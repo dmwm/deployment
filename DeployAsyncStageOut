@@ -1,0 +1,33 @@
+deploy_asyncstageout_deps()
+{
+  deploy CouchDB
+}
+
+deploy_asyncstageout_prep()
+{
+  mkproj asyncstageout
+}
+
+deploy_asyncstageout_sw()
+{
+  # Should deploy from an RPM like so:
+  # deploy_pkg -d asyncstageout -l app comp cms+asyncstageout+0.0.1
+  # but we've not built an RPM yet, so do a cheeky SVN co.
+  svn co svn+ssh://$USER@svn.cern.ch/reps/CMSDMWM/AsyncTransfer/trunk/src/
+}
+
+deploy_asyncstageout_post()
+{
+  # Tell couchdb to pick up AsyncTransfer on the next restart
+  # and configure replication, compaction and backup, too
+  local couchdb_root=$root/projects/couchdb
+  local hour=0
+
+  for area in compaction stagingarea replication backup; do
+    rm -f  $couchdb_root/$area/asyncstageout
+    touch $couchdb_root/$area/asyncstageout
+  done
+
+  echo "couchapp push $root/projects/asyncstageout/app/AsyncTransfer http://localhost:5984/asyncstageout" >> $couchdb_root/stagingarea/asyncstageout
+  echo "1 $hour * * *  $couchdb_root/manage compact asyncstageout" >> $couchdb_root/compaction/asyncstageout
+}
