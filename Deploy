@@ -1,0 +1,277 @@
+#!/bin/sh
+
+##H Deploy [-v] ROOT [SERVICE...]
+##H
+##H Deploy one or more SERVICEs into the ROOT directory.
+##H
+##H Possible options:
+##H  -M             Activate $MIGRATION commands.
+##H  -a             Activate production installation under multiple accounts.
+##H  -r A=B         Use repository B instead of A (e.g. comp=comp.pre).
+##H  -t TAG         When checking out configuration from SITECONF, use TAG.
+##H  -d SCRIPT-DIR  Look for service installation scripts in SCRIPT-DIR.
+##H  -h             Display this help.
+##H
+##H Remaining parameters are installation root directory ROOT and list
+##H of service names to install.  Assuming you want to install WMFoo to
+##H $PWD/test, with dependent package WMBar, have DeployWMFoo in $PWD
+##H and DeployWMBar in $PWD/extra, and you want to install using HEAD
+##H of SITECONF and pre-release RPMs with standard multi-account set-up,
+##H call Deploy as follows:
+##H
+##H     ./Deploy -a -r comp=comp.pre -t HEAD -d $PWD/extra $PWD/test WMFoo
+##H
+
+MIGRATION=
+
+repoedit=n
+arch=slc5_amd64_gcc434
+now=$(date +%Y%m%d%H%M%S)
+configtag=CMSWEB_CONFIG_PROD
+host=$(hostname -s)
+stages="prep sw post"
+nogroups=true
+servicedirs="$(cd $(dirname $0) && pwd) $PWD"
+
+while [ $# -ge 1 ]; do
+  case $1 in
+    -M ) MIGRATION=true; shift ;;
+    -a ) nogroups=false; shift ;;
+    -r ) repoedit="s/${2%=*}/${2#*=}/; $repoedit"; shift; shift ;;
+    -s ) stages="$2"; shift; shift ;;
+    -t ) configtag="$2"; shift; shift ;;
+    -d ) servicedirs="$servicedirs $2"; shift; shift ;;
+    -h ) perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0 1>&2; exit 1 ;;
+    -* ) echo "$0: unrecognised option $1, use -h for help" 1>&2; exit 1 ;;
+    *  ) break ;;
+  esac
+done
+
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 [OPTIONS] ROOT [SERVICE...] (use -h for help)" 1>&2
+  exit 1
+fi
+
+# Set SCRAM_ARCH. Lots of things won't work without it being set.
+export SCRAM_ARCH=$arch
+export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW
+
+# Make sure the installation directory exists.
+root="$1"; shift
+[ -d $root ] || {
+  mkdir -p $root || exit $?
+  chmod ug+rw,o-w $root || exit $?
+  $nogroups || chgrp _sw $root || exit $?
+} || exit 2
+
+# Start error log and make sure it gets wiped on exit.
+errlog=$root/.deploy-$(date +%Y%m%d-%H%M%S).log
+trap "(exit 77); exit 77" 1 2 15
+: > $errlog
+exec 11>&1 22>&2
+exec 1>>$errlog 2>&1
+set -ex
+
+# Record beginning of installation.
+note() { echo "$*" >> $errlog; echo "$*" 1>&11; }
+note "INFO: $now: starting deployment of: $*"
+
+######################################################################
+# Installation routines
+
+# Set group if we are running in multi-account mode.
+setgroup()
+{
+  if $nogroups; then :; else
+    local opts=
+    local priv=
+    local group=
+
+    while [ $# -ge 1 ]; do
+      case $1 in -*) opts="$opts $1"; shift ;; *) break;; esac
+    done
+
+    local priv=$1
+    local group=$2
+    shift; shift
+
+    if [ $# -ge 1 ]; then
+      chgrp $opts $group ${1+"$@"}
+      chmod $opts $priv ${1+"$@"}
+    fi
+  fi
+}
+
+# Produce crontab entry for sysboot rule
+sysboot()
+{
+  if $nogroups; then
+    echo "@reboot $PWD/config/manage sysboot"
+  else
+    echo "@reboot sudo -H -u $1 bashs -l -c '$PWD/config/manage sysboot'"
+  fi
+}
+
+# Create application proxy
+mkproxy()
+{
+  local acct=$1 path=$2
+  local link=$(echo $path | md5sum | awk '{print $1}' | cut -b 1-8)
+  local pxfile=$root/projects/conf/certs/PX$link
+  echo "$acct $path" > $pxfile
+  setgroup u+rw,go-rwx,g+r _config $pxfile
+  setgroup ug+rwx,o-rwx $acct $(dirname $path)
+}
+
+# Create project directory, with some additional directories.
+# With groups enabled the project directory is writable by _sw.
+mkproj()
+{
+  local name=$1
+  local dir=
+  shift
+
+  mkdir -p $root/projects/$name
+  $nogroups || chgrp _sw $root/projects/$name
+  $nogroups || chmod ug+rw,o-w $root/projects/$name
+
+  for dir; do
+   case $dir in
+     /*) mkdir -p $dir ;;
+     * ) mkdir -p $root/projects/$name/$dir ;;
+   esac
+  done
+
+  cd $root/projects/$name
+}
+
+# Source software management environment for a repository.
+# Automatically bootstrap the requested area if necessary.
+inrepo()
+{
+  local repo=$1
+  local inpath=${2-$repo}
+  if [ ! -f $root/${inpath}sw/.bootstrapped ]; then
+    note "INFO: bootstrapping $repo software area in $root/${inpath}sw"
+    if (rm -fr $root/${inpath}sw
+        mkdir -p $root/${inpath}sw
+        cd $root/${inpath}sw
+        wget -q http://cmsrep.cern.ch/cmssw/${repo%.*}/bootstrap.sh
+        sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
+          setup > $PWD/bootstrap-$arch.log 2>&1
+        touch .bootstrapped); then
+      note "INFO: bootstrap successful"
+    else
+      note "ERROR: bootstrap failed"
+      exit 3
+    fi
+  fi
+  . $root/${inpath}sw/$arch/external/apt/*/etc/profile.d/init.sh
+}
+
+# Deploy some component.
+deploy()
+{
+  local found=false
+  local pretty="$(echo $1 | tr _ -)"
+  local lower=$(echo $1 | tr '[A-Z]' '[a-z]')
+  eval local did="\$${lower}_deployed"
+  if [ X$did = X ]; then
+    local dir
+    for dir in $servicedirs; do
+      if [ -f $dir/Deploy$1 ]; then
+	found=true
+        . $dir/Deploy$1
+        break
+      fi
+    done
+
+    if $found; then :; else
+      note "ERROR: don't know how to deploy $1 - missing Deploy$1 in $servicedirs?"
+      exit 4
+    fi
+
+    eval deploy_${lower}_deps
+    note "INFO: deploying $pretty"
+    for stage in $stages; do
+      eval deploy_${lower}_$stage
+    done
+    eval "${lower}_deployed=1"
+  else
+    true
+  fi
+}
+
+deploy_pkg()
+{
+  local nofakes=true
+  local link=
+  local cfg=
+  while [ $# -ge 1 ]; do
+    case $1 in
+      -f ) nofakes=false; shift ;;
+      -l ) link=$2; shift; shift ;;
+      -c ) cfg=$2; shift; shift ;;
+      -d ) cd $root/projects/$2; shift; shift ;;
+      -* ) echo "$0: deploy_pkg: unexpected option $1" 1>&2; exit 1;;
+      *  ) break ;;
+    esac
+  done
+
+  local repo=$(echo $1 | sed -e "$repoedit")
+  local pkg=$2
+  local ver=$3
+
+  (inrepo $repo
+   apt-get update
+   { $nofakes || apt-get -y install $(apt-cache pkgnames | grep fake); }
+   apt-get -y install $pkg+$ver)
+
+  # Fix privs dropped by apt/rpm
+  setgroup ug+rw,o-w _sw $root/${repo}sw
+  if $nogroups; then :; else
+    BADFILES=$(find $root/${repo}sw/$arch -type f ! -group _sw -print)
+    [ X"$BADFILES" = X ] || note "WARNING: removing $BADFILES"
+    find $root/${repo}sw/$arch -type f ! -group _sw -print0 | xargs -r -t -0 rm -f
+    find $root/${repo}sw/$arch ! -type l -perm -2 -print0 | xargs -r -t -0 chmod o-w
+    find $root/${repo}sw/$arch -type d ! -perm -660 -print0 | xargs -r -t -0 chmod ug+rw
+    find $root/${repo}sw/$arch -type f ! -group _sw -print0 | xargs -r -t -0 chgrp _sw
+  fi
+
+  if [ X"$link" = X ]; then :; else
+    mkdir -p $(dirname $link)
+    rm -f $link
+    ln -s $root/${repo}sw/$arch/$(echo $pkg | tr + /)/$ver $link
+  fi
+  if [ X"$cfg" = X ]; then :; else
+    if [ -d config ]; then
+      BADFILES=$(find config -type f ! -group _config -print)
+      [ X"$BADFILES" = X ] || $nogroups || note "WARNING: removing $BADFILES"
+      $nogroups || find config -type f ! -group _config -print0 | xargs -r -t -0 rm -f
+    else
+      :
+    fi
+    cvs -Q co -d config -r $configtag COMP/SITECONF/T1_CH_CERN/$cfg
+    setgroup -R ug+r,go-w _config config
+  fi
+}
+
+
+######################################################################
+# Loop over all requested services and install them one at a time.
+(for svc; do
+  cd $root
+  deploy $(echo $svc | tr - _)
+done)
+exit=$?
+set +ex
+exec 1>&11 2>&22
+
+# Report program result
+note "INFO: installation log can be found in $errlog"
+case $exit in
+  0 ) note "INFO: installation completed sucessfully" ;;
+  * ) note "ERROR: installation failed with exit code $exit" ;;
+esac
+
+exit $exit

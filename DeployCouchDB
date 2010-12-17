@@ -1,0 +1,21 @@
+deploy_couchdb_deps()
+{
+  deploy Backend
+}
+
+deploy_couchdb_prep()
+{
+  mkproj couchdb database logs backup compaction replication stagingarea
+  setgroup ug+rw,o-w _couchdb $PWD/{database,logs,backup,compaction,replication,stagingarea}
+}
+
+deploy_couchdb_sw()
+{
+  deploy_pkg -d couchdb -l app -c CouchDB comp external+couchdb 1.0.1-cmp3
+  perl -p -i -e "s{/data/projects}{$root/projects}g" config/local.ini
+}
+
+deploy_couchdb_post()
+{
+  true
+}
