@@ -173,8 +173,7 @@ inrepo()
 deploy()
 {
   local found=false
-  local pretty="$(echo $1 | tr _ -)"
-  local lower=$(echo $1 | tr '[A-Z]' '[a-z]')
+  local lower=$(echo $1 | tr A-Z- a-z_)
   eval local did="\$${lower}_deployed"
   if [ X$did = X ]; then
     local dir
@@ -192,7 +191,7 @@ deploy()
     fi
 
     eval deploy_${lower}_deps
-    note "INFO: deploying $pretty"
+    note "INFO: deploying $1"
     for stage in $stages; do
       eval deploy_${lower}_$stage
     done
@@ -261,7 +260,7 @@ deploy_pkg()
 # Loop over all requested services and install them one at a time.
 (for svc; do
   cd $root
-  deploy $(echo $svc | tr - _)
+  deploy $svc
 done)
 exit=$?
 set +ex
