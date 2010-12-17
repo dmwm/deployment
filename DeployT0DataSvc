@@ -1,0 +1,23 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_t0datasvc_deps()
+{
+  deploy Backend
+}
+
+deploy_t0datasvc_prep()
+{
+  mkproj t0datasvc var logs
+  setgroup ug+rw,o-w _t0datasvc $PWD/{var,logs}
+}
+
+deploy_t0datasvc_sw()
+{
+  deploy_pkg -d t0datasvc -l app -c T0DataSvc comp cms+T0DataSvc 4.0.8
+}
+
+deploy_t0datasvc_post()
+{
+  cd $root/projects/t0datasvc
+  (crontab -l | { fgrep -v -e $PWD/ || true; }
+   sysboot _t0datasvc) | crontab -
+}

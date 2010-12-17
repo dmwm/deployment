@@ -1,0 +1,24 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_reqmgr_deps()
+{
+  deploy WMCore-Auth
+}
+
+deploy_reqmgr_prep()
+{
+  mkproj reqmgr logs var
+  setgroup ug+rw,o-w _reqmgr $PWD/{logs,var}
+}
+
+deploy_reqmgr_sw()
+{
+  deploy_pkg -d reqmgr -l app -c ReqMgr comp cms+reqmgr WMCORE_0_6_0
+  perl -p -i -e "s{/data/projects}{$root/projects}g" config/manage
+}
+
+deploy_reqmgr_post()
+{
+  cd $root/projects/reqmgr
+  (crontab -l | { fgrep -v -e $PWD/ || true; }
+   sysboot _reqmgr) | crontab -
+}

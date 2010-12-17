@@ -1,0 +1,34 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_das_deps()
+{
+  deploy Admin
+  deploy MongoDB
+}
+
+deploy_das_prep()
+{
+  mkproj das logs proxy
+  setgroup ug+rw,o-w _das $PWD/logs
+  mkproxy _das $PWD/proxy/proxy.cert
+}
+
+deploy_das_sw()
+{
+  deploy_pkg -d das -l app -c DAS comp cms+das 0.5.6a
+  # deploy_pkg -f cms cms+cmssw CMSSW_3_8_0
+  perl -p -i -e "s{/data/projects}{$root/projects}g" config/das_cms.py
+  cat config/*.yml | md5sum > config/schema-stamp
+  setgroup u+rw,go-w _config config/schema-stamp
+}
+
+deploy_das_post()
+{
+  cd $root/projects/das
+  newstamp=$(cat config/schema-stamp)
+  if [ -f logs/schema-stamp ]; then
+     oldstamp=$(cat logs/schema-stamp 2>/dev/null)
+     if [ X"$oldstamp" = X"$newstamp"]; then :; else
+        rm -f logs/schema-stamp
+     fi
+  fi
+}

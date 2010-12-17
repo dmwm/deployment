@@ -1,0 +1,27 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_admin_deps()
+{
+  deploy Backend
+}
+
+deploy_admin_prep()
+{
+  mkproj admin logs
+}
+
+deploy_admin_sw()
+{
+  cd $root/projects/admin
+  cvs -Q co -d config -r $configtag COMP/SITECONF/T1_CH_CERN/CMSWEB
+  setgroup -R ug+r,go-w _config config
+}
+
+deploy_admin_post()
+{
+  cd $root/projects/admin
+  (crontab -l | { fgrep -v -e $PWD/ || true; }
+   echo "*/10 * * * * $PWD/config/Monitoring"
+   echo "58 2 * * * $PWD/config/LogArchive $root"
+   echo "3 */3 * * * $PWD/config/ProxyRenew $root/projects/conf/certs cmsweb_backends cms") |
+   crontab -
+}

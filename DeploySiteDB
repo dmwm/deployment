@@ -1,0 +1,43 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_sitedb_deps()
+{
+  deploy Backend
+}
+
+deploy_sitedb_prep()
+{
+  mkproj sitedb logs
+  setgroup ug+rw,o-w _sitedb $PWD/logs
+}
+
+deploy_sitedb_sw()
+{
+  deploy_pkg -d sitedb -l app -c SiteDB comp cms+sitedb 1.2.3-cmp8
+  perl -p -i -e "s{/data/projects}{$root/projects}g" config/manage
+}
+
+deploy_sitedb_post()
+{
+  cd $root/projects/sitedb
+
+  case $host in
+    vocms50 | vocms106 | vocms107 )
+      NODE=https://cmsweb.cern.ch ;;
+    vocms51 )
+      NODE=https://vocms108.cern.ch ;;
+    * )
+      NODE=https://$(hostname -f) ;;
+  esac
+
+  rm -f $root/projects/conf/sitedb/sitedb.ini
+  sed "s|@NODE@|$NODE|g; s|@ROOT@|$root|g" \
+    < $root/projects/conf/sitedb/sitedb.iniex \
+    > $root/projects/conf/sitedb/sitedb.ini
+  setgroup ug+r,g-w,o-rwx _config $root/projects/conf/sitedb/sitedb.ini
+
+  (crontab -l | { fgrep -v -e $PWD/ || true; }
+   sysboot _sitedb;
+   case $host:$root in vocms106:/data )
+     echo "3 * * * * $PWD/config/HNSync";;
+   esac) | crontab -
+}

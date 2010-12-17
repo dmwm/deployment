@@ -1,0 +1,24 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_base_deps()
+{
+  deploy Backend
+}
+
+deploy_base_prep()
+{
+  mkproj base logs
+  setgroup ug+rw,o-w _base $PWD/logs
+}
+
+deploy_base_sw()
+{
+  deploy_pkg -d base -l app -c Base comp cms+webtools-base 0.1.21-cmp3
+  perl -p -i -e "s{/data/projects}{$root/projects}g" config/manage
+}
+
+deploy_base_post()
+{
+  cd $root/projects/base
+  (crontab -l | { fgrep -v -e $PWD/ || true; };
+   sysboot _base) | crontab -
+}

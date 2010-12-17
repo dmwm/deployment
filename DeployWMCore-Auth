@@ -1,0 +1,36 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmcore_auth_deps()
+{
+  deploy Backend
+}
+
+deploy_wmcore_auth_prep()
+{
+  keydir=$root/projects/conf/wmcore
+  case $host:$root in
+    vocms65:/data | vocms105:/data )
+      rm -f $keydir/header-auth-key
+      ln -s header-auth-key-prod $keydir/header-auth-key ;;
+    vocms108:/data )
+      rm -f $keydir/header-auth-key
+      ln -s header-auth-key-preprod $keydir/header-auth-key ;;
+    vocms109:/data )
+      rm -f $keydir/header-auth-key
+      ln -s header-auth-key-dev $keydir/header-auth-key ;;
+    * )
+      [ -f $keydir/header-auth-key ] ||
+        dd if=/dev/urandom of=$keydir/header-auth-key bs=20 count=1 ;;
+  esac
+
+  setgroup -R ug+r,g-w,o-rwx _config $root/projects/conf/wmcore
+}
+
+deploy_wmcore_auth_sw()
+{
+  true
+}
+
+deploy_wmcore_auth_post()
+{
+  true
+}

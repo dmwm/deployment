@@ -1,0 +1,24 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_mongodb_deps()
+{
+  deploy Backend
+}
+
+deploy_mongodb_prep()
+{
+  mkproj mongodb logs $root/das/db
+  setgroup ug+rw,o-w _mongodb $PWD/logs $root/das/db
+}
+
+deploy_mongodb_sw()
+{
+  deploy_pkg -d mongodb -l app -c MongoDB comp external+mongo 1.6.3
+  perl -p -i -e "s{/data/projects}{$root/projects}g" config/manage
+}
+
+deploy_mongodb_post()
+{
+  cd $root/projects/mongodb
+  (crontab -l | { fgrep -v -e $PWD/ || true; };
+   sysboot _mongodb) | crontab -
+}

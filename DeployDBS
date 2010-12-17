@@ -1,0 +1,22 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dbs_deps()
+{
+  deploy Backend
+}
+
+deploy_dbs_prep()
+{
+  mkproj dbs logs
+  setgroup ug+rw,o-w _dbs $PWD/logs
+}
+
+deploy_dbs_sw()
+{
+  deploy_pkg -d dbs -l app -c DBS comp cms+dbs3 DBS_3_S6_0_pre2-cmp
+  perl -p -i -e "s{/data/projects/}{$root/projects/}g" config/DBS.py config/manage
+}
+
+deploy_dbs_post()
+{
+  true
+}

@@ -1,0 +1,112 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_frontend_deps()
+{
+  true
+}
+
+deploy_frontend_prep()
+{
+  mkdir -p $root/frontend/{logs,apache2/{etc/cookie-keys,var}}
+
+  if [ -d $root/frontend/apache2/logs ]; then
+    mv $root/frontend/apache2/logs/* $root/frontend/logs/
+    rm $root/frontend/apache2
+    # rm -fr $root/frontend/compsw
+  fi
+
+  setgroup ug+rw,o-w _sw $root/frontend
+}
+
+deploy_frontend_sw()
+{
+  cd $root/frontend
+  deploy_pkg -l app -c FrontEndConf comp cms+frontend 4.0c-cmp2
+}
+
+deploy_frontend_post()
+{
+  cd $root/frontend
+  rm -f /tmp/{krb5cc_,tkt}$(id -u){,_*}
+  kinit cmsweb@CERN.CH 1>&11 2>&22
+
+  case $host in
+    vocms65 | vocms105 ) backends=backends-prod.txt opts="-DPRODUCTION";;
+    vocms108 )           backends=backends-preprod.txt opts="-DPRODUCTION -DPREPRODUCTION";;
+    vocms109 )           backends=backends-dev.txt opts="-DPRODUCTION -DTEST";;
+    * )                  backends=backends-dev.txt opts="-DTEST";;
+  esac
+
+  (. app/etc/profile.d/init.sh
+   mkserver                                           \
+   -r $PWD/apache2                                    \
+   -l $PWD/logs                                       \
+   -a $APACHE2_ROOT                                   \
+   -u _frontend:_frontend                             \
+   -o "$opts"                                         \
+   -p config/mpm.conf                                 \
+   -c config/frontend.conf                            \
+   -d config/htdocs                                   \
+   -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"             \
+   -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
+   -x "config/{*.pl,*.pm,testme}"                     \
+   -x "config/[cer]*.txt"                             \
+   -x config/$backends:backends.txt                   \
+   -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so  \
+   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so)
+
+  rm -f $PWD/apache2/etc/cookie-keys/*
+
+  [ -f $PWD/apache2/etc/header-key ] ||
+    dd if=/dev/urandom of=$PWD/apache2/etc/header-key bs=20 count=1
+
+  [ -f $PWD/apache2/etc/host-map-key ] ||
+    dd if=/dev/urandom of=$PWD/apache2/etc/host-map-key bs=20 count=1
+
+  rm -f $PWD/apache2/etc/db-param.txt
+  ssh cmsweb@lxplus.cern.ch cat private/conf/sitedb/security.ini |
+    perl -ne '
+      if (m{^dbname\s*=.*//(\S+):(\S+)\@(\S+)}) {
+        print "type Oracle\n", "database $3\n", "user $1\n",
+              "password $2\n", "schema-prefix $3\n"
+      }' > $PWD/apache2/etc/db-param.txt
+
+  setgroup ug+rw,o-w _frontend $root/frontend/{logs,apache2/var}
+  setgroup -R ugo+r,go-w _config $root/frontend/apache2/{*.conf,etc,htdocs}
+
+  (echo "PATH=/sbin:/bin:/usr/sbin:/usr/bin";
+   echo "X509_USER_CERT=/data/projects/conf/certs/hostcert.pem";
+   echo "X509_USER_KEY=/data/projects/conf/certs/hostkey.pem";
+   crontab -l | { egrep -v -e $PWD/ -e '^(PATH|X509_[A-Z_]*)=' || true; }
+   echo "13 */6 * * * (/opt/edg/libexec/edg-mkgridmap/edg-mkgridmap.pl" \
+      "--conf=$PWD/config/mkgridmap.conf --output=$PWD/apache2/etc/voms-gridmap.txt" \
+      "--safe) >> $PWD/logs/mkgridmap.log 2>&1";
+   case $host in
+     vocms105) ;;
+     vocms65) echo "23 */6 * * * $PWD/config/update-and-sync-cookie-keys $PWD vocms105" ;;
+     *)       echo "23 */6 * * * $PWD/config/update-and-sync-cookie-keys $PWD" ;;
+   esac) | crontab -
+
+  (crontab -l | grep -e '^[A-Z0-9_]*=' -e $PWD/ |
+   perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
+
+  case $host:$root in
+    vocms65:/data | vocms105:/data | vocms108:/data | vocms109:/data )
+      LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
+      (. app/etc/profile.d/init.sh; acrontab -l |
+       grep -v " $host .*/archive-log-files $PWD/";
+       echo "7 * * * * $host $APACHE_SETUP_ROOT/archive-log-files $PWD/logs $LOGDIR/$host") \
+       | acrontab
+      acrontab -l | grep " $host .*/archive-log-files " | sed "s|^[/*0-9 ]* $host ||" | sh -x
+      ;;
+  esac
+
+  # Set up init scripts and reboot
+  sudo rm -f /etc/rc.d/init.d/httpd
+  sudo ln -s $root/frontend/apache2/etc/httpd /etc/rc.d/init.d/httpd
+  sudo /sbin/chkconfig --add httpd
+  sudo /sbin/chkconfig --levels 2345 httpd on
+
+  kdestroy
+  rm -f /tmp/{krb5cc_,tkt}`id -u`{,_*}
+  note "INFO: reboot system when done!"
+}
