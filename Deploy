@@ -65,7 +65,7 @@ root="$1"; shift
 } || exit 2
 
 # Start error log and make sure it gets wiped on exit.
-errlog=$root/.deploy-$(date +%Y%m%d-%H%M%S).log
+errlog=$root/.deploy-$(date +%Y%m%d-%H%M%S)-$$.log
 trap "(exit 77); exit 77" 1 2 15
 : > $errlog
 exec 11>&1 22>&2
