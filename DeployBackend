@@ -7,8 +7,8 @@ deploy_backend_deps()
 deploy_backend_prep()
 {
   mkdir -p $root/projects
-  $nogroups || chgrp _sw $root/projects
-  $nogroups || chmod ug+rw,o-w $root/projects
+  $chgrp _sw $root/projects
+  $chmod ug+rw,o-w $root/projects
 
   mkproj backend
   if [ ! -f $root/projects/conf/.applied ]; then

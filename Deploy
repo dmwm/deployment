@@ -47,6 +47,9 @@ while [ $# -ge 1 ]; do
   esac
 done
 
+chgrp=/bin/true chown=/bin/true chmod=/bin/true
+$nogroups || chgrp=chgrp chown=chown chmod=chmod
+
 if [ $# -lt 1 ]; then
   echo "Usage: $0 [OPTIONS] ROOT [SERVICE...] (use -h for help)" 1>&2
   exit 1
@@ -61,7 +64,7 @@ root="$1"; shift
 [ -d $root ] || {
   mkdir -p $root || exit $?
   chmod ug+rw,o-w $root || exit $?
-  $nogroups || chgrp _sw $root || exit $?
+  $chgrp _sw $root || exit $?
 } || exit 2
 
 # Start error log and make sure it gets wiped on exit.
@@ -132,8 +135,8 @@ mkproj()
   shift
 
   mkdir -p $root/projects/$name
-  $nogroups || chgrp _sw $root/projects/$name
-  $nogroups || chmod ug+rw,o-w $root/projects/$name
+  $chgrp _sw $root/projects/$name
+  $chmod ug+rw,o-w $root/projects/$name
 
   for dir; do
    case $dir in
