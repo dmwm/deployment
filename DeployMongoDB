@@ -6,8 +6,8 @@ deploy_mongodb_deps()
 
 deploy_mongodb_prep()
 {
-  mkproj mongodb logs $root/das/db
-  setgroup ug+rw,o-w _mongodb $PWD/logs $root/das/db
+  mkproj mongodb logs stagingarea $root/das/db
+  setgroup ug+rw,o-w _mongodb $PWD/{logs,stagingarea} $root/das/db
 }
 
 deploy_mongodb_sw()
