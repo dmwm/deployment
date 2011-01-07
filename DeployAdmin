@@ -19,6 +19,7 @@ deploy_admin_sw()
 deploy_admin_post()
 {
   cd $root/projects/admin
+  $PWD/config/ProxyRenew $root/projects/conf/certs cmsweb_backends cms
   (crontab -l | { fgrep -v -e $PWD/ || true; }
    echo "*/10 * * * * $PWD/config/Monitoring"
    echo "58 2 * * * $PWD/config/LogArchive $root"
