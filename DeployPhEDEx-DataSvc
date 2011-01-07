@@ -33,7 +33,9 @@ deploy_phedex_datasvc_sw()
 deploy_phedex_datasvc_post()
 {
   cd $root/projects/phedex-webapp
+  cmd="$PWD/srv/bin/trim-cache 1000M"
+  $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
   (crontab -l | { fgrep -v "$PWD/" || true; }
-   echo "0 * * * * sudo -H -u _phedex bashs -c '$PWD/srv/bin/trim-cache 1000M'") |
+   echo "0 * * * * $cmd") |
    crontab -
 }
