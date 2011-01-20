@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmcore_deps()
+{
+   true
+}
+
+deploy_wmcore_prep()
+{
+  mkproj wmcore
+}
+
+deploy_wmcore_sw()
+{
+  deploy_pkg -d wmcore -l app -c WMCore comp cms+wmcore+WMCORE_0_6_8
+  deploy_pkg -l python2.6 -d wmcore  comp external+python+2.6.4-cmp7
+}
+
+deploy_wmcore_post()
+{
+   true
+}

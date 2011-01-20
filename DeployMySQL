@@ -1,0 +1,22 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_mysql_deps()
+{
+   true
+}
+
+deploy_mysql_prep()
+{
+  mkproj mysql database logs stagingarea
+  setgroup ug+rw,o-w _couchdb $PWD/{database,logs,stagingarea}
+}
+
+deploy_mysql_sw()
+{
+  deploy_pkg -d mysql -l app -c MySQL comp external+mysql+5.1.35-cmp
+  #perl -p -i -e "s{/data/projects}{$root/projects}g" config/local.ini
+}
+
+deploy_mysql_post()
+{
+  true
+}
