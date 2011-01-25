@@ -11,8 +11,9 @@ deploy_wmcore_prep()
 
 deploy_wmcore_sw()
 {
-  deploy_pkg -d wmcore -l app -c WMCore comp cms+wmcore+WMCORE_0_6_8
-  deploy_pkg -l python2.6 -d wmcore  comp external+python+2.6.4-cmp7
+  deploy_pkg -d wmcore -l app -c WMCore comp cms+wmcore+WMCORE_0_6_9
+  deploy_pkg -d wmcore -l python2.6   comp external+python+2.6.4-cmp7
+  deploy_pkg -d wmcore -l py2-mysqldb comp external+py2-mysqldb+1.2.3c1-cmp6
 }
 
 deploy_wmcore_post()
