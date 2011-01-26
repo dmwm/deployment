@@ -6,14 +6,14 @@ deploy_mysql_deps()
 
 deploy_mysql_prep()
 {
-  mkproj mysql database logs stagingarea
+  mkproj mysql database logs stagingarea config
   setgroup ug+rw,o-w _couchdb $PWD/{database,logs,stagingarea}
 }
 
 deploy_mysql_sw()
 {
-  deploy_pkg -d mysql -l app -c MySQL comp external+mysql+5.1.35-cmp
-  #perl -p -i -e "s{/data/projects}{$root/projects}g" config/local.ini
+  deploy_pkg -d mysql -l app  comp external+mysql+5.1.35-cmp
+
 }
 
 deploy_mysql_post()

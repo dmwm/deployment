@@ -1,7 +1,7 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_wmagent_deps()
 {
-  deploy CouchDB
+  deploy CouchDBOffsite
   deploy MySQL
   deploy WMCore
 }
@@ -38,6 +38,5 @@ deploy_wmagent_post()
 
   #Grab the WMAgent MySQL config
   local mysql_root=$root/projects/mysql
-  mkdir $mysql_root/config
   /bin/cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_root/config/my.cnf
 }
