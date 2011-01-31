@@ -18,7 +18,7 @@ deploy_wmagent_sw()
   deploy_pkg -d wmagent -l openid   comp external+py2-openid+2.2.4-cmp6
   deploy_pkg -d wmagent -l py2-cjson   comp external+py2-cjson+1.0.5-cmp5
   deploy_pkg -d wmagent -l dls-client   comp  cms+dls-client+DLS_1_1_2-cmp6
-  deploy_pkg -d wmagent -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1-cmp
+  deploy_pkg -d wmagent -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1-cmp
 }
 
 deploy_wmagent_post()
@@ -26,6 +26,7 @@ deploy_wmagent_post()
   local wmcore_root=$root/projects/wmcore
   local wmcore_etc=$wmcore_root/app/etc
   local wmagent_root=$root/projects/wmagent
+ 
 
   # get manage script from wmcore
   /bin/cp $wmcore_etc/deploy/wmagent-manage  $wmagent_root/config/manage
