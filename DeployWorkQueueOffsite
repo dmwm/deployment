@@ -1,0 +1,43 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_workqueueoffsite_deps()
+{
+  deploy CouchDBOffsite
+  deploy MySQL
+  deploy WMCore
+}
+
+deploy_workqueueoffsite_prep()
+{
+  mkproj workqueue config
+}
+
+deploy_workqueueoffsite_sw()
+{
+  deploy_pkg -d workqueue -l cherrypy  comp external+cherrypy+3.1.2-cmp6
+  deploy_pkg -d workqueue -l cheetah  comp external+py2-cheetah+2.4.0-cmp6
+  deploy_pkg -d workqueue -l openid   comp external+py2-openid+2.2.4-cmp6
+  deploy_pkg -d workqueue -l py2-cjson   comp external+py2-cjson+1.0.5-cmp5
+  deploy_pkg -d workqueue -l dls-client   comp  cms+dls-client+DLS_1_1_2-cmp6
+  deploy_pkg -d workqueue -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1-cmp
+}
+
+deploy_workqueueoffsite_post()
+{
+  local wmcore_root=$root/projects/wmcore
+  local wmcore_etc=$wmcore_root/app/etc
+  local workqueue_root=$root/projects/workqueue
+
+
+  # get manage script from wmcore
+  /bin/cp $wmcore_etc/deploy/workqueue-manage  $workqueue_root/config/manage
+
+  #override the webtools couch config
+  local couchdb_root=$root/projects/couchdb
+  local couchdb_ini=$couchdb_root/config/local.ini
+  /bin/cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
+  perl -p -i -e "s{deploy_project_root}{$root/projects}g" $couchdb_ini
+
+  #Grab the workqueue MySQL config
+  local mysql_root=$root/projects/mysql
+  /bin/cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_root/config/my.cnf
+}

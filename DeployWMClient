@@ -1,0 +1,48 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmclient_deps()
+{
+  true
+}
+
+deploy_wmclient_prep()
+{
+  mkproj wmclient etc
+}
+
+deploy_wmclient_sw()
+{
+  deploy_pkg -d wmclient -l httplib2 comp external+py2-httplib2+0.6.0-cmp4
+  deploy_pkg -d wmclient -l wmcore  comp cms+wmcore+WMCORE_0_6_10
+}
+
+deploy_wmclient_post()
+{
+
+  local wmclient_root=$root/projects/wmclient
+  local wmclient_etc=$wmclient_root/config
+  local wmclient_setup=$wmclient_root/etc/wmclient.sh
+
+
+cat > $wmclient_setup <<'EOF'
+#!/bin/sh
+THIS_SCRIPT=$(readlink -f $0)
+PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
+ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
+WMCLIENT_DIR="$PROJ_DIR/wmclient"
+export WMCORE_ROOT="$WMCLIENT_DIR/wmcore"
+
+
+. $WMCLIENT_DIR/wmcore/etc/profile.d/init.sh
+. $WMCLIENT_DIR/httplib2/etc/profile.d/init.sh
+
+
+export PATH=$PATH:$WMCLIENT_DIR/wmcore/bin
+export PYTHONPATH=$PYTHONPATH:$WMCLIENT_DIR/wmcore/src/python
+export PYTHONPATH=$PYTHONPATH:$WMCLIENT_DIR/wmcore/test/python
+
+
+EOF
+
+   chmod +x $wmclient_setup
+
+}
