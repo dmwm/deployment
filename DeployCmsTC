@@ -1,0 +1,23 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_cmstc_deps()
+{
+  true
+}
+
+deploy_cmstc_prep()
+{
+  mkproj cmstc var logs
+  setgroup ug+rw,o-w _cmstc $PWD/{logs}
+}
+
+deploy_cmstc_sw()
+{
+  deploy_pkg -d cmstc -l app -c CmsTC comp cms+CmsTC 0.0.1
+}
+
+deploy_cmstc_post()
+{
+  cd $root/projects/cmstc
+  (crontab -l | { fgrep -v -e $PWD/ || true; }
+   sysboot _cmstc) | crontab -
+}
