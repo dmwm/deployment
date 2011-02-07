@@ -8,7 +8,7 @@ deploy_reqmgroffsite_deps()
 
 deploy_reqmgroffsite_prep()
 {
-  mkproj reqmgr config
+  mkproj reqmgr config install
 }
 
 deploy_reqmgroffsite_sw()
@@ -18,7 +18,7 @@ deploy_reqmgroffsite_sw()
   deploy_pkg -d reqmgr -l openid   comp external+py2-openid+2.2.4-cmp6
   deploy_pkg -d reqmgr -l py2-cjson   comp external+py2-cjson+1.0.5-cmp5
   deploy_pkg -d reqmgr -l dls-client   comp  cms+dls-client+DLS_1_1_2-cmp6
-  deploy_pkg -d reqmgr -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1-cmp
+  deploy_pkg -d reqmgr -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1
 }
 
 deploy_reqmgroffsite_post()
@@ -29,7 +29,7 @@ deploy_reqmgroffsite_post()
 
 
   # get manage script from wmcore
-  /bin/cp $wmcore_etc/deploy/reqmgr-manage  $reqmgr_root/config/manage
+  /bin/cp $wmcore_etc/deploy/wmagent-manage  $reqmgr_root/config/manage
   #override the webtools couch config
   local couchdb_root=$root/projects/couchdb
   local couchdb_ini=$couchdb_root/config/local.ini

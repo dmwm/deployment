@@ -12,7 +12,7 @@ deploy_wmclient_prep()
 deploy_wmclient_sw()
 {
   deploy_pkg -d wmclient -l httplib2 comp external+py2-httplib2+0.6.0-cmp4
-  deploy_pkg -d wmclient -l wmcore  comp cms+wmcore+WMCORE_0_6_10
+  deploy_pkg -d wmclient -l wmcore  comp cms+wmcore+WMCORE_0_6_11
 }
 
 deploy_wmclient_post()
@@ -22,24 +22,18 @@ deploy_wmclient_post()
   local wmclient_etc=$wmclient_root/config
   local wmclient_setup=$wmclient_root/etc/wmclient.sh
 
+  echo '#!/bin/bash' > $wmclient_setup
+  echo "THIS_SCRIPT=$wmclient_setup" >> $wmclient_setup
 
-cat > $wmclient_setup <<'EOF'
-#!/bin/sh
-THIS_SCRIPT=$(readlink -f $0)
+cat >> $wmclient_setup <<'EOF'
 PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
 ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
-WMCLIENT_DIR="$PROJ_DIR/wmclient"
-export WMCORE_ROOT="$WMCLIENT_DIR/wmcore"
-
-
-. $WMCLIENT_DIR/wmcore/etc/profile.d/init.sh
-. $WMCLIENT_DIR/httplib2/etc/profile.d/init.sh
-
-
-export PATH=$PATH:$WMCLIENT_DIR/wmcore/bin
-export PYTHONPATH=$PYTHONPATH:$WMCLIENT_DIR/wmcore/src/python
-export PYTHONPATH=$PYTHONPATH:$WMCLIENT_DIR/wmcore/test/python
-
+export WMCORE_ROOT="$PROJ_DIR/wmcore"
+. $PROJ_DIR/wmcore/etc/profile.d/init.sh
+. $PROJ_DIR/httplib2/etc/profile.d/init.sh
+export PATH=$PATH:$PROJ_DIR/wmcore/bin
+export PYTHONPATH=$PYTHONPATH:$PROJ_DIR/wmcore/src/python
+export PYTHONPATH=$PYTHONPATH:$PROJ_DIR/wmcore/test/python
 
 EOF
 

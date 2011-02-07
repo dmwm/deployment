@@ -8,7 +8,7 @@ deploy_workqueueoffsite_deps()
 
 deploy_workqueueoffsite_prep()
 {
-  mkproj workqueue config
+  mkproj workqueue config install
 }
 
 deploy_workqueueoffsite_sw()
@@ -18,7 +18,7 @@ deploy_workqueueoffsite_sw()
   deploy_pkg -d workqueue -l openid   comp external+py2-openid+2.2.4-cmp6
   deploy_pkg -d workqueue -l py2-cjson   comp external+py2-cjson+1.0.5-cmp5
   deploy_pkg -d workqueue -l dls-client   comp  cms+dls-client+DLS_1_1_2-cmp6
-  deploy_pkg -d workqueue -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1-cmp
+  deploy_pkg -d workqueue -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1
 }
 
 deploy_workqueueoffsite_post()
@@ -29,7 +29,7 @@ deploy_workqueueoffsite_post()
 
 
   # get manage script from wmcore
-  /bin/cp $wmcore_etc/deploy/workqueue-manage  $workqueue_root/config/manage
+  /bin/cp $wmcore_etc/deploy/wmagent-manage  $workqueue_root/config/manage
 
   #override the webtools couch config
   local couchdb_root=$root/projects/couchdb
