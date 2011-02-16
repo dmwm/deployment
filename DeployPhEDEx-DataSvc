@@ -12,7 +12,7 @@ deploy_phedex_datasvc_prep()
 
 deploy_phedex_datasvc_sw()
 {
-  deploy_pkg -d phedex-webapp -l srv comp cms+PHEDEX-datasvc DATASVC_1_6_3-cmp3
+  deploy_pkg -d phedex-webapp -l srv comp cms+PHEDEX-datasvc DATASVC_1_6_6
   chmod a+x srv/bin/trim-cache
   perl -p -i -e "s{/where/i/put/my}{$root/projects/conf/phedex}g" \
     srv/PhEDExWeb/DataService/conf/datasvc-app.conf
@@ -20,7 +20,7 @@ deploy_phedex_datasvc_sw()
   rm -f apache2
   ln -s $root/$(echo comp | sed -e "$repoedit")sw/apache2 apache2
   setgroup g+w _config apache2/{logs,var} # hack, need to write here too
-  setgroup g+w _config apache2/logs/start_stop.log
+  rm -f apache2/logs/start_stop.log
 
   # Fix up feedback-mail
   cd srv/PhEDExWeb/DataService/conf
@@ -35,7 +35,8 @@ deploy_phedex_datasvc_post()
   cd $root/projects/phedex-webapp
   cmd="$PWD/srv/bin/trim-cache 1000M"
   $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
-  (crontab -l | { fgrep -v "$PWD/" || true; }
+  (crontab -l | { fgrep -v -e "$PWD/" || true; }
+   sysboot _phedex
    echo "0 * * * * $cmd") |
    crontab -
 }

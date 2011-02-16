@@ -12,7 +12,7 @@ deploy_overview_prep()
 
 deploy_overview_sw()
 {
-  deploy_pkg -d overview -f -l app -c Overview cms cms+overview 5.2.1c
+  deploy_pkg -d overview -f -l app -c Overview comp cms+overview 5.2.1c
   perl -p -i -e "s{/data/projects}{$root/projects}g" config/*.py
   cp -p /afs/cern.ch/project/oracle/admin/tnsnames.ora config/tnsnames.ora
   setgroup u+rw,go-w _config config/tnsnames.ora

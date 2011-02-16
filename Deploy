@@ -109,9 +109,9 @@ setgroup()
 sysboot()
 {
   if $nogroups; then
-    echo "@reboot $PWD/config/manage sysboot"
+    echo "@reboot $PWD/config/manage ${2-sysboot}"
   else
-    echo "@reboot sudo -H -u $1 bashs -l -c '$PWD/config/manage sysboot'"
+    echo "@reboot sudo -H -u $1 bashs -l -c '$PWD/config/manage ${2-sysboot}'"
   fi
 }
 

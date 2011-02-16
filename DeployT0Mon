@@ -12,7 +12,7 @@ deploy_t0mon_prep()
 
 deploy_t0mon_sw()
 {
-  deploy_pkg -d t0mon -l app -c Tier0 comp cms+T0Mon 4.0.8a
+  deploy_pkg -d t0mon -l app -c Tier0 comp cms+T0Mon 4.2.6c
 }
 
 deploy_t0mon_post()

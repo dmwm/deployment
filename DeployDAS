@@ -14,8 +14,7 @@ deploy_das_prep()
 
 deploy_das_sw()
 {
-  deploy_pkg -d das -l app -c DAS comp cms+das 0.5.8
-  # deploy_pkg -f cms cms+cmssw CMSSW_3_8_0
+  deploy_pkg -d das -l app -c DAS comp cms+das 0.5.9
   perl -p -i -e "s{/data/projects}{$root/projects}g" config/das_cms.py
   cat config/*.yml | md5sum > config/schema-stamp
   setgroup u+rw,go-w _config config/schema-stamp

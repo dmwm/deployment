@@ -6,7 +6,11 @@ deploy_frontend_deps()
 
 deploy_frontend_prep()
 {
-  mkdir -p $root/frontend/{logs,apache2/{etc/cookie-keys,var}}
+  $MIGRATION mv $root/frontend/apache2/etc/{cookie-,}keys
+  $MIGRATION mv $root/frontend/apache2/etc/{header-key,keys/authz-headers}
+  $MIGRATION mv $root/frontend/apache2/etc/{host-map-key,keys/host-map}
+  $MIGRATION rm -f $root/frontend/apache2/etc/keys/{2*,host-map}
+  mkdir -p $root/frontend/{logs,apache2/{etc/keys,var}}
 
   if [ -d $root/frontend/apache2/logs ]; then
     mv $root/frontend/apache2/logs/* $root/frontend/logs/
@@ -20,7 +24,7 @@ deploy_frontend_prep()
 deploy_frontend_sw()
 {
   cd $root/frontend
-  deploy_pkg -l app -c FrontEndConf comp cms+frontend 4.0c-cmp2
+  deploy_pkg -l app -c FrontEndConf comp cms+frontend 4.0c-cmp3
 }
 
 deploy_frontend_post()
@@ -54,13 +58,9 @@ deploy_frontend_post()
    -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so  \
    -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so)
 
-  rm -f $PWD/apache2/etc/cookie-keys/*
-
-  [ -f $PWD/apache2/etc/header-key ] ||
-    dd if=/dev/urandom of=$PWD/apache2/etc/header-key bs=20 count=1
-
-  [ -f $PWD/apache2/etc/host-map-key ] ||
-    dd if=/dev/urandom of=$PWD/apache2/etc/host-map-key bs=20 count=1
+  mkdir -p $PWD/apache2/etc/keys/auth-{hn,csrf,sid,pass}
+  mkdir -p $PWD/apache2/etc/keys/{cert-cookie,host-map}
+  touch $PWD/apache2/etc/keys/authz-headers
 
   rm -f $PWD/apache2/etc/db-param.txt
   ssh cmsweb@lxplus.cern.ch cat private/conf/sitedb/security.ini |
@@ -74,16 +74,16 @@ deploy_frontend_post()
   setgroup -R ugo+r,go-w _config $root/frontend/apache2/{*.conf,etc,htdocs}
 
   (echo "PATH=/sbin:/bin:/usr/sbin:/usr/bin";
-   echo "X509_USER_CERT=/data/projects/conf/certs/hostcert.pem";
-   echo "X509_USER_KEY=/data/projects/conf/certs/hostkey.pem";
+   echo "X509_USER_CERT=$root/projects/conf/certs/hostcert.pem";
+   echo "X509_USER_KEY=$root/projects/conf/certs/hostkey.pem";
    crontab -l | { egrep -v -e $PWD/ -e '^(PATH|X509_[A-Z_]*)=' || true; }
    echo "13 */6 * * * (/opt/edg/libexec/edg-mkgridmap/edg-mkgridmap.pl" \
       "--conf=$PWD/config/mkgridmap.conf --output=$PWD/apache2/etc/voms-gridmap.txt" \
       "--safe) >> $PWD/logs/mkgridmap.log 2>&1";
    case $host in
      vocms105) ;;
-     vocms65) echo "23 */6 * * * $PWD/config/update-and-sync-cookie-keys $PWD vocms105" ;;
-     *)       echo "23 */6 * * * $PWD/config/update-and-sync-cookie-keys $PWD" ;;
+     vocms65) echo "23 */6 * * * $PWD/config/update-keys $PWD vocms105" ;;
+     *)       echo "23 */6 * * * $PWD/config/update-keys $PWD" ;;
    esac) | crontab -
 
   (crontab -l | grep -e '^[A-Z0-9_]*=' -e $PWD/ |

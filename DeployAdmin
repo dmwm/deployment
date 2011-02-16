@@ -7,13 +7,14 @@ deploy_admin_deps()
 deploy_admin_prep()
 {
   mkproj admin logs
+  $MIGRATION rm -f logs/_*
 }
 
 deploy_admin_sw()
 {
-  cd $root/projects/admin
-  cvs -Q co -d config -r $configtag COMP/SITECONF/T1_CH_CERN/CMSWEB
-  setgroup -R ug+r,go-w _config config
+  deploy_pkg -d admin -l app -c CMSWEB comp external+rotatelogs 2.2.14-cmp
+  (echo ". $root/projects/backend/app/etc/profile.d/init.sh"
+   echo ". $root/projects/admin/app/etc/profile.d/init.sh") > init.sh
 }
 
 deploy_admin_post()
@@ -21,7 +22,9 @@ deploy_admin_post()
   cd $root/projects/admin
   $PWD/config/ProxyRenew $root/projects/conf/certs cmsweb_backends cms
   (crontab -l | { fgrep -v -e $PWD/ || true; }
-   echo "*/10 * * * * $PWD/config/Monitoring"
+   echo "@reboot . $PWD/init.sh && $PWD/config/ServerMonitor -r"
+   echo "*/6 * * * * . $PWD/init.sh && $PWD/config/ServerMonitor -q -v"
+   echo "37 */8 * * * . $PWD/init.sh && $PWD/config/ServerMonitor -q -r"
    echo "58 2 * * * $PWD/config/LogArchive $root"
    echo "3 */3 * * * $PWD/config/ProxyRenew $root/projects/conf/certs cmsweb_backends cms") |
    crontab -

@@ -12,7 +12,7 @@ deploy_dqmgui_prep()
 
 deploy_dqmgui_sw()
 {
-  deploy_pkg -d dqmgui -f -l app cms cms+dqmgui 5.2.1c
+  deploy_pkg -d dqmgui -f -l app comp cms+dqmgui 5.3.2
   cvs -Q co -d config -r OFFLINE_CONFIG_PRODUCTION CMSSW/DQM/Integration/config
   cvs -Q co -d style -r OFFLINE_CONFIG_PRODUCTION CMSSW/DQM/RenderPlugins/src
   setgroup -R ug+r,go-w _config config style

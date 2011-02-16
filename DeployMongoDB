@@ -12,7 +12,7 @@ deploy_mongodb_prep()
 
 deploy_mongodb_sw()
 {
-  deploy_pkg -d mongodb -l app -c MongoDB comp external+mongo 1.6.3
+  deploy_pkg -d mongodb -l app -c MongoDB comp external+mongo 1.6.5
   perl -p -i -e "s{/data/projects}{$root/projects}g" config/manage
 }
 

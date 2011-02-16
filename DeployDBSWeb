@@ -12,7 +12,7 @@ deploy_dbsweb_prep()
 
 deploy_dbsweb_sw()
 {
-  deploy_pkg -d dbsweb -l app -c DBSWeb comp cms+dbs-web V06_00_42
+  deploy_pkg -d dbsweb -l app -c DBSWeb comp cms+dbs-web V06_00_47
   perl -p -i -e 's{os\.chmod}{#os.chmod}g' app/lib/python2.6/site-packages/utils/DDConfig.py
   perl -p -i -e "s{/data/projects/}{$root/projects/}g" config/DBSDD.conf config/manage
   setgroup ug+r,g-w,o-rwx _config config/DBSDD.conf
@@ -36,5 +36,7 @@ deploy_dbsweb_sw()
 
 deploy_dbsweb_post()
 {
-  true
+  cd $root/projects/dbsweb
+  (crontab -l | { fgrep -v -e $PWD/ || true; };
+   sysboot _dbsweb) | crontab -
 }

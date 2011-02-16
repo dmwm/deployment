@@ -11,7 +11,7 @@ deploy_stagemanager_prep()
 
 deploy_stagemanager_sw()
 {
-  deploy_pkg -d stagemanager -l app comp cms+stagemanager+0.0.1
+  deploy_pkg -d stagemanager -l app comp cms+stagemanager+0.0.1-cmp
 }
 
 deploy_stagemanager_post()
@@ -28,7 +28,7 @@ deploy_stagemanager_post()
 
   for site in t1_uk_ral t1_us_fnal; do
     for db in requests statistics; do
-      local db_string=$site%2F$db
+      local db_string=${site}_${db}
       echo "couchapp push $root/projects/stagemanager/app/$db http://localhost:5984/$db_string" >> $couchdb_root/stagingarea/stagemanager
       echo "1 $hour * * *  $couchdb_root/manage compact $db_string" >> $couchdb_root/compaction/stagemanager
       hour=$(( $hour + 1 ))

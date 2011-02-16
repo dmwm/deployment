@@ -8,10 +8,12 @@ deploy_wmcore_auth_prep()
 {
   keydir=$root/projects/conf/wmcore
   case $host:$root in
-    vocms65:/data | vocms105:/data )
+    vocms65:/data | vocms105:/data | \
+    vocms106:/data | vocms107:/data | \
+    vocms50:/data | vocms53:/data )
       rm -f $keydir/header-auth-key
       ln -s header-auth-key-prod $keydir/header-auth-key ;;
-    vocms108:/data )
+    vocms108:/data | vocms51:/data )
       rm -f $keydir/header-auth-key
       ln -s header-auth-key-preprod $keydir/header-auth-key ;;
     vocms109:/data )

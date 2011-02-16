@@ -7,16 +7,15 @@ deploy_filemover_deps()
 
 deploy_filemover_prep()
 {
-  $MIGRATION rm -fr $root/pool/{[A-Z]*,blocks,castor,cmsfs,cmssw,logs,*-*,*_*}
+  $MIGRATION rm -fr $root/pool/{[[:upper:]]*,blocks,castor,cmsfs,cmssw,logs,*-*,*_*}
   mkproj filemover logs proxy $root/pool/download
-  setgroup ug+rw,o-w _filemover $PWD/logs
-  setgroup -R ug+rw,o-w _filemover $root/pool
+  setgroup ug+rw,o-w _filemover $PWD/logs $root/pool $root/pool/download
   mkproxy _filemover $PWD/proxy/proxy.cert
 }
 
 deploy_filemover_sw()
 {
-  deploy_pkg -d filemover -l app -c FileMover comp cms+filemover 1.0.5
+  deploy_pkg -d filemover -l app -c FileMover comp cms+filemover 1.0.7
   perl -p -i -e "s{/data/projects}{$root/projects}g" config/*.cfg config/manage
   rm -f app/lib/python2.6/site-packages/pid.txt
   ln -s $PWD/logs/pid.txt app/lib/python2.6/site-packages/pid.txt

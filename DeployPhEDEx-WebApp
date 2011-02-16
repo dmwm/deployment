@@ -11,9 +11,9 @@ deploy_phedex_webapp_prep()
 
 deploy_phedex_webapp_sw()
 {
-  deploy_pkg -d phedex-webapp -l app -c PhEDEx/web comp cms+PHEDEX-webapp WEBAPP_BETA_1_0_0pre32-cmp2
+  deploy_pkg -d phedex-webapp -l app -c PhEDEx/web comp cms+PHEDEX-webapp WEBAPP_BETA_1_0_2
   setgroup g+w _config apache2/{logs,var} # hack, need to write here too
-  setgroup g+w _config apache2/logs/start_stop.log
+  rm -f apache2/logs/start_stop.log
   chmod a+x srv/bin/trim-cache
 }
 
