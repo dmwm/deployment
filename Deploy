@@ -212,13 +212,15 @@ inrepo()
   local swarea=$2
   if [ ! -f $swarea/.bootstrapped ]; then
     note "INFO: bootstrapping $repo software area in $swarea"
-    if (rm -fr $swarea
-        mkdir -p $swarea
-        cd $swarea
-        wget -q http://cmsrep.cern.ch/cmssw/${repo%.*}/bootstrap.sh
-        sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
-          setup > $PWD/bootstrap-$arch.log 2>&1
-        touch .bootstrapped); then
+    (set -e
+     rm -fr $swarea
+     mkdir -p $swarea
+     cd $swarea
+     wget -q http://cmsrep.cern.ch/cmssw/${repo%.*}/bootstrap.sh
+     sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
+       setup > $PWD/bootstrap-$arch.log 2>&1
+     touch .bootstrapped)
+    if [ $? = 0 ]; then
       note "INFO: bootstrap successful"
     else
       note "ERROR: bootstrap failed"
@@ -297,10 +299,12 @@ deploy_pkg()
     local pkg=$2
     local ver=$3
 
-    (inrepo $repo $swarea
+    (set -e
+     inrepo $repo $swarea
      apt-get update
      apt-get -y install $(apt-cache pkgnames | grep fake)
      apt-get -y install $pkg+$ver)
+    [ $? = 0 ]
 
     # Fix privs dropped by apt/rpm
     setgroup ug+rw,o-w _sw $swarea
