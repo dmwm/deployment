@@ -8,7 +8,8 @@
 ##H  -M             Activate $MIGRATION commands.
 ##H  -a             Activate production installation under multiple accounts.
 ##H  -r A=B         Use repository B instead of A (e.g. comp=comp.pre).
-##H  -t TAG         When checking out configuration from SITECONF, use TAG.
+##H  -C ROOT DIR    SVN check out configuration from ROOT/[TAG]/DIR.
+##H  -t TAG         SVN check out configuration from using TAG (e.g. tags/foo).
 ##H  -d SCRIPT-DIR  Look for service installation scripts in SCRIPT-DIR.
 ##H  -h             Display this help.
 ##H
@@ -27,11 +28,13 @@ MIGRATION=
 repoedit=n
 arch=slc5_amd64_gcc434
 now=$(date +%Y%m%d%H%M%S)
-configtag=CMSWEB_CONFIG_PROD
 host=$(hostname -s)
 stages="prep sw post"
 nogroups=true
 servicedirs="$(cd $(dirname $0) && pwd) $PWD"
+cfgroot=http://svnweb.cern.ch/guest/CMSDMWM/Infrastructure
+cfgsubdir=Deployment
+cfgtag=tags/CMSWEB_CONFIG_PROD
 
 while [ $# -ge 1 ]; do
   case $1 in
@@ -39,7 +42,8 @@ while [ $# -ge 1 ]; do
     -a ) nogroups=false; shift ;;
     -r ) repoedit="s/${2%=*}/${2#*=}/; $repoedit"; shift; shift ;;
     -s ) stages="$2"; shift; shift ;;
-    -t ) configtag="$2"; shift; shift ;;
+    -C ) cfgroot="$2" cfgsubdir="$3"; shift; shift; shift ;;
+    -t ) cfgtag="$2"; shift; shift ;;
     -d ) servicedirs="$servicedirs $2"; shift; shift ;;
     -h ) perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0 1>&2; exit 1 ;;
     -* ) echo "$0: unrecognised option $1, use -h for help" 1>&2; exit 1 ;;
@@ -181,15 +185,15 @@ deploy()
   if [ X$did = X ]; then
     local dir
     for dir in $servicedirs; do
-      if [ -f $dir/Deploy$1 ]; then
+      if [ -f $dir/$1/deploy ]; then
 	found=true
-        . $dir/Deploy$1
+        . $dir/$1/deploy
         break
       fi
     done
 
     if $found; then :; else
-      note "ERROR: don't know how to deploy $1 - missing Deploy$1 in $servicedirs?"
+      note "ERROR: don't know how to deploy $1 - missing $1/deploy in $servicedirs?"
       exit 4
     fi
 
@@ -253,7 +257,7 @@ deploy_pkg()
     else
       :
     fi
-    cvs -Q co -d config -r $configtag COMP/SITECONF/T1_CH_CERN/$cfg
+    svn -q co $cfg $cfgroot/$cfgtag/$cfgsubdir config
     setgroup -R ug+r,go-w _config config
   fi
 }
