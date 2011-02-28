@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_couchdb_offsite_deps()
+{
+  true
+}
+
+deploy_couchdb_offsite_prep()
+{
+  mkproj couchdb database logs backup compaction replication stagingarea config
+  setgroup ug+rw,o-w _couchdb $PWD/{database,logs,backup,compaction,replication,stagingarea}
+}
+
+deploy_couchdb_offsite_sw()
+{
+  deploy_pkg  -d couchdb -l app  comp external+couchdb 1.0.1-cmp3
+}
+
+deploy_couchdb_offsite_post()
+{
+  true
+}
