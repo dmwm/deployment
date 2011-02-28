@@ -6,26 +6,29 @@ deploy_admin_deps()
 
 deploy_admin_prep()
 {
-  mkproj admin logs
-  $MIGRATION rm -f logs/_*
+  mkproj
 }
 
 deploy_admin_sw()
 {
-  deploy_pkg -d admin -l app -c CMSWEB comp external+rotatelogs 2.2.14-cmp
-  (echo ". $root/projects/backend/app/etc/profile.d/init.sh"
-   echo ". $root/projects/admin/app/etc/profile.d/init.sh") > init.sh
+  deploy_pkg -a proxy/.turd comp external+rotatelogs 2.2.14-cmp
+  (echo ". $root/current/apps/rotatelogs/etc/profile.d/init.sh"
+   echo ". $root/current/apps/pystack/etc/profile.d/init.sh") \
+   > $project_config/init.sh
+  setgroup u+rw,go-w _config $project_config/init.sh
 }
 
 deploy_admin_post()
 {
-  cd $root/projects/admin
-  $PWD/config/ProxyRenew $root/projects/conf/certs cmsweb_backends cms
-  (crontab -l | { fgrep -v -e $PWD/ || true; }
-   echo "@reboot . $PWD/init.sh && $PWD/config/ServerMonitor -r"
-   echo "*/6 * * * * . $PWD/init.sh && $PWD/config/ServerMonitor -q -v"
-   echo "37 */8 * * * . $PWD/init.sh && $PWD/config/ServerMonitor -q -r"
-   echo "58 2 * * * $PWD/config/LogArchive $root"
-   echo "3 */3 * * * $PWD/config/ProxyRenew $root/projects/conf/certs cmsweb_backends cms") |
+  (mkcrontab
+   echo "@reboot . $project_config/init.sh && $project_config/ServerMonitor -r"
+   echo "*/6 * * * * . $project_config/init.sh && $project_config/ServerMonitor -q -v"
+   echo "37 */8 * * * . $project_config/init.sh && $project_config/ServerMonitor -q -r"
+   echo "3 */3 * * * $project_config/ProxyRenew $root/certs $root/current/auth/proxy cmsweb_backends cms"
+   echo "58 2 * * * $project_config/LogArchive $root") |
    crontab -
+
+  if [ $(ls $root/current/auth/proxy/PX* 2>/dev/null | wc -l) = 0 ]; then :; else
+    crontab -l | grep $project_config/ProxyRenew | sed 's|^[0-9*/ ]* ||' | sh -x
+  fi
 }

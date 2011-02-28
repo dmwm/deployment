@@ -12,28 +12,22 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # Use export if you really need this!
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="Phedex-WEB"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/PhedexOperationsWebSite#WebStart"
 PHEDEX_PATTERN="/httpd -f .*/apache2/conf/apache2.conf"
 GRAPHS_PATTERN="phedex-graphs"
-
-# I want the same script to be used for both PHEDEX-web and PHEDEX-webapp, so I do this to find out
-# which I have installed. Preference goes to phedex-web, which includes the graph-server
-PROJECT_ROOT=$(dirname $(dirname $(dirname $0)))
-PROJECT_DIR=/no/such/place
-if [ -d $PROJECT_ROOT/phedex-web ]; then
-  PROJECT_DIR=$PROJECT_ROOT/phedex-web
-elif [ -d $PROJECT_ROOT/phedex-webapp ]; then
-  PROJECT_DIR=$PROJECT_ROOT/phedex-webapp
-fi
-if [ ! -d $PROJECT_DIR ]; then
-  echo "Cannot find project directory under $PROJECT_ROOT"
-  exit 1
-fi
-PHEDEX_GRAPHS=srv/bin/cmsweb_phedex_graphs
-
-cd $PROJECT_DIR
-export MPLCONFIGDIR=$PWD/logs
+PHEDEX_GRAPHS=$ROOT/apps/PHEDEX-web/bin/cmsweb_phedex_graphs
+for app in PHEDEX-{datasvc,web,webapp}; do
+  [ -d $ROOT/apps/$app/etc/profile.d ] &&
+    . $ROOT/apps/$app/etc/profile.d/init.sh
+done
+export MPLCONFIGDIR=$STATEDIR
 
 #######################################################
 # Function for the main actions.
@@ -50,14 +44,15 @@ function sysboot {
 
 # Function which is used to start the service
 function start {
+  cd $STATEDIR
   echo "Starting the $SERVICE_TITLE"
   apache2/etc/init.d/httpd start </dev/null 2>&1
-  [ -f $PHEDEX_GRAPHS ] && $PHEDEX_GRAPHS start </dev/null 2>&1
+  [ -f $ROOT/enabled/phedex-web ] && $PHEDEX_GRAPHS start </dev/null 2>&1
 }
 
 # Stopping the graphs service
 function kill_graphs {
-  [ -f $PHEDEX_GRAPHS ] || return
+  [ -f $ROOT/enabled/phedex-web ] || return
   $PHEDEX_GRAPHS stop
 
   # Sometimes it could be that default way to stop graphs fails, so we will kill it in other way
@@ -78,6 +73,7 @@ function stop {
 
 # function to restart the graphs service independently
 function restart_graphs {
+  cd $STATEDIR
   [ -f $PHEDEX_GRAPHS ] || return
   kill_graphs
   $PHEDEX_GRAPHS start </dev/null 2>&1
@@ -93,7 +89,7 @@ function status {
 # Function to do graceful restart
 function graceful {
   echo "Restarting gracefully the $SERVICE_TITLE"
-  $PROJECT_DIR/apache2/etc/init.d/httpd graceful
+  $STATEDIR/apache2/etc/init.d/httpd graceful
 }
 
 #######################################################

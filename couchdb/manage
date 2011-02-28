@@ -5,53 +5,41 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 #######################################################
 # Global configuration and environment setup
 #######################################################
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+KEYFILE=$ROOT/auth/$ME/hmackey.ini
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/CouchDB#Starting_the_service"
-PROJ_DIR=$(dirname $(dirname $0))
-cd $PROJ_DIR
-. app/etc/profile.d/init.sh
-HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
-
-#######################################################
-# Setting the variables which depends on the hostname
-# Hostnames are cmsweb cluster nodes
-#######################################################
-
-case $HOST in
-  vocms53 | vocms50 | vocms106 | vocms107)
-    KEYFILE=/data/projects/conf/couchdb/hmackey-prod.ini;;
-  vocms51)
-    KEYFILE=/data/projects/conf/couchdb/hmackey-preprod.ini;;
-  vocms109)
-    KEYFILE=/data/projects/conf/couchdb/hmackey-dev.ini;;
-  *)
-    KEYFILE=$PROJ_DIR/config/local.ini;;
-esac
-
+. $ROOT/apps/$ME/etc/profile.d/init.sh
 
 #######################################################
 # Actions definition
 #######################################################
 # Function to start the service conditionally on crond restart
 function sysboot {
-  if couchdb -p $PROJ_DIR/logs/couchdb.pid -s; then :; else
+  if couchdb -p $STATEDIR/couchdb.pid -s; then :; else
     start
   fi
 }
 
 # Function to start the service
 start() {
-  couchdb -A $PROJ_DIR/config/ -a $KEYFILE -b \
-    -o $PROJ_DIR/logs/$(date +%Y%m%d-%H%M%S).stdout \
-    -e $PROJ_DIR/logs/$(date +%Y%m%d-%H%M%S).stderr \
-    -p $PROJ_DIR/logs/couchdb.pid </dev/null >/dev/null 2>&1
+  cd $STATEDIR
+  couchdb -A $CFGDIR/ -a $KEYFILE -b \
+    -o $LOGDIR/$(date +%Y%m%d-%H%M%S).stdout \
+    -e $LOGDIR/$(date +%Y%m%d-%H%M%S).stderr \
+    -p $STATEDIR/couchdb.pid </dev/null >/dev/null 2>&1
 }
 
 stop() {
-  couchdb -d -p $PROJ_DIR/logs/couchdb.pid
+  couchdb -d -p $STATEDIR/couchdb.pid
 }
 
 status() {
-  couchdb -p $PROJ_DIR/logs/couchdb.pid -s
+  couchdb -p $STATEDIR/couchdb.pid -s
 
   curl -s localhost:5984 | grep -q '{"couchdb":"Welcome","version":"1.0.1"}' ||
     { echo "CouchDB is not correctly responding to requests"; return; }
@@ -74,7 +62,7 @@ clean_views() {
 }
 
 push_apps() {
-  for APP in $PROJ_DIR/stagingarea/*; do
+  for APP in $STATEDIR/stagingarea/*; do
     [ -f $APP ] || continue
     . $APP
     for DB in $(egrep -o '5984/.*$' $APP | cut -d/ -f2); do

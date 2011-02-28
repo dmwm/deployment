@@ -2,23 +2,30 @@
 deploy_couchdb_deps()
 {
   deploy backend
+  deploy wmcore-auth
 }
 
 deploy_couchdb_prep()
 {
-  mkproj couchdb database logs backup compaction replication stagingarea
-  setgroup ug+rw,o-w _couchdb $PWD/{database,logs,backup,compaction,replication,stagingarea}
+  mkproj database backup compaction replication stagingarea
 }
 
 deploy_couchdb_sw()
 {
-  deploy_pkg -d couchdb -l app -c CouchDB comp external+couchdb 1.0.1-cmp4
-  perl -p -i -e "s{/data/projects}{$root/projects}g" config/local.ini
+  deploy_pkg -a couchdb/hmackey.ini comp external+couchdb 1.0.1-cmp4
+  perl -p -i -e "s{/data}{$root}g" $project_config/local.ini
 }
 
 deploy_couchdb_post()
 {
-  cd $root/projects/couchdb
-  (crontab -l | { fgrep -v -e $PWD/ || true; };
-   sysboot _couchdb) | crontab -
+  case $host in vocms10[67] | vocms50 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}
+
+deploy_couchdb_auth()
+{
+  perl -e \
+    'undef $/; print "[couch_cms_auth]\n";
+     print "hmac_secret = ", unpack("h*", <STDIN>), "\n"' < \
+    $root/current/auth/wmcore-auth/header-auth-key
 }

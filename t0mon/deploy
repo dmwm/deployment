@@ -6,18 +6,16 @@ deploy_t0mon_deps()
 
 deploy_t0mon_prep()
 {
-  mkproj t0mon var logs
-  setgroup ug+rw,o-w _t0mon $PWD/{var,logs}
+  mkproj var
 }
 
 deploy_t0mon_sw()
 {
-  deploy_pkg -d t0mon -l app -c Tier0 comp cms+T0Mon 4.2.6c
+  deploy_pkg comp cms+T0Mon 4.2.6c
 }
 
 deploy_t0mon_post()
 {
-  cd $root/projects/t0mon
-  (crontab -l | { fgrep -v -e $PWD/ || true; }
-   sysboot _t0mon) | crontab -
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
 }

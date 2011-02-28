@@ -11,24 +11,19 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # If need a new variable, it must be defined here.
 # Use export if you really need this!
 #######################################################
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="DBS Discovery"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/DBS2_discovery#Start_Stop_Restart_Data_Discover"
-HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
-
-#######################################################
-# Sourcing the environment and usefull things
-#######################################################
-
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
-LOGDIR=$PWD/logs
-
-# define authentication security.ini location
-export SEC_MOD_INI=/data/projects/conf/sitedb/security.ini
-
-port=$(cat $PWD/config/DBSDD.conf | grep -i "port=" | tail -1 | sed "s/PORT=//g")
-url=$(cat $PWD/config/DBSDD.conf  | grep -i "^URL=" | tail -1 | sed "s/URL=//g")
-pidfile=$(cat $PWD/config/DBSDD.conf | grep -i "pidfile=" | tail -1 | sed "s/PIDFILE=//g")
+. $ROOT/apps/dbs-web/etc/profile.d/init.sh
+export SEC_MOD_INI=$ROOT/auth/sitedb/security.ini
+port=$(cat $CFGDIR/DBSDD.conf | grep -i "port=" | tail -1 | sed "s/PORT=//g")
+url=$(cat $CFGDIR/DBSDD.conf  | grep -i "^URL=" | tail -1 | sed "s/URL=//g")
+pidfile=$(cat $CFGDIR/DBSDD.conf | grep -i "pidfile=" | tail -1 | sed "s/PIDFILE=//g")
 cmd="cmsWeb --base-url=$url --port=$port --default-page /DDServer --pid-file $pidfile"
 
 #######################################################

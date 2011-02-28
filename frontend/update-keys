@@ -31,7 +31,7 @@ sub init()
     exit(2);
   }
 
-  $keydir = "$srvdir/apache2/etc/keys";
+  $keydir = "$srvdir/etc/keys";
   if (! -d $keydir)
   {
     print STDERR "$keydir: no such directory\n";
@@ -99,10 +99,10 @@ sub sync_keys()
 # Restart all web servers.
 sub restart_servers()
 {
-  system("sudo $srvdir/apache2/etc/httpd graceful");
+  system("sudo $srvdir/etc/httpd graceful");
   foreach my $host (@hosts)
   {
-    system("ssh $host sudo $srvdir/apache2/etc/httpd graceful");
+    system("ssh $host sudo $srvdir/etc/httpd graceful");
   }
 }
 

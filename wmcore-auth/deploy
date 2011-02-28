@@ -1,28 +1,32 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_wmcore_auth_deps()
-{
-  deploy backend
-}
-
 deploy_wmcore_auth_prep()
 {
-  keydir=$root/projects/conf/wmcore
-  case $host:$root in
-    vocms65:/data | vocms105:/data | \
-    vocms106:/data | vocms107:/data | \
-    vocms50:/data | vocms53:/data )
-      rm -f $keydir/header-auth-key
-      ln -s header-auth-key-prod $keydir/header-auth-key ;;
-    vocms108:/data | vocms51:/data )
-      rm -f $keydir/header-auth-key
-      ln -s header-auth-key-preprod $keydir/header-auth-key ;;
-    vocms109:/data )
-      rm -f $keydir/header-auth-key
-      ln -s header-auth-key-dev $keydir/header-auth-key ;;
-    * )
-      [ -f $keydir/header-auth-key ] ||
-        dd if=/dev/urandom of=$keydir/header-auth-key bs=20 count=1 ;;
-  esac
+  mkproj -l -s
+}
 
-  setgroup -R ug+r,g-w,o-rwx _config $root/projects/conf/wmcore
+deploy_wmcore_auth_sw()
+{
+  [ X"$privauthdir" = X ] || rm -f $project_auth/header-auth-key
+  deploy_pkg -a wmcore-auth/header-auth-key
+}
+
+deploy_wmcore_auth_auth()
+{
+  if [ X"$privauthdir" = X ] || [ $(ls $privauthdir/wmcore/*-key* 2>/dev/null | wc -l) = 0 ]; then
+    perl -e 'open(R, "< /dev/urandom") or die; sysread(R, $key, 20) or die; print $key'
+  else
+    case $host in
+      vocms65 | vocms105 | vocms106 | vocms107 | vocms50 | vocms53 )
+        cat $privauthdir/wmcore/header-auth-key-prod ;;
+      vocms108 | vocms51 )
+        cat $privauthdir/wmcore/header-auth-key-preprod ;;
+      * )
+        cat $privauthdir/wmcore/header-auth-key-dev ;;
+    esac
+  fi
+}
+
+deploy_wmcore_auth_post()
+{
+  disable;
 }

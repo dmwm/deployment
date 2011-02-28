@@ -13,7 +13,7 @@ config.cache_server.log_screen = True
 config.cache_server.queue_limit = 100
 config.cache_server.logfile = ''
 config.cache_server.port = 8211
-config.cache_server.pid = '/data/projects/das/logs/das_cache_server.pid'
+config.cache_server.pid = '/data/state/das/das_cache_server.pid'
 
 # web_server configuration
 config.component_('web_server')
@@ -26,7 +26,7 @@ config.web_server.log_screen = True
 config.web_server.url_base = '/das'
 config.web_server.logfile = ''
 config.web_server.port = 8212
-config.web_server.pid = '/data/projects/das/logs/das_web_server.pid'
+config.web_server.pid = '/data/state/das/das_web_server.pid'
 
 # mongodb configuration
 config.component_('mongodb')
@@ -70,6 +70,6 @@ config.component_('das')
 config.das.logformat = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 config.das.logfile = ''
 config.das.verbose = 0
-config.das.parserdir = '/data/projects/das/logs' # area should be owned by _das account
+config.das.parserdir = '/data/state/das' # area should be owned by _das account
 config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','google_maps','postalcode','ip_service']
 

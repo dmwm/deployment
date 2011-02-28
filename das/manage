@@ -11,29 +11,29 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # Use export if you really need this!
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="DAS"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation"
-HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+cd $STATEDIR
 
-#######################################################
-# Sourcing environment requirements
-#######################################################
-
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
-export DAS_ROOT
-export YUI_ROOT
+export DAS_ROOT YUI_ROOT
 export PYTHONUNBUFFERED=1
 export DAS_PYTHONPATH=$DAS_ROOT/lib/python2.6/site-packages
 export DAS_JSPATH=$DAS_ROOT/lib/python2.6/site-packages/src/js
 export DAS_CSSPATH=$DAS_ROOT/lib/python2.6/site-packages/src/css
 export DAS_TMPLPATH=$DAS_ROOT/lib/python2.6/site-packages/src/templates
 export DAS_IMAGESPATH=$DAS_ROOT/lib/python2.6/site-packages/src/images
-export X509_USER_PROXY=$PWD/proxy/proxy.cert
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
-export DAS_CONFIG=$PWD/config/das_cms.py
-export DAS_ANALYTICS=$PWD/config/analytics_cfg.py
+export DAS_CONFIG=$CFGDIR/das_cms.py
+export DAS_ANALYTICS=$CFGDIR/analytics_cfg.py
 
 #######################################################
 # Function for the main actions.
@@ -60,14 +60,14 @@ function start {
   echo "Starting the $SERVICE_TITLE"
   for pat in cache web; do
     python -u $DAS_PYTHONPATH/DAS/web/das_server.py --server=$pat \
-       </dev/null 2>&1 | rotatelogs logs/das-$pat-%Y%m%d.log 86400 >/dev/null 2>&1 &
+       </dev/null 2>&1 | rotatelogs $LOGDIR/das-$pat-%Y%m%d.log 86400 >/dev/null 2>&1 &
   done
 }
 
 function start_analytics {
   echo "Starting the $SERVICE_TITLE analytics"
   python -u $DAS_PYTHONPATH/DAS/analytics/analytics_controller.py $DAS_ANALYTICS \
-       </dev/null 2>&1 | rotatelogs logs/das-analytics-%Y%m%d.log 86400 >/dev/null 2>&1 &
+       </dev/null 2>&1 | rotatelogs $LOGDIR/das-analytics-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Function which is used to stop the service

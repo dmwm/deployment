@@ -2,22 +2,26 @@
 deploy_t0datasvc_deps()
 {
   deploy backend
+  deploy wmcore-auth
 }
 
 deploy_t0datasvc_prep()
 {
-  mkproj t0datasvc var logs
-  setgroup ug+rw,o-w _t0datasvc $PWD/{var,logs}
+  mkproj var
 }
 
 deploy_t0datasvc_sw()
 {
-  deploy_pkg -d t0datasvc -l app -c T0DataSvc comp cms+T0DataSvc 5.0.0
+  deploy_pkg -a t0datasvc/connect comp cms+T0DataSvc 5.0.0
 }
 
 deploy_t0datasvc_post()
 {
-  cd $root/projects/t0datasvc
-  (crontab -l | { fgrep -v -e $PWD/ || true; }
-   sysboot _t0datasvc) | crontab -
+  case $host in * ) enable ;; esac
+  (mkcrontab -l; sysboot) | crontab -
+}
+
+deploy_t0datasvc_auth()
+{
+  echo "oracle://FOO:BAR@ZOINKS:1521"
 }

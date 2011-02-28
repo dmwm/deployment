@@ -12,15 +12,18 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # Use export if you really need this!
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="Base"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/WebtolsBase#Running_a_webtools_base_service"
 HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
+. $ROOT/apps/webtools-base/etc/profile.d/init.sh
+export SEC_MOD_INI=$ROOT/auth/sitedb/security.ini
 export YUI_ROOT
-
-# define authentication security.ini location
-export SEC_MOD_INI=/data/projects/conf/sitedb/security.ini
 
 #######################################################
 # Setting the variables which depends on the hostname
@@ -35,10 +38,7 @@ case $HOST in
     NODE=https://vocms108.cern.ch
     ;;
   vocms109)
-    NODE=https://vocms109.cern.ch
-    ;;
-  *)
-    NODE=http://localhost
+    NODE=https://$HOST.cern.ch
     ;;
 esac
 
@@ -57,10 +57,11 @@ function sysboot {
 
 # Function to start the service
 function start {
+  cd $STATEDIR
   echo "Starting the $SERVICE_TITLE"
-  cmsWeb --pid-file logs/pid.txt --base-url $NODE/base -p 7999 \
+  cmsWeb --pid-file $STATEDIR/pid.txt --base-url $NODE/base -p 7999 \
     --default-page /WSServer/ --log-level 100 \
-    </dev/null 2>&1 | rotatelogs logs/base-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    </dev/null 2>&1 | rotatelogs $LOGDIR/base-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Function to stop the service

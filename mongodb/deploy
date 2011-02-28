@@ -6,19 +6,16 @@ deploy_mongodb_deps()
 
 deploy_mongodb_prep()
 {
-  mkproj mongodb logs stagingarea $root/das/db
-  setgroup ug+rw,o-w _mongodb $PWD/{logs,stagingarea} $root/das/db
+  mkproj stagingarea db
 }
 
 deploy_mongodb_sw()
 {
-  deploy_pkg -d mongodb -l app -c MongoDB comp external+mongo 1.6.5
-  perl -p -i -e "s{/data/projects}{$root/projects}g" config/manage
+  deploy_pkg comp external+mongo 1.6.5
 }
 
 deploy_mongodb_post()
 {
-  cd $root/projects/mongodb
-  (crontab -l | { fgrep -v -e $PWD/ || true; };
-   sysboot _mongodb) | crontab -
+  case $host in vocms10[67] | vocms50 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
 }

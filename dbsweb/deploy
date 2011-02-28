@@ -6,24 +6,24 @@ deploy_dbsweb_deps()
 
 deploy_dbsweb_prep()
 {
-  mkproj dbsweb logs
-  setgroup ug+rw,o-w _dbsweb $PWD/logs
+  mkproj
 }
 
 deploy_dbsweb_sw()
 {
-  deploy_pkg -d dbsweb -l app -c DBSWeb comp cms+dbs-web V06_00_47
-  perl -p -i -e 's{os\.chmod}{#os.chmod}g' app/lib/python2.6/site-packages/utils/DDConfig.py
-  perl -p -i -e "s{/data/projects/}{$root/projects/}g" config/DBSDD.conf config/manage
-  setgroup ug+r,g-w,o-rwx _config config/DBSDD.conf
-  chmod g-w,o-rwx config/DBSDD.conf
+  app=$root/current/apps/dbs-web
+  deploy_pkg comp cms+dbs-web V06_00_47
+  perl -p -i -e 's{os\.chmod}{#os.chmod}g' $app/lib/python2.6/site-packages/utils/DDConfig.py
+  perl -p -i -e "s{/data/}{$root/}g" $project_config/DBSDD.conf
+  setgroup ug+r,g-w,o-rwx _config $project_config/DBSDD.conf
+  chmod g-w,o-rwx $project_config/DBSDD.conf
 
-  for f in app/lib/python*/site-packages; do
+  for f in $app/lib/python*/site-packages; do
     [ -f $f/DBSDD.conf ] || continue
-    ln -sf $PWD/config/DBSDD.conf $f/DBSDD.conf
+    ln -sf $project_config/DBSDD.conf $f/DBSDD.conf
   done
 
-  cd app
+  cd $app
   (. etc/profile.d/init.sh
    cd lib/python*/site-packages
    rm -f YUI yui WEBTOOLS
@@ -36,7 +36,6 @@ deploy_dbsweb_sw()
 
 deploy_dbsweb_post()
 {
-  cd $root/projects/dbsweb
-  (crontab -l | { fgrep -v -e $PWD/ || true; };
-   sysboot _dbsweb) | crontab -
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
 }

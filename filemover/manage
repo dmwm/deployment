@@ -9,33 +9,24 @@
 # Use export if you really need this!
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="FileMover"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/FileMover#Starting_the_Service"
-HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
+. $ROOT/apps/$ME/etc/profile.d/init.sh
 
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
-export FILEMOVER_ROOT
-export YUI_ROOT
-export X509_USER_PROXY=$PWD/proxy/proxy.cert
-export X509_USER_CERT=$PWD/proxy/proxy.cert
-export X509_USER_KEY=$PWD/proxy/proxy.cert
-FILEMOVER_CONFIG=$PWD/config/fm_config.py
+export FILEMOVER_ROOT YUI_ROOT
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$STATEDIR/proxy/proxy.cert
+export X509_USER_KEY=$STATEDIR/proxy/proxy.cert
+FILEMOVER_CONFIG=$CFGDIR/fm_config.py
 
-# define security.ini location
-export SEC_MOD_INI=/data/projects/conf/sitedb/security.ini
-
-#######################################################
-# Setting the variables which depends on the hostname
-# Hostnames are cmsweb cluster nodes
-#######################################################
-
-case $HOST in
-  * )
-    port=8201 url="/filemover/"
-    cmd="$WMCORE_ROOT/lib/python2.6/site-packages/WMCore/WebTools/Root.py --ini=$FILEMOVER_CONFIG"
-    ;;
-esac
+port=8201 url="/filemover/"
+cmd="$WMCORE_ROOT/lib/python2.6/site-packages/WMCore/WebTools/Root.py --ini=$FILEMOVER_CONFIG"
 
 #######################################################
 #  Function for the main actions.
@@ -52,8 +43,9 @@ function sysboot {
 
 # Function to start the service
 function start {
+  cd $STATEDIR
   echo "Starting the $SERVICE_TITLE"
-  nohup ${cmd} </dev/null 2>&1 | rotatelogs logs/filemover-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  nohup ${cmd} </dev/null 2>&1 | rotatelogs $LOGDIR/filemover-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Function to stop the service

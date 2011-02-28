@@ -12,11 +12,16 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # Use export if you really need this!
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="T0Mon"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/T0Mon#Starting_the_Service"
 PROJ_CONFIG_FILE="T0MonConfig.py"
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
+. $ROOT/apps/T0Mon/etc/profile.d/init.sh
 export T0MON_ROOT
 
 #######################################################
@@ -34,14 +39,15 @@ function sysboot {
 
 # Function to start the service
 function start {
+  cd $STATEDIR
   echo "Starting the $SERVICE_TITLE"
   # remove refreshing lock file if it exists
   if [ -e var/Mott0Refreshing ]; then
       echo "Removing stale lock file"
       rm -f var/Mott0Refreshing
   fi
-  python $WMCORE_ROOT/src/python/WMCore/WebTools/Root.py --ini=config/$PROJ_CONFIG_FILE \
-    </dev/null 2>&1 | rotatelogs logs/T0Mon-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  python $WMCORE_ROOT/src/python/WMCore/WebTools/Root.py --ini=$CFGDIR/$PROJ_CONFIG_FILE \
+    </dev/null 2>&1 | rotatelogs $LOGDIR/T0Mon-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Function to stop the service

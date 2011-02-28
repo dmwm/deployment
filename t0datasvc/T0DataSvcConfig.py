@@ -3,9 +3,8 @@ from WMCore.WMBase import getWMBASE
 import cherrypy
 
 # Get the connection string
-theFile = open( "../conf/t0datasvc/connect", "r" )
-connectURL = theFile.read()
-theFile.close()
+theFile = "%s/auth/t0datasvc/connect" % __file__.rsplit('/', 3)[0]
+connectURL = open(theFile).read()
 
 ###############################DAS
 cherrypy.config.update({'environment': 'embedded'})
@@ -13,7 +12,7 @@ cherrypy.config.update({'environment': 'embedded'})
 ##########################################3
 config = Configuration()
 config.component_('SecurityModule')
-config.SecurityModule.key_file = "../conf/wmcore/header-auth-key"
+config.SecurityModule.key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 
 config.component_('Webtools')
 config.Webtools.port = 8304

@@ -23,8 +23,7 @@ config.Webtools.port = 8300
 config.Webtools.host = '0.0.0.0'
 
 config.component_('SecurityModule')
-config.SecurityModule.key_file = "../conf/wmcore/header-auth-key"
-
+config.SecurityModule.key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 
 config.Webtools.application = 'T0MonApplication'
 

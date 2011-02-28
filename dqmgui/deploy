@@ -2,17 +2,20 @@
 deploy_dqmgui_deps()
 {
   deploy backend
+  deploy admin
 }
 
 deploy_dqmgui_prep()
 {
-  mkproj dqmgui logarch gui repository
-  setgroup ug+rw,o-w _dqmgui $PWD/{gui,repository}
+  mkproj gui repository
 }
 
 deploy_dqmgui_sw()
 {
-  deploy_pkg -d dqmgui -f -l app comp cms+dqmgui 5.3.2
+  export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW
+  deploy_pkg comp cms+dqmgui 5.3.2
+
+  cd $project_config
   cvs -Q co -d config -r OFFLINE_CONFIG_PRODUCTION CMSSW/DQM/Integration/config
   cvs -Q co -d style -r OFFLINE_CONFIG_PRODUCTION CMSSW/DQM/RenderPlugins/src
   setgroup -R ug+r,go-w _config config style
@@ -20,7 +23,6 @@ deploy_dqmgui_sw()
 
 deploy_dqmgui_post()
 {
-  cd $root/projects/dqmgui
-  (crontab -l | { fgrep -v -e $PWD/ || true; }
-   sysboot _dqmgui; echo "17 2 * * * $PWD/config/daily") | crontab -
+  case $host in vocms10[67] | vocms5[03] ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot; echo "17 2 * * * $project_config/daily") | crontab -
 }

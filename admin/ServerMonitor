@@ -309,19 +309,19 @@ class MonitorDaemon:
   for errors and pinging server URLs. It runs a number of utility
   monitor processes to do all this in parallel, collecting their
   output to a single auto-rotated feed for scanning by lemon."""
-  def __init__(self, rootdir, statedir):
+  def __init__(self, rootdir, statedir, feeddir):
     """Initialise the monitor daemon.
 
     @param rootdir -- root directory where to find all services
-    @param statedir -- directory for maintaining daemon state."""
+    @param statedir -- directory for maintaining daemon state
+    @param feeddir -- directory for maintaing daemon logs."""
     self.rootdir = rootdir
     self.statedir = statedir
-    self.logfiles = "%s/*.log" % statedir
-    self.lemonfeed = "%s/feed.lemon" % statedir
-    self.pidfile = "%s/monitor.pid" % self.statedir
-    self.logfile = ["rotatelogs",
-		    "%s/server-monitor-%%Y%%m%%d.log" % self.statedir,
-		    "86400"]
+    self.feeddir = feeddir
+    self.logfiles = "%s/*.log" % feeddir
+    self.lemonfeed = "%s/feed.lemon" % feeddir
+    self.pidfile = "%s/monitor.pid" % statedir
+    self.logfile = ["rotatelogs", "%s/server-monitor-%%Y%%m%%d.log" % feeddir, "86400"]
 
   def daemon_pid(self):
     """Check if there is a daemon running, and if so return its pid.
@@ -499,7 +499,7 @@ class MonitorDaemon:
     qltask = Queue()
     queues = [qptask, qltask, qutask]
     mon = [[ProcessMonitor(qptask)],
-           [LogFileMonitor(qltask, self.statedir)],
+           [LogFileMonitor(qltask, self.feeddir)],
            [URLMonitor(qutask) for i in xrange(0, 10)]]
 
     # Install signal handlers to drain processing on termination.
@@ -538,20 +538,21 @@ class MonitorDaemon:
 
       # Reload any updated configuration files.
       oldconfigs = cfgs.keys()
-      for cfgfile in glob("%s/*/config/monitoring*.ini" % self.rootdir):
+      for cfgfile in glob("%s/current/config/*/monitoring*.ini" % self.rootdir):
         if cfgfile in oldconfigs:
           oldconfigs.remove(cfgfile)
         st = os.stat(cfgfile)
         if cfgfile in cfgs:
 	  s = cfgs[cfgfile]
         else:
+	  app = cfgfile.rsplit("/", 2)[1]
           s = cfgs[cfgfile] = FileState()
           m = re.match(r".*/monitoring-(.*)\.ini$", cfgfile)
           if m:
             s.svcname = m.group(1)
           else:
-            s.svcname = cfgfile.rsplit("/", 3)[1]
-          s.log_dir = cfgfile.rsplit("/", 2)[0] + "/logs"
+            s.svcname = app
+          s.log_dir = "%s/logs/%s" % (self.rootdir, app)
           s.log_files = []
           s.log_regex = None
           s.ps_regex = None
@@ -606,19 +607,19 @@ if __name__ == "__main__":
     os.environ['PYTHONUNBUFFERED'] = "1"
     os.execvp("python", ["python", "-u"] + sys.argv)
 
-  # Find root and state directory locations.
-  rootdir = __file__.rsplit('/', 3)[0]
-  statedir = __file__.rsplit('/', 2)[0] + "/logs"
-  if not os.path.isdir("%s/conf" % rootdir):
-    print >> sys.stderr, "%s: does not seem to be the right place" % rootdir
-  if not os.path.isdir(statedir) or not os.access(statedir, os.W_OK):
-    print >> sys.stderr, "%s: not a writeable directory" % statedir
-
-  # Create monitor object for these locations.
-  monitor = MonitorDaemon(rootdir, statedir)
+  appname = __file__.rsplit('/', 2)[1]
+  rootdir = __file__.rsplit('/', 4)[0]
+  statedir = "%s/state/%s" % (rootdir, appname)
+  feeddir = "%s/logs/%s" % (rootdir, appname)
 
   # See what it is we want to do.
   opt = OptionParser()
+  opt.add_option("-C", "--root", dest="rootdir", metavar="DIR", default=rootdir,
+                 help="find app logs under DIR")
+  opt.add_option("-S", "--state", dest="statedir", metavar="DIR", default=statedir,
+                 help="store state under DIR")
+  opt.add_option("-F", "--feed", dest="feeddir", metavar="DIR", default=feeddir,
+                 help="store feed under DIR")
   opt.add_option("-q", "--quiet", action="store_true", dest="quiet", default=False,
                  help="be quiet, don't print unnecessary output")
   opt.add_option("-v", "--verify", action="store_true", dest="verify", default=False,
@@ -632,6 +633,31 @@ if __name__ == "__main__":
   opt.add_option("-l", "--log", dest="logfile", metavar="DEST", default=None,
                  help="log to DEST, via pipe if DEST begins with '|', otherwise a file")
   opts, args = opt.parse_args()
+
+  # Find root and state dirs.
+  if not opts.rootdir \
+     or not os.path.isdir(opts.rootdir) \
+     or not os.path.isdir("%s/logs" % opts.rootdir):
+    print >> sys.stderr, sys.argv[0], \
+       ": could not locate root directory, use --root (tried %s)" % opts.rootdir
+    sys.exit(1)
+
+  if not opts.statedir \
+     or not os.path.isdir(opts.statedir) \
+     or not os.access(opts.statedir, os.W_OK):
+    print >> sys.stderr, sys.argv[0], \
+      ": could not locate state directory, use --state (tried %s)" % opts.statedir
+    sys.exit(1)
+
+  if not opts.feeddir \
+     or not os.path.isdir(opts.feeddir) \
+     or not os.access(opts.feeddir, os.W_OK):
+    print >> sys.stderr, sys.argv[0], \
+      ": could not locate log directory, use --feed (tried %s)" % opts.feeddir
+    sys.exit(1)
+
+  # Create monitor object for these locations.
+  monitor = MonitorDaemon(opts.rootdir, opts.statedir, opts.feeddir)
 
   # Now actually execute the task.
   if opts.status:

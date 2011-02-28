@@ -23,7 +23,7 @@ elif re.match(r"^vocms51\.cern\.ch$", HOST):
 
 config = Configuration()
 config.component_('SecurityModule')
-config.SecurityModule.key_file = "/data/projects/conf/wmcore/header-auth-key-preprod"
+config.SecurityModule.key_file = "/data/current/auth/wmcore-auth/header-auth-key"
 
 config.section_("CoreDatabase")
 config.CoreDatabase.connectUrl = connectUrl

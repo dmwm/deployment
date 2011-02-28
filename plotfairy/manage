@@ -5,12 +5,17 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 #######################################################
 # Global configuration and environment setup
 #######################################################
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="PlotFairy"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/PlotFairy#Starting_the_service"
 PROJ_CONFIG_FILE="plotfairy-conf.py"
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
-export MPLCONFIGDIR=$PWD/logs
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+export MPLCONFIGDIR=$STATEDIR
 
 #######################################################
 #  Function for the main actions.
@@ -27,10 +32,11 @@ function sysboot {
 
 # Function to start the service
 function start {
+  cd $STATEDIR
   echo "Starting the $SERVICE_TITLE"
   python $PLOTFAIRY_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py \
-    --ini=config/$PROJ_CONFIG_FILE </dev/null 2>&1 | \
-    rotatelogs logs/plotfairy-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    --ini=$CFGDIR/$PROJ_CONFIG_FILE </dev/null 2>&1 | \
+    rotatelogs $LOGDIR/plotfairy-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Function to stop the service

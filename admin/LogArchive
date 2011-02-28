@@ -6,7 +6,7 @@ BASEDIR=${1-/data}
 # Scans the application log directories and picks any old files, and packs
 # them with maximum compression into a zip archive.
 
-for applogs in $BASEDIR/*sw/apache2/logs $BASEDIR/projects/*/logs; do
+for applogs in $BASEDIR/logs/*; do
   [ -d $applogs ] || continue
   [ -f $applogs/.noarchive ] && continue
 

@@ -1,8 +1,8 @@
 import os, os.path
 CONFIGDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 1)[0]
 SWDIR = os.path.normcase(os.environ["OVERVIEW_ROOT"]).rsplit('/', 3)[0]
-SRVDIR = CONFIGDIR.rsplit('/', 1)[0] + "/server"
-AUTHDIR = '/data/projects/conf/overview'
+SRVDIR = '/data/state/overview'
+AUTHDIR = '/data/current/auth/overview'
 
 modules = ("GuiProdmon", "GuiCache", "GuiFilelight", "GuiCompPhedex", "GuiCompCore",
            "GuiCompDDT", "GuiCompGrid", "GuiCompTier0", "GuiCompWelcome", "GuiCompCAF")

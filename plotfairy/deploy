@@ -6,19 +6,16 @@ deploy_plotfairy_deps()
 
 deploy_plotfairy_prep()
 {
-  mkproj plotfairy logs
-  setgroup ug+rw,o-w _plotfairy $PWD/logs
+  mkproj
 }
 
 deploy_plotfairy_sw()
 {
-  deploy_pkg -d plotfairy -f -l app -c PlotFairy comp cms+plotfairy WMCORE_0_6_0-cmp
-  perl -p -i -e "s{/data/projects}{$root/projects}g" config/*.py
+  deploy_pkg comp cms+plotfairy WMCORE_0_6_0-cmp
 }
 
 deploy_plotfairy_post()
 {
-  cd $root/projects/plotfairy
-  (crontab -l | { fgrep -v -e $PWD/ || true; }
-   sysboot _plotfairy) | crontab -
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
 }

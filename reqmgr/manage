@@ -8,14 +8,19 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # Setting the common variables
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="reqmgr"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/ReqMgrSystemDesign"
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
-# Grab the security info from here
-export PYTHONPATH=/data/projects/conf/reqmgr:$PYTHONPATH
-export YUI_ROOT=$YUI_ROOT
-PROJ_CONFIG_FILE=$PWD/config/ReqMgrConfig.py
+PROJ_CONFIG_FILE=$CFGDIR/ReqMgrConfig.py
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
+export YUI_ROOT
 
 #######################################################
 # Functions for the main actions.
@@ -30,9 +35,10 @@ function sysboot {
 
 # Function to start the service
 function start {
+  cd $STATEDIR
   echo "Starting the $SERVICE_TITLE"
   python $WTBASE/WMCore/WebTools/Root.py --ini=$PROJ_CONFIG_FILE \
-    </dev/null 2>&1 | rotatelogs logs/reqmgr-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Function which is used to stop the service

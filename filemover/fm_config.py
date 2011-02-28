@@ -44,11 +44,11 @@ fmws.day_transfer = 10
 fmws.verbose = 1
 fmws.max_transfer = 3
 fmws.logger_dir = __file__.rsplit('/', 1)[0]
-fmws.download_area = '/data/pool/download'
+fmws.download_area = '/data/state/filemover/download'
 
 # FileManager configuration
 file_manager = config.FileMover.section_('file_manager')
-file_manager.base_directory = '/data/pool'
+file_manager.base_directory = '/data/state/filemover'
 file_manager.max_size_gb = 20
 file_manager.max_movers = 5
 
@@ -64,4 +64,4 @@ transfer_wrapper.transfer_command = 'srmcp -debug=true -srm_protocol_version=2 -
 
 # Security module stuff
 config.component_('SecurityModule')
-config.SecurityModule.key_file = '/data/projects/conf/wmcore/header-auth-key'
+config.SecurityModule.key_file = '/data/current/auth/wmcore-auth/header-auth-key'

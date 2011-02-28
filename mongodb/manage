@@ -11,12 +11,16 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # Use export if you really need this!
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="MongoDB"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation"
-DBDIR=/data/das/db
-
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
+. $ROOT/apps/mongo/etc/profile.d/init.sh
+cd $STATEDIR
 
 #######################################################
 #  Function for the main actions.
@@ -31,38 +35,26 @@ cd $(dirname $(dirname $0))
 # then use update script to populate new content into DB, e.g. update_mapping_db.js
 # The update script contains a JSON docs to be populated.
 function update_db {
-  stamp=`cat stagingarea/update_$1.js | md5sum`
-  if  [ -f stagingarea/$1-schema-stamp ]; then
-oldstamp=`cat stagingarea/$1-schema-stamp`
-  else
-        oldstamp="X"
+  stamp=$(cat stagingarea/update_$1.js | md5sum)
+  oldstamp=$(cat stagingarea/$1-schema-stamp 2>/dev/null)
+  if [ ! -f stagingarea/$1-schema-stamp ] || [ X"$oldstamp" != X"$stamp" ]; then
+    set -e
+    echo "Clean $1"
+    mongo --port 8230 stagingarea/clean_$1.js
+    echo "Update $1"
+    db=$(echo $1 | cut -f1 -d_) coll=$(echo $1 | cut -f2 -d_)
+    mongoimport --port 8230 --db $db --collection $coll --file stagingarea/update_$1.js
+    echo "$stamp" > stagingarea/$1-schema-stamp
+    set +e
   fi
-  # Check schema stamp
-  if [ ! -f stagingarea/$1-schema-stamp ] || [ "$oldstamp" != "$stamp" ]; then
-     # exit if anything dies
-     set -e
-
-     echo "Clean $1"
-     mongo --port 8230 stagingarea/clean_$1.js
-     echo "Update $1"
-     db=`echo $1 | awk '{split($1,a,"_"); print a[1]}'`
-     coll=`echo $1 | awk '{split($1,a,"_"); print a[2]}'`
-     mongoimport --port 8230 --db $db --collection $coll --file stagingarea/update_$1.js
-
-     cat stagingarea/update_$1.js | md5sum > stagingarea/$1-schema-stamp
-
-     # done with unsafe stuff
-     set +e
-  fi
-
 }
 
 # Function to start the service conditionally on crond restart
 function sysboot {
-  PID=$(cat $DBDIR/mongod.lock 2>/dev/null)
+  PID=$(cat $STATEDIR/db/mongod.lock 2>/dev/null)
   if [ X"$PID" = X ] || [ $(ps h $PID | wc -l) = 0 ]; then
     # must clean-up improper shutdown
-    rm -rf $DBDIR/*
+    rm -rf $STATEDIR/db/*
     rm -f $PWD/stagingarea/*-schema-stamp
     start
     sleep 2
@@ -74,9 +66,9 @@ function sysboot {
 function start()
 {
   echo "Starting the $SERVICE_TITLE"
-  $MONGO_ROOT/bin/mongod --dbpath=$DBDIR \
+  $MONGO_ROOT/bin/mongod --dbpath=$STATEDIR/db \
       --port 8230 --nohttpinterface --bind_ip 127.0.0.1 \
-      </dev/null 2>&1 | rotatelogs logs/mongodb-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-%Y%m%d.log 86400 >/dev/null 2>&1 &
   sleep 2
   echo
   echo "$SERVICE_TITLE is ready"
@@ -86,11 +78,11 @@ function start()
 function stop()
 {
   echo "Stopping the $SERVICE_TITLE"
-  PID=$(cat $DBDIR/mongod.lock 2>/dev/null)
+  PID=$(cat $STATEDIR/db/mongod.lock 2>/dev/null)
   if [ X"$PID" != X ]; then
     kill -INT $PID
     n=0
-    while [ -s $DBDIR/mongod.lock -a $n -le 10 ]; do
+    while [ -s $STATEDIR/db/mongod.lock -a $n -le 10 ]; do
       echo "Waiting for mongod to exit..."
       n=$(expr $n + 1)
       sleep 1
@@ -101,7 +93,7 @@ function stop()
 # Function to check the status of the process
 function status()
 {
-  PID=$(cat $DBDIR/mongod.lock 2>/dev/null)
+  PID=$(cat $STATEDIR/db/mongod.lock 2>/dev/null)
   if [ X"$PID" != X ] && [ $(ps -p $PID | wc -l) != 0 ]; then
     echo "$SERVICE_TITLE is RUNNING, PID $PID."
   else

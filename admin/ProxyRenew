@@ -1,10 +1,10 @@
 #!/bin/sh
 
-### ProxyRenew CERT-DIRECTORY LABEL VOMS[:/GROUP/Role=ROLE]
+### ProxyRenew CERT-DIRECTORY PROXY-DIRECTORY LABEL VOMS[:/GROUP/Role=ROLE]
 ###
 ### Given 'hostcert.pem' and 'hostkey.pem' in CERT-DIRECTORY, maintains
 ### one or more proxy certificates, 'proxy-<LOGIN>.cert' and 'proxy.cert',
-### in the same directory.  The proxy is renewed by attempting to acquire
+### in PROXY-DIRECTORY.  The proxy is renewed by attempting to acquire
 ### new delegations titled LABEL_<LOGIN> for every seed proxy <LOGIN>,
 ### extended with voms attribute VOMS (VOMS:/GROUP/Role=ROLE if required).
 ### Warns the operators if none of the available proxies can be renewed or
@@ -12,7 +12,7 @@
 ###
 ### The proxy would normally be renewed using a cron job like this:
 ###
-###  3 */3 * * * /data/projects/admin/ProxyRenew /data/projects/conf/certs cmsweb_backends cms
+###  3 */3 * * * /data/projects/admin/ProxyRenew /data/certs /data/current/auth/proxy cmsweb_backends cms
 ###
 ### Periodically, usually once a month, the operator should upload his or
 ### her personal proxy to myproxy.cern.ch using the following command. Do
@@ -42,21 +42,21 @@ if [ X"$1" = X-v ]; then
   shift
 fi
 
-if [ $# -ne 3 ]; then
-  echo "usage: $0 CERT-DIRECTORY LABEL VOMS[:/GROUP/Role=ROLE]" 1>&2
+if [ $# -ne 4 ]; then
+  echo "usage: $0 CERT-DIRECTORY PROXY-DIRECTORY LABEL VOMS[:/GROUP/Role=ROLE]" 1>&2
   exit 1
 fi
 
-dir="$1"
-label="$2"
-voms="$3"
+certdir="$1"
+dir="$2"
+label="$3"
+voms="$4"
 
-[ -d "$dir" ] ||
-  { echo "$dir: no such certificate directory" 1>&2; exit 2; }
-cd "$dir" ||
-  { echo "$dir: cannot change to directory" 1>&2; exit 3; }
-[ -f hostcert.pem -a -f hostkey.pem ] ||
-  { echo "$dir: no hostcert.pem/hostkey.pem/proxy.cert here" 1>&2; exit 4; }
+[ -d "$certdir" ] || { echo "$certdir: no such certificate directory" 1>&2; exit 2; }
+[ -d "$dir" ] || { echo "$dir: no such proxy directory" 1>&2; exit 1; }
+cd "$dir" || { echo "$dir: cannot change to directory" 1>&2; exit 3; }
+[ -f $certdir/hostcert.pem -a -f $certdir/hostkey.pem ] ||
+  { echo "$certdir: no hostcert.pem/hostkey.pem here" 1>&2; exit 4; }
 
 unset MYPROXY_SERVER
 unset MYPROXY_SERVER_DN
@@ -92,8 +92,8 @@ got_proxy=0 best_proxy= good_proxy= ok_proxy=
 for proxy in proxy-*.cert; do
   [ -f "$proxy" ] || continue
   login=$(echo "$proxy" | sed 's/^proxy-//; s/\.cert//')
-  export X509_USER_CERT=$PWD/hostcert.pem
-  export X509_USER_KEY=$PWD/hostkey.pem
+  export X509_USER_CERT=$certdir/hostcert.pem
+  export X509_USER_KEY=$certdir/hostkey.pem
   unset X509_USER_PROXY
 
   # Check the proxy is valid at all. If not, complain and delete it

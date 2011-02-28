@@ -12,17 +12,18 @@ case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1
 # Use export if you really need this!
 #######################################################
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
 SERVICE_TITLE="SiteDB"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/SiteDB#Starting_the_service"
 HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
-PROJ_CONFIG=/data/projects/conf/sitedb
-
-cd $(dirname $(dirname $0))
-. app/etc/profile.d/init.sh
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+export SEC_MOD_INI=$ROOT/auth/$ME/security.ini
 export YUI_ROOT
-
-# define authentication security.ini location
-export SEC_MOD_INI=/data/projects/conf/sitedb/security.ini
 
 #######################################################
 # Setting the variables which depends on the hostname
@@ -31,17 +32,11 @@ export SEC_MOD_INI=/data/projects/conf/sitedb/security.ini
 
 case $HOST in
   vocms50 | vocms106 | vocms107)
-    NODE=https://cmsweb.cern.ch
-    ;;
-  vocms51)
-    NODE=https://vocms108.cern.ch
-    ;;
-  vocms109)
-    NODE=https://vocms109.cern.ch
-    ;;
-  *)
-    NODE=http://localhost
-    ;;
+    NODE=https://cmsweb.cern.ch ;;
+  vocms51 )
+    NODE=https://cmsweb-testbed.cern.ch ;;
+  * )
+    NODE=https://$(hostname -f) ;;
 esac
 
 #######################################################
@@ -59,11 +54,11 @@ function sysboot {
 
 # Function to start the service
 function start {
+  cd $STATEDIR
   echo "Starting the $SERVICE_TITLE"
-  cd logs
   cmsWeb --base-url $NODE/sitedb -p 8055 --default-page /sitelist/ \
-    --my-sitedb-ini=$PROJ_CONFIG/sitedb.ini \
-    </dev/null 2>&1 | rotatelogs sitedb-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    --my-sitedb-ini=$ROOT/auth/$ME/sitedb.ini \
+    </dev/null 2>&1 | rotatelogs $LOGDIR/sitedb-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Function to stop the service

@@ -2,42 +2,57 @@
 deploy_sitedb_deps()
 {
   deploy backend
+  deploy wmcore-auth
 }
 
 deploy_sitedb_prep()
 {
-  mkproj sitedb logs
-  setgroup ug+rw,o-w _sitedb $PWD/logs
+  mkproj
 }
 
 deploy_sitedb_sw()
 {
-  deploy_pkg -d sitedb -l app -c SiteDB comp cms+sitedb 1.2.3-cmp8
-  perl -p -i -e "s{/data/projects}{$root/projects}g" config/manage
+  deploy_pkg -a sitedb/sitedb.ini -a sitedb/security.ini comp cms+sitedb 1.2.3-cmp8
 }
 
 deploy_sitedb_post()
 {
-  cd $root/projects/sitedb
-
-  case $host in
-    vocms50 | vocms106 | vocms107 )
-      NODE=https://cmsweb.cern.ch ;;
-    vocms51 )
-      NODE=https://vocms108.cern.ch ;;
-    * )
-      NODE=https://$(hostname -f) ;;
-  esac
-
-  rm -f $root/projects/conf/sitedb/sitedb.ini
-  sed "s|@NODE@|$NODE|g; s|@ROOT@|$root|g" \
-    < $root/projects/conf/sitedb/sitedb.iniex \
-    > $root/projects/conf/sitedb/sitedb.ini
-  setgroup ug+r,g-w,o-rwx _config $root/projects/conf/sitedb/sitedb.ini
-
-  (crontab -l | { fgrep -v -e $PWD/ || true; }
-   sysboot _sitedb;
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot
    case $host:$root in vocms106:/data )
-     echo "3 * * * * $PWD/config/HNSync";;
+     echo "3 * * * * $project_config/HNSync";;
    esac) | crontab -
+}
+
+deploy_sitedb_auth()
+{
+  case $1 in
+    */security.ini )
+      echo "[database]"
+      echo "dbtype = oracle"
+      echo "dbname = oracle://FOO:BAR@ZOINKS" ;;
+
+    */sitedb.ini )
+      echo "[endpoint]"
+      echo "phedex = http://cmsweb.cern.ch/phedex/prod/Request::Create?dest="
+      echo "dbs = https://cmsweb.cern.ch/dbs_discovery/getData?dbsInst=cms_dbs_prod_global&proc=&ajax=0&userMode=user&group=*&tier=*&app=*&site="
+      echo "goc = https://goc.gridops.org/site/list?id="
+      echo "gstat = http://goc.grid.sinica.edu.tw/gstat"
+      echo "dashboard = http://lxarda16.cern.ch/dashboard/request.py"
+      echo "squid = http://frontier.cern.ch/squidstats/mrtgcms"
+      echo "sam = https://lcg-sam.cern.ch:8443/sam/sam.py?"
+      echo "[security]"
+      echo "cert = $root/certs/hostcert.pem"
+      echo "key = $root/certs/hostkey.pem"
+      echo "[setup]"
+      case $host in
+        vocms50 | vocms106 | vocms107 )
+	  echo "basepath = https://cmsweb.cern.ch/sitedb" ;;
+        vocms51 )
+	  echo "basepath = https://cmsweb-testbed.cern.ch/sitedb" ;;
+        * )
+          echo "basepath = https://$(hostname -f)/sitedb" ;;
+      esac
+      ;;
+  esac
 }

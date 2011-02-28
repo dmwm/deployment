@@ -8,36 +8,29 @@ deploy_wmagent_deps()
 
 deploy_wmagent_prep()
 {
-  mkproj wmagent config
+  mkproj
 }
 
 deploy_wmagent_sw()
 {
-  deploy_pkg -d wmagent -l cherrypy  comp external+cherrypy+3.1.2-cmp6
-  deploy_pkg -d wmagent -l cheetah  comp external+py2-cheetah+2.4.0-cmp6
-  deploy_pkg -d wmagent -l openid   comp external+py2-openid+2.2.4-cmp6
-  deploy_pkg -d wmagent -l py2-cjson   comp external+py2-cjson+1.0.5-cmp5
-  deploy_pkg -d wmagent -l dls-client   comp  cms+dls-client+DLS_1_1_2-cmp6
-  deploy_pkg -d wmagent -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1
-}
+  deploy_pkg comp external+cherrypy 3.1.2-cmp6
+  deploy_pkg comp external+py2-cheetah 2.4.0-cmp6
+  deploy_pkg comp external+py2-openid 2.2.4-cmp6
+  deploy_pkg comp external+py2-cjson 1.0.5-cmp5
+  deploy_pkg comp cms+dls-client DLS_1_1_2-cmp6
+  deploy_pkg comp cms+dbs-client DBS_2_1_1_patch1_1
 
-deploy_wmagent_post()
-{
-  local wmcore_root=$root/projects/wmcore
-  local wmcore_etc=$wmcore_root/app/etc
-  local wmagent_root=$root/projects/wmagent
-
+  local wmcore_etc=$root/current/apps/wmcore/etc
+  local couchdb_ini=$root/current/config/couchdb/local.ini
+  local mysql_config=$root/current/config/mysql/my.cnf
 
   # get manage script from wmcore
-  /bin/cp $wmcore_etc/deploy/wmagent-manage  $wmagent_root/config/manage
+  cp $wmcore_etc/deploy/wmagent-manage $project_config/manage
 
-  #override the webtools couch config
-  local couchdb_root=$root/projects/couchdb
-  local couchdb_ini=$couchdb_root/config/local.ini
-  /bin/cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
+  # override the webtools couch config
+  cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
   perl -p -i -e "s{deploy_project_root}{$root/projects}g" $couchdb_ini
 
-  #Grab the WMAgent MySQL config
-  local mysql_root=$root/projects/mysql
-  /bin/cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_root/config/my.cnf
+  # grab the WMAgent MySQL config
+  cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
 }
