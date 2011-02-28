@@ -1,0 +1,68 @@
+# SiteDB API mapping to DAS
+system : sitedb
+format : JSON
+---
+urn : "CMSNametoAdmins"
+url : "https://cmsweb.cern.ch/sitedb/json/index/CMSNametoAdmins"
+expire : 3600
+params : {"name":""}
+daskeys : [
+        {"key":"site", "map":"site.name", "pattern":"^T[0-3]"},
+        {"key":"admin", "map":"email", "pattern":""}
+]
+das2api : [
+        {"das_key":"admin", "api_param":"name", "pattern":""},
+]
+---
+urn : "SEtoCMSName"
+url : "https://cmsweb.cern.ch/sitedb/json/index/SEtoCMSName"
+expire : 3600
+params : {"name":""}
+daskeys : [
+        {"key":"site", "map":"site.name", "pattern":"^T[0-3]"},
+        {"key":"site", "map":"site.se", "pattern":"([a-zA-Z0-9]+\\.){2}"}
+]
+das2api : [
+        {"das_key":"site.se", "api_param":"name", "pattern":"([a-zA-Z0-9]+\\.){2}"},
+]
+---
+urn : "CMStoSAMName"
+url : "https://cmsweb.cern.ch/sitedb/json/index/CMStoSAMName"
+expire : 3600
+params : {"name":""}
+daskeys : [{"key":"site", "map":"site.name", "pattern":"^T[0-3]"}]
+das2api : [
+        {"das_key":"site.name", "api_param":"name", "pattern":"^T[0-3]"},
+]
+---
+urn : "CMStoSiteName"
+url : "https://cmsweb.cern.ch/sitedb/json/index/CMStoSiteName"
+expire : 3600
+params : {"name":""}
+daskeys : [{"key":"site", "map":"site.name", "pattern":"^T[0-3]"}]
+das2api : [
+        {"api_param":"name", "das_key":"site.name", "pattern":"^T[0-3]"},
+]
+---
+urn : "CMSNametoCE"
+url : "https://cmsweb.cern.ch/sitedb/json/index/CMSNametoCE"
+expire : 3600
+params : {"name":"required"}
+daskeys : [{"key":"site", "map":"site.name", "pattern":"^T[0-3]"}]
+das2api : [
+        {"das_key":"site.name", "api_param":"name", "pattern":"^T[0-3]"},
+]
+---
+urn : "CMSNametoSE"
+url : "https://cmsweb.cern.ch/sitedb/json/index/CMSNametoSE"
+expire : 3600
+params : {"name":""}
+daskeys : [{"key":"site", "map":"site.name", "pattern":"^T[0-3]"}]
+das2api : [
+        {"das_key":"site.name", "api_param":"name", "pattern":"^T[0-3]"},
+]
+---
+notations : [
+    {"notation":"cmsname", "map":"name", "api":""},
+    {"notation":"cms_name", "map":"name", "api":""},
+]

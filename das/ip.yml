@@ -1,0 +1,18 @@
+system : ip_service
+format : JSON
+---
+urn : ip_locator
+url : "http://api.ipinfodb.com/v2/ip_query.php"
+expire : 30
+params : { "ip" : "required", "output": "json", "timezone": "true",
+                "key": "409b2ed52a2ad2743956eef1ab4842417fcf801af24a5ec9c501a2ce3dd8dbbe" }
+daskeys : [
+    {"key":"ip","map":"ip.address","pattern":""},
+]
+das2api : [
+    {"das_key":"ip.address","api_param":"ip","pattern":""},
+]
+---
+notations : [
+    {"notation":"Ip", "map":"address", "api":""},
+]

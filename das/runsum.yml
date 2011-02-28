@@ -1,0 +1,24 @@
+# RunSummary API mapping to DAS
+system : runsum
+format : XML
+---
+urn : "runsum"
+url : "https://cmswbm.web.cern.ch/cmswbm/cmsdb/servlet/RunSummary"
+expire : 3600
+params  : {"DB":"cms_omds_lb", "FORMAT":"XML", "RUN":"required"}
+daskeys : [
+        {"key":"run", "map":"run.run_number", "pattern":""},
+        {"key":"bfield", "map":"run.bfield", "pattern":""},
+]
+das2api : [
+        {"das_key":"run", "api_param":"RUN", "pattern":"[1-9][0-9]{4,5}"},
+        {"das_key":"run.run_number","api_param":"RUN", "pattern":"[1-9][0-9]{4,5}"},
+]
+---
+notations : [
+    {"notation":"bField", "map":"bfield", "api":""},
+    {"notation":"hltKey", "map":"hlt", "api":""},
+    {"notation":"runNumber", "map":"run_number", "api":""},
+    {"notation":"run", "map":"run_number", "api":""},
+]
+

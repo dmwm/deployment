@@ -1,0 +1,150 @@
+#! /bin/bash
+
+case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1;; esac
+
+#######################################################
+# Global configuration and environment setup
+#######################################################
+TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/CouchDB#Starting_the_service"
+PROJ_DIR=$(dirname $(dirname $0))
+cd $PROJ_DIR
+. app/etc/profile.d/init.sh
+HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
+
+#######################################################
+# Setting the variables which depends on the hostname
+# Hostnames are cmsweb cluster nodes
+#######################################################
+
+case $HOST in
+  vocms53 | vocms50 | vocms106 | vocms107)
+    KEYFILE=/data/projects/conf/couchdb/hmackey-prod.ini;;
+  vocms51)
+    KEYFILE=/data/projects/conf/couchdb/hmackey-preprod.ini;;
+  vocms109)
+    KEYFILE=/data/projects/conf/couchdb/hmackey-dev.ini;;
+  *)
+    KEYFILE=$PROJ_DIR/config/local.ini;;
+esac
+
+
+#######################################################
+# Actions definition
+#######################################################
+# Function to start the service conditionally on crond restart
+function sysboot {
+  if couchdb -p $PROJ_DIR/logs/couchdb.pid -s; then :; else
+    start
+  fi
+}
+
+# Function to start the service
+start() {
+  couchdb -A $PROJ_DIR/config/ -a $KEYFILE -b \
+    -o $PROJ_DIR/logs/$(date +%Y%m%d-%H%M%S).stdout \
+    -e $PROJ_DIR/logs/$(date +%Y%m%d-%H%M%S).stderr \
+    -p $PROJ_DIR/logs/couchdb.pid </dev/null >/dev/null 2>&1
+}
+
+stop() {
+  couchdb -d -p $PROJ_DIR/logs/couchdb.pid
+}
+
+status() {
+  couchdb -p $PROJ_DIR/logs/couchdb.pid -s
+
+  curl -s localhost:5984 | grep -q '{"couchdb":"Welcome","version":"1.0.1"}' ||
+    { echo "CouchDB is not correctly responding to requests"; return; }
+
+  local TASKS=$(curl -s localhost:5984/_active_tasks)
+  [ "$TASKS" = '[]' ] && TASKS="No active tasks (e.g. compactions)"
+  echo $TASKS
+}
+
+# When a view is changed (e.g. new version of an app deployed) the views should be cleaned
+clean_views() {
+  local database=$1
+  [ -n "$database" ] ||
+    { echo "You must specify the database you wish to clean the views "; exit 1; }
+
+  echo "Cleaning views for $database"
+  curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_view_cleanup | \
+       grep -q '{"ok":true}' ||
+    { echo "An error occured while cleaning the views. Please look in the CouchDB logs."; exit 3; }
+}
+
+push_apps() {
+  for APP in $PROJ_DIR/stagingarea/*; do
+    [ -f $APP ] || continue
+    . $APP
+    for DB in $(egrep -o '5984/.*$' $APP | cut -d/ -f2); do
+      clean_views $DB
+    done
+  done
+}
+
+#Trigger a compaction with: manage compact t1_uk_ral_requests 'I did read documentation'
+compact(){
+  local database=$1
+  [ -n "$database" ] ||
+    { echo "You must specify a database to compact"; exit 3; }
+
+  curl -s localhost:5984/$database | grep -q '"compact_running":true' &&
+    { echo "$database is already compacting"; exit 5; }
+
+  echo "Compacting database $database"
+  curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_compact | \
+        grep -q '{"ok":true}' ||
+    { echo "An error occured triggering compaction. Please look in the CouchDB logs."; exit 7; }
+
+  # TODO: view compaction
+  # curl -H "Content-Type: application/json" -X POST http://localhost:5984/dbname/_compact/designname
+}
+
+help() {
+  echo "CouchDB management script"
+  echo "Usage: $0 status|start|stop|restart|help|version|pushapps security_string"
+  echo "       $0 compact|cleanviews dbname security_string"
+  echo "For more details, check the Twiki page: $TWIKI_PAGE"
+}
+
+check() {
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please read documentation." 1>&2
+    exit 2;
+  fi
+}
+
+#######################################################
+# Main
+#######################################################
+
+case $1 in
+  start | restart)
+    check "$2"; stop; sleep 1; start; sleep 1; push_apps; status ;;
+  status)
+    status ;;
+  stop)
+    check "$2"; stop; status ;;
+  pushapps)
+    check "$2"; push_apps;;
+  compact)
+    check "$3"; compact $2;;
+  cleanviews)
+    check "$3"; clean_views $2;;
+  sysboot)
+    if ps -oargs= $PPID | grep -q -e crond; then
+      sysboot
+    else
+      echo "$0: sysboot is for cron only" 1>&2
+      exit 1
+    fi ;;
+  help)
+    help ;;
+  version)
+    echo "Management script for CouchDB $COUCHDB_VERSION." ;;
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1 ;;
+esac

@@ -1,0 +1,124 @@
+#! /bin/sh
+
+case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1;; esac
+
+#######################################################
+# About the script
+#######################################################
+# Setting the common variables
+#######################################################
+
+SERVICE_TITLE="reqmgr"
+TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/ReqMgrSystemDesign"
+cd $(dirname $(dirname $0))
+. app/etc/profile.d/init.sh
+# Grab the security info from here
+export PYTHONPATH=/data/projects/conf/reqmgr:$PYTHONPATH
+export YUI_ROOT=$YUI_ROOT
+PROJ_CONFIG_FILE=$PWD/config/ReqMgrConfig.py
+
+#######################################################
+# Functions for the main actions.
+#######################################################
+
+# Function to start service conditionally on crond restart
+function sysboot {
+  if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$PROJ_CONFIG_FILE" | wc -l) = 0 ]; then
+    start
+  fi
+}
+
+# Function to start the service
+function start {
+  echo "Starting the $SERVICE_TITLE"
+  python $WTBASE/WMCore/WebTools/Root.py --ini=$PROJ_CONFIG_FILE \
+    </dev/null 2>&1 | rotatelogs logs/reqmgr-%Y%m%d.log 86400 >/dev/null 2>&1 &
+}
+
+# Function which is used to stop the service
+function stop {
+  echo "Stopping the $SERVICE_TITLE"
+  for PID in $(pgrep -u $(id -u) -f "Root.py.*[=]$PROJ_CONFIG_FILE" | sort -rn); do
+    PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
+             perl -n -e 'print join(" ", (split)[0..6])')
+    echo "Stopping $PID ($PSLINE):"
+    kill -9 $PID
+  done
+}
+
+# Function to chack the status of the process
+function status {
+  if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$PROJ_CONFIG_FILE" | wc -l) != 0 ]; then
+    echo "$SERVICE_TITLE is RUNNING."
+  else
+    echo "$SERVICE_TITLE is NOT RUNNING."
+  fi
+
+}
+
+#######################################################
+# Function to provide the help for the user
+# To edit the help provided, edit lines with the ##H prefix
+#######################################################
+##H Available actions:
+##H   sysboot - start server from crond if not running
+##H   status - show current service's status
+##H   start - start the service
+##H   stop - stop the service
+##H   restart - restart the service
+##H Security string - string needed to perform actions, see twiki page
+#######################################################
+function help {
+  echo "$SERVICE_TITLE management script"
+  echo "Usage: $0 status|start|stop|restart|help security_string"
+  echo "For more details, check the Twiki page: $TWIKI_PAGE"
+  perl -ne '/^##H / && do { s/^##H ?//; print }' < $0
+}
+
+# Verify the security string. You shouldn't change this.
+function check {
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation."
+    exit 2;
+  fi
+}
+
+#######################################################
+# The engine of the script. The place where the
+# script reacts to the actions.
+# Params: $1 - action
+#         $2 - security string
+#######################################################
+
+case $1 in
+  sysboot)
+    if ps -oargs= $PPID | grep -q -e crond; then
+      sysboot
+    else
+      echo "$0: sysboot is for cron only" 1>&2
+      exit 1
+    fi
+    ;;
+  start | restart)
+    check "$2"
+    stop
+    start
+    status
+    ;;
+  status)
+    status
+    ;;
+  stop)
+    check "$2"
+    stop
+    status
+    ;;
+  help)
+    help
+    ;;
+  * )
+    echo "$0: unknown action '$1'. Please read the documentation or run '$0 help'." 1>&2
+    exit 1 ;;
+esac
+

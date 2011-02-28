@@ -1,0 +1,27 @@
+#!/bin/sh
+
+BASEDIR=${1-/data}
+
+# Automatically archive old logs from all application servers to zip files.
+# Scans the application log directories and picks any old files, and packs
+# them with maximum compression into a zip archive.
+
+for applogs in $BASEDIR/*sw/apache2/logs $BASEDIR/projects/*/logs; do
+  [ -d $applogs ] || continue
+  [ -f $applogs/.noarchive ] && continue
+
+  # Pick a ZIP archive. Find the last zip archive that is <500 MB.
+  # If there is none, start a new archive, with today's time stamp.
+  zip=$(find $applogs -name '*.zip' -size -500M | sort | tail -1)
+  [ X"$zip" = X ] && zip=$applogs/old-logs-$(date +%Y%m%d-%H%M).zip
+
+  # Archive away logs that haven't been touched in two days.
+  set -e
+  FILES=$(find $applogs -type f \
+            \( -name '*log*' -o -name '*.txt' -o \
+	       -name '*.stdout' -o -name '*.stderr' \) \
+	    \! -name '*.zip' \
+	    -mtime +0 | sort)
+  [ X"$FILES" = X ] || zip -9Tmojq $zip $FILES
+  set +e
+done

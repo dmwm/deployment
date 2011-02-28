@@ -1,0 +1,142 @@
+#!/bin/zsh
+setopt sh_word_split
+
+case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1;; esac
+
+# Overview management command. Intended to run at server boot, for example
+# via '@reboot /data/overview/config/manage restart' crontab entry, and
+# after a server upgrade. If server processes are already running, they
+# are first stopped.
+#
+# See the operations documentation on how to use this script:
+# https://twiki.cern.ch/twiki/bin/view/CMS/OverviewDeployment
+
+######################################################################
+# Set parameters. Use the latest installed server by default.
+#
+# Collect arguments and verify the invocation came from documented
+# (copy-and-paste) instructions to avoid ops mishaps, such as one
+# caused tired or insufficiently cafeinated operator.
+#
+# Note that we treat "start" and "restart" actions identically to
+# prevent operational errors of starting overlapping servers.
+PS4="+ "
+ACT=${1:-none}
+NOW=$(date +%Y%m%d%H%M%S)
+CHECK=$(echo "$2" | md5sum | awk '{print $1}')
+HOST=$(hostname | tr '[:upper:]' '[:lower:]' | sed 's/\..*//')
+OV_DIR=$(dirname $(dirname $0))
+
+case $HOST in
+  vocms106 | vocms107 | vocms50 | vocms53 | vocms51 | vocms109 )
+    CONF=server-conf.py ;;
+  * )
+    CONF=dev-conf.py ;;
+esac
+
+EXTRA=
+case $ACT in *=* ) EXTRA=${ACT#*\=} ACT=${ACT%\=*} ;; esac
+case $ACT in stop | status | restart | sysboot ) ;; start ) ACT=restart ;; * )
+  echo "$0: unrecognised action '${ACT:-(none)}' (arg: $1);" \
+       "please check documentation." 1>&2
+  exit 1 ;;
+esac
+
+if [ -n "$(echo "$EXTRA" | sed -e 's/,*webserver,*//g' -e 's/,*logger,*//g')" ]; then
+  echo "$0: unrecognised action parameter '${EXTRA:-(none)}';" \
+       "please check documentation." 1>&2
+  exit 1
+fi
+
+[ $ACT = status ] ||
+{ ps -oargs= $PPID | grep -q -e crond; } ||
+[ X"$CHECK" = X94e261a5a70785552d34a65068819993 ] ||
+{ echo "$0: cannot complete operation, please check documentation."; exit 2; }
+
+######################################################################
+# Utilities.
+refuseproc() {
+  local title="$1" pat="$2" reason="$3"
+  if [ $(pgrep -u $(id -u) -f "$pat" | wc -l) != 0 ]; then
+    echo "$title: $reason because processes matching '$pat' are still running" 1>&2
+    exit 4
+  fi
+}
+
+statproc() {
+  local title="$1" pat="$2"
+  echo "${newline}${title}:"
+  pgrep -u $(id -u) -f "$pat" | xargs -r ps -o pid=,bsdstart=,args= |
+    perl -p -e 's/^/  /; END { $. || print "  (none running)\n"; }'
+  newline="\n"
+}
+
+killproc() {
+  local T title pat nextmsg
+  T=1 title="$1" pat="$2"
+  nextmsg="${newline}Stopping ${title}:"
+  for pid in $(pgrep -u $(id -u) -f "$pat" | sort -rn); do
+    psline=$(ps -o pid=,bsdstart=,args= $pid |
+             perl -n -e 'print join(" ", (split)[0..4])')
+    [ -n "$nextmsg" ] && { echo "$nextmsg"; nextmsg=; }
+    echo -n "Stopping $pid ($psline):"
+    for sig in TERM TERM QUIT KILL; do
+      echo -n " SIG$sig"
+      kill -$sig $pid
+      sleep 1
+      [ $(ps h $pid | wc -l) = 0 ] && break
+      sleep $T
+      T=$(expr $T \* 2)
+      [ $(ps h $pid | wc -l) = 0 ] && break
+    done
+    echo
+    newline="\n"
+  done
+}
+
+######################################################################
+# Source server environment. Move to $OV_DIR so cwd is safe.
+cd $OV_DIR
+. app/etc/profile.d/env.sh
+
+# If this is a status call, show running processes and exit now.
+newline=
+if [ $ACT = status ]; then
+  case ${EXTRA:-logger} in *logger* )
+    statproc "Loggers" "ovRotateLogs" ;;
+  esac
+
+  case ${EXTRA:-webserver} in *webserver* )
+    statproc "Web servers" "ovGui" ;;
+  esac
+
+  exit 0
+fi
+
+# If this is sysboot, check if the server is running. If not, start.
+if [ $ACT = sysboot ]; then
+  [ $(pgrep -u $(id -u) -f "ovGui" | wc -l) = 0 ] || exit 0
+  ACT=restart
+fi
+
+# Should be stop or restart from here on.
+[ $ACT = restart ] || [ $ACT = stop ] || { echo "$0: $LINENO: internal error"; exit 3; }
+
+######################################################################
+# Stop any existing daemons.
+
+newline=
+case ${EXTRA:-webserver} in *webserver* )
+  (set -x; ovControl stop all from $OV_DIR/config/$CONF) ;;
+esac
+
+[ $ACT = stop ] && exit 0
+
+# Should be restart from here on.
+[ $ACT = restart ] || { echo "$0: $LINENO: internal error"; exit 3; }
+
+######################################################################
+# Start web server if requested.
+case ${EXTRA:-webserver} in *webserver* )
+  (set -x; ovControl start all from $OV_DIR/config/$CONF) ;;
+esac

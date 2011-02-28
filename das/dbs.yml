@@ -1,0 +1,283 @@
+# DBS2 API Mapping to DAS
+system : dbs
+format : XML
+---
+urn : listPrimaryDatasets
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listPrimaryDatasets", "apiversion": "DBS_2_0_9", "pattern":"*",
+}
+daskeys : [
+    {"key":"primary_dataset", "map":"primary_dataset.name", "pattern":""}
+]
+das2api : [
+    {"das_key":"primary_dataset.name", "api_param":"pattern", "pattern":""},
+]
+---
+urn : listProcessedDatasets
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listProcessedDatasets", "apiversion": "DBS_2_0_9",
+     "primary_datatset_name_pattern":"*",
+     "data_tier_name_pattern": "*",
+     "processed_datatset_name_pattern": "*",
+     "app_version": "*",
+     "app_family_name": "*",
+     "app_executable_name": "*",
+     "ps_hash": "*",
+}
+daskeys : [
+    {"key":"dataset", "map":"dataset.name", "pattern":""},
+    {"key":"release", "map":"release.name", "pattern":"CMSSW_.*"},
+]
+das2api : [
+    {"das_key":"dataset.name", "api_param":"processed_datatset_name_pattern", "pattern":""},
+    {"das_key":"primary_dataset.name", "api_param":"primary_datatset_name_pattern", "pattern":""},
+    {"das_key":"release.name", "api_param":"app_version", "pattern":"CMSSW_.*"},
+]
+---
+urn : listDatasetSummary
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listDatasetSummary", "apiversion": "DBS_2_0_9", "path": "required",
+}
+daskeys : [
+    {"key":"dataset", "map":"dataset.name", "pattern":""}
+]
+das2api : [
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+]
+---
+urn : listAlgorithms
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listAlgorithms", "apiversion": "DBS_2_0_9",
+     "app_version": "*",
+     "app_family_name": "*",
+     "app_executable_name": "*",
+}
+daskeys : [
+    {"key":"release", "map":"release.name", "pattern":"CMSSW_.*"}
+]
+das2api : [
+    {"das_key":"release.name", "api_param":"app_version", "pattern":""},
+]
+---
+urn : listRuns
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listRuns", "apiversion": "DBS_2_0_9", "path":"*",
+}
+daskeys : [
+    {"key":"run", "map":"run.run_number", "pattern":""},
+    {"key":"dataset", "map":"dataset.name", "pattern":""},
+]
+das2api : [
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+]
+---
+urn : listTiers
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listTiers", "apiversion": "DBS_2_0_9", "path":"*",
+}
+daskeys : [
+    {"key":"tier", "map":"tier.name", "pattern":""},
+    {"key":"dataset", "map":"dataset.name", "pattern":""},
+]
+das2api : [
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+]
+---
+urn : listDatasetParents
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listDatasetParents", "apiversion": "DBS_2_0_9", "path": "*",
+}
+daskeys : [
+    {"key":"dataset", "map":"dataset.name", "pattern":""}
+]
+das2api : [
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+]
+#---
+#urn :
+#url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+#expire : 900
+---
+urn : listBlocks
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listBlocks", "apiversion": "DBS_2_0_9",
+     "path":"*", "block_name":"required",
+     "storage_elemennt_name": "*", "user_type":"NORMAL"
+}
+daskeys : [
+    {"key":"block", "map":"block.name", "pattern":""},
+    {"key":"dataset", "map":"dataset.name", "pattern":""},
+    {"key":"site", "map":"site.name", "pattern":"([a-zA-Z0-9]+\\.){2}"},
+]
+das2api : [
+    {"das_key":"block.name", "api_param":"block_name", "pattern":""},
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+    {"das_key":"site.name", "api_param":"storage_element_name",
+     "pattern":"^T[0-3]_"},
+    {"das_key":"site.se", "api_param":"storage_element_name",
+     "pattern":"([a-zA-Z0-9]+\\.){2}"}
+]
+---
+urn : listBlocks4path
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listBlocks", "apiversion": "DBS_2_0_9",
+     "path":"required", "block_name":"*",
+     "storage_elemennt_name": "*", "user_type":"NORMAL"
+}
+daskeys : [
+    {"key":"block", "map":"block.name", "pattern":""},
+    {"key":"dataset", "map":"dataset.name", "pattern":""},
+    {"key":"site", "map":"site.name", "pattern":"([a-zA-Z0-9]+\\.){2}"},
+]
+das2api : [
+    {"das_key":"block.name", "api_param":"block_name", "pattern":""},
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+    {"das_key":"site.name", "api_param":"storage_element_name",
+     "pattern":"^T[0-3]_"},
+    {"das_key":"site.se", "api_param":"storage_element_name",
+     "pattern":"([a-zA-Z0-9]+\\.){2}"}
+]
+---
+urn : listBlockProvenance
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listBlockProvenance", "apiversion": "DBS_2_0_9", "block_name":"*",
+     "parent_or_child": "PARENT"
+}
+daskeys : [
+    {"key":"block", "map":"block.name", "pattern":""},
+    {"key":"relationship", "map":"relationship", "pattern":""}
+]
+das2api : [
+    {"das_key":"block.name", "api_param":"block_name", "pattern":""},
+    {"das_key":"relationship", "api_param":"parent_or_child",
+     "pattern":"(PARENT|CHILD)"},
+]
+---
+urn : listFiles
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params: {
+    "api" : "listFiles", "apiversion" : "DBS_2_0_9", "path" : "",
+    "primary_dataset": "", "processed_dataset" : "", "data_tier_list" : "",
+    "analysis_dataset_name" : "", "block_name" : "", "other_details" : True,
+    "run_number" : "", "pattern_lfn": "", "detail" : True, "retrive_list" : "" }
+daskeys : [
+        {"key": "file", "map": "file.name", "pattern": ""},
+        {"key": "run", "map": "run.run_number", "pattern": ""},
+        {"key": "dataset", "map": "dataset.name", "pattern": ""},
+        {"key": "block", "map": "block.name", "pattern": ""},
+]
+das2api : [
+        {"das_key": "dataset", "api_param": "path", "pattern":""},
+        {"das_key": "block.name", "api_param": "block_name", "pattern":""},
+        {"das_key": "run", "api_param": "run_number", "pattern":""},
+        {"das_key": "run.run_number", "api_param": "run_number", "pattern":""},
+        {"das_key": "file.name", "api_param": "pattern_lfn", "pattern":""},
+]
+---
+urn : listFileParents
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listFileParents", "apiversion": "DBS_2_0_9", "lfn":"required",
+}
+daskeys : [
+    {"key":"file", "map":"file.name", "pattern":""},
+]
+das2api : [
+    {"das_key":"file.name", "api_param":"lfn", "pattern":""},
+]
+---
+urn : listFileLumis
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listFileLumis", "apiversion": "DBS_2_0_9", "lfn":"required",
+}
+daskeys : [
+    {"key":"lumi", "map":"lumi.number", "pattern":""},
+    {"key":"file", "map":"file.name", "pattern":""},
+]
+das2api : [
+    {"das_key":"file.name", "api_param":"lfn", "pattern":""},
+]
+---
+urn : listLFNs
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listLFNs", "apiversion": "DBS_2_0_9",
+     "path":"", "pattern_meta_data":"",
+}
+daskeys : [
+    {"key":"file", "map":"file.name", "pattern":""},
+    {"key":"dataset", "map":"dataset.name", "pattern":""},
+]
+das2api : [
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+]
+---
+urn : listFileProcQuality
+url : "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
+expire : 900
+params : {
+     "api":"listFileProcQuality", "apiversion": "DBS_2_0_9",
+     "path":"required", "lfn":"required",
+}
+daskeys : [
+    {"key":"file_quality", "map":"file_quality", "pattern":""},
+    {"key":"dataset", "map":"dataset.name", "pattern":""},
+    {"key":"file", "map":"file.name", "pattern":""},
+]
+das2api : [
+    {"das_key":"dataset.name", "api_param":"path", "pattern":""},
+    {"das_key":"file.name", "api_param":"lfn", "pattern":""},
+]
+---
+notations : [
+    {"notation":"creation_date", "map":"creation_time", "api":""},
+    {"notation":"last_modification_date", "map":"modification_time", "api":""},
+    {"notation":"app_family_name", "map":"name", "api":""},
+    {"notation":"app_executable_name", "map":"executable", "api":""},
+    {"notation":"storage_element", "map":"se", "api":""},
+    {"notation":"storage_element_name", "map":"se", "api":""},
+    {"notation":"number_of_files", "map":"nfiles", "api":""},
+    {"notation":"number_of_events", "map":"nevents", "api":""},
+    {"notation":"number_of_blocks", "map":"nblocks", "api":""},
+    {"notation":"number_of_lumi_sections", "map":"nlumis", "api":""},
+    {"notation":"lumi_section_number", "map":"lumi", "api":""},
+    {"notation":"start_event_number", "map":"start_event", "api":""},
+    {"notation":"end_event_number", "map":"end_event", "api":""},
+    {"notation":"total_luminosity", "map":"totlumi", "api":""},
+    {"notation":"total_size", "map":"size", "api":""},
+    {"notation":"lfn", "map":"name", "api":""},
+    {"notation":"processed_dataset", "map":"dataset", "api":""},
+    {"notation":"data_tier", "map":"tier", "api":""},
+    {"notation":"path.dataset_path", "map":"name", "api":""},
+    {"notation":"name.dataset_path", "map":"name", "api":""},
+    {"notation":"path", "map":"dataset", "api":"listBlocks"},
+    {"notation":"path", "map":"dataset", "api":"listBlocks4path"},
+    {"notation":"path", "map":"name", "api":""},
+    {"notation":"primary_name", "map":"name", "api":""},
+    {"notation":"file_lfn", "map":"file", "api":""},
+]

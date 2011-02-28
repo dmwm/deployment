@@ -1,0 +1,17 @@
+system : runregistry
+format : JSON
+---
+urn : rr_xmlrpc
+url : "http://pccmsdqm04.cern.ch/runregistry/xmlrpc"
+expire : 900
+params : {}
+daskeys : [
+    {"key":"run","map":"run.run_number","pattern":""},
+    {"key":"date","map":"date","pattern":""},
+]
+---
+notations : [
+    {"notation":"bField", "map":"bfield", "api":""},
+    {"notation":"hltKey", "map":"hlt", "api":""},
+    {"notation":"runNumber", "map":"run_number", "api":""},
+]

@@ -1,0 +1,154 @@
+#! /bin/bash
+
+case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1;; esac
+
+#######################################################
+# Base service management script
+# Author: Ignas Butenas, contact if needed by email: ignas.butenas@cern.ch
+#######################################################
+# Setting the basic and common variables.
+# Make sure that these are up to date.
+# If need a new variable, it must be defined here.
+# Use export if you really need this!
+#######################################################
+
+SERVICE_TITLE="Base"
+TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/WebtolsBase#Running_a_webtools_base_service"
+HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
+cd $(dirname $(dirname $0))
+. app/etc/profile.d/init.sh
+export YUI_ROOT
+
+# define authentication security.ini location
+export SEC_MOD_INI=/data/projects/conf/sitedb/security.ini
+
+#######################################################
+# Setting the variables which depends on the hostname
+# Hostnames are cmsweb cluster nodes
+#######################################################
+
+case $HOST in
+  vocms50 | vocms106 | vocms107)
+    NODE=https://cmsweb.cern.ch
+    ;;
+  vocms51)
+    NODE=https://vocms108.cern.ch
+    ;;
+  vocms109)
+    NODE=https://vocms109.cern.ch
+    ;;
+  *)
+    NODE=http://localhost
+    ;;
+esac
+
+#######################################################
+# Function for the main actions.
+# If using the variable here, need to define it in the
+# top part of the script, to keep them in one place.
+#######################################################
+
+# Function to start the service conditionally on crond restart
+function sysboot {
+  if [ $(pgrep -u $(id -u) -f "cmsWeb.*[/]base" | wc -l) = 0 ]; then
+    start
+  fi
+}
+
+# Function to start the service
+function start {
+  echo "Starting the $SERVICE_TITLE"
+  cmsWeb --pid-file logs/pid.txt --base-url $NODE/base -p 7999 \
+    --default-page /WSServer/ --log-level 100 \
+    </dev/null 2>&1 | rotatelogs logs/base-%Y%m%d.log 86400 >/dev/null 2>&1 &
+}
+
+# Function to stop the service
+function stop {
+  echo "Stopping the $SERVICE_TITLE"
+  for PID in $(pgrep -u $(id -u) -f "cmsWeb.*[/]base" | sort -rn); do
+    PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
+             perl -n -e 'print join(" ", (split)[0..6])')
+    echo "Stopping $PID ($PSLINE):"
+    kill -9 $PID
+  done
+}
+
+# Function to chack the status of the process
+function status {
+  if [ $(pgrep -u $(id -u) -f "cmsWeb.*[/]base" | wc -l) != 0 ]; then
+    echo "$SERVICE_TITLE is RUNNING."
+  else
+    echo "$SERVICE_TITLE is NOT RUNNING."
+  fi
+}
+
+#######################################################
+# Function to provide the help for the user
+# To edit the help provided, edit lines with the ##H prefix
+#######################################################
+##H Available actions:
+##H   sysboot - start server from crond if not running
+##H   status - show current service's status
+##H   start - start the service
+##H   stop - stop the service
+##H   restart - restart the service
+##H   version - get current version of the service
+##H Security string - string needed to perform actions, see twiki page
+#######################################################
+function help {
+  echo "$SERVICE_TITLE management script"
+  echo "Usage: $0 status|start|stop|restart|help|version security_string"
+  echo "For more details, check the Twiki page: $TWIKI_PAGE"
+  perl -ne '/^##H / && do { s/^##H ?//; print }' < $0
+}
+
+# Function to check the security string.
+function check {
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation."
+    exit 2;
+  fi
+}
+
+#######################################################
+# The engine of the script. The place where the
+# script reacts to the actions.
+# Params: $1 - action
+#         $2 - security string
+#######################################################
+
+case $1 in
+  sysboot)
+    if ps -oargs= $PPID | grep -q -e crond; then
+      sysboot
+    else
+      echo "$0: sysboot is for cron only" 1>&2
+      exit 1
+    fi
+    ;;
+  start | restart)
+    check "$2"
+    stop
+    start
+    status
+    ;;
+  status)
+    status
+    ;;
+  stop)
+    check "$2"
+    stop
+    status
+    ;;
+  help)
+    help
+    ;;
+  version)
+    echo "Management script for $SERVICE_TITLE $WEBTOOLS_BASE_VERSION."
+    ;;
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1 ;;
+esac

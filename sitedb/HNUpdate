@@ -1,0 +1,192 @@
+#!/usr/bin/env python
+import sys, cx_Oracle
+from ConfigParser import ConfigParser
+from optparse import OptionParser
+
+def getUserDicts(list):
+    # create a pair of dicts:
+    #    input like: ['user', 'password', 'None', 'None', 'Name', 'None', 'None', 'email\n']
+    #    output:
+    #        passwddict = {'username':'password'}
+    #        userdict = {'username':'Forename:Surname:Email'}
+    userdict = {}
+    passwddict = {}
+    for p in list:
+        try:
+            p = p.strip()
+            p = p.split(":")
+            passwddict[p[0]] = p[1]
+            userdict[p[0]] = "%s:%s:%s" % (p[4],p[5],p[7])
+        except Exception, e:
+            print "Error adding %s" % p
+            print len(p.split(":"))
+            print p.split(":")
+            print e
+    return passwddict, userdict
+
+def getNewEntries(old, new):
+    #old and new are dictionaries, this finds entries in new that aren't in old
+    newList = []
+    for e in new.keys():
+        if not e in old:
+            newList.append(e)
+    return newList
+
+def getChangedEntries(old, new):
+    #old and new are dictionaries, this finds entries in new that different to old
+    changeList = []
+    for e in new.keys():
+        if e in old:
+            if not old[e] == new[e]:
+                changeList.append(e)
+    return changeList
+
+def getChanges(old, new):
+    oldpasswords, oldusers = getUserDicts(old)
+    newpasswords, newusers = getUserDicts(new)
+    newpasslist = getNewEntries(oldpasswords, newpasswords)
+    newuserlist = getNewEntries(oldusers, newusers)
+    changedpasslist = getChangedEntries(oldpasswords, newpasswords)
+    changeduserlist = getChangedEntries(oldusers, newusers)
+    # Return four lists in the form of:
+    # userlist contains hnuser:passwd:name:email
+    nplist = []
+    nulist = []
+    cplist = []
+    culist = []
+    for p in newpasslist:
+        nplist.append("%s:%s::" %(p, newpasswords[p]))
+    for p in changedpasslist:
+        cplist.append("%s:%s::" %(p, newpasswords[p]))
+    for u in newuserlist:
+        # newusers[p] = name:None:none
+        nulist.append("%s::%s" %(u, newusers[u].replace('None:','')))
+    for u in changeduserlist:
+        # newusers[p] = name:None:none
+        culist.append("%s::%s" %(u, newusers[u].replace('None:','')))
+    return nplist, nulist, cplist, culist
+
+def addPassword(userlist, cur):
+    #userlist contains hnuser:passwd:name:email
+    for user in userlist:
+        u = user.split(':')
+        sql = "insert into user_passwd (username, passwd) values (:hnuser, :pass)"
+        binds = {'hnuser': u[0], 'pass': u[1]}
+        try:
+            cur.execute(sql, binds)
+        except Exception, e:
+            print sql, binds, e
+
+def addUser(userlist, cur):
+    #userlist contains hnuser:passwd:name:email
+    for user in userlist:
+        u = user.split(':')
+        sql = """insert into contact (id, surname, forename, email, username)
+        values (contact_sq.nextval, :forename,:surname,:email,:hnuser)"""
+        name = u[2]
+        if len(name.split()) > 1:
+            binds = {'forename':name.split()[0],'surname':" ".join(name.split()[1:]),'email':u[3],'hnuser': u[0]}
+        else:
+            binds = {'forename':name,'surname':name,'email':u[3],'hnuser': u[0]}
+        try:
+            cur.execute(sql, binds)
+        except Exception, e:
+            print sql, binds, e
+
+def updateUserPass(userlist, cur):
+    #userlist contains hnuser:passwd:name:email
+    for user in userlist:
+        u = user.split(':')
+        sql = "update USER_PASSWD set PASSWD = :pass where USERNAME = :hnuser"
+        binds = {'hnuser': u[0], 'pass': u[1]}
+        try:
+            cur.execute(sql, binds)
+        except Exception, e:
+            print sql, binds, e
+
+def updateUserInfo(userlist, cur):
+    #userlist contains hnuser:passwd:name:email
+    for user in userlist:
+        u = user.split(':')
+        name = u[2]
+        sql = "update contact set surname = :surname, forename = :forename, email = :email where USERNAME = :hnuser"
+        if len(name.split()) > 1:
+            binds = {'hnuser': u[0], 'surname':" ".join(name.split()[1:]), 'forename':name.split()[0], 'email':u[3]}
+        else:
+            binds = {'hnuser': u[0], 'surname':name, 'forename':name, 'email':u[3]}
+        try:
+            cur.execute(sql, binds)
+        except Exception, e:
+            print sql, binds, e
+
+def getUserList(cur):
+    sql = """select USER_PASSWD.USERNAME, USER_PASSWD.PASSWD, CONTACT.FORENAME, CONTACT.SURNAME,
+    CONTACT.email
+    from CONTACT
+    join USER_PASSWD on USER_PASSWD.USERNAME = CONTACT.USERNAME
+    ORDER BY CONTACT.SURNAME"""
+    cur.execute(sql)
+    databaseusers = []
+    for r in cur.fetchall():
+        # make out put like:
+        # username:password:None:None:Full Name:None:None:email
+        str = "%s:%s:None:None:%s %s:None:None:%s" % (r[0], r[1],r[2], r[3], r[4])
+        databaseusers.append(str)
+    return databaseusers
+
+if __name__ == "__main__":
+    parser = OptionParser()
+    parser.add_option ("-v", "--verbose",
+                   help = "print each change",
+                   action="store_true",
+                   dest = "verbose")
+    parser.add_option ("--newfile",
+                   help = "new contents of HN passwd in FILE1",
+                   metavar = "FILE1",
+                   dest = "file1")
+    parser.add_option ("--oldfile",
+                   help = "contents of and old HN passwd in FILE2, if not specified will contact database.",
+                   metavar = "FILE2",
+                   dest = "file2")
+    parser.add_option("-s", "--security",
+                   help = "the security.ini file that contains the username/password for the database",
+                   dest = 'security')
+
+    options, args = parser.parse_args ()
+    f1name = options.file1
+    newfile = open(f1name)
+    new = newfile.readlines(); newfile.close()
+
+    cfg = ConfigParser()
+    cfg.read(options.security)
+    dbstring = cfg.get('database', 'dbname')
+
+    user, passwd, database = dbstring.replace('oracle://', '').replace('@',':').split(':')
+
+    con = cx_Oracle.connect('%s/%s@%s' % (user, passwd, database))
+
+    cur = con.cursor()
+    if options.file2:
+        f2name = options.file2
+        oldfile = open(f2name)
+        old = oldfile.readlines(); oldfile.close()
+    else:
+        old = getUserList(cur)
+    newpasses, newusers, changedpasses, changedusers = getChanges(old,new)
+    if options.verbose:
+        print newpasses, newusers, changedpasses, changedusers
+    if len(changedpasses):
+        if options.verbose: print "Updating user passwords"
+        updateUserPass(changedpasses, cur)
+    if len(changedusers):
+        if options.verbose: print "Updating user info"
+        updateUserInfo(changedusers, cur)
+    #First add the password
+    if len(newpasses):
+        if options.verbose: print "Adding user passwords"
+        addPassword(newpasses, cur)
+    if len(newusers):
+        if options.verbose: print "Adding user info"
+        addUser(newusers, cur)
+    con.commit()
+    con.close()
