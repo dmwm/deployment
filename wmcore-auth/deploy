@@ -26,13 +26,3 @@ deploy_wmcore_auth_prep()
 
   setgroup -R ug+r,g-w,o-rwx _config $root/projects/conf/wmcore
 }
-
-deploy_wmcore_auth_sw()
-{
-  true
-}
-
-deploy_wmcore_auth_post()
-{
-  true
-}

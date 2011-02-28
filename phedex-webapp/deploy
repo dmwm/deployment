@@ -4,20 +4,10 @@ deploy_phedex_webapp_deps()
   deploy phedex-datasvc
 }
 
-deploy_phedex_webapp_prep()
-{
-  true
-}
-
 deploy_phedex_webapp_sw()
 {
   deploy_pkg -d phedex-webapp -l app -c PhEDEx/web comp cms+PHEDEX-webapp WEBAPP_BETA_1_0_2
   setgroup g+w _config apache2/{logs,var} # hack, need to write here too
   rm -f apache2/logs/start_stop.log
   chmod a+x srv/bin/trim-cache
-}
-
-deploy_phedex_webapp_post()
-{
-  true
 }

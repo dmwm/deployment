@@ -180,14 +180,18 @@ inrepo()
 deploy()
 {
   local found=false
-  local lower=$(echo $1 | tr A-Z- a-z_)
-  eval local did="\$${lower}_deployed"
+  local name=$(echo $1 | tr - _)
+  eval local did="\$${name}_deployed"
   if [ X$did = X ]; then
     local dir
     for dir in $servicedirs; do
       if [ -f $dir/$1/deploy ]; then
-	found=true
+	eval "deploy_${name}_deps() { true; }"
+	eval "deploy_${name}_prep() { true; }"
+	eval "deploy_${name}_sw() { true; }"
+	eval "deploy_${name}_post() { true; }"
         . $dir/$1/deploy
+	found=true
         break
       fi
     done
@@ -197,12 +201,12 @@ deploy()
       exit 4
     fi
 
-    eval deploy_${lower}_deps
+    eval deploy_${name}_deps
     note "INFO: deploying $1"
     for stage in $stages; do
-      eval deploy_${lower}_$stage
+      eval deploy_${name}_$stage
     done
-    eval "${lower}_deployed=1"
+    eval "${name}_deployed=1"
   else
     true
   fi

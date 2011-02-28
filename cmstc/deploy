@@ -1,9 +1,4 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_cmstc_deps()
-{
-  true
-}
-
 deploy_cmstc_prep()
 {
   mkproj cmstc var logs

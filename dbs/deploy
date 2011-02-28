@@ -15,8 +15,3 @@ deploy_dbs_sw()
   deploy_pkg -d dbs -l app -c DBS comp cms+dbs3 DBS_3_S6_0_pre2-cmp
   perl -p -i -e "s{/data/projects/}{$root/projects/}g" config/DBS.py config/manage
 }
-
-deploy_dbs_post()
-{
-  true
-}

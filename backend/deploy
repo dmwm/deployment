@@ -1,9 +1,4 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_backend_deps()
-{
-  true
-}
-
 deploy_backend_prep()
 {
   mkdir -p $root/projects

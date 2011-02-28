@@ -1,9 +1,4 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_frontend_deps()
-{
-  true
-}
-
 deploy_frontend_prep()
 {
   $MIGRATION mv $root/frontend/apache2/etc/{cookie-,}keys

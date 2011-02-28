@@ -1,9 +1,4 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_wmclient_deps()
-{
-  true
-}
-
 deploy_wmclient_prep()
 {
   mkproj wmclient etc
