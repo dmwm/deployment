@@ -1,0 +1,4 @@
+#!/bin/sh
+
+. $1/apps/PHEDEX-web/etc/profile.d/init.sh
+exec htcacheclean -n -t -p $2 -l $3

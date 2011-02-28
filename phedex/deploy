@@ -1,51 +1,136 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_phedex_variants="datasvc webapp web combined"
-
 deploy_phedex_deps()
 {
   deploy backend
-  case $variant in
-    webapp )
-      deploy phedex datasvc ;;
-    combined )
-      deploy phedex datasvc
-      deploy phedex webapp
-      deploy phedex web
-      ;;
-  esac
 }
 
 deploy_phedex_prep()
 {
-  case $variant in
-    web )     extra=sessions ;;
-    datasvc ) extra=cache/phedex-datasvc ;;
-    * )       extra= ;;
-  esac
-
-  mkproj $extra
+  mkproj $extra sessions cache/phedex-datasvc
 }
 
 deploy_phedex_sw()
 {
-  case $variant in
-    web )     deploy_pkg comp cms+PHEDEX-web WEB_3_1_7post1 ;;
-    webapp )  deploy_pkg comp cms+PHEDEX-webapp WEBAPP_BETA_1_0_2 ;;
-    datasvc ) deploy_pkg comp cms+PHEDEX-datasvc DATASVC_1_6_6 ;;
-  esac
+  deploy_pkg -a phedex/DBParam comp cms+PHEDEX-web 3.2.0pre1
+  deploy_pkg comp cms+PHEDEX-webapp 1.1.0pre1
+  deploy_pkg comp cms+PHEDEX-datasvc 1.7.0pre1
+
+  (set -e
+   for app in PHEDEX-{web,webapp,datasvc}; do
+     . $root/current/apps/$app/etc/profile.d/init.sh
+   done
+   perl -p -i -e "
+       s|(?<!/store)/data/|$root/|g; \
+       s|\@WEB_VERSION\@|$PHEDEX_WEB_VERSION|g; \
+       s|\@DATASVC_VERSION\@|$PHEDEX_DATASVC_VERSION|g; \
+       s|\@WEBAPP_VERSION\@|$PHEDEX_WEBAPP_VERSION|g; \
+       s|\@WEBAPP_BASEURL\@|/phedex/datasvc/app|g; \
+       s|\@WEBAPP_DATASERVICEURL\@|/phedex/datasvc/json/|g;" \
+     $project_config/{app-*.conf,*.xml} \
+     $PHEDEX_WEBAPP_ROOT/PhEDExWeb/ApplicationServer/js/phedex-base{,-loader}{,-min}.js)
+  [ $? = 0 ]
 }
 
 deploy_phedex_post()
 {
   case $host in vocms53 ) disable ;; * ) enable ;; esac
-  (mkcrontab |
+
+  case $host in
+    vocms53 )     opts="" ;;
+    vocms10[67] ) opts="-DPHEDEX_DATASVC -DPHEDEX_WEBAPP" ;;
+    * )           opts="-DPHEDEX_DATASVC -DPHEDEX_WEBAPP -DPHEDEX_WEB" ;;
+  esac
+
+  rm -fr $PWD/{htdocs,etc}
+  (set -e
+   for app in PHEDEX-{web,webapp,datasvc}; do
+     . $root/current/apps/$app/etc/profile.d/init.sh
+   done
+   export YUI_ROOT
+   export PROTOVIS_ROOT
+   mkserver                                                     \
+   -r $PWD                                                      \
+   -l $project_logs                                             \
+   -a $APACHE2_ROOT                                             \
+   -o "$opts"                                                   \
+   -p $project_config/httpd-mpm.conf                            \
+   -c $project_config/httpd-phedex.conf                         \
+   -d $PHEDEX_WEB_ROOT/Documentation                            \
+   -d $PHEDEX_WEBAPP_ROOT/PhEDExWeb                             \
+   -d $PHEDEX_DATASVC_ROOT/PhEDExWeb                            \
+   -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"                       \
+   -e "$PHEDEX_WEB_ROOT/etc/env.d/*.sh"                         \
+   -e "$PHEDEX_WEBAPP_ROOT/etc/env.d/*.sh"                      \
+   -e "$PHEDEX_DATASVC_ROOT/etc/env.d/*.sh"                     \
+   -x "$project_config/{app,cherrypy}-*.conf"                   \
+   -x "$project_config/graphs_*.xml"                            \
+   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so           \
+   -m cache_module:$APACHE2_ROOT/modules/mod_cache.so           \
+   -m disk_cache_module:$APACHE2_ROOT/modules/mod_disk_cache.so)
+  [ $? = 0 ]
+
+  setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
+  setgroup ug+rw,o-w _phedex $PWD/var
+
+  (mkcrontab
    case $variant in
      datasvc )
-       fgrep -v "$root/current/apps/PHEDEX-datasvc/" || true
-       cmd="$root/current/apps/PHEDEX-datasvc/bin/trim-cache 1000M"
+       cmd="$project_config/trim-cache $root/current $PWD/cache 1000M"
        $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
        echo "0 * * * * $cmd" ;;
-     * ) cat ;;
    esac
    sysboot) | crontab -
+
+  (crontab -l | fgrep $project_config/trim-cache | sed 's|^[/*0-9 ]* ||;') | sh -x
+}
+
+deploy_phedex_auth()
+{
+  cat <<-EOF
+	# Database connection parameters for different databases.
+	# *DO NOT COMMIT INTO CVS*.
+
+	Section            Prod/WebSite
+	Interface          Oracle
+	Database           cms_transfermgmt
+	AuthDBUsername     cms_transfermgmt_writer
+	AuthDBPassword     __FILL_ME_IN__
+	AuthRole           phedex_website_prod
+	AuthRolePassword   __FILL_ME_IN__
+	ConnectionLife     86400
+	LogConnection      off
+	LogSQL             off
+
+
+	Section            Debug/WebSite
+	Interface          Oracle
+	Database           cms_transfermgmt_sc
+	AuthDBUsername     cms_transfermgmt_sc_writer
+	AuthDBPassword     __FILL_ME_IN__
+	AuthRole           phedex_website_debug
+	AuthRolePassword   __FILL_ME_IN__
+	ConnectionLife     86400
+	LogConnection      off
+	LogSQL             off
+
+	Section            Dev/WebSite
+	Interface          Oracle
+	Database           cms_transfermgmt_test
+	AuthDBUsername     cms_transfermgmt_test_writer
+	AuthDBPassword     __FILL_ME_IN__
+	AuthRole           phedex_website_dev
+	AuthRolePassword   __FILL_ME_IN__
+	ConnectionLife     86400
+	LogConnection      off
+	LogSQL             off
+
+	Section            SecurityModule
+	Interface          Oracle
+	Database           cms_sitedb
+	AuthDBUsername     cms_sitedb_writer
+	AuthDBPassword     __FILL_ME_IN__
+	ConnectionLife     86400
+	LogConnection      off
+	LogSQL             off
+EOF
 }

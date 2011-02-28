@@ -18,15 +18,17 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-SERVICE_TITLE="Phedex-WEB"
+SERVICE_TITLE="PhEDEx"
 TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/PhedexOperationsWebSite#WebStart"
-PHEDEX_PATTERN="/httpd -f .*/apache2/conf/apache2.conf"
-GRAPHS_PATTERN="phedex-graphs"
-PHEDEX_GRAPHS=$ROOT/apps/PHEDEX-web/bin/cmsweb_phedex_graphs
+PHEDEX_PATTERN="/httpd -f $STATEDIR/server.conf"
+GRAPHS_PATTERN="phedex-web.*[/]graphs_website_prod.xml"
 for app in PHEDEX-{datasvc,web,webapp}; do
-  [ -d $ROOT/apps/$app/etc/profile.d ] &&
-    . $ROOT/apps/$app/etc/profile.d/init.sh
+  . $ROOT/apps/$app/etc/profile.d/init.sh
 done
+PHEDEX_GRAPHS_ROOT=$PHEDEX_WEB_ROOT/Documentation/WebSite/PlotConfig
+GLOBAL_GRAPHS_ROOT=$WEBTOOLS_ROOT/lib/python2.6/site-packages/Tools/GraphTool
+export PYTHONPATH=$PHEDEX_GRAPHS_ROOT/src:$GLOBAL_GRAPHS_ROOT/src:$PYTHONPATH
+export GLOBAL_GRAPHS_ROOT # for the .xml files
 export MPLCONFIGDIR=$STATEDIR
 
 #######################################################
@@ -42,20 +44,14 @@ function sysboot {
   fi
 }
 
-# Function which is used to start the service
-function start {
-  cd $STATEDIR
-  echo "Starting the $SERVICE_TITLE"
-  apache2/etc/init.d/httpd start </dev/null 2>&1
-  [ -f $ROOT/enabled/phedex-web ] && $PHEDEX_GRAPHS start </dev/null 2>&1
+# Start the graphs service
+function start_graphs {
+  python -u $PHEDEX_GRAPHS_ROOT/tools/phedex-web.py $STATEDIR/etc/graphs_website_prod.xml \
+    </dev/null 2>&1 | rotatelogs $LOGDIR/graphs-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
-# Stopping the graphs service
+# Stop the graphs service
 function kill_graphs {
-  [ -f $ROOT/enabled/phedex-web ] || return
-  $PHEDEX_GRAPHS stop
-
-  # Sometimes it could be that default way to stop graphs fails, so we will kill it in other way
   for PID in $(pgrep -u $(id -u) -f "$GRAPHS_PATTERN" | sort -rn); do
     PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
              perl -n -e 'print join(" ", (split)[0..6])')
@@ -64,32 +60,38 @@ function kill_graphs {
   done
 }
 
+# Function which is used to start the service
+function start {
+  cd $STATEDIR
+  echo "Starting the $SERVICE_TITLE"
+  $STATEDIR/etc/httpd start </dev/null 2>&1
+  start_graphs
+}
+
 # Function which is used to stop the service
 function stop {
   echo "Stopping the $SERVICE_TITLE"
-  apache2/etc/init.d/httpd stop
+  $STATEDIR/etc/httpd stop
   kill_graphs
 }
 
-# function to restart the graphs service independently
-function restart_graphs {
-  cd $STATEDIR
-  [ -f $PHEDEX_GRAPHS ] || return
-  kill_graphs
-  $PHEDEX_GRAPHS start </dev/null 2>&1
-}
-
-# Function to chack the status of the process
+# Function to check the status of the process
 function status {
   echo "Checking the $SERVICE_TITLE status..."
-  apache2/etc/init.d/httpd status
-  [ -f $PHEDEX_GRAPHS ] && $PHEDEX_GRAPHS status
+  $STATEDIR/etc/httpd status
+
+  GPIDS=$(pgrep -u $(id -u) -f "$GRAPHS_PATTERN" | sort -rn)
+  if [ X"$GPIDS" != X ]; then
+    echo "PhEDEx graph service is RUNNING, PID: $GPIDS"
+  else
+    echo "PhEDEx graph service is NOT RUNNING."
+  fi
 }
 
 # Function to do graceful restart
 function graceful {
   echo "Restarting gracefully the $SERVICE_TITLE"
-  $STATEDIR/apache2/etc/init.d/httpd graceful
+  $STATEDIR/etc/httpd graceful
 }
 
 #######################################################
@@ -158,7 +160,9 @@ case $1 in
     ;;
   rgraphs)
     check "$2"
-    restart_graphs
+    cd $STATEDIR
+    kill_graphs
+    start_graphs
     status
     ;;
   help)
