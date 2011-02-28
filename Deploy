@@ -231,10 +231,13 @@ inrepo()
 # Deploy some component.
 deploy()
 {
+  local var=${2-default}
   local name=$(echo $1 | tr - _)
-  eval local did="\$${name}_deployed"
+  local varname=$(echo $var | tr - _)
+  eval local did="\$${name}_${varname}_deployed"
   if [ X$did = X ]; then
     if [ -f $servicedir/$1/deploy ]; then
+      eval "deploy_${name}_variants=default"
       eval "deploy_${name}_deps() { true; }"
       eval "deploy_${name}_prep() { true; }"
       eval "deploy_${name}_sw() { true; }"
@@ -246,6 +249,12 @@ deploy()
       exit 4
     fi
 
+    eval local variants="\$deploy_${name}_variants"
+    case " $variants " in *" $var "* ) ;; * )
+      note "ERROR: $1 does not have variant '$var'"
+      exit 5 ;;
+    esac
+
     local setup=:
     setup="$setup; project='$1'"
     setup="$setup; project_config_src='$servicedir/$1'"
@@ -253,14 +262,15 @@ deploy()
     setup="$setup; project_auth='$root/current/auth/$1'"
     setup="$setup; project_state='$root/state/$1'"
     setup="$setup; project_logs='$root/logs/$1'"
+    setup="$setup; variant='$var'"
     setup="$setup; cd \$root; [ ! -d \$project_state ] || cd \$project_state"
 
     eval "$setup; deploy_${name}_deps"
-    note "INFO: deploying $1"
+    note "INFO: deploying $1 ($var)"
     for stage in $stages; do
       eval "$setup; deploy_${name}_$stage"
     done
-    eval "${name}_deployed=1"
+    eval "${name}_${varname}_deployed=1"
   else
     true
   fi
@@ -366,7 +376,7 @@ set -ex
 note "INFO: $now: starting deployment of: $*"
 
 # Loop over all requested services and install them one at a time.
-(for svc; do deploy $svc; done)
+(for svc; do deploy $(echo $svc | tr / ' '); done)
 
 # Resume normal output.
 exit=$?

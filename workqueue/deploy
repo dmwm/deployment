@@ -1,25 +1,25 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_reqmgr_variants="default offsite"
+deploy_workqueue_variants="default offsite"
 
-deploy_reqmgr_deps()
+deploy_workqueue_deps()
 {
-  deploy backend
+  deploy mysql
   deploy wmcore-auth
   deploy couchdb $variant
   case $variant in offsite ) deploy wmcore ;; esac
 }
 
-deploy_reqmgr_prep()
+deploy_workqueue_prep()
 {
   case $variant in offsite ) extra=install ;; * ) extra= ;; esac
   mkproj $extra
 }
 
-deploy_reqmgr_sw()
+deploy_workqueue_sw()
 {
   case $variant in
     default )
-      deploy_pkg -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr WMCORE_0_6_9 ;;
+      ;;
 
     offsite )
       deploy_pkg comp external+cherrypy 3.1.2-cmp6
@@ -44,35 +44,4 @@ deploy_reqmgr_sw()
       cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
       ;;
   esac
-}
-
-deploy_reqmgr_post()
-{
-  case $host in vocms53 ) disable ;; * ) enable ;; esac
-  case $variant in default )
-    (mkcrontab; sysboot) | crontab -
-
-    # Tell couchdb to pick up reqmgr on the next restart
-    # and configure replication, compaction and backup, too
-    local couchdb_config=$root/current/config/couchdb
-    local couchdb_state=$root/state/couchdb
-    local hour=0
-
-    for area in compaction stagingarea replication backup; do
-      rm -f $couchdb_state/$area/reqmgr
-      touch $couchdb_state/$area/reqmgr
-    done
-
-    for db in reqmgr_config_cache reqmgr_spec_cache; do
-      echo "couchapp push $root/current/apps/reqmgr/$db http://localhost:5984/$db" >> $couchdb_state/stagingarea/reqmgr
-      echo "1 $hour * * * $couchdb_config/manage compact $db" >> $couchdb_state/compaction/reqmgr
-      hour=$(( $hour + 1 ))
-    done
-    ;;
-  esac
-}
-
-deploy_reqmgr_auth()
-{
-  echo 'connectUrl = "oracle://FOO:BAR@ZOINKS"'
 }

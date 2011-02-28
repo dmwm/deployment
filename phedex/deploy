@@ -1,0 +1,51 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_phedex_variants="datasvc webapp web combined"
+
+deploy_phedex_deps()
+{
+  deploy backend
+  case $variant in
+    webapp )
+      deploy phedex datasvc ;;
+    combined )
+      deploy phedex datasvc
+      deploy phedex webapp
+      deploy phedex web
+      ;;
+  esac
+}
+
+deploy_phedex_prep()
+{
+  case $variant in
+    web )     extra=sessions ;;
+    datasvc ) extra=cache/phedex-datasvc ;;
+    * )       extra= ;;
+  esac
+
+  mkproj $extra
+}
+
+deploy_phedex_sw()
+{
+  case $variant in
+    web )     deploy_pkg comp cms+PHEDEX-web WEB_3_1_7post1 ;;
+    webapp )  deploy_pkg comp cms+PHEDEX-webapp WEBAPP_BETA_1_0_2 ;;
+    datasvc ) deploy_pkg comp cms+PHEDEX-datasvc DATASVC_1_6_6 ;;
+  esac
+}
+
+deploy_phedex_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab |
+   case $variant in
+     datasvc )
+       fgrep -v "$root/current/apps/PHEDEX-datasvc/" || true
+       cmd="$root/current/apps/PHEDEX-datasvc/bin/trim-cache 1000M"
+       $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
+       echo "0 * * * * $cmd" ;;
+     * ) cat ;;
+   esac
+   sysboot) | crontab -
+}
