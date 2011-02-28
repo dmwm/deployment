@@ -343,13 +343,13 @@ deploy_pkg()
     esac
 
     mkdir -p $project_auth
-    if [ X"$privauthdir" = X ] || [ ! -f $privauthdir/$authsrc ]; then
-      if [ -f $project_auth/$authdest ]; then :; else
-        eval "deploy_${authname}_auth $authsrc" > $project_auth/$authdest
-      fi
-    else
+    if [ X"$privauthdir" != X ] && [ -f $privauthdir/$authsrc ]; then
       rm -f $project_auth/$authdest
       cp $privauthdir/$authsrc $project_auth/$authdest
+    elif [ -f $project_auth/$authdest ]; then
+      true
+    else
+      eval "deploy_${authname}_auth $authsrc" > $project_auth/$authdest
     fi
 
     setgroup u=rwx,g=rx,o-rwx _config $(find $project_auth -type d)
