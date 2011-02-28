@@ -216,7 +216,7 @@ inrepo()
      rm -fr $swarea
      mkdir -p $swarea
      cd $swarea
-     wget -q http://cmsrep.cern.ch/cmssw/${repo%.*}/bootstrap.sh
+     wget -q http://cmsrep.cern.ch/cmssw/$(echo $repo | cut -d. -f1)/bootstrap.sh
      sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
        setup > $PWD/bootstrap-$arch.log 2>&1
      touch .bootstrapped)
