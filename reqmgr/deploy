@@ -19,7 +19,7 @@ deploy_reqmgr_sw()
 {
   case $variant in
     default )
-      deploy_pkg -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr WMCORE_0_6_9 ;;
+      deploy_pkg -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr WMCORE_0_6_9-cmp ;;
 
     offsite )
       deploy_pkg comp external+cherrypy 3.1.2-cmp6

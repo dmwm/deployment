@@ -12,7 +12,7 @@ deploy_sitedb_prep()
 
 deploy_sitedb_sw()
 {
-  deploy_pkg -a sitedb/sitedb.ini -a sitedb/security.ini comp cms+sitedb 1.2.3-cmp8
+  deploy_pkg -a sitedb/sitedb.ini -a sitedb/security.ini comp cms+sitedb 1.2.3-cmp7
 }
 
 deploy_sitedb_post()
