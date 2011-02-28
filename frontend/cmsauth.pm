@@ -803,8 +803,10 @@ sub init($)
     }
 
     my $dbpfx = "";
+    my $dbuser = "";
+    my $dbpass = "";
     my $dbid = "cmsauth\@@{[Sys::Hostname::hostname()]}";
-    my ($dbtype, $dbname, $dbuser, $dbpass);
+    my ($dbtype, $dbname);
     while (<F>)
     {
       chomp;
@@ -834,7 +836,7 @@ sub init($)
     }
     close(F);
 
-    if (! $dbtype || ! $dbname || ! $dbuser || ! $dbpass)
+    if (! $dbtype || ! $dbname)
     {
       $r->log->error("$me $db: missing parameters");
       die;
@@ -919,26 +921,27 @@ sub authz_maybe_reload($)
     }
 
     # Read site and group roles of users.
-    $q = dbexec($dbh, qq{
-      (select 'site' type, sr.contact, r.title, c.name
-       from site_responsibility sr
-       join role r on r.id = sr.role
-       join site s on s.id = sr.site
-       join site_cms_name_map sn on sn.site_id = s.id
-       join cms_name c on c.id = sn.cms_name_id)
-      union
-      (select 'group' type, gr.contact, r.title, g.name
-       from group_responsibility gr
-       join role r on r.id = gr.role
-       join user_group g on g.id = gr.user_group)});
-    while (my $r = $q->fetchrow_arrayref())
+    foreach my $sql (qq{select 'site' type, sr.contact, r.title, c.name
+                        from site_responsibility sr
+                        join role r on r.id = sr.role
+                        join site s on s.id = sr.site
+                        join site_cms_name_map sn on sn.site_id = s.id
+                        join cms_name c on c.id = sn.cms_name_id},
+		     qq{select 'group' type, gr.contact, r.title, g.name
+                        from group_responsibility gr
+                        join role r on r.id = gr.role
+                        join user_group g on g.id = gr.user_group})
     {
-      my ($type, $id, $role, $name) = @$r;
-      next if not exists $uid{$id};
+      $q = dbexec($dbh, $sql);
+      while (my $r = $q->fetchrow_arrayref())
+      {
+        my ($type, $id, $role, $name) = @$r;
+        next if not exists $uid{$id};
 
-      ($role = lc $role) =~ s/[^a-z0-9]+/-/g;
-      ($name = lc $name) =~ s/[^a-z0-9]+/-/g;
-      push(@{$uid{$id}{ROLES}{$role}}, "$type:$name");
+        ($role = lc $role) =~ s/[^a-z0-9]+/-/g;
+        ($name = lc $name) =~ s/[^a-z0-9]+/-/g;
+        push(@{$uid{$id}{ROLES}{$role}}, "$type:$name");
+      }
     }
 
     # Sort capabilities.

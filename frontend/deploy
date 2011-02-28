@@ -13,7 +13,7 @@ deploy_frontend_prep()
 
 deploy_frontend_sw()
 {
-  deploy_pkg comp cms+frontend 4.0c-cmp3
+  deploy_pkg comp cms+frontend 4.1
 }
 
 deploy_frontend_post()
