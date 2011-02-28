@@ -1,10 +1,27 @@
-#! /bin/bash
+#!/bin/sh
 
-case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1;; esac
+##H Usage: manage ACTION [ARG] [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H   pushapps    push couch applications
+##H   compact     compact database ARG
+##H   cleanviews  clean view named ARG
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/CouchDB
 
-#######################################################
-# Global configuration and environment setup
-#######################################################
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
@@ -12,33 +29,42 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 KEYFILE=$ROOT/auth/$ME/hmackey.ini
-TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/CouchDB#Starting_the_service"
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
-#######################################################
-# Actions definition
-#######################################################
-# Function to start the service conditionally on crond restart
-function sysboot {
+# Start service conditionally on crond restart.
+sysboot()
+{
   if couchdb -p $STATEDIR/couchdb.pid -s; then :; else
     start
   fi
 }
 
-# Function to start the service
-start() {
+# Start the service.
+start()
+{
   cd $STATEDIR
   couchdb -A $CFGDIR/ -a $KEYFILE -b \
     -o $LOGDIR/$(date +%Y%m%d-%H%M%S).stdout \
     -e $LOGDIR/$(date +%Y%m%d-%H%M%S).stderr \
     -p $STATEDIR/couchdb.pid </dev/null >/dev/null 2>&1
+
+  sleep 1
+  push_apps
 }
 
-stop() {
+# Stop the service.
+stop()
+{
   couchdb -d -p $STATEDIR/couchdb.pid
 }
 
-status() {
+# Check if the server is running.
+status()
+{
   couchdb -p $STATEDIR/couchdb.pid -s
 
   curl -s localhost:5984 | grep -q '{"couchdb":"Welcome","version":"1.0.1"}' ||
@@ -49,8 +75,10 @@ status() {
   echo $TASKS
 }
 
-# When a view is changed (e.g. new version of an app deployed) the views should be cleaned
-clean_views() {
+# When a view is changed, such as a new app version is deployed,
+# invoke this to clean up the views in that database.
+clean_views()
+{
   local database=$1
   [ -n "$database" ] ||
     { echo "You must specify the database you wish to clean the views "; exit 1; }
@@ -61,7 +89,9 @@ clean_views() {
     { echo "An error occured while cleaning the views. Please look in the CouchDB logs."; exit 3; }
 }
 
-push_apps() {
+# Push applications from staging area into couchdb.
+push_apps()
+{
   for APP in $STATEDIR/stagingarea/*; do
     [ -f $APP ] || continue
     . $APP
@@ -71,8 +101,9 @@ push_apps() {
   done
 }
 
-#Trigger a compaction with: manage compact t1_uk_ral_requests 'I did read documentation'
-compact(){
+# Trigger a database compaction.
+compact()
+{
   local database=$1
   [ -n "$database" ] ||
     { echo "You must specify a database to compact"; exit 3; }
@@ -89,50 +120,70 @@ compact(){
   # curl -H "Content-Type: application/json" -X POST http://localhost:5984/dbname/_compact/designname
 }
 
-help() {
-  echo "CouchDB management script"
-  echo "Usage: $0 status|start|stop|restart|help|version|pushapps security_string"
-  echo "       $0 compact|cleanviews dbname security_string"
-  echo "For more details, check the Twiki page: $TWIKI_PAGE"
-}
-
-check() {
+# Verify the security string.
+check()
+{
   CHECK=$(echo "$1" | md5sum | awk '{print $1}')
   if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
-    echo "$0: cannot complete operation, please read documentation." 1>&2
+    echo "$0: cannot complete operation, please check documentation." 1>&2
     exit 2;
   fi
 }
 
-#######################################################
-# Main
-#######################################################
-
-case $1 in
-  start | restart)
-    check "$2"; stop; sleep 1; start; sleep 1; push_apps; status ;;
-  status)
-    status ;;
-  stop)
-    check "$2"; stop; status ;;
-  pushapps)
-    check "$2"; push_apps;;
-  compact)
-    check "$3"; compact $2;;
-  cleanviews)
-    check "$3"; clean_views $2;;
-  sysboot)
-    if ps -oargs= $PPID | grep -q -e crond; then
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    if ps -oargs= $PPID | grep -q crond; then
       sysboot
     else
       echo "$0: sysboot is for cron only" 1>&2
       exit 1
-    fi ;;
-  help)
-    help ;;
-  version)
-    echo "Management script for CouchDB $COUCHDB_VERSION." ;;
+    fi
+    ;;
+
+  start | restart )
+    check "$2"
+    stop
+    sleep 1
+    start
+    status
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$2"
+    stop
+    status
+    ;;
+
+  pushapps )
+    check "$2"
+    push_apps
+    ;;
+
+  compact )
+    check "$3"
+    compact $2
+    ;;
+
+  cleanviews )
+    check "$3"
+    clean_views $2
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$COUCHDB_VERSION"
+    ;;
+
   * )
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
-    exit 1 ;;
+    exit 1
+    ;;
 esac

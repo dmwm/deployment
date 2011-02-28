@@ -1,8 +1,23 @@
-#! /bin/bash
+#!/bin/sh
 
-case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1;; esac
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/OverviewDeployment
 
-# Overview management script
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
 
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
@@ -10,106 +25,96 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-SERVICE_TITLE="Overview"
-TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/OverviewDeployment#Other_server_operation"
 CFGFILE=$CFGDIR/server-conf.py
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
 . $ROOT/apps/overview/etc/profile.d/env.sh
 export OVERVIEW_ROOT
 
-# Function to start the service conditionally on crond restart
-function sysboot {
+# Start service conditionally on crond restart.
+sysboot()
+{
   if [ $(pgrep -u $(id -u) -f "[/]ovGui $CFGFILE" | wc -l) = 0 ]; then
     start
   fi
 }
 
-# Function to start the service
-function start {
+# Start the service.
+start()
+{
   cd $STATEDIR
+  echo "starting $ME"
   ovControl start all from $CFGFILE
 }
 
-# Function to stop the service
-function stop {
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
   ovControl stop all from $CFGFILE
 }
 
-# Function to chack the status of the process
-function status {
-  PIDS=$(pgrep -u $(id -u) -f "[/]ovGui $CFGFILE")
-  if [ X"$PIDS" != X ]; then
-    echo "$SERVICE_TITLE is RUNNING, PID:" $PIDS
+# Check if the server is running.
+status()
+{
+  pid=$(pgrep -u $(id -u) -f "[/]ovGui $CFGFILE" | sort -n)
+  if [ X"$pid" = X ]; then
+    echo -e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
-    echo "$SERVICE_TITLE is NOT RUNNING."
+    echo -e "$ME is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
 }
 
-#######################################################
-# Function to provide the help for the user
-# To edit the help provided, edit lines with the ##H prefix
-#######################################################
-##H Available actions:
-##H   sysboot - start server from crond if not running
-##H   status - show current service's status
-##H   start - start the service
-##H   stop - stop the service
-##H   restart - restart the service
-##H   version - get current version of the service
-##H Security string - string needed to perform actions, see twiki page
-#######################################################
-function help {
-  echo "$SERVICE_TITLE management script"
-  echo "Usage: $0 status|start|stop|restart|help|version security_string"
-  echo "For more details, check the Twiki page: $TWIKI_PAGE"
-  perl -ne '/^##H / && do { s/^##H ?//; print }' < $0
-}
-
-# Function to check the security string.
-function check {
+# Verify the security string.
+check()
+{
   CHECK=$(echo "$1" | md5sum | awk '{print $1}')
   if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
-    echo "$0: cannot complete operation, please check documentation."
+    echo "$0: cannot complete operation, please check documentation." 1>&2
     exit 2;
   fi
 }
 
-#######################################################
-# The engine of the script. The place where the
-# script reacts to the actions.
-# Params: $1 - action
-#         $2 - security string
-#######################################################
-
-case $1 in
-  sysboot)
-    if ps -oargs= $PPID | grep -q -e crond; then
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    if ps -oargs= $PPID | grep -q crond; then
       sysboot
     else
       echo "$0: sysboot is for cron only" 1>&2
       exit 1
     fi
     ;;
-  start | restart)
+
+  start | restart )
     check "$2"
     stop
     start
     status
     ;;
-  status)
+
+  status )
     status
     ;;
-  stop)
+
+  stop )
     check "$2"
     stop
     status
     ;;
-  help)
-    help
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
     ;;
-  version)
-    echo "Management script for $SERVICE_TITLE $T0MON_VERSION."
+
+  version )
+    echo "$OVERVIEW_VERSION"
     ;;
-  *)
+
+  * )
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
-    exit 1 ;;
+    exit 1
+    ;;
 esac

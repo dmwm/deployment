@@ -1,15 +1,23 @@
 #!/bin/sh
 
-case $(id -un) in cmsweb ) echo "ERROR: please use another account" 1>&2; exit 1;; esac
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
 
-#######################################################
-# MongoDB management script
-#######################################################
-# Setting the basic and common variables.
-# Make sure that these are up to date.
-# If need a new variable, it must be defined here.
-# Use export if you really need this!
-#######################################################
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
 
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
@@ -17,24 +25,21 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-SERVICE_TITLE="MongoDB"
-TWIKI_PAGE="https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation"
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
 . $ROOT/apps/mongo/etc/profile.d/init.sh
 cd $STATEDIR
 
-#######################################################
-#  Function for the main actions.
-#  If using the variable here, need to define it in the
-#  top part of the script, to keep them in one place.
-#######################################################
-
-# Function to clean-up and update specific DB in Mongo
-# it accepts a single parameter in a form <dbname>_<collection_name>,
-# e.g. mapping_db
-# First it uses a cleanup script, e.g. clean_mapping_db.js to clean DB content
-# then use update script to populate new content into DB, e.g. update_mapping_db.js
-# The update script contains a JSON docs to be populated.
-function update_db {
+# Function to clean-up and update specific DB in Mongo.
+# Accepts a single parameter in a form <dbname>_<collection_name>,
+# e.g. mapping_db. First runs the cleanup script to clean database
+# content, then uses the update script to populate new content into
+# DB, e.g. clean_mapping_db.js and update_mapping_db.js. The update
+# script contains the JSON docs to be populated.
+update_db()
+{
   stamp=$(cat stagingarea/update_$1.js | md5sum)
   oldstamp=$(cat stagingarea/$1-schema-stamp 2>/dev/null)
   if [ ! -f stagingarea/$1-schema-stamp ] || [ X"$oldstamp" != X"$stamp" ]; then
@@ -49,35 +54,35 @@ function update_db {
   fi
 }
 
-# Function to start the service conditionally on crond restart
-function sysboot {
+# Start service conditionally on crond restart.
+sysboot()
+{
   PID=$(cat $STATEDIR/db/mongod.lock 2>/dev/null)
   if [ X"$PID" = X ] || [ $(ps h $PID | wc -l) = 0 ]; then
     # must clean-up improper shutdown
     rm -rf $STATEDIR/db/*
     rm -f $PWD/stagingarea/*-schema-stamp
     start
-    sleep 2
-    update_db "mapping_db"
   fi
 }
 
-# Function to start the service
-function start()
+# Start the service.
+start()
 {
-  echo "Starting the $SERVICE_TITLE"
+  echo "starting $ME"
   $MONGO_ROOT/bin/mongod --dbpath=$STATEDIR/db \
       --port 8230 --nohttpinterface --bind_ip 127.0.0.1 \
       </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-%Y%m%d.log 86400 >/dev/null 2>&1 &
   sleep 2
-  echo
-  echo "$SERVICE_TITLE is ready"
+  echo "$ME is ready"
+  sleep 2
+  update_db "mapping_db"
 }
 
-# Function to stop the service
-function stop()
+# Stop the service.
+stop()
 {
-  echo "Stopping the $SERVICE_TITLE"
+  echo "stopping $ME"
   PID=$(cat $STATEDIR/db/mongod.lock 2>/dev/null)
   if [ X"$PID" != X ]; then
     kill -INT $PID
@@ -90,85 +95,65 @@ function stop()
   fi
 }
 
-# Function to check the status of the process
-function status()
+# Check if the server is running.
+status()
 {
   PID=$(cat $STATEDIR/db/mongod.lock 2>/dev/null)
   if [ X"$PID" != X ] && [ $(ps -p $PID | wc -l) != 0 ]; then
-    echo "$SERVICE_TITLE is RUNNING, PID $PID."
+    echo -e "$ME is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   else
-    echo "$SERVICE_TITLE is NOT RUNNING."
+    echo -e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   fi
 }
 
-#######################################################
-# Function to provide the help for the user
-# To edit the help provided, edit lines with the ##H prefix
-#######################################################
-##H Available actions:
-##H   sysboot - start server from crond if not running
-##H   status - show current service's status
-##H   start - start the service
-##H   stop - stop the service
-##H   restart - restart the service
-##H   version - get current version of the service
-##H Security string - string needed to perform actions, see twiki page
-#######################################################
-function help {
-  echo "$SERVICE_TITLE management script"
-  echo "Usage: $0 status|start|stop|restart|help|version security_string"
-  echo "For more details, check the Twiki page: $TWIKI_PAGE"
-  perl -ne '/^##H / && do { s/^##H ?//; print }' < $0
-}
-
-# Function to check the security string.
-function check {
+# Verify the security string.
+check()
+{
   CHECK=$(echo "$1" | md5sum | awk '{print $1}')
   if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
-    echo "$0: cannot complete operation, please check documentation."
+    echo "$0: cannot complete operation, please check documentation." 1>&2
     exit 2;
   fi
 }
 
-#######################################################
-# The engine of the script. The place where the
-# script reacts to the actions.
-# Params: $1 - action
-#         $2 - security string
-#######################################################
-
-case $1 in
-  sysboot)
-    if ps -oargs= $PPID | grep -q -e crond; then
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    if ps -oargs= $PPID | grep -q crond; then
       sysboot
     else
       echo "$0: sysboot is for cron only" 1>&2
       exit 1
     fi
     ;;
-  start | restart)
+
+  start | restart )
     check "$2"
     stop
     start
-    sleep 2
-    update_db "mapping_db"
     status
     ;;
-  status)
+
+  status )
     status
     ;;
-  stop)
+
+  stop )
     check "$2"
     stop
     status
     ;;
-  help)
-    help
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
     ;;
-  version)
-    echo "Management script for $SERVICE_TITLE."
+
+  version )
+    echo "$MONGO_VERSION"
     ;;
-  *)
+
+  * )
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
-    exit 1 ;;
+    exit 1
+    ;;
 esac
