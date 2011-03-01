@@ -73,12 +73,9 @@ deploy_phedex_post()
   setgroup ug+rw,o-w _phedex $PWD/var
 
   (mkcrontab
-   case $variant in
-     datasvc )
-       cmd="$project_config/trim-cache $root/current $PWD/cache 1000M"
-       $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
-       echo "0 * * * * $cmd" ;;
-   esac
+   cmd="$project_config/trim-cache $root/current $PWD/cache 1000M"
+   $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
+   echo "0 * * * * $cmd"
    sysboot) | crontab -
 
   (crontab -l | fgrep $project_config/trim-cache | sed 's|^[/*0-9 ]* ||;') | sh -x
