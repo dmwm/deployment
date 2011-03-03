@@ -75,7 +75,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  $STATEDIR/etc/httpd start </dev/null 2>&1
+  $STATEDIR/etc/httpd restart </dev/null 2>&1
   start_graphs
 }
 

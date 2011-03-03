@@ -15,8 +15,12 @@
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/ServiceApache
 
 case ${1:-status} in
-  status | start | restart | graceful | stop | configtest )
+  status | graceful | stop | configtest )
     sudo /sbin/service httpd $1
+    ;;
+
+  start | restart )
+    sudo /sbin/service httpd restart
     ;;
 
   help )
