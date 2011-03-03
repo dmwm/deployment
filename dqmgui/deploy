@@ -7,18 +7,27 @@ deploy_dqmgui_deps()
 
 deploy_dqmgui_prep()
 {
-  mkproj gui repository
+  extra=
+  case $host in
+    dqm-c2d07-* )
+      extra="$extra /dqmdata/dqm/uploads"
+      extra="$extra /dqmdata/dqm/agents"
+      extra="$extra /dqmdata/dqm/repository/original"
+      extra="$extra agents"
+      ;;
+
+    * )
+      for d in offline caf relval dev devtest; do
+        extra="$extra $d $d/agents $d/data $d/uploads $project_logs/$d"
+      done
+      ;;
+  esac
+  mkproj $extra
 }
 
 deploy_dqmgui_sw()
 {
-  export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW
-  deploy_pkg comp cms+dqmgui 5.3.2
-
-  cd $project_config
-  cvs -Q co -d config -r OFFLINE_CONFIG_PRODUCTION CMSSW/DQM/Integration/config
-  cvs -Q co -d style -r OFFLINE_CONFIG_PRODUCTION CMSSW/DQM/RenderPlugins/src
-  setgroup -R ug+r,go-w _config config style
+  deploy_pkg comp cms+dqmgui 6.0.0
 }
 
 deploy_dqmgui_post()
