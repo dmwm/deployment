@@ -31,12 +31,16 @@ COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/overview/etc/profile.d/env.sh
-export OVERVIEW_ROOT
+
+export MPLCONFIGDIR=$STATEDIR
+export MATPLOTLIBRC=$CFGDIR
+export HOME=$STATEDIR
+export QUIET_ASSERT=a
 
 # Start service conditionally on crond restart.
 sysboot()
 {
-  if [ $(pgrep -u $(id -u) -f "[/]ovGui $CFGFILE" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "[/]monGui $CFGFILE" | wc -l) = 0 ]; then
     start
   fi
 }
@@ -46,20 +50,20 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  ovControl start all from $CFGFILE
+  monControl start all from $CFGFILE
 }
 
 # Stop the service.
 stop()
 {
   echo "stopping $ME"
-  ovControl stop all from $CFGFILE
+  monControl stop all from $CFGFILE
 }
 
 # Check if the server is running.
 status()
 {
-  pid=$(pgrep -u $(id -u) -f "[/]ovGui $CFGFILE" | sort -n)
+  pid=$(pgrep -u $(id -u) -f "[/]monGui $CFGFILE" | sort -n)
   if [ X"$pid" = X ]; then
     echo -e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else

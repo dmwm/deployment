@@ -6,12 +6,12 @@ deploy_overview_deps()
 
 deploy_overview_prep()
 {
-  mkproj server
+  mkproj
 }
 
 deploy_overview_sw()
 {
-  deploy_pkg -a overview/dbparam.py comp cms+overview 5.2.1c
+  deploy_pkg -a overview/dbparam.py comp cms+overview 6.0.0
 }
 
 deploy_overview_post()
