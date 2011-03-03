@@ -74,10 +74,98 @@ deploy_system_post()
   # FIXME: Check the cmsweb account can *not* write files anywhere on AFS, including cmsweb-owned directories.
   # FIXME: Check lemon-host-check has no warnings other than the machine being in maintenance mode.
   case $variant in
-    frontend )
-      ;;
+    frontend | backend )
+      [ $USER = cmsweb ]
+      [ $HOME = /home/cmsweb ]
+      cd $HOME
 
-    backend )
+      # Verify the user has required local groups.
+      G=$(id -Gn)
+      for g in _config _sw _auth _frontend _admin _base _couchdb _das _dbs \
+               _dbsweb _dqmgui _filemover _overview _phedex _sitedb _t0mon \
+               _mongodb _reqmgr _workqueue _configcache _plotfairy _t0datasvc; do
+        case " $G " in *" $g "* ) ;; * ) note "ERROR: no $g group"; exit 1;; esac
+      done
+
+      # Must have various directories.
+      [ -d /data/user ]
+      [ -d /data/certs ]
+      [ -d /data/empty ]
+
+      # Must have AFS token and be able to sudo.
+      /usr/kerberos/bin/klist -s
+      sudo -l
+
+      # Verify system installation is up-to-date; should do nothing.
+      sudo /usr/sbin/ccm-fetch
+      sudo /usr/sbin/ncm-ncd --configure --all || true # fails for useraccess (slsmon)
+      sudo /usr/sbin/spma_wrapper.sh
+
+      # Fetch CRLs. Do this only for front-end and combined front-/back-end.
+      case $variant in
+        frontend )
+          sudo sh -c 'http_proxy="http://ca-proxy.cern.ch/" /opt/edg/etc/cron/edg-fetch-crl-cron' ;;
+        backend )
+          [ ! -f /opt/edg/etc/cron/edg-fetch-crl-cron ] ||
+            sudo sh -c 'http_proxy="http://ca-proxy.cern.ch/" /opt/edg/etc/cron/edg-fetch-crl-cron' ;;
+      esac
+
+      # Verify the host certificate is ok.
+      note "INFO: cert subject:    " $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -subject)
+      note "INFO: cert fingerprint:" $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -fingerprint)
+      note "INFO: cert validity:   " $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -dates)
+
+      openssl verify -CApath /etc/grid-security/certificates /etc/grid-security/hostcert.pem
+      openssl x509 -noout -in /etc/grid-security/hostcert.pem -days 180 ||
+        { note "ERROR: cert must be valid for at least 180 days"; exit 1; }
+      X=$(echo -n "this is a test" |
+          openssl smime -encrypt -aes128 /etc/grid-security/hostcert.pem | \
+          sudo openssl smime -decrypt -inkey /etc/grid-security/host{key,cert}.pem)
+      case $X in "this is a test" ) ;; * )
+        note "ERROR: cert and key do not match"; exit 1;;
+      esac
+
+      X=$(openssl x509 -noout -in /etc/grid-security/hostcert.pem -subject)
+      case $variant:$X in
+        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb.cern.ch" | \
+        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb-testbed.cern.ch" | \
+        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmswttest.cern.ch" | \
+         backend:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9][0-9]".cern.ch" )
+          ;;
+        * )
+          note "ERROR: cert subject invalid for $variant: $X"
+          exit 1 ;;
+      esac
+
+      # Install logwatch / bashs scanner.
+      (cd $project_config_src/logwatch; find . -type f -print0 |
+       tar --null -T /dev/stdin -cf -) | sudo tar -C /etc/logwatch -xvvf - \
+         --no-anchored --exclude CVS --exclude .svn --exclude .git \
+         --exclude '*~' --exclude '.#*' --exclude '*.swp'
+
+      # Make sure the permissions for /home/cmsweb are right.
+      sudo /usr/sbin/ncm-ncd --configure dirperm
+
+      # Setup bash. Set environment on login. Destroy token on logout.
+      (echo '[ -f ~/.bashrc ] && . ~/.bashrc') > .bash_profile
+      (echo unlog; echo kdestroy; echo 'rm -f /tmp/{krb5cc_,tkt}$(id -u){,_*}') > .bash_logout
+      (echo '[ -f /etc/bashrc ] && . /etc/bashrc';
+       echo 'export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW'
+       echo 'export PATH=$HOME/bin:/data/current/bin:$PATH') > .bashrc
+
+      # Create the .cvspass file for any CVS checkouts.
+      cvs -d :pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW login
+
+      # Set up SSH keys.
+      mkdir -p .ssh
+      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/ssh-keys-$variant .ssh/authorized_keys
+      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant .ssh/id_dsa
+      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant.pub .ssh/id_dsa.pub
+      chmod -R go-rwx /home/cmsweb/.ssh
+
+      # Generate post-install logwatch report.
+      export PATH=$PATH:/usr/sbin
+      sudo /usr/sbin/logwatch
       ;;
 
     devvm )

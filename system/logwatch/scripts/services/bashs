@@ -1,0 +1,30 @@
+#!/usr/bin/perl -nw
+###########################################################################
+# bashs: A logwatch script to collate and format bashs log entries from
+#        the messages log. Entries are broken down by the user who issued
+#        the command.  Based on the 'sudo' script.
+###########################################################################
+
+use strict;
+our ($Debug,  $Detail,  %byUser);
+BEGIN {
+    $Debug = $ENV{'LOGWATCH_DEBUG'} || 0;
+    $Detail = $ENV{'LOGWATCH_DETAIL_LEVEL'} || 20;
+}
+
+# -n causes this script to be run for every line of input (except BEGIN & END)
+if (my($uid, $cmd) = /bashs: pid=\d+ uid=(\d+)[, ](.*)/) {
+    push @{$byUser{"@{[(getpwuid($uid))[0]]} ($uid; @{[(getpwuid($uid))[6]]})"}}, $cmd;
+}
+
+END {
+    foreach my $user (sort keys %byUser) {
+       print "=" x 78, "\n", "$user:\n";
+       foreach my $cmd (@{$byUser{$user}}) {
+        	# make long commands easier to read
+        	$cmd =~ s/(?=.{74,})(.{1,74}) /${1} \\\n    /g
+        	    if (length($cmd) > 75);
+        	print "$cmd\n";
+       } # foreach $row
+    } # foreach $user
+} # END

@@ -1,0 +1,282 @@
+#! /usr/bin/python
+
+##########################################################
+# Script to integrate CMSWEB audit reports in logwatch
+#
+# Script queries ausearch tool with the time interval and
+# key used in audit rule description. Then applies regexps
+# on it and calculating success and failed results.
+# Report is generated and printed to STDOUT for logwatch
+# to grab it and send to emails every morning.
+#
+# Audit rules can be found: /etc/audit/audit.rules
+# Requires:
+#  - auditd, aureport and ausearch installed
+#  - python > 2.4
+##########################################################
+
+# import needed modules
+import os, sys, subprocess, re
+from datetime import date, timedelta
+
+# uncomment this to print failed actions
+#_printable = ['failed']
+# uncoment this to print both - successful and failed actions
+_printable = ['failed','success']
+
+# Dictionary to keep the summary entries
+_summary = {}
+
+# ausearch tool is here:
+_ausearch_tool = '/sbin/ausearch'
+
+# Regexps list seperated by keys for better performance
+# Also dictionary keys is used to query ausearch tool for the key specific results
+
+# Universal regexp to catch most of the system calls.
+if 'success' in _printable:
+  _universal_regexp = (
+    re.compile("type=PATH .*item=(?P<item_id>\d+) "
+	       "name=(?P<item_name>[\(\)/@a-zA-Z0-9_\.\-\*]+)"),
+    re.compile("type=SYSCALL .*syscall=(?P<syscall>[a-z]+) .*"
+	       "success=(?P<success>no) .*exit=(?P<exit_code>[\-0-9]+)"
+	       "\((?P<exit_message>[\-0-9\ a-zA-Z]+)\) .*"
+	       "uid=(?P<uid>[_a-z]+) .*comm=(?P<comm>[/a-zA-Z0-9_\.\-]+) .*"
+	       "exe=(?P<exe>[/a-zA-Z0-9_\.\-]+)"),
+    re.compile("type=SYSCALL .*syscall=(?P<syscall>[a-z]+) .*"
+	       "success=(?P<success>yes) .* uid=(?P<uid>[_a-z]+) .*"
+	       "comm=(?P<comm>[/a-zA-Z0-9_\.\-]+) .*"
+	       "exe=(?P<exe>[/a-zA-Z0-9_\.\-]+)"),
+  )
+# increasing performance and not applying the success regexp if we will not print it in results
+else:
+  _universal_regexp = (
+    re.compile("type=PATH .*item=(?P<item_id>\d+) "
+	       "name=(?P<item_name>[\(\)/@a-zA-Z0-9_\.\-\*]+)"),
+    re.compile("type=SYSCALL .*syscall=(?P<syscall>[a-z]+) .*"
+	       "success=(?P<success>no) .*exit=(?P<exit_code>[\-0-9]+)"
+	       "\((?P<exit_message>[\-0-9\ a-zA-Z]+)\) .*"
+	       "uid=(?P<uid>[_a-z]+) .*comm=(?P<comm>[/a-zA-Z0-9_\.\-]+) .*"
+	       "exe=(?P<exe>[/a-zA-Z0-9_\.\-]+)"),
+  )
+
+
+# Regexps to be used for each key described in audit rules
+_regexps = {
+  'SYSTEM_filesystem' :  _universal_regexp,
+  'SYSTEM_fileaccess_fail' : _universal_regexp,
+  'SYSTEM_security' : _universal_regexp,
+  'SYSTEM_permissions' : _universal_regexp,
+  'SYSTEM_logins' : _universal_regexp,
+  'SYSTEM_config' : _universal_regexp,
+  'SYSTEM_pamd' : _universal_regexp,
+  'SYSTEM_timechange' : _universal_regexp,
+  'CMSWEB_compsw' : _universal_regexp,
+  'CMSWEB_service_executable' : _universal_regexp,
+  'CMSWEB_proj_conf' : _universal_regexp,
+  'CMSWEB_logs' : _universal_regexp,
+  'SYSTEM_crontab' : _universal_regexp,
+  'SYSTEM_audit_logs' : _universal_regexp,
+  'CMSWEB_service_exited' : (
+    re.compile("type=SYSCALL .*syscall=(?P<syscall>[a-z]+) .*"
+	       "uid=(?P<uid>[_a-z]+) .*comm=(?P<comm>[/a-zA-Z0-9_\.\-]+) .*"
+	       "exe=(?P<exe>[/a-zA-Z0-9_\.\-]+)"),
+  ),
+  # Not tested because of too less entries with these keys...
+  # 'SYSTEM_ssh' : _universal_regexp,
+  # 'SYSTEM_aliases' :_universal_regexp,
+  # 'SYSTEM_postfix' : _universal_regexp,
+  # 'SYSTEM_locale' : _universal_regexp,
+  # 'CMSWEB_cmssw' : _universal_regexp,
+  # 'SYSTEM_syscall_failed' : _universal_regexp,
+  # 'SYSTEM_auditd' : _universal_regexp,
+}
+
+# Initializing everything
+def initialize():
+  for key in _regexps.keys():
+    _summary[key] = {}
+    _summary[key]['total'] = 0
+    _summary[key]['failed'] = 0
+    _summary[key]['success'] = 0
+    _summary[key]['ignored'] = 0
+    _summary[key]['info'] = {}
+
+# Analyzing the line
+def do_match(block, key):
+
+  lines = [line for line in block.split('\n') if line]
+  arguments = {}
+
+  for line in lines:
+    for exp in _regexps[key]:
+      matched = exp.match(line)
+      if matched:
+        match_result = matched.groupdict()
+        if 'item_id' in match_result.keys():
+          arguments[matched.group('item_id')] = matched.group('item_name')
+        if 'syscall' in match_result.keys():
+          syscall_information = match_result
+
+  try:
+    # checking if information about this user was entered earlier
+    if syscall_information['uid'] not in _summary[key]['info'].keys():
+      _summary[key]['info'][syscall_information['uid']] \
+	= {'success':{}, 'failed':{}, 'total':0}
+
+    smry = _summary[key]['info'][syscall_information['uid']]
+
+    # if this is succesfull syscall construct keys differently and
+    # could be that success is not available in match result
+    if 'success' in syscall_information.keys():
+      if syscall_information['success'] == 'no':
+        syscall_key = "%s - %s (exit code: %s)" % \
+		      (syscall_information['syscall'],
+		       syscall_information['exit_message'],
+		       syscall_information['exit_code'])
+        where_to_add = 'failed'
+      else:
+        syscall_key = "%s - success" % syscall_information['syscall']
+        where_to_add = 'success'
+    else:
+      syscall_key = "%s - success" % syscall_information['syscall']
+      where_to_add = 'success'
+
+    # if syscall first time found for this user, create place in dictionary for it
+    if syscall_key not in smry[where_to_add].keys():
+      smry[where_to_add][syscall_key] = {}
+    scsmry = smry[where_to_add][syscall_key]
+
+    # what command caused this system call to be logged
+    command_ran = "%s %s" % (syscall_information['comm'], syscall_information['exe'])
+    if command_ran not in scsmry.keys():
+      scsmry[command_ran] = {'count':0, 'arguments':{}}
+    cmdsmry = scsmry[command_ran]
+
+    # getting arguments
+    number_of_arguments = len(arguments)
+    argument_string = None
+    # 'rename' syscall
+    if syscall_information['syscall'] == 'rename':
+      item1 = "%s" % (number_of_arguments - 2)
+      item2 = "%s" % (number_of_arguments - 1)
+      if item1 in arguments.keys() and item2 in arguments.keys():
+        argument_string = "%s -> %s" % (arguments[item1], arguments[item2])
+      elif item2 in arguments.keys():
+        argument_string = "%s" % (arguments[item2])
+    # 'execve' syscall
+    elif syscall_information['syscall'] == 'execve':
+      if '0' in arguments.keys():
+        argument_string = "%s" % (arguments['0'])
+    #unlink syscall
+    elif syscall_information['syscall'] == 'unlink':
+      if '1' in arguments.keys():
+        argument_string = "%s" % (arguments['1'])
+      elif '0' in arguments.keys():
+        argument_string = "%s" % (arguments['0'])
+    # fchmod syscall
+    elif syscall_information['syscall'] == 'fchmod':
+      item = "%s" % (number_of_arguments)
+      if item in arguments.keys():
+        argument_string = "%s" % (arguments[item])
+      elif '0' in arguments.keys():
+        argument_string = "%s" % (arguments['0'])
+    # others - not requiring special things
+    else:
+        item = "%s" % (number_of_arguments - 1)
+        if item in arguments.keys():
+          argument_string = "%s" % (arguments[item])
+        else:
+          item = "%s" % (number_of_arguments)
+          if item in arguments.keys():
+            argument_string = "%s" % (arguments[item])
+
+    # if argument string exists then create an entry for it
+    if argument_string != None and argument_string != '(null)':
+      if argument_string not in cmdsmry['arguments'].keys():
+        cmdsmry['arguments'][argument_string] = {'count':0}
+      cmdsmry['arguments'][argument_string]['count'] += 1
+
+    # counting commands
+    cmdsmry['count'] += 1
+
+    # increasing global counters
+    smry['total'] += 1
+    _summary[key][where_to_add] += 1
+
+  except Exception, e:
+    _summary[key]['ignored'] += 1
+
+  return True
+
+
+# Printing the report:
+def  print_report():
+  for key in _regexps.keys():
+    print "%s [total: %s, failed: %s, success: %s, ignored: %s ]" % \
+          (key, _summary[key]['total'], _summary[key]['failed'],
+	   _summary[key]['success'], _summary[key]['ignored'])
+    for user, user_info in _summary[key]['info'].items():
+      for what_to_print in _printable:
+        if len(user_info[what_to_print]) > 0:
+          print user
+        for syscall, commands in user_info[what_to_print].items():
+          print "   %s" % syscall
+
+          commands_have = len(commands)
+          if commands_have < 200:
+            will_print = commands_have
+          else:
+            will_print = 50
+          printed_count = 0
+          for command_ran in commands:
+            printed_count += 1
+            if printed_count > will_print:
+              print "      (%s actions were not reported)" % (commands_have - will_print)
+              break
+            print "      %s: { %s }" % (_summary[key]['info'][user][what_to_print][syscall][command_ran]['count'], command_ran)
+
+            argument_have = len(_summary[key]['info'][user][what_to_print][syscall][command_ran]['arguments'])
+            if argument_have < 200:
+              will_print_args = argument_have
+            else:
+              will_print_args = 50
+            args_printed_count = 0
+            for argument in _summary[key]['info'][user][what_to_print][syscall][command_ran]['arguments'].keys():
+              args_printed_count += 1
+              if args_printed_count > will_print_args:
+                print "        (%s arguments were not reported)" % (argument_have - will_print_args)
+                break
+              print "        %s : %s " % (argument, _summary[key]['info'][user][what_to_print][syscall][command_ran]['arguments'][argument]['count'])
+          print " "
+
+  return True
+
+# Main function
+def main():
+  initialize()
+  for key in _regexps.keys():
+    # will query ausearch tool for the yesterday's results
+    cmd = [_ausearch_tool,'--input-logs','-i','-k',key,'-ts', 'yesterday', '00:00:00','-te', 'yesterday', '23:59:59']
+    try:
+      (output,err) = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()
+      if err:
+        print "Errors occured while trying to read log files."
+        for error in err:
+          print "Error: %s" % error
+          print "-----------------------------------------------\n"
+          return -2
+    except Exception, e:
+      print "ERROR: problem while reading audit logs. Please check if auditd installed and running."
+      return -1
+
+    blocks = [block for block in output.split('----') if block]
+    _summary[key]['total'] = len(blocks)
+    for block in blocks:
+      do_match(block,key)
+
+  print_report()
+  return 0
+
+if __name__ == '__main__':
+  main()
