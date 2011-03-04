@@ -15,9 +15,7 @@ deploy_das_prep()
 
 deploy_das_sw()
 {
-  deploy_pkg comp cms+das 0.5.9
-  cat $project_config/*.yml | md5sum > $project_config/schema-stamp
-  setgroup u+rw,go-w _config $project_config/schema-stamp
+  deploy_pkg comp cms+das 0.5.10
 }
 
 deploy_das_post()

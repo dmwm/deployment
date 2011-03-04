@@ -27,6 +27,7 @@ config.web_server.url_base = '/das'
 config.web_server.logfile = ''
 config.web_server.port = 8212
 config.web_server.pid = '/data/state/das/das_web_server.pid'
+config.web_server.status_update = 5000
 
 # mongodb configuration
 config.component_('mongodb')
@@ -52,6 +53,7 @@ config.loggingdb.dbname = 'logging'
 config.component_('analyticsdb')
 config.analyticsdb.collname = 'db'
 config.analyticsdb.dbname = 'analytics'
+config.analyticsdb.history = 5184000
 
 # mappingdb configuration
 config.component_('mappingdb')
@@ -71,5 +73,5 @@ config.das.logformat = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 config.das.logfile = ''
 config.das.verbose = 0
 config.das.parserdir = '/data/state/das' # area should be owned by _das account
-config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','google_maps','postalcode','ip_service']
+config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','ip_service']
 
