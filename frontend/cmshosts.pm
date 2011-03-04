@@ -62,7 +62,7 @@ package cmshosts;
 use strict;
 use warnings;
 use Apache2::ServerUtil;
-use File::Spec::Functions qw(catfile rel2abs);
+use File::Spec::Functions qw(rel2abs);
 use Digest::SHA1 'sha1_hex';
 use Apache2::Const -compile => ':common', ':http';
 use cmstools;
@@ -123,7 +123,7 @@ sub reload_conf($)
   # Re-read mapping table.
   my $nerr = 0;
   my $newmap = [];
-  my $f = catfile $server_root, $host_map;
+  my $f = rel2abs $host_map, $server_root;
   $r->log->notice("reloading mappings from $f") if DEBUG;
   open(F, "< $f") or die "$f: $!";
   while (<F>)

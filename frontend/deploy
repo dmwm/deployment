@@ -1,4 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_frontend_variants="default prod preprod"
 deploy_frontend_deps()
 {
   deploy wmcore-auth
@@ -6,25 +7,29 @@ deploy_frontend_deps()
 
 deploy_frontend_prep()
 {
-  mkproj etc/keys var \
-         etc/keys/auth-{hn,csrf,sid,pass} \
-         etc/keys/{cert-cookie,host-map}
+  $MIGRATION rm -fr $project_state/{htdocs,etc}
+  mkproj var etc/keys{,/{auth-{hn,csrf,sid,pass},cert-cookie,host-map}}
+  setgroup ug+rw,o-w _config $PWD{,/etc{,/keys}}
 }
 
 deploy_frontend_sw()
 {
-  deploy_pkg comp cms+frontend 4.1
-}
+  deploy_pkg -a frontend/db-params.txt comp cms+frontend 4.1
 
-deploy_frontend_post()
-{
-  case $host in
-    vocms65 | vocms105 ) backends=backends-prod.txt    opts="-DPRODUCTION";;
-    vocms108 )           backends=backends-preprod.txt opts="-DPRODUCTION -DPREPRODUCTION";;
-    * )                  backends=backends-dev.txt     opts="-DPRODUCTION -DTEST";;
+  if grep -q Oracle $project_auth/db-params.txt; then :; else
+    deploy_frontend_fakeauth $project_auth/users.db
+  fi
+
+  case $variant in
+    prod )     backends=backends-prod.txt    opts="-DPRODUCTION";;
+    preprod )  backends=backends-preprod.txt opts="-DPRODUCTION -DPREPRODUCTION";;
+    * )        backends=backends-dev.txt     opts="-DPRODUCTION -DTEST";;
   esac
 
   (. $root/current/apps/frontend/etc/profile.d/init.sh
+   export AUTH_DB_PARAMS=$project_auth/db-params.txt
+   export HOST_MAP_FILE=$project_config/$backends
+   export CONFIG_DIR=$project_config
    mkserver                                           \
    -r $PWD                                            \
    -l $project_logs                                   \
@@ -36,30 +41,18 @@ deploy_frontend_post()
    -d $project_config/htdocs                          \
    -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"             \
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
-   -x "$project_config/{*.pl,*.pm}"                   \
-   -x "$project_config/[cer]*.txt"                    \
-   -x $project_config/$backends:backends.txt          \
    -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so  \
-   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so) || exit $?
+   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so)
+  [ $? = 0 ]
 
-  cp $root/current/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
+  rm -f $PWD/etc/keys/authz-headers
+  ln $root/current/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
+  setgroup ugo+r,go-w _config $PWD/{*.conf,etc/{httpd,*.txt}}
+  setgroup -R ugo+r,go-w _config $PWD/{etc/env.d,htdocs}
+}
 
-  rm -f $PWD/etc/db-param.txt
-  if [ X"$privauthdir" = X ]; then
-    (echo "type SQLite"; echo "database dbname=$PWD/var/users.db") \
-      > $PWD/etc/db-param.txt
-    deploy_frontend_fakeauth $PWD/var/users.db
-  else
-    cat $privauthdir/sitedb/security.ini |
-      perl -ne '
-        if (m{^dbname\s*=.*//(\S+):(\S+)\@(\S+)}) {
-          print "type Oracle\n", "database $3\n", "user $1\n",
-                "password $2\n", "schema-prefix $3\n"
-        }' > $PWD/etc/db-param.txt
-  fi
-
-  setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
-
+deploy_frontend_post()
+{
   case $host in * ) enable ;; esac
   (echo "PATH=/sbin:/bin:/usr/sbin:/usr/bin";
    echo "X509_USER_CERT=$root/certs/hostcert.pem";
@@ -95,18 +88,33 @@ deploy_frontend_post()
   sudo /sbin/chkconfig --levels 2345 httpd on
 }
 
+deploy_frontend_auth()
+{
+  if [ X"$privauthdir" != X ] && [ -f $privauthdir/sitedb/security.ini ]; then
+    perl -ne '
+      if (m{^dbname\s*=.*//(\S+):(\S+)\@(\S+)}) {
+        print "type Oracle\n", "database $3\n", "user $1\n",
+              "password $2\n", "schema-prefix $3\n"
+      }' < $privauthdir/sitedb/security.ini
+  else
+    echo "type SQLite"
+    echo "database dbname=$project_auth/users.db"
+  fi
+}
+
 deploy_frontend_fakeauth()
 {
   [ ! -f $1 ] || return 0
 
-  local user=$(id -un)
-  local pass=dev_$(echo $host | tr - _)_$$_$RANDOM
+  local user=${SUDO_USER:-$(id -un)}
+  local pass=$(perl -e 'print map{chr(1+32*(2+int(rand(2)))+int(rand(26)))} 1..15')
   local passcrypt=$(perl -e "print crypt('$pass', reverse time())")
+  local homedir=$(finger -m -p -l $user | perl -ne '/Directory: (\S+)/ && print $1')
   local name=$(finger -m -p -l $user | perl -ne '/Name: (.*)/ && print $1')
   local forename=$(echo "$name" | cut -f1 -d\ )
   local surname=$(echo "$name" | cut -f2- -d\ )
-  if [ -r $HOME/.globus/usercert.pem ]; then
-    local dn=$(openssl x509 -noout -subject -in ~/.globus/usercert.pem | cut -f2- -d\ )
+  if [ -r $homedir/.globus/usercert.pem ]; then
+    local dn=$(openssl x509 -noout -subject -in $homedir/.globus/usercert.pem | cut -f2- -d\ )
   else
     local dn=
   fi
@@ -155,4 +163,5 @@ deploy_frontend_fakeauth()
    echo "insert into role values (1, 'bar');"
    echo "insert into site_responsibility values (1, 1, 1);"
    echo "insert into group_responsibility values (1, 1, 1);") | sqlite3 $1
+  setgroup ugo+r,go-wx _config $project_auth/users.db
 }
