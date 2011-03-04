@@ -1,4 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_wmcore_auth_variants="default prod preprod"
 deploy_wmcore_auth_prep()
 {
   mkproj -l -s
@@ -13,20 +14,20 @@ deploy_wmcore_auth_sw()
 deploy_wmcore_auth_auth()
 {
   if [ X"$privauthdir" = X ] || [ $(ls $privauthdir/wmcore/*-key* 2>/dev/null | wc -l) = 0 ]; then
-    perl -e 'open(R, "< /dev/urandom") or die; sysread(R, $key, 20) or die; print $key'
+    havekeys=false
   else
-    case $host in
-      vocms65 | vocms105 | vocms106 | vocms107 | vocms50 | vocms53 )
-        cat $privauthdir/wmcore/header-auth-key-prod ;;
-      vocms108 | vocms51 )
-        cat $privauthdir/wmcore/header-auth-key-preprod ;;
-      * )
-        cat $privauthdir/wmcore/header-auth-key-dev ;;
-    esac
+    havekeys=true
   fi
+
+  case $variant:$havekeys in
+    prod:true | preprod:true )
+      cat $privauthdir/wmcore/header-auth-key-$variant ;;
+    * )
+      perl -e 'open(R, "< /dev/urandom") or die; sysread(R, $key, 20) or die; print $key' ;;
+  esac
 }
 
 deploy_wmcore_auth_post()
 {
-  disable;
+  disable
 }
