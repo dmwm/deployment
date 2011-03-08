@@ -6,7 +6,7 @@ deploy_phedex_deps()
 
 deploy_phedex_prep()
 {
-  mkproj $extra sessions cache/phedex-datasvc
+  mkproj sessions cache/phedex-datasvc
 }
 
 deploy_phedex_sw()
