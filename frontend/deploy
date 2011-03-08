@@ -7,7 +7,6 @@ deploy_frontend_deps()
 
 deploy_frontend_prep()
 {
-  $MIGRATION rm -fr $project_state/{htdocs,etc}
   mkproj var etc/keys{,/{auth-{hn,csrf,sid,pass},cert-cookie,host-map}}
   setgroup ug+rw,o-w _config $PWD{,/etc{,/keys}}
 }
