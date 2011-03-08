@@ -20,6 +20,7 @@ deploy_admin_sw()
 
 deploy_admin_post()
 {
+  local pxlabel certs
   case $host in
     vocms65 | vocms105 | vocms108 | \
     vocms50 | vocms51 | vocms53 | \
@@ -30,11 +31,20 @@ deploy_admin_post()
       pxlabel=devvm_$(echo $host | tr - _) ;;
   esac
 
+  if [ -r $root/certs/hostcert.pem ]; then
+    certs=$root/certs
+  elif [ -r /data/certs/hostcert.pem ]; then
+    certs=/data/certs
+  else
+    note "ERROR: cannot find hostcert to use"
+    exit 1
+  fi
+
   (mkcrontab
    echo "@reboot . $project_config/init.sh && $project_config/ServerMonitor -r"
    echo "*/6 * * * * . $project_config/init.sh && $project_config/ServerMonitor -q -v"
    echo "37 */8 * * * . $project_config/init.sh && $project_config/ServerMonitor -q -r"
-   echo "3 */3 * * * $project_config/ProxyRenew $root/certs $root/current/auth/proxy $pxlabel cms"
+   echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
    echo "7 * * * * $project_config/LogArchive $root") |
    crontab -
 

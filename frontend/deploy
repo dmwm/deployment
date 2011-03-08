@@ -52,10 +52,20 @@ deploy_frontend_sw()
 
 deploy_frontend_post()
 {
+  local certs
+  if [ -r $root/certs/hostcert.pem ]; then
+    certs=$root/certs
+  elif [ -r /data/certs/hostcert.pem ]; then
+    certs=/data/certs
+  else
+    note "ERROR: cannot find hostcert to use"
+    exit 1
+  fi
+
   case $host in * ) enable ;; esac
   (echo "PATH=/sbin:/bin:/usr/sbin:/usr/bin";
-   echo "X509_USER_CERT=$root/certs/hostcert.pem";
-   echo "X509_USER_KEY=$root/certs/hostkey.pem";
+   echo "X509_USER_CERT=$certs/hostcert.pem";
+   echo "X509_USER_KEY=$certs/hostkey.pem";
    mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
    echo "13 */6 * * * (/opt/edg/libexec/edg-mkgridmap/edg-mkgridmap.pl" \
       "--conf=$project_config/mkgridmap.conf --output=$PWD/etc/voms-gridmap.txt" \

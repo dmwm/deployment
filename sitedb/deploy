@@ -27,6 +27,16 @@ deploy_sitedb_post()
 
 deploy_sitedb_auth()
 {
+  local certs
+  if [ -r $root/certs/hostcert.pem ]; then
+    certs=$root/certs
+  elif [ -r /data/certs/hostcert.pem ]; then
+    certs=/data/certs
+  else
+    note "ERROR: cannot find hostcert to use"
+    exit 1
+  fi
+
   case $1 in
     */security.ini )
       echo "[database]"
@@ -43,8 +53,8 @@ deploy_sitedb_auth()
       echo "squid = http://frontier.cern.ch/squidstats/mrtgcms"
       echo "sam = https://lcg-sam.cern.ch:8443/sam/sam.py?"
       echo "[security]"
-      echo "cert = $root/certs/hostcert.pem"
-      echo "key = $root/certs/hostkey.pem"
+      echo "cert = $certs/hostcert.pem"
+      echo "key = $certs/hostkey.pem"
       echo "[setup]"
       case $variant in
         prod )
