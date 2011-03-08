@@ -79,6 +79,11 @@ deploy_system_post()
       [ $HOME = /home/cmsweb ]
       cd $HOME
 
+      # Verify system installation is up-to-date; should do nothing.
+      sudo /usr/sbin/ccm-fetch
+      sudo /usr/sbin/spma_wrapper.sh
+      sudo /usr/sbin/ncm-ncd --configure --all || true # fails for useraccess (slsmon)
+
       # Verify the user has required local groups.
       G=$(id -Gn)
       for g in _config _sw _auth _frontend _admin _base _couchdb _das _dbs \
@@ -95,11 +100,6 @@ deploy_system_post()
       # Must have AFS token and be able to sudo.
       /usr/kerberos/bin/klist -s
       sudo -l
-
-      # Verify system installation is up-to-date; should do nothing.
-      sudo /usr/sbin/ccm-fetch
-      sudo /usr/sbin/ncm-ncd --configure --all || true # fails for useraccess (slsmon)
-      sudo /usr/sbin/spma_wrapper.sh
 
       # Fetch CRLs. Do this only for front-end and combined front-/back-end.
       case $variant in
