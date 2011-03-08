@@ -35,8 +35,19 @@ deploy_admin_post()
    echo "*/6 * * * * . $project_config/init.sh && $project_config/ServerMonitor -q -v"
    echo "37 */8 * * * . $project_config/init.sh && $project_config/ServerMonitor -q -r"
    echo "3 */3 * * * $project_config/ProxyRenew $root/certs $root/current/auth/proxy $pxlabel cms"
-   echo "58 2 * * * $project_config/LogArchive $root") |
+   echo "7 * * * * $project_config/LogArchive $root") |
    crontab -
+
+  case $host:$root in
+    vocms65:/data/srv | vocms105:/data/srv | vocms108:/data/srv | vocms109:/data/srv )
+      klist -s # must have afs kerberos token
+      LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
+      (acrontab -l | { fgrep -v -e " $host $project_config/" || true; } | \
+        { grep -v " $host .*/archive-log-files" || true; }
+       echo "9 * * * * $host $project_config/LogSave $root $LOGDIR/$host") | acrontab
+      acrontab -l | fgrep " $host $project_config/" | sed "s|^[/*0-9 ]* $host ||" | sh -x
+      ;;
+  esac
 
   if [ $(ls $root/current/auth/proxy/PX* 2>/dev/null | wc -l) = 0 ]; then :; else
     crontab -l | grep $project_config/ProxyRenew | sed 's|^[0-9*/ ]* ||' | sh -x

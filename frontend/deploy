@@ -69,18 +69,6 @@ deploy_frontend_post()
   (crontab -l | grep -e '^[A-Z0-9_]*=' -e $project_config/ |
    perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
 
-  case $host in
-    vocms65 | vocms105 | vocms108 | vocms109 )
-      klist -s # must have afs kerberos token
-      LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
-      (. $root/current/apps/frontend/etc/profile.d/init.sh;
-       acrontab -l | grep -v " $host .*/archive-log-files ";
-       echo "7 * * * * $host $APACHE_SETUP_ROOT/archive-log-files $project_logs $LOGDIR/$host") \
-        | acrontab
-      acrontab -l | grep " $host .*/archive-log-files " | sed "s|^[/*0-9 ]* $host ||" | sh -x
-      ;;
-  esac
-
   sudo rm -f /etc/rc.d/init.d/httpd
   sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
   sudo /sbin/chkconfig --add httpd
