@@ -18,8 +18,9 @@ reqMgrHost = "http://127.0.0.1:%d" % PORT
 if re.match(r"^vocms(?:10[67]|5[03])\.cern\.ch$", HOST):
   HOST = "cmsweb.cern.ch"
   COUCH = "http://vocms53.cern.ch:5984"
-elif re.match(r"^vocms51\.cern\.ch$", HOST):
+elif re.match(r"^vocms(?:51|13[23])\.cern\.ch$", HOST):
   HOST = "cmsweb-testbed.cern.ch"
+  COUCH = "http://vocms133.cern.ch:5984"
 
 config = Configuration()
 config.component_('SecurityModule')

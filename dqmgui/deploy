@@ -32,7 +32,7 @@ deploy_dqmgui_sw()
 
 deploy_dqmgui_post()
 {
-  case $host in vocms10[67] | vocms5[03] ) disable ;; * ) enable ;; esac
+  case $host in vocms10[67] | vocms5[03] | vocms132 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot
    cmd="$project_config/daily"
    $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
