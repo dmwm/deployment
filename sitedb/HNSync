@@ -2,12 +2,16 @@
 
 # Source SiteDB environment so we have cx_oracle available.
 # Any version of SiteDB installed on this system will do.
-. /data/current/apps/sitedb/etc/profile.d/init.sh
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+STATEDIR=$TOP/state/$ME
+. $ROOT/apps/$ME/etc/profile.d/init.sh
 
 # Configuration working parametres.
-WORK_DIR=$(dirname $(dirname $0))/hn
+WORK_DIR=$STATEDIR/hn
 FILE=hn_passwd_$(date +%Y%m%d_%H%M%S).out
-SECURITY_FILE=/data/current/auth/sitedb/security.ini
+SECURITY_FILE=$ROOT/auth/sitedb/security.ini
 
 # Download the input from hypernews. This is restricted to
 # certain hosts, Andreas Peiffer can add other nodes to the

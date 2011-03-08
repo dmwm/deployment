@@ -20,7 +20,7 @@ deploy_phedex_sw()
      . $root/current/apps/$app/etc/profile.d/init.sh
    done
    perl -p -i -e "
-       s|(?<!/store)/data/|$root/|g; \
+       s|\@ROOT\@|$root/|g; \
        s|\@WEB_VERSION\@|$PHEDEX_WEB_VERSION|g; \
        s|\@DATASVC_VERSION\@|$PHEDEX_DATASVC_VERSION|g; \
        s|\@WEBAPP_VERSION\@|$PHEDEX_WEBAPP_VERSION|g; \

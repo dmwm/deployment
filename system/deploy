@@ -151,7 +151,7 @@ deploy_system_post()
       (echo unlog; echo kdestroy; echo 'rm -f /tmp/{krb5cc_,tkt}$(id -u){,_*}') > .bash_logout
       (echo '[ -f /etc/bashrc ] && . /etc/bashrc';
        echo 'export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW'
-       echo 'export PATH=$HOME/bin:/data/current/bin:$PATH') > .bashrc
+       echo 'export PATH=$HOME/bin:/data/srv/current/bin:$PATH') > .bashrc
 
       # Create the .cvspass file for any CVS checkouts.
       cvs -d :pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW login

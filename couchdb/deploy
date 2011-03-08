@@ -15,7 +15,7 @@ deploy_couchdb_prep()
 deploy_couchdb_sw()
 {
   deploy_pkg -a couchdb/hmackey.ini comp external+couchdb 1.0.1-cmp10
-  perl -p -i -e "s{/data}{$root}g" $project_config/local.ini
+  perl -p -i -e "s|{ROOT}|$root|g" $project_config/local.ini
 }
 
 deploy_couchdb_post()

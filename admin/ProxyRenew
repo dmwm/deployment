@@ -12,7 +12,9 @@
 ###
 ### The proxy would normally be renewed using a cron job like this:
 ###
-###  3 */3 * * * /data/projects/admin/ProxyRenew /data/certs /data/current/auth/proxy cmsweb_backends cms
+###  3 */3 * * * /data/system/current/config/admin/ProxyRenew \
+###                /data/certs /data/system/current/auth/proxy \
+###                cmsweb_backends cms
 ###
 ### Periodically, usually once a month, the operator should upload his or
 ### her personal proxy to myproxy.cern.ch using the following command. Do
@@ -20,9 +22,8 @@
 ### (-R pattern) should be registered with px.support@cern.ch prior to use.
 ###
 ###  export GT_PROXY_MODE=old
-###  myproxy-init -l cmsweb_backends_$(id -un) -x \
-###               -R "*/CN=vocms(106|107|109|116|50|51|53).cern.ch" \
-###               -c 720 -t 36 -s myproxy.cern.ch
+###  myproxy-init -x -R "*/CN=vocms(10[4-9]|116|5[013]|65).cern.ch" \
+###    -c 720 -t 36 -s myproxy.cern.ch -l cmsweb_backends_$(id -un)
 ###
 ### In addition on the first time and whenever the proxy has expired, the
 ### operator needs to re-bootstrap the renewal process by copying a seed
@@ -30,7 +31,7 @@
 ###
 ###  voms-proxy-init -voms cms
 ###  scp -p /tmp/x509up_u$(id -u) \
-###    cmsweb@vocmsNNN.cern.ch:/data/projects/conf/certs/seed-$(id -un).cert
+###    cmsweb@vocmsNNN.cern.ch:/data/system/current/auth/proxy/seed-$(id -un).cert
 ###
 
 verbose=false

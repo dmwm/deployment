@@ -3,7 +3,7 @@
 
   <import module="graphtool.database.queries">SqlQueries</import>
   <import module="time"/>
-  <import file="/data/state/phedex/etc/graphs_dbparam.xml" />
+  <import file="@ROOT@/state/phedex/etc/graphs_dbparam.xml" />
 
   <class type="SqlQueries" name="GenericQuery">
 

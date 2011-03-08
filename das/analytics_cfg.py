@@ -14,7 +14,7 @@ logfile_mode = "None"
 workers = 4
 log_to_stderr = 0
 web_base = "/analytics"
-pid = "/data/state/das/das_analytics.pid"
+pid = '{ROOT}/state/das/das_analytics.pid'
 
 # DAS analytics tasks
 Task("DatasetHotspot", "ValueHotspot", 3600, key="dataset.name")

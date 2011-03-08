@@ -7,5 +7,5 @@
   <import module="graphtool.tools.check_block">CheckBlock</import>
   <import module="graphtool.tools.file_config">FileConfig</import>
   <import module="graphtool.tools.fileinfo">FileInfo</import>
-  <import file="/data/state/phedex/etc/graphs_text_queries.xml" />
+  <import file="@ROOT@/state/phedex/etc/graphs_text_queries.xml" />
 </graphtool-config>

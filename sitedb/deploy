@@ -20,7 +20,7 @@ deploy_sitedb_post()
 {
   case $host in vocms53 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot
-   case $host:$root in vocms106:/data )
+   case $host in vocms106 )
      echo "3 * * * * $project_config/HNSync";;
    esac) | crontab -
 }

@@ -1,5 +1,5 @@
 <graphtool-config>
-  <import file="/data/state/phedex/etc/graphs_generic_queries.xml" />
+  <import file="@ROOT@/state/phedex/etc/graphs_generic_queries.xml" />
 
   <class type="SqlQueries" name="PhedexQueries">
 
