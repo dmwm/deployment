@@ -260,6 +260,48 @@ start()
         fi
       done
       ;;
+
+    *:*agents* ) # dev
+      refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
+
+      # standard lot of agents
+      for D in dev; do
+        DQM_DATA=$STATEDIR/$D
+        startagent $D/agent-receive \
+          visDQMReceiveDaemon \
+          $DQM_DATA/uploads \
+          $DQM_DATA/data \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/agents/zip
+
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          7 \
+          $DQM_DATA/agents/stageout
+
+        startagent $D/agent-import \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $DQM_DATA/ix \
+          $DQM_DATA/agents/historic \
+          $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-vcontrol \
+          visDQMVerControlDaemon \
+          $DQM_DATA/agents/vcontrol \
+          $DQM_DATA/data
+      done
+      ;;
   esac
 
   # maybe start migration
