@@ -24,7 +24,7 @@ deploy_couchdb_post()
      [ -d /data/projects/couchdb/database ] && \
      [ $(find $PWD/database -type f | wc -l) = 0 ]; then
     note "INFO: cloning old couch databases from /data/projects/couchdb/database"
-    cmd="tar -C /data/projects/couchdb/database -cf - . | tar -C $PWD/database -xvvf -"
+    cmd="(cd /data/projects/couchdb/database && tar -cf - * .??*) | tar -C $PWD/database -xvvf -"
     $nogroups || cmd="sudo -H -u _couchdb bashs -lc '$cmd'"
     eval $cmd
   else :; fi
