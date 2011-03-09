@@ -101,9 +101,7 @@ killproc()
 startagent()
 {
   local logstem=$1; shift
-  (set -x
-   ("$@" 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 </dev/null &) \
-   </dev/null >/dev/null 2>&1 &)
+  (set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Start service conditionally on crond restart.
@@ -355,7 +353,7 @@ start()
                 ln ${f%.origin} ${b%.origin}
               fi
             fi
-          done' </dev/null 2>&1 | rotatelogs $LOGDIR/agent-migration-$D-%Y%m%d.log 86400 >/dev/null 2>&1 &
+          done' </dev/null 2>&1 | rotatelogs $LOGDIR/$D/agent-migration-$D-%Y%m%d.log 86400 >/dev/null 2>&1 &
       done
       ;;
   esac
@@ -365,7 +363,7 @@ start()
     dqm-c2d07-[01]1:*collector* | dqm-c2d07-2[12]:*collector* )
       DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
     *:* )
-      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/dev/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
   esac
 
   # finally web server(s)
