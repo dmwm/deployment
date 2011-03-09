@@ -383,7 +383,7 @@ stop()
   case ${1:-agents} in *agents* )
     killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|OnlineSync|createOnlineInfo" ;;
   esac
-  case ${1:-migration} in *migration* )
+  case $1 in *migration* )
     killproc "$ME migration agents" "visDQMMigration|sleep" ;;
   esac
   case ${1:-collector} in *collector* )
@@ -414,7 +414,7 @@ status()
   case ${1:-agents} in *agents* )
     statproc "$ME agents" "visDQM.*Daemon|visDQMIndex|zip|OnlineSync|createOnlineInfo" ;;
   esac
-  case ${1:-migration} in *migration* )
+  case $1 in *migration* )
     statproc "$ME migration" "visDQMMigration|sleep" ;;
   esac
 }
