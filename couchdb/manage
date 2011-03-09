@@ -146,7 +146,6 @@ case ${1:-status} in
     stop
     sleep 1
     start
-    status
     ;;
 
   status )
@@ -156,7 +155,6 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
-    status
     ;;
 
   pushapps )

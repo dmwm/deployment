@@ -410,7 +410,6 @@ case ${1:-status} in
     check "$2"
     stop
     start
-    status
     ;;
 
   status )
@@ -420,7 +419,6 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
-    status
     ;;
 
   compile )
@@ -431,7 +429,6 @@ case ${1:-status} in
     check "$3"
     stop "$2"
     start "$2"
-    status "$2"
     ;;
 
   xstatus)
@@ -441,7 +438,6 @@ case ${1:-status} in
   xstop )
     check "$3"
     stop "$2"
-    status "$2"
     ;;
 
   help )

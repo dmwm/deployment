@@ -103,8 +103,6 @@ case ${1:-status} in
     check "$2"
     stop
     start
-    sleep 2
-    status
     ;;
 
   status )
@@ -114,7 +112,6 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
-    status
     ;;
 
   help )
