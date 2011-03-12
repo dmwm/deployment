@@ -36,5 +36,5 @@ deploy_dqmgui_post()
   (mkcrontab; sysboot
    cmd="$project_config/daily"
    $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
-   echo "17 2 * * * $cmd") | crontab -
+   [ ! -f $root/enabled/$project ] || echo "17 2 * * * $cmd") | crontab -
 }

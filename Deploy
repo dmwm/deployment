@@ -137,10 +137,12 @@ setgroup()
 # Produce crontab entry for sysboot rule
 sysboot()
 {
-  if $nogroups; then
-    echo "@reboot $project_config/manage ${1-sysboot}"
-  else
-    echo "@reboot sudo -H -u _$project bashs -l -c '$project_config/manage ${1-sysboot}'"
+  if [ ! -f $root/enabled/$project ]; then :; else
+    if $nogroups; then
+      echo "@reboot $project_config/manage ${1-sysboot}"
+    else
+      echo "@reboot sudo -H -u _$project bashs -l -c '$project_config/manage ${1-sysboot}'"
+    fi
   fi
 }
 

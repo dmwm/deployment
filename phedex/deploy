@@ -72,11 +72,10 @@ deploy_phedex_post()
   setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
   setgroup ug+rw,o-w _phedex $PWD/var
 
-  (mkcrontab
+  (mkcrontab; sysboot
    cmd="$project_config/trim-cache $root/current $PWD/cache 1000M"
    $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
-   echo "0 * * * * $cmd"
-   sysboot) | crontab -
+   [ ! -f $root/enabled/$project ] || echo "0 * * * * $cmd") | crontab -
 
   (crontab -l | fgrep $project_config/trim-cache | sed 's|^[/*0-9 ]* ||;') | sh -x
 }
