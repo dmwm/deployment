@@ -19,10 +19,10 @@
     <query name="link_query">
       <inputs>
         <input name="to_node"> .* </input>
-        <input kind='sql' name="span" type="eval"> 3600 </input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
         <input name="from_node" > .* </input>
-        <input kind='sql' name="starttime" type="eval">time.time()-3*86400</input>
-        <input kind='sql' name="endtime" type="eval">time.time()</input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
         <input name="link">link</input>
         <input name="no_mss"> True </input>
       </inputs>
@@ -59,10 +59,10 @@
     <query name="link_stats_query">
       <inputs>
         <input name="to_node"> .* </input>
-        <input kind='sql' name="span" type="eval"> 3600 </input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
         <input name="from_node" > .* </input>
-        <input kind='sql' name="starttime" type="eval">time.time()-3*86400</input>
-        <input kind='sql' name="endtime" type="eval">time.time()</input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
         <input name="link">link</input>
         <input name="no_mss"> True </input>
       </inputs>
@@ -98,9 +98,9 @@
     <query name="dest_query">
       <inputs>
         <input name="node" > .* </input>
-        <input kind='sql' name="span" type="eval"> 3600 </input>
-        <input kind='sql' name="starttime" type="eval">time.time()-86400</input>
-        <input kind='sql' name="endtime" type="eval">time.time()</input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
         <input name="no_mss"> True </input>
       </inputs>
       <sql>
@@ -135,8 +135,8 @@
       <inputs>
         <input name="to_node"> .* </input>
         <input name="from_node" > .* </input>
-        <input kind='sql' name="starttime" type="eval">time.time()-7*86400</input>
-        <input kind='sql' name="endtime" type="eval">time.time()</input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
         <input name="link">link</input>
         <input name="no_mss"> True </input>
       </inputs>
@@ -173,9 +173,9 @@
       <inputs>
         <input name="to_node" kind='sql'> .* </input>
         <input name="from_node" kind='sql'> .* </input>
-        <input kind='sql' name="starttime" type="eval">time.time()-7*86400</input>
-        <input kind='sql' name="endtime" type="eval">time.time()</input>
-        <input kind='sql' name="span" type="eval"> 3600 </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
         <input name="link">link</input>
         <input name="no_mss"> True </input>
       </inputs>
@@ -205,8 +205,8 @@
     <query name="latency_queries">
       <inputs>
         <input name="node" kind='sql'> .* </input>
-        <input kind='sql' name="starttime" type="eval">time.time()-30*86400</input>
-        <input kind='sql' name="endtime" type="eval">time.time()</input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
         <input kind='sql' name='dataset'>.*</input>
         <input kind='sql' name='min_blocksize'>0</input>
         <input kind='sql' name='max_blocksize'>500</input>

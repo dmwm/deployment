@@ -111,8 +111,8 @@
       <inputs>
         <input kind='sql' name="to_node">.*</input>
         <input kind='sql'  name="from_node">.*</input>
-        <input kind='sql' name="span" type="eval">3600</input>
-        <input kind='sql' name="now" type="eval">time.time()</input>
+        <input kind='sql' name="span" type="int">3600</input>
+        <input kind='sql' name="now" type="int">9999999999</input>
       </inputs>
       <sql>
       select

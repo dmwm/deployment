@@ -171,7 +171,7 @@
 
     <query name="quality_count" base="GenericQuery.simple_link_query2">
       <inputs>
-        <input name="minpercent" kind="sql" type="eval"> 0 </input>
+        <input name="minpercent" kind="sql" type="int"> 0 </input>
       </inputs>
       <sql>
         <filler name="having"> HAVING (NVL(SUM(h.done_files),0) + NVL(SUM(h.fail_files),0) > 0) AND (NVL(SUM(h.done_files),0)/(NVL(SUM(h.done_files),0) + NVL(SUM(h.fail_files),0)) > :minpercent/100) </filler>
@@ -183,7 +183,7 @@
 
     <query name="quality_count2" base="GenericQuery.simple_link_query2">
       <inputs>
-        <input name="minrate" kind="sql" type="eval"> 0 </input>
+        <input name="minrate" kind="sql" type="int"> 0 </input>
       </inputs>
       <sql>
         <filler name="having"> HAVING nvl(sum(h.done_bytes),0)/1048576/:span > :minrate </filler>
@@ -221,7 +221,7 @@
 <!--
     <query name="quality_table" base="GenericQuery.simple_link_query2">
       <inputs>
-        <input name="minpercent" kind="sql" type="eval"> 0 </input>
+        <input name="minpercent" kind="sql" type="int"> 0 </input>
       </inputs>
       <sql>
         <filler name="column"> distinct(h.to_node) </filler>

@@ -11,7 +11,7 @@ deploy_phedex_prep()
 
 deploy_phedex_sw()
 {
-  deploy_pkg -a phedex/DBParam comp cms+PHEDEX-web 4.0.0
+  deploy_pkg -a phedex/DBParam -a phedex/DBGraph comp cms+PHEDEX-web 4.0.0
   deploy_pkg comp cms+PHEDEX-webapp 1.1.0
   deploy_pkg comp cms+PHEDEX-datasvc 2.0.0
 
@@ -83,10 +83,12 @@ deploy_phedex_post()
 
 deploy_phedex_auth()
 {
-  cat <<-EOF
-	# Database connection parameters for different databases.
-	# *DO NOT COMMIT INTO CVS*.
+  case $1 in
+    */DBGraph )
+      perl -p -e 'exit(0) if /SecurityModule/' < $project_auth/DBParam ;;
 
+    */DBParam )
+      cat <<-EOF
 	Section            Prod/WebSite
 	Interface          Oracle
 	Database           cms_transfermgmt
@@ -130,4 +132,6 @@ deploy_phedex_auth()
 	LogConnection      off
 	LogSQL             off
 EOF
+      ;;
+  esac
 }
