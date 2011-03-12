@@ -57,12 +57,14 @@ sub handler($)
     # my $auth = $r->subprocess_env("AUTH_SPEC");
     # my $rauth = $r->subprocess_env("REDIRECT_AUTH_SPEC");
     my $ir = initialreq($r);
+    my $uri = Apache2::Util::escape_path($ir->unparsed_uri(), $r->pool);
+    $uri =~ s/'/%27/g;
+
     $title = "Authorisation required";
     $message = "<p>The site you requested is protected and requires you"
              . " to authenticate</p><p><a href='/auth/trouble'>Diagnose"
 	     . " certificate problems</a></p><p><a href='/auth/hnlogin?c="
-	     . Apache2::Util::escape_path($ir->unparsed_uri(), $r->pool)
-	     . "'>Login with your HN account</a></p>";
+	     . "$uri'>Login with your HN account</a></p>";
   }
   elsif ($err eq "/404")
   {
