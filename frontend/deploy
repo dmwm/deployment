@@ -46,7 +46,7 @@ deploy_frontend_sw()
 
   rm -f $PWD/etc/keys/authz-headers
   ln $root/current/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
-  setgroup ugo+r,go-w _config $PWD/{*.conf,etc/{httpd,*.txt}}
+  setgroup ugo+r,go-w _config $PWD/{*.conf,etc/{httpd,options.txt}}
   setgroup -R ugo+r,go-w _config $PWD/{etc/env.d,htdocs}
 }
 
