@@ -12,7 +12,7 @@ deploy_dbsweb_prep()
 deploy_dbsweb_sw()
 {
   app=$root/current/apps/dbs-web
-  deploy_pkg comp cms+dbs-web V06_00_47-cmp
+  deploy_pkg comp cms+dbs-web V06_00_47-cmp2
   perl -p -i -e 's{os\.chmod}{#os.chmod}g' $app/lib/python2.6/site-packages/utils/DDConfig.py
   perl -p -i -e "s|{ROOT}|$root|g" $project_config/DBSDD.conf
   setgroup ug+r,g-w,o-rwx _config $project_config/DBSDD.conf
