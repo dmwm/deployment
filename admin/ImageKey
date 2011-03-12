@@ -1,0 +1,49 @@
+#!/bin/sh
+
+##H Usage: ImageKey ACTION
+##H
+##H Available actions:
+##H   help        show this help
+##H   start       (re)start the service
+##H   stop        stop the service
+##H   env         print ssh environment
+##H   run         run with ssh environment
+
+PATH=/bin:/usr/bin:$PATH
+
+case ${1:-help} in
+  stop )
+    rm -f /root/.sshenv
+    agent=$(pgrep -u root ssh-agent) || true
+    [ X"$agent" = X ] || kill $agent
+    ;;
+
+  start )
+    set -e
+    rm -f /root/.sshenv
+    agent=$(pgrep -u root ssh-agent) || true
+    [ X"$agent" = X ] || kill $agent
+    eval `ssh-agent`
+    ssh-add -t 7200
+    env | grep '^SSH_' | sed 's/^/export /; s/$/;/' > /root/.sshenv
+    ;;
+
+  env )
+    cat /root/.sshenv 2>/dev/null ;;
+
+  run )
+    shift
+    set -e
+    . /root/.sshenv
+    exec "$@"
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
