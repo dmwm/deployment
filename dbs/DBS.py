@@ -22,17 +22,18 @@ config.SecurityModule.key_file = os.path.join(ROOTDIR,'auth/wmcore-auth/header-a
 config.component_('Webtools')
 config.Webtools.port = 8250
 config.Webtools.log_screen = True
-config.Webtools.application = 'cms_dbs'
+config.Webtools.proxy_base = 'True'
+config.Webtools.application = 'dbs'
 
-config.component_('cms_dbs')
-config.cms_dbs.templates = os.path.join(getWMBASE(),'../src/templates/WMCore/WebTools')
-config.cms_dbs.title = 'DBS Server'
-config.cms_dbs.description = 'CMS DBS Service'
-config.cms_dbs.section_('views')
-config.cms_dbs.admin = 'cmsdbs'
-config.cms_dbs.default_expires = 300
+config.component_('dbs')
+config.dbs.templates = os.path.join(getWMBASE(),'../src/templates/WMCore/WebTools')
+config.dbs.title = 'DBS Server'
+config.dbs.description = 'CMS DBS Service'
+config.dbs.section_('views')
+config.dbs.admin = 'cmsdbs'
+config.dbs.default_expires = 300
 
-active = config.cms_dbs.views.section_('active')
+active = config.dbs.views.section_('active')
 active.section_('DBSReader')
 active.DBSReader.object = 'WMCore.WebTools.RESTApi'
 active.DBSReader.section_('model')
