@@ -6,7 +6,7 @@ deploy_overview_deps()
 
 deploy_overview_prep()
 {
-  mkproj
+  mkproj sessions
 }
 
 deploy_overview_sw()

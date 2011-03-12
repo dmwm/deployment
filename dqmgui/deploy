@@ -13,12 +13,12 @@ deploy_dqmgui_prep()
       extra="$extra /dqmdata/dqm/uploads"
       extra="$extra /dqmdata/dqm/agents"
       extra="$extra /dqmdata/dqm/repository/original"
-      extra="$extra agents"
+      extra="$extra agents sessions"
       ;;
 
     * )
       for d in offline caf relval dev devtest; do
-        extra="$extra $d $d/agents $d/data $d/uploads $project_logs/$d"
+        extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $project_logs/$d"
       done
       ;;
   esac
