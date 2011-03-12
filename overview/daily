@@ -21,6 +21,7 @@ if [ ! -d $STATEDIR/sessions ]; then
   exit 1
 fi
 
+cd $STATEDIR
 mkdir $STATEDIR/.nodaily || { echo "$0: daily cannot run"; exit 1; }
 trap "rmdir $STATEDIR/.nodaily" 0 1 2 15
 

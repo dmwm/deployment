@@ -22,6 +22,7 @@ if [ $(find $STATEDIR -maxdepth 2 -type d -name sessions | wc -l) = 0 ]; then
   exit 1
 fi
 
+cd $STATEDIR
 mkdir $STATEDIR/.nodaily || { echo "$0: daily cannot run"; exit 1; }
 trap "rmdir $STATEDIR/.nodaily" 0 1 2 15
 
