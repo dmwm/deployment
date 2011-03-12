@@ -16,6 +16,7 @@ deploy_admin_sw()
    echo ". $root/current/apps/pystack/etc/profile.d/init.sh") \
    > $project_config/init.sh
   setgroup u+rw,go-w _config $project_config/init.sh
+  rm -f $project_config/{Clone,Install,Image,rsync}*
 }
 
 deploy_admin_post()
