@@ -17,12 +17,12 @@ if [ X"$STATEDIR" = X ]; then
   exit 1
 fi
 
+cd $STATEDIR
 if [ $(find $STATEDIR -maxdepth 2 -type d -name sessions | wc -l) = 0 ]; then
   echo "$0: server location '$STATEDIR' is wrong"
   exit 1
 fi
 
-cd $STATEDIR
 mkdir $STATEDIR/.nodaily || { echo "$0: daily cannot run"; exit 1; }
 trap "rmdir $STATEDIR/.nodaily" 0 1 2 15
 
