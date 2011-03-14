@@ -1,8 +1,9 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_dqmgui_variants="default bare"
 deploy_dqmgui_deps()
 {
   deploy backend
-  deploy admin
+  deploy admin $variant
 }
 
 deploy_dqmgui_prep()
@@ -33,6 +34,8 @@ deploy_dqmgui_sw()
 deploy_dqmgui_post()
 {
   case $host in vocms10[67] | vocms5[03] | vocms132 ) disable ;; * ) enable ;; esac
+  case $variant in bare ) return ;; esac
+
   (mkcrontab; sysboot
    cmd="$project_config/daily"
    $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"

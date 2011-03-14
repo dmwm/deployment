@@ -1,4 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_admin_variants="default bare"
 deploy_admin_deps()
 {
   deploy backend
@@ -21,6 +22,8 @@ deploy_admin_sw()
 
 deploy_admin_post()
 {
+  case $variant in bare ) disable; return ;; esac
+
   local pxlabel pxskip certs
   case $host in
     vocms65 | vocms105 | vocms108 | vocms134 | vocms135 | \
