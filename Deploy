@@ -235,7 +235,7 @@ inrepo()
 # Deploy some component.
 deploy()
 {
-  local pkg version
+  local pkg version variant
   case $1 in
     *@* ) pkg=${1%@*} version=${1#*@} ;;
     *   ) pkg=$1 version= ;;
