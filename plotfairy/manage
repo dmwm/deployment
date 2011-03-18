@@ -46,7 +46,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python $PLOTFAIRY_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py \
+  python -u $PLOTFAIRY_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py \
     --ini=$CFGFILE </dev/null 2>&1 | \
     rotatelogs $LOGDIR/plotfairy-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }

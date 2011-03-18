@@ -45,7 +45,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python $WMCORE_ROOT/src/python/WMCore/WebTools/Root.py \
+  python -u $T0DATASVC_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py \
     --ini=$CFGFILE </dev/null 2>&1 |
     rotatelogs $LOGDIR/T0DataSvc-%Y%m%d%H%M%S.log 86400 >/dev/null 2>&1 &
 }

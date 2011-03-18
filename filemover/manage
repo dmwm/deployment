@@ -50,7 +50,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python $WMCORE_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py \
+  python -u $FILEMOVER_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py \
     --ini=$CFGFILE </dev/null 2>&1 |
     rotatelogs $LOGDIR/filemover-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }

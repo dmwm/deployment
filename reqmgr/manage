@@ -48,7 +48,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python $WTBASE/WMCore/WebTools/Root.py --ini=$CFGFILE \
+  python -u $REQMGR_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$CFGFILE \
     </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 

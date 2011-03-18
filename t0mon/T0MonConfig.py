@@ -25,19 +25,20 @@ config.Webtools.host = '0.0.0.0'
 config.component_('SecurityModule')
 config.SecurityModule.key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 
-config.Webtools.application = 'T0MonApplication'
+config.Webtools.application = 'T0Mon'
 
 ## This is the config for the application
-config.component_('T0MonApplication')
+config.component_('T0Mon')
 ## Define the default location for templates for the app
-config.T0MonApplication.admin = ''
-config.T0MonApplication.title = 'T0Mon'
-config.T0MonApplication.description = 'Tier-0 Monitoring'
+config.T0Mon.admin = ''
+config.T0Mon.title = 'T0Mon'
+config.T0Mon.description = 'Tier-0 Monitoring'
+config.T0Mon.index = 'T0Mon'
 
 ## Views are all pages
-config.T0MonApplication.section_('views')
+config.T0Mon.section_('views')
 ## These are all the active pages that Root.py should instantiate
-active = config.T0MonApplication.views.section_('active')
+active = config.T0Mon.views.section_('active')
 
 active.T0Mon = active.section_('T0Mon')
 active.T0Mon.object = 'T0Mon.T0Mon'

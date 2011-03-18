@@ -22,6 +22,7 @@ config.FileMover.templates = environ['FILEMOVER_ROOT'] + '/lib/python2.6/site-pa
 config.FileMover.admin = 'cms-service-webtools@cern.ch'
 config.FileMover.title = 'CMS FileMover Documentation'
 config.FileMover.description = 'Documentation on the FileMover'
+config.FileMover.index = "FileMover"
 
 # dbs section
 dbs = config.FileMover.section_('dbs')
@@ -35,8 +36,8 @@ config.FileMover.section_('views')
 # These are all the active pages that Root.py should instantiate
 active = config.FileMover.views.section_('active')
 
-active.section_('filemover')
-active.filemover.object = 'fm.web.FileMoverService'
+active.section_('FileMover')
+active.FileMover.object = 'fm.web.FileMoverService'
 
 # FileMover WebServer configuration
 fmws = config.FileMover.section_('fmws')

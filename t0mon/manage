@@ -51,7 +51,7 @@ start()
       echo "Removing stale lock file"
       rm -f var/Mott0Refreshing
   fi
-  python $WMCORE_ROOT/src/python/WMCore/WebTools/Root.py \
+  python -u $T0MON_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py \
     --ini=$CFGFILE </dev/null 2>&1 |
     rotatelogs $LOGDIR/T0Mon-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
