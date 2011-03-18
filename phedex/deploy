@@ -77,7 +77,11 @@ deploy_phedex_post()
    $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
    [ ! -f $root/enabled/$project ] || echo "0 * * * * $cmd") | crontab -
 
-  (crontab -l | fgrep $project_config/trim-cache | sed 's|^[/*0-9 ]* ||;') | sh -x
+  if $nogroups; then
+    rm -fr cache/phedex-datasvc/*
+  else
+    sudo -H -u _phedex bashs -lc "rm -fr cache/phedex-datasvc/*"
+  fi
 }
 
 deploy_phedex_auth()
