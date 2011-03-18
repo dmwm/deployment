@@ -12,8 +12,7 @@ deploy_dbsweb_prep()
 deploy_dbsweb_sw()
 {
   app=$root/current/apps/dbs-web
-  deploy_pkg comp cms+dbs-web V06_00_47-cmp2
-  perl -p -i -e 's{os\.chmod}{#os.chmod}g' $app/lib/python2.6/site-packages/utils/DDConfig.py
+  deploy_pkg comp cms+dbs-web V06_00_48
   perl -p -i -e "s|{ROOT}|$root|g" $project_config/DBSDD.conf
   setgroup ug+r,g-w,o-rwx _config $project_config/DBSDD.conf
   chmod g-w,o-rwx $project_config/DBSDD.conf
@@ -29,9 +28,7 @@ deploy_dbsweb_sw()
    rm -f YUI yui WEBTOOLS
    ln -s $YUI_ROOT/build YUI
    ln -s $YUI_ROOT yui
-   ln -s $WEBTOOLS_ROOT/lib/python2.6/site-packages/Controllers WEBTOOLS
-   mkdir -p rss
-   ./scripts/genTemplates.sh)
+   ln -s $WEBTOOLS_ROOT/lib/python2.6/site-packages/Controllers WEBTOOLS)
 }
 
 deploy_dbsweb_post()
