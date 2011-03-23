@@ -1,5 +1,5 @@
 # DAS analytics web server configuration
-log_to_stdout = 1
+log_to_stdout = 0
 log_to_file = 0
 web_history = 10000
 minimum_interval = 60
