@@ -19,10 +19,20 @@ deploy_frontend_sw()
     deploy_frontend_fakeauth $project_auth/users.db
   fi
 
+  local backends opts name
   case $variant in
-    prod )     backends=backends-prod.txt    opts="-DPRODUCTION";;
-    preprod )  backends=backends-preprod.txt opts="-DPRODUCTION -DPREPRODUCTION";;
-    * )        backends=backends-dev.txt     opts="-DPRODUCTION -DTEST";;
+    prod )
+      backends=backends-prod.txt
+      opts="-DPRODUCTION"
+      name="-n cmsweb.cern.ch" ;;
+    preprod )
+      backends=backends-preprod.txt
+      opts="-DPRODUCTION -DPREPRODUCTION"
+      name="-n cmsweb-testbed.cern.ch" ;;
+    * )
+      backends=backends-dev.txt
+      opts="-DPRODUCTION -DTEST"
+      name="" ;;
   esac
 
   (. $root/current/apps/frontend/etc/profile.d/init.sh
@@ -30,6 +40,7 @@ deploy_frontend_sw()
    export HOST_MAP_FILE=$project_config/$backends
    export CONFIG_DIR=$project_config
    mkserver                                           \
+   $name                                              \
    -r $PWD                                            \
    -l $project_logs                                   \
    -a $APACHE2_ROOT                                   \
