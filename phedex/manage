@@ -56,6 +56,7 @@ kill_graphs()
   for PID in $(pgrep -u $(id -u) -f "$GRAPHS_PATTERN" | sort -rn); do
     PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
              perl -n -e 'print join(" ", (split)[0..6])')
+    [ $(ps h $PID | wc -l) = 0 ] && break
     echo "Stopping $PID ($PSLINE):"
     kill -9 $PID
   done
@@ -84,9 +85,10 @@ stop()
 {
   echo "stopping $ME"
   for pat in "$PHEDEX_PATTERN" "$GRAPHS_PATTERN"; do
-    for PID in $(pgrep -u $(id -u) -f "$pat" | sort -rn); do
+    for PID in $(pgrep -u $(id -u) -f "$pat" | sort -n); do
       PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
                perl -n -e 'print join(" ", (split)[0..6])')
+      [ $(ps h $PID | wc -l) = 0 ] && break
       echo "Stopping $PID ($PSLINE):"
       kill -INT $PID
       sleep 1
