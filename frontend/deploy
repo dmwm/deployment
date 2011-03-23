@@ -22,17 +22,14 @@ deploy_frontend_sw()
   local backends opts name
   case $variant in
     prod )
-      backends=backends-prod.txt
-      opts="-DPRODUCTION"
-      name="-n cmsweb.cern.ch" ;;
+      opts="" name="-n cmsweb.cern.ch"
+      backends=backends-prod.txt ;;
     preprod )
-      backends=backends-preprod.txt
-      opts="-DPRODUCTION -DPREPRODUCTION"
-      name="-n cmsweb-testbed.cern.ch" ;;
+      opts="" name="-n cmsweb-testbed.cern.ch"
+      backends=backends-preprod.txt ;;
     * )
-      backends=backends-dev.txt
-      opts="-DPRODUCTION -DTEST"
-      name="" ;;
+      opts="-DTEST" name=""
+      backends=backends-dev.txt ;;
   esac
 
   (. $root/current/apps/frontend/etc/profile.d/init.sh
