@@ -52,7 +52,6 @@ start()
     -e $LOGDIR/$(date +%Y%m%d-%H%M%S).stderr \
     -p $STATEDIR/couchdb.pid </dev/null >/dev/null 2>&1
 
-  sleep 1
   push_apps
 }
 
@@ -92,13 +91,26 @@ clean_views()
 # Push applications from staging area into couchdb.
 push_apps()
 {
-  for APP in $STATEDIR/stagingarea/*; do
-    [ -f $APP ] || continue
-    . $APP
-    for DB in $(egrep -o '5984/.*$' $APP | cut -d/ -f2); do
-      clean_views $DB
-    done
+  n=0 started=false
+  while [ $n -le 20 ]; do
+    couchdb -p $STATEDIR/couchdb.pid -s 2> /dev/null && started=true && break
+    echo "waiting for couchdb..."
+    sleep 1
+    n=$(expr $n + 1)
   done
+
+  if $started; then
+    for APP in $STATEDIR/stagingarea/*; do
+      [ -f $APP ] || continue
+      . $APP
+      for DB in $(egrep -o '5984/.*$' $APP | cut -d/ -f2); do
+        clean_views $DB
+      done
+    done
+  else
+    echo "couchdb did not start, not pushing application"
+    exit 1
+  fi
 }
 
 # Trigger a database compaction.
