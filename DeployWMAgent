@@ -3,7 +3,6 @@ deploy_wmagent_deps()
 {
   deploy CouchDBOffsite
   deploy MySQL
-  deploy WMCore
 }
 
 deploy_wmagent_prep()
@@ -13,20 +12,30 @@ deploy_wmagent_prep()
 
 deploy_wmagent_sw()
 {
+
+  AGENT_VERSION="0.7.2a-cmp"
+  AGENT_RPM="cms+wmagent+$AGENT_VERSION"
+  deploy_pkg -d wmagent -l app  comp  $AGENT_RPM
   deploy_pkg -d wmagent -l cherrypy  comp external+cherrypy+3.1.2-cmp6
   deploy_pkg -d wmagent -l cheetah  comp external+py2-cheetah+2.4.0-cmp6
   deploy_pkg -d wmagent -l openid   comp external+py2-openid+2.2.4-cmp6
   deploy_pkg -d wmagent -l py2-cjson   comp external+py2-cjson+1.0.5-cmp5
+  deploy_pkg -d wmagent -l py2-mysqldb comp external+py2-mysqldb+1.2.3c1-cmp6
   deploy_pkg -d wmagent -l dls-client   comp  cms+dls-client+DLS_1_1_2-cmp6
   deploy_pkg -d wmagent -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1
+
+  WMCORE_LOC="$root/compsw/$SCRAM_ARCH/cms/wmcore/$AGENT_VERSION/"
+  WMAGENT_LOC="$root/projects/wmagent"
+  ln -s $WMCORE_LOC $WMAGENT_LOC/wmcore
+
 }
 
 deploy_wmagent_post()
 {
-  local wmcore_root=$root/projects/wmcore
-  local wmcore_etc=$wmcore_root/app/etc
+  local wmcore_root=$root/projects/wmagent/wmcore
+  local wmcore_etc=$wmcore_root/etc
   local wmagent_root=$root/projects/wmagent
- 
+
 
   # get manage script from wmcore
   /bin/cp $wmcore_etc/deploy/wmagent-manage  $wmagent_root/config/manage

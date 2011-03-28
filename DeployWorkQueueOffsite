@@ -3,7 +3,7 @@ deploy_workqueueoffsite_deps()
 {
   deploy CouchDBOffsite
   deploy MySQL
-  deploy WMCore
+  deploy WMAgent
 }
 
 deploy_workqueueoffsite_prep()
@@ -13,18 +13,13 @@ deploy_workqueueoffsite_prep()
 
 deploy_workqueueoffsite_sw()
 {
-  deploy_pkg -d workqueue -l cherrypy  comp external+cherrypy+3.1.2-cmp6
-  deploy_pkg -d workqueue -l cheetah  comp external+py2-cheetah+2.4.0-cmp6
-  deploy_pkg -d workqueue -l openid   comp external+py2-openid+2.2.4-cmp6
-  deploy_pkg -d workqueue -l py2-cjson   comp external+py2-cjson+1.0.5-cmp5
-  deploy_pkg -d workqueue -l dls-client   comp  cms+dls-client+DLS_1_1_2-cmp6
-  deploy_pkg -d workqueue -l dbs-client   comp  cms+dbs-client+DBS_2_1_1_patch1_1
+  true;
 }
 
 deploy_workqueueoffsite_post()
 {
-  local wmcore_root=$root/projects/wmcore
-  local wmcore_etc=$wmcore_root/app/etc
+  local wmcore_root=$root/projects/wmagent/wmcore
+  local wmcore_etc=$wmcore_root/etc
   local workqueue_root=$root/projects/workqueue
 
 
