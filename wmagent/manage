@@ -41,6 +41,7 @@ COUCH_PASS=
 
 COUCH_HOST=127.0.0.1
 COUCH_PORT=5984
+COUCH_HOST_NAME=`hostname`
 
 REQMGR_HOSTNAME=
 REQMGR_PORT=8687
@@ -70,6 +71,12 @@ activate_agent(){
     touch $INSTALL_AG/.using
     cp $ROOT_DIR/apps/wmcore/etc/WMAgentConfig.py $CONFIG_AG/config-template.py
 }
+
+activate_crabserver(){
+    touch $INSTALL_AG/.using
+    cp $ROOT_DIR/apps/wmcore/etc/CrabServerConfig.py $CONFIG_AG/config-template.py
+}
+
 activate_workqueue(){
     touch $INSTALL_WQ/.using
     cp $ROOT_DIR/apps/wmcore/etc/GlobalWorkQueueConfig.py $CONFIG_WQ/config-template.py
@@ -386,6 +393,7 @@ init_couch_pre(){
     mkdir -p $INSTALL_COUCH/logs
     mkdir -p $INSTALL_COUCH/database
     perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_COUCH}" $CONFIG_COUCH/local.ini
+    # couch ini file requires IP based hostname
     perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
@@ -485,7 +493,7 @@ init_wmagent(){
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_AG \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST:$COUCH_PORT \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --global_workqueue_hostname=$GLOBAL_WORKQUEUE_HOSTNAME \
                        --global_workqueue_port=$GLOBAL_WORKQUEUE_PORT \
                        --local_workqueue_port=$LOCAL_WORKQUEUE_PORT
@@ -505,7 +513,7 @@ init_reqmgr(){
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_RM \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST:$COUCH_PORT \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME
     wmcore-db-init --config $CONFIG_RM/config.py --create --modules=WMCore.Agent.Database,WMCore.RequestManager.RequestDB
@@ -522,7 +530,7 @@ init_workqueue(){
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_WQ \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_WQ \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST:$COUCH_PORT \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --reqmgr_port=$REQMGR_PORT \
                        --global_workqueue_hostname=$GLOBAL_WORKQUEUE_HOSTNAME \
@@ -731,6 +739,8 @@ case $1 in
     activate_workqueue;;
   activate-reqmgr)
     activate_reqmgr;;
+  activate-crabserver)
+    activate_crabserver;;
   start-services)
     start_services;;
   stop-services)
