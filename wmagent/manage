@@ -679,7 +679,7 @@ clean_all(){
 execute_command_agent(){
     shift;
     local RUNTHIS=$1
-    local WMCORE_BIN_DIR=$ROOT_DIR/app/wmcore/bin
+    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
     if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
         echo "$RUNTHIS is not a binary in WMCore/bin"
         exit 1
@@ -693,7 +693,7 @@ execute_command_agent(){
 execute_command_wq(){
     shift;
     local RUNTHIS=$1
-    local WMCORE_BIN_DIR=$ROOT_DIR/app/wmcore/bin
+    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
     if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
         echo "$RUNTHIS is not a binary in WMCore/bin"
         exit 1
@@ -707,7 +707,7 @@ execute_command_wq(){
 execute_command_rm(){
     shift;
     local RUNTHIS=$1
-    local WMCORE_BIN_DIR=$ROOT_DIR/app/wmcore/bin
+    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
     if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
         echo "$RUNTHIS is not a binary in WMCore/bin"
         exit 1
@@ -721,7 +721,7 @@ execute_command_rm(){
 
 
 help(){
-    echo "there is no help, you are all alone";
+    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
 }
 
 
