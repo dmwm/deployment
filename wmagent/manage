@@ -365,13 +365,13 @@ mysql_prompt(){
     case "$2" in
       "reqmgr")
           load_secrets_file;
-          mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_AG};;
+          mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_RM};;
       "workqueue")
           load_secrets_file;
           mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_WQ};;
       "wmagent")
           load_secrets_file;
-          mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_RM};;
+          mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_AG};;
       *)
         echo "Unknown arg to mysql_prompt: $2"
         echo "Should be one of reqmgr, workqueue, wmagent"
@@ -570,7 +570,7 @@ init_agent(){
 
 start_agent(){
     init_agent;
-    if [ $USING_WQ -eq 1 ]; then
+    if [ $USING_RM -eq 1 ]; then
         echo "Starting ReqMgr..."
         wmcoreD --start --config=$CONFIG_RM/config.py
     fi
@@ -597,7 +597,7 @@ stop_agent(){
         echo "Shutting down WorkQueue...";
         wmcoreD --shutdown --config=$CONFIG_WQ/config.py;
     fi
-    if [ $USING_RM -eq 1 ]; then
+    if [ $USING_AG -eq 1 ]; then
         echo "Shutting down WMAgent...";
         wmcoreD --shutdown --config=$CONFIG_AG/config.py;
     fi
@@ -614,7 +614,7 @@ status_of_agent(){
         echo "Status of WorkQueue:"
         wmcoreD --status --config=$CONFIG_WQ/config.py
     fi
-    if [ $USING_RM -eq 1 ]; then
+    if [ $USING_AG -eq 1 ]; then
         echo "Status of WMAgent:"
         wmcoreD --status --config=$CONFIG_AG/config.py
     fi
