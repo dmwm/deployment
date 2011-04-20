@@ -1,0 +1,69 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_sitedb_variants="default prod preprod"
+deploy_sitedb_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+}
+
+deploy_sitedb_prep()
+{
+  mkproj
+}
+
+deploy_sitedb_sw()
+{
+  deploy_pkg -a sitedb/sitedb.ini -a sitedb/security.ini comp cms+sitedb 1.2.3-cmp11
+}
+
+deploy_sitedb_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot
+   case $host in vocms106 )
+     echo "3 * * * * $project_config/HNSync";;
+   esac) | crontab -
+}
+
+deploy_sitedb_auth()
+{
+  local certs
+  if [ -r $root/certs/hostcert.pem ]; then
+    certs=$root/certs
+  elif [ -r /data/certs/hostcert.pem ]; then
+    certs=/data/certs
+  else
+    note "ERROR: cannot find hostcert to use"
+    exit 1
+  fi
+
+  case $1 in
+    */security.ini )
+      echo "[database]"
+      echo "dbtype = oracle"
+      echo "dbname = oracle://FOO:BAR@ZOINKS" ;;
+
+    */sitedb.ini )
+      echo "[endpoint]"
+      echo "phedex = http://cmsweb.cern.ch/phedex/prod/Request::Create?dest="
+      echo "dbs = https://cmsweb.cern.ch/dbs_discovery/getData?dbsInst=cms_dbs_prod_global&proc=&ajax=0&userMode=user&group=*&tier=*&app=*&site="
+      echo "goc = https://goc.gridops.org/site/list?id="
+      echo "gstat = http://goc.grid.sinica.edu.tw/gstat"
+      echo "dashboard = http://lxarda16.cern.ch/dashboard/request.py"
+      echo "squid = http://frontier.cern.ch/squidstats/mrtgcms"
+      echo "sam = https://lcg-sam.cern.ch:8443/sam/sam.py?"
+      echo "[security]"
+      echo "cert = $certs/hostcert.pem"
+      echo "key = $certs/hostkey.pem"
+      echo "[setup]"
+      case $variant in
+        prod )
+	  echo "basepath = https://cmsweb.cern.ch/sitedb" ;;
+        preprod )
+	  echo "basepath = https://cmsweb-testbed.cern.ch/sitedb" ;;
+        * )
+          echo "basepath = https://$(hostname -f)/sitedb" ;;
+      esac
+      ;;
+  esac
+}

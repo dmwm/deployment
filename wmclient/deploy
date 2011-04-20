@@ -1,0 +1,11 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmclient_prep()
+{
+  mkproj
+}
+
+deploy_wmclient_sw()
+{
+  deploy_pkg comp external+py2-httplib2 0.6.0-cmp4
+  deploy_pkg comp cms+wmcore WMCORE_0_6_11
+}

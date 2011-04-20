@@ -1,0 +1,43 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dqmgui_variants="default bare"
+deploy_dqmgui_deps()
+{
+  deploy backend
+  deploy admin $variant
+}
+
+deploy_dqmgui_prep()
+{
+  extra=
+  case $host in
+    dqm-c2d07-* )
+      extra="$extra /dqmdata/dqm/uploads"
+      extra="$extra /dqmdata/dqm/agents"
+      extra="$extra /dqmdata/dqm/repository/original"
+      extra="$extra agents sessions"
+      ;;
+
+    * )
+      for d in offline caf relval dev devtest; do
+        extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $project_logs/$d"
+      done
+      ;;
+  esac
+  mkproj $extra
+}
+
+deploy_dqmgui_sw()
+{
+  deploy_pkg comp cms+dqmgui 6.0.2
+}
+
+deploy_dqmgui_post()
+{
+  case $host in vocms10[67] | vocms5[03] | vocms132 ) disable ;; * ) enable ;; esac
+  case $variant in bare ) return ;; esac
+
+  (mkcrontab; sysboot
+   cmd="$project_config/daily"
+   $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
+   [ ! -f $root/enabled/$project ] || echo "17 2 * * * $cmd") | crontab -
+}

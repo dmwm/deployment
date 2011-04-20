@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_plotfairy_deps()
+{
+  deploy backend
+}
+
+deploy_plotfairy_prep()
+{
+  mkproj
+}
+
+deploy_plotfairy_sw()
+{
+  deploy_pkg comp cms+plotfairy WMCORE_0_6_0-cmp
+}
+
+deploy_plotfairy_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}

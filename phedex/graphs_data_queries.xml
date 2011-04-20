@@ -1,0 +1,286 @@
+<graphtool-config>
+  <import module="graphtool.database.queries">SqlQueries</import>
+  <import module="time"/>
+
+  <class type="SqlQueries" name="GenericBase">
+
+    <attribute name="connection_manager"> PhedexConnMan </attribute>
+
+    <aggregate>
+        <connection>Debug/Reader</connection>
+        <connection>Prod/Reader</connection>
+    </aggregate>
+
+    <attribute name="display_name"> Phedex Queries  </attribute>
+
+    <query name="very_generic_link">
+      <inputs>
+        <input kind='sql' name="to_node" />
+        <input kind='sql' name="from_node" />
+      </inputs>
+      <sql>
+        select
+          <slot name="columns" />
+        from
+          <slot name="from" />
+        where
+          <slot name="where" />
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="results_parser">
+        <inputs>
+          <input name="pivot_transform"> phedex_link </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type" />
+      <attribute name="pivot_name">Pivot</attribute>
+      <attribute name="grouping_name" />
+      <attribute name="title" />
+      <attribute name="column_names" />
+      <attribute name="column_units" />
+    </query>
+
+    <query name="very_generic_node">
+      <inputs>
+        <input name="node" kind='sql' />
+      </inputs>
+      <sql>
+        select
+          <slot name="columns"/>
+        from
+          <slot name="from"/>
+        where
+          <slot name="where"/>
+      </sql>
+
+      <results module="phedexgraphs.database.query_handler" function="results_parser">
+        <inputs>
+          <input name="results"> 2 </input>
+          <input name="pivots"> 0 </input>
+          <input name="grouping"> 1 </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type" />
+      <attribute name="pivot_name">Pivot</attribute>
+      <attribute name="grouping_name" />
+      <attribute name="title" />
+      <attribute name="column_names" />
+      <attribute name="column_units" />
+    </query>
+  </class>
+
+  <class type="SqlQueries" name="DataQueries">
+
+    <attribute name="connection_manager"> PhedexConnMan </attribute>
+
+    <aggregate>
+        <connection>Debug/Reader</connection>
+        <connection>Prod/Reader</connection>
+    </aggregate>
+
+    <attribute name="display_name"> Phedex Queries  </attribute>
+
+    <query name="subscription" base="GenericBase.very_generic_node">
+      <sql>
+        <!-- select -->
+        <filler name="columns">
+          n.name, d.name, sum(b.bytes)/1099511627776
+        </filler>
+        <!-- from -->
+        <filler name="from"> t_dps_block b
+          join t_dps_dataset d on d.id = b.dataset
+          join t_dps_subscription s on s.dataset = d.id
+          join t_adm_node n on n.id = s.destination
+        </filler>
+        <!-- where -->
+        <filler name="where">
+            regexp_like( n.name, :node )
+          group by n.name, d.name
+          order by n.name, d.name
+        </filler>
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="results_parser">
+      </results>
+      <attribute name="pivot_name"> Destination </attribute>
+      <attribute name="grouping_name">Name</attribute>
+      <attribute name="title"> Subscriptions Active </attribute>
+      <attribute name="column_names"> Dataset Size </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="rates_query">
+      <inputs>
+        <input kind='sql' name="to_node">.*</input>
+        <input kind='sql'  name="from_node">.*</input>
+        <input kind='sql' name="span" type="int">3600</input>
+        <input kind='sql' name="now" type="int">9999999999</input>
+      </inputs>
+      <sql>
+      select
+        f.name, t.name,
+        null,
+        nvl(sum(h.done_files),0),
+        nvl(sum(h.done_bytes),0)/1073741824,
+        nvl(sum(h.done_bytes),0)/1048576/:span,
+        nvl(sum(h.fail_files),0)
+      from t_history_link_events h
+        join t_adm_node f on f.id = h.from_node
+        join t_adm_node t on t.id = h.to_node
+      where
+        timebin >= :now - :span and
+        regexp_like( t.name, :to_node ) and
+        regexp_like( f.name, :from_node )
+      group by f.name, t.name
+      order by 5 desc
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="results_parser">
+        <inputs all="True">
+          <input name="results"> 3,4,5,6 </input>
+          <input name="pivot_transform"> phedex_link </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type" />
+      <attribute name="pivot_name">Link</attribute>
+      <attribute name="grouping_name" />
+      <attribute name="title">Rates Information</attribute>
+      <attribute name="column_names">Done Files, Data Transferred, Data Transfer Rate, Files Failed</attribute>
+      <attribute name="column_units">files,GB,MB/s,files</attribute>
+    </query>
+
+    <query name="replica_info">
+      <inputs>
+        <input name="lfn" kind="sql">
+          /store/data/GlobalMay07/A/000/010/025/GlobalMay07.00010025.0000.A.test.0.0000.dat
+        </input>
+      </inputs>
+      <sql>
+        SELECT
+          f.logical_name,
+          n.name
+        FROM t_dps_file f
+          JOIN t_xfer_replica xr ON xr.fileid = f.id
+          JOIN t_adm_node n ON xr.node = n.id
+        WHERE
+          f.logical_name=:lfn
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="complex_pivot_parser">
+        <inputs>
+          <input name="pivots"> 0 </input>
+          <input name="results"> 1 </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type"/>
+      <attribute name="pivot_name">LFN</attribute>
+      <attribute name="title">File Information</attribute>
+      <attribute name="column_names">Replica Location</attribute>
+      <attribute name="column_units"/>
+    </query>
+
+    <query name="block_info">
+      <inputs>
+        <input name="lfn" kind="sql">
+          /store/data/GlobalMay07/A/000/010/025/GlobalMay07.00010025.0000.A.test.0.0000.dat
+        </input>
+      </inputs>
+      <sql>
+        SELECT
+          f.logical_name,
+          b.name
+        FROM t_dps_file f
+          JOIN t_dps_block b ON f.inblock = b.id
+        WHERE
+          f.logical_name=:lfn
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="complex_pivot_parser">
+        <inputs>
+          <input name="pivots"> 0 </input>
+          <input name="results"> 1 </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type"/>
+      <attribute name="pivot_name">LFN</attribute>
+      <attribute name="title">Block Information</attribute>
+      <attribute name="column_names">Block Location</attribute>
+      <attribute name="column_units"/>
+    </query>
+
+    <query name="custodial_info">
+      <inputs>
+        <input name="from_nodes" kind="sql">T2</input>
+        <input name="time_create" kind="sql" type="timestamp">time.time()-7*86400</input>
+        <!--<input name="to_node" kind="sql">T1_CERN_MSS</input>-->
+        <input name="block_name" kind="sql">CSA07</input>
+      </inputs>
+      <sql>
+        SELECT
+          n.name source_site,
+          b.name block
+        FROM t_dps_block b
+          JOIN t_dps_file f ON f.inblock = b.id
+          JOIN t_adm_node n ON n.id = f.node
+        WHERE
+          (SELECT count(*) FROM t_dps_block_replica mm
+              JOIN t_adm_node nr ON nr.id = mm.node
+              WHERE b.id = mm.block AND mm.dest_files = mm.node_files
+              AND nr.kind='MSS'
+          ) = 0
+          AND b.time_create &lt; :time_create
+          AND n.kind != 'MSS'
+          AND regexp_like(n.name, :from_nodes)
+          AND regexp_like(b.name, :block_name)
+        GROUP BY n.name, b.name
+        ORDER BY 1,2
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="complex_pivot_parser">
+        <inputs>
+          <input name="pivots"> 0 </input>
+          <input name="results"> 1 </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type"/>
+      <attribute name="pivot_name">Source Site</attribute>
+      <attribute name="title">Blocks not in custodial storage</attribute>
+      <attribute name="column_names">Block Name</attribute>
+      <attribute name="column_units"/>
+    </query>
+
+    <query name="enabled" base="GenericBase.very_generic_link">
+        <inputs>
+            <input kind="sql" name="excludefrom">T3|MSS</input>
+            <input kind="sql" name="excludeto">T3|MSS</input>
+            <input kind='sql' name="to_node">.*</input>
+            <input kind='sql' name="from_node">.*</input>
+        </inputs>
+        <sql>
+            <filler name="columns">
+                from_node.name, to_node.name, l.is_active
+            </filler>
+            <filler name="from">
+                t_adm_link l
+                JOIN t_adm_node to_node on l.to_node=to_node.id
+                JOIN t_adm_node from_node on l.from_node=from_node.id
+            </filler>
+            <filler name="where">
+                regexp_like(to_node.name, :to_node) AND
+                regexp_like(from_node.name, :from_node) AND
+                (not regexp_like(to_node.name, :excludeto)) AND
+                (not regexp_like(from_node.name, :excludefrom))
+            </filler>
+        </sql>
+        <results module="graphtool.database.query_handler" function="results_parser">
+            <inputs>
+                <input name="pivot_transform"> echo </input>
+                <input name="pivots"> 0 </input>
+                <input name="grouping"> 1 </input>
+                <input name="results"> 2 </input>
+            </inputs>
+        </results>
+        <attribute name="graph_type"/>
+        <attribute name="pivot_name"> From Node</attribute>
+        <attribute name="grouping_name">To Node</attribute>
+        <attribute name="title"> Status of Production Links </attribute>
+        <attribute name="column_names"> Enabled?</attribute>
+        <attribute name="column_units"/>
+    </query>
+
+  </class>
+</graphtool-config>

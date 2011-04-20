@@ -1,0 +1,1 @@
+"/DC=ch/DC=cern/OU=computers/CN=tier0/vocms69.cern.ch" cms

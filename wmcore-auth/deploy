@@ -1,0 +1,42 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmcore_auth_prep()
+{
+  mkproj -l -s
+
+  local key=$privauthdir/wmcore/header-auth-key
+  if [ X"$privauthdir" = X ] || [ -s $key ]; then :; else
+    note "INFO: creating header authentication key $key"
+    rm -f $key
+    deploy_wmcore_auth_genkey > $key
+    case $privauthdir in
+      /afs/* ) chmod 400 $key ;;
+      * ) setgroup ug+r,ugo-wx,o-rwx _sw $key ;;
+    esac
+  fi
+}
+
+deploy_wmcore_auth_sw()
+{
+  rm -f $project_auth/header-auth-key
+  deploy_pkg -a wmcore-auth/header-auth-key
+}
+
+deploy_wmcore_auth_genkey()
+{
+  perl -e 'open(R, "< /dev/urandom") or die; sysread(R, $K, 20) or die; print $K'
+}
+
+deploy_wmcore_auth_auth()
+{
+  local key=$privauthdir/wmcore/header-auth-key
+  if [ X"$privauthdir" = X ] || [ ! -s $key ]; then
+    deploy_wmcore_auth_genkey
+  else
+    cat $key
+  fi
+}
+
+deploy_wmcore_auth_post()
+{
+  disable
+}

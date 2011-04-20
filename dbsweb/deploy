@@ -1,0 +1,38 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dbsweb_deps()
+{
+  deploy backend
+}
+
+deploy_dbsweb_prep()
+{
+  mkproj
+}
+
+deploy_dbsweb_sw()
+{
+  app=$root/current/apps/dbs-web
+  deploy_pkg comp cms+dbs-web V06_00_48
+  perl -p -i -e "s|{ROOT}|$root|g" $project_config/DBSDD.conf
+  setgroup ug+r,g-w,o-rwx _config $project_config/DBSDD.conf
+  chmod g-w,o-rwx $project_config/DBSDD.conf
+
+  for f in $app/lib/python*/site-packages; do
+    [ -f $f/DBSDD.conf ] || continue
+    ln -sf $project_config/DBSDD.conf $f/DBSDD.conf
+  done
+
+  cd $app
+  (. etc/profile.d/init.sh
+   cd lib/python*/site-packages
+   rm -f YUI yui WEBTOOLS
+   ln -s $YUI_ROOT/build YUI
+   ln -s $YUI_ROOT yui
+   ln -s $WEBTOOLS_ROOT/lib/python2.6/site-packages/Controllers WEBTOOLS)
+}
+
+deploy_dbsweb_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}

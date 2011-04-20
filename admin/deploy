@@ -1,0 +1,73 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_admin_variants="default bare"
+deploy_admin_deps()
+{
+  deploy backend
+}
+
+deploy_admin_prep()
+{
+  mkproj
+}
+
+deploy_admin_sw()
+{
+  deploy_pkg -a proxy/.turd comp external+rotatelogs 2.2.14-cmp2
+  (echo ". $root/current/apps/rotatelogs/etc/profile.d/init.sh"
+   echo ". $root/current/apps/pystack/etc/profile.d/init.sh") \
+   > $project_config/init.sh
+  setgroup u+rw,go-w _config $project_config/init.sh
+  rm -f $project_config/{Clone,Install,Image,rsync}*
+}
+
+deploy_admin_post()
+{
+  case $variant in bare ) disable; return ;; esac
+
+  local pxlabel pxskip certs
+  case $host in
+    vocms65 | vocms105 | vocms108 | vocms134 | vocms135 | \
+    vocms50 | vocms51 | vocms53 | vocms132 | vocms133 | \
+    vocms106 | vocms107 | vocms109 )
+      pxlabel=cmsweb_backends ;;
+
+    * )
+      pxlabel=devvm_$(echo $host | tr - _) ;;
+  esac
+
+  if [ $(ls $root/current/auth/proxy/PX* 2>/dev/null | wc -l) = 0 ]; then
+    pxskip=true
+  else
+    pxskip=false
+    if [ -r $root/certs/hostcert.pem ]; then
+      certs=$root/certs
+    elif [ -r /data/certs/hostcert.pem ]; then
+      certs=/data/certs
+    else
+      note "ERROR: cannot find hostcert to use"
+      exit 1
+    fi
+  fi
+
+  (mkcrontab
+   echo "@reboot . $project_config/init.sh && $project_config/ServerMonitor -r"
+   echo "*/6 * * * * . $project_config/init.sh && $project_config/ServerMonitor -q -v"
+   echo "37 */8 * * * . $project_config/init.sh && $project_config/ServerMonitor -q -r"
+   $pxskip || echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
+   echo "7 * * * * $project_config/LogArchive $root") |
+   crontab -
+
+  case $host:$root in
+    vocms65:/data/srv | vocms105:/data/srv | vocms108:/data/srv | \
+    vocms109:/data/srv | vocms134:/data/srv | vocms135:/data/srv )
+      klist -s # must have afs kerberos token
+      LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
+      (acrontab -l | { fgrep -v -e " $host $project_config/" || true; } | \
+        { grep -v " $host .*/archive-log-files" || true; }
+       echo "9 * * * * $host $project_config/LogSave $root $LOGDIR/$host") | acrontab
+      acrontab -l | fgrep " $host $project_config/" | sed "s|^[/*0-9 ]* $host ||" | sh -x
+      ;;
+  esac
+
+  $pxskip || { crontab -l | grep $project_config/ProxyRenew | sed 's|^[0-9*/ ]* ||' | sh -x; }
+}

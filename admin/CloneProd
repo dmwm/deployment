@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DIR=${1-/data}
+cd $DIR
+sudo rsync -zavuH -e 'ssh -c arcfour' --rsync-path="sudo rsync" --exclude '**/phedex*/cache' cmsweb@vocms50.cern.ch:/data/ ./
+sudo rsync -zavuH -e 'ssh -c arcfour' --rsync-path="sudo rsync" --exclude '**/phedex*/cache' cmsweb@vocms107.cern.ch:/data/ ./
+sudo rsync -zavuH -e 'ssh -c arcfour' --rsync-path="sudo rsync" --exclude '/pool/store/*' --exclude '**/download/[a-y]*' --exclude '**/download/z[^ah]*' --exclude '**/phedex*/cache' cmsweb@vocms53.cern.ch:/data/ ./
+sudo /usr/sbin/ncm-ncd --configure grid_service_certificates

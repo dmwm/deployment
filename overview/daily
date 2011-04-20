@@ -1,0 +1,30 @@
+#!/bin/zsh
+
+# Overview daily maintenance script.
+#
+# See the operations documentation on how to use this script:
+# https://twiki.cern.ch/twiki/bin/view/CMS/OverviewDeployment
+
+######################################################################
+# Figure out where the server is based on this script's location.
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+STATEDIR=$TOP/state/$ME
+
+if [ X"$STATEDIR" = X ]; then
+  echo "$0: cannot figure out server location"
+  exit 1
+fi
+
+if [ ! -d $STATEDIR/sessions ]; then
+  echo "$0: server location '$STATEDIR' is wrong"
+  exit 1
+fi
+
+cd $STATEDIR
+mkdir $STATEDIR/.nodaily || { echo "$0: daily cannot run"; exit 1; }
+trap "rmdir $STATEDIR/.nodaily" 0 1 2 15
+
+######################################################################
+# Purge old sessions.
+find "$STATEDIR/sessions" -type f -mmin +120 | xargs rm -f

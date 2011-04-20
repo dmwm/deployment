@@ -1,0 +1,75 @@
+#!/bin/sh
+
+# DQM daily maintenance script.
+#
+# See the operations documentation on how to use this script:
+#   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
+
+######################################################################
+# Figure out where the server is based on this script's location.
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+STATEDIR=$TOP/state/$ME
+FILER=/dqmdata
+
+if [ X"$STATEDIR" = X ]; then
+  echo "$0: cannot figure out server location"
+  exit 1
+fi
+
+cd $STATEDIR
+if [ $(find $STATEDIR -maxdepth 2 -type d -name sessions | wc -l) = 0 ]; then
+  echo "$0: server location '$STATEDIR' is wrong"
+  exit 1
+fi
+
+mkdir $STATEDIR/.nodaily || { echo "$0: daily cannot run"; exit 1; }
+trap "rmdir $STATEDIR/.nodaily" 0 1 2 15
+
+######################################################################
+# Purge old sessions.
+for dir in $(find $STATEDIR -maxdepth 2 -type d -name sessions); do
+  find "$dir" -type f -mmin +120 | xargs rm -f
+done
+
+######################################################################
+# Delete transfered zip files
+for i in offline caf dev; do
+  ZIPREPO=$STATEDIR/$i/zipped
+  CLEANDIR=$STATEDIR/$i/agents/clean
+  if [ -d $ZIPREPO ] && [ -d $CLEANDIR ]; then
+    for cf in $(find $CLEANDIR -name \*.zinfo); do
+      set -e
+      ZIPPATH=$ZIPREPO/$(python -c "a=eval(file('$cf').read());print a['zpath']")
+      if [ -e $ZIPPATH ]; then
+        rm $ZIPPATH $cf
+      else
+        mv $cf ${cf}.bad
+      fi
+      set +e
+    done
+  fi
+done
+
+######################################################################
+# Compact monitoring logs.
+if [ -d $FILER/status ]; then
+  HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
+  for f in $(find $FILER/status/*/$HOST/* -name '20[0-9][0-9][01][0-9]*.txt' -mmin +60 | sort); do
+    set -e
+    [ -f "$f" ] || continue
+    month=$(echo "$f" | perl -pe 's|.*/||; s|^([0-9]{6}).*|$1|')
+    day=$(echo "$f" | perl -pe 's|.*/||; s|^([0-9]{8}).*|$1|')
+    case $month in 20[0-9][0-9][01][0-9] ) ;; * )
+      echo "$f: could not determine month from log file name (got: $month)"
+      continue ;;
+    esac
+    case $day in 20[0-9][0-9][01][0-9][0123][0-9] ) ;; * )
+      echo "$f: could not determine day from log file name (got: $day)"
+      continue ;;
+    esac
+
+    zip -9Tmoqj $(dirname "$f")/$day.zip $f
+    set +e
+  done
+fi

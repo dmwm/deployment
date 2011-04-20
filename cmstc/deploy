@@ -1,0 +1,16 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_cmstc_prep()
+{
+  mkproj
+}
+
+deploy_cmstc_sw()
+{
+  deploy_pkg comp cms+CmsTC 0.0.1
+}
+
+deploy_cmstc_post()
+{
+  case $host in * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}

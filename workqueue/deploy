@@ -1,0 +1,47 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_workqueue_variants="default offsite"
+
+deploy_workqueue_deps()
+{
+  deploy mysql
+  deploy wmcore-auth
+  deploy couchdb $variant
+  case $variant in offsite ) deploy wmcore ;; esac
+}
+
+deploy_workqueue_prep()
+{
+  case $variant in offsite ) extra=install ;; * ) extra= ;; esac
+  mkproj $extra
+}
+
+deploy_workqueue_sw()
+{
+  case $variant in
+    default )
+      ;;
+
+    offsite )
+      deploy_pkg comp external+cherrypy 3.1.2-cmp6
+      deploy_pkg comp external+py2-cheetah 2.4.0-cmp6
+      deploy_pkg comp external+py2-openid 2.2.4-cmp6
+      deploy_pkg comp external+py2-cjson 1.0.5-cmp5
+      deploy_pkg comp cms+dls-client DLS_1_1_2-cmp6
+      deploy_pkg comp cms+dbs-client DBS_2_1_1_patch1_1
+
+      local wmcore_etc=$root/current/apps/wmcore/etc
+      local couchdb_ini=$root/current/config/couchdb/local.ini
+      local mysql_config=$root/current/config/mysql/my.cnf
+
+      # get manage script from wmcore
+      cp $wmcore_etc/deploy/wmagent-manage $project_config/manage
+
+      # override the webtools couch config
+      cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
+      perl -p -i -e "s{deploy_project_root}{$root/projects}g" $couchdb_ini
+
+      # grab the WMAgent MySQL config
+      cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
+      ;;
+  esac
+}

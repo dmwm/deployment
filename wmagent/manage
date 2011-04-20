@@ -1,0 +1,789 @@
+#!/bin/bash
+
+
+#
+# Global variables etc
+#
+THIS_SCRIPT=$(readlink -f $0)
+PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
+ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
+
+INSTALL_AG="$ROOT_DIR/install/wmagent"
+INSTALL_WQ="$ROOT_DIR/install/workqueue"
+INSTALL_RM="$ROOT_DIR/install/reqmgr"
+INSTALL_MYSQL="$ROOT_DIR/install/mysql"
+INSTALL_COUCH="$ROOT_DIR/install/couchdb"
+
+CONFIG_COUCH="$ROOT_DIR/config/couchdb"
+CONFIG_MYSQL="$ROOT_DIR/config/mysql"
+CONFIG_AG="$ROOT_DIR/config/wmagent"
+CONFIG_WQ="$ROOT_DIR/config/workqueue"
+CONFIG_RM="$ROOT_DIR/config/reqmgr"
+
+USING_AG=0
+USING_WQ=0
+USING_RM=0
+
+
+MYSQL_INIT_DONE=0
+COUCH_INIT_DONE=0
+AG_INIT_DONE=0
+WQ_INIT_DONE=0
+RM_INIT_DONE=0
+
+MYSQL_DATABASE_AG=wmagent
+MYSQL_DATABASE_WQ=workqueue
+MYSQL_DATABASE_RM=reqmgr
+MYSQL_USER=
+MYSQL_PASS=
+COUCH_USER=
+COUCH_PASS=
+
+COUCH_HOST=127.0.0.1
+COUCH_PORT=5984
+COUCH_HOST_NAME=`hostname`
+
+REQMGR_HOSTNAME=
+REQMGR_PORT=8687
+
+GLOBAL_WORKQUEUE_HOSTNAME=
+GLOBAL_WORKQUEUE_PORT=9996
+
+LOCAL_WORKQUEUE_PORT=9997
+
+#
+# Init checks
+#
+# which of the agent, workqueue and reqmgr are we using
+if [ -e $INSTALL_AG/.using ]; then USING_AG=1; else USING_AG=0; fi;
+if [ -e $INSTALL_WQ/.using ]; then USING_WQ=1; else USING_WQ=0; fi;
+if [ -e $INSTALL_RM/.using ]; then USING_RM=1; else USING_RM=0; fi;
+
+# Flags to show which tools have been initialised
+if [ -e $INSTALL_AG/.init ]; then AG_INIT_DONE=1; else AG_INIT_DONE=0; fi;
+if [ -e $INSTALL_WQ/.init ]; then WQ_INIT_DONE=1; else WQ_INIT_DONE=0; fi;
+if [ -e $INSTALL_RM/.init ]; then RM_INIT_DONE=1; else RM_INIT_DONE=0; fi;
+if [ -e $INSTALL_MYSQL/.init ]; then MYSQL_INIT_DONE=1; else MYSQL_INIT_DONE=0; fi;
+if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; fi;
+
+#callbacks to activate or show initialisation has been done
+activate_agent(){
+    touch $INSTALL_AG/.using
+    cp $ROOT_DIR/apps/wmcore/etc/WMAgentConfig.py $CONFIG_AG/config-template.py
+}
+
+activate_crabserver(){
+    touch $INSTALL_AG/.using
+    cp $ROOT_DIR/apps/wmcore/etc/CrabServerConfig.py $CONFIG_AG/config-template.py
+}
+
+activate_workqueue(){
+    touch $INSTALL_WQ/.using
+    cp $ROOT_DIR/apps/wmcore/etc/GlobalWorkQueueConfig.py $CONFIG_WQ/config-template.py
+}
+activate_reqmgr(){
+    touch $INSTALL_RM/.using
+    cp $ROOT_DIR/apps/wmcore/etc/ReqMgrConfig.py $CONFIG_RM/config-template.py
+}
+inited_agent(){
+    touch $INSTALL_AG/.init
+}
+inited_workqueue(){
+    touch $INSTALL_WQ/.init
+}
+inited_reqmgr(){
+    touch $INSTALL_RM/.init
+}
+inited_couch(){
+    touch $INSTALL_COUCH/.init
+}
+inited_mysql(){
+    touch $INSTALL_MYSQL/.init
+}
+
+
+#
+# Passwords/Secrets handling
+#
+load_secrets_file(){
+    if [ "x$WMAGENT_SECRETS_LOCATION" == "x" ]; then
+        WMAGENT_SECRETS_LOCATION=$HOME/WMAgent.secrets;
+    fi
+    if [ ! -e $WMAGENT_SECRETS_LOCATION ]; then
+        echo "Password file: $WMAGENT_SECRETS_LOCATION does not exist"
+        echo "Either set WMAGENT_SECRETS_LOCATION to a valid file or check that $HOME/WMAgent.secrets exists"
+        exit 1;
+    fi
+
+    local MATCH_MYSQL_USER=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_USER | sed s/MYSQL_USER=//`
+    local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_PASS | sed s/MYSQL_PASS=//`
+    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_REQMGR_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_HOSTNAME | sed s/REQMGR_HOSTNAME=//`
+    local MATCH_REQMGR_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_PORT | sed s/REQMGR_PORT=//`
+    local MATCH_GLOBAL_WORKQUEUE_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_HOSTNAME | sed s/GLOBAL_WORKQUEUE_HOSTNAME=//`
+    local MATCH_GLOBAL_WORKQUEUE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_PORT | sed s/GLOBAL_WORKQUEUE_PORT=//`
+    local MATCH_LOCAL_WORKQUEUE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_PORT | sed s/LOCAL_WORKQUEUE_PORT=//`
+
+    if [ "x$MATCH_MYSQL_USER" == "x" ]; then
+        MYSQL_USER=wmagentmysql;
+    else
+        MYSQL_USER=$MATCH_MYSQL_USER;
+    fi
+    if [ "x$MATCH_MYSQL_PASS" == "x" ]; then
+        echo "Secrets file doesnt contain MYSQL_PASS";
+        exit 1
+    else
+        MYSQL_PASS=$MATCH_MYSQL_PASS;
+    fi
+    if [ "x$MATCH_COUCH_USER" == "x" ]; then
+        COUCH_USER=wmagentcouch;
+    else
+        COUCH_USER=$MATCH_COUCH_USER;
+    fi
+    if [ "x$MATCH_COUCH_PASS" == "x" ]; then
+        echo "Secrets file doesnt contain COUCH_PASS";
+        exit 1
+    else
+        COUCH_PASS=$MATCH_COUCH_PASS;
+    fi
+    if [ ! "x$MATCH_COUCH_PORT" == "x" ]; then
+        COUCH_PORT=$MATCH_COUCH_PORT;
+    fi
+    if [ ! "x$MATCH_COUCH_HOST" == "x" ]; then
+        COUCH_HOST=$MATCH_COUCH_HOST;
+    fi
+    if [ ! "x$MATCH_REQMGR_HOSTNAME" == "x" ]; then
+        REQMGR_HOSTNAME=$MATCH_REQMGR_HOSTNAME;
+    fi
+    if [ ! "x$MATCH_REQMGR_PORT" == "x" ]; then
+        REQMGR_PORT=$MATCH_REQMGR_PORT;
+    fi
+    if [ ! "x$MATCH_GLOBAL_WORKQUEUE_HOSTNAME" == "x" ]; then
+        GLOBAL_WORKQUEUE_HOSTNAME=$MATCH_GLOBAL_WORKQUEUE_HOSTNAME;
+    fi
+    if [ ! "x$MATCH_GLOBAL_WORKQUEUE_PORT" == "x" ]; then
+        GLOBAL_WORKQUEUE_PORT=$MATCH_GLOBAL_WORKQUEUE_PORT;
+    fi
+    if [ ! "x$MATCH_LOCAL_WORKQUEUE_PORT" == "x" ]; then
+        LOCAL_WORKQUEUE_PORT=$MATCH_LOCAL_WORKQUEUE_PORT;
+    fi
+}
+
+print_settings(){
+    echo "INSTALL_AG=               $INSTALL_AG                 "
+    echo "INSTALL_WQ=               $INSTALL_WQ                 "
+    echo "INSTALL_RM=               $INSTALL_RM                 "
+    echo "CONFIG_COUCH=             $CONFIG_COUCH               "
+    echo "CONFIG_MYSQL=             $CONFIG_MYSQL               "
+    echo "CONFIG_AG=                $CONFIG_AG                  "
+    echo "CONFIG_WQ=                $CONFIG_WQ                  "
+    echo "CONFIG_RM=                $CONFIG_RM                  "
+    echo "MYSQL_DATABASE_AG=        $MYSQL_DATABASE_AG          "
+    echo "MYSQL_DATABASE_WQ=        $MYSQL_DATABASE_WQ          "
+    echo "MYSQL_DATABASE_RM=        $MYSQL_DATABASE_RM          "
+    echo "MYSQL_USER=               $MYSQL_USER                 "
+    echo "MYSQL_PASS=               $MYSQL_PASS                 "
+    echo "COUCH_USER=               $COUCH_USER                 "
+    echo "COUCH_PASS=               $COUCH_PASS                 "
+    echo "COUCH_HOST=               $COUCH_HOST                 "
+    echo "COUCH_PORT=               $COUCH_PORT                 "
+    echo "REQMGR_HOSTNAME=          $REQMGR_HOSTNAME            "
+    echo "REQMGR_PORT=              $REQMGR_PORT                "
+    echo "GLOBAL_WORKQUEUE_HOSTNAME= $GLOBAL_WORKQUEUE_HOSTNAME "
+    echo "GLOBAL_WORKQUEUE_PORT=    $GLOBAL_WORKQUEUE_PORT      "
+    echo "LOCAL_WORKQUEUE_PORT=     $LOCAL_WORKQUEUE_PORT       "
+
+
+}
+
+
+#
+# Environment
+#
+
+. $ROOT_DIR/apps/pystack/etc/profile.d/init.sh
+. $ROOT_DIR/apps/couchdb/etc/profile.d/init.sh
+. $ROOT_DIR/apps/mysql/etc/profile.d/init.sh
+. $ROOT_DIR/apps/py2-cjson/etc/profile.d/init.sh
+. $ROOT_DIR/apps/py2-openid/etc/profile.d/init.sh
+. $ROOT_DIR/apps/py2-cheetah/etc/profile.d/init.sh
+. $ROOT_DIR/apps/cherrypy/etc/profile.d/init.sh
+. $ROOT_DIR/apps/dls-client/etc/profile.d/init.sh
+. $ROOT_DIR/apps/dbs-client/etc/profile.d/init.sh
+. $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
+. $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
+
+export WMCORE_ROOT=$ROOT_DIR/apps/wmcore
+
+
+print_environment(){
+    echo $WMCORE_ROOT
+}
+
+
+
+#export PATH=$PATH:$WMCORE_DIR/app/bin
+#export PYTHONPATH=$WMCORE_DIR/app/src/python:$PYTHONPATH
+#export PYTHONPATH=$PYTHONPATH:$WMCORE_DIR/app/test/python
+#export PYTHONPATH=$PYTHONPATH:$WMAGENT_DIR/dls-client/Client/lib
+#export PYTHONPATH=$PYTHONPATH:$WMAGENT_DIR/dbs-client/lib
+
+
+
+#########################
+#  MySQL                #
+#########################
+
+#
+# first time startup routines for mysql
+# pre gets called before startup, post called after it
+init_mysql_db_pre(){
+    echo "Installing the mysql database area..."
+    mkdir -p $INSTALL_MYSQL/database
+    mkdir -p $INSTALL_MYSQL/logs
+    mysql_install_db --datadir=$INSTALL_MYSQL/database
+
+}
+init_mysql_db_post(){
+    #install the WMAgent stuff
+    echo "Installing the mysql schema..."
+    load_secrets_file;
+    local TIMEOUT=0;
+    while [ ! -e $INSTALL_MYSQL/logs/mysql.sock ]
+    do
+        sleep 2;
+        TIMEOUT=$(($TIMEOUT+2))
+        if [ $TIMEOUT -ge 300 ]; then
+            echo "Timeout waiting for mysqld to start."
+            exit 1;
+        fi
+    done
+    echo "Socket file exists, proceeding with schema install..."
+    mysqladmin -u root password $MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock
+
+    inited_mysql;
+
+    # create the user & grant privs (same db user for all three components)
+    local SQLUSER="CREATE USER '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASS}';"
+    local SQLGRANT="GRANT ALL ON *.* TO $MYSQL_USER@localhost WITH GRANT OPTION;"
+
+    mysql -u root -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "$SQLUSER"
+    mysql -u root -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "$SQLGRANT"
+
+    # create databases for agent, wq or reqmgr
+    if [ $USING_AG -eq 1 ]; then
+        echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_AG}"
+    fi
+    if [ $USING_WQ -eq 1 ]; then
+        echo "Installing WorkQueue Database: ${MYSQL_DATABASE_WQ}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_WQ}"
+    fi
+    if [ $USING_RM -eq 1 ]; then
+        echo "Installing ReqMgr Database: ${MYSQL_DATABASE_RM}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_RM}"
+    fi
+
+}
+
+status_of_mysql(){
+    echo "+ Status of MySQL"
+    if [ ! -e $INSTALL_MYSQL/logs/mysqld.pid ]; then
+        echo "++ MySQL process file not found"
+        return
+    fi
+    local MYSQL_PID=`cat $INSTALL_MYSQL/logs/mysqld.pid`
+    kill -0 $MYSQL_PID;
+    local MYSQL_STATUS=$?
+    if [ $MYSQL_STATUS -eq 0 ]; then
+        echo "++ MYSQL running with process: $MYSQL_PID";
+    else
+        echo "++ MYSQL process not running"
+    fi
+
+    echo "++" `mysqladmin -u root --password=$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock status`
+}
+
+#
+# Main startup method for MySQL.
+# Checks for initialisation
+start_mysql(){
+   echo "Starting mysql..."
+
+   if [ $MYSQL_INIT_DONE -eq 0 ]; then
+          echo "MySQL has not been initialised... running pre initialisation";
+          init_mysql_db_pre;
+   fi
+
+
+   # Start mysqld to install the database schemas
+   #
+   echo "starting mysqld_safe..."
+   nohup mysqld_safe --defaults-extra-file=$CONFIG_MYSQL/my.cnf \
+                     --datadir=$INSTALL_MYSQL/database \
+                     --socket=$INSTALL_MYSQL/logs/mysql.sock \
+                     --skip-networking --log-error=$INSTALL_MYSQL/logs/error.log \
+                      --pid-file=$INSTALL_MYSQL/logs/mysqld.pid > /dev/null 2>&1 < /dev/null &
+   if [ $MYSQL_INIT_DONE -eq 0 ]; then
+        echo "MySQL has not been initialised... running post initialisation";
+        init_mysql_db_post;
+   fi
+
+
+}
+
+#
+# stop MySQL
+#
+stop_mysql(){
+   echo "stopping mysql..."
+   load_secrets_file;
+   mysqladmin -u root -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock shutdown &
+   wait $!
+}
+
+#
+# Wipe out MySQL
+# Will cause next start to recreate databases
+clean_mysql(){
+    echo "cleaning MySQL DB...";
+    if [ -e $INSTALL_MYSQL/logs/mysql.pid ]; then stop_mysql; fi;
+
+    /bin/rm -f $INSTALL_MYSQL/.init
+    /bin/rm -f $INSTALL_MYSQL/logs/mysql.sock
+    /bin/rm -f $INSTALL_MYSQL/logs/mysqld.pid
+    /bin/rm -rf $INSTALL_MYSQL/database/*
+}
+
+#
+# MySQL Prompt so that people can poke around in the db interactively
+#
+mysql_prompt(){
+    case "$2" in
+      "reqmgr")
+          load_secrets_file;
+          mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_RM};;
+      "workqueue")
+          load_secrets_file;
+          mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_WQ};;
+      "wmagent")
+          load_secrets_file;
+          mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_AG};;
+      *)
+        echo "Unknown arg to mysql_prompt: $2"
+        echo "Should be one of reqmgr, workqueue, wmagent"
+        exit 1
+    esac
+
+}
+
+#########################
+#  CouchDB              #
+#########################
+
+#
+# first time startup for couch: disable admin party and create user based on secrets file
+#
+init_couch_pre(){
+
+    echo "Initialising CouchDB on $COUCH_HOST:$COUCH_PORT..."
+    mkdir -p $INSTALL_COUCH/logs
+    mkdir -p $INSTALL_COUCH/database
+    perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_COUCH}" $CONFIG_COUCH/local.ini
+    # couch ini file requires IP based hostname
+    perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
+}
+
+init_couch_post(){
+    inited_couch;
+}
+
+status_of_couch(){
+    echo "+ Couch Status:"
+    if [ ! -e $INSTALL_COUCH/logs/couchdb.pid ]; then
+        echo "++ Couch process file not found"
+        return
+    fi
+    local COUCH_PID=`cat $INSTALL_COUCH/logs/couchdb.pid`
+    kill -0 $COUCH_PID;
+    local COUCH_STATUS=$?
+    if [ $COUCH_STATUS -eq 0 ]; then
+        echo "++ Couch running with process: $COUCH_PID";
+    else
+        echo "++ Couch process not running"
+    fi
+    echo "++" `curl -s $COUCH_HOST:$COUCH_PORT`
+}
+
+#
+# Startup couch
+#
+start_couch(){
+   load_secrets_file;
+   echo "starting couch..."
+   if [ $COUCH_INIT_DONE -eq 0 ]; then
+       echo "CouchDB has not been initialised... running pre initialisation";
+       init_couch_pre;
+   fi
+   couchdb -b -a $CONFIG_COUCH/local.ini \
+           -p $INSTALL_COUCH/logs/couchdb.pid \
+           -e $INSTALL_COUCH/logs/stderr.log \
+           -o $INSTALL_COUCH/logs/stdout.log
+   if [ $COUCH_INIT_DONE -eq 0 ]; then
+       echo "CouchDB has not been initialised... running post initialisation"
+       init_couch_post;
+   fi
+
+
+}
+
+#
+# shutdown couch
+#
+stop_couch(){
+   echo "stopping couch...";
+   couchdb  -d  -p $INSTALL_COUCH/logs/couchdb.pid;
+
+}
+
+clean_couch(){
+    echo "cleaning couch installation..."
+    stop_couch
+    echo "removing files"
+    rm -f $INSTALL_COUCH/.init
+    rm -rf $INSTALL_COUCH/database/*
+
+}
+
+
+#
+# combined startup of all required services
+#
+start_services(){
+    echo "Starting Services..."
+    #start up the services required by the agent
+    start_couch;
+    start_mysql;
+}
+
+stop_services(){
+    #shut down all services
+    echo "Shutting down services..."
+    stop_couch;
+    stop_mysql;
+}
+
+##############################
+#  Agent stuff               #
+##############################
+
+
+
+# generate the agent config from the basic template
+init_wmagent(){
+    load_secrets_file;
+
+    wmagent-mod-config --input=$CONFIG_AG/config-template.py \
+                       --output=$CONFIG_AG/config.py \
+                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
+                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --working_dir=$INSTALL_AG \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --global_workqueue_hostname=$GLOBAL_WORKQUEUE_HOSTNAME \
+                       --global_workqueue_port=$GLOBAL_WORKQUEUE_PORT \
+                       --local_workqueue_port=$LOCAL_WORKQUEUE_PORT
+    wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.WorkQueue.Database,WMCore.BossAir,WMCore.ResourceControl;
+    export WMAGENT_CONFIG=$CONFIG_AG/config.py
+    wmagent-couchapp-init;
+    unset WMAGENT_CONFIG
+    inited_agent;
+
+}
+
+
+init_reqmgr(){
+    load_secrets_file;
+    wmagent-mod-config --input=$CONFIG_RM/config-template.py \
+                       --output=$CONFIG_RM/config.py \
+                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
+                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --working_dir=$INSTALL_RM \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --reqmgr_port=$REQMGR_PORT \
+                       --reqmgr_hostname=$REQMGR_HOSTNAME
+    wmcore-db-init --config $CONFIG_RM/config.py --create --modules=WMCore.Agent.Database,WMCore.RequestManager.RequestDB
+    export WMAGENT_CONFIG=$CONFIG_RM/config.py
+    wmagent-couchapp-init;
+    unset WMAGENT_CONFIG
+    inited_reqmgr;
+}
+
+init_workqueue(){
+    load_secrets_file;
+    wmagent-mod-config --input=$CONFIG_WQ/config-template.py \
+                       --output=$CONFIG_WQ/config.py \
+                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_WQ \
+                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --working_dir=$INSTALL_WQ \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --reqmgr_hostname=$REQMGR_HOSTNAME \
+                       --reqmgr_port=$REQMGR_PORT \
+                       --global_workqueue_hostname=$GLOBAL_WORKQUEUE_HOSTNAME \
+                       --global_workqueue_port=$GLOBAL_WORKQUEUE_PORT
+    wmcore-db-init --config $CONFIG_WQ/config.py --create --modules=WMCore.WorkQueue.Database,WMCore.Agent.Database
+    inited_workqueue;
+
+}
+
+#
+# initialise the agent based on the project installed
+#
+init_agent(){
+
+    if [ $USING_AG -eq 1 ]; then
+        if [ $AG_INIT_DONE -eq 0 ]; then
+            echo "Initialising Agent..."
+            init_wmagent;
+        fi
+    fi
+
+    if [ $USING_WQ -eq 1 ]; then
+        if [ $WQ_INIT_DONE -eq 0 ]; then
+            echo "Initialising WorkQueue..."
+            init_workqueue;
+        fi
+    fi
+
+    if [ $USING_RM -eq 1 ]; then
+        if [ $RM_INIT_DONE -eq 0 ]; then
+            echo "Initialising ReqMgr..."
+            init_reqmgr;
+        fi
+    fi
+
+}
+
+start_agent(){
+    init_agent;
+    if [ $USING_RM -eq 1 ]; then
+        echo "Starting ReqMgr..."
+        wmcoreD --start --config=$CONFIG_RM/config.py
+    fi
+
+
+    if [ $USING_WQ -eq 1 ]; then
+        echo "Starting WorkQueue..."
+        wmcoreD --start --config=$CONFIG_WQ/config.py
+    fi
+
+    if [ $USING_AG -eq 1 ]; then
+        echo "Starting WMAgent..."
+        wmcoreD --start --config=$CONFIG_AG/config.py
+    fi
+
+}
+
+stop_agent(){
+    if [ $USING_RM -eq 1 ]; then
+        echo "Shutting down ReqMgr...";
+        wmcoreD --shutdown --config=$CONFIG_RM/config.py;
+    fi
+    if [ $USING_WQ -eq 1 ]; then
+        echo "Shutting down WorkQueue...";
+        wmcoreD --shutdown --config=$CONFIG_WQ/config.py;
+    fi
+    if [ $USING_AG -eq 1 ]; then
+        echo "Shutting down WMAgent...";
+        wmcoreD --shutdown --config=$CONFIG_AG/config.py;
+    fi
+
+
+}
+
+status_of_agent(){
+    if [ $USING_RM -eq 1 ]; then
+        echo "Status of ReqMgr:"
+        wmcoreD --status --config=$CONFIG_RM/config.py
+    fi
+    if [ $USING_WQ -eq 1 ]; then
+        echo "Status of WorkQueue:"
+        wmcoreD --status --config=$CONFIG_WQ/config.py
+    fi
+    if [ $USING_AG -eq 1 ]; then
+        echo "Status of WMAgent:"
+        wmcoreD --status --config=$CONFIG_AG/config.py
+    fi
+
+}
+
+
+#
+# revert agent back to pre initialised state & wipe out
+# everything currently in existence.
+clean_agent(){
+    load_secrets_file;
+    stop_agent;
+    # Todo: clean couchapps?
+    if [ $USING_RM -eq 1 ]; then
+        echo "Cleaning ReqMgr..."
+        rm -rf $INSTALL_RM/*
+        rm -f $CONFIG_RM/config.py;
+        rm -f $INSTALL_RM/.init
+
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "drop database ${MYSQL_DATABASE_RM}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_RM}"
+    fi
+    if [ $USING_WQ -eq 1 ]; then
+        echo "Cleaning WorkQueue..."
+        rm -rf $INSTALL_WQ/*
+        rm -f $CONFIG_WQ/config.py;
+        rm -f $INSTALL_WQ/.init
+
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "drop database ${MYSQL_DATABASE_WQ}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_WQ}"
+    fi
+    if [ $USING_AG -eq 1 ]; then
+        echo "Cleaning WMAgent..."
+        rm -rf $INSTALL_AG/*
+        rm -f $CONFIG_AG/config.py;
+        rm -f $INSTALL_AG/.init
+
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "drop database ${MYSQL_DATABASE_AG}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_AG}"
+    fi
+
+}
+
+
+status(){
+    load_secrets_file;
+    status_of_couch;
+    status_of_mysql;
+    status_of_agent;
+
+
+}
+
+clean_all(){
+    clean_mysql;
+    clean_couch;
+    clean_agent;
+}
+
+
+execute_command_agent(){
+    shift;
+    local RUNTHIS=$1
+    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
+    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in WMCore/bin"
+        exit 1
+    fi
+    shift;
+    load_secrets_file;
+    export WMAGENT_CONFIG=$CONFIG_AG/config.py
+    echo "Executing $RUNTHIS $@ ..."
+    $RUNTHIS $@;
+}
+execute_command_wq(){
+    shift;
+    local RUNTHIS=$1
+    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
+    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in WMCore/bin"
+        exit 1
+    fi
+    shift;
+    load_secrets_file;
+    export WMAGENT_CONFIG=$CONFIG_WQ/config.py
+    echo "Executing $RUNTHIS $@ ..."
+    $RUNTHIS $@;
+}
+execute_command_rm(){
+    shift;
+    local RUNTHIS=$1
+    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
+    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in WMCore/bin"
+        exit 1
+    fi
+    shift;
+    load_secrets_file;
+    export WMAGENT_CONFIG=$CONFIG_RM/config.py
+    echo "Executing $RUNTHIS $@ ..."
+    $RUNTHIS $@;
+}
+
+
+help(){
+    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
+}
+
+
+
+#######################################################
+# Main
+#######################################################
+
+case $1 in
+  status)
+    status ;;
+  activate-agent)
+    activate_agent;;
+  activate-workqueue)
+    activate_workqueue;;
+  activate-reqmgr)
+    activate_reqmgr;;
+  activate-crabserver)
+    activate_crabserver;;
+  start-services)
+    start_services;;
+  stop-services)
+    stop_services;;
+  start-mysql)
+    start_mysql;;
+  stop-mysql)
+    stop_mysql;;
+  clean-mysql)
+     clean_mysql;;
+  mysql-prompt)
+     mysql_prompt $@;;
+  start-couch)
+     start_couch;;
+  stop-couch)
+     stop_couch;;
+  clean-couch)
+     clean_couch;;
+  init-agent)
+     init_agent;;
+  init-reqmgr)
+     init_reqmgr;;
+  init-workqueue)
+     init_workqueue;;
+  start-agent)
+     start_agent;;
+  stop-agent)
+     stop_agent;;
+  clean-agent)
+     clean_agent;;
+  clean-all)
+     clean_all;;
+  execute-agent)
+     execute_command_agent $@;;
+  execute-workqueue)
+     execute_command_wq $@;;
+  execute-reqmgr)
+     execute_command_rm $@;;
+  help)
+    help ;;
+  version)
+    echo "Management script for WMAgent. No idea what version, at least 2 though" ;;
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1 ;;
+esac

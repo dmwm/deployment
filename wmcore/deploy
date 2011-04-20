@@ -1,0 +1,12 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmcore_prep()
+{
+  mkproj
+}
+
+deploy_wmcore_sw()
+{
+  deploy_pkg comp cms+wmcore WMCORE_0_6_11
+  deploy_pkg comp external+python 2.6.4-cmp7
+  deploy_pkg comp external+py2-mysqldb 1.2.3c1-cmp6
+}

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-##H Deploy [-v] ROOT [SERVICE...]
+##H Deploy [OPTIONS] ROOT [SERVICE...]
 ##H
 ##H Deploy one or more SERVICEs into the ROOT directory.
 ##H
@@ -8,30 +8,34 @@
 ##H  -M             Activate $MIGRATION commands.
 ##H  -a             Activate production installation under multiple accounts.
 ##H  -r A=B         Use repository B instead of A (e.g. comp=comp.pre).
-##H  -t TAG         When checking out configuration from SITECONF, use TAG.
-##H  -d SCRIPT-DIR  Look for service installation scripts in SCRIPT-DIR.
+##H  -t VERSION     Install software as VERSION.
+##H  -p AUTH-DIR    Use private secrets from AUTH-DIR (default: use dummies).
+##H  -s STAGES      Install only STAGES parts of recipes (prep sw post).
+##H  -H HOST        Install as if for HOST (default: hostname).
 ##H  -h             Display this help.
 ##H
 ##H Remaining parameters are installation root directory ROOT and list
-##H of service names to install.  Assuming you want to install WMFoo to
-##H $PWD/test, with dependent package WMBar, have DeployWMFoo in $PWD
-##H and DeployWMBar in $PWD/extra, and you want to install using HEAD
-##H of SITECONF and pre-release RPMs with standard multi-account set-up,
-##H call Deploy as follows:
+##H of service names to install. Per-service deployment recipes and
+##H configuration are taken from the same directory as this script.
 ##H
-##H     ./Deploy -a -r comp=comp.pre -t HEAD -d $PWD/extra $PWD/test WMFoo
+##H Example to install service 'foo' into /data as version hg1103-backend
+##H from pre-release repository, using official secrets from 'secrets'.
 ##H
+##H   scp -rp cmsweb@lxplus.cern.ch:private/conf secrets
+##H   svn co svn+ssh://svn.cern.ch/reps/Infrastructure/trunk/Deployment d
+##H   d/Deploy -a -r comp=comp.pre -V hg1103a-backend -A secrets /data foo
 
 MIGRATION=
 
 repoedit=n
 arch=slc5_amd64_gcc434
 now=$(date +%Y%m%d%H%M%S)
-configtag=CMSWEB_CONFIG_PROD
 host=$(hostname -s)
-stages="prep sw post"
+stages="prep sw"
 nogroups=true
-servicedirs="$(cd $(dirname $0) && pwd) $PWD"
+servicedir="$(cd $(dirname $0) && pwd)"
+cfgversion=
+privauthdir=
 
 while [ $# -ge 1 ]; do
   case $1 in
@@ -39,8 +43,9 @@ while [ $# -ge 1 ]; do
     -a ) nogroups=false; shift ;;
     -r ) repoedit="s/${2%=*}/${2#*=}/; $repoedit"; shift; shift ;;
     -s ) stages="$2"; shift; shift ;;
-    -t ) configtag="$2"; shift; shift ;;
-    -d ) servicedirs="$servicedirs $2"; shift; shift ;;
+    -t ) cfgversion="$2"; shift; shift ;;
+    -p ) privauthdir="$2"; shift; shift ;;
+    -H ) host="$2"; shift; shift ;;
     -h ) perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0 1>&2; exit 1 ;;
     -* ) echo "$0: unrecognised option $1, use -h for help" 1>&2; exit 1 ;;
     *  ) break ;;
@@ -55,29 +60,53 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
+if [ X"$cfgversion" = X ]; then
+  echo "$0: missing software tag version (-t option)" 1>&2
+  exit 1
+fi
+
+case $cfgversion in */* | . | .. | .* )
+  echo "$0: invalid configuration version name '$cfgversion'" 1>&2
+  exit 1 ;;
+esac
+
+if [ X"$privauthdir" != X ] && [ ! -d "$privauthdir" ]; then
+  echo "$privauthdir: not a directory" 1>&2
+  exit 1
+fi
+
 # Set SCRAM_ARCH. Lots of things won't work without it being set.
 export SCRAM_ARCH=$arch
-export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW
 
 # Make sure the installation directory exists.
 root="$1"; shift
-[ -d $root ] || {
-  mkdir -p $root || exit $?
-  chmod ug+rw,o-w $root || exit $?
-  $chgrp _sw $root || exit $?
-} || exit 2
+[ -d $root ] || mkdir -p $root || exit $?
 
-# Start error log and make sure it gets wiped on exit.
-errlog=$root/.deploy-$(date +%Y%m%d-%H%M%S)-$$.log
-trap "(exit 77); exit 77" 1 2 15
-: > $errlog
-exec 11>&1 22>&2
-exec 1>>$errlog 2>&1
-set -ex
+# Create directory for deployment logs. Must be writeable by _sw.
+[ -d $root/.deploy ] || {
+  mkdir -p $root/.deploy || exit $?
+  $chmod ug+rw,o-w $root/.deploy || exit $?
+  $chgrp _sw $root/.deploy || exit $?
+}
 
-# Record beginning of installation.
-note() { echo "$*" >> $errlog; echo "$*" 1>&11; }
-note "INFO: $now: starting deployment of: $*"
+# Create directory for the configuration version we are about to create.
+# (Re)set 'current' link to what we are about to install if necessary.
+for dir in $root/$cfgversion{,/bin,/apps,/auth,/config}; do
+  [ -d $dir ] || {
+    mkdir -p $dir || exit $?
+    $chmod ug+rw,o-w $dir || exit $?
+    $chgrp _sw $dir || exit $?
+  }
+done
+
+for dir in $root/{logs,state,enabled}; do
+  [ -d $dir ] || mkdir -p $dir || exit $?
+done
+
+if [ ! -L $root/current ] || [ X$(readlink $root/current) != X$cfgversion ]; then
+  rm -f $root/current || exit $?
+  ln -s $cfgversion $root/current || exit $?
+fi
 
 ######################################################################
 # Installation routines
@@ -108,21 +137,37 @@ setgroup()
 # Produce crontab entry for sysboot rule
 sysboot()
 {
-  if $nogroups; then
-    echo "@reboot $PWD/config/manage ${2-sysboot}"
-  else
-    echo "@reboot sudo -H -u $1 bashs -l -c '$PWD/config/manage ${2-sysboot}'"
+  if [ ! -f $root/enabled/$project ]; then :; else
+    if $nogroups; then
+      echo "@reboot $project_config/manage ${1-sysboot}"
+    else
+      echo "@reboot sudo -H -u _$project bashs -l -c '$project_config/manage ${1-sysboot}'"
+    fi
   fi
+}
+
+# Clean up crontab entries for the project
+mkcrontab()
+{
+  crontab -l | { fgrep -v -e $project_config/ || true; }
 }
 
 # Create application proxy
 mkproxy()
 {
-  local acct=$1 path=$2
+  local acct=_$project
+  local path=$PWD/proxy/proxy.cert
   local link=$(echo $path | md5sum | awk '{print $1}' | cut -b 1-8)
-  local pxfile=$root/projects/conf/certs/PX$link
+  local pxfile=$root/current/auth/proxy/PX$link
+  local pxdir=$root/current/auth/proxy
+
+  mkdir -p $pxdir
+  setgroup u+rwx,g+rx,o-rwx _config $pxdir
+
   echo "$acct $path" > $pxfile
-  setgroup u+rw,go-rwx,g+r _config $pxfile
+  setgroup u+rw,go-rwx _config $pxfile
+
+  mkdir -p $PWD/proxy
   setgroup ug+rwx,o-rwx $acct $(dirname $path)
 }
 
@@ -130,22 +175,35 @@ mkproxy()
 # With groups enabled the project directory is writable by _sw.
 mkproj()
 {
-  local name=$1
-  local dir=
-  shift
-
-  mkdir -p $root/projects/$name
-  $chgrp _sw $root/projects/$name
-  $chmod ug+rw,o-w $root/projects/$name
-
-  for dir; do
-   case $dir in
-     /*) mkdir -p $dir ;;
-     * ) mkdir -p $root/projects/$name/$dir ;;
-   esac
+  local nolog=false
+  local nostate=false
+  while [ $# -ge 1 ]; do
+    case $1 in
+      -s ) nostate=true; shift ;;
+      -l ) nolog=true; shift ;;
+      -* ) echo "$0: mkproj: unexpected option $1" 1>&2; exit 1;;
+      *  ) break ;;
+    esac
   done
 
-  cd $root/projects/$name
+  mkdir -p $project_config
+  $chgrp _sw $project_config
+  $chmod ug+rw,o-w $project_config
+
+  if $nolog; then :; else
+    mkdir -p $project_logs
+    setgroup ug+rw,o-w _$project $project_logs
+  fi
+
+  if $nostate; then :; else
+    mkdir -p $project_state
+    setgroup ug+rw,o-w _$project $project_state
+    cd $project_state
+    for dir; do
+      mkdir -p $dir
+      setgroup ug+rw,o-w _$project $dir
+    done
+  fi
 }
 
 # Source software management environment for a repository.
@@ -153,52 +211,76 @@ mkproj()
 inrepo()
 {
   local repo=$1
-  local inpath=${2-$repo}
-  if [ ! -f $root/${inpath}sw/.bootstrapped ]; then
-    note "INFO: bootstrapping $repo software area in $root/${inpath}sw"
-    if (rm -fr $root/${inpath}sw
-        mkdir -p $root/${inpath}sw
-        cd $root/${inpath}sw
-        wget -q http://cmsrep.cern.ch/cmssw/${repo%.*}/bootstrap.sh
-        sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
-          setup > $PWD/bootstrap-$arch.log 2>&1
-        touch .bootstrapped); then
+  local swarea=$2
+  if [ ! -f $swarea/.bootstrapped ]; then
+    note "INFO: bootstrapping $repo software area in $swarea"
+    (set -e
+     rm -fr $swarea
+     mkdir -p $swarea
+     cd $swarea
+     wget -q http://cmsrep.cern.ch/cmssw/$(echo $repo | cut -d. -f1)/bootstrap.sh
+     sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
+       setup > $PWD/bootstrap-$arch.log 2>&1
+     touch .bootstrapped)
+    if [ $? = 0 ]; then
       note "INFO: bootstrap successful"
     else
       note "ERROR: bootstrap failed"
       exit 3
     fi
   fi
-  . $root/${inpath}sw/$arch/external/apt/*/etc/profile.d/init.sh
+  . $swarea/$arch/external/apt/*/etc/profile.d/init.sh
 }
 
 # Deploy some component.
 deploy()
 {
-  local found=false
-  local lower=$(echo $1 | tr A-Z- a-z_)
-  eval local did="\$${lower}_deployed"
+  local pkg version variant
+  case $1 in
+    *@* ) pkg=${1%@*} version=${1#*@} ;;
+    *   ) pkg=$1 version= ;;
+  esac
+  local var=${2-default}
+  local name=$(echo $pkg | tr - _)
+  local varname=$(echo $var | tr - _)
+  eval local did="\$${name}_${varname}_deployed"
   if [ X$did = X ]; then
-    local dir
-    for dir in $servicedirs; do
-      if [ -f $dir/Deploy$1 ]; then
-	found=true
-        . $dir/Deploy$1
-        break
-      fi
-    done
-
-    if $found; then :; else
-      note "ERROR: don't know how to deploy $1 - missing Deploy$1 in $servicedirs?"
+    if [ -f $servicedir/$pkg/deploy ]; then
+      eval "deploy_${name}_variants=default"
+      eval "deploy_${name}_deps() { true; }"
+      eval "deploy_${name}_prep() { true; }"
+      eval "deploy_${name}_sw() { true; }"
+      eval "deploy_${name}_post() { enable; }"
+      eval "deploy_${name}_auth() { true; }"
+      . $servicedir/$pkg/deploy
+    else
+      note "ERROR: cannot deploy $pkg, no $servicedir/$pkg/deploy"
       exit 4
     fi
 
-    eval deploy_${lower}_deps
-    note "INFO: deploying $1"
+    eval local variants="\$deploy_${name}_variants"
+    case " $variants " in *" $var "* ) ;; * )
+      note "ERROR: $pkg does not have variant '$var'"
+      exit 5 ;;
+    esac
+
+    local setup=:
+    setup="$setup; project='$pkg'"
+    setup="$setup; project_version_override='$version'"
+    setup="$setup; project_config_src='$servicedir/$pkg'"
+    setup="$setup; project_config='$root/current/config/$pkg'"
+    setup="$setup; project_auth='$root/current/auth/$pkg'"
+    setup="$setup; project_state='$root/state/$pkg'"
+    setup="$setup; project_logs='$root/logs/$pkg'"
+    setup="$setup; variant='$var'"
+    setup="$setup; cd \$root; [ ! -d \$project_state ] || cd \$project_state"
+
+    eval "$setup; deploy_${name}_deps"
+    note "INFO: deploying $pkg - variant: $var, version: ${version:-default}"
     for stage in $stages; do
-      eval deploy_${lower}_$stage
+      eval "$setup; deploy_${name}_$stage"
     done
-    eval "${lower}_deployed=1"
+    eval "${name}_${varname}_deployed=1"
   else
     true
   fi
@@ -206,65 +288,109 @@ deploy()
 
 deploy_pkg()
 {
-  local nofakes=true
+  local authfiles=
+  local authfile=
   local link=
-  local cfg=
   while [ $# -ge 1 ]; do
     case $1 in
-      -f ) nofakes=false; shift ;;
-      -l ) link=$2; shift; shift ;;
-      -c ) cfg=$2; shift; shift ;;
-      -d ) cd $root/projects/$2; shift; shift ;;
+      -a ) authfiles="$authfiles $2"; shift; shift ;;
+      -l ) link="$2"; shift; shift ;;
       -* ) echo "$0: deploy_pkg: unexpected option $1" 1>&2; exit 1;;
       *  ) break ;;
     esac
   done
 
-  local repo=$(echo $1 | sed -e "$repoedit")
-  local pkg=$2
-  local ver=$3
+  if [ $# = 0 ]; then :; else
+    local repo=$(echo $1 | sed -e "$repoedit")
+    local label=$(echo $repo | sed 's/^comp//; s/^\([^.]\)/.\1/; s/^/sw/; n')
+    local swarea=$root/$cfgversion/$label
+    local ver=${project_version_override:-$3}
+    local pkg=$2
 
-  (inrepo $repo
-   apt-get update
-   { $nofakes || apt-get -y install $(apt-cache pkgnames | grep fake); }
-   apt-get -y install $pkg+$ver)
+    (set -e
+     inrepo $repo $swarea
+     apt-get update
+     apt-get -y install $(apt-cache pkgnames | grep fake)
+     apt-get -y install $pkg+$ver)
+    [ $? = 0 ]
 
-  # Fix privs dropped by apt/rpm
-  setgroup ug+rw,o-w _sw $root/${repo}sw
-  if $nogroups; then :; else
-    BADFILES=$(find $root/${repo}sw/$arch -type f ! -group _sw -print)
-    [ X"$BADFILES" = X ] || note "WARNING: removing $BADFILES"
-    find $root/${repo}sw/$arch -type f ! -group _sw -print0 | xargs -r -t -0 rm -f
-    find $root/${repo}sw/$arch ! -type l -perm -2 -print0 | xargs -r -t -0 chmod o-w
-    find $root/${repo}sw/$arch -type d ! -perm -660 -print0 | xargs -r -t -0 chmod ug+rw
-    find $root/${repo}sw/$arch -type f ! -group _sw -print0 | xargs -r -t -0 chgrp _sw
-  fi
-
-  if [ X"$link" = X ]; then :; else
-    mkdir -p $(dirname $link)
-    rm -f $link
-    ln -s $root/${repo}sw/$arch/$(echo $pkg | tr + /)/$ver $link
-  fi
-  if [ X"$cfg" = X ]; then :; else
-    if [ -d config ]; then
-      BADFILES=$(find config -type f ! -group _config -print)
-      [ X"$BADFILES" = X ] || $nogroups || note "WARNING: removing $BADFILES"
-      $nogroups || find config -type f ! -group _config -print0 | xargs -r -t -0 rm -f
-    else
-      :
+    # Fix privs dropped by apt/rpm
+    setgroup ug+rw,o-w _sw $swarea
+    if $nogroups; then :; else
+      BADFILES=$(find $swarea/$arch -type f ! -group _sw -print)
+      [ X"$BADFILES" = X ] || note "WARNING: removing $BADFILES"
+      find $swarea/$arch -type f ! -group _sw -print0 | xargs -r -t -0 rm -f
+      find $swarea/$arch ! -type l -perm -2 -print0 | xargs -r -t -0 chmod o-w
+      find $swarea/$arch -type d ! -perm -660 -print0 | xargs -r -t -0 chmod ug+rw
+      find $swarea/$arch -type f ! -group _sw -print0 | xargs -r -t -0 chgrp _sw
     fi
-    cvs -Q co -d config -r $configtag COMP/SITECONF/T1_CH_CERN/$cfg
-    setgroup -R ug+r,go-w _config config
+
+    # Create application link.
+    [ X"$link" != X ] || link=${pkg#*+}
+    rm -f $root/current/apps/$link
+    ln -s ../$label/$arch/$(echo $pkg+$ver | tr + /) $root/current/apps/$link
   fi
+
+  # Install configuration.
+  if $nogroups; then :; else
+    BADFILES=$(find $project_config -type f ! -group _config -print)
+    [ X"$BADFILES" = X ] || note "WARNING: removing $BADFILES"
+    find $project_config -type f ! -group _config -print0 | xargs -r -t -0 rm -f
+  fi
+
+  (cd $project_config_src; find . -type f -print0 |
+   tar --null -T /dev/stdin -cf -) | tar -C $project_config -xvvf - \
+     --no-anchored --exclude CVS --exclude .svn --exclude .git \
+     --exclude '*~' --exclude '.#*' --exclude '*.swp'
+  setgroup ug+r,go-w _config $(find $project_config -type f)
+
+  # Install authentication file if any.
+  for authfile in $authfiles; do
+    local authname=$(echo $project | tr - _)
+    local authsrc=
+    local authdest=
+    case $authfile in
+      *:* ) authsrc=${authfile#*:} authdest=${authfile%*:} ;;
+      *   ) authsrc=$authfile authdest=$(basename $authfile) ;;
+    esac
+
+    mkdir -p $project_auth
+    if [ X"$privauthdir" != X ] && [ -f $privauthdir/$authsrc ]; then
+      rm -f $project_auth/$authdest
+      cp $privauthdir/$authsrc $project_auth/$authdest
+    elif [ -f $project_auth/$authdest ]; then
+      true
+    else
+      eval "deploy_${authname}_auth $authsrc" > $project_auth/$authdest
+    fi
+
+    setgroup u=rwx,g=rx,o-rwx _config $(find $project_auth -type d)
+    setgroup ug=r,o-rwx _config $(find $project_auth -type f)
+  done
 }
 
+# Enable or disable server on a particular node.
+enable() { touch $root/enabled/$project; }
+disable() { rm -f $root/enabled/$project; }
+
+note() { echo "$*" >> $errlog; echo "$*" 1>&11; }
 
 ######################################################################
+# Start error log and make sure it gets wiped on exit.
+errlog=$root/.deploy/$(date +%Y%m%d-%H%M%S)-$$-$(echo $stages | tr -d ' ').log
+trap "(exit 77); exit 77" 1 2 15
+: > $errlog
+exec 11>&1 22>&2
+exec 1>>$errlog 2>&1
+set -ex
+
+# Record beginning of installation.
+note "INFO: $now: starting deployment of: $*"
+
 # Loop over all requested services and install them one at a time.
-(for svc; do
-  cd $root
-  deploy $svc
-done)
+(for svc; do deploy $(echo $svc | tr / ' '); done)
+
+# Resume normal output.
 exit=$?
 set +ex
 exec 1>&11 2>&22

@@ -1,0 +1,495 @@
+#!/bin/sh
+
+##H Usage 1: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H   compile     refresh render plugins
+##H
+##H Usage 2: manage ACTION COMPONENTs [SECURITY-STRING]
+##H COMPONENTs: webserver collector renderer logger agent migration
+##H
+##H   xstatus     show status for COMPONENTs
+##H   xstart      (re)start COMPONENTs
+##H   xrestart    (re)start COMPONENTs
+##H   xstop       stop COMPONENTs
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
+. $ROOT/apps/dqmgui/etc/profile.d/env.sh
+
+export QUIET_ASSERT=a
+
+case $HOST in
+  dqm-c2d07-0[12] ) CONFIGS="online" ;;
+  dqm-c2d07-11 )    CONFIGS="online-playback" ;;
+  dqm-c2d07-12 )    CONFIGS="online-test" ;;
+  dqm-c2d07-21 )    CONFIGS="gui-test" ;;
+  dqm-c2d07-22 )    CONFIGS="online-dev" ;;
+  vocms138 )        CONFIGS="offline offline-caf" ;;
+  vocms139 )        CONFIGS="offline-relval" ;;
+  * )               CONFIGS="offline-dev" ;;
+esac
+
+refuseproc()
+{
+  local title="$1" pat="$2" reason="$3"
+  if [ $(pgrep -u $(id -u) -f "$pat" | wc -l) != 0 ]; then
+    echo "$title: $reason because processes matching '$pat' are still running" 1>&2
+    exit 4
+  fi
+}
+
+statproc()
+{
+  local title="$1" pat="$2"
+  pid=$(pgrep -u $(id -u) -f "$pat" | sort -n)
+  if [ X"$pid" = X ]; then
+    echo -e "$title is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+  else
+    echo -e "$title is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+  fi
+}
+
+killproc()
+{
+  local T title pat nextmsg
+  T=1 title="$1" pat="$2"
+  nextmsg="${newline}Stopping ${title}:"
+  for pid in $(pgrep -u $(id -u) -f "$pat" | sort -rn); do
+    psline=$(ps -o pid=,bsdstart=,args= $pid |
+             perl -n -e 'print join(" ", (split)[0..4])')
+    [ -n "$nextmsg" ] && { echo "$nextmsg"; nextmsg=; }
+    echo -n "Stopping $pid ($psline):"
+    for sig in TERM TERM QUIT KILL; do
+      echo -n " SIG$sig"
+      kill -$sig $pid
+      sleep 1
+      [ $(ps h $pid | wc -l) = 0 ] && break
+      sleep $T
+      T=$(expr $T \* 2)
+      [ $(ps h $pid | wc -l) = 0 ] && break
+    done
+    echo
+    newline="\n"
+  done
+}
+
+startagent()
+{
+  local logstem=$1; shift
+  (set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 >/dev/null 2>&1 &
+}
+
+# Start service conditionally on crond restart.
+sysboot()
+{
+  if [ $(pgrep -u $(id -u) -f "[/]monGui $CFGDIR" | wc -l) = 0 ]; then
+    start
+  fi
+}
+
+# Start the service.
+start()
+{
+  cd $STATEDIR
+  echo "starting $ME"
+
+  # first start agents
+  case $HOST:${1:-agents} in
+    dqm-c2d07-01:*agents* ) # dqm-prod-local
+      refuseproc "file agents" "visDQMIndex" "refusing to restart"
+
+      DQM_DATA=/dqmdata/dqm
+      startagent agent-receive \
+        visDQMReceiveDaemon \
+        $DQM_DATA/uploads \
+        $DQM_DATA/repository/original \
+        $DQM_DATA/agents/import-local \
+        $DQM_DATA/agents/import-offsite \
+        $DQM_DATA/agents/import-test
+
+      startagent agent-import \
+        visDQMImportDaemon \
+        $DQM_DATA/agents/import-local \
+        $DQM_DATA/repository/original \
+        $STATEDIR/ix
+
+      startagent agent-delete \
+        visDQMDeleteDaemon \
+        http://localhost:8030/dqm/online/ \
+        $STATEDIR/ix \
+        $CFGDIR/OnlineQuotas.py
+      ;;
+
+    dqm-c2d07-02:*agents* ) # dqm-prod-offsite
+      refuseproc "file agents" "visDQMIndex" "refusing to restart"
+
+      DQM_DATA=/dqmdata/dqm
+      startagent agent-import \
+        visDQMImportDaemon \
+        $DQM_DATA/agents/import-offsite \
+        $DQM_DATA/repository/original \
+        $STATEDIR/ix
+
+      startagent agent-delete \
+        visDQMDeleteDaemon \
+        http://localhost:8030/dqm/online/ \
+        $STATEDIR/ix \
+        $CFGDIR/OnlineQuotas.py
+      ;;
+
+    dqm-c2d07-12:*agents* ) # dqm-test
+      refuseproc "file agents" "visDQMIndex" "refusing to restart"
+
+      DQM_DATA=/dqmdata/dqm
+      startagent agent-import \
+        visDQMImportDaemon \
+        $DQM_DATA/agents/import-test \
+        $DQM_DATA/repository/original \
+        $STATEDIR/ix
+
+      startagent agent-delete \
+        visDQMDeleteDaemon \
+        http://localhost:8030/dqm/online-test/ \
+        $STATEDIR/ix \
+        $CFGDIR/OnlineQuotas.py
+      ;;
+
+    vocms116:*agents* ) # offline
+      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|createOnlineInfo" "refusing to restart"
+
+      # standard lot of agents
+      for D in offline caf dev; do
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed 's/offline/dqmdata/')
+        DQM_DATA=$STATEDIR/$D
+        startagent $D/agent-receive \
+          visDQMReceiveDaemon \
+          $DQM_DATA/uploads \
+          $DQM_DATA/data \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/agents/zip
+
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          7 \
+          $DQM_DATA/agents/stageout
+
+        startagent $D/agent-zstager \
+          visDQMZipCastorStager \
+          $DQM_DATA/agents/stageout \
+          $DQM_DATA/zipped \
+          $CASTORDIR \
+          $DQM_DATA/agents/verify
+
+        startagent $D/agent-zverifier \
+          visDQMZipCastorVerifier \
+          $DQM_DATA/agents/verify \
+          lilopera@cern.ch  \
+          $DQM_DATA/zipped \
+          $CASTORDIR \
+          7 \
+          $DQM_DATA/agents/clean
+
+        startagent $D/agent-import \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $DQM_DATA/ix \
+          $DQM_DATA/agents/historic \
+          $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-vcontrol \
+          visDQMVerControlDaemon \
+          $DQM_DATA/agents/vcontrol \
+          $DQM_DATA/data
+
+        if [ $D = offline ]; then
+          DIRS="OnlineData,RelVal"
+          DIRS="$DIRS,OfflineData/HIRun2010/StreamExpress"
+          DIRS="$DIRS,OfflineData/HIRun2010/HICorePhysics"
+          DIRS="$DIRS,OfflineData/HIRun2010/HIAllPhysics"
+          startagent $D/agent-syncdn \
+            visDQMSyncDaemon \
+            --dirs $DIRS \
+            --dirs_quotas=30G,15G,20G,15G,50G 130G \
+            $DQM_DATA/data \
+            /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data
+
+          startagent $D/agent-osync \
+            $CFGDIR/OnlineSync.sh
+
+          startagent $D/agent-coinfo \
+            $CFGDIR/createOnlineInfo \
+            $DQM_DATA/data/OnlineData \
+            $DQM_DATA/agents/zip
+        fi
+      done
+      ;;
+
+    *:*agents* ) # dev
+      refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
+
+      # standard lot of agents
+      for D in dev; do
+        DQM_DATA=$STATEDIR/$D
+        startagent $D/agent-receive \
+          visDQMReceiveDaemon \
+          $DQM_DATA/uploads \
+          $DQM_DATA/data \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/agents/zip
+
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          7 \
+          $DQM_DATA/agents/stageout
+
+        startagent $D/agent-import \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $DQM_DATA/ix \
+          $DQM_DATA/agents/historic \
+          $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-vcontrol \
+          visDQMVerControlDaemon \
+          $DQM_DATA/agents/vcontrol \
+          $DQM_DATA/data
+      done
+      ;;
+  esac
+
+  # maybe start migration
+  case $HOST:$1 in
+    dqm-c2d07-21:*migration* )
+      refuseproc "migration agents" "visDQMMigrationProcess" "refusing to restart"
+
+      for i in $(seq 1 $(expr 5 + $(expr $(date +%s) % 10))); do key=$RANDOM; done
+      echo -n "$0: really start migration agents? (y/n) "
+      read answer; case $answer in y ) ;; * ) exit 2 ;; esac
+      echo -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
+      read answer; case $answer in $key ) ;; * ) exit 2 ;; esac
+
+      zsh -c '
+        jobs -Z "visDQMMigrationProcess";
+        while true; do
+          for f in $(find repository{2,3}/original -name "DQM_V????_*_R00*.root" | sort); do
+            if [ $(find repository/original -name $(basename $f) | wc -l) = 0 ]; then
+              v=$(basename $f | sed "s/.*_V\([0-9][0-9][0-9][0-9]\)_.*/\1/")
+              b=uploads2/$v/$(basename $f | sed s/_V${v}_/_V0001_/)
+              [ -f $b -o -f $b.bad -o -f $b.origin.bad ] && continue
+              mkdir -p $(dirname $b)
+              ln $f $b
+              echo "md5:$(md5sum < $b | awk '{print $1}') $(stat -c '%s' $b) $b" > $b.origin
+            fi
+          done
+          sleep 1200
+        done' </dev/null 2>&1 | rotatelogs $LOGDIR/agent-migration-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    vocms116:*migration* ) # offline
+      refuseproc "migration agents" "visDQMMigrationProcess" "refusing to restart"
+
+      for i in $(seq 1 $(expr 5 + $(expr $(date +%s) % 10))); do key=$RANDOM; done
+      echo -n "$0: really start migration agents? (y/n) "
+      read answer; case $answer in y ) ;; * ) exit 2 ;; esac
+      echo -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
+      read answer; case $answer in $key ) ;; * ) exit 2 ;; esac
+
+      for D in offline caf dev; do
+        zsh -c '
+          cd '$D'
+          jobs -Z "visDQMMigrationProcess";
+          for f in $(find old/data -name "*.root.origin" | sort); do
+            if [ $(find repository/data -name $(basename ${f%.origin}) | wc -l) = 0 ]; then
+              v=$(basename $f | sed "s/.*_V\([0-9][0-9][0-9][0-9]\)_.*/\1/")
+              b=uploads2/$v/$(basename $f | sed s/_V${v}_/_V0001_/)
+              if [ ! -f $b -a ! -f $b.bad ]; then
+                mkdir -p $(dirname $b)
+                ln $f $b
+                ln ${f%.origin} ${b%.origin}
+              fi
+            fi
+          done' </dev/null 2>&1 | rotatelogs $LOGDIR/$D/agent-migration-$D-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      done
+      ;;
+  esac
+
+  # start collector
+  case $HOST:${1:-collector} in
+    dqm-c2d07-[01]1:*collector* | dqm-c2d07-2[12]:*collector* )
+      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+    *:* )
+      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/dev/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+  esac
+
+  # finally web server(s)
+  case $HOST:${1:-webserver} in *:*webserver* )
+    for cfg in $CONFIGS; do
+      monControl start all from $CFGDIR/server-conf-$cfg.py
+    done ;;
+  esac
+}
+
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
+  case ${1:-agents} in *agents* )
+    killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|OnlineSync|createOnlineInfo" ;;
+  esac
+  case $1 in *migration* )
+    killproc "$ME migration agents" "visDQMMigration|sleep" ;;
+  esac
+  case ${1:-collector} in *collector* )
+    killproc "$ME collector" "DQMCollector"
+  esac
+  case ${1:-webserver} in *webserver* )
+    for cfg in $CONFIGS; do
+      monControl stop all from $CFGDIR/server-conf-$cfg.py
+    done ;;
+  esac
+}
+
+# Check if the server is running.
+status()
+{
+  case ${1:-webserver} in *webserver* )
+    statproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  esac
+  case ${1:-renderer} in *renderer* )
+    statproc "$ME renderer" "visDQMRender" ;;
+  esac
+  case ${1:-collector} in *collector* )
+    statproc "$ME collector" "DQMCollector" ;;
+  esac
+  case ${1:-logger} in *logger* )
+    statproc "$ME loggers" "rotatelogs" ;;
+  esac
+  case ${1:-agents} in *agents* )
+    statproc "$ME agents" "visDQM.*Daemon|visDQMIndex|zip|OnlineSync|createOnlineInfo" ;;
+  esac
+  case $1 in *migration* )
+    statproc "$ME migration" "visDQMMigration|sleep" ;;
+  esac
+}
+
+# (Re)compile render plugins.
+compile()
+{
+  for cfg in $CONFIGS; do
+    monControl rebuild all from $CFGDIR/server-conf-$cfg.py
+  done
+}
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    if ps -oargs= $PPID | grep -q crond; then
+      sysboot
+    else
+      echo "$0: sysboot is for cron only" 1>&2
+      exit 1
+    fi
+    ;;
+
+  start | restart )
+    check "$2"
+    stop
+    start
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$2"
+    stop
+    ;;
+
+  compile )
+    compile
+    ;;
+
+  xstart | xrestart )
+    check "$3"
+    stop "$2"
+    start "$2"
+    ;;
+
+  xstatus)
+    status "$2"
+    ;;
+
+  xstop )
+    check "$3"
+    stop "$2"
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$DQMGUI_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

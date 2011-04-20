@@ -1,0 +1,35 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_das_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+  deploy mongodb
+  deploy admin
+}
+
+deploy_das_prep()
+{
+  mkproj
+  mkproxy
+}
+
+deploy_das_sw()
+{
+  deploy_pkg comp cms+das 0.5.12
+  perl -p -i -e "s|{ROOT}|$root|" $project_config/analytics_cfg.py
+}
+
+deploy_das_post()
+{
+  case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+
+  # put DAS JSON maps into mongodb stagingarea
+  local mongodb_stage=$root/state/mongodb/stagingarea
+  rm -f $mongodb_stage/{clean,update}_mapping_db.js
+  (echo 'mapping = db.getSisterDB("mapping");'
+   echo 'mapping.dropDatabase();') > \
+   $mongodb_stage/clean_mapping_db.js
+  cp $root/current/apps/das/lib/python2.6/site-packages/DAS/services/cms_maps/das_maps.js \
+    $mongodb_stage/update_mapping_db.js
+}

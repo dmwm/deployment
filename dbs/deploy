@@ -1,0 +1,30 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dbs_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+}
+
+deploy_dbs_prep()
+{
+  mkproj
+}
+
+deploy_dbs_sw()
+{
+  deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3 3.0.6-cmp
+}
+
+deploy_dbs_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab | sysboot) | crontab -
+}
+
+deploy_dbs_auth()
+{
+  echo "connectUrlReader='oracle://owner:secret@instance'"
+  echo "databaseOwnerReader='owner'"
+  echo "connectUrlWriter='oracle://owner:secret@instance'"
+  echo "databaseOwnerWriter='owner'"
+}

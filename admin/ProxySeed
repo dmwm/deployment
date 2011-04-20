@@ -1,0 +1,56 @@
+#!/bin/sh
+
+### Usage: ProxySeed [-h] [-t TYPE] [-d DESTINATION]
+###
+### Creates a new long-lived proxy of TYPE kind, either 'dev' or 'prod', and
+### installs it into DESTINATION which must be a directory 'scp' can copy to.
+### DESTINATION defaults to '/data/current/auth/proxy', TYPE to 'DevVM'.
+###
+### Examples:
+###   ProxySeed
+###   ProxySeed DevVM /data/current/auth/proxy
+###   ProxySeed Production cmsweb@$(hostname):/data/srv/hg1103a/auth/proxy
+
+usage()
+{
+  perl -ne '/^### Usage:/ && do { s/^### ?//; print }' < $0
+  exit 1
+}
+
+type=dev dest=/data/current/auth/proxy
+pxparam="-x -c 720 -t 36 -s myproxy.cern.ch"
+shost=$(hostname -s | tr [:upper:]- [:lower:]_)
+fhost=$(hostname -f)
+me=$(id -un)
+eval set -- $(getopt -n $0 -o ht:d: -- ${1+"$@"})
+[ $? = 0 ] || usage
+for arg; do
+  case $arg in
+    -t) case $2 in
+          dev | prod ) type="$2"; shift; shift;;
+          * ) echo "$2: bad proxy type, try 'dev' or 'prod'" 1>&2; exit 1;;
+        esac ;;
+    -d) dest="$2"; shift; shift ;;
+    -h) perl -ne '/^###/ && do { s/^### ?//; print }' < $0; exit 0;;
+    --) shift; break ;;
+    -*) usage; exit 1 ;;
+  esac
+done
+
+[ $# = 0 ] || usage
+
+set -e
+source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
+export GT_PROXY_MODE=old
+
+set -x
+voms-proxy-init -voms cms -valid 36:00
+scp -p /tmp/x509up_u$(id -u) $dest/seed-$me.cert
+case $type in
+  dev )
+    myproxy-init $pxparam -R "*/CN=$fhost" -l devvm_${shost}_$me ;;
+
+  prod )
+    myproxy-init $pxparam -R "*/CN=vocms(10[4-9]|116|5[013]|65|13[2345]).cern.ch" \
+      -l cmsweb_backends_$me ;;
+esac

@@ -1,0 +1,232 @@
+#!/bin/sh
+
+### ProxyRenew CERT-DIRECTORY PROXY-DIRECTORY LABEL VOMS[:/GROUP/Role=ROLE]
+###
+### Given 'hostcert.pem' and 'hostkey.pem' in CERT-DIRECTORY, maintains
+### one or more proxy certificates, 'proxy-<LOGIN>.cert' and 'proxy.cert',
+### in PROXY-DIRECTORY.  The proxy is renewed by attempting to acquire
+### new delegations titled LABEL_<LOGIN> for every seed proxy <LOGIN>,
+### extended with voms attribute VOMS (VOMS:/GROUP/Role=ROLE if required).
+### Warns the operators if none of the available proxies can be renewed or
+### the VOMS extensions cannot be retrieved.
+###
+### The proxy would normally be renewed using a cron job like this:
+###
+###  3 */3 * * * /data/system/current/config/admin/ProxyRenew \
+###                /data/certs /data/system/current/auth/proxy \
+###                cmsweb_backends cms
+###
+### Periodically, usually once a month, the operator should upload his or
+### her personal proxy to myproxy.cern.ch using the following command. Do
+### note that the account name (-l cmsweb_backends) and renewing host list
+### (-R pattern) should be registered with px.support@cern.ch prior to use.
+###
+###  export GT_PROXY_MODE=old
+###  myproxy-init -x -R "*/CN=vocms(10[4-9]|116|5[013]|65).cern.ch" \
+###    -c 720 -t 36 -s myproxy.cern.ch -l cmsweb_backends_$(id -un)
+###
+### In addition on the first time and whenever the proxy has expired, the
+### operator needs to re-bootstrap the renewal process by copying a seed
+### proxy to the backend servers for use by ProxyRenew:
+###
+###  voms-proxy-init -voms cms
+###  scp -p /tmp/x509up_u$(id -u) \
+###    cmsweb@vocmsNNN.cern.ch:/data/system/current/auth/proxy/seed-$(id -un).cert
+###
+
+verbose=false
+export GT_PROXY_MODE=old
+source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
+
+if [ X"$1" = X-v ]; then
+  verbose=true
+  shift
+fi
+
+if [ $# -ne 4 ]; then
+  echo "usage: $0 CERT-DIRECTORY PROXY-DIRECTORY LABEL VOMS[:/GROUP/Role=ROLE]" 1>&2
+  exit 1
+fi
+
+certdir="$1"
+dir="$2"
+label="$3"
+voms="$4"
+
+[ -d "$certdir" ] || { echo "$certdir: no such certificate directory" 1>&2; exit 2; }
+[ -d "$dir" ] || { echo "$dir: no such proxy directory" 1>&2; exit 1; }
+cd "$dir" || { echo "$dir: cannot change to directory" 1>&2; exit 3; }
+[ -f $certdir/hostcert.pem -a -f $certdir/hostkey.pem ] ||
+  { echo "$certdir: no hostcert.pem/hostkey.pem here" 1>&2; exit 4; }
+
+unset MYPROXY_SERVER
+unset MYPROXY_SERVER_DN
+unset MYPROXY_TCP_PORT_RANGE
+
+export MYPROXY_SERVER=myproxy.cern.ch
+
+now=$(date +%Y%m%d%H%M%S)
+errlog=$(mktemp /tmp/proxy-renew.XXXXXX)
+trap "rm -f $errlog" 0
+trap "(exit 77); exit 77" 1 2 15
+
+# Loop over all available seeds/proxies. Try to renew all renewable proxies.
+# Some of the proxies may have expired. This isn't a problem in itself; it's
+# only a problem if we don't find any valid proxies at all.
+echo "INFO: $now: Scanning for renewable proxies" > $errlog
+
+# Convert any seeds to the current proxy for that login. This is so renewal
+# can be re-seeded if the proxy has already expired and cannot be used to
+# obtain delegations any more.
+for seed in seed-*.cert; do
+  [ -f "$seed" ] || continue
+  login=$(echo "$seed" | sed 's/^seed-//; s/\.cert$//')
+  echo "INFO: renewing proxy-$login.cert from $seed" >> $errlog
+  rm -f "proxy-$login.cert"
+  cp "$seed" "proxy-$login.cert"
+  chmod 600 "proxy-$login.cert"
+  rm -f "$seed"
+done
+
+# Renew all delegations we can.
+got_proxy=0 best_proxy= good_proxy= ok_proxy=
+for proxy in proxy-*.cert; do
+  [ -f "$proxy" ] || continue
+  login=$(echo "$proxy" | sed 's/^proxy-//; s/\.cert//')
+  export X509_USER_CERT=$certdir/hostcert.pem
+  export X509_USER_KEY=$certdir/hostkey.pem
+  unset X509_USER_PROXY
+
+  # Check the proxy is valid at all. If not, complain and delete it
+  # to avoid recurrent error messages every time the cron job runs.
+  if grid-proxy-info -file "$proxy" -exists -valid 0:01 >> $errlog 2>&1; then :; else
+    echo "* URGENT: $proxy has expired and must be renewed, deleting turd" >> $errlog
+    rm -f "$proxy"
+    continue
+  fi
+
+  # Proxy valid for at least 24 hours is good enough
+  if grid-proxy-info -file "$proxy" -exists -valid 24:00 >> $errlog 2>&1; then
+    echo "INFO: $proxy is still valid" >> $errlog
+    got_proxy=$(expr $got_proxy + 1) best_proxy="$proxy"
+    continue
+  fi
+
+  # Try to renew the proxy
+  echo "INFO: $proxy needs to be renewed" >> $errlog
+  rm -f "$proxy.new" "$proxy.voms"
+  if myproxy-get-delegation -q -t 36 -l "${label}_${login}" \
+      -a "$proxy" -o "$proxy.new" >> $errlog 2>&1; then
+    echo "INFO: $proxy successfully renewed" >> $errlog
+    ok_proxy="$proxy"
+  else
+    echo "ERROR: $proxy failed on myproxy-get-delegation: $?" >> $errlog
+    rm -f "$proxy.new"
+    continue
+  fi
+
+  # Verify validity of the new proxy, should have 36 hour life time.
+  # If it is valid, move it into place, otherwise check how much is
+  # left and warn the operator. However leave the proxy in place in
+  # case it still works and this is a transient error.
+  h=35 m=50
+  echo "INFO: $proxy verifying life time" >> $errlog
+  if grid-proxy-info -file "$proxy.new" -exists -valid $h:$m >> $errlog 2>&1; then
+    echo "INFO: $proxy renewed with at least 35h validity left" >> $errlog
+    good_proxy="$proxy"
+  else
+    t=$(grid-proxy-info -file "$proxy.new" -timeleft)
+    if [ X"$t" != X ]; then
+      h=$(expr $t / 3600)
+      m=$(expr $(expr $t / 60) % 60)
+    fi
+    echo "WARNING: $proxy was renewed, but only ${t}s validity left" >> $errlog
+    ok_proxy="$proxy"
+  fi
+
+  # Add voms extensions to new proxy. We cannot use the --voms option of
+  # myproxy-get-delegation because of bug when cert/key variables are set.
+  # If we get VOMS extensions successfully, replace plain proxy from myproxy
+  # with the voms-enhanced one here after checking the attribute validity.
+  # If we fail to get VOMS extensions, keep the plain proxy certificate.
+  unset X509_USER_CERT
+  unset X509_USER_KEY
+
+  if voms-proxy-init -valid $h:$m -voms "$voms" \
+                     -cert "$proxy.new" -key "$proxy.new" \
+                     -out "$proxy.voms" -bits 1024 -quiet >> $errlog 2>&1; then
+    actime=$(voms-proxy-info -file "$proxy.voms" -actimeleft)
+    if [ X"$actime" != X ]; then
+      mv -f "$proxy.voms" "$proxy.new"
+      if [ $actime -gt 126000 ]; then
+        echo "INFO: $proxy renewed voms extensions, ${actime}s validity left" >> $errlog
+        best_proxy="$proxy"
+      else
+        echo "WARNING: $proxy renewed voms extensions, but ${actime}s validity left" >> $errlog
+        good_proxy="$proxy"
+      fi
+    else
+      echo "WARNING: $proxy no voms attributes, ${actime}s validity left" >> $errlog
+      ok_proxy="$proxy"
+    fi
+  else
+    # Failed to retrieve VOMS extensions, keep the plain proxy cert.
+    echo "WARNING: $proxy cannot renew voms extensions: $?" >> $errlog
+  fi
+
+  # Use this proxy.
+  rm -f "$proxy.voms"
+  mv -f "$proxy.new" "$proxy"
+  chmod go-rwx "$proxy"
+  got_proxy=$(expr $got_proxy + 1)
+
+  # If the long-lived myproxy proxy will expire soonish, warn.
+  mtl=$(export X509_USER_CERT="$proxy" X509_USER_KEY="$proxy" X509_USER_PROXY="$proxy"
+        myproxy-info -l "${label}_${login}" |
+         perl -ne '/timeleft: (\d+):(\d+):(\d+)/ && { print $1*3600 + $2*60 + $3 }')
+  if [ X"$mtl" = X ]; then
+    echo "ERROR: ${label}_${login} remaining life time unavailable" >> $errlog
+  elif [ "$mtl" -lt 259200 ]; then
+    echo "* URGENT: ${label}_${login} remaining life time ${mtl}s, please renew" >> $errlog
+  fi
+done
+
+# Choose current proxy to use.
+if [ $got_proxy -gt 0 ]; then
+  if [ X"$best_proxy" != X ]; then
+    rm -f proxy.cert
+    ln -s "$best_proxy" proxy.cert
+  elif [ X"$good_proxy" != X ]; then
+    rm -f proxy.cert
+    ln -s "$good_proxy" proxy.cert
+  elif [ X"$ok_proxy" != X ]; then
+    rm -f proxy.cert
+    ln -s "$ok_proxy" proxy.cert
+  fi
+fi
+
+# Install per application proxies.
+for f in PX*; do
+  [ -f $f ] || continue
+  while read acct path; do
+    if [ ! -d $(dirname $path) ]; then
+      echo "WARNING: removing stale proxy $f for $acct in $path" >> $errlog
+      rm -f $f
+      continue
+    fi
+    if [ ! -f $path ] || [ $path -ot proxy.cert ]; then
+      cat proxy.cert | sudo -H -u $acct bashs -l -c "umask 077 && cat > $path"
+    fi
+  done < $f
+done
+
+# Report program result
+exit=0 logscan="egrep -v ^INFO:"; $verbose && logscan=cat
+case $got_proxy in
+  0 ) echo "ERROR: proxy needs to be renewed immediately" >> $errlog; logscan="cat" exit=5 ;;
+  1 ) echo "INFO: 1 proxy renewed" >> $errlog ;;
+  * ) echo "INFO: $got_proxy proxies renewed" >> $errlog ;;
+esac
+
+$logscan < $errlog
+exit $exit

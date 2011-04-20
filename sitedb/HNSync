@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Source SiteDB environment so we have cx_oracle available.
+# Any version of SiteDB installed on this system will do.
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+STATEDIR=$TOP/state/$ME
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+# Configuration working parametres.
+WORK_DIR=$STATEDIR/hn
+FILE=hn_passwd_$(date +%Y%m%d_%H%M%S).out
+SECURITY_FILE=$ROOT/auth/sitedb/security.ini
+
+# Download the input from hypernews. This is restricted to
+# certain hosts, Andreas Peiffer can add other nodes to the
+# list of those with access.
+umask 077
+mkdir -p $WORK_DIR
+curl -4skL https://hn.cern.ch/cgi-bin/CMS/serveHNUserFile.py |
+  egrep -v -e '^<' -e '^$' > $WORK_DIR/$FILE
+
+# Update SiteDB database from hypernews info.
+$(dirname $0)/HNUpdate -s $SECURITY_FILE --newfile=$WORK_DIR/$FILE
+
+# Tidy up the file.
+# rm $WORK_DIR/$FILE
+exit 0

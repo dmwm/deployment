@@ -1,0 +1,61 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_reqmgr_variants="default offsite"
+
+deploy_reqmgr_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+  deploy couchdb $variant
+  case $variant in offsite ) deploy wmcore ;; esac
+}
+
+deploy_reqmgr_prep()
+{
+  case $variant in offsite ) extra=install ;; * ) extra= ;; esac
+  mkproj $extra
+}
+
+deploy_reqmgr_sw()
+{
+  case $variant in
+    default )
+      deploy_pkg -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr 0.7.2-cmp ;;
+
+    offsite )
+      deploy_pkg comp external+cherrypy 3.1.2-cmp6
+      deploy_pkg comp external+py2-cheetah 2.4.0-cmp6
+      deploy_pkg comp external+py2-openid 2.2.4-cmp6
+      deploy_pkg comp external+py2-cjson 1.0.5-cmp5
+      deploy_pkg comp cms+dls-client DLS_1_1_2-cmp6
+      deploy_pkg comp cms+dbs-client DBS_2_1_1_patch1_1
+
+      local wmcore_etc=$root/current/apps/wmcore/etc
+      local couchdb_ini=$root/current/config/couchdb/local.ini
+      local mysql_config=$root/current/config/mysql/my.cnf
+
+      # get manage script from wmcore
+      cp $wmcore_etc/deploy/wmagent-manage $project_config/manage
+
+      # override the webtools couch config
+      cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
+      perl -p -i -e "s{deploy_project_root}{$root/projects}g" $couchdb_ini
+
+      # grab the WMAgent MySQL config
+      cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
+      ;;
+  esac
+}
+
+deploy_reqmgr_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  case $variant in default )
+    (mkcrontab; sysboot) | crontab -
+    ;;
+  esac
+}
+
+deploy_reqmgr_auth()
+{
+  echo 'connectUrl = "oracle://FOO:BAR@ZOINKS"'
+}

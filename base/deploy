@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_base_deps()
+{
+  deploy backend
+}
+
+deploy_base_prep()
+{
+  mkproj
+}
+
+deploy_base_sw()
+{
+  deploy_pkg comp cms+webtools-base 0.1.21-cmp6
+}
+
+deploy_base_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}

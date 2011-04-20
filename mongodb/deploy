@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_mongodb_deps()
+{
+  deploy backend
+}
+
+deploy_mongodb_prep()
+{
+  mkproj stagingarea db
+}
+
+deploy_mongodb_sw()
+{
+  deploy_pkg comp external+mongo 1.6.5-cmp2
+}
+
+deploy_mongodb_post()
+{
+  case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}

@@ -1,0 +1,48 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_couchdb_variants="default offsite"
+
+deploy_couchdb_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+}
+
+deploy_couchdb_prep()
+{
+  mkproj database backup compaction replication stagingarea
+}
+
+deploy_couchdb_sw()
+{
+  rm -f $project_auth/hmackey.ini
+  deploy_pkg -a couchdb/hmackey.ini comp external+couchdb 1.0.2
+  perl -p -i -e "s|{ROOT}|$root|g" $project_config/local.ini
+}
+
+deploy_couchdb_post()
+{
+  if $MIGRATION && \
+     [ -d /data/projects/couchdb/database ] && \
+     [ $(find $PWD/database -type f | wc -l) = 0 ]; then
+    note "INFO: cloning old couch databases from /data/projects/couchdb/database"
+    sudo rsync -cav /data/projects/couchdb/database/ $PWD/database/
+  else :; fi
+
+  case $variant in
+    default )
+      case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+      (mkcrontab; sysboot) | crontab -
+      ;;
+    * )
+      enable
+      ;;
+  esac
+}
+
+deploy_couchdb_auth()
+{
+  perl -e \
+    'undef $/; print "[couch_cms_auth]\n";
+     print "hmac_secret = ", unpack("h*", <STDIN>), "\n"' < \
+    $root/current/auth/wmcore-auth/header-auth-key
+}

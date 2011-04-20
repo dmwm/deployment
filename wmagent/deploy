@@ -1,0 +1,46 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmagent_deps()
+{
+  deploy couchdb
+  deploy mysql
+}
+
+deploy_wmagent_prep()
+{
+  mkproj wmagent
+}
+
+deploy_wmagent_sw()
+{
+  AGENT_VERSION="0.7.5"
+  deploy_pkg comp cms+wmagent $AGENT_VERSION
+  deploy_pkg comp external+cherrypy 3.1.2-cmp6
+  deploy_pkg comp external+py2-cheetah 2.4.0-cmp6
+  deploy_pkg comp external+py2-openid 2.2.4-cmp6
+  deploy_pkg comp external+py2-cjson 1.0.5-cmp5
+  deploy_pkg comp cms+dls-client DLS_1_1_2-cmp6
+  deploy_pkg comp cms+dbs-client DBS_2_1_1_patch1_1
+
+  # need to link in wmcore codebase for binaries etc
+  ln -s $root/current/sw/$SCRAM_ARCH/cms/wmcore/$AGENT_VERSION $root/current/apps/wmcore
+
+  mkdir -p $root/current/install/wmagent
+  mkdir -p $root/current/install/reqmgr
+  mkdir -p $root/current/install/workqueue
+  mkdir -p $root/current/install/mysql
+  mkdir -p $root/current/install/couchdb
+
+  mkdir -p $root/current/config/reqmgr
+  mkdir -p $root/current/config/workqueue
+
+
+  local couchdb_ini=$root/current/config/wmagent/local.ini
+  local mysql_config=$root/current/config/wmagent/my.cnf
+  perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
+
+  cp -f $couchdb_ini $root/current/config/couchdb
+  cp -f $mysql_config $root/current/config/mysql
+
+
+
+}

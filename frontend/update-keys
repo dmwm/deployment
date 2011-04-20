@@ -1,0 +1,142 @@
+#!/usr/bin/perl
+
+BEGIN { use strict; use warnings; $^W=1; }
+use POSIX;
+
+sub init();
+sub refresh_keys();
+sub sync_keys();
+sub restart_servers();
+sub generate_key($);
+sub date_to_str();
+
+my $srvdir;
+my $keydir;
+my @hosts;
+
+init();
+refresh_keys();
+sync_keys();
+restart_servers();
+exit(0);
+
+# Determine locations and parameters.
+sub init()
+{
+  die "usage: $0 server-dir host...\n" if scalar @ARGV == 0;
+  $srvdir = shift(@ARGV);
+  if (! -d $srvdir)
+  {
+    print STDERR "$srvdir: no such directory\n";
+    exit(2);
+  }
+
+  $keydir = "$srvdir/etc/keys";
+  if (! -d $keydir)
+  {
+    print STDERR "$keydir: no such directory\n";
+    exit(3);
+  }
+
+  @hosts = @ARGV;
+}
+
+# Refresh keys. Don't touch keys that are files. Keys which are
+# directories are expected to be rotating keys, so update those.
+# For now apply standard cycle of one week to all the keys.
+sub refresh_keys()
+{
+  my $now = time();
+
+  # Refresh keys in subdirectories.
+  foreach my $f (<$keydir/*>)
+  {
+    if (-d $f)
+    {
+      generate_key($f . "/" . date_to_str());
+    }
+    elsif (-f $f && (stat($f))[7] < 20)
+    {
+      generate_key($f);
+    }
+
+    # Delete old (> 7 days) cookie keys.  This invalidates the
+    # cookies using those keys since their HMAC can no longer
+    # be verified.
+    unlink grep($now - (stat($_))[9] > 7*86400, <$f/*>);
+  }
+
+  # Make sure the group and protections are correct.
+  if (my ($name,$passwd,$gid,$members) = getgrnam("_config"))
+  {
+    chmod(0750, $keydir, grep(-d $_, <$keydir/*>));
+    chmod(0640, grep(-f $_, <$keydir/*>), <$keydir/*/*>);
+    chown(-1, $gid, $keydir, <$keydir/*>, <$keydir/*/*>)
+  }
+  else
+  {
+    chmod(0700, $keydir, grep(-d $_, <$keydir/*>));
+    chmod(0600, grep(-f $_, <$keydir/*>), <$keydir/*/*>);
+  }
+}
+
+# Synchronise cookie keys with other servers.
+sub sync_keys()
+{
+  my $nbad = 0;
+  foreach my $host (@hosts)
+  {
+    $nbad++ if system("rsync --delete -au -e ssh $keydir/ $host:$keydir/");
+  }
+
+  if ($nbad)
+  {
+    print STDERR "$0: key synchronisation failed with $nbad hosts";
+    exit(4);
+  }
+}
+
+# Restart all web servers.
+sub restart_servers()
+{
+  system("sudo $srvdir/etc/httpd graceful");
+  foreach my $host (@hosts)
+  {
+    system("ssh $host sudo $srvdir/etc/httpd graceful");
+  }
+}
+
+# Generate new random secret key for HMAC.  SHA1-HMAC needs 160-bit
+# keys, or 20 bytes of data. Force overwrite any existing keys.
+sub generate_key($)
+{
+  my $f = shift;
+  my $key = "";
+
+  open(R, "< /dev/urandom") or die;
+  sysread(R, $key, 20) or die;
+  close(R) or die;
+
+  open(K, "> $f") or die;
+  syswrite(K, $key, 20) or die;
+  close(K) or die;
+}
+
+# Convert date to a short string that is guaranteed to sort in
+# the time-increasing order.  Uses current time, converts it
+# to an integer in <year-month-day-hour> format, and converts
+# the integer to a 5-character base32hex string.
+sub date_to_str()
+{
+  $d = strftime("%Y%m%d%H", gmtime(time())) - 2008000000;
+  $t = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+  $x = "";
+  while($d > 0)
+  {
+    $r = $d % 32;
+    $d = int($d/32);
+    $x .= substr($t, $r, 1);
+  }
+  $x .= "0" while length($x) < 5;
+  return scalar reverse $x;
+}

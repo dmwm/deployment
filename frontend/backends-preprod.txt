@@ -1,0 +1,9 @@
+^/auth/complete/dqm/(?:online(?:|-playback|-test)|gui-test|ecal|lumi)(?:/|$) cmsdaq0.cern.ch
+^/auth/complete/dqm/(?:offline|caf)(?:/|$) vocms116.cern.ch
+^/auth/complete/dqm/dev(?:/|$) vocms133.cern.ch
+^/auth/complete/couchdb(?:/|$) vocms133.cern.ch :affinity
+^/auth/complete/filemover(?:/|$) vocms133.cern.ch
+^/overview(?:/|$) vocms132.cern.ch
+^/phedex(?!/datasvc) vocms132.cern.ch
+^/das(?:/|$) vocms133.cern.ch
+^ vocms132.cern.ch|vocms133.cern.ch

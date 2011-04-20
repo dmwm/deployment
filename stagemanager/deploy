@@ -1,0 +1,38 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_stagemanager_deps()
+{
+  deploy couchdb
+}
+
+deploy_stagemanager_prep()
+{
+  mkproj -l -s
+}
+
+deploy_stagemanager_sw()
+{
+  deploy_pkg comp cms+stagemanager 0.0.1-cmp3
+}
+
+deploy_stagemanager_post()
+{
+  # Tell couchdb to pick up stage manager on the next restart
+  # and configure replication, compaction and backup, too
+  local couchdb_config=$root/current/config/couchdb
+  local couchdb_state=$root/state/couchdb
+  local hour=0
+
+  for area in compaction stagingarea replication backup; do
+    rm -f $couchdb_state/$area/stagemanager
+    touch $couchdb_state/$area/stagemanager
+  done
+
+  for site in t1_uk_ral t1_us_fnal; do
+    for db in requests statistics; do
+      local db_string=${site}_${db}
+      echo "couchapp push $root/current/apps/stagemanager/$db http://localhost:5984/$db_string" >> $couchdb_state/stagingarea/stagemanager
+      echo "1 $hour * * * $couchdb_config/manage compact $db_string" >> $couchdb_state/compaction/stagemanager
+      hour=$(( $hour + 1 ))
+    done
+  done
+}

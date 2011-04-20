@@ -1,0 +1,11 @@
+<graphtool-config>
+  <import module="graphtool.tools.rates">Rates</import>
+  <import module="graphtool.tools.cooloff">Cooloff</import>
+  <import module="graphtool.tools.list_help">ListHelp</import>
+  <import module="graphtool.tools.routing">Routing</import>
+  <import module="graphtool.tools.list_replicas">ListReplicas</import>
+  <import module="graphtool.tools.check_block">CheckBlock</import>
+  <import module="graphtool.tools.file_config">FileConfig</import>
+  <import module="graphtool.tools.fileinfo">FileInfo</import>
+  <import file="@ROOT@/state/phedex/etc/graphs_text_queries.xml" />
+</graphtool-config>

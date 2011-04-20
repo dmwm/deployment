@@ -1,0 +1,720 @@
+#!/usr/bin/env python
+
+import os, os.path, sys, re, urllib2, socket, traceback, errno, thread
+from time import time, sleep, strftime, localtime
+from subprocess import Popen, PIPE
+from threading import Thread
+from Queue import Queue, Empty
+from cStringIO import StringIO
+import cPickle as pickle
+from glob import glob
+from signal import *
+
+def logmsg(*args):
+  """Output a space separated log message prefixed with current time."""
+  # Print full single line at a time, 'print' will write every
+  # argument separate which in unbuffered mode with threads can
+  # result in jumbled output.
+  sys.stdout.write(strftime("%b %d %H:%M:%S ", localtime(time()))
+		   + " ".join(args) + "\n")
+
+class FileState:
+  """Cached information about a file: size, mtime and last read position."""
+  size = 0
+  mtime = 0
+  lastpos = 0
+
+class Monitor(Thread):
+  """Base class for monitors.
+
+  Each monitor is a thread which receives tasks from a task queue,
+  and reports relevant findings via `logmsg()`. Each monitor runs
+  forever, normally started from derived class constructor, until it
+  receives 'None' task in the task queue as a signal to exit.
+
+  Each task is passed to `self._do(*task)` method for processing. The
+  derived class should provide implementation of this method with a
+  method which logs its findings to `logmsg()`."""
+  def __init__(self, task_queue):
+    """Initialise the core monitor.
+
+    @param task_queue -- queue for incoming tasks."""
+    Thread.__init__(self)
+    self.tasks = task_queue
+
+  def run(self):
+    """Run the monitor main loop.
+
+    Runs forever until the thread receives a `None` task from the
+    incoming task queue. Passes actual tasks to the `_do()` method
+    which the derived classes should provide.
+
+    If a task fails to execute and raises an exception, it's reported
+    to `logmsg()` but processing continues normally. This is necessary
+    to avoid errors from killing the entire monitor thread, but beware
+    this may cause extremely rapid error logging in case of improperly
+    validated input or outright programming errors."""
+    task = True
+    while task:
+      task = self.tasks.get()
+      if task != None:
+        try:
+          self._do(*task)
+        except Exception, e:
+	  trace = StringIO()
+          traceback.print_exc(file=trace)
+          logmsg("ADMIN", "FAILURE", "TASK %s ERROR: %s" % (repr(task), str(e)))
+	  for line in trace.getvalue().rstrip().split("\n"):
+            logmsg("ADMIN", "FAILURE", line)
+
+class ProcessMonitor(Monitor):
+  """Monitor which looks for process command lines matching a regexp.
+
+  For each service this monitor accepts a regexp, which is matched
+  against all command lines of all currently running processes. The
+  PIDs of any matching processes found are logged."""
+  def __init__(self, task_queue):
+    """Initialise the process monitor.
+
+    @param task_queue -- queue for incoming tasks."""
+    Monitor.__init__(self, task_queue)
+    self.start()
+
+  def _do(self, svc, pattern):
+    """Perform process scan.
+
+    @param svc -- service name
+    @param pattern -- regexp to match against command lines."""
+    pattern = re.compile(pattern)
+    pids = []
+    for proc in glob("/proc/*/cmdline"):
+      try:
+        cmdline = " ".join(file(proc).read().split("\0"))
+        if re.search(pattern, cmdline):
+          pids.append(proc.split("/")[2])
+      except IOError:
+	pass
+    if pids:
+      logmsg(svc, "PROCESS", "pid:%s" % ",".join(pids))
+
+class URLMonitor(Monitor):
+  """Monitor which matches HTTP server response to a regexp.
+
+  For each service this monitor accepts a URL and a regexp. The
+  monitor connects to the URL and matches the entire response, both
+  headers and response body, to the regexp. Logs a "PING OK" or a
+  "PING FAILED" message depending on success.
+
+  The server has maximum 10 seconds to respond. If the server does
+  not respond in time, a "PING FAILED" is reported automatically.
+
+  The monitor reports itself as "ServerMonitor/N.M" user agent."""
+  def __init__(self, task_queue, debug_level = 0):
+    """Initialise the log monitor.
+
+    @param task_queue -- queue for incoming tasks
+    @param debug_level -- urllib2 http connection debug level."""
+    Monitor.__init__(self, task_queue)
+    methods = []
+    if debug_level:
+      methods.append(urllib2.HTTPHandler(debuglevel = debug_level))
+    methods.append(urllib2.HTTPRedirectHandler())
+    self.opener = urllib2.build_opener(*methods)
+    self.start()
+
+  def _do(self, svc, url, regex):
+    """Ping a URL and check the response matches a regexp.
+
+    @param svc -- service name
+    @param url -- the server to connect to, should be http (not https)
+    @param regex -- regular expression to match against the reply."""
+    try:
+
+      req = urllib2.Request(url)
+      req.add_header("User-Agent", "ServerMonitor/2.0")
+      if sys.version_info < (2, 6, 0):
+        socket.setdefaulttimeout(10)
+        obj = self.opener.open(req)
+      else:
+        obj = self.opener.open(req, timeout = 10)
+
+      reply = "%s\n%s" % (obj.info(), obj.read())
+      if re.search(regex, reply, re.S):
+        logmsg(svc, "PING", "OK", "<%s>" % url)
+      else:
+        logmsg(svc, "PING", "FAILED", "<%s>" % url, regex, "(no match)")
+    except Exception, e:
+      logmsg(svc, "PING", "FAILED", "<%s>" % url, regex, str(e).replace("\n", "; "))
+
+class LogFileMonitor(Monitor):
+  """Monitor which scans log files against regexp patterns.
+
+  For each service this monitor accepts a service log directory, list
+  of glob patterns for log file names to scan in it, and a regexp.
+  Any lines matching the pattern in those files are presumed to be
+  errors and are reported verbatim to the output.
+
+  The monitor maintains state of previously seen log files, their size
+  and last modified time stamp, and the last byte offset seen. Logs are
+  scanned only from the last position onwards. However if the file size
+  shrinks, or files are removed, memory of scanning the files is reset
+  and the files are re-evaluated from beginning if/when they reappear.
+  """
+  def __init__(self, task_queue, state_dir):
+    """Initialise the log monitor.
+
+    @param task_queue -- queue for incoming tasks
+    @param state_dir -- directory in which to keep log scan state."""
+    Monitor.__init__(self, task_queue)
+    self.state_dir = state_dir
+    self.state = self._load_state()
+    self.modified = False
+    self.last_save = 0
+    self.start()
+
+  def _read_lines(self, file):
+    """Generator to read a log file breaking it to lines. This is vastly
+    more efficient than 'for line in file', especially on a zip file.
+
+    Yields tuples of (offset, end, line), where `offset` is byte offset
+    into the file where the line begins, `end` is the byte offset to the
+    end of the line, and `line` is the line contents including trailing
+    newline. Yields only lines which end in a newline character; if there
+    is an incomplete line, it will not be returned. This is usually as
+    desired as the line will be read on the next scan of the file.
+
+    The input object `file` should be the file to read from. The caller
+    should seek the file to the desired starting position if the reading
+    should begin somewhere else than beginning of the file. Usually this
+    would be the last line end returned at the previous file read.
+
+    @param file -- the file object to read from."""
+    pos = 0
+    linebuf = ''
+    offset = file.tell()
+    while True:
+      nl = linebuf.find('\n', pos)
+      if nl >= 0:
+        yield (offset+pos, offset+nl+1, linebuf[pos:nl+1])
+        pos = nl+1
+      else:
+        next = file.read(1048576)
+        linebuf = linebuf[pos:] + next
+        if linebuf == '': break
+        offset += pos
+        pos = 0
+
+  def _load_state(self):
+    """Load previous log file scanner state.
+
+    Loads the list of previously seen log files from a cache file
+    if one exists and can be read. The cache file is just a python
+    pickled log state dictionary.
+
+    After loading the cache, any log files which no longer exist on
+    the file system are automatically removed. Hence if those files
+    later reappear, they will be considered new log files."""
+    state = {}
+    try:
+      state_file = open("%s/%s" % (self.state_dir, "log-state"), "r")
+      state = pickle.load(state_file)
+    except:
+      pass
+
+    for fname in state.keys():
+      if not os.path.exists(fname):
+        self.modified = True
+	del state[fname]
+
+    return state
+
+  def _save_state(self):
+    """Save a new file parsing state.
+
+    The state is saved if there have been changes, but only if there
+    have been changes since the last time the state was saved, and
+    only if the state wasn't already saved in the last 15 seconds.
+
+    Any files which have disappeared since the last time the state was
+    built are first removed; any such removals count as state change."""
+
+    for fname in self.state.keys():
+      if not os.path.exists(fname):
+        self.modified = True
+	del self.state[fname]
+
+    now = time()
+    if self.modified and now - self.last_save > 15:
+      out = open("%s/%s" % (self.state_dir, "log-state"), "w")
+      pickle.dump(self.state, out)
+      out.close()
+      self.last_save = now
+      self.modified = False
+
+  def _do(self, svc, dir, files, rx):
+    """Perform log scan task.
+
+    @param svc -- service name
+    @param dir -- service log directory
+    @param files -- list of log file name glob patterns to read from
+    @param rx -- regular expression which matches error lines in the logs"""
+    rx = re.compile(rx)
+    for fname in sum([glob("%s/%s" % (dir, pat)) for pat in files], []):
+      try:
+        st = os.stat(fname)
+        if fname in self.state:
+	  s = self.state[fname]
+        else:
+          s = self.state[fname] = FileState()
+          self.modified = True
+
+        if s.size != st.st_size or s.mtime != st.st_mtime:
+          if s.size > st.st_size:
+            s.lastpos = 0
+          file = open(fname, "r")
+          file.seek(s.lastpos)
+          for start, end, line in self._read_lines(file):
+            s.lastpos = end
+	    if re.search(rx, line):
+              logmsg(svc, "ERROR", "file:<%s>:%d" % (fname, start), line.rstrip())
+
+          s.size = st.st_size
+          s.mtime = st.st_mtime
+          self.modified = True
+
+        self._save_state()
+      except Exception, e:
+	trace = StringIO()
+        traceback.print_exc(file=trace)
+        logmsg(svc, "ERROR", "file:<%s>:0" % fname,
+               "failed to read file: %s" % str(e))
+	for line in trace.getvalue().rstrip().split("\n"):
+          logmsg(svc, "FAILURE", line)
+
+class MonitorDaemon:
+  """Master monitor daemon.
+
+  The `MonitorDaemon` represents the master daemon for monitoring
+  other servers. It provides all services for starting, stopping and
+  checking the status of the monitor daemon, as well as the main loop.
+
+  The class implements all the methods required for proper unix
+  daemonisation, including maintaing a PID file for the process group
+  and correct progressively more aggressive signals sent to terminate
+  the daemon. Starting multiple daemons in same directory is refused.
+
+  The master daemon scans for monitoring configuration files, and
+  reloads the contents for files which have changed on disk. It then
+  regularly polls the other servers for running processes, log files
+  for errors and pinging server URLs. It runs a number of utility
+  monitor processes to do all this in parallel, collecting their
+  output to a single auto-rotated feed for scanning by lemon."""
+  def __init__(self, rootdir, statedir, feeddir):
+    """Initialise the monitor daemon.
+
+    @param rootdir -- root directory where to find all services
+    @param statedir -- directory for maintaining daemon state
+    @param feeddir -- directory for maintaing daemon logs."""
+    self.rootdir = rootdir
+    self.statedir = statedir
+    self.feeddir = feeddir
+    self.logfiles = "%s/*.log" % feeddir
+    self.lemonfeed = "%s/feed.lemon" % feeddir
+    self.pidfile = "%s/monitor.pid" % statedir
+    self.logfile = ["rotatelogs", "%s/server-monitor-%%Y%%m%%d.log" % feeddir, "86400"]
+
+  def daemon_pid(self):
+    """Check if there is a daemon running, and if so return its pid.
+
+    Reads the pid file from the daemon work directory, if any. If a
+    non-empty pid file exists, checks if a process by that PGID exists.
+    If yes, reports the daemon as running, otherwise reports either a
+    stale daemon no longer running or no deamon running at all.
+
+    @return A tuple (running, pgid). The first value will be True if a
+    running daemon was found, in which case pid will be its PGID. The
+    first value will be false otherwise, and pgid will be either None
+    if no pid file was found, or an integer if there was a stale file."""
+    pid = None
+    try:
+      pid = int(open(self.pidfile).readline())
+      os.killpg(pid, 0)
+      return (True, pid)
+    except:
+      return (False, pid)
+
+  def kill_daemon(self, silent = False):
+    """Check if the daemon is running, and if so kill it.
+
+    If there is no daemon running and no pid file, does nothing. If there
+    is a pid file but no such process running, removes the stale pid file.
+    Otherwise sends progressively more lethal signals at intervals to the
+    daemon process until it quites.
+
+    The signals are always sent to the entire process group, and signals
+    will keep on getting sent as long as at least one process from the
+    daemon process group is still alive. If for some reason the group
+    cannot be killed otherwise, sends SIGKILL to the group in the end.
+
+    The message about removing a stale pid file cannot be silenced. All
+    other messages are squelched if `silent` is True.
+
+    @param silent -- do not print any messages if True."""
+    running, pid = self.daemon_pid()
+    if not running:
+      if pid != None:
+        print "Removing stale pid file %s" % self.pidfile
+        os.remove(self.pidfile)
+      else:
+        if not silent:
+          print "Server monitor not running, not killing"
+    else:
+      if not silent:
+        sys.stdout.write("Killing server monitor pgid %d " % pid)
+        sys.stdout.flush()
+
+      dead = False
+      for sig, grace in ((SIGINT, .5), (SIGINT, 1),
+			 (SIGINT, 3), (SIGINT, 5),
+			 (SIGKILL, 0)):
+        try:
+	  if not silent:
+            sys.stdout.write(".")
+            sys.stdout.flush()
+          os.killpg(pid, sig)
+          sleep(grace)
+          os.killpg(pid, 0)
+        except OSError, e:
+          if e.errno == errno.ESRCH:
+	    dead = True
+	    break
+	  raise
+
+      if not dead:
+        try: os.killpg(pid, SIGKILL)
+	except: pass
+
+      if not silent:
+        sys.stdout.write("\n")
+
+  def start_daemon(self):
+    """Start the deamon."""
+
+    # Redirect all output to the logging daemon.
+    devnull = file("/dev/null", "w")
+    if isinstance(self.logfile, list):
+      subproc = Popen(self.logfile, stdin=PIPE, stdout=devnull, stderr=devnull,
+	              bufsize=0, close_fds=True, shell=False)
+      logger = subproc.stdin
+    elif isinstance(self.logfile, str):
+      logger = open(self.logfile, "a+", 0)
+    else:
+      raise TypeError("'logfile' must be a string or array")
+    os.dup2(logger.fileno(), sys.stdout.fileno())
+    os.dup2(logger.fileno(), sys.stderr.fileno())
+    os.dup2(devnull.fileno(), sys.stdin.fileno())
+    logger.close()
+    devnull.close()
+
+    # First fork. Discard the parent.
+    pid = os.fork()
+    if pid > 0:
+      os._exit(0)
+
+    # Establish as a daemon, set process group / session id.
+    os.chdir(self.statedir)
+    os.setsid()
+
+    # Second fork. The child does the work, discard the second parent.
+    pid = os.fork()
+    if pid > 0:
+      os._exit(0)
+
+    # Save process group id to pid file, then run real worker.
+    file(self.pidfile, "w").write("%d\n" % os.getpgid(0))
+
+    try:
+      self.run()
+    except Exception, e:
+      trace = StringIO()
+      traceback.print_exc(file=trace)
+      logmsg("ADMIN", "STOP", "Terminating from error %s" % str(e))
+      for line in trace.getvalue().rstrip().split("\n"):
+        logmsg("ADMIN", "STOP", line)
+
+    # Remove pid file once we are done.
+    try: os.remove(self.pidfile)
+    except: pass
+
+  def _reload_config(self, cfgfile, s):
+    """Reload a changed configuration file.
+
+    @param cfgfile -- name of the configuration file to reload
+    @param s -- state object for configuration contents."""
+    logmsg("ADMIN", "RELOAD", cfgfile)
+    nline = 0
+    for line in open(cfgfile):
+      nline += 1
+      line = re.sub(r"#.*", "", line)
+      line = re.sub(r"^\s+", "", line)
+      line = re.sub(r"\s+$", "", line)
+      if line == "": continue
+
+      m = re.match(r"^LOG_FILES='(.*)'$", line)
+      if m: s.log_files = re.split(r"\s+", m.group(1)); continue
+      m = re.match(r'^LOG_FILES="(.*)"$', line)
+      if m: s.log_files = re.split(r"\s+", m.group(1)); continue
+
+      m = re.match(r"^LOG_ERROR_REGEX='(.*)'$", line)
+      if m: s.log_regex = m.group(1); continue
+      m = re.match(r'^LOG_ERROR_REGEX="(.*)"$', line)
+      if m: s.log_regex = m.group(1); continue
+
+      m = re.match(r"^PS_REGEX='(.*)'$", line)
+      if m: s.ps_regex = m.group(1); continue
+      m = re.match(r'^PS_REGEX="(.*)"$', line)
+      if m: s.ps_regex = m.group(1); continue
+
+      m = re.match(r"^PING_URL='(.*)'$", line)
+      if m: s.ping_url = m.group(1); continue
+      m = re.match(r'^PING_URL="(.*)"$', line)
+      if m: s.ping_url = m.group(1); continue
+
+      m = re.match(r"^PING_REGEX='(.*)'$", line)
+      if m: s.ping_regex = m.group(1); continue
+      m = re.match(r'^PING_REGEX="(.*)"$', line)
+      if m: s.ping_regex = m.group(1); continue
+
+      logmsg("ADMIN", "BADCONFIG", "%s:%d:" % (cfgfile, nline),
+             "unrecognised line <%s>" % line)
+
+  def run(self):
+    """Run the daemon main loop."""
+    # Set up queue and monitor objects. Start one each of process and
+    # log file monitor, and 10 URL monitors to run in parallel.
+    cfgs = {}
+    qexit = Queue()
+    qptask = Queue()
+    qutask = Queue()
+    qltask = Queue()
+    queues = [qptask, qltask, qutask]
+    mon = [[ProcessMonitor(qptask)],
+           [LogFileMonitor(qltask, self.feeddir)],
+           [URLMonitor(qutask) for i in xrange(0, 10)]]
+
+    # Install signal handlers to drain processing on termination.
+    def _sigstop(signum, frame):
+      logmsg("ADMIN", "STOP", "Exiting from signal %d (pid %d)" % (signum, os.getpid()))
+      qexit.put(True)
+
+    signal(SIGINT, _sigstop)
+    signal(SIGTERM, _sigstop)
+    signal(SIGQUIT, _sigstop)
+
+    logmsg("ADMIN", "START", "Daemon started (pid %d)" % os.getpid())
+
+    # Main loop. Run forever, napping 30 seconds at the time.
+    while True:
+      # Retarget feed.lemon if it points to a wrong log file.
+      mylogs = sorted([(os.stat(x).st_mtime, x) for x in glob(self.logfiles)])
+      if len(mylogs):
+        current_log = mylogs[-1][1].rsplit('/', 1)[1]
+        if not os.path.exists(self.lemonfeed):
+          os.symlink(current_log, self.lemonfeed)
+        elif not os.path.islink(self.lemonfeed) or \
+             os.readlink(self.lemonfeed) != current_log:
+          os.remove(self.lemonfeed)
+          os.symlink(current_log, self.lemonfeed)
+
+      # Delete any still pending work. Warn if we remove any.
+      ncleared = 0
+      for q in queues:
+        while True:
+          try: q.get(False); ncleared += 1
+          except Empty: break
+
+      if ncleared > 0:
+        logmsg("ADMIN", "OVERFLOW", "%d tasks discarded" % ncleared)
+
+      # Reload any updated configuration files.
+      oldconfigs = cfgs.keys()
+      for cfgfile in glob("%s/current/config/*/monitoring*.ini" % self.rootdir):
+        if cfgfile in oldconfigs:
+          oldconfigs.remove(cfgfile)
+        st = os.stat(cfgfile)
+        if cfgfile in cfgs:
+	  s = cfgs[cfgfile]
+        else:
+	  app = cfgfile.rsplit("/", 2)[1]
+          s = cfgs[cfgfile] = FileState()
+          m = re.match(r".*/monitoring-(.*)\.ini$", cfgfile)
+          if m:
+            s.svcname = m.group(1)
+          else:
+            s.svcname = app
+          s.log_dir = "%s/logs/%s" % (self.rootdir, app)
+          s.log_files = []
+          s.log_regex = None
+          s.ps_regex = None
+          s.ping_url = None
+          s.ping_regex = None
+
+        if s.size != st.st_size or s.mtime != st.st_mtime:
+          self._reload_config(cfgfile, s)
+          s.mtime = st.st_mtime
+          s.size = st.st_size
+
+      # Remove cached configuration for removed configurations.
+      for cfgfile in oldconfigs:
+        logmsg("ADMIN", "DISCARD", cfgfile)
+        cfgs.pop(cfgfile)
+
+      # Issue work for these configurations.
+      for cfgfile, s in cfgs.iteritems():
+        if s.log_files and s.log_regex:
+          qltask.put((s.svcname, s.log_dir, s.log_files, s.log_regex))
+        if s.ps_regex:
+          qptask.put((s.svcname, s.ps_regex))
+        if s.ping_url and s.ping_regex:
+          qutask.put((s.svcname, s.ping_url, s.ping_regex))
+
+      # Have a nap, but stop if signalled.
+      try: qexit.get(timeout = 30); break
+      except Empty: pass
+
+    # We've been stopped. Tell all monitor threads to quit.
+    for q, m in zip(queues, mon):
+      map(lambda i: q.put(None), m)
+
+    # Now wait for everyone to actually quit.
+    for q, m in zip(queues, mon):
+      map(lambda i: i.join(), m)
+
+    # Log that we are actually quitting now.
+    logmsg("ADMIN", "STOP", "Exiting")
+
+# Main program code. Process command line options.
+if __name__ == "__main__":
+  from optparse import OptionParser
+
+  # If we can alter stack size, reduce it to small(er) amount. We
+  # do need enough that pickling manages to write out state files.
+  if getattr(thread, 'stack_size', None):
+    thread.stack_size(128*1024)
+
+  # If we are running with buffered output, force unbuffered
+  if 'PYTHONUNBUFFERED' not in os.environ:
+    os.environ['PYTHONUNBUFFERED'] = "1"
+    os.execvp("python", ["python", "-u"] + sys.argv)
+
+  appname = __file__.rsplit('/', 2)[1]
+  rootdir = __file__.rsplit('/', 4)[0]
+  statedir = "%s/state/%s" % (rootdir, appname)
+  feeddir = "%s/logs/%s" % (rootdir, appname)
+
+  # See what it is we want to do.
+  opt = OptionParser()
+  opt.add_option("-C", "--root", dest="rootdir", metavar="DIR", default=rootdir,
+                 help="find app logs under DIR")
+  opt.add_option("-S", "--state", dest="statedir", metavar="DIR", default=statedir,
+                 help="store state under DIR")
+  opt.add_option("-F", "--feed", dest="feeddir", metavar="DIR", default=feeddir,
+                 help="store feed under DIR")
+  opt.add_option("-q", "--quiet", action="store_true", dest="quiet", default=False,
+                 help="be quiet, don't print unnecessary output")
+  opt.add_option("-v", "--verify", action="store_true", dest="verify", default=False,
+                 help="verify daemon is running, restart if not")
+  opt.add_option("-s", "--status", action="store_true", dest="status", default=False,
+                 help="check if the server monitor daemon is running")
+  opt.add_option("-k", "--kill", action="store_true", dest="kill", default=False,
+                 help="kill any existing already running daemon")
+  opt.add_option("-r", "--restart", action="store_true", dest="restart", default=False,
+                 help="restart, kill any existing running daemon first")
+  opt.add_option("-l", "--log", dest="logfile", metavar="DEST", default=None,
+                 help="log to DEST, via pipe if DEST begins with '|', otherwise a file")
+  opts, args = opt.parse_args()
+
+  # Find root and state dirs.
+  if not opts.rootdir \
+     or not os.path.isdir(opts.rootdir) \
+     or not os.path.isdir("%s/logs" % opts.rootdir):
+    print >> sys.stderr, sys.argv[0], \
+       ": could not locate root directory, use --root (tried %s)" % opts.rootdir
+    sys.exit(1)
+
+  if not opts.statedir \
+     or not os.path.isdir(opts.statedir) \
+     or not os.access(opts.statedir, os.W_OK):
+    print >> sys.stderr, sys.argv[0], \
+      ": could not locate state directory, use --state (tried %s)" % opts.statedir
+    sys.exit(1)
+
+  if not opts.feeddir \
+     or not os.path.isdir(opts.feeddir) \
+     or not os.access(opts.feeddir, os.W_OK):
+    print >> sys.stderr, sys.argv[0], \
+      ": could not locate log directory, use --feed (tried %s)" % opts.feeddir
+    sys.exit(1)
+
+  # Create monitor object for these locations.
+  monitor = MonitorDaemon(opts.rootdir, opts.statedir, opts.feeddir)
+
+  # Now actually execute the task.
+  if opts.status:
+    # Show status of running daemon, including exit code matching the
+    # daemon status: 0 = running, 1 = not running, 2 = not running but
+    # there is a stale pid file. If silent don't print out anything
+    # but still return the right exit code.
+    running, pid = monitor.daemon_pid()
+    if running:
+      if not opts.quiet:
+	print "Server monitor is RUNNING, PID %d" % pid
+      sys.exit(0)
+    elif pid != None:
+      if not opts.quiet:
+	print "Server monitor is NOT RUNNING, stale PID %d" % pid
+      sys.exit(2)
+    else:
+      if not opts.quiet:
+        print "Server monitor is NOT RUNNING"
+      sys.exit(1)
+
+  elif opts.kill:
+    # Stop any previously running daemon. If quiet squelch messages,
+    # except removal of stale pid file cannot be silenced.
+    monitor.kill_daemon(silent = opts.quiet)
+
+  else:
+    # We are handling a server start, in one of many possible ways:
+    # normal start, restart (= kill any previous daemon), or verify
+    # (= if daemon is running leave it alone, otherwise start).
+
+    # Convert 'verify' to 'restart' if the server isn't running.
+    if opts.verify:
+      opts.restart = True
+      if monitor.daemon_pid()[0]:
+        sys.exit(0)
+
+    # If restarting, kill any previous daemon, otherwise complain if
+    # there is a daemon already running here. Starting overlapping
+    # daemons is not supported because pid file would be overwritten
+    # and we'd lose track of the previous daemon.
+    if opts.restart:
+      monitor.kill_daemon(silent = opts.quiet)
+    else:
+      running, pid = monitor.daemon_pid()
+      if running:
+        print >> sys.stderr, "Refusing to start over an already running daemon, pid %d" % pid
+        sys.exit(1)
+
+    # If we are (re)starting and were given a log file option, convert
+    # the logfile option to a list if it looks like a pipe request, i.e.
+    # starts with "|", such as "|rotatelogs foo/bar-%Y%m%d.log".
+    if opts.logfile:
+      if opts.logfile.startswith("|"):
+        monitor.logfile = re.split(r"\s+", opts.logfile[1:])
+      else:
+        monitor.logfile = opts.logfile
+
+    # Actually start the daemon now.
+    monitor.start_daemon()

@@ -1,0 +1,6 @@
+<graphtool-config>
+  <import module="phedexgraphs.database.phedex_connection"> PhedexConnectionManager </import>
+  <class name="PhedexConnMan" type="PhedexConnectionManager">
+    <attribute name="DBParam">@ROOT@/current/auth/phedex/DBGraph</attribute>
+  </class>
+</graphtool-config>

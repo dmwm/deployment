@@ -1,0 +1,121 @@
+#!/bin/sh
+
+### Usage: InstallDevSim -h
+### Usage: InstallDevSim [-d DIR] -s image -v VER -p PKGS [-r A=B] [-a AUTH]
+### Usage: InstallDevSim [-d DIR] -t HOSTS -s sync -v VER
+### Usage: InstallDevSim [-d DIR] -t HOSTS -s post -v VER -p PKGS
+### Usage: InstallDevSim [-d DIR] -t HOSTS -s status[:what]
+### Usage: InstallDevSim [-d DIR] -t HOSTS -s start[:what]
+
+usage()
+{
+  perl -ne '/^### Usage:/ && do { s/^### ?//; print }' < $0
+  exit 1
+}
+
+help()
+{
+  perl -ne '/^###/ && do { s/^### ?//; print }' < $0
+  exit 0
+}
+
+STAGE= VER= REPO= ACFG= PKGS= HOSTS=
+eval set -- $(getopt -n $0 -o hs:d:v:r:a:p:t: -- ${1+"$@"})
+[ $? = 0 ] || usage
+for arg; do
+  case $arg in
+    -d) cd "$2" || exit $?; shift; shift ;;
+    -t) HOSTS="$2"; shift; shift ;;
+    -s) STAGE="$2"; shift; shift ;;
+    -v) VER="$2"; shift; shift ;;
+    -r) REPO="-r $2"; shift; shift ;;
+    -a) ACFG="-p $2"; rm -f $2/auth/wmcore/header-auth-key*; shift; shift ;;
+    -p) PKGS="$2"; shift; shift ;;
+    -h) help ;;
+    --) shift; break ;;
+    -*) usage ;;
+  esac
+done
+
+[ $# = 0 ] || usage
+[ -d cfg/admin ] || usage
+[ X"$STAGE" = X ] && usage
+
+case $STAGE in
+  status:* | start:* | stop:* | post:* )
+    WHAT=${STAGE#*:} STAGE=${STAGE%:*} ;;
+  post )
+    WHAT=$(hostname -s) ;;
+  status | start | stop )
+    WHAT="*" ;;
+esac
+
+case $STAGE in
+  image )
+    [ X"$PKGS" = X ] && usage
+    [ X"$VER" = X ] && usage
+    ;;
+  sync )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$VER" = X ] && usage
+    ;;
+  post )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$PKGS" = X ] && usage
+    [ X"$VER" = X ] && usage
+    ;;
+  status | start | stop | shutdown )
+    [ X"$HOSTS" = X ] && usage
+    ;;
+esac
+
+case $STAGE in
+  image )
+    set -ex
+    rm -f srv
+    ln -s srv-dev srv
+    mkdir -p srv-dev
+    $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD/srv $PKGS
+    sudo -H -u _sw $PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS
+    $PWD/cfg/admin/ProxySeed -t dev -d $PWD/srv/$VER/auth/proxy
+    ;;
+
+  sync )
+    set -ex
+
+    for host in $HOSTS; do
+      sudo rsync -nzcavmH -e "ssh -c arcfour" \
+        --rsync-path="sudo rsync" --delete --delete-excluded \
+        -f "+ /srv-dev/$VER" -f ". $PWD/cfg/admin/rsync-dev.rules" \
+        $PWD/ cmsweb@$host:$PWD/
+    done
+    ;;
+
+  post )
+    set -e
+    for host in $HOSTS; do
+      (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
+       echo ": \$PWD/cfg/Deploy $REPO -t $VER -a -s post $PWD/srv $PKGS") |
+       ssh cmsweb@$host bashs -l
+    done
+    ;;
+
+  start | status | stop )
+    set -e
+    for host in $HOSTS; do
+      (echo "exec 2>&1; set -e; hostname -f; cd $PWD"
+       echo "for f in srv/enabled/$WHAT; do"
+       echo "  app=\${f#*/*/}; case \$app in frontend) u=root ;; * ) u=_\$app ;; esac"
+       echo "  sudo -H -u \$u bashs -lc \"set -x; : $PWD/srv/current/config/\$app/manage $STAGE 'I did read documentation'\""
+       echo "done") |
+       ssh cmsweb@$host bashs -l
+    done
+    ;;
+
+  * )
+    echo "$STAGE: bad stage, try -h for help" 1>&2
+    exit 1
+    ;;
+esac
+
+exit 0

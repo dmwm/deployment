@@ -1,0 +1,6 @@
+. /data/cfg/admin/rsync-basic.rules
+. /data/cfg/admin/rsync-deploy-post.rules
+. /data/cfg/admin/rsync-keep-releases.rules
+P /srv-dev/state/***
+H /srv-preprod
+H /srv-prod

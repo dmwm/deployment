@@ -1,0 +1,244 @@
+<graphtool-config>
+  <import module="phedexgraphs.database.query_handler">*</import>
+
+  <import module="graphtool.database.queries">SqlQueries</import>
+  <import module="time"/>
+  <import file="@ROOT@/state/phedex/etc/graphs_dbparam.xml" />
+
+  <class type="SqlQueries" name="GenericQuery">
+
+    <attribute name="connection_manager"> PhedexConnMan </attribute>
+
+    <aggregate>
+        <connection>Debug/Reader</connection>
+        <connection>Prod/Reader</connection>
+    </aggregate>
+
+    <attribute name="display_name"> Phedex Queries  </attribute>
+
+    <query name="link_query">
+      <inputs>
+        <input name="to_node"> .* </input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
+        <input name="from_node" > .* </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
+        <input name="link">link</input>
+        <input name="no_mss"> True </input>
+      </inputs>
+      <sql>
+        select
+          f.name, t.name,
+          trunc( h.timebin/:span)*:span,
+          <slot name="column"/>
+        from t_history_link_events h
+          join t_adm_node f on f.id = h.from_node
+          join t_adm_node t on t.id = h.to_node
+        where timebin &gt;= :starttime
+          and timebin &lt; :endtime
+        group by trunc(h.timebin/:span)*:span,
+          f.name, t.name order by 1 asc, 2, 3
+        <slot name="having"/>
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="results_parser">
+        <inputs all="True">
+          <input name="pivot_transform">phedex_link</input>
+          <input name="pivots"> 0,1 </input>
+          <input name="grouping"> 2 </input>
+          <input name="results"> 3 </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type">PhedexStackedBar</attribute>
+      <attribute name="pivot_name">Link</attribute>
+      <attribute name="grouping_name">Time</attribute>
+      <attribute name="title" />
+      <attribute name="column_names"/>
+      <attribute name="column_units" />
+    </query>
+
+    <query name="link_stats_query">
+      <inputs>
+        <input name="to_node"> .* </input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
+        <input name="from_node" > .* </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
+        <input name="link">link</input>
+        <input name="no_mss"> True </input>
+      </inputs>
+      <sql>
+        select
+          f.name, t.name,
+          trunc( h.timebin/:span)*:span,
+          <slot name="column"/>
+        from t_history_link_stats h
+          join t_adm_node f on f.id = h.from_node
+          join t_adm_node t on t.id = h.to_node
+        where timebin &gt;= :starttime
+          and timebin &lt; :endtime
+        group by trunc(h.timebin/:span)*:span,
+          f.name, t.name order by 1 asc, 2, 3
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="results_parser">
+        <inputs all="True">
+          <input name="pivot_transform">phedex_link</input>
+          <input name="pivots"> 0,1 </input>
+          <input name="grouping"> 2 </input>
+          <input name="results"> 3 </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type">PhedexStackedBar</attribute>
+      <attribute name="pivot_name">Link</attribute>
+      <attribute name="grouping_name">Time</attribute>
+      <attribute name="title" />
+      <attribute name="column_names"/>
+      <attribute name="column_units" />
+    </query>
+
+    <query name="dest_query">
+      <inputs>
+        <input name="node" > .* </input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
+        <input name="no_mss"> True </input>
+      </inputs>
+      <sql>
+        select
+          t.name,
+          trunc( h.timebin/:span)*:span,
+          <slot name="column"/>
+        from t_history_dest h
+          join t_adm_node t on t.id = h.node
+        where timebin &gt;= :starttime
+          and timebin &lt; :endtime
+        group by trunc(h.timebin/:span)*:span,
+          t.name order by 1 asc, 2
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="results_parser">
+        <inputs all="True">
+          <input name="pivots"> 0 </input>
+          <input name="grouping"> 1 </input>
+          <input name="results"> 2 </input>
+          <input name="pivot_transform">phedex_node</input>
+        </inputs>
+      </results>
+      <attribute name="graph_type">PhedexStackedBar</attribute>
+      <attribute name="pivot_name">Node</attribute>
+      <attribute name="grouping_name">Time</attribute>
+      <attribute name="title" />
+      <attribute name="column_names" />
+      <attribute name="column_units" />
+    </query>
+
+    <query name="simple_link_query">
+      <inputs>
+        <input name="to_node"> .* </input>
+        <input name="from_node" > .* </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
+        <input name="link">link</input>
+        <input name="no_mss"> True </input>
+      </inputs>
+      <sql>
+        SELECT
+          f.name, t.name,
+          <slot name="column"/>
+        FROM t_history_link_events h
+          JOIN t_adm_node f ON f.id = h.from_node
+          JOIN t_adm_node t ON t.id = h.to_node
+        WHERE timebin &gt;= :starttime
+          AND timebin &lt; :endtime
+        GROUP BY
+          f.name, t.name
+          <slot name="where" />
+          <slot name="having" />
+      </sql>
+      <results module="phedexgraphs.database.query_handler" function="simple_results_parser">
+        <inputs all="True">
+          <input name="pivots"> 0,1 </input>
+          <input name="results"> 2 </input>
+          <input name="pivot_transform">phedex_link</input>
+        </inputs>
+      </results>
+      <attribute name="graph_type">HorizontalBarGraph</attribute>
+      <attribute name="fixed-height">False</attribute>
+      <attribute name="pivot_name">Node</attribute>
+      <attribute name="title" />
+      <attribute name="column_names" />
+      <attribute name="column_units" />
+    </query>
+
+    <query name="simple_link_query2">
+      <inputs>
+        <input name="to_node" kind='sql'> .* </input>
+        <input name="from_node" kind='sql'> .* </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
+        <input kind='sql' name="span" type="int"> 3600 </input>
+        <input name="link">link</input>
+        <input name="no_mss"> True </input>
+      </inputs>
+      <sql>
+        select timegroup, count(*) from
+          ( select
+            trunc( h.timebin/:span)*:span as timegroup, h.to_node AS tonode
+          from t_history_link_events h
+            join t_adm_node f on f.id = h.from_node
+            join t_adm_node t on t.id = h.to_node
+          where timebin &gt;= :starttime
+            and timebin &lt; :endtime
+            and regexp_like( f.name, :from_node )
+            and regexp_like( t.name, :to_node )
+          group by trunc( h.timebin/:span)*:span,  h.to_node
+          <slot name="having" />  )
+        GROUP BY timegroup
+      </sql>
+      <results module="graphtool.database.query_handler" function="simple_results_parser" />
+      <attribute name="graph_type">PhedexBar</attribute>
+      <attribute name="pivot_name">Time</attribute>
+      <attribute name="title" />
+      <attribute name="column_names" />
+      <attribute name="column_units" />
+    </query>
+
+    <query name="latency_queries">
+      <inputs>
+        <input name="node" kind='sql'> .* </input>
+        <input kind='sql' name="starttime" type="int">9999999999</input>
+        <input kind='sql' name="endtime" type="int">9999999999</input>
+        <input kind='sql' name='dataset'>.*</input>
+        <input kind='sql' name='min_blocksize'>0</input>
+        <input kind='sql' name='max_blocksize'>500</input>
+      </inputs>
+      <sql>
+        SELECT
+          <slot name="column" />
+        FROM t_dps_block_replica r
+        JOIN t_adm_node n ON r.node = n.id
+        JOIN t_dps_block b ON r.block = b.id
+        JOIN t_dps_dataset d ON b.dataset = d.id
+        WHERE
+          b.files = r.node_files AND
+          regexp_like( n.name, :node ) AND
+          (r.time_update - r.time_create) > 0 AND
+          r.time_create > :starttime AND
+          r.time_create &lt;= :endtime AND
+          regexp_like( d.name, :dataset ) AND
+          r.src_files = 0 AND
+          b.is_open='n' AND
+          b.bytes / (1024*1024*1024) > :min_blocksize AND
+          b.bytes / (1024*1024*1024) &lt;= :max_blocksize
+        GROUP BY <slot name="group" />
+      </sql>
+      <results module="graphtool.database.query_handler" function="simple_results_parser" />
+      <attribute name="graph_type">HorizontalBarGraph</attribute>
+      <attribute name="fixed-height">False</attribute>
+      <attribute name="pivot_name"/>
+      <attribute name="title" />
+      <attribute name="column_names" />
+      <attribute name="column_units" />
+    </query>
+
+  </class>
+</graphtool-config>

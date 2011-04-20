@@ -1,0 +1,17 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_backend_prep()
+{
+  mkproj -l -s
+}
+
+deploy_backend_sw()
+{
+  deploy_pkg comp cms+pystack 1.0b-cmp4
+  rm -f $root/current/bin/{pystack,gdb}
+  ln -s ../apps/pystack/bin/{pystack,gdb} $root/current/bin/
+}
+
+deploy_backend_post()
+{
+  disable
+}

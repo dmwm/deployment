@@ -1,0 +1,34 @@
+#!/bin/sh
+
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   status      show current service's status
+##H   configtest  check server configuration
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   graceful    restart the service gracefully
+##H   stop        stop the service
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/ServiceApache
+
+case ${1:-status} in
+  status | graceful | stop | configtest )
+    sudo /sbin/service httpd $1
+    ;;
+
+  start | restart )
+    sudo /sbin/service httpd restart
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

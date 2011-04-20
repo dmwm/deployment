@@ -1,0 +1,27 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_t0datasvc_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+}
+
+deploy_t0datasvc_prep()
+{
+  mkproj var
+}
+
+deploy_t0datasvc_sw()
+{
+  deploy_pkg -a t0datasvc/connect comp cms+T0DataSvc 5.0.1b
+}
+
+deploy_t0datasvc_post()
+{
+  case $host in * ) enable ;; esac
+  (mkcrontab -l; sysboot) | crontab -
+}
+
+deploy_t0datasvc_auth()
+{
+  echo "oracle://FOO:BAR@ZOINKS:1521"
+}

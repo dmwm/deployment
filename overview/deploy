@@ -1,0 +1,41 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_overview_deps()
+{
+  deploy backend
+}
+
+deploy_overview_prep()
+{
+  mkproj sessions
+}
+
+deploy_overview_sw()
+{
+  deploy_pkg -a overview/dbparam.py comp cms+overview 6.0.2
+}
+
+deploy_overview_post()
+{
+  case $host in vocms106 | vocms5[03] | vocms133 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot
+   cmd="$project_config/daily"
+   $nogroups || cmd="sudo -H -u _overview bashs -l -c '$cmd'"
+   [ ! -f $root/enabled/$project ] || echo "17 2 * * * $cmd") | crontab -
+}
+
+deploy_overview_auth()
+{
+  sed 's/^    //' <<\EOF
+    def connectprod():  import cx_Oracle as db; return db.connect(user="FOO", password="BAR", dsn="ZOINKS")
+    def connectdbg():   import cx_Oracle as db; return db.connect(user="FOO", password="BAR", dsn="ZOINKS")
+    def connectdev():   import cx_Oracle as db; return db.connect(user="FOO", password="BAR", dsn="ZOINKS")
+    def connecttest():  import cx_Oracle as db; return db.connect(user="FOO", password="BAR", dsn="ZOINKS")
+    def connecttest2(): import cx_Oracle as db; return db.connect(user="FOO", password="BAR", dsn="ZOINKS")
+    dbparam += [
+      { 'name': "Production", 'label': "prod",     'class': "all-prod", 'connect': connectprod },
+      { 'name': "Debug",      'label': "debug",    'class': "all-prod", 'connect': connectdbg },
+      { 'name': "Dev",        'label': "dev",      'class': "all-dev",  'connect': connectdev },
+      { 'name': "Testbed",    'label': "testbed",  'class': "all-dev",  'connect': connecttest },
+      { 'name': "Testbed2",   'label': "testbed2", 'class': "all-dev",  'connect': connecttest2 } ]
+EOF
+}

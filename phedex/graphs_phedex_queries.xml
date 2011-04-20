@@ -1,0 +1,236 @@
+<graphtool-config>
+  <import file="@ROOT@/state/phedex/etc/graphs_generic_queries.xml" />
+
+  <class type="SqlQueries" name="PhedexQueries">
+
+    <attribute name="connection_manager"> PhedexConnMan </attribute>
+
+    <attribute name="display_name"> Phedex Queries  </attribute>
+
+    <query name="quantity_rates" base="GenericQuery.link_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.done_bytes),0)/1048576/:span </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Transfer Rate </attribute>
+      <attribute name="column_names"> Transfer Rate </attribute>
+      <attribute name="column_units"> MB/s </attribute>
+    </query>
+
+    <query name="quantity" base="GenericQuery.link_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.done_bytes),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Transfer Volume</attribute>
+      <attribute name="column_names"> Data Transferred </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="quantity_cumulative" base="GenericQuery.link_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.done_bytes),0)/1099511627776 </filler>
+      </sql>
+      <results module="graphtool.database.query_handler" function="cumulative_pivot_group_parser" />
+      <attribute name="title"> CMS PhEDEx - Cumulative Transfer Volume </attribute>
+      <attribute name="column_names"> Data Transferred </attribute>
+      <attribute name="column_units"> TB </attribute>
+      <attribute name="graph_type"> PhedexCumulative </attribute>
+    </query>
+
+    <query name="destined" base="GenericQuery.dest_query">
+      <sql>
+        <filler name="column"> nvl(sum(dest_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Volume of Routed Data  </attribute>
+      <attribute name="column_names"> Data Routed  </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="resident" base="GenericQuery.dest_query">
+      <sql>
+        <filler name="column"> nvl(sum(node_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Volume of Resident Data </attribute>
+      <attribute name="column_names"> Data Resident </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="pending" base="GenericQuery.link_stats_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.pend_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Volume of Queued Data </attribute>
+      <attribute name="column_names"> Queued Data </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="request" base="GenericQuery.dest_query">
+      <sql>
+        <filler name="column"> nvl(sum(request_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Volume of Requested Data </attribute>
+      <attribute name="column_names"> Data Requested </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="idle" base="GenericQuery.dest_query">
+      <sql>
+        <filler name="column"> nvl(sum(idle_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Volume of Idle Data </attribute>
+      <attribute name="column_names"> Idle Data </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="cooloff" base="GenericQuery.link_stats_query">
+      <sql>
+        <filler name="column"> nvl(sum(cool_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Volume of Data in Cool-off </attribute>
+      <attribute name="column_names"> Data in Cool-off </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
+    <query name="quality_all" base="GenericQuery.link_query">
+      <inputs>
+          <input name="show_expired" type="bool"> False </input>
+      </inputs>
+      <sql>
+        <filler name="column">
+            nvl(sum(h.done_files),0),
+            nvl(sum(h.fail_files),0),
+            nvl(sum(h.try_files),0),
+            nvl(sum(h.expire_files),0)
+        </filler>
+      </sql>
+      <results>
+        <inputs>
+          <input name="data_transform"> phedex_quality </input>
+          <input name="results"> 3,4,5,6 </input>
+        </inputs>
+      </results>
+      <attribute name="graph_type"> PhedexQualityMap </attribute>
+      <attribute name="fixed-height">False</attribute>
+      <attribute name="title"> CMS PhEDEx - Transfer Quality </attribute>
+      <attribute name="column_names"> Successful Transfers, Failed Transfers, Attempted Transfers, Expired Transfers </attribute>
+      <attribute name="column_units"> Files, Files, Files, Files </attribute>
+    </query>
+
+    <query name="quality_try" base="GenericQuery.link_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.try_files),0) </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Number of Attempted Transfers </attribute>
+      <attribute name="column_names"> Attempted Transfers </attribute>
+      <attribute name="column_units"> Files </attribute>
+    </query>
+
+    <query name="quality_done" base="GenericQuery.link_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.done_files),0) </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Number of Successful Transfers </attribute>
+      <attribute name="column_names"> Successful Transfers </attribute>
+      <attribute name="column_units"> Files </attribute>
+    </query>
+
+    <query name="quality_fail" base="GenericQuery.link_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.fail_files),0) </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Number of Failed Transfers </attribute>
+      <attribute name="column_names"> Failed Transfers </attribute>
+      <attribute name="column_units"> Files </attribute>
+    </query>
+
+    <query name="quality_expired" base="GenericQuery.link_query">
+      <sql>
+        <filler name="column"> nvl(sum(h.expire_files),0) </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Number of Expired Transfers </attribute>
+      <attribute name="column_names"> Expired Transfers </attribute>
+      <attribute name="column_units"> Files </attribute>
+    </query>
+
+    <query name="quality_bar" base="GenericQuery.simple_link_query">
+      <inputs>
+        <input name="mintransfers" kind="sql" type="int"> 0 </input>
+      </inputs>
+      <sql>
+        <filler name="column"> NVL(SUM(h.done_files),0), NVL(SUM(h.fail_files),0)</filler>
+        <filler name="having"> HAVING NVL(SUM(h.done_files),0) + NVL(SUM(h.fail_files),0) > :mintransfers </filler>
+      </sql>
+      <attribute name="graph_type"> PhedexQualityBar </attribute>
+      <attribute name="title"> CMS PhEDEx - Transfer Quality Bar Graph </attribute>
+      <results>
+        <inputs> <input name="results"> 2,3 </input> </inputs>
+      </results>
+      <attribute name="column_names"> Successful, Failed </attribute>
+      <attribute name="column_units"> Transfer, Transfers </attribute>
+      <attribute name="ylabel"> Percentage of Successful Transfers </attribute>
+    </query>
+
+    <query name="quality_count" base="GenericQuery.simple_link_query2">
+      <inputs>
+        <input name="minpercent" kind="sql" type="int"> 0 </input>
+      </inputs>
+      <sql>
+        <filler name="having"> HAVING (NVL(SUM(h.done_files),0) + NVL(SUM(h.fail_files),0) > 0) AND (NVL(SUM(h.done_files),0)/(NVL(SUM(h.done_files),0) + NVL(SUM(h.fail_files),0)) > :minpercent/100) </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Count of Sites Above $minpercent% Quality </attribute>
+      <attribute name="column_names"> Count </attribute>
+      <attribute name="column_units"> Sites </attribute>
+    </query>
+
+    <query name="quality_count2" base="GenericQuery.simple_link_query2">
+      <inputs>
+        <input name="minrate" kind="sql" type="int"> 0 </input>
+      </inputs>
+      <sql>
+        <filler name="having"> HAVING nvl(sum(h.done_bytes),0)/1048576/:span > :minrate </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Count of Sites Transferring Above $minrateMB/s </attribute>
+      <attribute name="column_names"> Count </attribute>
+      <attribute name="column_units"> Sites </attribute>
+    </query>
+
+    <query name="site_latency" base="GenericQuery.latency_queries">
+      <sql>
+        <filler name="column"> n.name, avg(r.time_update - r.time_create) / 86400 </filler>
+        <filler name="group"> n.name </filler>
+      </sql>
+      <attribute name="pivot">Node</attribute>
+      <attribute name="title"> CMS PhEDEx - Site Latency </attribute>
+      <attribute name="column_names"> Avg Time to Finish Block </attribute>
+      <attribute name="column_units"> Days </attribute>
+    </query>
+
+    <query name="dataset_latency" base="GenericQuery.latency_queries">
+      <inputs>
+        <input name="node" kind='sql'> T1_FNAL_Buffer </input>
+      </inputs>
+      <sql>
+        <filler name="column"> d.name, avg(r.time_update - r.time_create) / 86400 </filler>
+        <filler name="group"> d.name </filler>
+      </sql>
+      <attribute name="pivot">Dataset</attribute>
+      <attribute name="title"> CMS PhEDEx - Dataset Latency </attribute>
+      <attribute name="column_names"> Avg Time to Finish Bock </attribute>
+      <attribute name="column_units"> Days </attribute>
+    </query>
+
+<!--
+    <query name="quality_table" base="GenericQuery.simple_link_query2">
+      <inputs>
+        <input name="minpercent" kind="sql" type="int"> 0 </input>
+      </inputs>
+      <sql>
+        <filler name="column"> distinct(h.to_node) </filler>
+        <filler name="having"> HAVING (NVL(SUM(h.done_files),0) + NVL(SUM(h.fail_files),0) > 0) AND (NVL(SUM(h.done_files),0)/(NVL(SUM(h.done_files),0) + NVL(SUM(h.fail_files),0)) > :minpercent/100) </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Sites Above $minpercent% Quality </attribute>
+      <attribute name="graph_type"/>
+    </query>
+-->
+
+  </class>
+</graphtool-config>

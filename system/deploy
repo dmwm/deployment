@@ -1,0 +1,324 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_system_variants="frontend backend devvm"
+
+# Add a local group if it doesn't already exist.
+add_local_group()
+{
+  local add_user=$1 id=$2 name=$3
+  if getent group | grep -q "^$name:"; then :; else
+    sudo /usr/sbin/groupadd -g $id $name
+    [ X$add_user != XT ] || sudo /usr/sbin/usermod -a -G $name $USER
+  fi
+}
+
+# Create a local user if it doesn't already exist.
+add_local_user()
+{
+  local id=$1 login=$2 xgroup=$3 name=$4
+  if getent passwd | grep -q "^$login:"; then :; else
+    sudo /usr/sbin/useradd -M -g $login -G $login$xgroup -c "CMSWEB $name,,," \
+                           -d /data/empty -s /sbin/nologin -u $id $login
+  fi
+}
+
+# Set protections on local (/data/certs) host certificate files.
+hostcert_local_prot()
+{
+  sudo chown $USER:_config /data/certs/host{cert,key}.pem
+  sudo chmod 644 /data/certs/hostcert.pem
+  sudo chmod 400 /data/certs/hostkey.pem
+}
+
+# Install host certificate from local (/data/certs) to the system
+# directory (/etc/grid-security), with appropriate file ownerships.
+hostcert_to_system()
+{
+  [ -d /etc/grid-security ] || { note "ERROR: no /etc/grid-security!?"; exit 1; }
+  sudo cp /data/certs/host{cert,key}.pem /etc/grid-security
+  sudo chown root:root /etc/grid-security/host{cert,key}.pem
+  sudo chmod 644 /etc/grid-security/hostcert.pem
+  sudo chmod 400 /etc/grid-security/hostkey.pem
+}
+
+deploy_system_post()
+{
+  # FIXME: Check machine from right netblock
+  # FIXME: Check external firewall bypass
+  # FIXME: Check (alias) host certificate
+  # FIXME: Check myproxy access using host certificate
+  # FIXME: Check pass-through for online reverse proxy
+  # FIXME: Check clean system install
+  # FIXME: Check machine is in maintenance mode
+  # FIXME: Check VOC owns the machine in CDB and LANDB
+  # FIXME: Check machine uses the right quattor profile
+  # FIXME: Check system firewall rules for ports 80, 443
+  # FIXME: Check access from outside CERN
+  # FIXME: Check access from within CERN
+  # FIXME: Check all operators have 'sms' command access.
+  # FIXME: Check all operators can edit system quattor profiles.
+  # FIXME: Check all operators can login to the system with AFS accounts.
+  # FIXME: Check all operators can sudo commands to root.
+  # FIXME: Check applicable people can ssh to cmsweb account.
+  # FIXME: Check the host executes acron jobs.
+  # FIXME: Check mail to root goes to the operators.
+  # FIXME: Check mail to cmsweb goes to the operators.
+  # FIXME: Check mail bounces to mails sent by cmsweb go to the operators.
+  # FIXME: Check mail from cron jobs goes to the operators.
+  # FIXME: Check mail from acron jobs goes to the operators.
+  # FIXME: Check operators get automatic system log monitor reports.
+  # FIXME: Check system logs are automatically rotated at least once a month.
+  # FIXME: Check the host can make http requests to online DQM GUI via cmsdaq0.cern.ch.
+  # FIXME: Check /data is owned by cmsweb:zh.
+  # FIXME: Check the host can *not* list or copy files to or from castor.
+  # FIXME: Check the cmsweb account can *not* read non-public files from AFS.
+  # FIXME: Check the cmsweb account can *not* write files anywhere on AFS, including cmsweb-owned directories.
+  # FIXME: Check lemon-host-check has no warnings other than the machine being in maintenance mode.
+  case $variant in
+    frontend | backend )
+      [ $USER = cmsweb ]
+      [ $HOME = /home/cmsweb ]
+      cd $HOME
+
+      # Verify system installation is up-to-date; should do nothing.
+      sudo /usr/sbin/ccm-fetch
+      sudo /usr/sbin/spma_wrapper.sh
+      sudo /usr/sbin/ncm-ncd --configure --all || true # fails for useraccess (slsmon)
+
+      # Verify the user has required local groups.
+      G=$(id -Gn)
+      for g in _config _sw _auth _frontend _admin _base _couchdb _das _dbs \
+               _dbsweb _dqmgui _filemover _overview _phedex _sitedb _t0mon \
+               _mongodb _reqmgr _workqueue _configcache _plotfairy _t0datasvc; do
+        case " $G " in *" $g "* ) ;; * ) note "ERROR: no $g group"; exit 1;; esac
+      done
+
+      # Must have various directories.
+      [ -d /data/user ]
+      [ -d /data/certs ]
+      [ -d /data/empty ]
+
+      # Must have AFS token and be able to sudo.
+      /usr/kerberos/bin/klist -s
+      sudo -l
+
+      # Fetch CRLs. Do this only for front-end and combined front-/back-end.
+      case $variant in
+        frontend )
+          sudo sh -c 'http_proxy="http://ca-proxy.cern.ch/" /opt/edg/etc/cron/edg-fetch-crl-cron' ;;
+        backend )
+          [ ! -f /opt/edg/etc/cron/edg-fetch-crl-cron ] ||
+            sudo sh -c 'http_proxy="http://ca-proxy.cern.ch/" /opt/edg/etc/cron/edg-fetch-crl-cron' ;;
+      esac
+
+      # Verify the host certificate is ok.
+      note "INFO: cert subject:    " $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -subject)
+      note "INFO: cert fingerprint:" $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -fingerprint)
+      note "INFO: cert validity:   " $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -dates)
+
+      openssl verify -CApath /etc/grid-security/certificates /etc/grid-security/hostcert.pem
+      openssl x509 -noout -in /etc/grid-security/hostcert.pem -days 180 ||
+        { note "ERROR: cert must be valid for at least 180 days"; exit 1; }
+      X=$(echo -n "this is a test" |
+          openssl smime -encrypt -aes128 /etc/grid-security/hostcert.pem | \
+          sudo openssl smime -decrypt -inkey /etc/grid-security/host{key,cert}.pem)
+      case $X in "this is a test" ) ;; * )
+        note "ERROR: cert and key do not match"; exit 1;;
+      esac
+
+      X=$(openssl x509 -noout -in /etc/grid-security/hostcert.pem -subject)
+      case $variant:$X in
+        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb.cern.ch" | \
+        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb-testbed.cern.ch" | \
+        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmswttest.cern.ch" | \
+         backend:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9][0-9]".cern.ch" )
+          ;;
+        * )
+          note "ERROR: cert subject invalid for $variant: $X"
+          exit 1 ;;
+      esac
+
+      # Install logwatch / bashs scanner.
+      (cd $project_config_src/logwatch; find . -type f -print0 |
+       tar --null -T /dev/stdin -cf -) | sudo tar -C /etc/logwatch -xvvf - \
+         --no-anchored --exclude CVS --exclude .svn --exclude .git \
+         --exclude '*~' --exclude '.#*' --exclude '*.swp'
+
+      # Make sure the permissions for /home/cmsweb are right.
+      sudo /usr/sbin/ncm-ncd --configure dirperm
+
+      # Setup bash. Set environment on login. Destroy token on logout.
+      (echo '[ -f ~/.bashrc ] && . ~/.bashrc') > .bash_profile
+      (echo unlog; echo kdestroy; echo 'rm -f /tmp/{krb5cc_,tkt}$(id -u){,_*}') > .bash_logout
+      (echo '[ -f /etc/bashrc ] && . /etc/bashrc';
+       echo 'export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW'
+       echo 'export PATH=$HOME/bin:/data/srv/current/bin:$PATH') > .bashrc
+
+      # Create the .cvspass file for any CVS checkouts.
+      cvs -d :pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW login
+
+      # Set up SSH keys.
+      mkdir -p .ssh
+      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/ssh-keys-$variant .ssh/authorized_keys
+      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant .ssh/id_dsa
+      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant.pub .ssh/id_dsa.pub
+      chmod -R go-rwx /home/cmsweb/.ssh
+
+      # Generate post-install logwatch report.
+      export PATH=$PATH:/usr/sbin
+      sudo /usr/sbin/logwatch
+      ;;
+
+    devvm )
+      MYGROUP=$(id -gn)
+
+      # Fix /etc/sudoers. We can't have 'requiretty' as we need crontab
+      # to sudo to service accounts, and we need NOPASSWD so that user
+      # isn't prompted for passwords at every occasion (there's nobody
+      # to give that password anyway for _foo accounts from crontab!).
+      # This will cause a password prompt if user didn't invoke sudo.
+      sudo perl -p -i -e \
+       "s/^(?=Defaults\s+requiretty)/\#/;
+	s/^$USER\s+ALL=\(ALL\)\s+ALL$/$USER ALL=(ALL) NOPASSWD: ALL/" \
+        /etc/sudoers
+
+      # Install additional yum repositories (glite-VOBOX instead of glite-SCAS?)
+      sudo wget -q -O /etc/yum.repos.d/HEP_OSlibs.repo \
+        http://cern.ch/grid-deployment/download/HEP/repo/HEP_OSlibs.repo
+      sudo wget -q -O /etc/yum.repos.d/glite-lcg-ca.repo \
+        http://cern.ch/grid-deployment/glite/repos/3.2/lcg-CA.repo
+      sudo wget -q -O /etc/yum.repos.d/glite-scas.repo \
+        http://cern.ch/grid-deployment/glite/repos/3.2/glite-SCAS.repo
+
+      # Install additional required packages.
+      sudo yum -y install \
+        HEP_OSlibs_SL5 'ca_*' dummy-ca-certs lcg-CA \
+        fetch-crl edg-mkgridmap git-all stgit colordiff
+      if rpm --quiet -q bashs; then :; else
+        sudo rpm -ivh http://swrepsrv.cern.ch/swrep/x86_64_slc5/bashs-3.2-21.x86_64.rpm
+      fi
+
+      # Update firewall rules, persist change across reboot.
+      [ -f /etc/sysconfig/iptables.vmoriginal ] || sudo cp -p /etc/sysconfig/iptables{,.vmoriginal}
+      sudo sh -c '/sbin/iptables-restore < /etc/sysconfig/iptables.vmoriginal'
+      sudo /sbin/iptables -I RH-Firewall-1-INPUT 3 -p tcp -m tcp --dport 80 -j ACCEPT
+      sudo /sbin/iptables -I RH-Firewall-1-INPUT 3 -p tcp -m tcp --dport 443 -j ACCEPT
+      sudo sh -c '/sbin/iptables-save > /etc/sysconfig/iptables'
+
+      # Create groups. Add myself to all the groups.
+      for ng in T:100000:_config    F:100001:_empty     T:100002:_sw          \
+                T:100003:_auth      T:100010:_frontend  T:100020:_admin       \
+		T:100021:_base      T:100022:_couchdb   T:100023:_das         \
+		T:100024:_dbs       T:100025:_dbsweb    T:100026:_dqmgui      \
+		T:100027:_filemover T:100028:_overview  T:100029:_phedex      \
+                T:100030:_sitedb    T:100031:_t0mon     T:100032:_mongodb     \
+		T:100033:_reqmgr    T:100034:_workqueue T:100035:_configcache \
+		T:100036:_plotfairy T:100037:_t0datasvc; do
+	add_local_group $(echo $ng | tr : " ")
+      done
+
+      # Create accounts
+      add_local_user 100001 _empty       ""       "Void"
+      add_local_user 100002 _sw          ,_config "Master"
+      add_local_user 100003 _auth        ,_config "Auth Agent"
+      add_local_user 100010 _frontend    ,_config "Front-End"
+      add_local_user 100020 _admin       ,_config "Admin"
+      add_local_user 100021 _base        ,_config "Base App"
+      add_local_user 100022 _couchdb     ,_config "CouchDB App"
+      add_local_user 100023 _das         ,_config "DAS App"
+      add_local_user 100024 _dbs         ,_config "DBS App"
+      add_local_user 100025 _dbsweb      ,_config "DBS-Discovery App"
+      add_local_user 100026 _dqmgui      ,_config "DQM GUI App"
+      add_local_user 100027 _filemover   ,_config "FileMover App"
+      add_local_user 100028 _overview    ,_config "Overview App"
+      add_local_user 100029 _phedex      ,_config "PhEDEx App"
+      add_local_user 100030 _sitedb      ,_config "SiteDB App"
+      add_local_user 100031 _t0mon       ,_config "T0Mon App"
+      add_local_user 100032 _mongodb     ,_config "MongoDB App"
+      add_local_user 100033 _reqmgr      ,_config "ReqMgr App"
+      add_local_user 100034 _workqueue   ,_config "WorkQueue App"
+      add_local_user 100035 _configcache ,_config "ConfigCache App"
+      add_local_user 100036 _plotfairy   ,_config "PlotFairy App"
+      add_local_user 100037 _t0datasvc   ,_config "T0DataSvc App"
+
+      # Restart nscd to flush account changes. Current account will _not_
+      # see these changes before logout/login however, so commands below
+      # cannot rely on fully propagated group ownership!
+      sudo /sbin/service nscd restart
+
+      # Create basic required directories.
+      sudo mkdir -p /data
+      sudo chown $USER:_sw /data
+      sudo chmod 0775 /data
+
+      mkdir -p /data/user
+      chown $USER:$MYGROUP /data/user
+      chmod 0775 /data/user
+
+      sudo rm -fr /data/empty
+      mkdir -p /data/empty
+      note "NOTE: Provide CMS anonymous CVS pserver password now"
+      HOME=/data/empty cvs -d :pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW login
+      echo "umask 002" > /data/empty/.profile
+      chmod 444 /data/empty/.profile
+      chmod 640 /data/empty/.cvspass
+      chmod 555 /data/empty
+      sudo chown -R _empty:_empty /data/empty
+      sudo chown _empty:_sw /data/empty/.cvspass
+
+      # Install host certificate $USER:_config owned in /data/certs.
+      # If we don't have host{cert,key}.pem in /data/certs nor in
+      # /etc/grid-security, create a pair using whatever means known,
+      # falling back on creating a fake one. If we have the certs
+      # already in one place, copy them to the other.
+      [ -d /etc/grid-security ]
+      mkdir -p /data/certs
+      sudo chown $USER:_config /data
+      sudo chmod 0775 /data
+      if [ ! -f /data/certs/hostcert.pem ] && [ ! -f /etc/grid-security/hostcert.pem ]; then
+        case $(hostname -f) in
+	  *.cern.ch )
+	    (set -e
+	     cd /tmp
+	     tmp=$(mktemp -t -d cert-$$-XXXXX)
+	     req=$(hostname -s).csr
+	     der=$(hostname -s).der
+	     cn=/CN=$(hostname -f)
+	     cd $tmp
+             note "WARNING: requesting now a new host certificate via ca.cern.ch"
+             note "WARNING: you will prompted for your login or grid certificate password"
+             note "WARNING: by supplying your password you agree to CERN computing rules"
+	     openssl req -new -subj $cn -out $req -nodes -keyout hostkey.pem
+	     $project_config_src/careq-cern-ch $req $der 1>&11 2>&22
+	     openssl x509 -inform DER -in $der -outform PEM > hostcert.pem
+	     chmod 400 $req $der hostkey.pem
+	     chmod 644 hostcert.pem
+	     mv $req $der host{key,cert}.pem /data/certs
+	     rm -r $tmp)
+	    [ $? = 0 ]
+	    ;;
+
+          * )
+	    note "WARNING: no hostcert.pem in /data/certs or /etc/grid-security"
+	    note "WARNING: creating fake host certificate, replace with real one!"
+	    (set -e
+	     umask 077
+	     openssl genrsa -out /data/certs/hostkey.pem 1024
+	     umask 022
+	     openssl req -new -key /data/certs/hostkey.pem \
+	      -subj /DC=ch/DC=cern/OU=computers$cn | openssl x509 -req -days 365 \
+	      -signkey /data/certs/hostkey.pem -out /data/certs/hostcert.pem)
+	    [ $? = 0 ]
+	    ;;
+	esac
+      fi
+
+      if [ -f /data/certs/hostcert.pem ]; then
+	hostcert_local_prot
+        hostcert_to_system
+      else
+        sudo cp /etc/grid-security/host{cert,key}.pem /data/certs
+        hostcert_local_prot
+      fi
+      ;;
+  esac
+}

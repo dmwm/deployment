@@ -1,0 +1,11 @@
+<graphtool-config>
+  <import file="@ROOT@/state/phedex/etc/graphs_phedex_queries.xml" />
+  <import file="@ROOT@/state/phedex/etc/graphs_data_queries.xml" />
+
+  <import module="graphtool.tools.query_output">XmlGenerator</import>
+
+  <class type="XmlGenerator" name="query_xml">
+    <queryobj> PhedexQueries </queryobj>
+    <queryobj> DataQueries </queryobj>
+  </class>
+</graphtool-config>

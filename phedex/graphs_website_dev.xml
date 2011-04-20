@@ -1,0 +1,27 @@
+<graphtool-config>
+  <import module="graphtool.web"> WebHost, StaticContent </import>
+  <import module="phedexgraphs.web"> TfcMapperPhedex </import>
+<!--  <import module="phedexgraphs.web.graphviz">GraphViz</import> -->
+  <import file="@ROOT@/state/phedex/etc/graphs_text_queries.xml" />
+  <import file="@ROOT@/state/phedex/etc/graphs_phedex_graphs.xml" />
+  <import file="@ROOT@/state/phedex/etc/graphs_dbparam.xml" />
+
+  <class name="static" type="StaticContent">
+    <directory name="content"> $GLOBAL_GRAPHS_ROOT/static_content </directory>
+  </class>
+
+  <class name="tfc" type="TfcMapperPhedex">
+    <attribute name="connection_manager"> PhedexConnMan </attribute>
+  </class>
+
+<!--  <class name="graphviz" type="GraphViz">  </class> -->
+
+  <class name="web" type="WebHost">
+    <mount location="/graphtool-test/graphs" content="image/png"> <instance name="phedex_grapher"/> </mount>
+    <mount location="/graphtool-test/xml" content="text/xml"> <instance name="query_xml" /> </mount>
+    <instance name="static" location="/graphtool-test/static"/>
+    <instance name="tfc" location="/tfc"/>
+<!--    <instance name="graphviz" location="/graphviz"/> -->
+    <config>@ROOT@/state/phedex/etc/cherrypy-graphs.conf</config>
+  </class>
+</graphtool-config>

@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_t0mon_deps()
+{
+  deploy t0datasvc
+}
+
+deploy_t0mon_prep()
+{
+  mkproj var
+}
+
+deploy_t0mon_sw()
+{
+  deploy_pkg comp cms+T0Mon 4.2.11
+}
+
+deploy_t0mon_post()
+{
+  case $host in vocms53 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}

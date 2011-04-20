@@ -1,0 +1,180 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_frontend_variants="default prod preprod"
+deploy_frontend_deps()
+{
+  deploy wmcore-auth
+}
+
+deploy_frontend_prep()
+{
+  mkproj var etc/keys{,/{auth-{hn,csrf,sid,pass},cert-cookie,host-map}}
+  setgroup ug+rw,o-w _config $PWD{,/etc{,/keys}}
+}
+
+deploy_frontend_sw()
+{
+  deploy_pkg -a frontend/db-params.txt comp cms+frontend 4.1-cmp
+
+  if grep -q Oracle $project_auth/db-params.txt; then :; else
+    deploy_frontend_fakeauth $project_auth/users.db
+  fi
+
+  local backends opts name
+  case $variant in
+    prod )
+      opts="" name="-n cmsweb.cern.ch"
+      backends=backends-prod.txt ;;
+    preprod )
+      opts="" name="-n cmsweb-testbed.cern.ch"
+      backends=backends-preprod.txt ;;
+    * )
+      opts="-DTEST" name=""
+      backends=backends-dev.txt ;;
+  esac
+
+  (. $root/current/apps/frontend/etc/profile.d/init.sh
+   export AUTH_DB_PARAMS=$project_auth/db-params.txt
+   export HOST_MAP_FILE=$project_config/$backends
+   export CONFIG_DIR=$project_config
+   mkserver                                           \
+   $name                                              \
+   -r $PWD                                            \
+   -l $project_logs                                   \
+   -a $APACHE2_ROOT                                   \
+   -u _frontend:_frontend                             \
+   -o "$opts"                                         \
+   -p $project_config/mpm.conf                        \
+   -c $project_config/frontend.conf                   \
+   -d $project_config/htdocs                          \
+   -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"             \
+   -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
+   -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so  \
+   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so)
+  [ $? = 0 ]
+
+  rm -f $PWD/etc/keys/authz-headers
+  ln $root/current/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
+  setgroup ugo+r,go-w _config $PWD/{*.conf,etc/{httpd,options.txt}}
+  setgroup -R ugo+r,go-w _config $PWD/{etc/env.d,htdocs}
+}
+
+deploy_frontend_post()
+{
+  if $MIGRATION && \
+     [ -d /data/frontend/logs ] && \
+     [ $(find $project_logs -type f | wc -l) = 0 ]; then
+    note "INFO: cloning old front-end logs from /data/frontend/logs"
+    tar -C /data/frontend/logs -cf - . | tar -C $project_logs -xvvf -
+  else :; fi
+
+  local certs
+  if [ -r $root/certs/hostcert.pem ]; then
+    certs=$root/certs
+  elif [ -r /data/certs/hostcert.pem ]; then
+    certs=/data/certs
+  else
+    note "ERROR: cannot find hostcert to use"
+    exit 1
+  fi
+
+  case $host in * ) enable ;; esac
+  (echo "PATH=/sbin:/bin:/usr/sbin:/usr/bin";
+   echo "X509_USER_CERT=$certs/hostcert.pem";
+   echo "X509_USER_KEY=$certs/hostkey.pem";
+   mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
+   echo "13 */6 * * * (/opt/edg/libexec/edg-mkgridmap/edg-mkgridmap.pl" \
+      "--conf=$project_config/mkgridmap.conf --output=$PWD/etc/voms-gridmap.txt" \
+      "--safe) >> $project_logs/mkgridmap.log 2>&1";
+   case $host in
+     vocms105 | vocms135 ) ;;
+     vocms65)  echo "23 */6 * * * $project_config/update-keys $PWD vocms105" ;;
+     vocms134) echo "23 */6 * * * $project_config/update-keys $PWD vocms135" ;;
+     *)        echo "23 */6 * * * $project_config/update-keys $PWD" ;;
+   esac) | crontab -
+
+  (crontab -l | grep -e '^[A-Z0-9_]*=' -e $project_config/ |
+   perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
+
+  sudo rm -f /etc/rc.d/init.d/httpd
+  sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
+  sudo /sbin/chkconfig --add httpd
+  sudo /sbin/chkconfig --levels 2345 httpd on
+}
+
+deploy_frontend_auth()
+{
+  if [ X"$privauthdir" != X ] && [ -f $privauthdir/sitedb/security.ini ]; then
+    perl -ne '
+      if (m{^dbname\s*=.*//(\S+):(\S+)\@(\S+)}) {
+        print "type Oracle\n", "database $3\n", "user $1\n",
+              "password $2\n", "schema-prefix $3\n"
+      }' < $privauthdir/sitedb/security.ini
+  else
+    echo "type SQLite"
+    echo "database dbname=$project_auth/users.db"
+  fi
+}
+
+deploy_frontend_fakeauth()
+{
+  [ ! -f $1 ] || return 0
+
+  local user=${SUDO_USER:-$(id -un)}
+  local pass=$(perl -e 'print map{chr(1+32*(2+int(rand(2)))+int(rand(26)))} 1..15')
+  local passcrypt=$(perl -e "print crypt('$pass', reverse time())")
+  local homedir=$(finger -m -p -l $user | perl -ne '/Directory: (\S+)/ && print $1')
+  local name=$(finger -m -p -l $user | perl -ne '/Name: (.*)/ && print $1')
+  local forename=$(echo "$name" | cut -f1 -d\ )
+  local surname=$(echo "$name" | cut -f2- -d\ )
+  if [ -r $homedir/.globus/usercert.pem ]; then
+    local dn=$(openssl x509 -noout -subject -in $homedir/.globus/usercert.pem | cut -f2- -d\ )
+  else
+    local dn=
+  fi
+
+  note "INFO: generating fake login with user $user password $pass dn '$dn'"
+  (echo "create table cms_name"
+   echo " (id integer not null primary key,"
+   echo "  name varchar(100) not null unique);"
+   echo "create table site"
+   echo " (id integer not null primary key,"
+   echo "  name varchar(100) not null unique);"
+   echo "create table site_cms_name_map"
+   echo " (site_id integer not null,"
+   echo "  cms_name_id integer not null);"
+   echo "create table user_passwd"
+   echo " (username varchar(60) not null primary key,"
+   echo "  passwd varchar(30) not null);"
+   echo "create table contact"
+   echo " (id integer not null primary key,"
+   echo "  surname varchar(1000) not null,"
+   echo "  forename varchar(1000) not null,"
+   echo "  username varchar(60) unique,"
+   echo "  dn varchar(1000) unique);"
+   echo "create table role"
+   echo " (id integer not null primary key,"
+   echo "  title varchar(100) not null unique);"
+   echo "create table user_group"
+   echo " (id integer not null primary key,"
+   echo "  name varchar(100) not null unique);"
+   echo "create table site_responsibility"
+   echo " (contact integer not null,"
+   echo "  role integer not null,"
+   echo "  site integer not null,"
+   echo "  primary key (contact, role, site));"
+   echo "create table group_responsibility"
+   echo " (contact integer not null,"
+   echo "  role integer not null,"
+   echo "  user_group integer not null,"
+   echo "  primary key (contact, role, user_group));"
+   echo "insert into cms_name values (1, 'T3_NX_Foobar');"
+   echo "insert into site values (1, 'Foobar');"
+   echo "insert into site_cms_name_map values (1, 1);"
+   echo "insert into user_passwd values ('$user', '$passcrypt');"
+   echo "insert into contact values (1, '$surname', '$forename', '$user', '$dn');"
+   echo "insert into user_group values (1, 'foo');"
+   echo "insert into role values (1, 'bar');"
+   echo "insert into site_responsibility values (1, 1, 1);"
+   echo "insert into group_responsibility values (1, 1, 1);") | sqlite3 $1
+  setgroup ugo+r,go-wx _config $project_auth/users.db
+}

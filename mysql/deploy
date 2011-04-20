@@ -1,0 +1,10 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_mysql_prep()
+{
+  mkproj database stagingarea
+}
+
+deploy_mysql_sw()
+{
+  deploy_pkg comp external+mysql 5.1.37
+}

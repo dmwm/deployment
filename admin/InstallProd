@@ -1,0 +1,240 @@
+#!/bin/sh
+
+### Usage: InstallProd -h
+### Usage: InstallProd [-d DIR] -x PROD -s image -v VER -p PKGS -u PXUSER [-r A=B] [-a AUTH]
+### Usage: InstallProd [-d DIR] -x PROD -s kstart
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s shutdown
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sync -v VER
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s post -v VER -p PKGS
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s migrate -p PKGS
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s status[:what]
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s start[:what]
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s stop[:what]
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s check -v VER
+### Usage: InstallProd [-d DIR] -x PROD -s kstop
+
+usage()
+{
+  perl -ne '/^### Usage:/ && do { s/^### ?//; print }' < $0
+  exit 1
+}
+
+help()
+{
+  perl -ne '/^###/ && do { s/^### ?//; print }' < $0
+  exit 0
+}
+
+confirm()
+{
+  key=$(perl -e 'print map{chr(1+32*(2+int(rand(2)))+int(rand(26)))} 0..9')
+  echo; echo "********************************************"
+  echo -n "*** $1? if yes, say [$key]: "
+  read answer
+  case $answer in
+    $key ) true ;;
+    * ) exit 2 ;;
+  esac
+}
+
+STAGE= VER= REPO= ACFG= PKGS= HOSTS= PXUSER= STEM=
+eval set -- $(getopt -n $0 -o hs:d:v:r:a:p:t:u:x: -- ${1+"$@"})
+[ $? = 0 ] || usage
+for arg; do
+  case $arg in
+    -d) cd "$2" || exit $?; shift; shift ;;
+    -t) HOSTS="$2"; shift; shift ;;
+    -s) STAGE="$2"; shift; shift ;;
+    -v) VER="$2"; shift; shift ;;
+    -u) PXUSER="$2"; shift; shift ;;
+    -x) STEM="$2"; shift; shift ;;
+    -r) REPO="-r $2"; shift; shift ;;
+    -a) ACFG="-p $2"; rm -f $2/auth/wmcore/header-auth-key*; shift; shift ;;
+    -p) PKGS="$2"; shift; shift ;;
+    -h) help ;;
+    --) shift; break ;;
+    -*) usage ;;
+  esac
+done
+
+[ $# = 0 ] || usage
+[ -d cfg/admin ] || usage
+[ X"$STAGE" = X ] && usage
+[ X"$STEM" = X ] && usage
+
+case $STAGE in
+  status:* | start:* | stop:* | post:* )
+    WHAT=${STAGE#*:} STAGE=${STAGE%:*} ;;
+  post )
+    WHAT=$(hostname -s) ;;
+  sync | check )
+    case $VER in
+      fe* ) EXTRA="-f H_/srv-*/[sl]*/[b-eg-z]* -f H_/srv-*/[sl]*/fi*" ;;
+      be* ) EXTRA="-f H_/srv-*/[sl]*/frontend" ;;
+      hg* ) EXTRA="" ;;
+    esac ;;
+  status | start | stop )
+    WHAT="*" ;;
+esac
+
+case $STAGE in
+  image )
+    [ X"$PKGS" = X ] && usage
+    [ X"$VER" = X ] && usage
+    case $PXUSER:$VER in :be* | :hg* ) usage ;; esac
+    ;;
+  sync )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$VER" = X ] && usage
+    ;;
+  post )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$PKGS" = X ] && usage
+    [ X"$VER" = X ] && usage
+    ;;
+  status | start | stop | shutdown )
+    [ X"$HOSTS" = X ] && usage
+    ;;
+  migrate )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$PKGS" = X ] && usage
+    ;;
+esac
+
+case $STAGE in
+  image )
+    set -ex
+    rm -f srv
+    ln -s srv-$STEM srv
+    mkdir -p srv-$STEM
+    $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD/srv $PKGS
+    sudo -H -u _sw $PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS
+    case $VER in hg* | be* )
+      ssh -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed \
+        -t prod -d cmsweb@$(hostname -f):$PWD/srv/$VER/auth/proxy ;;
+    esac
+    ;;
+
+  kstart | kstop )
+    set -ex
+    sudo $PWD/cfg/admin/ImageKey ${STAGE#k}
+    ;;
+
+  sync )
+    set -ex
+    (cd srv && rm current && ln -s $VER current)
+    for host in $HOSTS; do
+      sudo rsync -nzavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
+        --rsync-path="sudo rsync" --delete --delete-excluded \
+        -f "+ /srv-$STEM/$VER" $EXTRA \
+        -f ". $PWD/cfg/admin/rsync-$STEM.rules" -f "P /compsw" \
+        $PWD/ cmsweb@$host:$PWD/
+      set +x; confirm "is sync ok for $host"; set -x
+    done
+
+    for host in $HOSTS; do
+      sudo rsync -zavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
+        --rsync-path="sudo rsync" --delete --delete-excluded \
+        -f "+ /srv-$STEM/$VER" $EXTRA \
+        -f ". $PWD/cfg/admin/rsync-$STEM.rules" -f "P /compsw" \
+        $PWD/ cmsweb@$host:$PWD/
+    done
+    ;;
+
+  shutdown )
+    set -e
+    for host in $HOSTS; do
+      (echo "exec 2>&1; set -x; hostname -f; cd $PWD"
+       echo "crontab -r"
+       echo "for x in /data/projects/*/config/manage; do"
+       echo "  [ -f \$x ] || continue"
+       echo "  u=_\$(echo \$x | cut -d/ -f4 | cut -d- -f1)"
+       echo "  sudo -H -u \$u bashs -lc \"set -x; \$x stop 'I did read documentation'\""
+       echo "done"
+       echo "for x in srv/enabled/*; do"
+       echo "  [ -f \$x ] || continue"
+       echo "  app=\${x#*/*/}; case \$app in frontend) u=root ;; * ) u=_\$app ;; esac"
+       echo "  sudo -H -u \$u bashs -lc \"set -x; $PWD/srv/current/config/\$app/manage stop 'I did read documentation'\""
+       echo "done"
+       echo "if [ -f /etc/init.d/httpd ]; then"
+       echo "  sudo /sbin/service httpd stop"
+       echo "fi"
+       echo "killall python"
+       echo "exit 0") |
+       ssh cmsweb@$host bashs -l
+    done
+    ;;
+
+  post )
+    set -e
+    for host in $HOSTS; do
+      (echo "exec 2>&1; set -ex; hostname -f; cd $PWD; klist -s"
+       echo "\$PWD/cfg/Deploy $REPO -t $VER -a -s post $PWD/srv $PKGS") |
+       ssh cmsweb@$host bashs -l
+    done
+
+    confirm "post passed for $HOSTS"
+    for host in $HOSTS; do
+      (echo "exec 2>&1; set -ex; hostname -f; rm -fr $PWD/cfg"
+       echo "sudo /usr/sbin/lemon-host-check -sh || true") |
+       ssh cmsweb@$host bashs -l
+    done
+    ;;
+
+  migrate )
+    HA=${HOSTS%\ *} HB=${HOSTS#*\ }
+    for p in $PKGS; do
+      case $p in
+        couchdb )
+          set -ex
+          ssh -t cmsweb@$HB sudo rsync -nzavH -e "'ssh -c arcfour'" \
+            --rsync-path="'sudo rsync'" --delete --delete-excluded \
+            cmsweb@$HA:$PWD/srv/state/couchdb/database/ \
+            $PWD/srv/state/couchdb/database/
+
+          set +x; confirm "is $p migration from $HA to $HB ok"; set -x
+
+          ssh -t cmsweb@$HB sudo rsync -zavH -e "'ssh -c arcfour'" \
+            --rsync-path="'sudo rsync'" --delete --delete-excluded \
+            cmsweb@$HA:$PWD/srv/state/couchdb/database/ \
+            $PWD/srv/state/couchdb/database/
+          ;;
+
+        * )
+          echo "don't know how migrate $p from $HA to $HB" 1>&2
+          exit 1 ;;
+      esac
+    done
+    ;;
+
+  start | status | stop )
+    set -e
+    for host in $HOSTS; do
+      (echo "exec 2>&1; : set -e; hostname -f; cd $PWD; unlog; kdestroy"
+       echo "for f in srv/enabled/$WHAT; do"
+       echo "  app=\${f#*/*/}; case \$app in frontend) u=root ;; * ) u=_\$app ;; esac"
+       echo "  sudo -H -u \$u bashs -lc \"set -x; $PWD/srv/current/config/\$app/manage $STAGE 'I did read documentation'\" || true"
+       echo "done") |
+       ssh cmsweb@$host bashs -l
+    done
+    ;;
+
+  check )
+    set -ex
+    for host in $HOSTS; do
+      sudo rsync -nzcavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
+        --rsync-path="sudo rsync" --delete --delete-excluded \
+        -f "+ /srv-$STEM/$VER" $EXTRA -f "H /cfg" \
+        -f "H /srv-$STEM/$VER/auth/proxy/seed*.cert" \
+        -f ". $PWD/cfg/admin/rsync-$STEM.rules" -f "P /compsw" \
+        $PWD/ cmsweb@$host:$PWD/
+    done
+    ;;
+
+  * )
+    echo "$STAGE: bad stage, try -h for help" 1>&2
+    exit 1
+    ;;
+esac
+
+exit 0
