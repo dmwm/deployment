@@ -3,22 +3,20 @@ deploy_workqueue_variants="default offsite"
 
 deploy_workqueue_deps()
 {
-  deploy mysql
-  deploy wmcore-auth
   deploy couchdb $variant
-  case $variant in offsite ) deploy wmcore ;; esac
 }
 
 deploy_workqueue_prep()
 {
   case $variant in offsite ) extra=install ;; * ) extra= ;; esac
-  mkproj $extra
+  mkproj -s $extra
 }
 
 deploy_workqueue_sw()
 {
   case $variant in
     default )
+      deploy_pkg comp cms+workqueue 0.0.9
       ;;
 
     offsite )
@@ -39,9 +37,47 @@ deploy_workqueue_sw()
       # override the webtools couch config
       cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
       perl -p -i -e "s{deploy_project_root}{$root/projects}g" $couchdb_ini
-
-      # grab the WMAgent MySQL config
-      cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
       ;;
+  esac
+}
+
+deploy_workqueue_post()
+{
+  case $variant in
+    offsite )
+      ;;
+    default)
+	  # Tell couchdb to pick up workqueue on the next restart
+	  # and configure replication, compaction and backup, too
+	  local couchdb_config=$root/current/config/couchdb
+	  local couchdb_state=$root/state/couchdb
+	  # is the couch url assumption valid?
+	  local couch_url="http://localhost:5984"
+	  local hour=0
+	  local manage=$root/current/config/workqueue/manage
+
+	  for area in compaction stagingarea replication backup; do
+	    rm -f $couchdb_state/$area/workqueue
+	    touch $couchdb_state/$area/workqueue
+	  done
+
+	  for db in workqueue workqueue_inbox; do
+	      local couch_string="${couch_url}/${db}"
+	      echo "couchapp push $root/current/apps/workqueue/lib/couchapps/WorkQueue $couch_string" >> $couchdb_state/stagingarea/workqueue
+	      echo "12 $hour * * * $couchdb_config/manage compact $db" >> $couchdb_state/compaction/workqueue
+	      hour=$(( $hour + 1 ))
+	  done
+
+	  (mkcrontab
+	   for op in reqmgr_sync location_refresh housekeep; do
+	      local cmd_$op="$manage $op"
+	      $nogroups || local cmd_$op="sudo -H -u _workqueue bashs -l -c '$manage $op'"
+	   done
+	   [ -f $root/enabled/couchdb ] && {
+	      echo "5,25,45 * * * * ${cmd_reqmgr_sync}";
+	      echo "30 * * * * ${cmd_location_refresh}";
+	      echo "15,35,55 * * * * ${cmd_housekeep}";
+	   }) | crontab -
+	  ;;
   esac
 }
