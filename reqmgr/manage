@@ -34,6 +34,7 @@ COLOR_NORMAL="\\033[0;39m"
 
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export YUI_ROOT
+export WMCORE_ROOT=$REQMGR_ROOT/lib/python*/site-packages
 
 # Start service conditionally on crond restart.
 sysboot()
