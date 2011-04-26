@@ -94,8 +94,8 @@ deploy_phedex_auth()
       cat <<-EOF
 	Section            Prod/WebSite
 	Interface          Oracle
-	Database           cms_transfermgmt
-	AuthDBUsername     cms_transfermgmt_writer
+	Database           cms_transfermgmt__IN_DEV_VM__
+	AuthDBUsername     cms_transfermgmt_writer__IN_DEV_VM__
 	AuthDBPassword     __FILL_ME_IN__
 	AuthRole           phedex_website_prod
 	AuthRolePassword   __FILL_ME_IN__
@@ -106,8 +106,8 @@ deploy_phedex_auth()
 
 	Section            Debug/WebSite
 	Interface          Oracle
-	Database           cms_transfermgmt_sc
-	AuthDBUsername     cms_transfermgmt_sc_writer
+	Database           cms_transfermgmt_sc__IN_DEV_VM__
+	AuthDBUsername     cms_transfermgmt_sc_writer__IN_DEV_VM__
 	AuthDBPassword     __FILL_ME_IN__
 	AuthRole           phedex_website_debug
 	AuthRolePassword   __FILL_ME_IN__
@@ -117,8 +117,8 @@ deploy_phedex_auth()
 
 	Section            Dev/WebSite
 	Interface          Oracle
-	Database           cms_transfermgmt_test
-	AuthDBUsername     cms_transfermgmt_test_writer
+	Database           cms_transfermgmt_test__IN_DEV_VM__
+	AuthDBUsername     cms_transfermgmt_test_writer__IN_DEV_VM__
 	AuthDBPassword     __FILL_ME_IN__
 	AuthRole           phedex_website_dev
 	AuthRolePassword   __FILL_ME_IN__
@@ -128,8 +128,8 @@ deploy_phedex_auth()
 
 	Section            SecurityModule
 	Interface          Oracle
-	Database           cms_sitedb
-	AuthDBUsername     cms_sitedb_writer
+	Database           cms_sitedb__IN_DEV_VM__
+	AuthDBUsername     cms_sitedb_writer__IN_DEV_VM__
 	AuthDBPassword     __FILL_ME_IN__
 	ConnectionLife     86400
 	LogConnection      off
