@@ -49,11 +49,9 @@ cd $STATEDIR
 sysboot()
 {
   dostart=false
-  for pat in cache web; do
-    if [ $(pgrep -u $(id -u) -f "[/]das_server.py.*=$pat" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
       dostart=true
-    fi
-  done
+  fi
   if [ $(pgrep -u $(id -u) -f "[/]analytics_controller.py" | wc -l) = 0 ]; then
     dostart=true
   fi
@@ -64,10 +62,8 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  for pat in cache web; do
-    python -u $DAS_PYTHONPATH/DAS/web/das_server.py --server=$pat \
-       </dev/null 2>&1 | rotatelogs $LOGDIR/das-$pat-%Y%m%d.log 86400 >/dev/null 2>&1 &
-  done
+  python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
+       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 
   python -u $DAS_PYTHONPATH/DAS/analytics/analytics_controller.py $DAS_ANALYTICS \
     </dev/null 2>&1 | rotatelogs $LOGDIR/das-analytics-%Y%m%d.log 86400 >/dev/null 2>&1 &
@@ -77,10 +73,8 @@ start()
 stop()
 {
   echo "stopping $ME"
-  for pat in web cache; do
-    for pid in $(pgrep -u $(id -u) -f "[/]das_server.py.*=$pat"); do
+  for pid in $(pgrep -u $(id -u) -f "[/]das_server.py"); do
       kill -9 $pid
-    done
   done
 
   for pid in $(pgrep -u $(id -u) -f "[/]analytics_controller.py"); do
@@ -91,11 +85,9 @@ stop()
 # Check if the server is running.
 status()
 {
-  for pat in cache web analytics; do
-    if [ $pat == "cache" ]; then
-      pid=$(pgrep -u $(id -u) -f "[/]das_server.py.*=cache" | sort -n)
-    elif [ $pat == "web" ]; then
-      pid=$(pgrep -u $(id -u) -f "[/]das_server.py.*=web" | sort -n)
+  for pat in web analytics; do
+    if [ $pat == "web" ]; then
+      pid=$(pgrep -u $(id -u) -f "[/]das_server.py" | sort -n)
     elif [ $pat == "analytics" ]; then
       pid=$(pgrep -u $(id -u) -f "[/]analytics_controller.py" | sort -n)
     fi
