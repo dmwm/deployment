@@ -53,11 +53,13 @@ start()
     -p $STATEDIR/couchdb.pid </dev/null >/dev/null 2>&1
 
   push_apps
+  install_cronjobs
 }
 
 # Stop the service.
 stop()
 {
+  crontab -r
   couchdb -d -p $STATEDIR/couchdb.pid
 }
 
@@ -111,6 +113,17 @@ push_apps()
     echo "couchdb did not start, not pushing application"
     exit 1
   fi
+}
+
+install_cronjobs()
+{
+  crontab -r
+  (for OP in backup compaction replication; do
+      for APP in $STATEDIR/$OP/*; do
+        [ -f $APP ] || continue
+        cat $APP
+      done
+   done) | crontab -
 }
 
 # Trigger a database compaction.
