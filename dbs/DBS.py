@@ -6,7 +6,7 @@ from WMCore.Configuration import Configuration
 from WMCore.WMInit import getWMBASE
 
 ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
-DBSVERSION = 'DBS_3_0_6'
+DBSVERSION = 'DBS_3_0_8'
 
 sys.path.append(os.path.join(ROOTDIR,'auth/dbs'))
 
@@ -26,7 +26,7 @@ config.Webtools.proxy_base = 'True'
 config.Webtools.application = 'dbs'
 
 config.component_('dbs')
-config.dbs.templates = os.path.join(getWMBASE(),'../src/templates/WMCore/WebTools')
+config.dbs.templates = os.path.join(getWMBASE(),'templates/WMCore/WebTools')
 config.dbs.title = 'DBS Server'
 config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')

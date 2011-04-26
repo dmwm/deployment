@@ -18,7 +18,7 @@ deploy_dbs_sw()
 deploy_dbs_post()
 {
   case $host in vocms53 ) disable ;; * ) enable ;; esac
-  (mkcrontab | sysboot) | crontab -
+  (mkcrontab; sysboot) | crontab -
 }
 
 deploy_dbs_auth()
