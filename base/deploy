@@ -11,7 +11,7 @@ deploy_base_prep()
 
 deploy_base_sw()
 {
-  deploy_pkg comp cms+webtools-base 0.1.21-cmp6
+  deploy_pkg comp cms+webtools-base 0.1.21-comp
 }
 
 deploy_base_post()

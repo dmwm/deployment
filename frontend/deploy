@@ -13,7 +13,7 @@ deploy_frontend_prep()
 
 deploy_frontend_sw()
 {
-  deploy_pkg -a frontend/db-params.txt comp cms+frontend 4.1-cmp
+  deploy_pkg -a frontend/db-params.txt comp cms+frontend 4.1-comp
 
   if grep -q Oracle $project_auth/db-params.txt; then :; else
     deploy_frontend_fakeauth $project_auth/users.db
