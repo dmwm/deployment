@@ -4,6 +4,7 @@
 ### Usage: InstallProd [-d DIR] -x PROD -s image -v VER -p PKGS -u PXUSER [-r A=B] [-a AUTH]
 ### Usage: InstallProd [-d DIR] -x PROD -s kstart
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s shutdown
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s checkprocs
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sync -v VER
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s post -v VER -p PKGS
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s migrate -p PKGS
@@ -92,7 +93,7 @@ case $STAGE in
     [ X"$PKGS" = X ] && usage
     [ X"$VER" = X ] && usage
     ;;
-  status | start | stop | shutdown )
+  status | start | stop | shutdown | checkprocs )
     [ X"$HOSTS" = X ] && usage
     ;;
   migrate )
@@ -159,6 +160,16 @@ case $STAGE in
        echo "if [ -f /etc/init.d/httpd ]; then"
        echo "  sudo /sbin/service httpd stop"
        echo "fi"
+       echo "exit 0") |
+       ssh cmsweb@$host bashs -l
+    done
+    ;;
+
+  checkprocs )
+    set -e
+    for host in $HOSTS; do
+      (echo "ps f -A -o user:10,pid,args --sort=uid,-ppid,pid | \\"
+       echo "  grep -e '^_' -e '^cmsweb' | awk '{print \"$host:\", \$0}'"
        echo "exit 0") |
        ssh cmsweb@$host bashs -l
     done
