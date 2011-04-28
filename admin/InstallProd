@@ -159,12 +159,6 @@ case $STAGE in
        echo "if [ -f /etc/init.d/httpd ]; then"
        echo "  sudo /sbin/service httpd stop"
        echo "fi"
-       echo "killall python" # TOFIX: there might exist more cmsweb cronjobs running
-                             # too (ProxyRenew, LogArchive, edg-mkgridmap and update-keys)
-       # Kills back-end services cronjobs
-       echo "ps f -A -o user:10,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,args \\"
-       echo "  --sort=uid,-ppid,pid | grep '^_' | awk '{print \$1, \$2}' |"
-       echo "  while read user pid; do sudo -H -u \$user bashs -l -c \"kill \$pid\"; done"
        echo "exit 0") |
        ssh cmsweb@$host bashs -l
     done
