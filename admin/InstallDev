@@ -2,7 +2,6 @@
 
 ### Usage: InstallDev -h
 ### Usage: InstallDev [-d DIR] -s image -v VER -p PKGS [-r A=B] [-a AUTH]
-### Usage: InstallDev [-d DIR] -s shutdown
 ### Usage: InstallDev [-d DIR] -s post[:HOST] -v VER -p PKGS
 ### Usage: InstallDev [-d DIR] -s status[:what]
 ### Usage: InstallDev [-d DIR] -s start[:what]
@@ -64,35 +63,6 @@ case $STAGE in
     sudo -H -u _sw $PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD $PKGS
     $PWD/cfg/admin/ProxySeed -t dev -d $PWD/$VER/auth/proxy
     $PWD/cfg/Deploy $REPO -t $VER -a -s post $PWD $PKGS
-    ;;
-
-  shutdown )
-    set -e
-    for host in $(hostname -s); do
-      (echo "exec 2>&1; set -x; hostname -f; cd $PWD"
-       echo "crontab -r"
-       echo "for x in /data/projects/*/config/manage; do"
-       echo "  [ -f \$x ] || continue"
-       echo "  u=_\$(echo \$x | cut -d/ -f4 | cut -d- -f1)"
-       echo "  sudo -H -u \$u bashs -lc \"set -x; \$x stop 'I did read documentation'\""
-       echo "done"
-       echo "for x in enabled/*; do"
-       echo "  [ -f \$x ] || continue"
-       echo "  app=\${x#*/}; case \$app in frontend) u=root ;; * ) u=_\$app ;; esac"
-       echo "  sudo -H -u \$u bashs -lc \"set -x; $PWD/current/config/\$app/manage stop 'I did read documentation'\""
-       echo "done"
-       echo "if [ -f /etc/init.d/httpd ]; then"
-       echo "  sudo /sbin/service httpd stop"
-       echo "fi"
-       echo "killall python" # TOFIX: there might exist more cmsweb cronjobs running
-                             # too (ProxyRenew, LogArchive, edg-mkgridmap and update-keys)
-       # Kills back-end services cronjobs
-       echo "ps f -A -o user:10,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,args \\"
-       echo "  --sort=uid,-ppid,pid | grep '^_' | awk '{print \$1, \$2}' |"
-       echo "  while read user pid; do sudo -H -u \$user bashs -l -c \"kill \$pid\"; done"
-       echo "exit 0") |
-       ssh $host bashs -l
-    done
     ;;
 
   post )
