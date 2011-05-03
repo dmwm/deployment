@@ -1,5 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_system_variants="frontend backend devvm"
+deploy_system_variants="frontend backend image devvm"
 
 # Add a local group if it doesn't already exist.
 add_local_group()
@@ -74,7 +74,7 @@ deploy_system_post()
   # FIXME: Check the cmsweb account can *not* write files anywhere on AFS, including cmsweb-owned directories.
   # FIXME: Check lemon-host-check has no warnings other than the machine being in maintenance mode.
   case $variant in
-    frontend | backend )
+    frontend | backend | image )
       [ $USER = cmsweb ]
       [ $HOME = /home/cmsweb ]
       cd $HOME
@@ -133,8 +133,11 @@ deploy_system_post()
       case $variant:$X in
         frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb.cern.ch" | \
         frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb-testbed.cern.ch" | \
-        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmswttest.cern.ch" | \
-         backend:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9][0-9]".cern.ch" )
+        frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb-dev.cern.ch" | \
+         backend:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9]".cern.ch" | \
+         backend:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9][0-9]".cern.ch" | \
+           image:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9]".cern.ch" | \
+           image:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9][0-9]".cern.ch" )
           ;;
         * )
           note "ERROR: cert subject invalid for $variant: $X"
@@ -161,11 +164,31 @@ deploy_system_post()
       cvs -d :pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW login
 
       # Set up SSH keys.
-      mkdir -p .ssh
-      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/ssh-keys-$variant .ssh/authorized_keys
-      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant .ssh/id_dsa
-      cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant.pub .ssh/id_dsa.pub
-      chmod -R go-rwx /home/cmsweb/.ssh
+      case $variant in
+        frontend | backend )
+          mkdir -p .ssh
+          cp -p /afs/cern.ch/user/c/cmsweb/private/admin/ssh-keys-$variant .ssh/authorized_keys
+          cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant .ssh/id_dsa
+          cp -p /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant.pub .ssh/id_dsa.pub
+          chmod -R go-rwx /home/cmsweb/.ssh
+          ;;
+
+        image )
+          sudo mkdir -p /root/.ssh
+          sudo chmod 700 /root/.ssh
+          sudo cp /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant /root/.ssh/id_dsa
+          sudo cp /afs/cern.ch/user/c/cmsweb/private/admin/id_dsa_$variant.pub /root/.ssh/id_dsa.pub
+          sudo chmod 600 /root/.ssh/id_dsa
+          sudo chmod 600 /root/.ssh/id_dsa.pub
+
+          note "IMPORTANT: run the following to update /root/.ssh/known_hosts"
+          note "   cfg/admin/ImageKey start"
+          note "   for h in vocms{5{0,3},65,10{5,6,7},127,13{2,3,4,5,6,8,9},140}{,.cern.ch}; do"
+          note "     sudo cfg/admin/ImageKey run ssh cmsweb@$h uptime"
+          note "   done"
+          note "   cfg/admin/ImageKey stop"
+          ;;
+      esac
 
       # Generate post-install logwatch report.
       export PATH=$PATH:/usr/sbin
