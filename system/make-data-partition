@@ -45,10 +45,10 @@ release_partition() {
   echo; echo "* deleting $1 on partition $2"
 
   # unmount the partition in case it's mounted right now
-  verbosely sudo umount $1
+  verbosely sudo /bin/umount $1
 
   # remove the partition reference from /etc/fstab
-  verbosely sudo perl -n -i -e 'm{\S+\s+'$1'\s+} || print' /etc/fstab
+  verbosely sudo /usr/bin/perl -n -i -e 'm{\S+\s+'$1'\s+} || print' /etc/fstab
 }
 
 # Delete all partitions on all disks which aren't currently mounted.
@@ -91,7 +91,7 @@ free_unused_partitions() {
     # want to mark those unused.
     unused=$(awk "/ $dev[0-9]+/ && \$3 > 1 { print \"/dev/\" \$NF }" /proc/partitions |
              while read part; do
-               if (mount; cat /proc/swaps) | grep -q "^$part "; then :; else
+               if (/bin/mount; cat /proc/swaps) | grep -q "^$part "; then :; else
                  echo -n " $part"
                fi
              done)
@@ -99,7 +99,7 @@ free_unused_partitions() {
     # Delete any unused partitions we found.
     if [ x"$unused" = x ]; then :; else
       echo "- $disk:$unused"
-      verbosely sudo parted -s $disk -- rm $(echo $unused | sed 's|/dev/[a-z]*||g')
+      verbosely sudo /sbin/parted -s $disk -- rm $(echo $unused | sed 's|/dev/[a-z]*||g')
     fi
   done
 }
@@ -129,7 +129,7 @@ allocate_data_partition() {
 
     # Find start/end/size of free space on this device.
     local start=0 end=0 size=0
-    eval $(sudo parted -s $disk -- unit mb print free 2>/dev/null |
+    eval $(sudo /sbin/parted -s $disk -- unit mb print free 2>/dev/null |
            grep 'Free Space' | tail -n1 | sed 's/MB//g; s/\.[0-9]*//g' |
            while read start end size rest; do
              echo "start=$start end=$end size=$size"
@@ -156,14 +156,14 @@ allocate_data_partition() {
     else
       # Create the partition.
       echo "- $disk $size MB free ($start -> $end)"
-      verbosely sudo parted -s $disk -- unit mb mkpart logical ${start} ${end}
+      verbosely sudo /sbin/parted -s $disk -- unit mb mkpart logical ${start} ${end}
 
       # Find the partition we just created. This is awkward, we don't
       # actually know the number, so make a guess. It should be the
       # only 'logical' partition with no filesystem type attribute,
       # or the attribute is 'xfs'.
-      local partno=$(sudo parted -s $disk -- unit mb print |
-        perl -n -e '/^\s*(\d+)\s+[\d.]+MB\s+[\d.]+MB\s+[\d.]+MB\s+logical(\s+xfs)?\s+$/ && print $1')
+      local partno=$(sudo /sbin/parted -s $disk -- unit mb print |
+        /usr/bin/perl -n -e '/^\s*(\d+)\s+[\d.]+MB\s+[\d.]+MB\s+[\d.]+MB\s+logical(\s+xfs)?\s+$/ && print $1')
       if [ x"$partno" = x ]; then
         echo "*** failed, cannot determine new partition" 1>&2
         exit 1
