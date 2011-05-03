@@ -80,7 +80,7 @@ deploy_system_post()
       cd $HOME
 
       # Make sure we have a valid /data partition first.
-      $project_config/make-data-partition
+      $project_config_src/make-data-partition
 
       # Verify system installation is up-to-date; should do nothing.
       # If we re-created /data above, this fills it correctly.
