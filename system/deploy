@@ -134,6 +134,7 @@ deploy_system_post()
         frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb.cern.ch" | \
         frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb-testbed.cern.ch" | \
         frontend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb-dev.cern.ch" | \
+         backend:"subject= /DC=ch/DC=cern/OU=computers/CN=cmsweb-dev.cern.ch" | \
          backend:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9]".cern.ch" | \
          backend:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9][0-9]".cern.ch" | \
            image:"subject= /DC=ch/DC=cern/OU=computers/CN=vocms"[0-9][0-9]".cern.ch" | \
