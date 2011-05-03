@@ -79,7 +79,11 @@ deploy_system_post()
       [ $HOME = /home/cmsweb ]
       cd $HOME
 
+      # Make sure we have a valid /data partition first.
+      $project_config/make-data-partition
+
       # Verify system installation is up-to-date; should do nothing.
+      # If we re-created /data above, this fills it correctly.
       sudo /usr/sbin/ccm-fetch
       sudo /usr/sbin/spma_wrapper.sh
       sudo /usr/sbin/ncm-ncd --configure --all || true # fails for useraccess (slsmon)

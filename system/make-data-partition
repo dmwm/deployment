@@ -1,0 +1,252 @@
+#!/bin/sh
+
+## Create /data partition on CMSWEB servers. This is done at post
+## install step because quattor cannot currently create XFS file
+## systems, and cannot create unused partitions either.
+##
+## This is somewhat insipired by the following scripts from
+## http://swrepsrv.cern.ch/swrep/x86_64_slc5/eosscripts-1.08-1.noarch.rpm:
+##   /usr/bin/eos-filesystem-setup.sh
+##   /usr/bin/eos-hwconfiguration-setup.sh
+##   /usr/bin/eos-server-datadisk-setup.sh
+##   /usr/bin/eos-udev.sh
+##
+## IMPORTANT: You are supposed to know what you do when running this
+## script. It will delete partitions and recreate them no questions
+## asked. It is meant to be CMSWEB server post-install script, not
+## something you run for the fun of it on other systems. Do not run
+## this on a system which has valuable data, on systems in production
+## use, or if you are not sure you want it to do something!
+
+set -e
+
+# Options for mkfs.xfs (FIXME: hwraid may need raid width options: -d su=256k,sw=6 -l su=256k)
+xfs_opts="-f -d agsize=16g -i size=1024 -n size=16384 -l version=2,lazy-count=1"
+
+# Options for mounting xfs partition (FIXME: 'barrier' for modern linux)
+xfs_mount="defaults,rw,noatime,nodiratime,swalloc,logbsize=256k,logbufs=8,inode64"
+
+# The partition where we will create /data (e.g. /dev/sda8).
+new_data_partition=
+
+# Execute something, showing what we execute first. The command must
+# exit without errors, i.e. zero exit code, or the script terminates.
+verbosely() {
+  echo ">>" ${1+"$@"}
+  ${1+"$@"}
+  [ $? = 0 ] || exit $?
+}
+
+# Release PARTITION on DEVICE. We no longer want this partition: it is
+# /data mounted incorrectly, such as ext3. This unmounts the partition
+# and removes references to it from /etc/fstab. The partition itself
+# is not deleted, that happens in free_unused_partitions.
+release_partition() {
+  echo; echo "* deleting $1 on partition $2"
+
+  # unmount the partition in case it's mounted right now
+  verbosely sudo umount $1
+
+  # remove the partition reference from /etc/fstab
+  verbosely sudo perl -n -i -e 'm{\S+\s+'$1'\s+} || print' /etc/fstab
+}
+
+# Delete all partitions on all disks which aren't currently mounted.
+# This is needed to release space after release_partition, or various
+# private experiments, or generally just recreate /data. The freed
+# space will be used in allocate_data_partition.
+#
+# NOTE: Removing partitions typically renumbers all following ones.
+# If the freed partitions are not at the end of the partition table,
+# it is possible /etc/fstab will become invalid. This script is not
+# meant to be general enough to handle that; it expects free disk
+# space is at the end.
+#
+# NOTE: This frees space on all available disks, because we don't
+# really know what *devices* we have (/dev/hda, /dev/sda, /dev/md0).
+# Quattor is expected to set up *single* large-volume device for our
+# servers, not several disks. So the purpose is to find the device
+# here - not to handle several disks.
+free_unused_partitions() {
+  echo; echo "* removing unused partitions"
+
+  # Scan partitions on all devices.
+  local disk dev part unused
+  for disk in /dev/{{h,s,xv}d[a-z],md[0-9]}; do
+    # Skip devices not present.
+    [ -e $disk ] || continue
+    dev=${disk#/dev/} unused=
+    case $disk in /dev/md* )
+      grep -q "^$dev " /proc/mdstat || continue ;;
+    esac
+
+    # Find partitions on this device which are not referenced in
+    # mounted filesystems or active swap devices. To list mounted
+    # filesystems use 'mount' not /proc/mounts, the former lists
+    # real partition for boot filesystem whereas the latter refers
+    # to it as 'rootfs'. Swaps are taken from /proc/swaps, they
+    # are not listed in 'mount' output.
+    #
+    # Note that logical partitions show up as size 0/1. We don't
+    # want to mark those unused.
+    unused=$(awk "/ $dev[0-9]+/ && \$3 > 1 { print \"/dev/\" \$NF }" /proc/partitions |
+             while read part; do
+               if (mount; cat /proc/swaps) | grep -q "^$part "; then :; else
+                 echo -n " $part"
+               fi
+             done)
+
+    # Delete any unused partitions we found.
+    if [ x"$unused" = x ]; then :; else
+      echo "- $disk:$unused"
+      verbosely sudo parted -s $disk -- rm $(echo $unused | sed 's|/dev/[a-z]*||g')
+    fi
+  done
+}
+
+# Allocate the space freed by free_unused_partitions as a single large
+# partition. The device address is stored into $new_data_partition.
+#
+# Picks the first device with at least 100 GB free space on it as the
+# host for the /data partition.
+#
+# See comments on free_unused_partitions() on device handling logic.
+# This not meant to handle complex partitions or disk layouts. Note
+# in particular this assumes 'msdos' (primary/extended/logical) disk
+# labelling, and that new partitions will be added as 'logical'.
+allocate_data_partition() {
+  echo; echo "* allocating unused partition space"
+
+  # Find a device with enough free space on it.
+  local disk dev part
+  for disk in /dev/{{h,s,xv}d[a-z],md[0-9]}; do
+    # Skip devices not present.
+    [ -e $disk ] || continue
+    dev=${disk#/dev/}
+    case $disk in /dev/md* )
+      grep -q "^$dev " /proc/mdstat || continue ;;
+    esac
+
+    # Find start/end/size of free space on this device.
+    local start=0 end=0 size=0
+    eval $(sudo parted -s $disk -- unit mb print free 2>/dev/null |
+           grep 'Free Space' | tail -n1 | sed 's/MB//g; s/\.[0-9]*//g' |
+           while read start end size rest; do
+             echo "start=$start end=$end size=$size"
+           done)
+
+    # If there was no free space at all, skip the device.
+    if [ x"$size" = x ]; then
+      continue
+
+    # If there isn't enough free space to make /data partition, skip.
+    elif [ $size -le 100000 ]; then
+      echo "- $disk free space $size MB < 100 GB, ignoring"
+      continue
+
+    # Found enough free space, make a partition and return - we don't
+    # want to go about allocating space on several devices. Set the
+    # partition path (e.g. /dev/sda8) to $new_data_partition.
+    #
+    # FIXME: Force rounding partition to megabyte boundary? For now
+    # assume a) RAID controller chops enough off disks so replacement
+    # disks will always work despite slight changes in sector counts,
+    # b) we either get don't get disks with 4kB sectors, or parted is
+    # smart enough to round correctly.
+    else
+      # Create the partition.
+      echo "- $disk $size MB free ($start -> $end)"
+      verbosely sudo parted -s $disk -- unit mb mkpart logical ${start} ${end}
+
+      # Find the partition we just created. This is awkward, we don't
+      # actually know the number, so make a guess. It should be the
+      # only 'logical' partition with no filesystem type attribute,
+      # or the attribute is 'xfs'.
+      local partno=$(sudo parted -s $disk -- unit mb print |
+        perl -n -e '/^\s*(\d+)\s+[\d.]+MB\s+[\d.]+MB\s+[\d.]+MB\s+logical(\s+xfs)?\s+$/ && print $1')
+      if [ x"$partno" = x ]; then
+        echo "*** failed, cannot determine new partition" 1>&2
+        exit 1
+      else
+        new_data_partition=$disk$partno
+        echo " -> $new_data_partition"
+        return
+      fi
+    fi
+  done
+
+  # Error: we failed to create a partition if we got this far.
+  echo "*** failed, no free space found on any disk" 1>&2
+  exit 1
+}
+
+# Actually create XFS /data partition on $new_data_partition.
+#
+# Creates the file system and adds appropriate /etc/fstab entry,
+# and actually mounts it in /data. Any existing /data contents are
+# first removed.
+create_data_filesystem() {
+  # Refuse to run if we don't have a partition or it's bogus.
+  [ x"$new_data_partition" = x ] && { echo "*** no partition to create" 1>&2; exit 1; }
+  [ -e $new_data_partition ] || { echo "$new_data_partition: no such device" 1>&2; exit 1; }
+
+  echo; echo "* creating /data xfs filesystem on $new_data_partition"
+
+  # Zero out first 100MB of the partition. (NB: if we were to work
+  # on full disks rather than partitions, then should zero out any
+  # existing partition table on the _full_ disk.)
+  verbosely sudo /bin/dd if=/dev/zero of=$new_data_partition bs=1M count=100; sync
+
+  # Create XFS file system with label '/data' and our special options.
+  verbosely sudo /sbin/mkfs.xfs -L /data $xfs_opts $new_data_partition
+
+  # Make /etc/fstab entry using our special mount options. Removes any
+  # existing /data mounts from /etc/fstab at this time. Note that
+  # release_partition may not have run if /data wasn't mounted, but
+  # it still had an entry in /etc/fstab.
+  verbosely sudo /bin/sh -c "(grep -v LABEL=/data /etc/fstab; printf '%-23s %-23s %-7s %s 1 2\n' LABEL=/data /data xfs $xfs_mount) > /etc/fstab.new"
+  verbosely sudo /bin/cp /etc/fstab /etc/fstab.saved.$(date +%Y%m%d%H%M%S)
+  verbosely sudo /bin/cp /etc/fstab.new /etc/fstab
+
+  # Zap any existing /data and create mount point; release_partition
+  # guarantees this is an actual directory, not a mount any more.
+  verbosely sudo /bin/rm -fr /data
+  verbosely sudo /bin/mkdir -p /data
+  verbosely sudo /bin/chown root:root /data
+  verbosely sudo /bin/chmod 0755 /data
+
+  # Actually mount /data now.
+  verbosely sudo /bin/mount /data
+}
+
+# Main program. Figure out if there is an existing XFS /data partition.
+# If so, leave it alone. Otherwise if /data is mounted, delete that
+# partition. Otherwise expect we create a new partition.
+target=${1-/data}
+have=false
+while read dev dir type rest; do
+  case $dir in $target )
+    have=true
+    case $type in
+      xfs )
+        echo "$target is xfs partition on $dev, leaving alone"
+        exit 0
+        ;;
+      * )
+        echo "$target is $type partition on $dev, removing"
+        release_partition $target $dev
+        ;;
+    esac
+    ;;
+  esac
+done < /proc/mounts
+
+$have || echo "/data is not a partitition, creating new one"
+
+# Now do the work.
+free_unused_partitions
+allocate_data_partition
+create_data_filesystem
+
+# We are done and all is fine.
+exit 0
