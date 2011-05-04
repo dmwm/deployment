@@ -48,11 +48,8 @@ deploy_reqmgr_sw()
 
 deploy_reqmgr_post()
 {
-  if [ -f $root/enabled/couchdb ]; then
-    enable
-  else
-    disable
-  fi
+  case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+
   case $variant in default )
     (mkcrontab; sysboot) | crontab -
     ;;
