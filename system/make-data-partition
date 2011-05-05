@@ -20,6 +20,9 @@
 
 set -e
 
+# Mount directory, default /data.
+target=${1-/data}
+
 # Options for mkfs.xfs (FIXME: hwraid may need raid width options: -d su=256k,sw=6 -l su=256k)
 xfs_opts="-f -d agsize=16g -i size=1024 -n size=16384 -l version=2,lazy-count=1"
 
@@ -80,6 +83,16 @@ free_unused_partitions() {
       grep -q "^$dev " /proc/mdstat || continue ;;
     esac
 
+    # Force partition table reload so /proc/partitions is up to date.
+    sudo /sbin/sfdisk --force --re-read $disk >/dev/null 2>&1 || true
+
+    # Check what partition table type device uses: gpt, msdos or none.
+    # If none/loop, the entire disk is free and we need to do nothing.
+    case $(sudo /sbin/parted -s $disk -- print || true) in
+      *"unrecognised disk label"* | *"Partition Table: loop"* )
+        continue ;;
+    esac
+
     # Find partitions on this device which are not referenced in
     # mounted filesystems or active swap devices. To list mounted
     # filesystems use 'mount' not /proc/mounts, the former lists
@@ -118,13 +131,29 @@ allocate_data_partition() {
   echo; echo "* allocating unused partition space"
 
   # Find a device with enough free space on it.
-  local disk dev part
+  local disk dev part ptable
   for disk in /dev/{{h,s,xv}d[a-z],md[0-9]}; do
     # Skip devices not present.
     [ -e $disk ] || continue
     dev=${disk#/dev/}
     case $disk in /dev/md* )
       grep -q "^$dev " /proc/mdstat || continue ;;
+    esac
+
+    # Check what partition table type device uses: gpt, msdos or none.
+    # If none/loop, use the entire disk as /data as it's free.
+    case $(sudo /sbin/parted -s $disk -- print || true) in
+      *"unrecognised disk label"* | *"Partition Table: loop"* )
+        echo "- $disk is entire disk free, using it"
+        new_data_partition=$disk
+        return ;;
+      *"Partition Table: gpt"* )
+        ptable=gpt ;;
+      *"Partition Table: msdos"* )
+        ptable=msdos ;;
+      * )
+        echo "*** $disk unrecognised partition table type, skipping"
+        continue ;;
     esac
 
     # Find start/end/size of free space on this device.
@@ -155,15 +184,29 @@ allocate_data_partition() {
     # smart enough to round correctly.
     else
       # Create the partition.
-      echo "- $disk $size MB free ($start -> $end)"
-      verbosely sudo /sbin/parted -s $disk -- unit mb mkpart logical ${start} ${end}
+      echo "- $disk $size MB free ($start -> $end), $ptable partitioning"
+      if [ X"$ptable" = Xmsdos ]; then
+        verbosely sudo /sbin/parted -s $disk -- unit mb mkpart logical ${start} ${end}
+      elif [ X"$ptable" = Xgpt ]; then
+        verbosely sudo /sbin/parted -s $disk -- unit mb mkpart $target ${start} ${end}
+      else
+        echo "*** $disk: oops unrecognised partition table '$ptable'"
+        exit 1
+      fi
 
       # Find the partition we just created. This is awkward, we don't
       # actually know the number, so make a guess. It should be the
       # only 'logical' partition with no filesystem type attribute,
-      # or the attribute is 'xfs'.
-      local partno=$(sudo /sbin/parted -s $disk -- unit mb print |
-        /usr/bin/perl -n -e '/^\s*(\d+)\s+[\d.]+MB\s+[\d.]+MB\s+[\d.]+MB\s+logical(\s+xfs)?\s+$/ && print $1')
+      # or the attribute is 'xfs' (msdos) or has label $target (gpt).
+      local partno
+      if [ $ptable = msdos ]; then
+        partno=$(sudo /sbin/parted -s $disk -- unit mb print |
+                 /usr/bin/perl -n -e '/^\s*(\d+)\s+[\d.]+MB\s+[\d.]+MB\s+[\d.]+MB\s+logical(\s+xfs)?\s+$/ && print $1')
+      elif [ $ptable = gpt ]; then
+        partno=$(sudo /sbin/parted -s $disk -- unit mb print |
+                 grep $target | awk '{ print $1 }')
+      fi
+
       if [ x"$partno" = x ]; then
         echo "*** failed, cannot determine new partition" 1>&2
         exit 1
@@ -190,39 +233,37 @@ create_data_filesystem() {
   [ x"$new_data_partition" = x ] && { echo "*** no partition to create" 1>&2; exit 1; }
   [ -e $new_data_partition ] || { echo "$new_data_partition: no such device" 1>&2; exit 1; }
 
-  echo; echo "* creating /data xfs filesystem on $new_data_partition"
+  echo; echo "* creating $target xfs filesystem on $new_data_partition"
 
-  # Zero out first 100MB of the partition. (NB: if we were to work
-  # on full disks rather than partitions, then should zero out any
-  # existing partition table on the _full_ disk.)
+  # Zero out first 100MB to wipe any existing partition table or
+  # file system labelling or structure.
   verbosely sudo /bin/dd if=/dev/zero of=$new_data_partition bs=1M count=100; sync
 
   # Create XFS file system with label '/data' and our special options.
-  verbosely sudo /sbin/mkfs.xfs -L /data $xfs_opts $new_data_partition
+  verbosely sudo /sbin/mkfs.xfs -L $target $xfs_opts $new_data_partition
 
   # Make /etc/fstab entry using our special mount options. Removes any
   # existing /data mounts from /etc/fstab at this time. Note that
   # release_partition may not have run if /data wasn't mounted, but
   # it still had an entry in /etc/fstab.
-  verbosely sudo /bin/sh -c "(grep -v LABEL=/data /etc/fstab; printf '%-23s %-23s %-7s %s 1 2\n' LABEL=/data /data xfs $xfs_mount) > /etc/fstab.new"
+  verbosely sudo /bin/sh -c "(grep -v LABEL=$target /etc/fstab; printf '%-23s %-23s %-7s %s 1 2\n' LABEL=$target $target xfs $xfs_mount) > /etc/fstab.new"
   verbosely sudo /bin/cp /etc/fstab /etc/fstab.saved.$(date +%Y%m%d%H%M%S)
   verbosely sudo /bin/cp /etc/fstab.new /etc/fstab
 
   # Zap any existing /data and create mount point; release_partition
   # guarantees this is an actual directory, not a mount any more.
-  verbosely sudo /bin/rm -fr /data
-  verbosely sudo /bin/mkdir -p /data
-  verbosely sudo /bin/chown root:root /data
-  verbosely sudo /bin/chmod 0755 /data
+  verbosely sudo /bin/rm -fr $target
+  verbosely sudo /bin/mkdir -p $target
+  verbosely sudo /bin/chown root:root $target
+  verbosely sudo /bin/chmod 0755 $target
 
   # Actually mount /data now.
-  verbosely sudo /bin/mount /data
+  verbosely sudo /bin/mount $target
 }
 
 # Main program. Figure out if there is an existing XFS /data partition.
 # If so, leave it alone. Otherwise if /data is mounted, delete that
 # partition. Otherwise expect we create a new partition.
-target=${1-/data}
 have=false
 while read dev dir type rest; do
   case $dir in $target )
@@ -241,7 +282,7 @@ while read dev dir type rest; do
   esac
 done < /proc/mounts
 
-$have || echo "/data is not a partitition, creating new one"
+$have || echo "$target is not a partitition, creating new one"
 
 # Now do the work.
 free_unused_partitions
