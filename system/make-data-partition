@@ -23,8 +23,11 @@ set -e
 # Mount directory, default /data.
 target=${1-/data}
 
-# Options for mkfs.xfs (FIXME: hwraid may need raid width options: -d su=256k,sw=6 -l su=256k)
-xfs_opts="-f -d agsize=16g -i size=1024 -n size=16384 -l version=2,lazy-count=1"
+# Basic options for mkfs.xfs. RAID controller detection amends these.
+xfs_dopts="agsize=16g"
+xfs_iopts="size=1024"
+xfs_nopts="size=16384"
+xfs_lopts="version=2,lazy-count=1"
 
 # Options for mounting xfs partition (FIXME: 'barrier' for modern linux)
 xfs_mount="defaults,rw,noatime,nodiratime,swalloc,logbsize=256k,logbufs=8,inode64"
@@ -35,8 +38,8 @@ new_data_partition=
 # Execute something, showing what we execute first. The command must
 # exit without errors, i.e. zero exit code, or the script terminates.
 verbosely() {
-  echo ">>" ${1+"$@"}
-  ${1+"$@"}
+  echo "   >>" ${1+"$@"}
+  ${1+"$@"} 2>&1 | sed 's/^/   /'
   [ $? = 0 ] || exit $?
 }
 
@@ -223,6 +226,35 @@ allocate_data_partition() {
   exit 1
 }
 
+# Detect RAID parameters for the selected partition for /data.
+detect_raid_config() {
+  local stripe=0 disks=0
+  case $(cat /proc/devices) in
+    *" megaraid"* )
+      disks=$(sudo /usr/sbin/megacli -EncInfo -aALL |
+              perl -ne '/Number of Physical Drives.*: (\d+)/ && print $1')
+
+      stripe=$(sudo /usr/sbin/megacli -LDInfo -L0 -a0 |
+               perl -ne '/Stripe Size: (\d+)kB/ && print $1')
+      ;;
+
+    *" twa"* )
+      disks=$(sudo /usr/sbin/tw_cli /c0 show all |
+              perl -ne '/Number of Drives = (\d+)/ && print $1')
+      stripe=$(sudo /usr/sbin/tw_cli /c0 show unitstatus | 
+               perl -ne '/^u\d+\s+RAID-6\s+\S+\s+\S+\s+\S+\s+(\d+)K/ || next; print $1; last')
+      ;;
+  esac
+
+  if [ $stripe != 0 -a $disks != 0 ]; then
+    local data_disks=$(expr $disks - 2)
+    echo; echo "* raid configuration stripe=${stripe}k disks=$disks/$data_disks"
+
+    xfs_dopts="$xfs_dopts,su=${stripe}k,sw=${data_disks}"
+    xfs_lopts="$xfs_lopts,su=${stripe}k"
+  fi
+}
+
 # Actually create XFS /data partition on $new_data_partition.
 #
 # Creates the file system and adds appropriate /etc/fstab entry,
@@ -233,6 +265,9 @@ create_data_filesystem() {
   [ x"$new_data_partition" = x ] && { echo "*** no partition to create" 1>&2; exit 1; }
   [ -e $new_data_partition ] || { echo "$new_data_partition: no such device" 1>&2; exit 1; }
 
+  # Get RAID parameters.
+  detect_raid_config
+
   echo; echo "* creating $target xfs filesystem on $new_data_partition"
 
   # Zero out first 100MB to wipe any existing partition table or
@@ -240,6 +275,7 @@ create_data_filesystem() {
   verbosely sudo /bin/dd if=/dev/zero of=$new_data_partition bs=1M count=100; sync
 
   # Create XFS file system with label '/data' and our special options.
+  xfs_opts="-f -d $xfs_dopts -i $xfs_iopts -n $xfs_nopts -l $xfs_lopts"
   verbosely sudo /sbin/mkfs.xfs -L $target $xfs_opts $new_data_partition
 
   # Make /etc/fstab entry using our special mount options. Removes any
