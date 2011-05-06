@@ -350,7 +350,7 @@ deploy_pkg()
     local authsrc=
     local authdest=
     case $authfile in
-      *:* ) authsrc=${authfile#*:} authdest=${authfile%*:} ;;
+      *:* ) authsrc=${authfile#*:} authdest=${authfile%:*} ;;
       *   ) authsrc=$authfile authdest=$(basename $authfile) ;;
     esac
 
