@@ -3,23 +3,27 @@ deploy_workqueue_variants="default offsite"
 
 deploy_workqueue_deps()
 {
-  deploy mysql
-  deploy wmcore-auth
   deploy couchdb $variant
-  case $variant in offsite ) deploy wmcore ;; esac
 }
 
 deploy_workqueue_prep()
 {
   case $variant in offsite ) extra=install ;; * ) extra= ;; esac
-  mkproj $extra
+  mkproj $extra cache
 }
 
 deploy_workqueue_sw()
 {
   case $variant in
     default )
-      ;;
+      deploy_pkg comp cms+workqueue 0.0.10
+      if [ -f $root/auth/wmcore/dmwm-service-cert.pem ]; then
+        deploy_pkg -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem
+        deploy_pkg -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem
+      else
+        :
+      fi
+    ;;
 
     offsite )
       deploy_pkg comp external+cherrypy 3.1.2-cmp6
@@ -39,9 +43,58 @@ deploy_workqueue_sw()
       # override the webtools couch config
       cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
       perl -p -i -e "s{deploy_project_root}{$root/projects}g" $couchdb_ini
-
-      # grab the WMAgent MySQL config
-      cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
       ;;
   esac
+}
+
+deploy_workqueue_post()
+{
+  case $variant in
+    offsite )
+      ;;
+    default)
+	  local workqueue_state=$root/state/workqueue
+	  # Tell couchdb to pick up workqueue on the next restart
+	  # and configure replication, compaction and backup, too
+	  local couchdb_config=$root/current/config/couchdb
+	  local couchdb_state=$root/state/couchdb
+	  local couch_url="http://localhost:5984"
+	  local hour=2
+	  local manage=$root/current/config/workqueue/workqueue_task
+
+	  find $workqueue_state/cache -maxdepth 1 -type d -name ".wmcore_cache_*" | sudo -u _workqueue xargs rm -rf
+
+	  for area in compaction stagingarea replication backup; do
+	    rm -f $couchdb_state/$area/workqueue
+	    touch $couchdb_state/$area/workqueue
+	  done
+
+      local couch_crons=""
+	  for db in workqueue workqueue_inbox; do
+	      local couch_string="${couch_url}/${db}"
+	      echo "couchapp push $root/current/apps/workqueue/lib/couchapps/WorkQueue $couch_string" >> $couchdb_state/stagingarea/workqueue
+	      local cmd="$couchdb_config/manage compact $db 'I did read documentation'"
+	      $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
+	      couch_crons="${couch_crons}12 $hour * * * $cmd\n"
+	      hour=$(( $hour + 1 ))
+	  done
+
+	  # Setup workqueue cronjobs
+	  local cmd="$manage reqmgr_sync"
+	  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
+	  local req_sync="5,25,45 * * * * $cmd" #>/dev/null # To turn off cron mails
+
+	  local cmd="$manage location_refresh"
+	  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
+	  local locations="30 * * * * $cmd" #>/dev/null
+
+	  local cmd="$manage housekeep"
+	  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
+	  local housekeep="15,35,55 * * * * $cmd" #>/dev/null
+
+	  (mkcrontab; echo -ne "${couch_crons}"; echo "${req_sync}"; echo "${locations}"; echo "${housekeep}") | crontab -
+
+	  ;;
+  esac
+
 }

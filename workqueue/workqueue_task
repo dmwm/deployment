@@ -1,0 +1,90 @@
+#!/bin/sh
+
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help               show this help
+##H   version            get current version of the service
+##H   location_refresh   refresh location info for input data
+##H   reqmgr_sync        sync with RequsetManager (get requests & report back)
+##H   housekeep          perform internal housekeeping actions
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/GlobalWorkQueue
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+CFGFILE=$CFGDIR/GlobalWorkQueueConfig.py
+AUTHDIR=$TOP/current/auth/workqueue
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+export WORKQUEUE_ROOT
+export WMAGENT_CONFIG=${CFGFILE}
+export WQ_CLI="${WORKQUEUE_ROOT}/bin/wmagent-workqueue"
+logcmd="rotatelogs $LOGDIR/workqueue-%Y%m%d.log 86400 2>&1"
+
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# check for a service certificate to use
+add_cert()
+{
+  if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
+    export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
+    export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
+  fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo ${WORKQUEUE_VERSION:-unknown}
+    ;;
+
+  location_refresh )
+    # PHEDEX cant handle proxy certs yet...
+    add_cert
+    ${WQ_CLI} --locations 2>&1 | $logcmd
+    ;;
+
+  reqmgr_sync )
+    add_cert
+    ${WQ_CLI} --reqmgr 2>&1 | $logcmd
+    ;;
+
+  housekeep )
+    add_cert
+    ${WQ_CLI} --clean 2>&1 | $logcmd
+    ;;
+
+  interactive )
+    add_cert
+    ${WQ_CLI} -i
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
