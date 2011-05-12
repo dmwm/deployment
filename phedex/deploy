@@ -73,7 +73,7 @@ deploy_phedex_post()
   setgroup ug+rw,o-w _phedex $PWD/var
 
   (mkcrontab; sysboot
-   cmd="$project_config/trim-cache $root/current $PWD/cache 1000M"
+   cmd="$project_config/trim-cache $PWD/cache/phedex-datasvc 1G"
    $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
    [ ! -f $root/enabled/$project ] || echo "0 * * * * $cmd") | crontab -
 

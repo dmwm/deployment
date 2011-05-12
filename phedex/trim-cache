@@ -1,4 +1,232 @@
-#!/bin/sh
+#!/usr/bin/python
 
-. $1/apps/PHEDEX-web/etc/profile.d/init.sh
-exec htcacheclean -n -t -p $2 -l $3
+# Custom mod_disk_cache trim tool. Call this as:
+#   trim-cache directory size
+#
+# For example to trim /data/state/phedex/cache to 1GB total data size
+# measured in actual file bytes, not in disk blocks allocated:
+#   trim-cache /data/state/phedex/cache 1G
+#
+# This differs from apache's htcacheclean in a couple of significant
+# ways which make it in practice much better in practice in production
+# compared to htcacheclean. The following practical observations are
+# the basis for these differences.
+#
+# * At the time of writing this utility, 1GB hourly cleaned up PhEDEx
+#   datasvc cache typically has ~40k objects in it. At each cleanup
+#   90-95% of these are expired: ~65% of responses have expire time of
+#   300s, ~25% expire time 900s, the rest more. While the distribution
+#   will no doubt vary over time, considerable quantity of expired
+#   data will in practice always exist in the cache. The expired
+#   contents will never be reused because of what datasvc is, future
+#   calls will just generate new content..
+#
+# * 'Vary' support adds to the depth of the directory structure. We do
+#   need the vary support for 'Accept-Encoding' handling for 99% of
+#   the responses. In practice less than one per mille of responses
+#   have more than one variation actually stored in the cache. So far
+#   these have invariably been different spellings of the compression
+#   arguments for 'Accept-Encoding' from different browsers, the
+#   responses stored are always the same. This may change in future.
+#   At any rate, this argues for keeping flatter directory structure.
+#   Trimming away expired objects helps prevent smaller directory tree
+#   from becoming excessively full.
+#
+# * The apache 'htcacheclean' can be very slow to execute, it can take
+#   over an hour to clean up 1GB cache.
+#
+# * The apache 'htcacheclean' attempts directly removal blindly,
+#   simply ignoring any error code from the operation. Technically
+#   this is fine but it generates an awfully large amount of audit
+#   logging noise.
+#
+# Hence the main differences here to htcacheclean are that this script
+# aggressively cleans all expired contents from the cache, only removes
+# directories which are non-empty, and in general runs much faster. It
+# is otherwises coded to be as faithful and similar to apache cleaner
+# as possible; any other deviations are likely to be bugs.
+
+import sys, os
+from time import time
+from struct import unpack
+
+# Allowed suffixes for command line size specification.
+SIZES = (("T", 1024**4), ("G", 1024**3), ("M", 1024**2), ("k", 1024), ("", 1))
+
+# Apache mod_disk_cache on-disk file format version identifiers.
+VARY_FORMAT = 3
+DISK_FORMAT = 4
+
+# File type classification for files found in the cache. Typically
+# each base file should have at least HEADER and DATA associated to
+# it. The TEMP are likely temporary files created in the cache during
+# normal cache operation. They are removed if they are older than a
+# reasonable time window around current time.
+HEADER = 1
+DATA = 2
+TEMP = 4
+
+# Information we remember about objects found in the cache tree.
+class CacheObject:
+  type = 0
+  remove = False
+  dsize = 0
+  hsize = 0
+  dtime = 0
+  htime = 0
+  expires = None
+  response = None
+
+  def __repr__(self):
+    return ("{ type: %d, remove: %s,"
+            " dsize: %d, hsize: %d,"
+            " dtime: %d, htime: %d,"
+            " expires: %s, response: %s }") % \
+           (self.type, self.remove,
+            self.dsize, self.hsize,
+            self.dtime, self.htime,
+            self.expires, self.response)
+
+# Safely attempt to stat a file, trying at least three times before
+# giving up, which can happen if apache is modifying the directory
+# tree at the same time. Returns None to indicate the file should be
+# ignored if all attempts fail, otherwise returns the object returned
+# by os.stat().
+def stat_file(path):
+  for i in xrange(1, 3):
+    try: return os.stat(path)
+    except: pass
+  return None
+
+# Remove an entry in the cache. Removes both header and data file.
+def delete_entry(type, base_path):
+  if type & TEMP:
+    try: os.remove(base_path)
+    except: pass
+  if type & HEADER:
+    try: os.remove(base_path + ".header")
+    except: pass
+  if type & DATA:
+    try: os.remove(base_path + ".data")
+    except: pass
+
+# The main program.
+if __name__ == "__main__":
+  # Get command line arguments
+  _, dir, size_limit = sys.argv
+  now = time()
+
+  # Convert size argument to a number.
+  for unit, multiplier in SIZES:
+    if size_limit.endswith(unit):
+      size_limit = (len(unit) and size_limit[:-1]) or size_limit
+      size_limit = float(size_limit) * multiplier
+      break
+
+  # Walk the cache to collect header/data files.
+  all_dirs = []
+  cache = {}
+  for path, dirs, files in os.walk(dir, topdown = False):
+    all_dirs.append(path)
+    for fname in files:
+      base, ext = os.path.splitext(fname)
+      base_path = os.path.join(path, base)
+      full_path = os.path.join(path, fname)
+      s = stat_file(full_path)
+      if not s: continue
+
+      if base_path not in cache:
+	cache[base_path] = o = CacheObject()
+      else:
+        o = cache[base_path]
+
+      if not ext:
+        if base.startswith("aptmp"):
+          o.type = TEMP
+	  o.dsize = s.st_size
+          o.dtime = s.st_mtime
+      elif ext == ".header":
+        o.type = o.type | HEADER
+        o.hsize = s.st_size
+        o.htime = s.st_mtime
+      elif ext == ".data":
+        o.type = o.type | DATA
+        o.dsize = s.st_size
+        o.dtime = s.st_mtime
+
+  # Read expire dates from header files, decide what must be removed.
+  for base_path, o in cache.iteritems():
+    if o.type == (HEADER|DATA):
+      try:
+        hfile = file(base_path + ".header", "r")
+        fmt, = unpack("=i", hfile.read(4))
+        if fmt == DISK_FORMAT:
+          _, _, _, _, expires, _, response = unpack("=iqqqqqq", hfile.read(52))
+          o.expires = expires * 1e-6
+	  o.response = response * 1e-6
+	  continue
+        elif fmt == VARY_FORMAT:
+	  # URL added .header.vary later, nuke orphan .data
+	  # Maybe delete the header itself, see below.
+          delete_entry(DATA, base_path)
+        hfile.close()
+      except:
+        pass
+
+      # Header read failure likely a race with apache, mark for remove if outside window.
+      o.remove = (o.htime < now - 3600 or o.htime > now + 3600)
+
+    elif o.type == HEADER:
+      # Stray header, mark for remove if outside window, likely a race with apache.
+      try:
+        hfile = file(base_path + ".header", "r")
+        fmt, = unpack("=i", hfile.read(4))
+        if fmt == VARY_FORMAT:
+          expires, = unpack("=q", hfile.read(8))
+          o.expires = expires * 1e-6
+	  continue
+        hfile.close()
+      except:
+        pass
+
+      o.remove = (o.htime < now - 3600 or o.htime > now + 3600)
+
+    elif o.type == DATA or o.type == TEMP:
+      # Mark for remove if outside window, stray data likely a race with apache.
+      o.remove = (o.dtime < now - 3600 or o.dtime > now + 3600)
+
+  # Compute total cache size.
+  total_size = 0
+  for base_path, o in cache.iteritems():
+    total_size += o.hsize + o.dsize
+
+  # Mark expired files for deletion. Mark anaything in fugure for deletion.
+  # Delete everything we've decided to delete for sure so far.
+  for base_path, o in cache.iteritems():
+    if o.expires and o.expires < now:
+      o.remove = True
+
+    if o.response > now or o.htime > now or o.dtime > now:
+      o.remove = True
+
+    if o.remove:
+      delete_entry(o.type, base_path)
+      total_size -= o.hsize + o.dsize
+      o.type = -o.type
+
+  # Shrink remaining cache until it's below size_limit in size.
+  cache_by_age = sorted([(a, b) for a, b in cache.iteritems() if not b.remove],
+                        key = lambda x: x[1].dtime or x[1].htime)
+  for base_path, o in cache_by_age:
+    if total_size < size_limit: break
+    if o.type <= 0: continue
+    delete_entry(o.type, base_path)
+    total_size -= o.hsize + o.dsize
+
+  # Prune empty directories.
+  for path in all_dirs:
+    try:
+      if not os.listdir(path):
+        os.rmdir(path)
+    except:
+      pass
