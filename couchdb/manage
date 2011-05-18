@@ -82,7 +82,6 @@ clean_views()
   [ -n "$database" ] ||
     { echo "You must specify the database you wish to clean the views "; exit 1; }
 
-  echo "Cleaning views for $database"
   curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_view_cleanup | \
        grep -q '{"ok":true}' ||
     { echo "An error occured while cleaning the views. Please look in the CouchDB logs."; exit 3; }
@@ -123,7 +122,6 @@ compact()
   curl -s localhost:5984/$database | grep -q '"compact_running":true' &&
     { echo "$database is already compacting"; exit 5; }
 
-  echo "Compacting database $database"
   curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_compact | \
         grep -q '{"ok":true}' ||
     { echo "An error occured triggering compaction. Please look in the CouchDB logs."; exit 7; }
