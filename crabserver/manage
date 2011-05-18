@@ -1,0 +1,181 @@
+#!/bin/bash
+
+#
+# Global variables etc
+#
+THIS_SCRIPT=$(readlink -f $0)
+PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
+ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
+
+INSTALL_CS="$ROOT_DIR/install/crabserver"
+
+CONFIG_CS="$ROOT_DIR/config/crabserver"
+USING_CS=0
+
+CS_INIT_DONE=0
+
+REQMGR_HOSTNAME=
+REQMGR_PORT=8687
+
+GLOBAL_WORKQUEUE_HOSTNAME=
+GLOBAL_WORKQUEUE_PORT=9996
+
+LOCAL_WORKQUEUE_PORT=9997
+
+CS_HOSTNAME=
+CS_PORT=8888
+
+MYSQL_DATABASE_RM=reqmgr
+INSTALL_MYSQL="$ROOT_DIR/install/mysql"
+
+
+#
+# Init checks
+#
+if [ -e $INSTALL_CS/.using ]; then USING_CS=1; else USING_CS=0; fi;
+
+# Flags to show the tools have been initialised
+if [ -e $INSTALL_CS/.init ]; then CS_INIT_DONE=1; else CS_INIT_DONE=0; fi;
+
+#callbacks to activate or show initialisation has been done
+activate_crabserver(){
+    touch $INSTALL_CS/.using
+    cp $ROOT_DIR/apps/wmcore/etc/CrabServerConfig.py $CONFIG_CS/config-template.py
+    $PROJ_DIR/wmagent/manage activate-agent  
+    $PROJ_DIR/wmagent/manage activate-reqmgr  
+    $PROJ_DIR/wmagent/manage activate-workqueue  
+}
+
+inited_crabserver(){
+    touch $INSTALL_CS/.init
+}
+
+#
+# Environment
+#
+
+. $ROOT_DIR/apps/crab-server3/etc/profile.d/init.sh
+. $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
+. $ROOT_DIR/apps/py2-cheetah/etc/profile.d/init.sh
+. $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
+
+export CRABSERVER_ROOT=$ROOT_DIR/apps/crab-server3
+
+load_secrets_file(){
+    if [ "x$WMAGENT_SECRETS_LOCATION" == "x" ]; then
+        WMAGENT_SECRETS_LOCATION=$HOME/WMAgent.secrets;
+    fi
+    if [ ! -e $WMAGENT_SECRETS_LOCATION ]; then
+        echo "Password file: $WMAGENT_SECRETS_LOCATION does not exist"
+        echo "Either set WMAGENT_SECRETS_LOCATION to a valid file or check that $HOME/WMAgent.secrets exists"
+        exit 1;
+    fi
+
+    local MATCH_MYSQL_USER=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_USER | sed s/MYSQL_USER=//`
+    local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_PASS | sed s/MYSQL_PASS=//`
+    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_CS_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep CS_HOSTNAME | sed s/CS_HOSTNAME=//`
+    local MATCH_CS_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep CS_PORT | sed s/CS_PORT=//`
+
+    if [ "x$MATCH_MYSQL_USER" == "x" ]; then
+        MYSQL_USER=wmagentmysql;
+    else
+        MYSQL_USER=$MATCH_MYSQL_USER;
+    fi
+    if [ "x$MATCH_MYSQL_PASS" == "x" ]; then
+        echo "Secrets file doesnt contain MYSQL_PASS";
+        exit 1
+    else
+        MYSQL_PASS=$MATCH_MYSQL_PASS;
+    fi
+    if [ "x$MATCH_COUCH_USER" == "x" ]; then
+        COUCH_USER=wmagentcouch;
+    else
+        COUCH_USER=$MATCH_COUCH_USER;
+    fi
+    if [ "x$MATCH_COUCH_PASS" == "x" ]; then
+        echo "Secrets file doesnt contain COUCH_PASS";
+        exit 1
+    else
+        COUCH_PASS=$MATCH_COUCH_PASS;
+    fi
+    if [ ! "x$MATCH_COUCH_PORT" == "x" ]; then
+        COUCH_PORT=$MATCH_COUCH_PORT;
+    fi
+    if [ ! "x$MATCH_COUCH_HOST" == "x" ]; then
+        COUCH_HOST=$MATCH_COUCH_HOST;
+    fi
+    if [ ! "x$MATCH_CS_HOSTNAME" == "x" ]; then
+        CS_HOSTNAME=$MATCH_CS_HOSTNAME;
+    fi
+    if [ ! "x$MATCH_CS_PORT" == "x" ]; then
+        CS_PORT=$MATCH_CS_PORT;
+    fi
+}
+
+init_crabserver(){
+    load_secrets_file;
+
+    wmagent-mod-config --input=$CONFIG_CS/config-template.py \
+                       --output=$CONFIG_CS/config.py \
+                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
+                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --working_dir=$INSTALL_CS  \
+                       --cs_hostname=$CS_HOSTNAME \
+                       --cs_port=$CS_PORT 
+    inited_crabserver;
+}
+
+status(){ 
+    wmcoreD --status --config=$CONFIG_CS/config.py
+    $PROJ_DIR/wmagent/manage status
+}
+
+start_services(){
+    $PROJ_DIR/wmagent/manage start-services
+}
+
+start_crabserver(){
+    $PROJ_DIR/wmagent/manage start-agent      
+    init_crabserver;
+    wmcoreD --start --config=$CONFIG_CS/config.py
+}
+
+stop_crabserver(){
+    wmcoreD --shutdown --config=$CONFIG_CS/config.py;
+
+    $PROJ_DIR/wmagent/manage stop-agent
+    $PROJ_DIR/wmagent/manage stop-services
+}
+
+help(){
+    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
+}
+
+
+
+#######################################################
+# Main
+#######################################################
+
+case $1 in
+  status)
+    status;;
+  activate-crabserver)
+    activate_crabserver;;
+  start-services)
+    start_services;;
+  start-crabserver)
+    start_crabserver;;
+  stop-crabserver)
+    stop_crabserver;;
+  help)
+    help ;;
+  version)
+    echo "Management script for CRABServer. No idea what version, at least 2 though" ;;
+  * )
+    $PROJ_DIR/wmagent/manage $1;;
+esac

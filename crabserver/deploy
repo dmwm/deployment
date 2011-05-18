@@ -1,0 +1,22 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_crabserver_deps()
+{
+  deploy wmagent
+}
+
+deploy_crabserver_prep()
+{
+  mkproj crabserver
+}
+
+deploy_crabserver_sw()
+{
+  SERVER_VERSION="test_tag1-comp"
+  # TODO make the RPM's and check this
+  deploy_pkg comp.pre cms+crab-server3 $SERVER_VERSION
+
+  mkdir -p $root/current/install/crabserver
+
+  mkdir -p $root/current/config/crabserver
+
+}
