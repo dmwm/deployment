@@ -1,5 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_frontend_variants="default prod preprod"
+deploy_frontend_variants="default prod preprod dev"
 deploy_frontend_deps()
 {
   deploy wmcore-auth
@@ -27,6 +27,9 @@ deploy_frontend_sw()
     preprod )
       opts="" name="-n cmsweb-testbed.cern.ch"
       backends=backends-preprod.txt ;;
+    dev )
+      opts="-DTEST" name="-n cmsweb-dev.cern.ch"
+      backends=backends-dev.txt ;;
     * )
       opts="-DTEST" name=""
       backends=backends-dev.txt ;;

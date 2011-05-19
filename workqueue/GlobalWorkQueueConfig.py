@@ -28,6 +28,10 @@ elif re.match(r"^vocms(?:51|13[23])\.cern\.ch$", HOST):
   HOST = "cmsweb-testbed.cern.ch"
   REQMGR = "https://cmsweb-testbed.cern.ch/reqmgr/reqMgr"
   WEBURL = "https://cmsweb-testbed.cern.ch/workqueue"
+elif re.match(r"^vocms127\.cern\.ch$", HOST):
+  HOST = "cmsweb-dev.cern.ch"
+  REQMGR = "https://cmsweb-dev.cern.ch/reqmgr/reqMgr"
+  WEBURL = "https://cmsweb-dev.cern.ch/workqueue"
 
 root = __file__.rsplit('/', 4)[0]
 cache_dir = os.path.join(root, 'state', 'workqueue', 'cache')

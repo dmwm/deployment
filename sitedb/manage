@@ -38,6 +38,8 @@ case $(hostname -s | tr '[:upper:]' '[:lower:]') in
     NODE=https://cmsweb.cern.ch ;;
   vocms51 | vocms132 | vocms133 )
     NODE=https://cmsweb-testbed.cern.ch ;;
+  vocms127 )
+    NODE=https://cmsweb-dev.cern.ch ;;
   * )
     NODE=https://$(hostname -f) ;;
 esac

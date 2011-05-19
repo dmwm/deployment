@@ -1,5 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_sitedb_variants="default prod preprod"
+deploy_sitedb_variants="default prod preprod dev"
 deploy_sitedb_deps()
 {
   deploy backend
@@ -61,6 +61,8 @@ deploy_sitedb_auth()
 	  echo "basepath = https://cmsweb.cern.ch/sitedb" ;;
         preprod )
 	  echo "basepath = https://cmsweb-testbed.cern.ch/sitedb" ;;
+        dev )
+          echo "basepath = https://cmsweb-dev.cern.ch/sitedb" ;;
         * )
           echo "basepath = https://$(hostname -f)/sitedb" ;;
       esac

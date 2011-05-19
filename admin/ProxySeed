@@ -51,6 +51,6 @@ case $type in
     myproxy-init $pxparam -R "*/CN=$fhost" -l devvm_${shost}_$me ;;
 
   prod )
-    myproxy-init $pxparam -R "*/CN=vocms(10[4-9]|116|5[013]|65|13[2345]).cern.ch" \
+    myproxy-init $pxparam -R "*/CN=(cmsweb-dev|vocms(10[4-9]|116|5[013]|65|127|13[2345])).cern.ch" \
       -l cmsweb_backends_$me ;;
 esac
