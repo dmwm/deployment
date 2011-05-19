@@ -96,7 +96,10 @@ deploy_workqueue_post()
       local housekeep="15-55/20 * * * * $cmd"
 
       (mkcrontab
-       echo -ne "${couch_crons}"
+       case $host in
+         vocms10[67] | vocms50 | vocms132 ) ;;
+         * ) echo -ne "${couch_crons}" ;;
+       esac
        echo "${req_sync}"
        echo "${locations}"
        echo "${housekeep}") | crontab -
