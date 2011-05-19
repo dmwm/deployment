@@ -63,8 +63,7 @@ deploy_workqueue_post()
       local couch_url="http://localhost:5984"
       local hour=2
 
-      find $workqueue_state/cache -maxdepth 1 -type d -name ".wmcore_cache_*" |
-        sudo -u _workqueue xargs rm -rf
+      sudo -H -u _workqueue bashs -lc "find $workqueue_state/cache -maxdepth 1 -type d -name \".wmcore_cache_*\" | xargs rm -rf"
 
       for area in compaction stagingarea replication backup; do
         rm -f $couchdb_state/$area/workqueue
