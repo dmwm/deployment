@@ -87,7 +87,7 @@ free_unused_partitions() {
     esac
 
     # Force partition table reload so /proc/partitions is up to date.
-    sudo /sbin/sfdisk --force --re-read $disk >/dev/null 2>&1 || true
+    sudo /sbin/blockdev --rereadpt $disk >/dev/null 2>&1 || true
 
     # Check what partition table type device uses: gpt, msdos or none.
     # If none/loop, the entire disk is free and we need to do nothing.
@@ -232,26 +232,27 @@ detect_raid_config() {
   case $(cat /proc/devices) in
     *" megaraid"* )
       disks=$(sudo /usr/sbin/megacli -EncInfo -aALL |
-              perl -ne '/Number of Physical Drives.*: (\d+)/ && print $1')
+              perl -ne '$v = $1 if /Number of Physical Drives.*: (\d+)/; END { print $v }')
 
-      stripe=$(sudo /usr/sbin/megacli -LDInfo -L0 -a0 |
-               perl -ne '/Stripe Size: (\d+)kB/ && print $1')
+      stripe=$(sudo /usr/sbin/megacli -LDInfo -Lall -aALL |
+               perl -ne '$v = int($1) if /Stripe Size: (\d+)kB/ && (! $v || int($1) > $v); END { print $v }')
       ;;
 
     *" twa"* )
       disks=$(sudo /usr/sbin/tw_cli /c0 show all |
-              perl -ne '/Number of Drives = (\d+)/ && print $1')
+              perl -ne '$v = $1 if /Number of Drives = (\d+)/; END { print $v }')
       stripe=$(sudo /usr/sbin/tw_cli /c0 show unitstatus | 
-               perl -ne '/^u\d+\s+RAID-6\s+\S+\s+\S+\s+\S+\s+(\d+)K/ || next; print $1; last')
+               perl -ne '$v = int($1) if /^u\d+\s+RAID-6\s+\S+\s+\S+\s+\S+\s+(\d+)K/ && (! $v || (int$1) > $v); END { print $v }')
       ;;
   esac
 
   if [ $stripe != 0 -a $disks != 0 ]; then
-    local data_disks=$(expr $disks - 2)
-    echo; echo "* raid configuration stripe=${stripe}k disks=$disks/$data_disks"
+    local logstripe=$stripe data_disks=$(expr $disks - 2)
+    [ $logstripe -le 256 ] || logstripe=256
+    echo; echo "* raid configuration stripe=${stripe}k logstripe=${logstripe}k disks=$disks/$data_disks"
 
     xfs_dopts="$xfs_dopts,su=${stripe}k,sw=${data_disks}"
-    xfs_lopts="$xfs_lopts,su=${stripe}k"
+    xfs_lopts="$xfs_lopts,su=${logstripe}k"
   fi
 }
 
