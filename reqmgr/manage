@@ -26,6 +26,7 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 CFGFILE=$CFGDIR/ReqMgrConfig.py
+AUTHDIR=$TOP/current/auth/reqmgr
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
@@ -35,6 +36,10 @@ COLOR_NORMAL="\\033[0;39m"
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export YUI_ROOT
 export WMCORE_ROOT=$REQMGR_ROOT/lib/python*/site-packages
+if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
+  export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
+  export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
+fi
 
 # Start service conditionally on crond restart.
 sysboot()
@@ -86,6 +91,12 @@ check()
   fi
 }
 
+# make sure the CMSSW_VERSIONS are up to date
+updateversions()
+{
+  requestDbAdmin add -c $CFGFILE -v all
+}
+
 # Main routine, perform action requested on command line.
 case ${1:-status} in
   sysboot )
@@ -110,6 +121,11 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  updateversions )
+    check "$2"
+    updateversions
     ;;
 
   help )

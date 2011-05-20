@@ -1,11 +1,23 @@
+import socket
+import re
 import WMCore.HTTPFrontEnd.RequestManager.ReqMgrConfiguration as ReqMgrConfig
 __all__ = []
 from WMCore.WMInit import getWMBASE
 import os.path
 INSTALL = getWMBASE()
 
+HOST = socket.getfqdn().lower()
+COUCH = "https://%s/couchdb" % HOST
+
+if re.match(r"^vocms(?:10[67]|5[03])\.cern\.ch$", HOST):
+  COUCH = "https://cmsweb.cern.ch/couchdb"
+elif re.match(r"^vocms(?:51|13[23])\.cern\.ch$", HOST):
+  COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
+elif re.match(r"^vocms127\.cern\.ch$", HOST):
+  COUCH = "https://cmsweb-dev.cern.ch/couchdb"
+
 config = ReqMgrConfig.reqMgrConfig(installation=INSTALL,
-  couchurl = 'http://localhost:5984')
+  couchurl = COUCH)
 
 config.webapp_("reqmgr")
 config.reqmgr.templates = os.path.join(INSTALL, '../../templates/WMCore/WebTools/RequestManager')
@@ -14,6 +26,7 @@ config.reqmgr.views.active.RequestOverview.templates = TEMPLATES
 config.reqmgr.views.active.RequestOverview.javascript = os.path.join(INSTALL, '../../javascript')
 config.reqmgr.views.active.RequestOverview.html  = os.path.join(INSTALL, '../../html')
 config.reqmgr.views.active.reqMgr.templates = TEMPLATES
+config.reqmgr.security_roles.extend(['facops', 'FacOps'])
 
 config.component_('SecurityModule')
 config.SecurityModule.key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]

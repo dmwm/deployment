@@ -19,7 +19,15 @@ deploy_reqmgr_sw()
 {
   case $variant in
     default )
-      deploy_pkg -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr 0.7.5 ;;
+      deploy_pkg \
+        -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
+        -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+        -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr 0.7.5
+
+      if grep -rq "replace me" $project_auth; then
+        note "WARNING: replace certificates in $project_auth with real ones"
+      else :; fi
+      ;;
 
     offsite )
       deploy_pkg comp external+cherrypy 3.1.2-cmp6
@@ -48,15 +56,58 @@ deploy_reqmgr_sw()
 
 deploy_reqmgr_post()
 {
-  case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+  enable
 
-  case $variant in default )
-    (mkcrontab; sysboot) | crontab -
-    ;;
+  case $variant in
+    offsite )
+      ;;
+    default )
+      # Tell couchdb to pick up reqmgr on the next restart
+      # and configure replication, compaction and backup, too
+      local couchdb_config=$root/current/config/couchdb
+      local couchdb_state=$root/state/couchdb
+      local hour=0
+
+      for area in compaction stagingarea replication backup; do
+        rm -f $couchdb_state/$area/reqmgr
+        touch $couchdb_state/$area/reqmgr
+      done
+
+      local couch_crons=""
+      for db in reqmgr_config_cache reqmgr_spec_cache; do
+        echo "touch $couchdb_state/database/$db.couch" >> $couchdb_state/stagingarea/reqmgr
+        local cmd="$couchdb_config/manage compact $db 'I did read documentation'"
+        $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
+        couch_crons="${couch_crons}1 $hour * * * $cmd\n"
+        hour=$(( $hour + 1 ))
+      done
+
+      # Setup ReqMgr cronjobs
+      local cmd="$project_config/manage updateversions 'I did read documentation'"
+      $nogroups || cmd="sudo -H -u _reqmgr bashs -l -c \"${cmd}\""
+      local reqmgr_crons="58 4 * * * $cmd"
+
+      (mkcrontab
+       sysboot
+       # Enable couch crons only where couchdb is enabled
+       case $host in
+         vocms10[67] | vocms50 | vocms132 ) ;;
+         * ) echo -ne "${couch_crons}" ;;
+       esac
+       echo "${reqmgr_crons}") | crontab -
+
+      ;;
   esac
 }
 
 deploy_reqmgr_auth()
 {
-  echo 'connectUrl = "oracle://FOO:BAR@ZOINKS"'
+  case $1 in
+    */*-cert.pem )
+      echo "replace me with your dmwm service certificate" ;;
+    */*-key.pem )
+      echo "replace me with your dmwm service key" ;;
+    */ReqMgrSecrets.py )
+      echo 'connectUrl = "oracle://FOO:BAR@ZOINKS"' ;;
+  esac
 }
