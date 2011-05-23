@@ -15,7 +15,7 @@ workqueueDBName = 'workqueue'
 workqueueInboxDbName = 'workqueue_inbox'
 HOST = socket.getfqdn().lower()
 REQMGR = "https://%s/reqmgr/reqMgr" % HOST
-COUCH = "http://localhost:5984"
+COUCH = "https://%s/couchdb" % HOST
 TEAMS = 'cmsdataops'
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 
@@ -24,14 +24,17 @@ if re.match(r"^vocms(?:10[67]|5[03])\.cern\.ch$", HOST):
   HOST = "cmsweb.cern.ch"
   REQMGR = "https://cmsweb.cern.ch/reqmgr/reqMgr"
   WEBURL = "https://cmsweb.cern.ch/workqueue"
+  COUCH = "https://cmsweb.cern.ch/couchdb"
 elif re.match(r"^vocms(?:51|13[23])\.cern\.ch$", HOST):
   HOST = "cmsweb-testbed.cern.ch"
   REQMGR = "https://cmsweb-testbed.cern.ch/reqmgr/reqMgr"
   WEBURL = "https://cmsweb-testbed.cern.ch/workqueue"
+  COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
 elif re.match(r"^vocms127\.cern\.ch$", HOST):
   HOST = "cmsweb-dev.cern.ch"
   REQMGR = "https://cmsweb-dev.cern.ch/reqmgr/reqMgr"
   WEBURL = "https://cmsweb-dev.cern.ch/workqueue"
+  COUCH = "https://cmsweb-dev.cern.ch/couchdb"
 
 root = __file__.rsplit('/', 4)[0]
 cache_dir = os.path.join(root, 'state', 'workqueue', 'cache')
