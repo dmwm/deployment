@@ -11,7 +11,7 @@ deploy_mongodb_prep()
 
 deploy_mongodb_sw()
 {
-  deploy_pkg comp external+mongo 1.6.5-comp
+  deploy_pkg comp external+mongo 1.8.1-comp2
 }
 
 deploy_mongodb_post()

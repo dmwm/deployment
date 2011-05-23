@@ -6,7 +6,7 @@ deploy_backend_prep()
 
 deploy_backend_sw()
 {
-  deploy_pkg comp cms+pystack 1.0b-comp
+  deploy_pkg comp cms+pystack 1.0b-comp2
   rm -f $root/current/bin/{pystack,gdb}
   ln -s ../apps/pystack/bin/{pystack,gdb} $root/current/bin/
 }
