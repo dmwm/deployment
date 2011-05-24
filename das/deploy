@@ -15,7 +15,7 @@ deploy_das_prep()
 
 deploy_das_sw()
 {
-  deploy_pkg comp cms+das 0.5.12-comp
+  deploy_pkg comp cms+das 0.7.1
   perl -p -i -e "s|{ROOT}|$root|" $project_config/analytics_cfg.py
 }
 
@@ -27,6 +27,7 @@ deploy_das_post()
   # put DAS JSON maps into mongodb stagingarea
   local mongodb_stage=$root/state/mongodb/stagingarea
   rm -f $mongodb_stage/{clean,update}_mapping_db.js
+  rm -f $mongodb_stage/mapping_db-schema-stamp
   (echo 'mapping = db.getSisterDB("mapping");'
    echo 'mapping.dropDatabase();') > \
    $mongodb_stage/clean_mapping_db.js

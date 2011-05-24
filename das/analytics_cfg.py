@@ -2,7 +2,7 @@
 log_to_stdout = 0
 log_to_file = 0
 web_history = 10000
-minimum_interval = 60
+minimum_interval = 600
 log_format = "%(asctime)s:%(name)s:%(levelname)s - %(message)s"
 max_retries = 1
 retry_delay = 60
@@ -16,9 +16,9 @@ log_to_stderr = 0
 web_base = "/analytics"
 pid = '{ROOT}/state/das/das_analytics.pid'
 
-# DAS analytics tasks
-Task("DatasetHotspot", "ValueHotspot", 3600, key="dataset.name")
-Task("BlockHotspot", "ValueHotspot", 3600, key="block.name")
-Task("FileHotspot", "ValueHotspot", 3600, key="file.name")
-Task("SiteHotspot", "ValueHotspot", 3600, key="site.name")
-Task("RunHotspot", "ValueHotspot", 3600, key="run.run_number")
+# DAS analytics tasks, use 4 hours interval for statistics analysis
+Task("DatasetHotspot", "ValueHotspot", 14400, key="dataset.name")
+Task("BlockHotspot", "ValueHotspot", 14400, key="block.name")
+Task("FileHotspot", "ValueHotspot", 14400, key="file.name")
+Task("SiteHotspot", "ValueHotspot", 14400, key="site.name")
+Task("RunHotspot", "ValueHotspot", 14400, key="run.run_number")

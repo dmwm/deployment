@@ -16,6 +16,7 @@ config.web_server.pid = '%s/state/das/das_web_server.pid' % __file__.rsplit('/',
 config.web_server.status_update = 3000
 config.web_server.number_of_workers = 8
 config.web_server.queue_limit = 20
+config.web_server.adjust_input = True
 
 # mongodb configuration
 config.component_('mongodb')
@@ -63,4 +64,4 @@ config.das.verbose = 0
 config.das.multitask = True
 config.das.error_expire = 300
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
-config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','ip_service','combined']
+config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','ip_service','combined','conddb']
