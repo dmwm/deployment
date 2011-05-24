@@ -41,12 +41,12 @@ if [ -e $INSTALL_CS/.init ]; then CS_INIT_DONE=1; else CS_INIT_DONE=0; fi;
 activate_crabserver(){
     touch $INSTALL_CS/.using
     cp $ROOT_DIR/apps/wmcore/etc/CrabServerConfig.py $CONFIG_CS/config-template.py
-    $PROJ_DIR/wmagent/manage activate-agent  
-    $PROJ_DIR/wmagent/manage activate-reqmgr  
-    $PROJ_DIR/wmagent/manage activate-workqueue  
+    $PROJ_DIR/wmagent/manage activate-agent
+    $PROJ_DIR/wmagent/manage activate-reqmgr
+    $PROJ_DIR/wmagent/manage activate-workqueue
 }
 
-inited_crabserver(){
+inited_server(){
     touch $INSTALL_CS/.init
 }
 
@@ -60,6 +60,7 @@ inited_crabserver(){
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
 
 export CRABSERVER_ROOT=$ROOT_DIR/apps/crab-server3
+export WMCORE_ROOT=$ROOT_DIR/apps/wmcore
 
 load_secrets_file(){
     if [ "x$WMAGENT_SECRETS_LOCATION" == "x" ]; then
@@ -116,7 +117,7 @@ load_secrets_file(){
     fi
 }
 
-init_crabserver(){
+init_server(){
     load_secrets_file;
 
     wmagent-mod-config --input=$CONFIG_CS/config-template.py \
@@ -125,11 +126,25 @@ init_crabserver(){
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_CS  \
                        --cs_hostname=$CS_HOSTNAME \
-                       --cs_port=$CS_PORT 
-    inited_crabserver;
+                       --cs_port=$CS_PORT
+    inited_server;
 }
 
-status(){ 
+# initialise the server and its subsystems
+#
+init_crabserver(){
+
+    $PROJ_DIR/wmagent/manage init-agent
+
+    if [ $CS_INIT_DONE -eq 0 ]; then
+        echo "Initialising server..."
+        init_server;
+    fi
+}
+
+
+
+status(){
     wmcoreD --status --config=$CONFIG_CS/config.py
     $PROJ_DIR/wmagent/manage status
 }
@@ -139,7 +154,7 @@ start_services(){
 }
 
 start_crabserver(){
-    $PROJ_DIR/wmagent/manage start-agent      
+    $PROJ_DIR/wmagent/manage start-agent
     init_crabserver;
     wmcoreD --start --config=$CONFIG_CS/config.py
 }
@@ -148,12 +163,31 @@ stop_crabserver(){
     wmcoreD --shutdown --config=$CONFIG_CS/config.py;
 
     $PROJ_DIR/wmagent/manage stop-agent
+}
+
+stop_services(){
     $PROJ_DIR/wmagent/manage stop-services
 }
 
 help(){
     echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
 }
+
+execute_agent(){
+    shift;
+    $PROJ_DIR/wmagent/manage  execute-agent $@
+}
+
+execute_workqueue(){
+    shift;
+    $PROJ_DIR/wmagent/manage  execute-workqueue $@
+}
+
+execute_reqmgr(){
+    shift;
+    $PROJ_DIR/wmagent/manage  execute-reqmgr $@
+}
+
 
 
 
@@ -164,6 +198,8 @@ help(){
 case $1 in
   status)
     status;;
+  init-crabserver)
+     init_crabserver;;
   activate-crabserver)
     activate_crabserver;;
   start-services)
@@ -172,6 +208,14 @@ case $1 in
     start_crabserver;;
   stop-crabserver)
     stop_crabserver;;
+  stop-services)
+    stop_services;;
+  execute-agent)
+    execute_agent $@;;
+  execute-workqueue)
+    execute_workqueue $@;;
+  execute-reqmgr)
+    execute_reqmgr $@;;
   help)
     help ;;
   version)
