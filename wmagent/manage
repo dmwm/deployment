@@ -207,12 +207,6 @@ print_settings(){
 . $ROOT_DIR/apps/pystack/etc/profile.d/init.sh
 . $ROOT_DIR/apps/couchdb/etc/profile.d/init.sh
 . $ROOT_DIR/apps/mysql/etc/profile.d/init.sh
-. $ROOT_DIR/apps/py2-cjson/etc/profile.d/init.sh
-. $ROOT_DIR/apps/py2-openid/etc/profile.d/init.sh
-. $ROOT_DIR/apps/py2-cheetah/etc/profile.d/init.sh
-. $ROOT_DIR/apps/cherrypy/etc/profile.d/init.sh
-. $ROOT_DIR/apps/dls-client/etc/profile.d/init.sh
-. $ROOT_DIR/apps/dbs-client/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
 
