@@ -13,7 +13,7 @@ deploy_crabserver_sw()
 {
   SERVER_VERSION="3.0.0"
 
-  deploy_pkg comp.pre cms+crab-server3 $SERVER_VERSION
+  deploy_pkg comp cms+crab-server3 $SERVER_VERSION
 
   mkdir -p $root/current/install/crabserver
 
