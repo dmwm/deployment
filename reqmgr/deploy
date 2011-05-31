@@ -91,7 +91,7 @@ deploy_reqmgr_post()
        sysboot
        # Enable couch crons only where couchdb is enabled
        case $host in
-         vocms10[67] | vocms50 | vocms132 ) ;;
+         vocms10[67] | vocms50 | vocms13[2689] ) ;;
          * ) echo -ne "${couch_crons}" ;;
        esac
        echo "${reqmgr_crons}") | crontab -

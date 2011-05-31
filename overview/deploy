@@ -16,7 +16,7 @@ deploy_overview_sw()
 
 deploy_overview_post()
 {
-  case $host in vocms106 | vocms5[03] | vocms133 ) disable ;; * ) enable ;; esac
+  case $host in vocms106 | vocms5[03] | vocms13[3689] | vocms140 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot
    cmd="$project_config/daily"
    $nogroups || cmd="sudo -H -u _overview bashs -l -c '$cmd'"

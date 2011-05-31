@@ -97,7 +97,7 @@ deploy_workqueue_post()
 
       (mkcrontab
        case $host in
-         vocms10[67] | vocms50 | vocms132 ) ;;
+         vocms10[67] | vocms50 | vocms13[2689] ) ;;
          * ) echo -ne "${couch_crons}" ;;
        esac
        echo "${req_sync}"

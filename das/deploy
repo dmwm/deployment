@@ -21,7 +21,7 @@ deploy_das_sw()
 
 deploy_das_post()
 {
-  case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+  case $host in vocms10[67] | vocms50 | vocms13[2689] ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 
   # put DAS JSON maps into mongodb stagingarea

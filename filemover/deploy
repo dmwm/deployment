@@ -19,6 +19,6 @@ deploy_filemover_sw()
 
 deploy_filemover_post()
 {
-  case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+  case $host in vocms10[67] | vocms50 | vocms13[2689] ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 }

@@ -30,7 +30,7 @@ deploy_couchdb_post()
 
   case $variant in
     default )
-      case $host in vocms10[67] | vocms50 | vocms132 ) disable ;; * ) enable ;; esac
+      case $host in vocms10[67] | vocms50 | vocms13[2689] ) disable ;; * ) enable ;; esac
       (mkcrontab; sysboot) | crontab -
       ;;
     * )
