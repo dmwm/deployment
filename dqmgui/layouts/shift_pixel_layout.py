@@ -74,24 +74,13 @@ shiftpixellayout(dqmitems, "15 - Cluster occupancy Endcap +z Disk 2",
      'description': "Cluster occupancy of Endcap +z Disk 2. Look for new holes compared to the example plot.",
      'draw': { 'withref': "no" }}]
   )
-shiftpixellayout(dqmitems, "16 - PKAM event rate: Pixel digis",
-  [{ 'path': "Pixel/bigEventRate",
-     'description': "Rate of events with at least 5000 digis in the entire Pixel detector. This rate is proportional to the rate of beam background events (PKAM). It should be relatively flat around 0.04Hz.",
-     'draw': { 'withref': "no" }}]
-  )
-shiftpixellayout(dqmitems, "17 - PKAM event rate: Endcap clusters",
-  [{ 'path': "Pixel/bigFpixClusterEventRate",
-     'description': "Rate of events with at least 330 clusters in the Pixel Endcaps. This rate is proportional to the rate of beam background events (PKAM). It should be relatively flat around 0.04Hz.",
-     'draw': { 'withref': "no" }}]
-  )
-shiftpixellayout(dqmitems, "18 - Pixel event rate",
+shiftpixellayout(dqmitems, "16 - Pixel event rate",
   [{ 'path': "Pixel/pixEventRate",
      'description': "Rate of events with Pixel activity above noise level (at least 4 modules with digis). This rate should be pretty consistently around 4-6Hz in every lumi section. It falls slightly with the beam intenstities going down throughout a fill.",
      'draw': { 'withref': "no" }}]
   )
-shiftpixellayout(dqmitems, "19 - Pixel event BX distribution",
+shiftpixellayout(dqmitems, "17 - Pixel event BX distribution",
   [{ 'path': "Pixel/pixEvtsPerBX",
      'description': "Distribution of Pixel events (at least 4 modules with digis) versus bucket number. The main contributions of Pixel events should come from the colliding bunches. Filled, but non-colliding bunches should be at least 2 orders of magnitudelower. Empty bunches should be close to zero.",
      'draw': { 'withref': "no" }}]
   )
-

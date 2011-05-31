@@ -517,6 +517,12 @@ csclayout(dqmitems,"CSC DQM Shifter/01 Data Integrity/2 DMB input timeout",
 csclayout(dqmitems,"CSC DQM Shifter/01 Data Integrity/3 CSC Status",
 	[{'path': "CSC/EventInfo/reportSummaryMap", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_DMB_input_timeout_Fract\">here</a>."}])
 
+csclayout(dqmitems,"CSC DQM Shifter/01 Data Integrity/4 Chambers without Data",
+        [{'path': "CSC/Summary/CSC_STATS_wo_alct", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_wo_alct\">here</a>."},
+         {'path': "CSC/Summary/CSC_STATS_wo_clct", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_wo_clct\">here</a>."}],
+        [{'path': "CSC/Summary/CSC_STATS_wo_cfeb", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_wo_cfeb\">here</a>."},
+         {'path': "CSC/Summary/CSC_STATS_cfeb_bwords", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_cfeb_bwords\">here</a>."}])
+
 csclayout(dqmitems,"CSC DQM Shifter/02 Chamber Occupancy/1 Overall Chamber Occupancy",
   	[{'path': "CSC/CSCOfflineMonitor/Occupancy/hCSCOccupancy", 'description': "Histogram shows overal occupancy of CSCs by different types of signals. If there is a substantial difference a problem with overal occupancy should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
 

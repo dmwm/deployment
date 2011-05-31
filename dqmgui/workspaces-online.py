@@ -15,8 +15,7 @@ server.workspace('DQMContent', 20, 'Tracker/Muons', 'Pixel', '^Pixel/',
                  'Pixel/Layouts/20e - Cluster occupancy Endcap -z Disk 2',
                  'Pixel/Layouts/20f - Cluster occupancy Endcap +z Disk 1',
                  'Pixel/Layouts/20g - Cluster occupancy Endcap +z Disk 2',
-                 'Pixel/Layouts/30b - PKAM event rates',
-                 'Pixel/Layouts/30c - Pixel event rates')
+                 'Pixel/Layouts/30a - Pixel event rates')
 
 server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracking)/',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
@@ -29,6 +28,12 @@ server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracki
                  'SiStrip/Layouts/07 - Tracking ReportSummary',
                  'SiStrip/Layouts/08 - Tracks (pp collisions)',
                  'SiStrip/Layouts/09 - Tracks (Cosmic Tracking)')
+
+server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStripLAS', '^SiStripLAS/',
+                 'SiStripLAS/Layouts/00 - SiStripLAS ReportSummary',
+                 'SiStripLAS/Layouts/01 - SiStripLAS TIB&TOB',
+                 'SiStripLAS/Layouts/02 - SiStripLAS TEC+',
+                 'SiStripLAS/Layouts/03 - SiStripLAS TEC-')
 
 server.workspace('DQMContent', 20, 'Tracker/Muons', 'CSC', '^CSC/',
                  'CSC/Layouts/00 Top Physics Efficiency',
@@ -55,10 +60,10 @@ server.workspace('DQMContent', 20, 'Tracker/Muons', 'DT', '^DT/',
                  'DT/Layouts/00-Summary/08-SynchNoiseSummary')
 
 server.workspace('DQMContent', 20, 'Tracker/Muons', 'RPC', '^RPC/',
-                 'RPC/Layouts/RPC_Summary/Barrel/Barrel_TOP_Summary',
-                 'RPC/Layouts/Occupancy_Summary/Wheels/RPC_BarrelOccupancy',
-                 'RPC/Layouts/Occupancy_Summary/Wheels/RPC_EndCapOccupancy',
-                 'RPC/Layouts/RPC_Summary/EndCap/EndCap_TOP_Summary')
+                 'RPC/Layouts/01-Fatal_FED_Errors',
+                 'RPC/Layouts/02-RPC_Events',
+                 'RPC/Layouts/08-Barrel_Occupancy',
+                 'RPC/Layouts/09-Endcap_Occupancy')
 
 server.workspace('DQMContent', 30, 'Calorimeter', 'EcalPreshower', '^EcalPreshower/',
                 'EcalPreshower/Layouts/01-IntegritySummary-EcalPreshower',
@@ -98,18 +103,18 @@ server.workspace('DQMContent',30,'Calorimeter','HCALcalib', '^HcalCalib/',
                  'HcalCalib/Layouts/04 HcalCalib Pedestal Check',
                  'HcalCalib/Layouts/08 HcalCalib RecHit Energies')
 
-
-
 server.workspace('DQMContent', 30, 'Calorimeter', 'Castor', '^Castor/',
                  'Castor/Layouts/CASTOR Digi ChannelSummaryMap',
                  'Castor/Layouts/CASTOR Digi Occupancy Map',
                  'Castor/Layouts/CASTOR Digi SaturationSummaryMap',
                  'Castor/Layouts/CASTOR event products',
-                 'Castor/Layouts/CASTOR RecHit Energy based Channel Status',
+                 'Castor/Layouts/CASTOR RecHit Occupancy Map',
+                 'Castor/Layouts/CASTOR RecHit Energy Fraction in modules',
+                 'Castor/Layouts/CASTOR RecHit Energy Fraction in sectors',
+                 'Castor/Layouts/CASTOR RecHit number per event- above threshold',
                  'Castor/Layouts/CASTOR RecHit Energies',
 		 'Castor/Layouts/CASTOR RecHit Energy in modules',
 		 'Castor/Layouts/CASTOR RecHit Energy in sectors',
-		 'Castor/Layouts/CASTOR RecHit Energy 2D Map',
                  'Castor/Layouts/CASTOR All Digi Values',
                  'Castor/Layouts/CASTOR average pulse in bunch crossings',
                  'Castor/Layouts/Castor Pulse Shape for sector=1 (in all 14 modules)',
@@ -134,7 +139,6 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'Castor', '^Castor/',
                  'Castor/Layouts/CASTOR Total RecHit Energy in phi-sectors per run',
                  'Castor/Layouts/CASTOR Total EM RecHit Energy per event',
                  'Castor/Layouts/CASTOR Total HAD RecHit Energy per event',
-                 'Castor/Layouts/CASTOR RecHit Energy per event',
                  'Castor/Layouts/CASTOR Total Energy ratio EM to HAD per event'
                 )
 

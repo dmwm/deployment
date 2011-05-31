@@ -13,13 +13,15 @@
 #include "TBox.h"
 #include "TPaletteAxis.h"
 #include "TGaxis.h"
+#include "TText.h"
 
 class CASTORRenderPlugin : public DQMRenderPlugin
 {
 
 
-
  public:
+
+
 
 
   ////---- define the histograms
@@ -51,9 +53,13 @@ class CASTORRenderPlugin : public DQMRenderPlugin
         ( o.name.find("CastorRecHit Energy in modules- above threshold") != std::string::npos)      ||
         ( o.name.find("CastorRecHit Energy in sectors- above threshold") != std::string::npos)      ||
         ( o.name.find("CASTOR 3D hits- cumulative") != std::string::npos)                           ||
-        ( o.name.find("CASTOR 3D hits- event with the largest deposited E") != std::string::npos)
-
-
+        ( o.name.find("CASTOR 3D hits- event with the largest deposited E") != std::string::npos)   ||
+        ( o.name.find("Fraction of the total energy in CASTOR modules") != std::string::npos)       ||
+        ( o.name.find("Fraction of the total energy in CASTOR sectors") != std::string::npos)       ||
+        ( o.name.find("CastorRecHits Occupancy Map") != std::string::npos)                          ||
+        ( o.name.find("CASTOR spigot status") != std::string::npos)                                 ||
+        ( o.name.find("CASTOR FEDFatal errors") != std::string::npos)                                 ||
+        ( o.name.find("CastorEventProduct") != std::string::npos)
         )
         return true;
 
@@ -150,7 +156,7 @@ private:
 
       if(o.name.find("CASTOR 3D hits- event with the largest deposited E") != std::string::npos) {
        //gStyle->SetPalette(1);
-       obj->SetStats(kTRUE);
+       obj->SetStats(kFALSE);
        obj->SetOption("LEGO");
        c->SetGrid(1);
        return;
@@ -187,8 +193,7 @@ private:
       obj->SetOption("colz");
       obj->GetXaxis()->SetLabelSize(0.05);
       obj->GetYaxis()->SetLabelSize(0.05);
-      obj->GetXaxis()->SetTitle("z-module");
-      obj->GetYaxis()->SetTitle("#phi-sector");
+
 
 
      if(o.name.find("reportSummaryMap") != std::string::npos)
@@ -229,6 +234,9 @@ private:
         obj->GetYaxis()->SetBinLabel(14,"14");
         obj->GetYaxis()->SetBinLabel(15,"15");
         obj->GetYaxis()->SetBinLabel(16,"16");
+
+        obj->GetXaxis()->SetTitle("z-module");
+        obj->GetYaxis()->SetTitle("#phi-sector");
 
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
@@ -280,6 +288,9 @@ private:
         obj->GetYaxis()->SetBinLabel(15,"15");
         obj->GetYaxis()->SetBinLabel(16,"16");
 
+        obj->GetXaxis()->SetTitle("z-module");
+        obj->GetYaxis()->SetTitle("#phi-sector");
+
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
         c->SetGrid(1,1);
@@ -293,8 +304,6 @@ private:
 	colorError1[3] = 416; // kGreen
         gStyle->SetPalette(4, colorError1);
         gStyle->SetPaintTextFormat("+g");
-
-
         return;
       }
 
@@ -337,6 +346,9 @@ private:
         obj->GetYaxis()->SetBinLabel(14,"14");
         obj->GetYaxis()->SetBinLabel(15,"15");
         obj->GetYaxis()->SetBinLabel(16,"16");
+
+        obj->GetXaxis()->SetTitle("z-module");
+        obj->GetYaxis()->SetTitle("#phi-sector");
 
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
@@ -396,6 +408,11 @@ private:
         obj->GetYaxis()->SetBinLabel(15,"15");
         obj->GetYaxis()->SetBinLabel(16,"16");
 
+
+
+        obj->GetXaxis()->SetTitle("z-module");
+        obj->GetYaxis()->SetTitle("#phi-sector");
+
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
         c->SetGrid(1,1);
@@ -407,7 +424,6 @@ private:
         colorError1[1] = 400;// kYellow
 	colorError1[2] = 416;// kGreen
         gStyle->SetPalette(3, colorError1);
-
         return;
       }
 
@@ -454,12 +470,67 @@ private:
         obj->GetYaxis()->SetBinLabel(16,"16");
 
 
+        obj->GetXaxis()->SetTitle("z-module");
+        obj->GetYaxis()->SetTitle("#phi-sector");
+
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
         gStyle->SetPalette(1);
         c->SetGrid(1,1);
         return;
       }
+
+
+    if(o.name.find("CastorRecHits Occupancy Map") != std::string::npos)
+      {
+        obj->GetXaxis()->SetNdivisions(15,true);
+        obj->GetYaxis()->SetNdivisions(17,true);
+        obj->GetXaxis()->SetLabelSize(0.07);
+        obj->GetYaxis()->SetLabelSize(0.07);
+
+        obj->GetXaxis()->SetBinLabel(1,"1");
+        obj->GetXaxis()->SetBinLabel(2,"2");
+        obj->GetXaxis()->SetBinLabel(3,"3");
+        obj->GetXaxis()->SetBinLabel(4,"4");
+        obj->GetXaxis()->SetBinLabel(5,"5");
+        obj->GetXaxis()->SetBinLabel(6,"6");
+        obj->GetXaxis()->SetBinLabel(7,"7");
+        obj->GetXaxis()->SetBinLabel(8,"8");
+        obj->GetXaxis()->SetBinLabel(9,"9");
+        obj->GetXaxis()->SetBinLabel(10,"10");
+        obj->GetXaxis()->SetBinLabel(11,"11");
+        obj->GetXaxis()->SetBinLabel(12,"12");
+        obj->GetXaxis()->SetBinLabel(13,"13");
+        obj->GetXaxis()->SetBinLabel(14,"14");
+
+        obj->GetYaxis()->SetBinLabel(1,"1");
+        obj->GetYaxis()->SetBinLabel(2,"2");
+        obj->GetYaxis()->SetBinLabel(3,"3");
+        obj->GetYaxis()->SetBinLabel(4,"4");
+        obj->GetYaxis()->SetBinLabel(5,"5");
+        obj->GetYaxis()->SetBinLabel(6,"6");
+        obj->GetYaxis()->SetBinLabel(7,"7");
+        obj->GetYaxis()->SetBinLabel(8,"8");
+        obj->GetYaxis()->SetBinLabel(9,"9");
+        obj->GetYaxis()->SetBinLabel(10,"10");
+        obj->GetYaxis()->SetBinLabel(11,"11");
+        obj->GetYaxis()->SetBinLabel(12,"12");
+        obj->GetYaxis()->SetBinLabel(13,"13");
+        obj->GetYaxis()->SetBinLabel(14,"14");
+        obj->GetYaxis()->SetBinLabel(15,"15");
+        obj->GetYaxis()->SetBinLabel(16,"16");
+
+        obj->GetXaxis()->SetTitle("z-module");
+        obj->GetYaxis()->SetTitle("#phi-sector");
+
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gStyle->SetPalette(1);
+        c->SetGrid(1,1);
+        return;
+      }
+
+
 
     if(o.name.find("CASTOR Digi Occupancy Map") != std::string::npos)
       {
@@ -501,6 +572,9 @@ private:
         obj->GetYaxis()->SetBinLabel(16,"16");
 
 
+        obj->GetXaxis()->SetTitle("z-module");
+        obj->GetYaxis()->SetTitle("#phi-sector");
+
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
         gStyle->SetPalette(1);
@@ -510,6 +584,77 @@ private:
 
 
 
+    if(o.name.find("CASTOR spigot status") != std::string::npos)
+      {
+        obj->GetXaxis()->SetNdivisions(15,true);
+        obj->GetYaxis()->SetNdivisions(3,true);
+        obj->GetXaxis()->SetLabelSize(0.07);
+        obj->GetYaxis()->SetLabelSize(0.07);
+
+        obj->GetXaxis()->SetBinLabel(1,"1");
+        obj->GetXaxis()->SetBinLabel(2,"2");
+        obj->GetXaxis()->SetBinLabel(3,"3");
+        obj->GetXaxis()->SetBinLabel(4,"4");
+        obj->GetXaxis()->SetBinLabel(5,"5");
+        obj->GetXaxis()->SetBinLabel(6,"6");
+        obj->GetXaxis()->SetBinLabel(7,"7");
+        obj->GetXaxis()->SetBinLabel(8,"8");
+        obj->GetXaxis()->SetBinLabel(9,"9");
+        obj->GetXaxis()->SetBinLabel(10,"10");
+        obj->GetXaxis()->SetBinLabel(11,"11");
+        obj->GetXaxis()->SetBinLabel(12,"12");
+        obj->GetXaxis()->SetBinLabel(13,"13");
+        obj->GetXaxis()->SetBinLabel(14,"14");
+        obj->GetXaxis()->SetBinLabel(15,"15");
+
+        obj->GetYaxis()->SetBinLabel(1,"690");
+        obj->GetYaxis()->SetBinLabel(2,"691");
+        obj->GetYaxis()->SetBinLabel(3,"692");
+
+        obj->GetXaxis()->SetTitle("input socket on CASTOR DCC");
+        obj->GetYaxis()->SetTitle("FED ID");
+
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+
+        obj->SetMinimum(-1.0);
+        obj->SetMaximum(+1.0);
+        int colorError1[3];
+        colorError1[0] = 632;// kRed
+        colorError1[1] = 400;// kYellow
+        colorError1[2] = 416;// kGreen
+        gStyle->SetPalette(3, colorError1);
+
+        c->SetGrid(1,1);
+        return;
+      }
+
+     if(o.name.find("CastorEventProduct") != std::string::npos)
+      {
+        obj->GetXaxis()->SetNdivisions(5,true);
+        obj->GetYaxis()->SetNdivisions(1,true);
+        obj->GetXaxis()->SetLabelSize(0.07);
+        obj->GetYaxis()->SetLabelSize(0.05);
+
+        obj->GetXaxis()->SetBinLabel(1,"Raw");
+        obj->GetXaxis()->SetBinLabel(2,"Digi");
+        obj->GetXaxis()->SetBinLabel(3,"RecHits");
+        obj->GetXaxis()->SetBinLabel(4,"Towers");
+        obj->GetXaxis()->SetBinLabel(5,"BasicJets");
+        obj->GetXaxis()->SetBinLabel(6,"JetID");
+        obj->GetYaxis()->SetBinLabel(1,"Status");
+        obj->GetYaxis()->SetTitle("Present/Not Present");
+
+        obj->SetMinimum(-1.0);
+        obj->SetMaximum(+1.0);
+
+        int colorError1[2];
+        colorError1[0] = 632;// kRed
+        colorError1[1] = 416;// kGreen
+        gStyle->SetPalette(2, colorError1);
+
+        return;
+      }
 
     }
 
@@ -563,6 +708,26 @@ private:
 
       }
 
+
+
+      if(o.name.find("CASTOR spigot status") != std::string::npos)
+      {
+
+        TBox* b_box_g = new TBox();
+        TBox* b_box_y = new TBox();
+        TBox* b_box_r = new TBox();
+
+        b_box_g->SetFillColor(416);
+        b_box_y->SetFillColor(400);
+        b_box_r->SetFillColor(632);
+
+        TLegend* leg = new TLegend(0.1,0.70,0.9,0.9); //(0.16, 0.11, 0.44, 0.38);
+        leg->AddEntry(b_box_g,"OK",   "f");
+        leg->AddEntry(b_box_y,"Problematic in <5% of events","f");
+        leg->AddEntry(b_box_r,"Problematic in >5% of events", "f");
+        leg->Draw();
+
+      }
 
 
       if(o.name.find("testOccupancy") != std::string::npos)
@@ -655,6 +820,35 @@ private:
         return;
        }
 
+ if( o.name.find("Fraction of the total energy in CASTOR modules") != std::string::npos) {
+        obj->GetXaxis()->SetBinLabel(1,"1");
+        obj->GetXaxis()->SetBinLabel(2,"2");
+        obj->GetXaxis()->SetBinLabel(3,"3");
+        obj->GetXaxis()->SetBinLabel(4,"4");
+        obj->GetXaxis()->SetBinLabel(5,"5");
+        obj->GetXaxis()->SetBinLabel(6,"6");
+        obj->GetXaxis()->SetBinLabel(7,"7");
+        obj->GetXaxis()->SetBinLabel(8,"8");
+        obj->GetXaxis()->SetBinLabel(9,"9");
+        obj->GetXaxis()->SetBinLabel(10,"10");
+        obj->GetXaxis()->SetBinLabel(11,"11");
+        obj->GetXaxis()->SetBinLabel(12,"12");
+        obj->GetXaxis()->SetBinLabel(13,"13");
+        obj->GetXaxis()->SetBinLabel(14,"14");
+        obj->GetXaxis()->SetTitle("z-module");
+
+        obj->GetXaxis()->SetLabelSize(0.07);
+        obj->GetXaxis()->SetNdivisions(1020);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        obj->GetYaxis()->SetTitle("fraction of the total energy");
+        obj->GetYaxis()->SetRange(0,1);
+        obj->SetStats( kFALSE );
+
+        return;
+       }
+
+
     if( o.name.find("CastorRecHit Energy in sectors- above threshold") != std::string::npos) {
         obj->GetXaxis()->SetBinLabel(1,"1");
         obj->GetXaxis()->SetBinLabel(2,"2");
@@ -681,7 +875,47 @@ private:
         return;
        }
 
+      if( o.name.find("Fraction of the total energy in CASTOR sectors") != std::string::npos) {
+        obj->GetXaxis()->SetBinLabel(1,"1");
+        obj->GetXaxis()->SetBinLabel(2,"2");
+        obj->GetXaxis()->SetBinLabel(3,"3");
+        obj->GetXaxis()->SetBinLabel(4,"4");
+        obj->GetXaxis()->SetBinLabel(5,"5");
+        obj->GetXaxis()->SetBinLabel(6,"6");
+        obj->GetXaxis()->SetBinLabel(7,"7");
+        obj->GetXaxis()->SetBinLabel(8,"8");
+        obj->GetXaxis()->SetBinLabel(9,"9");
+        obj->GetXaxis()->SetBinLabel(10,"10");
+        obj->GetXaxis()->SetBinLabel(11,"11");
+        obj->GetXaxis()->SetBinLabel(12,"12");
+        obj->GetXaxis()->SetBinLabel(13,"13");
+        obj->GetXaxis()->SetBinLabel(14,"14");
+        obj->GetXaxis()->SetBinLabel(15,"15");
+        obj->GetXaxis()->SetBinLabel(16,"16");
+        obj->GetXaxis()->SetTitle("#phi-sector");
 
+        obj->GetXaxis()->SetLabelSize(0.07);
+        obj->GetXaxis()->SetNdivisions(1020);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        obj->GetYaxis()->SetTitle("fraction of the total energy");
+        obj->GetYaxis()->SetRange(0,1);
+        obj->SetStats( kFALSE );
+        return;
+       }
+
+      if( o.name.find("CASTOR FEDFatal errors")!= std::string::npos) {
+
+        obj->GetXaxis()->SetBinLabel(1,"690");
+        obj->GetXaxis()->SetBinLabel(2,"691");
+        obj->GetXaxis()->SetBinLabel(3,"692");
+        obj->GetXaxis()->SetTitle("FED ID");
+
+        obj->GetXaxis()->SetLabelSize(0.07);
+        obj->GetXaxis()->CenterLabels();
+
+        return;
+         }
 
     }
   //==========================================================//
@@ -689,9 +923,43 @@ private:
   //==========================================================//
 
   void postDrawTH1( TCanvas *, const VisDQMObject &o ) {
-      if(o.name.find("testOccupancy") != std::string::npos) {
-	//leave it empty for the time being
+
+    TH1* obj = dynamic_cast<TH1*>( o.object );
+    assert( obj );
+
+
+      if(o.name.find("CASTOR FEDFatal errors") != std::string::npos){
+
+      TText t;
+
+       if( obj->GetEntries() == 0){
+       t.SetTextColor(3);
+       t.SetTextSize(0.07);
+       t.DrawText(690.3,0.5,"OK: No Fatal Errors Found");
       }
+
+        else{
+        t.SetTextColor(2);
+        t.SetTextSize(0.07);
+        t.DrawText(690.3,1.0,"ATTENTION: Fatal Errors Found");
+        }
+
+
+        gPad->SetGridx();
+        return;
+      }
+
+      if(o.name.find("CastorEventProduct") != std::string::npos)
+      {
+
+        obj->SetMarkerSize(3); // set font size to 3x normal
+        obj->SetOption("text90colz"); // draw marker at 90 degrees
+
+        gPad->SetGridx();
+        return;
+      }
+
+
     }
 
 

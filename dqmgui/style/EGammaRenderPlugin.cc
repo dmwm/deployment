@@ -59,7 +59,7 @@ public:
       if ( o.name.find( "/Electrons/Ele") != std::string::npos )
        {
         TH1 * histo = dynamic_cast<TH1*>(o.object) ;
-        assert(histo) ;
+        if (!histo) return ;
 
         TString histo_option = histo->GetOption() ;
         if ((histo_option.Contains("ELE_LOGY")==kTRUE)&&(histo->GetMaximum()>0))

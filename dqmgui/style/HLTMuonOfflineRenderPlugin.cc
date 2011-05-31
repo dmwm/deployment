@@ -5,8 +5,11 @@
   \\
 
 
-  $Id: HLTMuonOfflineRenderPlugin.cc,v 1.5 2009/10/31 23:18:54 lat Exp $
+  $Id: HLTMuonOfflineRenderPlugin.cc,v 1.6 2011/03/24 20:13:38 klukas Exp $
   $Log: HLTMuonOfflineRenderPlugin.cc,v $
+  Revision 1.6  2011/03/24 20:13:38  klukas
+  Updated to fit new offline DQM plots; changed efficiency plot styles
+
   Revision 1.5  2009/10/31 23:18:54  lat
   Update for DQM GUI 5.1.0
 
@@ -39,6 +42,7 @@
 #include "DQM/DQMRenderPlugin.h"
 #include "utils.h"
 
+#include "TProfile.h"
 #include "TProfile2D.h"
 #include "TH1F.h"
 #include "TH2F.h"
@@ -47,7 +51,13 @@
 #include "TColor.h"
 #include "TText.h"
 #include "TPRegexp.h"
+#include "TLine.h"
 #include <cassert>
+
+// Define constants
+TPRegexp efficiencyRegexp("(efficiency[^_]*$|genEff|recEff|TurnOn|MaxPt)");
+
+
 
 class HLTMuonOfflineRenderPlugin : public DQMRenderPlugin
 {
@@ -65,11 +75,18 @@ public:
     {
       c->cd();
 
+      // object is TProfile histogram
+      if( dynamic_cast<TProfile*>( o.object ) )
+      {
+        preDrawTProfile( c, o );
+      }
+
       // object is TH2 histogram
       if( dynamic_cast<TH2F*>( o.object ) )
       {
         preDrawTH2F( c, o );
       }
+
       // object is TH1 histogram
       else if( dynamic_cast<TH1F*>( o.object ) )
       {
@@ -79,21 +96,62 @@ public:
 
   virtual void postDraw (TCanvas * c, const VisDQMObject &o, const VisDQMImgInfo &)
     {
+
+      // object is TProfile histogram
+      if( dynamic_cast<TProfile*>( o.object ) )
+      {
+        postDrawTProfile( c, o );
+      }
+
       // object is TH2 histogram
       if( dynamic_cast<TH2F*>( o.object ) )
       {
         postDrawTH2F( c, o );
       }
+
       // object is TH1 histogram
       else if( dynamic_cast<TH1F*>( o.object ) )
       {
         postDrawTH1F( c, o );
       }
+
     }
 
 private:
-  void preDrawTH1F ( TCanvas *, const VisDQMObject &o )
+  void preDrawTProfile ( TCanvas *, const VisDQMObject &o )
     {
+
+      // Do we want to do anything special yet with TProfile histograms?
+      TProfile* obj = dynamic_cast<TProfile*>( o.object );
+      assert (obj); // checks that object indeed exists
+
+      // if this isn't a muon hlt plot, skip it
+      if (o.name.find("HLT/Muon") == std::string::npos)
+        return;
+
+      if (TString(o.name).Contains(efficiencyRegexp))
+      {
+
+          gStyle->SetOptStat(10);
+
+            obj->SetMinimum(0);
+          obj->SetMaximum(1.1);
+          obj->SetMarkerStyle(4);
+
+          }
+
+      if (o.name.find("TurnOn") != std::string::npos)
+          {
+
+            gPad->SetLogx();
+            obj->GetXaxis()->SetRangeUser(2., 300.);
+
+          }
+
+      }
+
+  void preDrawTH1F ( TCanvas *, const VisDQMObject &o )
+      {
       // Do we want to do anything special yet with TH1F histograms?
       TH1F* obj = dynamic_cast<TH1F*>( o.object );
       assert (obj); // checks that object indeed exists
@@ -109,17 +167,7 @@ private:
 
       // FourVector eff histograms
 
-      // If the plot is contained directly inside a folder called HLT_*,
-      // then it is a RelVal plot, otherwise, it's in an offline plot
-      // contained in a subfolder.
-      TPRegexp relvalPathPattern("HLT/Muon/.*/HLT_[^/]*/[^/]*$");
-      bool isRelValPlot = TString(o.name).Contains(relvalPathPattern);
-
-      if (isRelValPlot)
-      {
-
-        if (o.name.find("Eff")    != std::string::npos ||
-            o.name.find("TurnOn") != std::string::npos)
+      if (TString(o.name).Contains(efficiencyRegexp))
           {
 
             obj->SetMinimum(0);
@@ -127,35 +175,13 @@ private:
 
           }
 
-        if (o.name.find("PassMaxPt") != std::string::npos ||
-            o.name.find("TurnOn")    != std::string::npos)
+      if (o.name.find("TurnOn") != std::string::npos)
           {
 
-            gPad->SetLogx();
-            obj->GetXaxis()->SetRangeUser(2., 300.);
+          gPad->SetLogx();
+          obj->GetXaxis()->SetRangeUser(2., 300.);
 
           }
-
-      }
-
-      else
-      {
-        if (o.name.find("recEff") != std::string::npos)
-          {
-
-            obj->SetMinimum(0);
-            obj->SetMaximum(1.0);
-            obj->GetYaxis()->SetTitle("_Eff_");
-
-          }
-
-        if (o.name.find("recPassPt") != std::string::npos)
-          {
-
-            gPad->SetLogy();
-
-          }
-      }
 
     }
 
@@ -174,11 +200,23 @@ private:
       gStyle->SetOptStat(10);
       gStyle->SetPalette(1,0);
       obj->SetOption("colz");
-      gPad->SetGrid(1,1);
+      // gPad->SetGrid(1,1);
 
       //Handle the 2D eff histograms
-      if( o.name.find( "recEffPhiVsEta" )  != std::string::npos)
+      if (TString(o.name).Contains(efficiencyRegexp))
         {
+
+          obj->SetOption("text colz");
+          gStyle->SetPaintTextFormat(".2f");
+
+          const Int_t NRGBs = 3;
+          const Int_t NCont = 255;
+          Double_t stops[NRGBs] = { 0.00, 0.88, 1.00 };
+          Double_t red[NRGBs]   = { 1.00, 1.00, 0.00 };
+          Double_t green[NRGBs] = { 0.00, 1.00, 1.00 };
+          Double_t blue[NRGBs]  = { 0.00, 0.00, 0.00 };
+          TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
+          gStyle->SetNumberContours(NCont);
 
           obj->SetMinimum(0.0);
           obj->SetMaximum(1.0);
@@ -187,6 +225,26 @@ private:
         }
 
       // if not a 2D eff, do nothing special
+      return;
+
+    }
+
+  void postDrawTProfile( TCanvas *, const VisDQMObject &o)
+    {
+
+      TProfile* obj = dynamic_cast<TProfile*>( o.object );
+
+      if (TString(o.name).Contains(efficiencyRegexp))
+        {
+
+          TLine l;
+          l.SetLineStyle(2); // dashed
+          float xmin = obj->GetBinLowEdge(1);
+          float xmax = obj->GetBinLowEdge(obj->GetNbinsX() + 1);
+          l.DrawLine(xmin, 1.0, xmax, 1.0);
+
+        }
+
       return;
 
     }

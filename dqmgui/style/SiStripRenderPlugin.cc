@@ -2,8 +2,8 @@
   \file SiStripRenderPlugin
   \brief Display Plugin for SiStrip DQM Histograms
   \author S. Dutta
-  \version $Revision: 1.35 $
-  \date $Date: 2011/02/10 10:48:24 $
+  \version $Revision: 1.39 $
+  \date $Date: 2011/05/23 15:22:58 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -162,6 +162,13 @@ private:
         return;
       }
 
+      if( o.name.find( "DataPresentInLastLS" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        dqm::utils::reportSummaryMapPalette(obj);
+        obj->SetOption("colztext");
+        return;
+      }
 
       if( o.name.find( "DeltaBx_vs_ApvCycle" )  != std::string::npos)
       {
@@ -201,28 +208,35 @@ private:
       if( o.name.find( "Summary_MeanNumberOfDigis" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(4.0);
+        obj->SetMaximum(12.0);
         obj->SetMinimum(-0.1);
         return;
       }
       if( o.name.find( "Summary_MeanNumberOfDigis__TOB" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(2.5);
+        obj->SetMaximum(5.0);
         obj->SetMinimum(-0.1);
         return;
       }
       if( o.name.find( "Summary_MeanNumberOfClusters" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(1.0);
+        obj->SetMaximum(5.0);
+        obj->SetMinimum(-0.001);
+        return;
+      }
+      if( o.name.find( "Summary_MeanNumberOfClusters_TOB" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        obj->SetMaximum(3.0);
         obj->SetMinimum(-0.001);
         return;
       }
       if( o.name.find( "Summary_MeanClusterWidth" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(20.0);
+        obj->SetMaximum(10.0);
         obj->SetMinimum(-1.0);
         return;
       }
@@ -362,6 +376,11 @@ private:
         c->SetGridy();
         return;
       }
+      if( o.name.find( "DataPresentInLastLS" )  != std::string::npos)
+      {
+        c->SetGridx();
+        return;
+      }
     }
   void postDrawTProfile( TCanvas *c, const VisDQMObject &o )
   {
@@ -378,21 +397,32 @@ private:
     tl2.SetLineColor(4);
     tl2.SetLineWidth(3);
 
-    // FOR HI
-//     float xmin = 0.0;
-//     float xmax = obj->GetXaxis()->GetXmax();
+    float xmin = 0.0;
+    float xmax = obj->GetXaxis()->GetXmax();
     float ymax = obj->GetMaximum()*1.2;
 
     // FOR PP
+    /*
     float TIBLimit1 = 5000.0;
     float TOBLimit1 = 5500.0;
     float TIDLimit1 = 1000.0;
     float TECLimit1 = 5000.0;
 
-    float TIBLimit2 = 900.0;
-    float TOBLimit2 = 700.0;
-    float TIDLimit2 = 250.0;
+    float TIBLimit2 = 1000.0;
+    float TOBLimit2 = 1000.0;
+    float TIDLimit2 = 300.0;
     float TECLimit2 = 1200.0;
+    */
+
+    float TIBLimit1 = 10000.0;
+    float TOBLimit1 = 11000.0;
+    float TIDLimit1 = 2000.0;
+    float TECLimit1 = 10000.0;
+
+    float TIBLimit2 = 2000.0;
+    float TOBLimit2 = 2000.0;
+    float TIDLimit2 = 600.0;
+    float TECLimit2 = 2400.0;
 
     /* FOR HI
     float TIBLimit1 = 70000.0;
@@ -410,30 +440,30 @@ private:
         if (obj->GetEntries() > 10.0) c->SetLogy(1);
         c->SetGridy();
         if (name.find( "TotalNumberOfDigiProfile__TIB" ) != std::string::npos) {
-//	     tl1.DrawLine(xmin, TIBLimit1,     xmax, TIBLimit1);
-//           tl2.DrawLine(xmin, TIBLimit1*0.5, xmax, TIBLimit1*0.5);
-//           tl2.DrawLine(xmin, TIBLimit1*2.0, xmax, TIBLimit1*2.0);
+           tl1.DrawLine(xmin, TIBLimit1,     xmax, TIBLimit1);
+           tl2.DrawLine(xmin, TIBLimit1*0.5, xmax, TIBLimit1*0.5);
+           tl2.DrawLine(xmin, TIBLimit1*2.0, xmax, TIBLimit1*2.0);
 //          obj->SetMinimum(TIBLimit1*0.1);
           obj->SetMinimum(1);
           obj->SetMaximum(TMath::Max(ymax, TIBLimit1*50));
         } else if (name.find( "TotalNumberOfDigiProfile__TOB" ) != std::string::npos) {
-//           tl1.DrawLine(xmin, TOBLimit1,     xmax, TOBLimit1);
-//           tl2.DrawLine(xmin, TOBLimit1*0.5, xmax, TOBLimit1*0.5);
-//           tl2.DrawLine(xmin, TOBLimit1*2.0, xmax, TOBLimit1*2.0);
+           tl1.DrawLine(xmin, TOBLimit1,     xmax, TOBLimit1);
+           tl2.DrawLine(xmin, TOBLimit1*0.5, xmax, TOBLimit1*0.5);
+           tl2.DrawLine(xmin, TOBLimit1*2.0, xmax, TOBLimit1*2.0);
 //          obj->SetMinimum(TOBLimit1*0.1);
           obj->SetMinimum(1);
 	  obj->SetMaximum(TMath::Max(ymax, TOBLimit1*50));
         } else if (name.find( "TotalNumberOfDigiProfile__TEC" ) != std::string::npos) {
-//           tl1.DrawLine(xmin, TECLimit1,     xmax, TECLimit1);
-//           tl2.DrawLine(xmin, TECLimit1*0.5, xmax, TECLimit1*0.5);
-//           tl2.DrawLine(xmin, TECLimit1*2.0, xmax, TECLimit1*2.0);
+          tl1.DrawLine(xmin, TECLimit1,     xmax, TECLimit1);
+          tl2.DrawLine(xmin, TECLimit1*0.5, xmax, TECLimit1*0.5);
+          tl2.DrawLine(xmin, TECLimit1*2.0, xmax, TECLimit1*2.0);
 //          obj->SetMinimum(TECLimit1*0.1);
           obj->SetMinimum(1);
           obj->SetMaximum(TMath::Max(ymax, TECLimit1*50));
         } else if (name.find( "TotalNumberOfDigiProfile__TID" ) != std::string::npos) {
-//           tl1.DrawLine(xmin, TIDLimit1,     xmax, TIDLimit1);
-//           tl2.DrawLine(xmin, TIDLimit1*0.5, xmax, TIDLimit1*0.5);
-//           tl2.DrawLine(xmin, TIDLimit1*2.0, xmax, TIDLimit1*2.0);
+           tl1.DrawLine(xmin, TIDLimit1,     xmax, TIDLimit1);
+           tl2.DrawLine(xmin, TIDLimit1*0.5, xmax, TIDLimit1*0.5);
+           tl2.DrawLine(xmin, TIDLimit1*2.0, xmax, TIDLimit1*2.0);
 //          obj->SetMinimum(TIDLimit1*0.1);
           obj->SetMinimum(1);
           obj->SetMaximum(TMath::Max(ymax, TIDLimit1*50));
@@ -445,30 +475,30 @@ private:
         if (obj->GetEntries() > 10.0) c->SetLogy(1);
         c->SetGridy();
         if (name.find( "TotalNumberOfClusterProfile__TIB" ) != std::string::npos) {
-//           tl1.DrawLine(xmin, TIBLimit2,     xmax, TIBLimit2);
-//           tl2.DrawLine(xmin, TIBLimit2*0.5, xmax, TIBLimit2*0.5);
-//           tl2.DrawLine(xmin, TIBLimit2*2.0, xmax, TIBLimit2*2.0);
+          tl1.DrawLine(xmin, TIBLimit2,     xmax, TIBLimit2);
+          tl2.DrawLine(xmin, TIBLimit2*0.5, xmax, TIBLimit2*0.5);
+          tl2.DrawLine(xmin, TIBLimit2*2.0, xmax, TIBLimit2*2.0);
 //          obj->SetMinimum(TIBLimit2*0.1);
           obj->SetMinimum(1);
 	  obj->SetMaximum(TMath::Max(ymax, TIBLimit2*20));
         } else if (name.find( "TotalNumberOfClusterProfile__TOB" ) != std::string::npos) {
-//           tl1.DrawLine(xmin, TOBLimit2,     xmax, TOBLimit2);
-//           tl2.DrawLine(xmin, TOBLimit2*0.5, xmax, TOBLimit2*0.5);
-//           tl2.DrawLine(xmin, TOBLimit2*2.0, xmax, TOBLimit2*2.0);
+          tl1.DrawLine(xmin, TOBLimit2,     xmax, TOBLimit2);
+          tl2.DrawLine(xmin, TOBLimit2*0.5, xmax, TOBLimit2*0.5);
+          tl2.DrawLine(xmin, TOBLimit2*2.0, xmax, TOBLimit2*2.0);
 //          obj->SetMinimum(TOBLimit2*0.1);
           obj->SetMinimum(1);
           obj->SetMaximum(TMath::Max(ymax, TOBLimit2*20));
         } else if (name.find( "TotalNumberOfClusterProfile__TEC" ) != std::string::npos) {
-//           tl1.DrawLine(xmin, TECLimit2,     xmax, TECLimit2);
-//           tl2.DrawLine(xmin, TECLimit2*0.5, xmax, TECLimit2*0.5);
-//           tl2.DrawLine(xmin, TECLimit2*2.0, xmax, TECLimit2*2.0);
+          tl1.DrawLine(xmin, TECLimit2,     xmax, TECLimit2);
+          tl2.DrawLine(xmin, TECLimit2*0.5, xmax, TECLimit2*0.5);
+          tl2.DrawLine(xmin, TECLimit2*2.0, xmax, TECLimit2*2.0);
 //          obj->SetMinimum(TECLimit2*0.1);
           obj->SetMinimum(1);
           obj->SetMaximum(TMath::Max(ymax, TECLimit2*20));
         }  else if (name.find( "TotalNumberOfClusterProfile__TID" ) != std::string::npos) {
-//           tl1.DrawLine(xmin, TIDLimit2,     xmax, TIDLimit2);
-//           tl2.DrawLine(xmin, TIDLimit2*0.5, xmax, TIDLimit2*0.5);
-//           tl2.DrawLine(xmin, TIDLimit2*2.0, xmax, TIDLimit2*2.0);
+          tl1.DrawLine(xmin, TIDLimit2,     xmax, TIDLimit2);
+          tl2.DrawLine(xmin, TIDLimit2*0.5, xmax, TIDLimit2*0.5);
+          tl2.DrawLine(xmin, TIDLimit2*2.0, xmax, TIDLimit2*2.0);
 //          obj->SetMinimum(TIDLimit2*0.1);
           obj->SetMinimum(1);
           obj->SetMaximum(TMath::Max(ymax, TIDLimit2*20));

@@ -2,8 +2,8 @@
   \file HcalRenderPlugin.cc
   \brief Display Plugin for Hcal DQM Histograms
   \author J. Temple
-  \version $Revision: 1.49 $
-  \date $Date: 2010/11/24 18:58:24 $
+  \version $Revision: 1.50 $
+  \date $Date: 2011/04/28 13:11:44 $
   \\
   \\ Code shamelessly borrowed from S. Dutta's SiStripRenderPlugin.cc code,
   \\ G. Della Ricca and B. Gobbo's EBRenderPlugin.cc, and other existing
@@ -1062,12 +1062,22 @@ private:
 
         if (obj->GetBinContent(lastnonzerobin-1) > 50.0)
 	  {
+            if(obj->GetBinContent(0) > 0 )
+              {
+                TText t;
+                t.SetTextSize(0.07);
+                t.SetTextColor(1);
+                t.DrawTextNDC(0.1,0.5,"Known problem, no need to call HCAL experts!");
+              }
+            else
+              {
 	    c->SetFillColor(2);
 	    TText t;
 	    t.SetTextSize(0.07);
 	    t.SetTextColor(2);
 	    t.DrawTextNDC(0.2,0.5,"WARNING: # of dead channels is above 50");
 	  }
+          }
         return;
       }
   }

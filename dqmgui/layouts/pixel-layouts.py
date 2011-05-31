@@ -116,22 +116,12 @@ pixellayout(dqmitems, "20g - Cluster occupancy Endcap +z Disk 2",
      'description': "Cluster occupancy of Endcap +z Disk 2",
      'draw': { 'withref': "no" }}]
   )
-pixellayout(dqmitems, "30a - PKAM event rates",
-  [{ 'path': "Pixel/bigEventRate",
-     'description': "Rate of events with at least 2600 digis in the entire Pixel detector",
-     'draw': { 'withref': "no" }}]
-  )
-pixellayout(dqmitems, "30b - PKAM event rates",
-  [{ 'path': "Pixel/bigFpixClusterEventRate",
-     'description': "Rate of events with at least 180 clusters in the FPIX detector",
-     'draw': { 'withref': "no" }}]
-  )
-pixellayout(dqmitems, "30c - Pixel event rates",
+pixellayout(dqmitems, "30a - Pixel event rates",
   [{ 'path': "Pixel/pixEventRate",
      'description': "Rate of events with Pixel activity above noise level (at least 4 modules with digis)",
      'draw': { 'withref': "no" }}]
   )
-pixellayout(dqmitems, "30d - Pixel event BX distribution",
+pixellayout(dqmitems, "30b - Pixel event BX distribution",
   [{ 'path': "Pixel/pixEvtsPerBX",
      'description': "Distribution of Pixel events (at least 4 modules with digis) versus bucket number",
      'draw': { 'withref': "no" }}]

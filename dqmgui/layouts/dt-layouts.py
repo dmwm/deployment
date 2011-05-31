@@ -71,12 +71,12 @@ for wheel in range(-2, 3):
 
 
 #### EVENT SIZE #################################################################################
-for fed in range(770, 780):
+for fed in range(770, 775):
    name = name = "03-FEDEventSize/FED" + str(fed)
    histoname = "DT/00-DataIntegrity/FED" + str(fed) + "/FED" + str(fed) + "_EventLenght"
    dtlayout(dqmitems, name,[{ 'path': histoname}])
-   for rosid in range(1, 7):
-       ros = rosid + 6*(fed>774)
+   for rosid in range(1, 13):
+       ros = rosid
        name = "04-ROSEventSize/FED" + str(fed) + "_ROS" + str(ros)
        histoname = "DT/00-DataIntegrity/FED" + str(fed) + "/ROS" + str(ros) + "/FED" + str(fed) + "_ROS" + str(ros) + "_ROSEventLenght"
        dtlayout(dqmitems, name,[{ 'path': histoname}])

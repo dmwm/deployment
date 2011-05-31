@@ -6,7 +6,7 @@ LOGDIR    = "%s/logs/dqmgui" % BASEDIR
 
 # Modifiable parameters.
 LAYOUTS = ["%s/layouts/%s-layouts.py" % (CONFIGDIR, x) for x in
-	   ("castor","csc", "dt", "eb", "ee", "es","hcal", "hcalcalib", "hlt", "hlx", "l1t", "l1temulator", "rpc", "pixel", "sistrip")]
+	   ("castor","csc", "dt", "eb", "ee", "es","hcal", "hcalcalib", "hlt", "hlx", "l1t", "l1temulator", "rpc", "pixel", "sistrip", "sistriplas")]
 LAYOUTS += ["%s/layouts/%s_overview_layouts.py" % (CONFIGDIR, x) for x in
             ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
 LAYOUTS += ["%s/layouts/shift_%s_layout.py" % (CONFIGDIR, x) for x in

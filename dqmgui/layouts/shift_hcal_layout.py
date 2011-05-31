@@ -11,7 +11,7 @@ def shifthcallayout(i, p, *rows): i["00 Shift/Hcal/" + p] = DQMItem(layout=rows)
 
 # Report Summary Map
 shifthcallayout(dqmitems, "01 Hcal Report Summary",
-                [{'path':"Hcal/EventInfo/reportSummaryMap",
+                [{'path':"Hcal/EventInfo/reportSummaryMapShift",
                   'description':  "Shows average fraction of good cells per event in each Hcal subdetector (HB/HE/HO/HF/HO0/HO12/HFLumi).  Values should be greater than 0.98 for HB, HE, and HF.  There are known dead cells in HO, so the HO/HO0/HO12 values will usually be lower than those of the other subdetectors.  The HO0 value should still be > 0.95.  The summary map is fed by the results from the other plots on this page, so when a value is less than expected, you can use the other tests to determine the type of failure."}]
                 )
 

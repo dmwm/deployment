@@ -1,12 +1,12 @@
-// $Id: EBRenderPlugin.cc,v 1.141 2010/10/04 11:03:52 dellaric Exp $
+// $Id: EBRenderPlugin.cc,v 1.142 2011/05/28 09:49:02 emanuele Exp $
 
 /*!
   \file EBRenderPlugin
   \brief Display Plugin for Quality Histograms
   \author G. Della Ricca
   \author B. Gobbo
-  \version $Revision: 1.141 $
-  \date $Date: 2010/10/04 11:03:52 $
+  \version $Revision: 1.142 $
+  \date $Date: 2011/05/28 09:49:02 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -348,8 +348,8 @@ private:
           obj->GetXaxis()->SetNdivisions(17);
           obj->GetYaxis()->SetNdivisions(4);
         }
-        obj->SetMinimum(25.);
-        obj->SetMaximum(75.);
+        obj->SetMinimum(45.);
+        obj->SetMaximum(55.);
 
         gStyle->SetPalette(1);
         obj->SetContour(255);

@@ -8,6 +8,7 @@ server.workspace('DQMContent', 11, 'Tracker/Muons', 'SiStrip', '^SiStrip/')
 server.workspace('DQMContent', 12, 'Tracker/Muons', 'CSC', '^CSC/')
 server.workspace('DQMContent', 13, 'Tracker/Muons', 'DT', '^DT/')
 server.workspace('DQMContent', 14, 'Tracker/Muons', 'RPC', '^RPC/')
+server.workspace('DQMContent', 15, 'Tracker/Muons', 'SiStripLAS', '^SiStripLAS/')
 
 server.workspace('DQMContent', 21, 'Calorimeter', 'EcalBarrel', '^EcalBarrel/')
 server.workspace('DQMContent', 22, 'Calorimeter', 'EcalEndcap', '^EcalEndcap/')

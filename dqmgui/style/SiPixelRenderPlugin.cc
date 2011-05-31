@@ -2,8 +2,8 @@
   \file SiPixelRenderPlugin
   \brief Display Plugin for Pixel DQM Histograms
   \author P.Merkel
-  \version $Revision: 1.44 $
-  \date $Date: 2011/01/12 13:07:55 $
+  \version $Revision: 1.46 $
+  \date $Date: 2011/05/18 05:50:19 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -416,8 +416,8 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
         TLine t2; t2.SetLineColor(4); t2.DrawLine(0.,13.5,192.,13.5);
       }
       else if( o.name.find( "SUMDIG_ndigis_Barrel" ) != std::string::npos ){
-        TLine tl; tl.SetLineColor(4); tl.DrawLine(0.,3.,768.,3.);
-        TLine t2; t2.SetLineColor(4); t2.DrawLine(0.,12.,768.,12.);
+        TLine tl; tl.SetLineColor(4); tl.DrawLine(0.,3.5,768.,3.5);
+        TLine t2; t2.SetLineColor(4); t2.DrawLine(0.,13.5,768.,13.5);
       }
       else if( o.name.find( "SUMOFF_ndigis_Endcap" ) != std::string::npos ){
         obj->SetMaximum(8.);
@@ -425,8 +425,8 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
         TLine t2; t2.SetLineColor(4); t2.DrawLine(0.,3.8,96.,3.8);
       }
       else if( o.name.find( "SUMDIG_ndigis_Endcap" ) != std::string::npos ){
-        TLine tl; tl.SetLineColor(4); tl.DrawLine(0.,2.,672.,2.);
-        TLine t2; t2.SetLineColor(4); t2.DrawLine(0.,3.6,672.,3.6);
+        TLine tl; tl.SetLineColor(4); tl.DrawLine(0.,2.5,672.,2.5);
+        TLine t2; t2.SetLineColor(4); t2.DrawLine(0.,4.5,672.,4.5);
       }
       else if( o.name.find( "SUMOFF_charge_OnTrack_Barrel" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(0.,4.,192.,4.);
@@ -445,8 +445,8 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(0.,95.,768.,95.);
       }
       else if( o.name.find( "SUMCLU_nclusters_Barrel" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(0., 1.,768., 1.);
-        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(0.,2.3,768.,2.3);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(0., 1.3,768., 1.3);
+        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(0.,3.5,768.,3.5);
       }
       else if( o.name.find( "SUMCLU_size_Barrel" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(0.,2.5,768.,2.5);
@@ -469,8 +469,8 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(0.,42.,672.,42.);
       }
       else if( o.name.find( "SUMCLU_nclusters_Endcap" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(0., 1.,672., 1.);
-        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(0.,1.4,672.,1.4);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(0., 1.1,672., 1.1);
+        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(0.,2.0,672.,2.0);
       }
       else if( o.name.find( "SUMCLU_size_Endcap" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(0., 1.8,672., 1.8);
@@ -550,6 +550,9 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
 	  TLine tl33; tl33.SetLineColor(4); tl33.DrawLine(27.,25.,29.,25.); //little boxes
 	  TLine tl34; tl34.SetLineColor(4); tl34.DrawLine(27.,27.,29.,27.); //little boxes
 	}
+        //Look at last filled bin (above -0.99) and use to zoom in on plot
+        float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(-0.99))+1.;
+        obj->GetXaxis()->SetRangeUser(0.,currentX);
       }
 
 }

@@ -17,15 +17,15 @@ class RPCRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
     {
-      if (o.name.find("RPC/") == std::string::npos)
-        return false;
 
-      if( (o.name.find( "/RecHits/" ) != std::string::npos )||
-	  (o.name.find( "/RPCEfficiency" ) != std::string::npos )||
-	  (o.name.find( "/FEDIntegrity" ) != std::string::npos )||
-          (o.name.find("/EventInfo") != std::string::npos))
-        return true;
-
+      if  (o.name.find( "RPC/RecHits" ) != std::string::npos ) return true;
+      if  (o.name.find( "RPC/Noise" ) != std::string::npos ) return true;
+      if  (o.name.find( "RPC/Muon" ) != std::string::npos ) return true;
+      if  (o.name.find( "RPC/DCSInfo" ) != std::string::npos ) return true;
+      if  (o.name.find( "RPC/RPCEfficiency" ) != std::string::npos ) return true;
+      if  (o.name.find( "RPC/FEDIntegrity" ) != std::string::npos ) return true;
+      if  (o.name.find("RPC/EventInfo") != std::string::npos) return true;
+      if  (o.name.find("RPC/AllHits") != std::string::npos) return true;
       return false;
     }
 
@@ -85,7 +85,7 @@ private:
       c->SetGridy();
 
 
-      if(o.name.find("reportSummaryMap") != std::string::npos)
+      if(o.name.find("SummaryMap") != std::string::npos)
 	{
         dqm::utils::reportSummaryMapPalette(obj);
 	return;
@@ -301,7 +301,7 @@ private:
       {
 	gStyle->SetPaintTextFormat(".2f");
 
-	obj->GetXaxis()->SetTitle("% of RPC States");
+        obj->GetXaxis()->SetTitle("Fraction of RPC States");
 	obj->SetOption("text");
 	obj->SetStats( kTRUE );
 	return;
@@ -430,6 +430,29 @@ private:
 	gStyle->SetPalette(10, colorPaletteEff);
         return;
       }
+
+
+      if(o.name.find("rpcHVStatus") != std::string::npos)
+        {
+          //obj->Reset();
+          obj->SetMinimum(-0.5);
+          obj->SetMaximum(1.5);
+
+          int colorPaletteDCS[2];
+          colorPaletteDCS[0] = 632; // Red
+          colorPaletteDCS[1] = 416; // Green
+
+          gStyle->SetPalette(2, colorPaletteDCS);
+          return;
+        }
+
+
+
+      if(o.name.find("RollPercentage") != std::string::npos)
+        {
+          obj->SetOption( "text" );
+          return;
+        }
 
     }
 };

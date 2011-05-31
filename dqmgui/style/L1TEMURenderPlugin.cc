@@ -1,16 +1,31 @@
-/*!
-  \file L1TEMURenderPlugin.cc
-  \\
-  \\ Code shamelessly borrowed from J. Temple's HcalRenderPlugin.cc code,
-  \\ which was shamelessly borrowed from S. Dutta's SiStripRenderPlugin.cc
-  \\ code, G. Della Ricca and B. Gobbo's EBRenderPlugin.cc, and other existing
-  \\ subdetector plugins
-  \\ preDraw and postDraw methods now check whether histogram was a TH1
-  \\ or TH2, and call a private method appropriate for the histogram type
+/**
+ * \class L1TEMURenderPlugin
+ *
+ *
+ * Description: render plugin for L1 emulator DQM histograms.
+ *
+ * Implementation:
+ *    <TODO: enter implementation details>
+ *
+ * \author: Lorenzo Agostino
+ *      Initial version - based on code from HcalRenderPlugin
+ *
+ * \author: Vasile Mihai Ghete   - HEPHY Vienna
+ *      New render plugin for report summary map
+ *
+ *
+ * $Date: 2011/03/11 11:05:44 $
+ * $Revision: 1.11 $
+ *
 */
 
+// system include files
+#include <cassert>
+
+// user include files
+
+//    base class
 #include "DQM/DQMRenderPlugin.h"
-#include "utils.h"
 
 #include "TProfile2D.h"
 #include "TH1F.h"
@@ -23,86 +38,97 @@
 #include "TLine.h"
 #include "TLegend.h"
 #include "TPRegexp.h"
-#include <cassert>
 
-class L1TEMURenderPlugin : public DQMRenderPlugin
-{
+#include "QualityTestStatusRenderPlugin.h"
+
+class L1TEMURenderPlugin: public DQMRenderPlugin {
+
 public:
-  virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
-    {
+
       // determine whether core object is an L1TEMU object
-      if (o.name.find( "L1TEMU/" ) != std::string::npos &&
-          o.name.find( "L1TdeRCT/" ) == std::string::npos )
+    virtual bool applies(const VisDQMObject& dqmObj, const VisDQMImgInfo&) {
+        if (dqmObj.name.find("L1TEMU/") != std::string::npos) {
+
+            // return true for all L1TEMU, except L1TdeRCT
+            if (dqmObj.name.find("L1TEMU/L1TdeRCT/") != std::string::npos) {
+                return false;
+            } else {
         return true;
+            }
+        }
 
       return false;
     }
 
-  virtual void preDraw (TCanvas * c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo &)
-    {
-      c->cd();
+    // pre-draw, separated per histogram type
+    virtual void preDraw(TCanvas* canvas, const VisDQMObject& dqmObj,
+            const VisDQMImgInfo&, VisDQMRenderInfo&) {
+
+        canvas->cd();
+
+        if (dynamic_cast<TH2F*> (dqmObj.object)) {
 
       // object is TH2 histogram
-      if( dynamic_cast<TH2F*>( o.object ) )
-      {
-        preDrawTH2F( c, o );
-      }
+            preDrawTH2F(canvas, dqmObj);
+
+        } else if (dynamic_cast<TH1F*> (dqmObj.object)) {
+
       // object is TH1 histogram
-      else if( dynamic_cast<TH1F*>( o.object ) )
-      {
-        preDrawTH1F( c, o );
+            preDrawTH1F(canvas, dqmObj);
+
       }
+
     }
 
-  virtual void postDraw (TCanvas * c, const VisDQMObject & o, const VisDQMImgInfo &)
-    {
+    // post-draw, separated per histogram type
+    virtual void postDraw(TCanvas* canvas, const VisDQMObject& dqmObj,
+            const VisDQMImgInfo&) {
+
+        if (dynamic_cast<TH2F*> (dqmObj.object)) {
+
       // object is TH2 histogram
-      if( dynamic_cast<TH2F*>( o.object ) )
-      {
-        postDrawTH2F( c, o );
-      }
+            postDrawTH2F(canvas, dqmObj);
+
+        } else if (dynamic_cast<TH1F*> (dqmObj.object)) {
+
       // object is TH1 histogram
-      else if( dynamic_cast<TH1F*>( o.object ) )
-      {
-        postDrawTH1F( c, o );
+            postDrawTH1F(canvas, dqmObj);
       }
     }
 
 private:
-  void preDrawTH1F ( TCanvas *, const VisDQMObject &o )
-    {
-      // Do we want to do anything special yet with TH1F histograms?
 
-      TH1F* obj = dynamic_cast<TH1F*>( o.object );
-      assert (obj); // checks that object indeed exists
+    void preDrawTH1F(TCanvas*, const VisDQMObject& dqmObj) {
 
-      // Code used in SiStripRenderPlugin -- do we want similar defaults?
-      /*
-        gStyle->SetOptStat(0111);
-        if ( obj->GetMaximum(1.e5) > 0. )
-          gPad->SetLogy(1);
-        else
-          gPad->SetLogy(0);
-      */
+        TH1F* objTH = dynamic_cast<TH1F*> (dqmObj.object);
+
+        // checks that object indeed exists
+        assert(objTH);
+
+        // no other rendering changes
+
     }
 
-  void preDrawTH2F ( TCanvas *, const VisDQMObject &o )
-    {
-      TH2F* obj = dynamic_cast<TH2F*>( o.object );
+    void preDrawTH2F(TCanvas*, const VisDQMObject& dqmObj) {
+
+        TH2F* obj = dynamic_cast<TH2F*> (dqmObj.object);
+
+        // checks that object indeed exists
       assert( obj );
 
-      //put in preDrawTH2F
-      if( o.name.find( "reportSummaryMap" )  != std::string::npos)
-      {
-        obj->SetStats( kFALSE );
-        dqm::utils::reportSummaryMapPalette(obj);
+        // specific rendering of L1TEMU reportSummaryMap, using
+        // dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(obj)
 
-	obj->GetXaxis()->SetBinLabel(1,"Data");
-	obj->GetXaxis()->SetBinLabel(2,"Emulator");
+        if (dqmObj.name.find("reportSummaryMap") != std::string::npos) {
+
+        obj->SetStats( kFALSE );
+            dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(obj);
+
+            obj->GetXaxis()->SetBinLabel(1, "L1 systems");
+            obj->GetXaxis()->SetBinLabel(2, "L1 objects");
 	obj->GetXaxis()->SetLabelSize(0.1);
 
-        obj->SetOption("col");
-        obj->SetTitle("L1TEMU Report Summary Map");
+            obj->SetTitle("L1 Emulator vs Data (L1TEMU) Report Summary Map");
 
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
@@ -110,15 +136,16 @@ private:
         return;
       }
 
+        // pre-draw rendering of other L1TEMU TH2F histograms
+
       gStyle->SetCanvasBorderMode( 0 );
       gStyle->SetPadBorderMode( 0 );
       gStyle->SetPadBorderSize( 0 );
 
-      // I don't think we want to set stats to 0 for Hcal
       //gStyle->SetOptStat( 0 );
       //obj->SetStats( kFALSE );
 
-      // Use same labeling format as SiStripRenderPlugin.cc
+        // label format
       TAxis* xa = obj->GetXaxis();
       TAxis* ya = obj->GetYaxis();
 
@@ -130,118 +157,76 @@ private:
       ya->SetTitleSize(0.05);
       ya->SetLabelSize(0.04);
 
-      // Now the important stuff -- set 2D hist drawing option to "colz"
+        // set 2D histogram drawing option to "colz"
+        //  "COL"
+        //    A box is drawn for each cell with a color scale varying with contents.
+        //    All the none empty bins are painted.
+        //    Empty bins are not painted unless some bins have a negative content because
+        //    in that case the null bins might be not empty.
+        //  "COLZ" = "COL" +
+        //    The color palette is also drawn.
+
       gStyle->SetPalette(1);
       obj->SetOption("colz");
     }
 
-  void postDrawTH1F( TCanvas *, const VisDQMObject & )
-    {
-      /*
-        // Add error/warning text to 1-D histograms.  Do we want this at this time?
-        TText tt;
-        tt.SetTextSize(0.12);
+    void postDrawTH1F(TCanvas*, const VisDQMObject &) {
 
-        if (o.flags == 0)
-                return;
-        else
-        {
-          if (o.flags & DQMNet::DQM_PROP_REPORT_ERROR)
-          {
-                  tt.SetTextColor(2); // error color = RED
-                  tt.DrawTextNDC(0.5, 0.5, "Error");
-          } // DQM_PROP_REPORT_ERROR
-          else if (o.flags & DQMNet::DQM_PROP_REPORT_WARN)
-          {
-                  tt.SetTextColor(5);
-                  tt.DrawTextNDC(0.5, 0.5, "Warning"); // warning color = YELLOW
-          } // DQM_PROP_REPORT_WARN
-          else if (o.flags & DQMNet::DQM_PROP_REPORT_OTHER)
-          {
-                  tt.SetTextColor(1); // other color = BLACK
-                  tt.DrawTextNDC(0.5, 0.5, "Other ");
-          } // DQM_PROP_REPORT_OTHER
-          else
-          {
-                  tt.SetTextColor(3);
-                  tt.DrawTextNDC(0.5, 0.5, "Ok ");
-          } //else
-        } // else (  o.flags != 0  )
-      */
+        // use DQM default rendering
+
     }
 
-  void postDrawTH2F( TCanvas *, const VisDQMObject &o )
-    {
-      // nothing to put here just yet
-      // in the future, we can add text output based on error status,
-      // or set bin range based on filled histograms, etc.
-      // Maybe add a big "OK" sign to histograms with no entries (i.e., no errors)?
+    void postDrawTH2F(TCanvas*, const VisDQMObject& dqmObj) {
 
+        TH2F* obj = dynamic_cast<TH2F*> (dqmObj.object);
 
-      TH2F* obj = dynamic_cast<TH2F*>( o.object );
+        // checks that object indeed exists
       assert( obj );
 
+        if (dqmObj.name.find("reportSummaryMap") != std::string::npos) {
 
-      TBox* b_box = new TBox();
       TLine* l_line = new TLine();
       TText* t_text = new TText();
 
+            t_text->DrawText(2.25, 14.3, "Mu");
+            t_text->DrawText(2.25, 13.3, "NoIsoEG");
+            t_text->DrawText(2.25, 12.3, "IsoEG");
+            t_text->DrawText(2.25, 11.3, "CenJet");
+            t_text->DrawText(2.25, 10.3, "ForJet");
+            t_text->DrawText(2.25, 9.3, "TauJet");
+            t_text->DrawText(2.25, 8.3, "ETT");
+            t_text->DrawText(2.25, 7.3, "ETM");
+            t_text->DrawText(2.25, 6.3, "HTT");
+            t_text->DrawText(2.25, 5.3, "HTM");
+            t_text->DrawText(2.25, 4.3, "HfBitCounts");
+            t_text->DrawText(2.25, 3.3, "HfRingEtSums");
+            t_text->DrawText(2.25, 2.3, "GtExternal");
+            t_text->DrawText(2.25, 1.3, "TechTrig");
 
-      if( o.name.find( "reportSummaryMap" )  != std::string::npos)
-      {
-	t_text->DrawText(1.5,11.3,"GT");
-	t_text->DrawText(1.5,10.3,"Muons");
-	t_text->DrawText(1.5,9.3, "Jets");
-	t_text->DrawText(1.5,8.3, "TauJets");
-	t_text->DrawText(1.5,7.3, "IsoEM");
-	t_text->DrawText(1.5,6.3, "NonIsoEM");
-	t_text->DrawText(1.5,5.3, "MET");
+            t_text->DrawText(1.25, 11.3, "GT");
+            t_text->DrawText(1.25, 10.3, "GMT");
+            t_text->DrawText(1.25, 9.3, "RPC");
+            t_text->DrawText(1.25, 8.3, "CSC TF");
+            t_text->DrawText(1.25, 7.3, "CSC TPG");
+            t_text->DrawText(1.25, 6.3, "DT TF");
+            t_text->DrawText(1.25, 5.3, "DT TPG");
+            t_text->DrawText(1.25, 4.3, "GCT");
+            t_text->DrawText(1.25, 3.3, "RCT");
+            t_text->DrawText(1.25, 2.3, "HCAL TPG");
+            t_text->DrawText(1.25, 1.3, "ECAL TPG");
 
-	t_text->DrawText(2.5,11.3,"GLT");
-	t_text->DrawText(2.5,10.3,"GMT");
-	t_text->DrawText(2.5,9.3, "RPC");
-	t_text->DrawText(2.5,8.3, "CSCTPG");
-	t_text->DrawText(2.5,7.3, "CSCTF");
-	t_text->DrawText(2.5,6.3, "DTTPG");
-	t_text->DrawText(2.5,5.3, "DTTF");
-	t_text->DrawText(2.5,4.3, "HCAL");
-	t_text->DrawText(2.5,3.3, "ECAL");
-	t_text->DrawText(2.5,2.3, "GCT");
-	t_text->DrawText(2.5,1.3, "RCT");
+            l_line->SetLineWidth(2);
 
-	int NbinsX = obj->GetNbinsX();
-	int NbinsY = obj->GetNbinsY();
+            // vertical line
 
-	std::vector<std::vector<double> > TrigResult( NbinsY, std::vector<double>(NbinsX) );
+            l_line->DrawLine(2, 1, 2, 15);
 
-	for( int i=0; i<NbinsX; i++ ){
-	  for( int j=0; j<NbinsY; j++ ) TrigResult[j][i] = obj->GetBinContent(i+1,j+1);
-	}
+            // horizontal lines
 
-	char* trig_result = new char[20];
-
-	for( int j=0; j<NbinsY; j++ ){
-	  if( TrigResult[j][0]>-0.5 ){
-	    sprintf(trig_result,"%4.2f",TrigResult[j][0]);
-	    t_text->DrawText(1.2,j+1.3,trig_result);
-	  }
-	  if( TrigResult[j][1]>-0.5 ){
-	    sprintf(trig_result,"%4.2f",TrigResult[j][1]);
-	    t_text->DrawText(2.2,j+1.3,trig_result);
-	  }
-	}
-
-	b_box->SetFillColor(17);
-	b_box->DrawBox(1,1,2,5);
-
-	l_line->SetLineWidth(2);
-	l_line->DrawLine(2,1,2,12);
-
-	l_line->DrawLine(2,4,3,4);
-	l_line->DrawLine(2,3,3,3);
-	l_line->DrawLine(2,2,3,2);
-	l_line->DrawLine(2,1,3,1);
-
+            l_line->DrawLine(1, 1, 3, 1);
+            l_line->DrawLine(1, 2, 3, 2);
+            l_line->DrawLine(1, 3, 3, 3);
+            l_line->DrawLine(1, 4, 3, 4);
 	l_line->DrawLine(1,5,3,5);
 	l_line->DrawLine(1,6,3,6);
 	l_line->DrawLine(1,7,3,7);
@@ -249,30 +234,14 @@ private:
 	l_line->DrawLine(1,9,3,9);
 	l_line->DrawLine(1,10,3,10);
 	l_line->DrawLine(1,11,3,11);
-
-
-	TBox* b_box_w = new TBox();
-	TBox* b_box_r = new TBox();
-	TBox* b_box_y = new TBox();
-	TBox* b_box_g = new TBox();
-
-	b_box_g->SetFillColor(920);
-	b_box_y->SetFillColor(919);
-	b_box_r->SetFillColor(901);
-	b_box_w->SetFillColor(0);
-
-
-	TLegend* leg = new TLegend(0.16, 0.11, 0.44, 0.38);
-	leg->AddEntry(b_box_g,"Good",   "f");
-	leg->AddEntry(b_box_y,"Warning","f");
-	leg->AddEntry(b_box_r,"Error",  "f");
-	leg->AddEntry(b_box_w,"Masked", "f");
-	leg->Draw();
+            l_line->DrawLine(1, 12, 3, 12);
+            l_line->DrawLine(2, 13, 3, 13);
+            l_line->DrawLine(2, 14, 3, 14);
 
 	return;
       }
 
-
+        // post-draw rendering of other L1TEMU TH2F histograms
     }
 };
 

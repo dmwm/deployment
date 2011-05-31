@@ -1,6 +1,11 @@
 def castorlayout(i, p, *rows): i["Castor/Layouts/" + p] = DQMItem(layout=rows)
 
 
+castorlayout(dqmitems, "CASTOR All Digi Values",
+           [{ 'path': "Castor/CastorDigiMonitor/Castor All Digi Values",
+             'description':"all CASTOR ADC values"}]
+           )
+
 castorlayout(dqmitems, "CASTOR Digi ChannelSummaryMap",
            [{ 'path': "Castor/CastorPSMonitor/CASTOR Digi ChannelSummaryMap",
              'description':""}]
@@ -16,14 +21,29 @@ castorlayout(dqmitems, "CASTOR Digi SaturationSummaryMap",
              'description':""}]
            )
 
-castorlayout(dqmitems, "CASTOR RecHit Energy based Channel Status",
-           [{ 'path': "Castor/CastorChannelQuality/RecHitEnergyBasedSummaryMap",
-             'description':"Green - OK, Red - dead, Yellow - noisy"}]
-           )
-
 castorlayout(dqmitems, "CASTOR event products",
            [{ 'path': "Castor/CastorEventProducts/CastorEventProduct",
              'description':"check whether CASTOR objects are present in the events"}]
+           )
+
+castorlayout(dqmitems, "CASTOR RecHit Occupancy Map",
+           [{ 'path': "Castor/CastorRecHitMonitor/CastorRecHits Occupancy Map",
+             'description':""}]
+           )
+
+castorlayout(dqmitems, "CASTOR RecHit Energy Fraction in modules",
+           [{ 'path': "Castor/CastorRecHitMonitor/EnergyFraction/Fraction of the total energy in CASTOR modules",
+             'description':""}]
+           )
+
+castorlayout(dqmitems, "CASTOR RecHit Energy Fraction in sectors",
+           [{ 'path': "Castor/CastorRecHitMonitor/EnergyFraction/Fraction of the total energy in CASTOR sectors",
+             'description':""}]
+           )
+
+castorlayout(dqmitems, "CASTOR RecHit Number per Event- above threshold",
+           [{ 'path': "Castor/CastorRecHitMonitor/Number of CASTOR RecHits per event- above threshold",
+             'description':""}]
            )
 
 castorlayout(dqmitems, "CASTOR RecHit Energies",
@@ -46,10 +66,6 @@ castorlayout(dqmitems, "CASTOR RecHit Energy 2D Map",
              'description':"2D Energy Map"}]
            )
 
-castorlayout(dqmitems, "CASTOR All Digi Values",
-           [{ 'path': "Castor/CastorDigiMonitor/Castor All Digi Values",
-             'description':"all CASTOR ADC values"}]
-           )
 
 castorlayout(dqmitems, "CASTOR hits 3D- cumulative",
            [{ 'path': "Castor/CastorEventDisplay/CASTOR 3D hits- cumulative",

@@ -1,29 +1,28 @@
 def shiftrpclayout(i, p, *rows): i["00 Shift/RPC/" + p] = DQMItem(layout=rows)
 
-shiftrpclayout(dqmitems, "01-TOP_Summary_Wheel+2",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel2", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
+########### define varialbles for frequently used strings #############
+rpclink = "   >>> <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>"
+fed = "FED Fatal Errors";
+rpcevents = "Events processed by the RPC DQM"
+quality = "Overview of system quality. Expressed in percentage of chambers."
+occupancy = "Occupancy per sector"
 
-shiftrpclayout(dqmitems, "02-TOP_Summary_Wheel+1",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
 
-shiftrpclayout(dqmitems, "03-TOP_Summary_Wheel0",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel0", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
+################### Links to Histograms #################################
 
-shiftrpclayout(dqmitems, "04-TOP_Summary_Wheel-1",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel-1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
+#FED Fatal
+shiftrpclayout(dqmitems, "01-Fatal_FED_Errors",
+               [{ 'path': "RPC/FEDIntegrity_EvF/FEDFatal", 'description': fed + rpclink }])
 
-shiftrpclayout(dqmitems, "05-TOP_Summary_Wheel-2",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel-2", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
+#RPC Events
+shiftrpclayout(dqmitems, "02-RPC_Events",
+               [{ 'path': "RPC/AllHits/RPCEvents", 'description': rpcevents + rpclink }])
 
-shiftrpclayout(dqmitems, "06-TOP_Summary_Disk3",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk3", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
-shiftrpclayout(dqmitems, "07-TOP_Summary_Disk2",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk2", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
-shiftrpclayout(dqmitems, "08-TOP_Summary_Disk1",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
-shiftrpclayout(dqmitems, "09-TOP_Summary_Disk-1",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
-shiftrpclayout(dqmitems, "10-TOP_Summary_Disk-2",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-2", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
-shiftrpclayout(dqmitems, "11-TOP_Summary_Disk-3",
-  [{ 'path': "RPC/RecHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-3", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>" }])
+
+shiftrpclayout(dqmitems, "03-Quality_State_Overview",
+               [{ 'path': "RPC/AllHits/SummaryHistograms/RPC_System_Quality_Overview", 'description': quality + rpclink }])
+
+
+shiftrpclayout(dqmitems, "04-RPC_Occupancy",
+               [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Barrel", 'description': occupancy + rpclink  }],
+               [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Endcap", 'description': occupancy + rpclink }])

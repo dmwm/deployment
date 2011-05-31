@@ -393,8 +393,7 @@ private:
 	  return;
 
 	} else if ( ( o.name.find("etaFine_fraction_wh") != std::string::npos )
-		    || ( o.name.find("nTracks_wh" ) != std::string::npos )
-		    || ( o.name.find("eta" ) != std::string::npos ) ) {
+                    || ( o.name.find("nTracks_wh" ) != std::string::npos ) ) {
 
 	  obj->GetXaxis()->CenterLabels();
 	  obj->GetXaxis()->SetNdivisions(12);
