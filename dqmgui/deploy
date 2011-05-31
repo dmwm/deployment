@@ -40,4 +40,12 @@ deploy_dqmgui_post()
    cmd="$project_config/daily"
    $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
    [ ! -f $root/enabled/$project ] || echo "17 2 * * * $cmd") | crontab -
+
+  case $host:$root in
+    vocms138:/data/srv )
+      klist -s # must have afs kerberos token
+      (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
+       echo "6 */4 * * * $host $project_config/manage xstart afs-sync 'I did read documentation'") | acrontab
+      ;;
+  esac
 }

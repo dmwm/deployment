@@ -13,7 +13,7 @@
 ##H   compile     refresh render plugins
 ##H
 ##H Usage 2: manage ACTION COMPONENTs [SECURITY-STRING]
-##H COMPONENTs: webserver collector renderer logger agent migration
+##H COMPONENTs: webserver collector renderer logger agents afs-sync migration
 ##H
 ##H   xstatus     show status for COMPONENTs
 ##H   xstart      (re)start COMPONENTs
@@ -142,7 +142,7 @@ start()
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online/ \
         $STATEDIR/ix \
-        $CFGDIR/OnlineQuotas.py
+        $CFGDIR/quota-online.py
       ;;
 
     dqm-c2d07-02:*agents* ) # dqm-prod-offsite
@@ -159,7 +159,7 @@ start()
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online/ \
         $STATEDIR/ix \
-        $CFGDIR/OnlineQuotas.py
+        $CFGDIR/quota-online.py
       ;;
 
     dqm-c2d07-12:*agents* ) # dqm-test
@@ -176,15 +176,16 @@ start()
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online-test/ \
         $STATEDIR/ix \
-        $CFGDIR/OnlineQuotas.py
+        $CFGDIR/quota-online.py
       ;;
 
-    vocms116:*agents* ) # offline
-      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|createOnlineInfo" "refusing to restart"
+    vocms13[89]:*agents* ) # offline
+      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       # standard lot of agents
-      for D in offline caf dev; do
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed 's/offline/dqmdata/')
+      for D in $CONFIGS; do
+        D=${D/offline-}
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-receive \
           visDQMReceiveDaemon \
@@ -229,7 +230,15 @@ start()
           $DQM_DATA/data \
           $DQM_DATA/ix \
           $DQM_DATA/agents/historic \
+          $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-qcontrol \
+          visDQMRootFileQuotaControl \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $CFGDIR/quota-offline-${D}.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -237,26 +246,28 @@ start()
           $DQM_DATA/data
 
         if [ $D = offline ]; then
-          DIRS="OnlineData,RelVal"
-          DIRS="$DIRS,OfflineData/HIRun2010/StreamExpress"
-          DIRS="$DIRS,OfflineData/HIRun2010/HICorePhysics"
-          DIRS="$DIRS,OfflineData/HIRun2010/HIAllPhysics"
-          startagent $D/agent-syncdn \
-            visDQMSyncDaemon \
-            --dirs $DIRS \
-            --dirs_quotas=30G,15G,20G,15G,50G 130G \
-            $DQM_DATA/data \
-            /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data
-
           startagent $D/agent-osync \
-            $CFGDIR/OnlineSync.sh
+            visDQMOnlineSyncDaemon
 
           startagent $D/agent-coinfo \
-            $CFGDIR/createOnlineInfo \
+            visDQMCreateInfoDaemon \
             $DQM_DATA/data/OnlineData \
             $DQM_DATA/agents/zip
         fi
       done
+      ;;
+
+    vocms13[89]:*afs-sync* )
+      DIRS=OnlineData,OfflineData/Run2011/StreamExpress
+      DIRS=$DIRS,OfflineData/Run2011/StreamExpressCosmics
+      DIRS=$DIRS,OfflineData/Run2011/Commissioning
+      DIRS=$DIRS,OfflineData/Run2011/Cosmics,OfflineData/Run2011/MinimumBias
+
+      startagent offline/agent-afssync \
+        visDQMAfsSync \
+        --dirs $DIRS \
+        --dirs_quotas=30G,20G,20G,20G,20G,20G 130G \
+        $DQM_DATA/data /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data
       ;;
 
     *:*agents* ) # dev
@@ -269,22 +280,7 @@ start()
           visDQMReceiveDaemon \
           $DQM_DATA/uploads \
           $DQM_DATA/data \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/agents/zip
-
-        startagent $D/agent-zip \
-          visDQMZipDaemon \
-          $DQM_DATA/agents/zip \
-          $DQM_DATA/data \
-          $DQM_DATA/zipped \
-          $DQM_DATA/agents/freezer
-
-        startagent $D/agent-zfreeze \
-          visDQMZipFreezeDaemon \
-          $DQM_DATA/agents/freezer \
-          $DQM_DATA/zipped \
-          7 \
-          $DQM_DATA/agents/stageout
+          $DQM_DATA/agents/register
 
         startagent $D/agent-import \
           visDQMImportDaemon \
@@ -292,7 +288,15 @@ start()
           $DQM_DATA/data \
           $DQM_DATA/ix \
           $DQM_DATA/agents/historic \
+          $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-qcontrol \
+          visDQMRootFileQuotaControl \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $CFGDIR/quota-offline-${D}.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -379,7 +383,10 @@ stop()
 {
   echo "stopping $ME"
   case ${1:-agents} in *agents* )
-    killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|OnlineSync|createOnlineInfo" ;;
+    killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
+  esac
+  case ${1:-afs-sync} in *afs-sync* )
+    killproc "$ME afs sync" "visDQMAfsSync" ;;
   esac
   case $1 in *migration* )
     killproc "$ME migration agents" "visDQMMigration|sleep" ;;
@@ -410,7 +417,10 @@ status()
     statproc "$ME loggers" "rotatelogs" ;;
   esac
   case ${1:-agents} in *agents* )
-    statproc "$ME agents" "visDQM.*Daemon|visDQMIndex|zip|OnlineSync|createOnlineInfo" ;;
+    statproc "$ME agents" "visDQM.*Daemon|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+  esac
+  case ${1:-afs-sync} in *afs-sync* )
+    statproc "$ME afs sync" "visDQMAfsSync" ;;
   esac
   case $1 in *migration* )
     statproc "$ME migration" "visDQMMigration|sleep" ;;
