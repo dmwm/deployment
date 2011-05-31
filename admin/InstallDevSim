@@ -76,7 +76,7 @@ case $STAGE in
     ln -s srv-dev srv
     mkdir -p srv-dev
     $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD/srv $PKGS
-    sudo -H -u _sw $PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS
+    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS"
     $PWD/cfg/admin/ProxySeed -t dev -d $PWD/srv/$VER/auth/proxy
     ;;
 

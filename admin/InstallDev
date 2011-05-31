@@ -60,7 +60,7 @@ case $STAGE in
   image )
     set -ex
     $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD $PKGS
-    sudo -H -u _sw $PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD $PKGS
+    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD $PKGS"
     $PWD/cfg/admin/ProxySeed -t dev -d $PWD/$VER/auth/proxy
     $PWD/cfg/Deploy $REPO -t $VER -a -s post $PWD $PKGS
     ;;
@@ -74,8 +74,8 @@ case $STAGE in
     set -e
     for f in enabled/$WHAT; do
       app=${f#*/}; case $app in frontend) u=root ;; * ) u=_$app ;; esac
-      (set -ex; sudo -H -u $u $PWD/current/config/$app/manage \
-                   $STAGE 'I did read documentation')
+      (set -ex; sudo -H -u $u bashs -lc \
+       "$PWD/current/config/$app/manage $STAGE 'I did read documentation'")
     done
     ;;
 
