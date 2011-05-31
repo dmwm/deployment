@@ -15,7 +15,7 @@ deploy_couchdb_prep()
 deploy_couchdb_sw()
 {
   rm -f $project_auth/hmackey.ini
-  deploy_pkg -a couchdb/hmackey.ini comp external+couchdb 1.0.2-comp
+  deploy_pkg -a couchdb/hmackey.ini comp external+couchdb 1.0.2-comp2
   perl -p -i -e "s|{ROOT}|$root|g" $project_config/local.ini
 }
 
