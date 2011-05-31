@@ -44,5 +44,5 @@ active.T0Mon = active.section_('T0Mon')
 active.T0Mon.object = 'T0Mon.T0Mon'
 active.T0Mon.templates = os.environ["T0MON_ROOT"] + '/lib/python2.6/site-packages/T0Mon/templates'
 active.T0Mon.DAS='http://localhost:8304/tier0/'
-active.T0Mon.plotfairy='http://vocms114.cern.ch:8351/plotfairy/'
+active.T0Mon.plotfairy='http://vocms117.cern.ch:8351/plotfairy/'
 active.T0Mon.emailAlert = 'gowdy@cern.ch'
