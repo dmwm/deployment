@@ -94,6 +94,7 @@ check()
 # make sure the CMSSW_VERSIONS are up to date
 updateversions()
 {
+  cd $STATEDIR
   requestDbAdmin add -c $CFGFILE -v all
 }
 

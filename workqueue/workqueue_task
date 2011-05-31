@@ -32,7 +32,6 @@ export WMAGENT_CONFIG=${CFGFILE}
 export WQ_CLI="${WORKQUEUE_ROOT}/bin/wmagent-workqueue"
 logcmd="rotatelogs $LOGDIR/workqueue-%Y%m%d.log 86400 2>&1"
 
-
 # Verify the security string.
 check()
 {
@@ -64,21 +63,25 @@ case ${1:-status} in
 
   location_refresh )
     # PHEDEX cant handle proxy certs yet...
+    cd $STATEDIR
     add_cert
     ${WQ_CLI} --locations 2>&1 | $logcmd
     ;;
 
   reqmgr_sync )
+    cd $STATEDIR
     add_cert
     ${WQ_CLI} --reqmgr 2>&1 | $logcmd
     ;;
 
   housekeep )
+    cd $STATEDIR
     add_cert
     ${WQ_CLI} --clean 2>&1 | $logcmd
     ;;
 
   interactive )
+    cd $STATEDIR
     add_cert
     ${WQ_CLI} -i
     ;;
