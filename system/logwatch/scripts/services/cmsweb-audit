@@ -53,10 +53,10 @@ def parse(block):
     # elif line.startswith("type=USER_END "): pass
     # elif line.startswith("type=USER_START "): pass
 
-  if 'cwd' in info:
-    paths = ((i, (p == "(null)" and "[%s@%s]" % (inode,dev)) \
-              or os.path.join(info['cwd'], p))
-             for i, p, inode, dev in paths)
+  cwd = info.get('cwd', '/')
+  paths = [(i, (p == "(null)" and "[%s@%s]" % (inode,dev)) \
+            or os.path.join(info['cwd'], p))
+           for i, p, inode, dev in paths]
   if paths:
     info['paths'] = [p for i, p in sorted(paths)]
 
@@ -176,7 +176,7 @@ def summarise(data):
           tick(path_success, (info['uid'], onepath(info, 1), info['syscall'], info['exe']))
         else:
           tick(path_failure, (error(info), info['uid'], onepath(info, 1), info['syscall'], info['exe']))
-      elif info['syscall'] in ('open', 'rename', 'mkdir', 'chmod', 'chown'):
+      elif info['syscall'] in ('open', 'rename', 'mkdir', 'chmod', 'chown', 'link', 'fgetxattr'):
         if info['success'] == 'yes':
           tick(path_success, (info['uid'], pathlist(info), info['syscall'], info['exe']))
         else:
