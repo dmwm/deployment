@@ -17,7 +17,7 @@ deploy_t0datasvc_sw()
 
 deploy_t0datasvc_post()
 {
-  case $host in * ) enable ;; esac
+  case $host in vocms13[89] ) disable ;; * ) enable ;; esac
   (mkcrontab -l; sysboot) | crontab -
 }
 
