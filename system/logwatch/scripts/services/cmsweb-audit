@@ -27,7 +27,7 @@ def parse(block):
   for line in lines:
     if line.startswith("type=PATH "):
       line = re.sub(r"^type=PATH msg=\S+ \S+ : ", "", line)
-      m = re.match(r"^item=(\d+) name=", line)
+      m = re.match(r"^item=(\d+)\s+name=", line)
       id = m.group(1)
       line = line[m.end():]
       m = re.search(r" inode=(\d+) dev=(\d+:\d+) ", line)
@@ -54,8 +54,7 @@ def parse(block):
     # elif line.startswith("type=USER_START "): pass
 
   cwd = info.get('cwd', '/')
-  paths = [(i, (p == "(null)" and "[%s@%s]" % (inode,dev)) \
-            or os.path.join(info['cwd'], p))
+  paths = [(i, (p == "(null)" and "[%s@%s]" % (inode,dev)) or os.path.join(cwd, p))
            for i, p, inode, dev in paths]
   if paths:
     info['paths'] = [p for i, p in sorted(paths)]
@@ -70,7 +69,7 @@ def command(info):
 
   args = info['execve-args']
   for i in xrange(0, len(args)):
-    if not re.match(r"^[-_.,:/@+A-Za-z0-9]+$", args[i]):
+    if not re.match(r"^[-_.,:/@+=%A-Za-z0-9]+$", args[i]):
       args[i] = repr(args[i])
   return " ".join(args)
 
@@ -176,7 +175,8 @@ def summarise(data):
           tick(path_success, (info['uid'], onepath(info, 1), info['syscall'], info['exe']))
         else:
           tick(path_failure, (error(info), info['uid'], onepath(info, 1), info['syscall'], info['exe']))
-      elif info['syscall'] in ('open', 'rename', 'mkdir', 'chmod', 'chown', 'link', 'fgetxattr'):
+      elif info['syscall'] in ('open', 'rename', 'mkdir', 'chmod', 'chown',
+                               'fchown', 'link', 'getxattr', 'fgetxattr'):
         if info['success'] == 'yes':
           tick(path_success, (info['uid'], pathlist(info), info['syscall'], info['exe']))
         else:
@@ -264,7 +264,7 @@ def summarise(data):
            pfxcount(call_failure, (err, user)),
            pfxsum(call_failure, (err, user)))
         prev_user = user
-      print "      %-4d %s [%s]" % (exec_failure[key], call, exe)
+      print "      %-4d %s [%s]" % (call_failure[key], call, exe)
     pad = "\n\n"
 
   if exit_failure:
