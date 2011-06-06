@@ -56,7 +56,6 @@ inited_server(){
 
 . $ROOT_DIR/apps/crab-server3/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
-. $ROOT_DIR/apps/py2-cheetah/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
 
 export CRABSERVER_ROOT=$ROOT_DIR/apps/crab-server3
