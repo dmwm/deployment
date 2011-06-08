@@ -318,6 +318,7 @@ start_mysql(){
    echo "starting mysqld_safe..."
    nohup mysqld_safe --defaults-extra-file=$CONFIG_MYSQL/my.cnf \
                      --datadir=$INSTALL_MYSQL/database \
+                     --log-bin \
                      --socket=$INSTALL_MYSQL/logs/mysql.sock \
                      --skip-networking --log-error=$INSTALL_MYSQL/logs/error.log \
                       --pid-file=$INSTALL_MYSQL/logs/mysqld.pid > /dev/null 2>&1 < /dev/null &
