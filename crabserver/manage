@@ -40,7 +40,7 @@ if [ -e $INSTALL_CS/.init ]; then CS_INIT_DONE=1; else CS_INIT_DONE=0; fi;
 #callbacks to activate or show initialisation has been done
 activate_crabserver(){
     touch $INSTALL_CS/.using
-    cp $ROOT_DIR/apps/wmcore/etc/CrabServerConfig.py $CONFIG_CS/config-template.py
+    cp $ROOT_DIR/apps/crab-server3/configuration/Example.py $CONFIG_CS/config-template.py
     $PROJ_DIR/wmagent/manage activate-agent
     $PROJ_DIR/wmagent/manage activate-reqmgr
     $PROJ_DIR/wmagent/manage activate-workqueue
@@ -188,6 +188,27 @@ execute_reqmgr(){
 }
 
 
+clean_mysql(){
+    $PROJ_DIR/wmagent/manage clean-mysql
+}
+
+clean_couch(){
+    $PROJ_DIR/wmagent/manage clean-couch
+}
+
+clean_crabserver(){
+    $PROJ_DIR/wmagent/manage clean-agent
+    load_secrets_file;
+    echo "Cleaning CRABInterface..."
+    rm -rf $INSTALL_CS/*
+    rm -f $CONFIG_CS/config.py;
+    rm -f $INSTALL_CS/.init
+}
+clean_all(){
+    clean_mysql;
+    clean_couch;
+    clean_crabserver;
+}
 
 
 #######################################################
@@ -209,6 +230,14 @@ case $1 in
     stop_crabserver;;
   stop-services)
     stop_services;;
+  clean-mysql)
+    clean_mysql;;
+  clean-couch)
+    clean_couch;;
+  clean-crabserver)
+    clean_crabserver;;
+  clean-all)
+    clean_all;;
   execute-agent)
     execute_agent $@;;
   execute-workqueue)
