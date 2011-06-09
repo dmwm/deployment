@@ -3,16 +3,17 @@
 ##H Usage: manage ACTION [ARG] [SECURITY-STRING]
 ##H
 ##H Available actions:
-##H   help        show this help
-##H   version     get current version of the service
-##H   status      show current service's status
-##H   sysboot     start server from crond if not running
-##H   restart     (re)start the service
-##H   start       (re)start the service
-##H   stop        stop the service
-##H   pushapps    push couch applications
-##H   compact     compact database ARG
-##H   cleanviews  clean view named ARG
+##H   help            show this help
+##H   version         get current version of the service
+##H   status          show current service's status
+##H   sysboot         start server from crond if not running
+##H   restart         (re)start the service
+##H   start           (re)start the service
+##H   stop            stop the service
+##H   pushapps        push couch applications
+##H   compact         compact database ARG
+##H   compactviews    compact database views for design doc ARG ARG
+##H   cleanviews      clean view named ARG
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/CouchDB
@@ -126,8 +127,24 @@ compact()
         grep -q '{"ok":true}' ||
     { echo "An error occured triggering compaction. Please look in the CouchDB logs."; exit 7; }
 
-  # TODO: view compaction
-  # curl -H "Content-Type: application/json" -X POST http://localhost:5984/dbname/_compact/designname
+}
+
+# Trigger a view compaction
+compact_views()
+{
+  local database=$1
+  local designdoc=$2
+  [ -n "$database" ] ||
+    { echo "You must specify a database to compact its views"; exit 3; }
+  [ -n "$designdoc" ] ||
+    { echo "You must specify a design doc to compact its views"; exit 3; }
+
+  curl -s localhost:5984/$database/_design/$designdoc/_info | grep -q '"compact_running":true' &&
+    { echo "$database/$designdoc is already compacting"; exit 5; }
+
+  curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_compact/$designdoc | \
+        grep -q '{"ok":true}' ||
+    { echo "An error occured triggering view compaction. Please look in the CouchDB logs."; exit 7; }
 }
 
 # Verify the security string.
@@ -175,6 +192,11 @@ case ${1:-status} in
   compact )
     check "$3"
     compact $2
+    ;;
+
+  compactviews )
+    check "$4"
+    compact_views $2 $3
     ;;
 
   cleanviews )
