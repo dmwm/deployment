@@ -10,11 +10,7 @@ P /user/***
 P /srv-*/logs/***
 P /srv-*/enabled/***
 P /lost+found
-P /projects
-P /das
-P /pool
-P /wildish
-P /frontend
+P /temp
 - #*
 - .#*
 - *~
