@@ -146,13 +146,12 @@ class URLMonitor(Monitor):
     except Exception, e:
       logmsg(svc, "PING", "FAILED", "<%s>" % url, regex, str(e).replace("\n", "; "))
 
-class LogFileMonitor(Monitor):
+class LogMonitor(Monitor):
   """Monitor which scans log files against regexp patterns.
 
   For each service this monitor accepts a service log directory, list
   of glob patterns for log file names to scan in it, and a regexp.
-  Any lines matching the pattern in those files are presumed to be
-  errors and are reported verbatim to the output.
+  Lines matching regexps are handed to derived class for processing.
 
   The monitor maintains state of previously seen log files, their size
   and last modified time stamp, and the last byte offset seen. Logs are
@@ -160,13 +159,15 @@ class LogFileMonitor(Monitor):
   shrinks, or files are removed, memory of scanning the files is reset
   and the files are re-evaluated from beginning if/when they reappear.
   """
-  def __init__(self, task_queue, state_dir):
+  def __init__(self, task_queue, state_dir, state_id):
     """Initialise the log monitor.
 
     @param task_queue -- queue for incoming tasks
-    @param state_dir -- directory in which to keep log scan state."""
+    @param state_dir -- directory in which to keep log scan state.
+    @param state_id -- file name for log scan state."""
     Monitor.__init__(self, task_queue)
     self.state_dir = state_dir
+    self.state_id = state_id
     self.state = self._load_state()
     self.modified = False
     self.last_save = 0
@@ -216,7 +217,7 @@ class LogFileMonitor(Monitor):
     later reappear, they will be considered new log files."""
     state = {}
     try:
-      state_file = open("%s/%s" % (self.state_dir, "log-state"), "r")
+      state_file = open("%s/%s" % (self.state_dir, self.state_id), "r")
       state = pickle.load(state_file)
     except:
       pass
@@ -245,20 +246,22 @@ class LogFileMonitor(Monitor):
 
     now = time()
     if self.modified and now - self.last_save > 15:
-      out = open("%s/%s" % (self.state_dir, "log-state"), "w")
+      out = open("%s/%s" % (self.state_dir, self.state_id), "w")
       pickle.dump(self.state, out)
       out.close()
       self.last_save = now
       self.modified = False
 
-  def _do(self, svc, dir, files, rx):
+  def _do(self, svc, dir, files, rxlist):
     """Perform log scan task.
+
+    For each match found invokes derived class method _match().
 
     @param svc -- service name
     @param dir -- service log directory
     @param files -- list of log file name glob patterns to read from
-    @param rx -- regular expression which matches error lines in the logs"""
-    rx = re.compile(rx)
+    @param rxlist -- list of regular expressions to match log lines"""
+    rxlist = map(lambda rx: re.compile(rx), rxlist)
     for fname in sum([glob("%s/%s" % (dir, pat)) for pat in files], []):
       try:
         st = os.stat(fname)
@@ -275,8 +278,10 @@ class LogFileMonitor(Monitor):
           file.seek(s.lastpos)
           for start, end, line in self._read_lines(file):
             s.lastpos = end
-	    if re.search(rx, line):
-              logmsg(svc, "ERROR", "file:<%s>:%d" % (fname, start), line.rstrip())
+	    for rx in rxlist:
+	      match = re.search(rx, line)
+	      if match:
+	        self._match(svc, fname, start, line.rstrip(), rx, match)
 
           s.size = st.st_size
           s.mtime = st.st_mtime
@@ -290,6 +295,49 @@ class LogFileMonitor(Monitor):
                "failed to read file: %s" % str(e))
 	for line in trace.getvalue().rstrip().split("\n"):
           logmsg(svc, "FAILURE", line)
+
+
+class LogErrorMonitor(LogMonitor):
+  """LogMonitor which reports any matches found as errors."""
+  def __init__(self, task_queue, state_dir):
+    """Initialise the log monitor.
+
+    @param task_queue -- queue for incoming tasks
+    @param state_dir -- directory in which to keep log scan state."""
+    LogMonitor.__init__(self, task_queue, state_dir, "log-state")
+
+  def _match(self, svc, fname, start, line, rx, match):
+    """Repot log match.
+
+    @param svc -- service name
+    @param fname -- log file in which match was found
+    @param start -- line starting byte position
+    @param line -- log line
+    @param rx -- regular expression that matched
+    @param match -- match object"""
+    logmsg(svc, "ERROR", "file:<%s>:%d" % (fname, start), line)
+
+class LogValueMonitor(LogMonitor):
+  """LogMonitor which reports matches found as NAME=VALUE pairs where
+  NAMEs are named regexp match groups."""
+  def __init__(self, task_queue, state_dir):
+    """Initialise the log monitor.
+
+    @param task_queue -- queue for incoming tasks
+    @param state_dir -- directory in which to keep log scan state."""
+    LogMonitor.__init__(self, task_queue, state_dir, "report-state")
+
+  def _match(self, svc, fname, start, line, rx, match):
+    """Repot log match.
+
+    @param svc -- service name
+    @param fname -- log file in which match was found
+    @param start -- line starting byte position
+    @param line -- log line
+    @param rx -- regular expression that matched
+    @param match -- match object"""
+    logmsg(svc, "REPORT", " ".join(["%s=%s" % (k, v) for k, v in
+                                    sorted(match.groupdict().items())]))
 
 class MonitorDaemon:
   """Master monitor daemon.
@@ -461,14 +509,24 @@ class MonitorDaemon:
       if line == "": continue
 
       m = re.match(r"^LOG_FILES='(.*)'$", line)
-      if m: s.log_files = re.split(r"\s+", m.group(1)); continue
+      if m: s.log_err_files += re.split(r"\s+", m.group(1)); continue
       m = re.match(r'^LOG_FILES="(.*)"$', line)
-      if m: s.log_files = re.split(r"\s+", m.group(1)); continue
+      if m: s.log_err_files += re.split(r"\s+", m.group(1)); continue
 
       m = re.match(r"^LOG_ERROR_REGEX='(.*)'$", line)
-      if m: s.log_regex = m.group(1); continue
+      if m: s.log_err_regex.append(m.group(1)); continue
       m = re.match(r'^LOG_ERROR_REGEX="(.*)"$', line)
-      if m: s.log_regex = m.group(1); continue
+      if m: s.log_err_regex.append(m.group(1)); continue
+
+      m = re.match(r"^REPORT_FILES='(.*)'$", line)
+      if m: s.log_val_files += re.split(r"\s+", m.group(1)); continue
+      m = re.match(r'^REPORT_FILES="(.*)"$', line)
+      if m: s.log_val_files += re.split(r"\s+", m.group(1)); continue
+
+      m = re.match(r"^REPORT_REGEX='(.*)'$", line)
+      if m: s.log_val_regex.append(m.group(1)); continue
+      m = re.match(r'^REPORT_REGEX="(.*)"$', line)
+      if m: s.log_val_regex.append(m.group(1)); continue
 
       m = re.match(r"^PS_REGEX='(.*)'$", line)
       if m: s.ps_regex = m.group(1); continue
@@ -496,10 +554,12 @@ class MonitorDaemon:
     qexit = Queue()
     qptask = Queue()
     qutask = Queue()
-    qltask = Queue()
-    queues = [qptask, qltask, qutask]
+    qletask = Queue()
+    qlvtask = Queue()
+    queues = [qptask, qletask, qlvtask, qutask]
     mon = [[ProcessMonitor(qptask)],
-           [LogFileMonitor(qltask, self.feeddir)],
+           [LogErrorMonitor(qletask, self.feeddir)],
+           [LogValueMonitor(qlvtask, self.feeddir)],
            [URLMonitor(qutask) for i in xrange(0, 10)]]
 
     # Install signal handlers to drain processing on termination.
@@ -553,8 +613,10 @@ class MonitorDaemon:
           else:
             s.svcname = app
           s.log_dir = "%s/logs/%s" % (self.rootdir, app)
-          s.log_files = []
-          s.log_regex = None
+          s.log_err_files = []
+          s.log_err_regex = []
+          s.log_val_files = []
+          s.log_val_regex = []
           s.ps_regex = None
           s.ping_url = None
           s.ping_regex = None
@@ -571,8 +633,10 @@ class MonitorDaemon:
 
       # Issue work for these configurations.
       for cfgfile, s in cfgs.iteritems():
-        if s.log_files and s.log_regex:
-          qltask.put((s.svcname, s.log_dir, s.log_files, s.log_regex))
+        if s.log_err_files and s.log_err_regex:
+          qletask.put((s.svcname, s.log_dir, s.log_err_files, s.log_err_regex))
+        if s.log_val_files and s.log_val_regex:
+          qlvtask.put((s.svcname, s.log_dir, s.log_val_files, s.log_val_regex))
         if s.ps_regex:
           qptask.put((s.svcname, s.ps_regex))
         if s.ping_url and s.ping_regex:
