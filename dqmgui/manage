@@ -142,7 +142,7 @@ start()
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online/ \
         $STATEDIR/ix \
-        $CFGDIR/quota-online.py
+        $CFGDIR/quota-dd-online.py
       ;;
 
     dqm-c2d07-02:*agents* ) # dqm-prod-offsite
@@ -159,7 +159,7 @@ start()
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online/ \
         $STATEDIR/ix \
-        $CFGDIR/quota-online.py
+        $CFGDIR/quota-dd-online.py
       ;;
 
     dqm-c2d07-12:*agents* ) # dqm-test
@@ -176,7 +176,7 @@ start()
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online-test/ \
         $STATEDIR/ix \
-        $CFGDIR/quota-online.py
+        $CFGDIR/quota-dd-online.py
       ;;
 
     vocms13[89]:*agents* ) # offline
@@ -238,7 +238,7 @@ start()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-offline-${D}.py
+          $CFGDIR/quota-rfqc-offline-${D}.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -296,7 +296,7 @@ start()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-offline-${D}.py
+          $CFGDIR/quota-rfqc-offline-${D}.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
