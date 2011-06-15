@@ -161,9 +161,6 @@ deploy_system_post()
        echo 'export CVSROOT=:pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW'
        echo 'export PATH=$HOME/bin:/data/srv/current/bin:$PATH') > .bashrc
 
-      # Create the .cvspass file for any CVS checkouts.
-      cvs -d :pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW login
-
       # Set up SSH keys.
       case $variant in
         frontend | backend )
@@ -284,14 +281,10 @@ deploy_system_post()
 
       sudo rm -fr /data/empty
       mkdir -p /data/empty
-      note "NOTE: Provide CMS anonymous CVS pserver password now"
-      HOME=/data/empty cvs -d :pserver:anonymous@cmscvs.cern.ch:/cvs/CMSSW login
       echo "umask 002" > /data/empty/.profile
       chmod 444 /data/empty/.profile
-      chmod 640 /data/empty/.cvspass
       chmod 555 /data/empty
       sudo chown -R _empty:_empty /data/empty
-      sudo chown _empty:_sw /data/empty/.cvspass
 
       # Install host certificate $USER:_config owned in /data/certs.
       # If we don't have host{cert,key}.pem in /data/certs nor in
