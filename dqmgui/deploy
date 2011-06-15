@@ -19,16 +19,18 @@ deploy_dqmgui_prep()
 
     * )
       for d in offline caf relval dev devtest; do
-        extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $project_logs/$d"
+        extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
       done
       ;;
   esac
   mkproj $extra
+  mkproxy
+  $nogroups || chmod g+ws */data */zipped
 }
 
 deploy_dqmgui_sw()
 {
-  deploy_pkg comp cms+dqmgui 6.0.4
+  deploy_pkg comp cms+dqmgui 6.0.5
 }
 
 deploy_dqmgui_post()
@@ -37,15 +39,23 @@ deploy_dqmgui_post()
   case $variant in bare ) return ;; esac
 
   (mkcrontab; sysboot
-   cmd="$project_config/daily"
-   $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
-   [ ! -f $root/enabled/$project ] || echo "17 2 * * * $cmd") | crontab -
+   [ ! -f $root/enabled/$project ] || {
+     cmd="$project_config/daily"
+     $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
+     echo "17 2 * * * $cmd"
+     case $host in vocms13[89] ) # castor stageout must run under cmsweb account
+       echo "@reboot $project_config/manage xstart stageout 'I did read documentation'" ;;
+     esac
+     case $host in vocms138 )
+       echo "15 * * * * /data/user/vocms116-sync-here" ;;
+     esac
+   }) | crontab -
 
   case $host:$root in
     vocms138:/data/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
-       echo "6 */4 * * * $host $project_config/manage xstart afs-sync 'I did read documentation'") | acrontab
+       echo "6 */3 * * * $host $project_config/manage -q xstart afs-sync 'I did read documentation'") | acrontab
       ;;
   esac
 }

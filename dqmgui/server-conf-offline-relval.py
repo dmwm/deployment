@@ -1,8 +1,8 @@
 import os.path, socket; global CONFIGDIR
 CONFIGDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 1)[0]
 BASEDIR   = CONFIGDIR.replace("/current/config/dqmgui", "")
-STATEDIR  = "%s/state/dqmgui/offline" % BASEDIR
-LOGDIR    = "%s/logs/dqmgui/offline" % BASEDIR
+STATEDIR  = "%s/state/dqmgui/relval" % BASEDIR
+LOGDIR    = "%s/logs/dqmgui/relval" % BASEDIR
 
 LAYOUTS = ["%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, x) for x in
            ("hlt", )]
@@ -17,12 +17,12 @@ modules = ("Monitoring.DQM.GUI",)
 #server.instrument  = 'valgrind --tool=helgrind --num-callers=999 --error-limit=no'
 #server.instrument  = 'igprof -d -t python -pp'
 #server.instrument  = 'igprof -d -t python -mp'
-server.port        = 8080
+server.port        = 8081
 server.serverDir   = STATEDIR
 server.logFile     = '%s/weblog-%%Y%%m%%d.log' % LOGDIR
-server.baseUrl     = '/dqm/offline'
+server.baseUrl     = '/dqm/relval'
 server.title       = 'CMS data quality'
-server.serviceName = 'Offline'
+server.serviceName = 'RelVal'
 
 server.plugin('render', "%s/style/*.cc" % CONFIGDIR)
 server.extend('DQMRenderLink', server.pathOfPlugin('render'))

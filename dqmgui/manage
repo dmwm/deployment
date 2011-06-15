@@ -23,11 +23,6 @@
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
 
-if [ $(id -un)  = cmsweb ]; then
-  echo "ERROR: please use another account" 1>&2
-  exit 1
-fi
-
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
@@ -38,10 +33,17 @@ HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
+QUIET=false
 
 . $ROOT/apps/dqmgui/etc/profile.d/env.sh
 
 export QUIET_ASSERT=a
+export X509_CERT_DIR=/etc/grid-security/certificates
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
+export STAGE_HOST=${STAGE_HOST:-castorcms}
+export RFIO_USE_CASTOR_V2=YES
 
 case $HOST in
   dqm-c2d07-0[12] ) CONFIGS="online" ;;
@@ -54,6 +56,11 @@ case $HOST in
   * )               CONFIGS="offline-dev" ;;
 esac
 
+message()
+{
+  $QUIET || echo ${1+"$@"}
+}
+
 refuseproc()
 {
   local title="$1" pat="$2" reason="$3"
@@ -65,12 +72,21 @@ refuseproc()
 
 statproc()
 {
-  local title="$1" pat="$2"
-  pid=$(pgrep -u $(id -u) -f "$pat" | sort -n)
+  local user=$(id -u) title pat
+  while [ $# -ge 1 ]; do
+    case $1 in
+      -u ) user=$2; shift; shift ;;
+      -- ) shift; break ;;
+      -* ) echo "$0 (statproc): bad option '$1'" 1>&2; exit 1 ;;
+      *  ) break ;;
+    esac
+  done
+  title="$1" pat="$2"
+  pid=$(pgrep -u $user -f "$pat" | sort -n)
   if [ X"$pid" = X ]; then
-    echo -e "$title is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+    message -e "$title is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
-    echo -e "$title is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+    message -e "$title is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
 }
 
@@ -82,10 +98,10 @@ killproc()
   for pid in $(pgrep -u $(id -u) -f "$pat" | sort -rn); do
     psline=$(ps -o pid=,bsdstart=,args= $pid |
              perl -n -e 'print join(" ", (split)[0..4])')
-    [ -n "$nextmsg" ] && { echo "$nextmsg"; nextmsg=; }
-    echo -n "Stopping $pid ($psline):"
+    [ -n "$nextmsg" ] && { message -e "$nextmsg"; nextmsg=; }
+    message -n "Stopping $pid ($psline):"
     for sig in TERM TERM QUIT KILL; do
-      echo -n " SIG$sig"
+      message -n " SIG$sig"
       kill -$sig $pid
       sleep 1
       [ $(ps h $pid | wc -l) = 0 ] && break
@@ -93,7 +109,7 @@ killproc()
       T=$(expr $T \* 2)
       [ $(ps h $pid | wc -l) = 0 ] && break
     done
-    echo
+    message
     newline="\n"
   done
 }
@@ -116,7 +132,7 @@ sysboot()
 start()
 {
   cd $STATEDIR
-  echo "starting $ME"
+  message "starting $ME ${1:-(default)}"
 
   # first start agents
   case $HOST:${1:-agents} in
@@ -185,7 +201,8 @@ start()
       # standard lot of agents
       for D in $CONFIGS; do
         D=${D/offline-}
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        # CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/temp/dqm/test/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-receive \
           visDQMReceiveDaemon \
@@ -208,13 +225,6 @@ start()
           7 \
           $DQM_DATA/agents/stageout
 
-        startagent $D/agent-zstager \
-          visDQMZipCastorStager \
-          $DQM_DATA/agents/stageout \
-          $DQM_DATA/zipped \
-          $CASTORDIR \
-          $DQM_DATA/agents/verify
-
         startagent $D/agent-zverifier \
           visDQMZipCastorVerifier \
           $DQM_DATA/agents/verify \
@@ -229,7 +239,6 @@ start()
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
           $DQM_DATA/ix \
-          $DQM_DATA/agents/historic \
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/vcontrol
 
@@ -247,7 +256,8 @@ start()
 
         if [ $D = offline ]; then
           startagent $D/agent-osync \
-            visDQMOnlineSyncDaemon
+            visDQMOnlineSyncDaemon \
+	    $DQM_DATA/data/OnlineData
 
           startagent $D/agent-coinfo \
             visDQMCreateInfoDaemon \
@@ -257,17 +267,40 @@ start()
       done
       ;;
 
-    vocms13[89]:*afs-sync* )
+    vocms13[89]:*stageout* ) # offline
+      refuseproc "stageout agents" "visDQMZipCastorStager"
+
+      # standard lot of agents
+      for D in $CONFIGS; do
+        D=${D/offline-}
+        # CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/temp/dqm/test/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        DQM_DATA=$STATEDIR/$D
+        startagent $D/agent-zstager \
+          visDQMZipCastorStager \
+          $DQM_DATA/agents/stageout \
+          $DQM_DATA/zipped \
+          $CASTORDIR \
+          $DQM_DATA/agents/verify
+      done
+      ;;
+
+    vocms138:*afs-sync* )
+      refuseproc "afs sync" "visDQMAfsSync"
+
       DIRS=OnlineData,OfflineData/Run2011/StreamExpress
       DIRS=$DIRS,OfflineData/Run2011/StreamExpressCosmics
       DIRS=$DIRS,OfflineData/Run2011/Commissioning
       DIRS=$DIRS,OfflineData/Run2011/Cosmics,OfflineData/Run2011/MinimumBias
 
-      startagent offline/agent-afssync \
-        visDQMAfsSync \
-        --dirs $DIRS \
-        --dirs_quotas=30G,20G,20G,20G,20G,20G 130G \
-        $DQM_DATA/data /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data
+      for d in offline; do
+        DQM_DATA=$STATEDIR/$D
+        startagent $D/agent-afssync \
+          visDQMAfsSync \
+          --dirs $DIRS \
+          --dirs_quotas=30G,20G,20G,20G,20G,20G 130G \
+          $DQM_DATA/data /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data
+      done
       ;;
 
     *:*agents* ) # dev
@@ -287,7 +320,6 @@ start()
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
           $DQM_DATA/ix \
-          $DQM_DATA/agents/historic \
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/vcontrol
 
@@ -312,9 +344,9 @@ start()
       refuseproc "migration agents" "visDQMMigrationProcess" "refusing to restart"
 
       for i in $(seq 1 $(expr 5 + $(expr $(date +%s) % 10))); do key=$RANDOM; done
-      echo -n "$0: really start migration agents? (y/n) "
+      message -n "$0: really start migration agents? (y/n) "
       read answer; case $answer in y ) ;; * ) exit 2 ;; esac
-      echo -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
+      message -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
       read answer; case $answer in $key ) ;; * ) exit 2 ;; esac
 
       zsh -c '
@@ -338,9 +370,9 @@ start()
       refuseproc "migration agents" "visDQMMigrationProcess" "refusing to restart"
 
       for i in $(seq 1 $(expr 5 + $(expr $(date +%s) % 10))); do key=$RANDOM; done
-      echo -n "$0: really start migration agents? (y/n) "
+      message -n "$0: really start migration agents? (y/n) "
       read answer; case $answer in y ) ;; * ) exit 2 ;; esac
-      echo -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
+      message -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
       read answer; case $answer in $key ) ;; * ) exit 2 ;; esac
 
       for D in offline caf dev; do
@@ -366,7 +398,7 @@ start()
   case $HOST:${1:-collector} in
     dqm-c2d07-[01]1:*collector* | dqm-c2d07-2[12]:*collector* )
       DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
-    *:* )
+    *:*collector* )
       DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/dev/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
   esac
 
@@ -381,7 +413,7 @@ start()
 # Stop the service.
 stop()
 {
-  echo "stopping $ME"
+  message "stopping $ME ${1:-(default)}"
   case ${1:-agents} in *agents* )
     killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
   esac
@@ -417,10 +449,13 @@ status()
     statproc "$ME loggers" "rotatelogs" ;;
   esac
   case ${1:-agents} in *agents* )
-    statproc "$ME agents" "visDQM.*Daemon|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+    statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+  esac
+  case ${1:-stageout} in *stageout* )
+    statproc -u cmsweb "$ME stageout agent" "visDQMZipCastorStager" ;;
   esac
   case ${1:-afs-sync} in *afs-sync* )
-    statproc "$ME afs sync" "visDQMAfsSync" ;;
+    statproc -u cmsweb "$ME afs sync" "visDQMAfsSync" ;;
   esac
   case $1 in *migration* )
     statproc "$ME migration" "visDQMMigration|sleep" ;;
@@ -446,6 +481,28 @@ check()
 }
 
 # Main routine, perform action requested on command line.
+while [ $# -ge 1 ]; do
+  case $1 in
+    -q ) QUIET=true; shift ;;
+    -h ) set -- help ;;
+    -- ) shift; break ;;
+    -* ) echo "$0: unrecognised option '$1'" 1>&2; exit 1;;
+    *  ) break ;;
+  esac
+done
+
+# Check user name. Everything except afs-sync and castor stageout must
+# run as non-cmsweb account, afs-sync and castor stageout must be under
+# cmsweb, refuse to run otherwise.
+case $(id -un):$1:$2 in
+  cmsweb:xstart:afs-sync | cmsweb:xstart:stageout )
+    ;;
+
+  cmsweb:* | *:afs-sync | *:stageout )
+    echo "ERROR: please use another account" 1>&2
+    exit 1 ;;
+esac
+
 case ${1:-status} in
   sysboot )
     if ps -oargs= $PPID | grep -q crond; then
