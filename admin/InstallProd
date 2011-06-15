@@ -3,15 +3,19 @@
 ### Usage: InstallProd -h
 ### Usage: InstallProd [-d DIR] -x PROD -s image -v VER -p PKGS -u PXUSER [-r A=B] [-a AUTH]
 ### Usage: InstallProd [-d DIR] -x PROD -s kstart
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:maintenance
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s shutdown
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s checkprocs
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sysprep:{image|backend|frontend}
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sync -v VER
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s post -v VER -p PKGS
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s migrate -p PKGS
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s reboot
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s status[:what]
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s start[:what]
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s stop[:what]
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s check -v VER
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:production
 ### Usage: InstallProd [-d DIR] -x PROD -s kstop
 
 usage()
@@ -64,7 +68,7 @@ done
 [ X"$STEM" = X ] && usage
 
 case $STAGE in
-  status:* | start:* | stop:* | post:* )
+  sysprep:* | state:* | status:* | start:* | stop:* | post:* )
     WHAT=${STAGE#*:} STAGE=${STAGE%:*} ;;
   post )
     WHAT=$(hostname -s) ;;
@@ -84,6 +88,14 @@ case $STAGE in
     [ X"$VER" = X ] && usage
     case $PXUSER:$VER in :be* | :hg* ) usage ;; esac
     ;;
+  sysprep )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$WHAT" = X ] && usage
+    ;;
+  state )
+    [ X"$HOSTS" = X ] && usage
+    case $WHAT in production | maintenance ) ;; * ) usage ;; esac
+    ;;
   sync )
     [ X"$HOSTS" = X ] && usage
     [ X"$VER" = X ] && usage
@@ -93,7 +105,7 @@ case $STAGE in
     [ X"$PKGS" = X ] && usage
     [ X"$VER" = X ] && usage
     ;;
-  status | start | stop | shutdown | checkprocs )
+  status | start | stop | shutdown | checkprocs | reboot )
     [ X"$HOSTS" = X ] && usage
     ;;
   migrate )
@@ -119,6 +131,41 @@ case $STAGE in
   kstart | kstop )
     set -ex
     sudo $PWD/cfg/admin/ImageKey ${STAGE#k}
+    ;;
+
+  state )
+    set -e
+    for host in $HOSTS; do
+      case $WHAT in
+	maintenance )
+	  exists="!" ;;
+        production )
+	  exists=""
+	  ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -sh
+          confirm "is ok to put $host into $WHAT" ;;
+      esac
+      (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
+       echo "[ $exists -f /etc/iss.nologin ] || { echo Already in $WHAT; exit 0; }"
+       echo "sudo /usr/sbin/SetToDesiredState --state=$WHAT"
+       echo "exit 0") |
+       ssh cmsweb@$host bashs -l
+      confirm "is $host now in $WHAT"
+    done
+    ;;
+
+  sysprep )
+    set -e
+    for host in $HOSTS; do
+      rsync -zavmH --delete --delete-excluded --exclude .svn $PWD/cfg/ cmsweb@$host:/tmp/foo/
+      (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
+       echo "cd /tmp/foo"
+       echo "./Deploy -t dummy -s post $PWD system/$WHAT"
+       echo "cat /data/.deploy/*"
+       echo "rm -rf /tmp/foo /data/.deploy"
+       echo "exit 0") |
+       ssh cmsweb@$host bashs -l
+      confirm "is sysprep ok for $host"
+    done
     ;;
 
   sync )
@@ -186,8 +233,7 @@ case $STAGE in
 
     confirm "post passed for $HOSTS"
     for host in $HOSTS; do
-      (echo "exec 2>&1; set -ex; hostname -f; rm -fr $PWD/cfg"
-       echo "sudo /usr/sbin/lemon-host-check -sh || true") |
+      (echo "exec 2>&1; set -ex; hostname -f; rm -fr $PWD/cfg") |
        ssh cmsweb@$host bashs -l
     done
     ;;
@@ -215,6 +261,14 @@ case $STAGE in
           echo "don't know how migrate $p from $HA to $HB" 1>&2
           exit 1 ;;
       esac
+    done
+    ;;
+
+  reboot )
+    set -e
+    for host in $HOSTS; do
+      (set -x; ssh cmsweb@$host sudo /sbin/reboot)
+      [ $? = 0 ]
     done
     ;;
 
