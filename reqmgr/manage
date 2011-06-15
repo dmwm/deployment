@@ -36,6 +36,8 @@ COLOR_NORMAL="\\033[0;39m"
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export YUI_ROOT
 export WMCORE_ROOT=$REQMGR_ROOT/lib/python*/site-packages
+export REQMGR_CACHE_DIR=$STATEDIR
+export WMCORE_CACHE_DIR=$STATEDIR
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
   export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
   export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
