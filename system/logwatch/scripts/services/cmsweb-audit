@@ -175,8 +175,12 @@ def summarise(data):
           tick(path_success, (info['uid'], onepath(info, 1), info['syscall'], info['exe']))
         else:
           tick(path_failure, (error(info), info['uid'], onepath(info, 1), info['syscall'], info['exe']))
-      elif info['syscall'] in ('open', 'rename', 'mkdir', 'chmod', 'chown',
-                               'fchown', 'link', 'getxattr', 'fgetxattr'):
+      elif info['syscall'] in ('access', 'creat', 'open', 'openat',
+                               'truncate', 'ftruncate', 'rename', 'mkdir',
+                               'chmod', 'fchmod', 'fchmodat',
+                               'chown', 'fchown', 'fchownat', 'lchown',
+                               'link', 'symlink', 'readlink',
+                               'lsetxattr', 'lgetxattr', 'getxattr', 'fgetxattr'):
         if info['success'] == 'yes':
           tick(path_success, (info['uid'], pathlist(info), info['syscall'], info['exe']))
         else:
