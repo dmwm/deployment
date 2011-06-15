@@ -141,7 +141,7 @@ case $STAGE in
 	  exists="!" ;;
         production )
 	  exists=""
-	  ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -sh
+	  ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -sh || true
           confirm "is ok to put $host into $WHAT" ;;
       esac
       (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
