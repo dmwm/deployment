@@ -160,6 +160,7 @@ case $STAGE in
        echo "if [ -f /etc/init.d/httpd ]; then"
        echo "  sudo /sbin/service httpd stop"
        echo "fi"
+       echo "killall -u cmsweb python"
        echo "exit 0") |
        ssh cmsweb@$host bashs -l
     done
