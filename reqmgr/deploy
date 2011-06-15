@@ -63,55 +63,51 @@ deploy_reqmgr_post()
       ;;
     default )
       # Tell couchdb to pick up reqmgr on the next restart
-      # and configure replication, compaction and backup, too
-      local hour=0
-      local couchdb_config=$root/current/config/couchdb
-      local couchdb_state=$root/state/couchdb
-      local couchdb_string="http://localhost:5984"
+      # and configure replication, compaction and backup, too;
+      # do this only where couchdb is installed on the same node
+      local hour=0 couch_crons=""
       case $host in
-        vocms106 | vocms107 | vocms50 | vocms53 | vocms136 | vocms140 )
-          couchdb_string="https://cmsweb.cern.ch/couchdb" ;;
-        vocms132 | vocms133 )
-          couchdb_string="https://cmsweb-testbed.cern.ch/couchdb" ;;
-        vocms127 )
-          couchdb_string="https://cmsweb-dev.cern.ch/couchdb" ;;
-        cmsreqmgr )
-          couchdb_string="https://cmsreqmgr.cern.ch/couchdb" ;;
+        vocms10[67] | vocms50 | vocms13[2689] ) ;;
+        * )
+          local couchdb_config=$root/current/config/couchdb
+          local couchdb_state=$root/state/couchdb
+          local reqmgrapp=$root/current/apps/reqmgr
+
+          for area in compaction stagingarea replication backup; do
+            rm -f $couchdb_state/$area/reqmgr
+            touch $couchdb_state/$area/reqmgr
+          done
+
+	  $MIGRATION rm -f $couchdb_state/database/reqmgr_spec_cache.*
+          echo "couchapp push $reqmgrapp/lib/couchapps/ReqMgr" \
+	       "http://localhost:5984/reqmgr_workload_cache" \
+            >> $couchdb_state/stagingarea/reqmgr
+          echo "couchapp push $reqmgrapp/lib/couchapps/ConfigCache" \
+	       "http://localhost:5984/reqmgr_config_cache" \
+            >> $couchdb_state/stagingarea/reqmgr
+
+          for db in reqmgr_config_cache reqmgr_workload_cache; do
+            local cmd="$couchdb_config/manage compact $db 'I did read documentation'"
+            $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
+            couch_crons="${couch_crons}1 $hour * * * $cmd\n"
+            hour=$(( $hour + 1 ))
+          done ;;
       esac
 
-      for area in compaction stagingarea replication backup; do
-        rm -f $couchdb_state/$area/reqmgr
-        touch $couchdb_state/$area/reqmgr
-      done
-
-      local couch_crons=""
-      local reqmgrapp=$root/current/apps/reqmgr
-      echo "couchapp push $reqmgrapp/lib/couchapps/ReqMgr $couchdb_string/reqmgr_workload_cache" \
-          >> $couchdb_state/stagingarea/reqmgr
-      echo "couchapp push $reqmgrapp/lib/couchapps/ConfigCache $couchdb_string/reqmgr_config_cache" \
-          >> $couchdb_state/stagingarea/reqmgr
-
-      for db in reqmgr_config_cache reqmgr_workload_cache; do
-        local cmd="$couchdb_config/manage compact $db 'I did read documentation'"
-        $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-        couch_crons="${couch_crons}1 $hour * * * $cmd\n"
-        hour=$(( $hour + 1 ))
-      done
-
       # Setup ReqMgr cronjobs
-      local cmd="$project_config/manage updateversions 'I did read documentation'"
-      $nogroups || cmd="sudo -H -u _reqmgr bashs -l -c \"${cmd}\""
-      local reqmgr_crons="58 4 * * * $cmd"
-
       (mkcrontab
        sysboot
-       # Enable couch crons only where couchdb is enabled
        case $host in
          vocms10[67] | vocms50 | vocms13[2689] ) ;;
          * ) echo -ne "${couch_crons}" ;;
        esac
-       echo "${reqmgr_crons}") | crontab -
-
+       case $host in
+         vocms13[89] ) ;;
+	 * )
+           local cmd="$project_config/manage updateversions 'I did read documentation'"
+           $nogroups || cmd="sudo -H -u _reqmgr bashs -l -c \"${cmd}\""
+           echo "58 4 * * * $cmd" ;;
+       esac) | crontab -
       ;;
   esac
 }
