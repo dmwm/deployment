@@ -80,10 +80,11 @@ class ProcessMonitor(Monitor):
     Monitor.__init__(self, task_queue)
     self.start()
 
-  def _do(self, svc, pattern):
+  def _do(self, svc, can_talk, pattern):
     """Perform process scan.
 
     @param svc -- service name
+    @param can_talk -- can talk about problems
     @param pattern -- regexp to match against command lines."""
     pattern = re.compile(pattern)
     pids = []
@@ -122,10 +123,11 @@ class URLMonitor(Monitor):
     self.opener = urllib2.build_opener(*methods)
     self.start()
 
-  def _do(self, svc, url, regex):
+  def _do(self, svc, can_talk, url, regex):
     """Ping a URL and check the response matches a regexp.
 
     @param svc -- service name
+    @param can_talk -- can talk about problems
     @param url -- the server to connect to, should be http (not https)
     @param regex -- regular expression to match against the reply."""
     try:
@@ -141,10 +143,11 @@ class URLMonitor(Monitor):
       reply = "%s\n%s" % (obj.info(), obj.read())
       if re.search(regex, reply, re.S):
         logmsg(svc, "PING", "OK", "<%s>" % url)
-      else:
+      elif can_talk:
         logmsg(svc, "PING", "FAILED", "<%s>" % url, regex, "(no match)")
     except Exception, e:
-      logmsg(svc, "PING", "FAILED", "<%s>" % url, regex, str(e).replace("\n", "; "))
+      if can_talk:
+        logmsg(svc, "PING", "FAILED", "<%s>" % url, regex, str(e).replace("\n", "; "))
 
 class LogMonitor(Monitor):
   """Monitor which scans log files against regexp patterns.
@@ -252,12 +255,13 @@ class LogMonitor(Monitor):
       self.last_save = now
       self.modified = False
 
-  def _do(self, svc, dir, files, rxlist):
+  def _do(self, svc, can_talk, dir, files, rxlist):
     """Perform log scan task.
 
     For each match found invokes derived class method _match().
 
     @param svc -- service name
+    @param can_talk -- can talk about problems
     @param dir -- service log directory
     @param files -- list of log file name glob patterns to read from
     @param rxlist -- list of regular expressions to match log lines"""
@@ -289,12 +293,13 @@ class LogMonitor(Monitor):
 
         self._save_state()
       except Exception, e:
-	trace = StringIO()
-        traceback.print_exc(file=trace)
-        logmsg(svc, "ERROR", "file:<%s>:0" % fname,
-               "failed to read file: %s" % str(e))
-	for line in trace.getvalue().rstrip().split("\n"):
-          logmsg(svc, "FAILURE", line)
+	if can_talk:
+	  trace = StringIO()
+          traceback.print_exc(file=trace)
+          logmsg(svc, "ERROR", "file:<%s>:0" % fname,
+                 "failed to read file: %s" % str(e))
+	  for line in trace.getvalue().rstrip().split("\n"):
+            logmsg(svc, "FAILURE", line)
 
 
 class LogErrorMonitor(LogMonitor):
@@ -356,7 +361,10 @@ class MonitorDaemon:
   regularly polls the other servers for running processes, log files
   for errors and pinging server URLs. It runs a number of utility
   monitor processes to do all this in parallel, collecting their
-  output to a single auto-rotated feed for scanning by lemon."""
+  output to a single auto-rotated feed for scanning by lemon.
+
+  Monitoring is automatically skipped for servers which are disabled
+  on this host: the file ROOT/enabled/SERVICE does not exist."""
   def __init__(self, rootdir, statedir, feeddir):
     """Initialise the monitor daemon.
 
@@ -370,6 +378,7 @@ class MonitorDaemon:
     self.lemonfeed = "%s/feed.lemon" % feeddir
     self.pidfile = "%s/monitor.pid" % statedir
     self.logfile = ["rotatelogs", "%s/server-monitor-%%Y%%m%%d.log" % feeddir, "86400"]
+    self.hostname = socket.getfqdn().lower()
 
   def daemon_pid(self):
     """Check if there is a daemon running, and if so return its pid.
@@ -508,6 +517,11 @@ class MonitorDaemon:
       line = re.sub(r"\s+$", "", line)
       if line == "": continue
 
+      m = re.match(r"^ENABLE_IF='(.*)'$", line)
+      if m: s.enable_if = m.group(1); continue
+      m = re.match(r'^ENABLE_IF="(.*)"$', line)
+      if m: s.enable_if = m.group(1); continue
+
       m = re.match(r"^LOG_FILES='(.*)'$", line)
       if m: s.log_err_files += re.split(r"\s+", m.group(1)); continue
       m = re.match(r'^LOG_FILES="(.*)"$', line)
@@ -602,10 +616,10 @@ class MonitorDaemon:
         if cfgfile in oldconfigs:
           oldconfigs.remove(cfgfile)
         st = os.stat(cfgfile)
+	app = cfgfile.rsplit("/", 2)[1]
         if cfgfile in cfgs:
 	  s = cfgs[cfgfile]
         else:
-	  app = cfgfile.rsplit("/", 2)[1]
           s = cfgs[cfgfile] = FileState()
           m = re.match(r".*/monitoring-(.*)\.ini$", cfgfile)
           if m:
@@ -620,9 +634,22 @@ class MonitorDaemon:
           s.ps_regex = None
           s.ping_url = None
           s.ping_regex = None
+	  s.enable_if = "app_is_enabled"
+	  s.can_talk = True
 
         if s.size != st.st_size or s.mtime != st.st_mtime:
           self._reload_config(cfgfile, s)
+	  is_enabled = lambda appname: os.path.exists("%s/enabled/%s" % (self.rootdir, appname))
+	  vars = { "app": app, "service": s.svcname,
+	           "host": self.hostname.split('.')[0], "fqdn": self.hostname,
+                   "is_enabled": is_enabled, "app_is_enabled": is_enabled(app) }
+	  try:
+            s.can_talk = eval(s.enable_if, {}, vars)
+	  except Exception, e:
+            logmsg("ADMIN", "IGNORE", "%s: failed to evaluation precondition: %s" % (cfgfile, str(e)))
+	  if not s.can_talk:
+            logmsg("ADMIN", "IGNORE", "%s: squelched by precondition %s (%s)"
+		   % (cfgfile, repr(s.enable_if), str(vars)))
           s.mtime = st.st_mtime
           s.size = st.st_size
 
@@ -634,13 +661,13 @@ class MonitorDaemon:
       # Issue work for these configurations.
       for cfgfile, s in cfgs.iteritems():
         if s.log_err_files and s.log_err_regex:
-          qletask.put((s.svcname, s.log_dir, s.log_err_files, s.log_err_regex))
+          qletask.put((s.svcname, s.can_talk, s.log_dir, s.log_err_files, s.log_err_regex))
         if s.log_val_files and s.log_val_regex:
-          qlvtask.put((s.svcname, s.log_dir, s.log_val_files, s.log_val_regex))
+          qlvtask.put((s.svcname, s.can_talk, s.log_dir, s.log_val_files, s.log_val_regex))
         if s.ps_regex:
-          qptask.put((s.svcname, s.ps_regex))
+          qptask.put((s.svcname, s.can_talk, s.ps_regex))
         if s.ping_url and s.ping_regex:
-          qutask.put((s.svcname, s.ping_url, s.ping_regex))
+          qutask.put((s.svcname, s.can_talk, s.ping_url, s.ping_regex))
 
       # Have a nap, but stop if signalled.
       try: qexit.get(timeout = 30); break
