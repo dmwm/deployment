@@ -154,7 +154,7 @@ case $STAGE in
 	;;
       production:vocms* )
         for host in $update; do
-          ssh cmsweb@$host sudo /usr/sbin/lemon-host-check || true
+          ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 5 || true
           set +x; confirm "ok to put $host into $WHAT"; set -x
 	done
 	ssh $PXUSER@lxvoadm.cern.ch sms clear maint other $update
