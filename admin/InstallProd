@@ -15,6 +15,7 @@
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s start[:what]
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s stop[:what]
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s check -v VER
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:check
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:production -u USER
 ### Usage: InstallProd [-d DIR] -x PROD -s kstop
 
@@ -94,8 +95,11 @@ case $STAGE in
     ;;
   state )
     [ X"$HOSTS" = X ] && usage
-    [ X"$PXUSER" = X ] && usage
-    case $WHAT in production | maintenance ) ;; * ) usage ;; esac
+    case $PXUSER:$WHAT in
+      :production | :maintenance ) usage ;;
+      :check | *:production | *:maintenance ) ;;
+      * ) usage ;;
+    esac
     ;;
   sync )
     [ X"$HOSTS" = X ] && usage
@@ -137,34 +141,45 @@ case $STAGE in
   state )
     set -e
     update=
-    for host in $HOSTS; do
-      cur=$(ssh cmsweb@$host grep STATE_DESIRED /etc/state.desired | cut -d= -f2)
-      case $cur in
-	$WHAT )
-	  echo "$host already in state $WHAT, no need to change" ;;
-	* )
-	  echo "$host in state $cur, changing state"
-	  update="${update:+$update }$host" ;;
-      esac
-    done
-    set -x
-    case $WHAT:$update in
-      maintenance:vocms* )
-        ssh $PXUSER@lxvoadm.cern.ch sms set maint other upgrade $update
-	;;
-      production:vocms* )
-        for host in $update; do
+    case $WHAT in
+      check )
+        set -x
+        for host in $HOSTS; do
           ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 5 || true
-          set +x; confirm "ok to put $host into $WHAT"; set -x
 	done
-	ssh $PXUSER@lxvoadm.cern.ch sms clear maint other $update
 	;;
+
+      maintenance | production )
+        for host in $HOSTS; do
+          cur=$(ssh cmsweb@$host grep STATE_DESIRED /etc/state.desired | cut -d= -f2)
+          case $cur in
+	    $WHAT )
+	      echo "$host already in state $WHAT, no need to change" ;;
+	    * )
+	      echo "$host in state $cur, changing state"
+	      update="${update:+$update }$host" ;;
+          esac
+        done
+        set -x
+        case $WHAT:$update in
+          maintenance:vocms* )
+            ssh $PXUSER@lxvoadm.cern.ch sms set maint other upgrade $update
+	    ;;
+          production:vocms* )
+            for host in $update; do
+              ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 5 || true
+	    done
+            set +x; confirm "ok to put $update into $WHAT"; set -x
+	    ssh $PXUSER@lxvoadm.cern.ch sms clear maint other $update
+	    ;;
+        esac
+        set +x
+        for host in $HOSTS; do
+          cur=$(ssh cmsweb@$host grep STATE_DESIRED /etc/state.desired | cut -d= -f2)
+          case $cur in $WHAT ) ;; * ) echo "$host not $WHAT: $cur"; exit 1 ;; esac
+        done
+        ;;
     esac
-    set +x
-    for host in $HOSTS; do
-      cur=$(ssh cmsweb@$host grep STATE_DESIRED /etc/state.desired | cut -d= -f2)
-      case $cur in $WHAT ) ;; * ) echo "$host not $WHAT: $cur"; exit 1 ;; esac
-    done
     ;;
 
   sysprep )
