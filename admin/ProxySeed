@@ -44,8 +44,6 @@ source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
 export GT_PROXY_MODE=old
 
 set -x
-voms-proxy-init -voms cms -valid 36:00
-scp -p /tmp/x509up_u$(id -u) $dest/seed-$me.cert
 case $type in
   dev )
     myproxy-init $pxparam -R "*/CN=$fhost" -l devvm_${shost}_$me ;;
@@ -54,3 +52,5 @@ case $type in
     myproxy-init $pxparam -R "*/CN=(cmsweb-dev|vocms(10[5-7]|116|5[03]|65|127|13[2345689]|140)).cern.ch" \
       -l cmsweb_backends_$me ;;
 esac
+voms-proxy-init -voms cms -valid 36:00
+scp -p /tmp/x509up_u$(id -u) $dest/seed-$me.cert
