@@ -67,7 +67,7 @@ status()
 {
   couchdb -p $STATEDIR/couchdb.pid -s
 
-  curl -s localhost:5984 | grep -q '{"couchdb":"Welcome","version":"1.0.1"}' ||
+  curl -s localhost:5984 | grep -q '{"couchdb":"Welcome","version":"1.[0-9.]*"}' ||
     { echo "CouchDB is not correctly responding to requests"; return; }
 
   local TASKS=$(curl -s localhost:5984/_active_tasks)
