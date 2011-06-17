@@ -293,7 +293,7 @@ start()
       DIRS=$DIRS,OfflineData/Run2011/Commissioning
       DIRS=$DIRS,OfflineData/Run2011/Cosmics,OfflineData/Run2011/MinimumBias
 
-      for d in offline; do
+      for D in offline; do
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-afssync \
           visDQMAfsSync \
