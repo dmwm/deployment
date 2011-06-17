@@ -30,7 +30,7 @@ deploy_dqmgui_prep()
 
 deploy_dqmgui_sw()
 {
-  deploy_pkg comp cms+dqmgui 6.0.5
+  deploy_pkg comp cms+dqmgui 6.0.6
 }
 
 deploy_dqmgui_post()
