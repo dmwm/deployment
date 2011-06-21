@@ -20,12 +20,15 @@ deploy_dqmgui_prep()
     * )
       for d in offline caf relval dev devtest; do
         extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
+	for a in clean freezer qcontrol vcontrol register stageout verify zip; do
+	  extra="$extra $d/agents/$a"
+	done
       done
       ;;
   esac
   mkproj $extra
   mkproxy
-  $nogroups || chmod g+ws */data */zipped
+  $nogroups || chmod g+ws */data */zipped */agents/*
 }
 
 deploy_dqmgui_sw()
