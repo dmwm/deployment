@@ -4,6 +4,7 @@
 ### Usage: InstallProd [-d DIR] -x PROD -s image -v VER -p PKGS -u PXUSER [-r A=B] [-a AUTH]
 ### Usage: InstallProd [-d DIR] -x PROD -s kstart
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:maintenance -u USER
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s dnswait:ALIAS
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s shutdown
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s checkprocs
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sysprep:{image|backend|frontend}
@@ -69,7 +70,7 @@ done
 [ X"$STEM" = X ] && usage
 
 case $STAGE in
-  sysprep:* | state:* | status:* | start:* | stop:* | post:* )
+  dnswait:* | sysprep:* | state:* | status:* | start:* | stop:* | post:* )
     WHAT=${STAGE#*:} STAGE=${STAGE%:*} ;;
   post )
     WHAT=$(hostname -s) ;;
@@ -89,7 +90,7 @@ case $STAGE in
     [ X"$VER" = X ] && usage
     case $PXUSER:$VER in :be* | :hg* ) usage ;; esac
     ;;
-  sysprep )
+  sysprep | dnswait )
     [ X"$HOSTS" = X ] && usage
     [ X"$WHAT" = X ] && usage
     ;;
@@ -136,6 +137,24 @@ case $STAGE in
   kstart | kstop )
     set -ex
     sudo $PWD/cfg/admin/ImageKey ${STAGE#k}
+    ;;
+
+  dnswait )
+    aliased=true
+    while $aliased; do
+      aliased=false
+      alias=" $(dig +short $WHAT.cern.ch | tr '\n' ' ') "
+      for host in $HOSTS; do
+	case $alias in *" $(dig +short $host.cern.ch) "* ) aliased=true ;; esac
+      done
+      echo "*** $WHAT \\ $HOSTS @ $(date '+%Y-%m-%d %H:%M:%S')"
+      for ip in $(dig +short $WHAT.cern.ch); do
+        echo host=$(dig +short -x $ip) ip=$ip
+      done
+      sleep 10; echo
+    done
+
+    echo "*** CHECK SERVER LOGS FOR END OF ACCESS ***"
     ;;
 
   state )
