@@ -201,8 +201,7 @@ start()
       # standard lot of agents
       for D in $CONFIGS; do
         D=${D/offline-}
-        # CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
-        CASTORDIR=/castor/cern.ch/cms/store/temp/dqm/test/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-receive \
           visDQMReceiveDaemon \
@@ -273,8 +272,7 @@ start()
       # standard lot of agents
       for D in $CONFIGS; do
         D=${D/offline-}
-        # CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
-        CASTORDIR=/castor/cern.ch/cms/store/temp/dqm/test/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-zstager \
           visDQMZipCastorStager \
