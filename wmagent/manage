@@ -251,7 +251,7 @@ init_mysql_db_post(){
         sleep 2;
         TIMEOUT=$(($TIMEOUT+2))
         if [ $TIMEOUT -ge 300 ]; then
-            echo "Timeout waiting for mysqld to start."
+            echo "ERROR: Timeout waiting for mysqld to start."
             exit 1;
         fi
     done
@@ -322,6 +322,27 @@ start_mysql(){
                      --socket=$INSTALL_MYSQL/logs/mysql.sock \
                      --skip-networking --log-error=$INSTALL_MYSQL/logs/error.log \
                       --pid-file=$INSTALL_MYSQL/logs/mysqld.pid > /dev/null 2>&1 < /dev/null &
+   local TIMEOUT=0;
+   echo "Checking MySQL Socket file exists..."
+   while [ ! -e $INSTALL_MYSQL/logs/mysql.sock ]
+   do
+       sleep 2;
+       TIMEOUT=$(($TIMEOUT+2))
+       if [ $TIMEOUT -ge 300 ]; then
+           echo "ERROR: Timeout waiting for mysqld to start."
+           exit 1;
+       fi
+   done
+   echo "Socket file exists: $INSTALL_MYSQL/logs/mysql.sock"
+   
+   echo "Checking Server connection..."
+   mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "SHOW GLOBAL STATUS" > /dev/null;
+   if [ $? -ne 0 ]; then
+       echo "ERROR: checking mysql database is running, failed to execute SHOW GLOBAL STATUS"
+       exit 1
+   fi
+   echo "Connection OK"
+                      
    if [ $MYSQL_INIT_DONE -eq 0 ]; then
         echo "MySQL has not been initialised... running post initialisation";
         init_mysql_db_post;
@@ -338,6 +359,19 @@ stop_mysql(){
    load_secrets_file;
    mysqladmin -u root -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock shutdown &
    wait $!
+   echo "Making sure the MySQL socket file is removed..."
+   local TIMEOUT=0;
+   while [ -e $INSTALL_MYSQL/logs/mysql.sock ]
+   do
+       sleep 2;
+       TIMEOUT=$(($TIMEOUT+2))
+       if [ $TIMEOUT -ge 300 ]; then
+           echo "ERROR: Timeout waiting for mysqld to shutdown."
+           echo "ERROR: Socket file still exists: $INSTALL_MYSQL/logs/mysql.sock"
+           exit 1;
+       fi
+   done
+   echo "MySQL is shutdown."
 }
 
 #
