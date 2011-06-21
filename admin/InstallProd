@@ -258,9 +258,9 @@ case $STAGE in
       rsync -zavmH --delete --delete-excluded --exclude .svn $PWD/cfg/ cmsweb@$host:/tmp/foo/
       (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
        echo "cd /tmp/foo"
-       echo "./Deploy -t dummy -s post $PWD system/$WHAT"
-       echo "cat /data/.deploy/*"
-       echo "rm -rf /tmp/foo /data/.deploy"
+       echo "./Deploy -t dummy -s post \$PWD system/$WHAT"
+       echo "cat /tmp/foo/.deploy/*"
+       echo "rm -rf /tmp/foo"
        echo "exit 0") |
        ssh cmsweb@$host bashs -l
       confirm "is sysprep ok for $host"
