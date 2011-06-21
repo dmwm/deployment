@@ -7,8 +7,10 @@
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s dnswait:ALIAS
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s shutdown
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s checkprocs
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s backup:save
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sysprep:{image|backend|frontend}
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sync -v VER
+### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s backup:restore
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s post -v VER -p PKGS
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s migrate -p PKGS
 ### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s reboot
@@ -70,7 +72,7 @@ done
 [ X"$STEM" = X ] && usage
 
 case $STAGE in
-  dnswait:* | sysprep:* | state:* | status:* | start:* | stop:* | post:* )
+  dnswait:* | sysprep:* | state:* | backup:* | status:* | start:* | stop:* | post:* )
     WHAT=${STAGE#*:} STAGE=${STAGE%:*} ;;
   post )
     WHAT=$(hostname -s) ;;
@@ -93,6 +95,11 @@ case $STAGE in
   sysprep | dnswait )
     [ X"$HOSTS" = X ] && usage
     [ X"$WHAT" = X ] && usage
+    ;;
+  backup )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$WHAT" = X ] && usage
+    case $WHAT in save | restore ) ;; * ) usage ;; esac
     ;;
   state )
     [ X"$HOSTS" = X ] && usage
@@ -155,6 +162,50 @@ case $STAGE in
     done
 
     echo "*** CHECK SERVER LOGS FOR END OF ACCESS ***"
+    ;;
+
+  backup )
+    set -ex
+    case $WHAT in
+      save )
+        for host in $HOSTS; do
+	  LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive/$host
+          LOGSAVE="/data/srv/current/config/admin/LogSave /data/srv $LOGDIR"
+	  LOGARCH="/data/srv/current/config/admin/LogArchive /data/srv"
+
+	  acrontab -l | egrep " $host .*/LogSave "
+          set +x; confirm "remove acron task to archive logs for $host"; set -x
+	  acrontab -l | egrep -v " $host .*/LogSave " | acrontab
+
+          ssh cmsweb@$host -- $LOGARCH
+          ssh cmsweb@$host -- $LOGSAVE
+	  rsync -av --delete $LOGDIR/ $LOGDIR.backup/
+
+	  ssh cmsweb@$host -- rsync -n -av --no-group --delete \
+	    /data/srv/logs/frontend/ $LOGDIR.backup/
+          set +x; confirm "backup ok for $host"; set -x
+	  ssh cmsweb@$host -- rsync -av --no-group --delete \
+	    /data/srv/logs/frontend/ $LOGDIR.backup/
+	done
+	;;
+
+      restore )
+        for host in $HOSTS; do
+	  LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive/$host
+	  [ $(acrontab -l | egrep -c " $host .*/LogSave ") = 0 ]
+	  [ -d $LOGDIR.backup ]
+
+	  ssh cmsweb@$host -- rsync -n -av --no-group --delete \
+	    $LOGDIR.backup/ /data/srv/logs/frontend/
+          set +x; confirm "restore ok for $host"; set -x
+	  ssh cmsweb@$host -- rsync -av --no-group --delete \
+	    $LOGDIR.backup/ /data/srv/logs/frontend/
+
+          set +x; confirm "ok to remove $LOGDIR.backup"; set -x
+	  rm -fr $LOGDIR.backup
+	done
+        ;;
+    esac
     ;;
 
   state )
