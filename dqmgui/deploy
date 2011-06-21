@@ -46,9 +46,6 @@ deploy_dqmgui_post()
      case $host in vocms13[89] ) # castor stageout must run under cmsweb account
        echo "@reboot $project_config/manage xstart stageout 'I did read documentation'" ;;
      esac
-     case $host in vocms138 )
-       echo "15 * * * * /data/user/vocms116-sync-here" ;;
-     esac
    }) | crontab -
 
   case $host:$root in
