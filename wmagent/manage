@@ -335,6 +335,11 @@ start_mysql(){
    done
    echo "Socket file exists: $INSTALL_MYSQL/logs/mysql.sock"
    
+                      
+   if [ $MYSQL_INIT_DONE -eq 0 ]; then
+        echo "MySQL has not been initialised... running post initialisation";
+        init_mysql_db_post;
+   fi
    echo "Checking Server connection..."
    mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "SHOW GLOBAL STATUS" > /dev/null;
    if [ $? -ne 0 ]; then
@@ -342,11 +347,6 @@ start_mysql(){
        exit 1
    fi
    echo "Connection OK"
-                      
-   if [ $MYSQL_INIT_DONE -eq 0 ]; then
-        echo "MySQL has not been initialised... running post initialisation";
-        init_mysql_db_post;
-   fi
 
 
 }
