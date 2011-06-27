@@ -48,8 +48,10 @@ REQMGR_PORT=8687
 
 GLOBAL_WORKQUEUE_HOSTNAME=
 GLOBAL_WORKQUEUE_PORT=9996
+GLOBAL_WORKQUEUE_DBNAME=
 
 LOCAL_WORKQUEUE_PORT=9997
+LOCAL_WORKQUEUE_DBNAME=
 
 #
 # Init checks
@@ -126,6 +128,8 @@ load_secrets_file(){
     local MATCH_GLOBAL_WORKQUEUE_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_HOSTNAME | sed s/GLOBAL_WORKQUEUE_HOSTNAME=//`
     local MATCH_GLOBAL_WORKQUEUE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_PORT | sed s/GLOBAL_WORKQUEUE_PORT=//`
     local MATCH_LOCAL_WORKQUEUE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_PORT | sed s/LOCAL_WORKQUEUE_PORT=//`
+    local MATCH_GLOBAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_DBNAME | sed s/GLOBAL_WORKQUEUE_DBNAME=//`
+    local MATCH_LOCAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_DBNAME | sed s/LOCAL_WORKQUEUE_DBNAME=//`
 
     if [ "x$MATCH_MYSQL_USER" == "x" ]; then
         MYSQL_USER=wmagentmysql;
@@ -170,6 +174,12 @@ load_secrets_file(){
     if [ ! "x$MATCH_LOCAL_WORKQUEUE_PORT" == "x" ]; then
         LOCAL_WORKQUEUE_PORT=$MATCH_LOCAL_WORKQUEUE_PORT;
     fi
+    if [ ! "x$MATCH_GLOBAL_WORKQUEUE_DBNAME" == "x" ]; then
+        GLOBAL_WORKQUEUE_DBNAME=$MATCH_GLOBAL_WORKQUEUE_DBNAME;
+    fi
+    if [ ! "x$MATCH_LOCAL_WORKQUEUE_DBNAME" == "x" ]; then
+        LOCAL_WORKQUEUE_DBNAME=$MATCH_LOCAL_WORKQUEUE_DBNAME;
+    fi
 }
 
 print_settings(){
@@ -195,6 +205,8 @@ print_settings(){
     echo "GLOBAL_WORKQUEUE_HOSTNAME= $GLOBAL_WORKQUEUE_HOSTNAME "
     echo "GLOBAL_WORKQUEUE_PORT=    $GLOBAL_WORKQUEUE_PORT      "
     echo "LOCAL_WORKQUEUE_PORT=     $LOCAL_WORKQUEUE_PORT       "
+    echo "GLOBAL_WORKQUEUE_DBNAME=  $GLOBAL_WORKQUEUE_DBNAME    "
+    echo "LOCAL_WORKQUEUE_DBNAME=  $LOCAL_WORKQUEUE_DBNAME    "
 
 
 }
@@ -523,10 +535,9 @@ init_wmagent(){
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_AG \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --global_workqueue_hostname=$GLOBAL_WORKQUEUE_HOSTNAME \
-                       --global_workqueue_port=$GLOBAL_WORKQUEUE_PORT \
-                       --local_workqueue_port=$LOCAL_WORKQUEUE_PORT
-    wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.WorkQueue.Database,WMCore.BossAir,WMCore.ResourceControl;
+                       --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
+                       --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME
+    wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
     wmagent-couchapp-init;
     unset WMAGENT_CONFIG
@@ -560,11 +571,13 @@ init_workqueue(){
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_WQ \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --reqmgr_port=$REQMGR_PORT \
-                       --global_workqueue_hostname=$GLOBAL_WORKQUEUE_HOSTNAME \
-                       --global_workqueue_port=$GLOBAL_WORKQUEUE_PORT
-    wmcore-db-init --config $CONFIG_WQ/config.py --create --modules=WMCore.WorkQueue.Database,WMCore.Agent.Database
+                       --reqmgr_hostname=$REQMGR_HOSTNAME \
+                       --workqueue_db_name=$GLOBAL_WORKQUEUE_DBNAME
+    wmcore-db-init --config $CONFIG_WQ/config.py --create --modules=WMCore.Agent.Database
+    export WMAGENT_CONFIG=$CONFIG_WQ/config.py
+    wmagent-couchapp-init;
+    unset WMAGENT_CONFIG    
     inited_workqueue;
 
 }

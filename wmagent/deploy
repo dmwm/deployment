@@ -12,7 +12,7 @@ deploy_wmagent_prep()
 
 deploy_wmagent_sw()
 {
-  AGENT_VERSION="0.7.8"
+  AGENT_VERSION="0.8.0pre6"
   deploy_pkg comp cms+wmagent $AGENT_VERSION
 
 
