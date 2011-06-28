@@ -16,6 +16,121 @@ rxsyslib = re.compile(r".*/(?:tls/(?:x86_64/)?)?lib"
                       "krb5support|m|nss_files|pthread|resolv|rt|"
                       "selinux|sepol)\.so\.\d+$")
 
+# Regexp for compacting mail queue file names.
+rxmqueue = re.compile(r"^(/var/spool/(?:client)?mqueue/\./)([0-9A-Za-z]+)$")
+
+# Regexps for compacting apache disk cache file names.
+rxphedex = re.compile(r"^/data/srv[-a-z]*/state/phedex/cache/phedex-datasvc/")
+rxapache = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+		      r"external/apache2/[-.a-z0-9]+/bin/httpd$")
+rxapcachedir = re.compile(r"^(?:/[A-Za-z0-9_@]+){0,2}$")
+rxapcachedirv = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header\.vary"
+                           r"(?:/[A-Za-z0-9_@]+){0,2}$")
+rxapcachehdr = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header$")
+rxapcachehdrv = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header\.vary"
+                           r"(?:/[A-Za-z0-9_@]+){3}\.header$")
+rxapcachehdrvd = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header\.vary"
+                            r"(?:/[A-Za-z0-9_@]+){3}\.data$")
+
+# Regexps for compacting DQM GUI commands and file names.
+rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineData"
+                     r"/(?:merged|original))/\d{5}xxxx$"),
+          [r"\1", r"\2/NNNNNxxxx"]),
+
+         (re.compile(r"^(basename) (dqm/online/data/browse/(?:Original|Merged))"
+                     r"/\d{5}xxxx/\d{7}xx/DQM[-_A-Za-z0-9]+\.root$"),
+          [r"\1", r"\2/NNNNNxxxx/NNNNNNNxx/DQM.root"]),
+
+         (re.compile(r"^(stat) \d{5}xxxx(?:/\d{7}xx)?/"
+                     r"(?:index\.html|DQM[-_A-Za-z0-9]+\.root) (-c) (%Y)$"),
+          [r"\1", r"NNNNNxxxx/NNNNNNNxx/DQM.root", r"\2", r"\3"]),
+
+         (re.compile(r"^(chmod) (o\+rx) (/data/srv/state/dqmgui/[a-z]+/data/OnlineData)"
+                     r"(?:[/A-Za-z0-9]*)"),
+          [r"\1", r"\2", r"\3/X"]),
+
+         (re.compile(r"^(date) (-d) '[A-Za-z0-9,:\s]+\\r' \+%s$"),
+          [r"\1", r"\2", r"'(DATE)' +%s"]),
+
+         (re.compile(r"^(curl) (-A) ([A-Za-z0-9./]+) (-s) (-R) (-o)"
+                     r" (?:\d+x+(?:/\d+x+)?/(?:index\.html|DQM[-_A-Za-z0-9]+\.root))"
+                     r" (--create-dirs) (--capath) (/etc/grid-security/certificates/?)"
+                     r" (--key) (/data/srv/state/dqmgui/proxy/proxy\.cert)"
+                     r" (--cert) (/data/srv/state/dqmgui/proxy/proxy\.cert)"
+                     r" (https://cmsweb\.cern\.ch/dqm/online/data/browse)/"
+                     r"(?:Merged|Original)(?:/\d+x+){0,2}/(?:DQM[-_A-Za-z0-9]+\.root)?$"),
+          [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", "Rx/Rx/DQM.root", r"\7", r"\8", r"\9", r"\10", r"\11", r"\12", r"\13/A/Rx/Rx/DQM.root" ]),
+
+         (re.compile(r"^(curl) (-A) ([A-Za-z0-9./]+) (-s) (-I)"
+                     r" (--capath) (/etc/grid-security/certificates/?)"
+                     r" (--key) (/data/srv/state/dqmgui/proxy/proxy\.cert)"
+                     r" (--cert) (/data/srv/state/dqmgui/proxy/proxy\.cert)"
+                     r" (https://cmsweb\.cern\.ch/dqm/online/data/browse)/"
+                     r"(?:Merged|Original)(?:/$|/\d+x+){0,2}/(?:DQM[-_A-Za-z0-9]+\.root)?$"),
+          [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", r"\7", r"\8", r"\9", r"\10", r"\11", r"\12/A/Rx/Rx/DQM.root" ]),
+
+         (re.compile(r"^(curl) (-A) ([A-Za-z0-9./]+)"
+                     r" (--capath) (/etc/grid-security/certificates/?)"
+                     r" (--key) (/data/srv/state/dqmgui/proxy/proxy\.cert)"
+                     r" (--cert) (/data/srv/state/dqmgui/proxy/proxy\.cert)"
+                     r" (https://cmsweb\.cern\.ch/dqm/online/data/browse)/"
+                     r"(?:Merged|Original)(?:/$|/\d+x+){0,2}(?:/DQM[-_A-Za-z0-9]+\.root)?$"),
+          [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", r"\7", r"\8", r"\9", r"\10/A/Rx/Rx/DQM.root" ]),
+
+         (re.compile(r"^sh -c \"(exec perl -e 'alarm\(\d+\); exec qw\(root -n -l -b -q)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
+                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C\)' 2>&1 >/dev/null)\"$"),
+          ["sh", "-c", r"\1 \2/NNNN/DQM.root \3"]),
+
+         (re.compile(r"^perl -e '(alarm\(\d+\); exec qw\(root -n -l -b -q)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
+                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C\))'$"),
+          ["perl", "-e", r"\1 \2/NNNN/DQM.root \3"]),
+
+         (re.compile(r"^(root) (-n) (-l) (-b) (-q)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
+                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C)$"),
+          [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6/NNNN/DQM.root", r"\7"]),
+
+         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/lcg/root/"
+                     r"[-.a-z0-9]+/bin/root\.exe) (-splash) (-n) (-l) (-b) (-q)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
+                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C)$"),
+          [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", r"\7/NNNN/DQM.root", r"\8"]),
+
+         (re.compile(r"^sh -c '((?:exec )?visDQMIndex) (add)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/ix)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/data)"
+                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root'$"),
+          ["sh", "-c", r"\1 \2 \3 \4/A/B/C/Rx/DQM.root"]),
+
+         (re.compile(r"^(visDQMIndex) (add) (/data/srv/state/dqmgui/[a-z]+/ix)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/data)"
+                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root$"),
+          [r"\1", r"\2", r"\3", r"\4/A/B/C/Rx/DQM.root"]),
+
+         (re.compile(r"^sh -c '((?:exec )?zip) (-0oqj)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/zipped)"
+                     r"(?:/[A-Za-z0-9_]+){1,3}/DQM[-_A-Za-z0-9]+\.zip"
+                     r"(?: +(/data/srv/state/dqmgui/[a-z]+/data)"
+                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root)+'$"),
+          ["sh", "-c", r"\1 \2 \3/A/B/C/DQM.zip \4/A/B/C/Rx/DQM.root+"]),
+
+         (re.compile(r"^(zip) (-0oqj)"
+                     r" (/data/srv/state/dqmgui/[a-z]+/zipped)"
+                     r"(?:/[A-Za-z0-9_]+){1,3}/DQM[-_A-Za-z0-9]+\.zip"
+                     r"(?: +(/data/srv/state/dqmgui/[a-z]+/data)"
+                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root)+$"),
+          [r"\1", r"\2", r"\3/A/B/C/DQM.zip", r"\4/A/B/C/Rx/DQM.root+"]),
+
+         (re.compile(r"^(nsls) (-T) (/castor/cern.ch/cms/store/dqm/data/[a-z]+)"
+                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.zip$"),
+          [r"\1", r"\2", r"\3/A/B/C/DQM.zip"]))
+
 # Parse one input block. Turns the block into a tuple (type, dict) where the
 # dictionary describes all the relevant information for one audit entry.
 def parse(block):
@@ -120,16 +235,26 @@ def pfxcount(dict, keypfx):
   return len([k for k in dict.keys() if k[0:len(keypfx)] == keypfx])
 
 # Decide if we should report this syscall by looking at which paths it
-# accesses. Skip commonly used shared libraries which are ok not to be
-# found in $LD_LIBRARY_PATH search, and files opened in read-only mode
-# and which pretty much every process will access sooner or later.
+# accesses.
+#
+# Skip commonly used shared libraries which are ok not to be found in
+# $LD_LIBRARY_PATH search, and files opened in read-only mode and which
+# pretty much every process will access sooner or later.
+#
+# Convert common recurring command and path structures to templates to
+# avoid excessive reporting of very common occurances. Examples include
+# typical errors in manipulating apache disk cache and external commands
+# run by DQM GUI.
 def filter_path(info):
+  # Filter permission denied access to system libraries.
+  # This happens when searching for TLS, arch-specific bits.
   if (info['syscall'] == 'open'
       and info['exit'] in ('0', '-13(Permission denied)')
       and info.get('paths', None)
       and rxsyslib.match(info['paths'][0])):
     return True
 
+  # Filter successful read-only accesses to commonly used system files.
   if (info['syscall'] == 'open'
       and info['success'] == 'yes'
       and info['a1'] == '0'
@@ -141,6 +266,44 @@ def filter_path(info):
                                '/etc/pam.d/other',
                                '/etc/pam.d/system-auth')):
     return True
+
+  # Collapse sendmail temporary files.
+  if (info['exe'] == '/usr/sbin/sendmail.sendmail'
+      and info['syscall'] == 'unlink'
+      and info.get('paths', None)):
+    m = rxmqueue.match(info['paths'][0])
+    if m: info['paths'][0] = m.group(1) + ("X" * len(m.group(2)))
+    return False
+
+  # Collapse common 'errors' from apache disk cache accesses.
+  if rxapache.match(info['exe']) and info.get('paths', None):
+    m = rxphedex.match(info['paths'][0])
+    if not m: return False
+
+    prefix = info['paths'][0][:m.end()-1]
+    path = info['paths'][0][m.end()-1:]
+    if info['syscall'] == 'mkdir' and info['exit'] == '-17(File exists)':
+      if rxapcachedir.match(path):
+        info['paths'][0] = prefix + "/a/b"
+      elif rxapcachedirv.match(path):
+        info['paths'][0] = prefix + "/a/b/c.header.vary/a/b"
+    elif info['syscall'] == 'unlink' and info['exit'] == '-2(No such file or directory)':
+      if rxapcachehdr.match(path):
+        info['paths'][0] = prefix + "/a/b/c.header"
+      elif rxapcachehdrv.match(path):
+        info['paths'][0] = prefix + "/a/b/c.header.vary/x/y/z.header"
+      elif rxapcachehdrvd.match(path):
+        info['paths'][0] = prefix + "/a/b/c.header.vary/x/y/z.data"
+    return False
+
+  # Collapse file processing commands in DQM GUI.
+  if info['uid'] == '_dqmgui' and info['syscall'] == 'execve' and info['success'] == 'yes':
+    cmd = command(info)
+    for rx, argv in rxdqm:
+      m = rx.match(cmd)
+      if m:
+        info['execve-args'] = [m.expand(i) for i in argv]
+        return False
 
   return False
 
@@ -222,7 +385,7 @@ def summarise(data):
            pfxcount(exec_failure, (err, user)),
            pfxsum(exec_failure, (err, user)))
         prev_user = user
-      print "      %-4d %-30s %s" % (exec_failure[key], exename(exe), cmd)
+      print "      %-6d %-30s %s" % (exec_failure[key], exename(exe), cmd)
     pad = "\n\n"
 
   if path_failure:
@@ -245,7 +408,7 @@ def summarise(data):
            pfxcount(path_failure, (err, user)),
            pfxsum(path_failure, (err, user)))
         prev_user = user
-      print "      %-4d %s [%s, %s]" % (path_failure[key], path, syscall, exe)
+      print "      %-6d %s [%s, %s]" % (path_failure[key], path, syscall, exe)
     pad = "\n\n"
 
   if call_failure:
@@ -268,7 +431,7 @@ def summarise(data):
            pfxcount(call_failure, (err, user)),
            pfxsum(call_failure, (err, user)))
         prev_user = user
-      print "      %-4d %s [%s]" % (call_failure[key], call, exe)
+      print "      %-6d %s [%s]" % (call_failure[key], call, exe)
     pad = "\n\n"
 
   if exit_failure:
@@ -291,7 +454,7 @@ def summarise(data):
            pfxcount(exit_failure, (err, user)),
            pfxsum(exit_failure, (err, user)))
         prev_user = user
-      print "      %-4d %s" % (exec_failure[key], exe)
+      print "      %-6d %s" % (exec_failure[key], exe)
     pad = "\n\n"
 
   if exec_success:
@@ -306,7 +469,7 @@ def summarise(data):
            pfxcount(exec_success, (user,)),
            pfxsum(exec_success, (user,)))
         prev_user = user
-      print "    %-4d %-30s %s" % (exec_success[key], exename(exe), cmd)
+      print "    %-6d %-30s %s" % (exec_success[key], exename(exe), cmd)
     pad = "\n\n"
 
   if path_success:
@@ -321,7 +484,7 @@ def summarise(data):
            pfxcount(path_success, (user,)),
            pfxsum(path_success, (user,)))
         prev_user = user
-      print "    %-4d %s [%s, %s]" % (path_success[key], path, syscall, exe)
+      print "    %-6d %s [%s, %s]" % (path_success[key], path, syscall, exe)
     pad = "\n\n"
 
   if call_success:
@@ -336,7 +499,7 @@ def summarise(data):
            pfxcount(call_success, (user,)),
            pfxsum(call_success, (user,)))
         prev_user = user
-      print "    %-4d %s [%s]" % (call_success[key], call, exe)
+      print "    %-6d %s [%s]" % (call_success[key], call, exe)
     pad = "\n\n"
 
   if exit_success:
@@ -351,7 +514,7 @@ def summarise(data):
            pfxcount(exit_success, (user,)),
            pfxsum(exit_success, (user,)))
         prev_user = user
-      print "    %-4d %s" % (exit_success[key], exe)
+      print "    %-6d %s" % (exit_success[key], exe)
     pad = "\n\n"
 
 # Main program. Read ausearch output and digest it, generate summary.
