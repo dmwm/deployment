@@ -6,7 +6,7 @@ from WMCore.Configuration import Configuration
 from WMCore.WMInit import getWMBASE
 
 ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
-DBSVERSION = 'DBS_3_0_8'
+DBSVERSION = os.getenv('DBS3_VERSION')
 
 sys.path.append(os.path.join(ROOTDIR,'auth/dbs'))
 
@@ -26,7 +26,7 @@ config.Webtools.proxy_base = 'True'
 config.Webtools.application = 'dbs'
 
 config.component_('dbs')
-config.dbs.templates = os.path.join(getWMBASE(),'templates/WMCore/WebTools')
+config.dbs.templates = os.path.join(getWMBASE(),'../../templates/WMCore/WebTools')
 config.dbs.title = 'DBS Server'
 config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')
@@ -61,15 +61,3 @@ active.DBSWriter.version = DBSVERSION
 active.DBSWriter.section_('database')
 active.DBSWriter.database.connectUrl = connectUrlWriter
 active.DBSWriter.database.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
-
-active.section_('MIGRATE')
-active.MIGRATE.object = 'WMCore.WebTools.RESTApi'
-active.MIGRATE.section_('model')
-active.MIGRATE.model.object = 'dbs.web.DBSMigrateModel'
-active.MIGRATE.section_('formatter')
-active.MIGRATE.formatter.object = 'WMCore.WebTools.RESTFormatter'
-active.MIGRATE.section_('database')
-active.MIGRATE.database.connectUrl = connectUrlWriter
-active.MIGRATE.dbowner = databaseOwnerWriter
-active.MIGRATE.version = DBSVERSION
-active.MIGRATE.nthreads = 4

@@ -32,6 +32,9 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+# Necessary to evaluate the configuration
+export DBS3_VERSION
+
 # Start service conditionally on crond restart.
 sysboot()
 {
