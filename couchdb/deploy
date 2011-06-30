@@ -17,6 +17,20 @@ deploy_couchdb_sw()
   rm -f $project_auth/hmackey.ini
   deploy_pkg -a couchdb/hmackey.ini comp external+couchdb 1.1.0
   perl -p -i -e "s|{ROOT}|$root|g" $project_config/local.ini
+
+  case $variant in
+    default )
+      ;;
+    * )
+      # *FIX* Should properly use a user proxy here once couch
+      # ssl client accepts it. Would also need the proxy renewal setup there.
+      (echo
+       echo "[ssl]"
+       echo "cert_file = $root/certs/cert.pem"
+       echo "key_file = $root/certs/key.pem"
+      ) >> $project_config/local.ini
+      ;;
+  esac
 }
 
 deploy_couchdb_post()
