@@ -61,16 +61,14 @@ deploy_workqueue_post()
       local couchdb_config=$root/current/config/couchdb
       local couchdb_state=$root/state/couchdb
       local couch_url="http://localhost:5984"
-      local hour=2
 
       sudo -H -u _workqueue bashs -lc "find $workqueue_state/cache -maxdepth 1 -type d -name \".wmcore_cache_*\" | xargs rm -rf"
 
-      for area in compaction stagingarea replication backup; do
+      for area in stagingarea replication; do
         rm -f $couchdb_state/$area/workqueue
         touch $couchdb_state/$area/workqueue
       done
 
-      local couch_crons=""
       local wqapp=$root/current/apps/workqueue
       for db in workqueue workqueue_inbox; do
         local couch_string="${couch_url}/${db}"
@@ -81,18 +79,6 @@ deploy_workqueue_post()
 
         echo "$couchdb_config/manage cleanviews $db 'I did read documentation'" \
           >> $couchdb_state/stagingarea/workqueue
-
-        # compact views in cronjob
-        local cmd="$couchdb_config/manage compactviews $db WorkQueue 'I did read documentation'"
-        $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-        couch_crons="${couch_crons}10 $hour * * * $cmd\n"
-
-        # compact db in cronjob
-        local cmd="$couchdb_config/manage compact $db 'I did read documentation'"
-        $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-        couch_crons="${couch_crons}40 $hour * * * $cmd\n"
-
-        hour=$(( $hour + 1 ))
       done
 
       # Setup workqueue cronjobs
@@ -109,14 +95,9 @@ deploy_workqueue_post()
       local housekeep="15-55/20 * * * * $cmd"
 
       (mkcrontab
-       case $host in
-         vocms10[67] | vocms50 | vocms13[2689] ) ;;
-         * ) echo -ne "${couch_crons}" ;;
-       esac
        echo "${req_sync}"
        echo "${locations}"
        echo "${housekeep}") | crontab -
-
       ;;
   esac
 

@@ -150,20 +150,41 @@ replications()
   done
 }
 
-# Trigger a database compaction.
+# Trigger a database compaction. If "all", then compact all databases
+# and all the views of each database.
 compact()
 {
   local database=$1
   [ -n "$database" ] ||
     { echo "You must specify a database to compact"; exit 3; }
 
+  if [ "$database" = all ]; then
+    for database in $STATEDIR/database/[^_]*.couch; do
+      [ -f $database ] || continue
+      database=${database##*/}
+      database=${database%.couch}
+      compact_database $database
+
+      curl -s "localhost:5984/$database/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
+        awk -F\" '/"id":"_design/ {print $4}' |
+	while read dbview; do
+	  compact_views $database ${dbview#*/}
+	done
+    done
+  else
+    compact_database $database
+  fi
+}
+
+compact_database()
+{
+  local database=$1
   curl -s localhost:5984/$database | grep -q '"compact_running":true' &&
     { echo "$database is already compacting"; exit 5; }
 
   curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_compact | \
         grep -q '{"ok":true}' ||
     { echo "An error occured triggering compaction. Please look in the CouchDB logs."; exit 7; }
-
 }
 
 # Trigger a view compaction

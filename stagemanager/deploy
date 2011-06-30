@@ -27,7 +27,7 @@ deploy_stagemanager_post()
   local couchdb_config=$root/current/config/couchdb
   local couchdb_state=$root/state/couchdb
 
-  for area in compaction stagingarea replication backup; do
+  for area in stagingarea replication; do
     rm -f $couchdb_state/$area/stagemanager
     touch $couchdb_state/$area/stagemanager
   done
@@ -39,25 +39,17 @@ deploy_stagemanager_post()
         dbs=$(echo $dbs ${site}_{requests,statistics})
       done
       ;;
-    * ) dbs=$(echo ${variant}_{requests,statistics,stagequeue,configuration});;
+    t1_* )
+      dbs=$(echo ${variant}_{requests,statistics,stagequeue,configuration});;
   esac
 
-  local couch_crons=""
-  local hour=0
   for db in $dbs; do
     # Push the database
     echo "couchapp push $root/current/apps/stagemanager/${db##*_} http://localhost:5984/$db" >> $couchdb_state/stagingarea/stagemanager
-
-    # Setup database compaction
-    local cmd="$couchdb_config/manage compact $db 'I did read documentation'"
-    $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-    couch_crons="${couch_crons}12 $hour * * * $cmd\n"
-    hour=$(( $hour + 1 ))
   done
 
   case $variant in
-    default ) ;;
-    * ) 
+    t1_* )
       # Setup database replication
       (echo {,https://cmsweb.cern.ch/couchdb/}${variant}_statistics # unidirectional
        echo {,https://cmsweb.cern.ch/couchdb/}${variant}_requests
@@ -65,11 +57,4 @@ deploy_stagemanager_post()
       ) > $couchdb_state/replication/stagemanager
       ;;
   esac
-
-  (mkcrontab
-   case $host in
-     vocms10[67] | vocms50 | vocms13[2689] ) ;;
-     * ) echo -ne "${couch_crons}" ;;
-   esac
-  ) | crontab -
 }
