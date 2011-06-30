@@ -19,7 +19,7 @@ deploy_workqueue_sw()
       deploy_pkg \
         -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
         -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        comp cms+workqueue 0.0.12
+        comp cms+workqueue 0.0.16
 
       if grep -rq "replace me" $project_auth; then
         note "WARNING: replace certificates in $project_auth with real ones"
@@ -74,11 +74,24 @@ deploy_workqueue_post()
       local wqapp=$root/current/apps/workqueue
       for db in workqueue workqueue_inbox; do
         local couch_string="${couch_url}/${db}"
+
+        # push app, clean views on startup
         echo "couchapp push $wqapp/lib/couchapps/WorkQueue $couch_string" \
           >> $couchdb_state/stagingarea/workqueue
+
+        echo "$couchdb_config/manage cleanviews $db 'I did read documentation'" \
+          >> $couchdb_state/stagingarea/workqueue
+
+        # compact views in cronjob
+        local cmd="$couchdb_config/manage compactviews $db WorkQueue 'I did read documentation'"
+        $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
+        couch_crons="${couch_crons}10 $hour * * * $cmd\n"
+
+        # compact db in cronjob
         local cmd="$couchdb_config/manage compact $db 'I did read documentation'"
         $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-        couch_crons="${couch_crons}12 $hour * * * $cmd\n"
+        couch_crons="${couch_crons}40 $hour * * * $cmd\n"
+
         hour=$(( $hour + 1 ))
       done
 
