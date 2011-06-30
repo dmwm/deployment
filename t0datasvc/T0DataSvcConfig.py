@@ -48,4 +48,4 @@ tier0.model.object = 'T0.DAS.Tier0RESTModel'
 tier0.section_('formatter')
 tier0.formatter.object = 'WMCore.WebTools.DASRESTFormatter'
 tier0.serviceModules = ['T0.DAS.Services.' + x for x in
-                         ['MotT0Service','Tier0TomService','Tier0RECOService']]
+                         ['MotT0Service','Tier0RECOService']]
