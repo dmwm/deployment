@@ -10,8 +10,6 @@ LAYOUTS += ["%s/layouts/%s_overview_layouts.py" % (CONFIGDIR, x) for x in
             ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
 LAYOUTS += ["%s/layouts/%s_T0_layouts.py" % (CONFIGDIR, x) for x in
            ("btag","castor","csc","pixel","sistrip","hcal", "hcalcalib", "eb", "ee", "es", "hltmuon", "rpc")]
-LAYOUTS += [CONFIGDIR + "/layouts/shift_hlt_relval_layout.py"]
-LAYOUTS += [CONFIGDIR + "/layouts/hlt_relval-layouts.py"]
 
 modules = ("Monitoring.DQM.GUI",)
 

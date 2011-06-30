@@ -44,7 +44,8 @@ server.extend('DQMRenderLink', server.pathOfPlugin('render'))
 server.extend('DQMToJSON')
 server.extend('DQMFileAccess', None, "/dqmdata/dqm/uploads",
               { "ROOT": "/dqmdata/dqm/repository/original/OnlineData",
-                "Original": "/dqmdata/dqm/repository/original/OnlineData" }) # legacy
+                "Original": "/dqmdata/dqm/repository/original/OnlineData",
+                "Merged": "/dqmdata/dqm/repository/merged/OnlineData" }) # legacy
 server.source('DQMUnknown')
 server.source('DQMOverlay')
 server.source('DQMStripChart')
