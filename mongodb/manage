@@ -38,14 +38,20 @@ cd $STATEDIR
 # content, then uses the update script to populate new content into
 # DB, e.g. clean_mapping_db.js and update_mapping_db.js. The update
 # script contains the JSON docs to be populated.
+clean_db()
+{
+    set -e
+    echo "Clean $1"
+    mongo --port 8230 stagingarea/clean_$1.js
+    set +e
+}
 update_db()
 {
   stamp=$(cat stagingarea/update_$1.js | md5sum)
   oldstamp=$(cat stagingarea/$1-schema-stamp 2>/dev/null)
   if [ ! -f stagingarea/$1-schema-stamp ] || [ X"$oldstamp" != X"$stamp" ]; then
     set -e
-    echo "Clean $1"
-    mongo --port 8230 stagingarea/clean_$1.js
+    clean_db $1
     echo "Update $1"
     db=$(echo $1 | cut -f1 -d_) coll=$(echo $1 | cut -f2 -d_)
     mongoimport --port 8230 --db $db --collection $coll --file stagingarea/update_$1.js
@@ -76,6 +82,7 @@ start()
   sleep 2
   echo "$ME is ready"
   sleep 2
+  clean_db "das_db"
   update_db "mapping_db"
 }
 
