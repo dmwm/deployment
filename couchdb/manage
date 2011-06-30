@@ -11,6 +11,7 @@
 ##H   start           (re)start the service
 ##H   stop            stop the service
 ##H   pushapps        push couch applications
+##H   pushreps        push couch replications
 ##H   compact         compact database ARG
 ##H   compactviews    compact database views for design doc ARG ARG
 ##H   cleanviews      clean view named ARG
@@ -54,6 +55,7 @@ start()
     -p $STATEDIR/couchdb.pid </dev/null >/dev/null 2>&1
 
   push_apps
+  replications push
 }
 
 # Stop the service.
@@ -73,6 +75,8 @@ status()
   local TASKS=$(curl -s localhost:5984/_active_tasks)
   [ "$TASKS" = '[]' ] && TASKS="No active tasks (e.g. compactions)"
   echo $TASKS
+
+  replications status
 }
 
 # When a view is changed, such as a new app version is deployed,
@@ -111,6 +115,39 @@ push_apps()
     echo "couchdb did not start, not pushing application"
     exit 1
   fi
+}
+
+replications()
+{
+  [ "$1" = "push" ] && local status=false || local status=true
+  local all_reps=$(curl -s localhost:5984/_replicator/_all_docs?include_docs=true \
+                   | grep '^{"id":"[^_]' | awk -F\" '{print $4,$14,$28,$32,$38}')
+  local req_reps=$(cat $STATEDIR/replication/*)
+
+  [ -n "$all_reps" ] && echo "$all_reps" | while read ID REV SRC DST STATE; do
+    if echo "$req_reps" | grep -q "$SRC $DST"; then
+      echo "Replication 'id=$ID source=$SRC target=$DST' $STATE."
+    else
+      echo "Replication 'id=$ID source=$SRC target=$DST' unknown."
+      if ! $status; then
+        echo -n "Removing it... "
+        curl -s -X DELETE localhost:5984/_replicator/$ID?rev=$REV
+      fi
+    fi
+  done
+
+  local IDS=$(echo "$all_reps" | awk '{print $1}')
+  [ -n "$req_reps" ] && echo "$req_reps" | while read SRC DST; do
+    local ID=$(echo "$SRC $DST" | md5sum | awk '{print $1}')
+    if ! echo "$IDS" | grep -q "$ID"; then
+      echo "Replication 'id=$ID source=$SRC target=$DST' not pushed."
+      if ! $status; then
+        echo -n "Pushing it... "
+        curl -s -X PUT localhost:5984/_replicator/$ID \
+             -d "{\"source\":\"$SRC\", \"target\":\"$DST\", \"continuous\":true}"
+      fi
+    fi
+  done
 }
 
 # Trigger a database compaction.
@@ -187,6 +224,11 @@ case ${1:-status} in
   pushapps )
     check "$2"
     push_apps
+    ;;
+
+  pushreps )
+    check "$2"
+    replications push
     ;;
 
   compact )
