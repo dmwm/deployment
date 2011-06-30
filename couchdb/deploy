@@ -35,13 +35,6 @@ deploy_couchdb_sw()
 
 deploy_couchdb_post()
 {
-  if $MIGRATION && \
-     [ -d /data/projects/couchdb/database ] && \
-     [ $(find $PWD/database -type f | wc -l) = 0 ]; then
-    note "INFO: cloning old couch databases from /data/projects/couchdb/database"
-    sudo rsync -cav /data/projects/couchdb/database/ $PWD/database/
-  else :; fi
-
   case $variant in
     default )
       (mkcrontab; sysboot

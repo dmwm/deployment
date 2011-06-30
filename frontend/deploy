@@ -63,13 +63,6 @@ deploy_frontend_sw()
 
 deploy_frontend_post()
 {
-  if $MIGRATION && \
-     [ -d /data/frontend/logs ] && \
-     [ $(find $project_logs -type f | wc -l) = 0 ]; then
-    note "INFO: cloning old front-end logs from /data/frontend/logs"
-    tar -C /data/frontend/logs -cf - . | tar -C $project_logs -xvvf -
-  else :; fi
-
   local certs
   if [ -r $root/certs/hostcert.pem ]; then
     certs=$root/certs
