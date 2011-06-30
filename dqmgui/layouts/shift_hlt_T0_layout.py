@@ -86,23 +86,23 @@ trigvalFVPho(dqmitems,"HLT_Photon15_L1R: Et of RECO Photon objects",
 def hltCollLayout(i, p, *rows): i["00 Shift/HLT/Collisions/" + p] = DQMItem(layout=rows)
 
 hltCollLayout(dqmitems,"Eff of HLT_Photon75_Cleaned_L1R L1 seed to RECO",
-[{'path': "HLT/FourVector/paths/HLT_Photon75_CaloIdVL_IsoL_v4/custom-eff/HLT_Photon75_CaloIdVL_IsoL_v4_wrt_HLT_Mu_offEt_Eff_L1ToOff", 'description':"Efficiency of L1 seed to RECO for path HLT_Photon75_CaloIdVL_IsoL_v4. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+[{'path': "HLT/FourVector/paths/HLT_Photon75_CaloIdVL_IsoL_v6/custom-eff/HLT_Photon75_CaloIdVL_IsoL_v6_wrt_HLT_Mu_offEt_Eff_L1ToOff", 'description':"Efficiency of L1 seed to RECO for path HLT_Photon75_CaloIdVL_IsoL_v6. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltCollLayout(dqmitems,"Eff of  HLT_Photon75_CaloIdVL_IsoL_v4 L1 seed wrt RECO in eta-phi RECO space",
-[{'path': "HLT/FourVector/paths/HLT_Photon75_CaloIdVL_IsoL_v4/custom-eff/HLT_Photon75_CaloIdVL_IsoL_v4_wrt_HLT_Mu_offEtaoffPhi_Eff_L1ToOff", 'description':"Efficiency of L1 to RECO above 2 times HLT threshold for path HLT_Photon75_CaloIdVL_IsoL_v4 (eta-phi).   For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of  HLT_Photon75_CaloIdVL_IsoL_v6 L1 seed wrt RECO in eta-phi RECO space",
+[{'path': "HLT/FourVector/paths/HLT_Photon75_CaloIdVL_IsoL_v6/custom-eff/HLT_Photon75_CaloIdVL_IsoL_v6_wrt_HLT_Mu_offEtaoffPhi_Eff_L1ToOff", 'description':"Efficiency of L1 to RECO above 2 times HLT threshold for path HLT_Photon75_CaloIdVL_IsoL_v6 (eta-phi).   For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltCollLayout(dqmitems,"Eff of  HLT_Photon75_CaloIdVL_IsoL_v4  to RECO",
-[{'path': "HLT/FourVector/paths/HLT_Photon75_CaloIdVL_IsoL_v4/custom-eff/HLT_Photon75_CaloIdVL_IsoL_v4_wrt_HLT_Mu_offEt_Eff_OnToOff", 'description':"Efficiency of HLT to RECO for path   HLT_Photon75_CaloIdVL_IsoL_v4. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of  HLT_Photon75_CaloIdVL_IsoL_v6  to RECO",
+[{'path': "HLT/FourVector/paths/HLT_Photon75_CaloIdVL_IsoL_v6/custom-eff/HLT_Photon75_CaloIdVL_IsoL_v6_wrt_HLT_Mu_offEt_Eff_OnToOff", 'description':"Efficiency of HLT to RECO for path   HLT_Photon75_CaloIdVL_IsoL_v6. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
 
-hltCollLayout(dqmitems,"Eff of HLT_Jet300_v2 L1 seed to RECO",
-[{'path': "HLT/FourVector/paths/HLT_Jet300_v2/custom-eff/HLT_Jet300_v2_wrt_HLT_Mu_offEt_Eff_L1ToOff", 'description':"Efficiency of L1 seed to RECO for path HLT_Jet300_v2. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of HLT_Jet300_v3 L1 seed to RECO",
+[{'path': "HLT/FourVector/paths/HLT_Jet300_v3/custom-eff/HLT_Jet300_v3_wrt_HLT_Mu_offEt_Eff_L1ToOff", 'description':"Efficiency of L1 seed to RECO for path HLT_Jet300_v3. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltCollLayout(dqmitems,"Eff of HLT_Jet300_v2 L1 seed wrt RECO in eta-phi RECO space",
-[{'path': "HLT/FourVector/paths/HLT_Jet300_v2/custom-eff/HLT_Jet300_v2_wrt_HLT_Mu_offEtaoffPhi_Eff_L1ToOff", 'description':"Efficiency of L1 to RECO above 2 times HLT threshold for path HLT_Jet300_v2 (eta-phi).   For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of HLT_Jet300_v3 L1 seed wrt RECO in eta-phi RECO space",
+[{'path': "HLT/FourVector/paths/HLT_Jet300_v3/custom-eff/HLT_Jet300_v3_wrt_HLT_Mu_offEtaoffPhi_Eff_L1ToOff", 'description':"Efficiency of L1 to RECO above 2 times HLT threshold for path HLT_Jet300_v3 (eta-phi).   For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltCollLayout(dqmitems,"Eff of HLT_Jet300_v2 to RECO",
-[{'path': "HLT/FourVector/paths/HLT_Jet300_v2/custom-eff/HLT_Jet300_v2_wrt_HLT_Mu_offEt_Eff_OnToOff", 'description':"Efficiency of HLT to RECO for path HLT_Jet300_v2. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of HLT_Jet300_v3 to RECO",
+[{'path': "HLT/FourVector/paths/HLT_Jet300_v3/custom-eff/HLT_Jet300_v3_wrt_HLT_Mu_offEt_Eff_OnToOff", 'description':"Efficiency of HLT to RECO for path HLT_Jet300_v3. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
 
 hltCollLayout(dqmitems,"Eff of HLT_Mu30_v3 L1 seed to RECO",
@@ -115,28 +115,28 @@ hltCollLayout(dqmitems,"Eff of HLT_Mu30_v3 to RECO",
 [{'path': "HLT/FourVector/paths/HLT_Mu30_v3/custom-eff/HLT_Mu30_v3_wrt_HLT_Jet_offEt_Eff_OnToOff", 'description':"Efficiency of HLT to RECO for path HLT_Mu30_v3. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
 
-hltCollLayout(dqmitems,"Eff of HLT_Ele52_CaloIdVT_TrkIdT_v1 L1 seed to RECO",
-[{'path': "HLT/FourVector/paths/HLT_Ele52_CaloIdVT_TrkIdT_v1/custom-eff/HLT_Ele52_CaloIdVT_TrkIdT_v1_wrt_HLT_Mu_offEt_Eff_L1ToOff", 'description':"Efficiency of L1 seed to RECO for path HLT_Ele52_CaloIdVT_TrkIdT_v1. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of HLT_Ele52_CaloIdVT_TrkIdT_v3 L1 seed to RECO",
+[{'path': "HLT/FourVector/paths/HLT_Ele52_CaloIdVT_TrkIdT_v3/custom-eff/HLT_Ele52_CaloIdVT_TrkIdT_v3_wrt_HLT_Mu_offEt_Eff_L1ToOff", 'description':"Efficiency of L1 seed to RECO for path HLT_Ele52_CaloIdVT_TrkIdT_v3. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltCollLayout(dqmitems,"Eff of HLT_Ele52_CaloIdVT_TrkIdT_v1 L1 seed wrt RECO in eta-phi RECO space",
-[{'path': "HLT/FourVector/paths/HLT_Ele52_CaloIdVT_TrkIdT_v1/custom-eff/HLT_Ele52_CaloIdVT_TrkIdT_v1_wrt_HLT_Mu_offEtaoffPhi_Eff_L1ToOff", 'description':"Efficiency of L1 to RECO above 2 times HLT threshold for path HLT_Ele52_CaloIdVT_TrkIdT_v1 (eta-phi).   For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of HLT_Ele52_CaloIdVT_TrkIdT_v3 L1 seed wrt RECO in eta-phi RECO space",
+[{'path': "HLT/FourVector/paths/HLT_Ele52_CaloIdVT_TrkIdT_v3/custom-eff/HLT_Ele52_CaloIdVT_TrkIdT_v3_wrt_HLT_Mu_offEtaoffPhi_Eff_L1ToOff", 'description':"Efficiency of L1 to RECO above 2 times HLT threshold for path HLT_Ele52_CaloIdVT_TrkIdT_v3 (eta-phi).   For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltCollLayout(dqmitems,"Eff of HLT_Ele52_CaloIdVT_TrkIdT_v1 to its RECO",
-[{'path': "HLT/FourVector/paths/HLT_Ele52_CaloIdVT_TrkIdT_v1/custom-eff/HLT_Ele52_CaloIdVT_TrkIdT_v1_wrt_HLT_Mu_offEt_Eff_OnToOff", 'description':"Efficiency of HLT to RECO for path HLT_Ele52_CaloIdVT_TrkIdT_v1. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltCollLayout(dqmitems,"Eff of HLT_Ele52_CaloIdVT_TrkIdT_v3 to its RECO",
+[{'path': "HLT/FourVector/paths/HLT_Ele52_CaloIdVT_TrkIdT_v3/custom-eff/HLT_Ele52_CaloIdVT_TrkIdT_v3_wrt_HLT_Mu_offEt_Eff_OnToOff", 'description':"Efficiency of HLT to RECO for path HLT_Ele52_CaloIdVT_TrkIdT_v3. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
 def hltlayout(i, p, *rows): i["00 Shift/HLT/Cosmics/" + p] = DQMItem(layout=rows)
 
-hltlayout(dqmitems,"N of HLT_L1MuOpen_AntiBPTX_v2 muons" ,
-        [{'path': "HLT/FourVector/paths/HLT_L1MuOpen_AntiBPTX_v2/HLT_L1MuOpen_AntiBPTX_v2_wrt_HLT_Jet_NOn", 'description': "Multiplicity of HLT muons passing HLT_L1Mu path.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltlayout(dqmitems,"N of HLT_L1SingleMuOpen_AntiBPTX_v2 muons" ,
+        [{'path': "HLT/FourVector/paths/HLT_L1SingleMuOpen_AntiBPTX_v2/HLT_L1SingleMuOpen_AntiBPTX_v2_wrt_HLT_Jet_NOn", 'description': "Multiplicity of HLT muons passing HLT_L1Mu path.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltlayout(dqmitems,"HLT_L1MuOpen_AntiBPTX_v2 & L1 muons eta-phi",
-        [{'path': "HLT/FourVector/paths/HLT_L1MuOpen_AntiBPTX_v2/HLT_L1MuOpen_AntiBPTX_v2_wrt_HLT_Jet_l1Etal1PhiL1On", 'description': "X=eta and Y=phi for L1 muons that are matched (eta-phi) with HLT muons triggering this path.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltlayout(dqmitems,"HLT_L1SingleMuOpen_AntiBPTX_v2 & L1 muons eta-phi",
+        [{'path': "HLT/FourVector/paths/HLT_L1SingleMuOpen_AntiBPTX_v2/HLT_L1SingleMuOpen_AntiBPTX_v2_wrt_HLT_Jet_l1Etal1PhiL1On", 'description': "X=eta and Y=phi for L1 muons that are matched (eta-phi) with HLT muons triggering this path.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltlayout(dqmitems,"Eff HLT_L1MuOpen_AntiBPTX_v2 to its L1 vs Pt",
-        [{'path': "HLT/FourVector/paths/HLT_L1MuOpen_AntiBPTX_v2/custom-eff/HLT_L1MuOpen_AntiBPTX_v2_wrt_HLT_Jet_l1Et_Eff_OnToL1", 'description': "Fraction of L1 muons that triggered this HLT path as function of Et.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltlayout(dqmitems,"Eff HLT_L1SingleMuOpen_AntiBPTX_v2 to its L1 vs Pt",
+        [{'path': "HLT/FourVector/paths/HLT_L1SingleMuOpen_AntiBPTX_v2/custom-eff/HLT_L1SingleMuOpen_AntiBPTX_v2_wrt_HLT_Jet_l1Et_Eff_OnToL1", 'description': "Fraction of L1 muons that triggered this HLT path as function of Et.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-hltlayout(dqmitems,"Eff HLT_L1MuOpen_AntiBPTX_v2 to its L1 vs eta-phi",
-        [{'path': "HLT/FourVector/paths/HLT_L1MuOpen_AntiBPTX_v2/custom-eff/HLT_L1MuOpen_AntiBPTX_v2_wrt_HLT_Jet_l1Etal1Phi_Eff_OnToL1", 'description': "Fraction of L1 muons that triggered this HLT path as function of eta-phi.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
+hltlayout(dqmitems,"Eff HLT_L1SingleMuOpen_AntiBPTX_v2 to its L1 vs eta-phi",
+        [{'path': "HLT/FourVector/paths/HLT_L1SingleMuOpen_AntiBPTX_v2/custom-eff/HLT_L1SingleMuOpen_AntiBPTX_v2_wrt_HLT_Jet_l1Etal1Phi_Eff_OnToL1", 'description': "Fraction of L1 muons that triggered this HLT path as function of eta-phi.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
 
 

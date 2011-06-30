@@ -8,7 +8,7 @@ shiftsistriplayout(dqmitems, "00 - SiStrip ReportSummary",
  [{ 'path': "SiStrip/EventInfo/reportSummaryMap",
     'description': "Overall Report Summary where detector fraction and S/N flags are combined together -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "no" }}])
 shiftsistriplayout(dqmitems, "01 - FED errors",
-  [{ 'path': "SiStrip/ReadoutView/FedMonitoringSummary/nFEDErrors",
+  [{ 'path': "SiStrip/ReadoutView/FedMonitoringSummary/FEDLevel/nFEDErrors",
      'description': "# of FEDs in error per event - Call Tracker DOC 165503 if the mean value is above 10 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a>"}])
 shiftsistriplayout(dqmitems, "02 - # of Cluster Trend",
   [{ 'path': "SiStrip/MechanicalView/TIB/TotalNumberOfClusterProfile__TIB",

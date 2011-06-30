@@ -11,7 +11,7 @@ server.workspace('DQMContent', 10, 'Tracker/Muons', 'Pixel', '^Pixel/',
                  'Pixel/Layouts/05 - Barrel OnTrack cluster positions',
                  'Pixel/Layouts/06 - Endcap OnTrack cluster positions')
 
-server.workspace('DQMContent', 10, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracking)/',
+server.workspace('DQMContent', 10, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracking|AlcaBeamMonitor|OfflinePV)/',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
                  'SiStrip/Layouts/01 - FED-Detected Errors Summary',
                  'SiStrip/Layouts/02 - FED-Detected Errors',
@@ -20,7 +20,9 @@ server.workspace('DQMContent', 10, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracki
                  'SiStrip/Layouts/05 - OffTrackCluster (Total Number)',
                  'SiStrip/Layouts/06 - Tracking ReportSummary',
                  'SiStrip/Layouts/07 - Tracks (pp collisions)',
-                 'SiStrip/Layouts/09 - Tracks (Cosmic Tracking)')
+                 'SiStrip/Layouts/09 - Beam Monitor Test',
+                 'SiStrip/Layouts/10 - Tracks (Cosmic Tracking)'
+                 )
 
 server.workspace('DQMContent', 12, 'Tracker/Muons', 'CSC', '^CSC/',
 	         'CSC/Layouts/00 Data Integrity/Physics Efficiency 01',
