@@ -46,6 +46,7 @@ export MPLCONFIGDIR=$STATEDIR
 start_graphs()
 {
   cd $STATEDIR
+  ulimit -v $(( 4096 * 1024 )) # max 4GB vsize
   python -u $PHEDEX_GRAPHS_ROOT/tools/phedex-web.py $STATEDIR/etc/graphs_website_prod.xml \
     </dev/null 2>&1 | rotatelogs $LOGDIR/graphs-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
