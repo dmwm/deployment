@@ -15,36 +15,19 @@ deploy_workqueue_prep()
 deploy_workqueue_sw()
 {
   case $variant in
+    offsite )
+      ;;
     default )
       deploy_pkg \
         -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
         -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        comp cms+workqueue 0.0.16
+        comp cms+workqueue 0.0.18
 
       if grep -rq "replace me" $project_auth; then
         note "WARNING: replace certificates in $project_auth with real ones"
       else :; fi
       ;;
 
-    offsite )
-      deploy_pkg comp external+cherrypy 3.1.2-cmp6
-      deploy_pkg comp external+py2-cheetah 2.4.0-cmp6
-      deploy_pkg comp external+py2-openid 2.2.4-cmp6
-      deploy_pkg comp external+py2-cjson 1.0.5-cmp5
-      deploy_pkg comp cms+dls-client DLS_1_1_2-cmp6
-      deploy_pkg comp cms+dbs-client DBS_2_1_1_patch1_1
-
-      local wmcore_etc=$root/current/apps/wmcore/etc
-      local couchdb_ini=$root/current/config/couchdb/local.ini
-      local mysql_config=$root/current/config/mysql/my.cnf
-
-      # get manage script from wmcore
-      cp $wmcore_etc/deploy/wmagent-manage $project_config/manage
-
-      # override the webtools couch config
-      cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
-      perl -p -i -e "s{deploy_project_root}{$root/projects}g" $couchdb_ini
-      ;;
   esac
 }
 
