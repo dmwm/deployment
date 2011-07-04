@@ -376,3 +376,9 @@ sistriplayout(dqmitems, "31 - TECB Residual",
      'description': "Hit Residual in TECB Wheel #8"},
    { 'path': "SiStrip/MechanicalView/TEC/side_1/wheel_9/HitResiduals_TEC__wheel__9",
      'description': "Hit Residual in TECB Wheel #9"}])
+#sistriplayout(dqmitems, "32 - Offline PV Test",
+#  [{ 'path': "OfflinePV/offlinePrimaryVertices/tagDiffX",
+#     'description': "description 1"},
+#   { 'path': "OfflinePV/offlinePrimaryVertices/tagDiffY",
+#     'description': "description 2"}
+#  ])

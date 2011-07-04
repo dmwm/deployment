@@ -1,11 +1,11 @@
-// $Id: DTRenderPlugin.cc,v 1.60 2010/07/16 13:56:22 battilan Exp $
+// $Id: DTRenderPlugin.cc,v 1.61 2011/06/14 14:39:35 branca Exp $
 
 /*!
   \file EBRenderPlugin
   \brief Display Plugin for Quality Histograms
   \author G. Masetti
-  \version $Revision: 1.60 $
-  \date $Date: 2010/07/16 13:56:22 $
+  \version $Revision: 1.61 $
+  \date $Date: 2011/06/14 14:39:35 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -16,6 +16,7 @@
 #include "TCanvas.h"
 #include "TColor.h"
 #include <cassert>
+#include <math.h>
 #include "TLatex.h"
 #include "TLine.h"
 
@@ -43,7 +44,8 @@ public:
          (o.name.find( "DT/F" ) != std::string::npos) ||
          (o.name.find( "DT/B" ) != std::string::npos) ||
          (o.name.find( "DT/C" ) != std::string::npos) ||
-         (o.name.find( "DT/L" ) != std::string::npos))
+         (o.name.find( "DT/L" ) != std::string::npos) ||
+         (o.name.find( "Everything/AlCaReco/DtCalibSynch/0" ) != std::string::npos))
         return true;
 
       return false;
@@ -132,7 +134,9 @@ private:
         c->SetBottomMargin(0.1);
         c->SetLeftMargin(0.12);
         c->SetRightMargin(0.12);
-	obj->SetOption("text");
+        obj->SetOption("text colz");
+        obj->SetMinimum(0.);
+        obj->SetMaximum(20.);
 	obj->SetMarkerSize( 1.5 );
 	gStyle->SetPaintTextFormat("2.1f");
 
@@ -436,11 +440,17 @@ private:
         obj->GetYaxis()->SetLabelSize(0.1);
         return;
       }
+      if( o.name.find( "TrigEffPhi_W" ) != std::string::npos ||
+          o.name.find( "TrigEffCorrPhi_W" ) != std::string::npos )
+      {
+        obj->GetZaxis()->SetRangeUser(0,1);
+        return;
+      }
       // --------------------------------------------------------------
       // Trigger plots
       if( o.name.find("CorrFractionSummary_W") != std::string::npos ||
-          o.name.find("PhiSlopeSummary_W")     != std::string::npos ||
-          o.name.find("PhibSlopeSummary_W")    != std::string::npos ||
+          o.name.find("PhiLutSummary_W")     != std::string::npos ||
+          o.name.find("PhibLutSummary_W")    != std::string::npos ||
           o.name.find("2ndFractionSummary_W")  != std::string::npos ||
           o.name.find("MatchingSummary_W")     != std::string::npos )
       {
@@ -465,8 +475,7 @@ private:
         return;
       }
       else if( o.name.find("CorrFractionSummary") != std::string::npos ||
-               o.name.find("PhiSlopeSummary")     != std::string::npos ||
-               o.name.find("PhibSlopeSummary")    != std::string::npos ||
+               o.name.find("LutSummary")     != std::string::npos ||
                o.name.find("MatchingSummary")     != std::string::npos ||
                o.name.find("2ndFractionSummary")  != std::string::npos )
       {
@@ -493,6 +502,7 @@ private:
         return;
       }
       else if(o.name.find("2ndFraction")  != std::string::npos ||
+              o.name.find("ResidualPercentage") != std::string::npos ||
               o.name.find("CorrFraction") != std::string::npos ||
               o.name.find("HFraction")    != std::string::npos )
       {
@@ -508,7 +518,7 @@ private:
         c->SetLeftMargin(0.12);
         c->SetRightMargin(0.12);
         obj->SetMinimum(-0.00000001);
-        obj->SetMaximum(1.0);
+        obj->SetMaximum(o.name.find("2ndFraction")  != std::string::npos ? 0.25 : 1.0);
         return;
       }
       else if(o.name.find("CorrectBX")        != std::string::npos ||
@@ -552,9 +562,29 @@ private:
         }
         else if(o.name.find("BX") != std::string::npos)
         {
-          obj->SetOption("text");
+          obj->SetOption("text colz");
           obj->SetMarkerSize( 2 );
           gStyle->SetPaintTextFormat("2.0f");
+
+          if ( o.name.find( "CorrectBX" ) != std::string::npos )
+          {
+            if (o.name.find( "DCC" ) != std::string::npos)
+            {
+              obj->SetMinimum(-2.);
+              obj->SetMaximum(2.);
+            }
+            else
+            {
+              obj->SetMinimum(0.);
+              obj->SetMaximum(20.);
+            }
+          }
+          else if ( o.name.find( "ResidualBX" ) != std::string::npos )
+          {
+            obj->SetMinimum(-15.);
+            obj->SetMaximum(15.);
+          }
+
         }
         return;
       }
@@ -1012,14 +1042,6 @@ private:
         obj->GetYaxis()->SetRangeUser(0.,1.1);
         return;
       }
-      else if ( o.name.find( "CorrectBX" ) != std::string::npos )
-      {
-        if (o.name.find( "DCC" ) != std::string::npos)
-          obj->GetYaxis()->SetRangeUser(-5.,5.);
-        else
-          obj->GetYaxis()->SetRangeUser(0.,20.);
-        return;
-      }
 
       if( o.name.find("DCC_ErrorsChamberID") != std::string::npos )
       {
@@ -1063,7 +1085,8 @@ private:
         return;
       }
 
-      if(o.name.find("NevtPerLS" ) < o.name.size())
+      if(o.name.find("NevtPerLS") < o.name.size()    ||
+         o.name.find("MatchingTrend") < o.name.size()  )
       {
         //     obj->GetXaxis()->SetNdivisions(6,true);
         obj->GetXaxis()->CenterLabels();
@@ -1237,9 +1260,9 @@ private:
       if(o.name.find("ROB_mean") != std::string::npos)
       {
 	TH2F * histo =  dynamic_cast<TH2F*>( o.object );
-	if(histo->ProjectionX("",100,101,"")->Integral()>0)
+        if(histo->ProjectionY("",100,100,"")->Integral()>0)
 	{
-          TLatex *labelOverflow = new TLatex(0.45,0.45,"Overflow");
+          TLatex *labelOverflow = new TLatex(0.5,0.5,"Overflow");
           labelOverflow->SetTextColor(kRed);
           labelOverflow->SetNDC();
           labelOverflow->Draw("same");
@@ -1320,7 +1343,20 @@ private:
 
         return;
       }
-
+      /*
+      if (o.name.find("GlbSummary") != std::string::npos)
+      {
+        TH2F * histo =  dynamic_cast<TH2F*>( o.object );
+        if(fabs(histo->GetEntries()-10.)<0.01)
+          {
+            TLatex *labelCertification = new TLatex(0.5,0.5,"#splitline{Summary plot needs more statistics}{Do not use for Certification}");
+            labelCertification->SetTextColor(kBlue);
+            labelCertification->SetTextAlign(21);
+            labelCertification->SetNDC();
+            labelCertification->Draw("same");
+          }
+      }
+      */
     }
 
   void postDrawTH1( TCanvas *, const VisDQMObject &o )
