@@ -159,6 +159,12 @@ start()
         http://localhost:8030/dqm/online/ \
         $STATEDIR/ix \
         $CFGDIR/quota-dd-online.py
+
+      startagent agent-sound \
+        visDQMSoundAlarmDaemon \
+        http://localhost:8030/dqm/online \
+        scx5scr24mac.cms \
+        50505 60 3
       ;;
 
     dqm-c2d07-02:*agents* ) # dqm-prod-offsite
