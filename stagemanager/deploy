@@ -51,9 +51,9 @@ deploy_stagemanager_post()
   case $variant in
     t1_* )
       # Setup database replication
-      (echo {,https://cmsweb.cern.ch/couchdb/}${variant}_statistics # unidirectional
-       echo {,https://cmsweb.cern.ch/couchdb/}${variant}_requests
-       echo {https://cmsweb.cern.ch/couchdb/,}${variant}_requests
+      (echo {,https://cmsweb.cern.ch/couchdb/}${variant}_statistics statistics/repfilter # unidirectional
+       echo {,https://cmsweb.cern.ch/couchdb/}${variant}_requests requests/repfilter
+       echo {https://cmsweb.cern.ch/couchdb/,}${variant}_requests requests/repfilter
       ) > $couchdb_state/replication/stagemanager
       ;;
   esac
