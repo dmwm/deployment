@@ -121,33 +121,37 @@ replications()
 {
   [ "$1" = "push" ] && local status=false || local status=true
   local all_reps=$(curl -s localhost:5984/_replicator/_all_docs?include_docs=true \
-                   | grep '^{"id":"[^_]' | awk -F\" '{print $4,$14,$28,$32,$38}')
-  local req_reps=$(cat $STATEDIR/replication/*)
+                   | grep '^{"id":"[^_]' | awk -F\" '{print $4,$14,$28,$32,$38,$42}')
+  local req_reps=$(cat $STATEDIR/replication/* 2>/dev/null || echo "")
 
-  [ -n "$all_reps" ] && echo "$all_reps" | while read ID REV SRC DST STATE; do
-    if echo "$req_reps" | grep -q "$SRC $DST"; then
-      echo "Replication 'id=$ID source=$SRC target=$DST' $STATE."
-    else
-      echo "Replication 'id=$ID source=$SRC target=$DST' unknown."
-      if ! $status; then
-        echo -n "Removing it... "
-        curl -s -X DELETE localhost:5984/_replicator/$ID?rev=$REV
+  if [ -n "$all_reps" ]; then
+    echo "$all_reps" | while read ID REV SRC DST FILTER STATE; do
+      if echo "$req_reps" | grep -q "$SRC $DST $FILTER"; then
+        echo "Replication 'id=$ID source=$SRC target=$DST filter=$FILTER' $STATE."
+      else
+        echo "Replication 'id=$ID source=$SRC target=$DST filter=$FILTER' unknown."
+        if ! $status; then
+          echo -n "Removing it... "
+          curl -s -X DELETE localhost:5984/_replicator/$ID?rev=$REV
+        fi
       fi
-    fi
-  done
+    done
+  fi
 
-  local IDS=$(echo "$all_reps" | awk '{print $1}')
-  [ -n "$req_reps" ] && echo "$req_reps" | while read SRC DST; do
-    local ID=$(echo "$SRC $DST" | md5sum | awk '{print $1}')
-    if ! echo "$IDS" | grep -q "$ID"; then
-      echo "Replication 'id=$ID source=$SRC target=$DST' not pushed."
-      if ! $status; then
-        echo -n "Pushing it... "
-        curl -s -X PUT localhost:5984/_replicator/$ID \
-             -d "{\"source\":\"$SRC\", \"target\":\"$DST\", \"continuous\":true}"
+  if [ -n "$req_reps" ]; then
+    local IDS=$(echo "$all_reps" | awk '{print $1}')
+    echo "$req_reps" | while read SRC DST FILTER; do
+      local ID=$(echo "$SRC $DST $FILTER" | md5sum | awk '{print $1}')
+      if ! echo "$IDS" | grep -q "$ID"; then
+        echo "Replication 'id=$ID source=$SRC target=$DST filter=$FILTER' not pushed."
+        if ! $status; then
+          echo -n "Pushing it... "
+          curl -s -X PUT localhost:5984/_replicator/$ID \
+               -d "{\"source\":\"$SRC\", \"target\":\"$DST\", \"continuous\":true, \"filter\":\"$FILTER\"}"
+        fi
       fi
-    fi
-  done
+    done
+  fi
 }
 
 # Trigger a database compaction. If "all", then compact all databases
