@@ -37,13 +37,12 @@ deploy_couchdb_post()
 {
   case $variant in
     default )
-      (mkcrontab
+      (mkcrontab; sysboot
        case $host in
          vocms10[67] | vocms50 | vocms13[2689] )
 	   disable ;;
          * )
 	   enable
-           sysboot
 	   local cmd="$project_config/manage compact all 'I did read documentation'"
 	   $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
 	   echo "12 0 * * * $cmd" ;;
