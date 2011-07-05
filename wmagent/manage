@@ -48,10 +48,12 @@ REQMGR_PORT=8687
 
 GLOBAL_WORKQUEUE_HOSTNAME=
 GLOBAL_WORKQUEUE_PORT=9996
-GLOBAL_WORKQUEUE_DBNAME=
+GLOBAL_WORKQUEUE_DBNAME=workqueue
 
 LOCAL_WORKQUEUE_PORT=9997
-LOCAL_WORKQUEUE_DBNAME=
+LOCAL_WORKQUEUE_DBNAME=workqueue
+
+WMBS_SERVICE_PORT=9999
 
 #
 # Init checks
@@ -130,7 +132,8 @@ load_secrets_file(){
     local MATCH_LOCAL_WORKQUEUE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_PORT | sed s/LOCAL_WORKQUEUE_PORT=//`
     local MATCH_GLOBAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_DBNAME | sed s/GLOBAL_WORKQUEUE_DBNAME=//`
     local MATCH_LOCAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_DBNAME | sed s/LOCAL_WORKQUEUE_DBNAME=//`
-
+    local MATCH_WMBS_SERVICE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep WMBS_SERVICE_PORT | sed s/WMBS_SERVICE_PORT=//`
+    
     if [ "x$MATCH_MYSQL_USER" == "x" ]; then
         MYSQL_USER=wmagentmysql;
     else
@@ -179,6 +182,9 @@ load_secrets_file(){
     fi
     if [ ! "x$MATCH_LOCAL_WORKQUEUE_DBNAME" == "x" ]; then
         LOCAL_WORKQUEUE_DBNAME=$MATCH_LOCAL_WORKQUEUE_DBNAME;
+    fi
+    if [ ! "x$MATCH_WMBS_SERVICE_PORT" == "x" ]; then
+        WMBS_SERVICE_PORT=$MATCH_WMBS_SERVICE_PORT;
     fi
 }
 
@@ -528,7 +534,14 @@ stop_services(){
 # generate the agent config from the basic template
 init_wmagent(){
     load_secrets_file;
-
+    #if GLOBAL_WORKQUEUE_HOSTNAME is specified assume port and db name is specified too
+    #if not specified, gets global workqueue url from CouchProxyManager
+    #
+    if [ ! "x$GLOBAL_WORKQUEUE_HOSTNAME" == "x" ]; then
+        GLOBAL_WORKQUEUE_URL=;
+    else
+        GLOBAL_WORKQUEUE_URL=http://$GLOBAL_WORKQUEUE_HOSTNAME:$GLOBAL_WORKQUEUE_PORT/$GLOBAL_WORKQUEUE_DBNAME;
+    fi
     wmagent-mod-config --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
@@ -536,7 +549,9 @@ init_wmagent(){
                        --working_dir=$INSTALL_AG \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
-                       --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME
+                       --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
+                       --workqueue_port=$LOCAL_WORKQUEUE_PORT \
+                       --wmbs_service_port=$WMBS_SERVICE_PORT
     wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
     wmagent-couchapp-init;
