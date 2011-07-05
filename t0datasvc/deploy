@@ -12,7 +12,7 @@ deploy_t0datasvc_prep()
 
 deploy_t0datasvc_sw()
 {
-  deploy_pkg -a t0datasvc/connect comp cms+T0DataSvc 5.0.1b-comp2
+  deploy_pkg -a t0datasvc/connect comp cms+T0DataSvc 5.0.3
 }
 
 deploy_t0datasvc_post()

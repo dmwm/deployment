@@ -22,7 +22,7 @@ deploy_reqmgr_sw()
       deploy_pkg \
         -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
         -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr 0.7.9b
+        -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr 0.7.9b-comp
 
       if grep -rq "replace me" $project_auth; then
         note "WARNING: replace certificates in $project_auth with real ones"
