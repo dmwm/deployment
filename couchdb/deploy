@@ -35,6 +35,8 @@ deploy_couchdb_sw()
 
 deploy_couchdb_post()
 {
+  $MIGRATION rm -rf $PWD/{backup,compaction}
+
   case $variant in
     default )
       (mkcrontab
