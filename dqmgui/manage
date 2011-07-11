@@ -236,7 +236,7 @@ start()
           lilopera@cern.ch  \
           $DQM_DATA/zipped \
           $CASTORDIR \
-          7 \
+          24 \
           $DQM_DATA/agents/clean
 
         startagent $D/agent-import \
