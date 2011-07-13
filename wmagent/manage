@@ -537,7 +537,7 @@ init_wmagent(){
     #if GLOBAL_WORKQUEUE_HOSTNAME is specified assume port and db name is specified too
     #if not specified, gets global workqueue url from CouchProxyManager
     #
-    if [ ! "x$GLOBAL_WORKQUEUE_HOSTNAME" == "x" ]; then
+    if [ "x$GLOBAL_WORKQUEUE_HOSTNAME" == "x" ]; then
         GLOBAL_WORKQUEUE_URL=;
     else
         GLOBAL_WORKQUEUE_URL=http://$GLOBAL_WORKQUEUE_HOSTNAME:$GLOBAL_WORKQUEUE_PORT/$GLOBAL_WORKQUEUE_DBNAME;
