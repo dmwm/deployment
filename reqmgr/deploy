@@ -63,29 +63,21 @@ deploy_reqmgr_post()
       ;;
     default )
       # Tell couchdb to pick up reqmgr on the next restart
-      # and configure replication, compaction and backup, too;
-      # do this only where couchdb is installed on the same node
-      case $host in
-        vocms10[67] | vocms50 | vocms13[2689] ) ;;
-        * )
-          local couchdb_config=$root/current/config/couchdb
-          local couchdb_state=$root/state/couchdb
-          local reqmgrapp=$root/current/apps/reqmgr
+      local couchdb_config=$root/current/config/couchdb
+      local couchdb_state=$root/state/couchdb
+      local reqmgrapp=$root/current/apps/reqmgr
 
-          for area in stagingarea replication; do
-            rm -f $couchdb_state/$area/reqmgr
-            touch $couchdb_state/$area/reqmgr
-          done
+      for area in stagingarea replication; do
+        rm -f $couchdb_state/$area/reqmgr
+        touch $couchdb_state/$area/reqmgr
+      done
 
-	  $MIGRATION rm -f $couchdb_state/database/reqmgr_spec_cache.*
-          echo "couchapp push $reqmgrapp/lib/couchapps/ReqMgr" \
-	       "http://localhost:5984/reqmgr_workload_cache" \
-            >> $couchdb_state/stagingarea/reqmgr
-          echo "couchapp push $reqmgrapp/lib/couchapps/ConfigCache" \
-	       "http://localhost:5984/reqmgr_config_cache" \
-            >> $couchdb_state/stagingarea/reqmgr
-          ;;
-      esac
+      echo "couchapp push $reqmgrapp/lib/couchapps/ReqMgr" \
+           "http://localhost:5984/reqmgr_workload_cache" \
+        >> $couchdb_state/stagingarea/reqmgr
+      echo "couchapp push $reqmgrapp/lib/couchapps/ConfigCache" \
+           "http://localhost:5984/reqmgr_config_cache" \
+        >> $couchdb_state/stagingarea/reqmgr
 
       # Setup ReqMgr cronjobs
       (mkcrontab
