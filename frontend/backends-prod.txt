@@ -2,7 +2,7 @@
 ^/auth/complete/dqm/(?:offline|caf)(?:/|$) vocms138.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms139.cern.ch
 ^/auth/complete/dqm/dev(?:/|$) vocms133.cern.ch
-^/auth/complete/couchdb(?:/|$) vocms140.cern.ch :affinity
+^/auth/complete/(?:couchdb|workqueue)(?:/|$) vocms140.cern.ch :affinity
 ^/auth/complete/filemover(?:/|$) vocms140.cern.ch
 ^/overview(?:/|$) vocms107.cern.ch
 ^/phedex(?!/datasvc) vocms136.cern.ch
