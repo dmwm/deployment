@@ -1,89 +1,81 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_workqueue_variants="default offsite"
+deploy_workqueue_variants="default prod preprod dev"
 
 deploy_workqueue_deps()
 {
-  deploy couchdb $variant
+  deploy couchdb
 }
 
 deploy_workqueue_prep()
 {
-  case $variant in offsite ) extra=install ;; * ) extra= ;; esac
-  mkproj $extra cache
+  mkproj cache
 }
 
 deploy_workqueue_sw()
 {
-  case $variant in
-    offsite )
-      ;;
-    default )
-      deploy_pkg \
-        -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
-        -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        comp cms+workqueue 0.0.18
+  deploy_pkg \
+    -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
+    -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+    comp cms+workqueue 0.0.18
 
-      if grep -rq "replace me" $project_auth; then
-        note "WARNING: replace certificates in $project_auth with real ones"
-      else :; fi
-      ;;
+  if grep -rq "replace me" $project_auth; then
+    note "WARNING: replace certificates in $project_auth with real ones"
+  else :; fi
 
-  esac
+  cp -p $project_config/GlobalWorkQueueConfig-${variant}.py $project_config/GlobalWorkQueueConfig.py
 }
 
 deploy_workqueue_post()
 {
-  case $variant in
-    offsite )
-      ;;
-    default)
-      local manage=$root/current/config/workqueue/workqueue_task
-      local workqueue_state=$root/state/workqueue
-      # Tell couchdb to pick up workqueue on the next restart
-      # and configure replication, compaction and backup, too
-      local couchdb_config=$root/current/config/couchdb
-      local couchdb_state=$root/state/couchdb
-      local couch_url="http://localhost:5984"
+  # Do cache cleanup
+  sudo -H -u _workqueue bashs -lc "rm -rf $root/state/workqueue/cache/*"
 
-      sudo -H -u _workqueue bashs -lc "find $workqueue_state/cache -maxdepth 1 -type d -name \".wmcore_cache_*\" | xargs rm -rf"
+  # Tell couchdb to push workqueue apps on the next restart
+  local manage=$root/current/config/workqueue/workqueue_task
+  local couchdb_config=$root/current/config/couchdb
+  local couchdb_state=$root/state/couchdb
+  local couch_url="http://localhost:5984"
 
-      for area in stagingarea replication; do
-        rm -f $couchdb_state/$area/workqueue
-        touch $couchdb_state/$area/workqueue
-      done
+  for area in stagingarea replication; do
+    rm -f $couchdb_state/$area/workqueue
+    touch $couchdb_state/$area/workqueue
+  done
 
-      local wqapp=$root/current/apps/workqueue
-      for db in workqueue workqueue_inbox; do
-        local couch_string="${couch_url}/${db}"
+  local wqapp=$root/current/apps/workqueue
+  for db in workqueue workqueue_inbox; do
+    local couch_string="${couch_url}/${db}"
 
-        # push app, clean views on startup
-        echo "couchapp push $wqapp/lib/couchapps/WorkQueue $couch_string" \
-          >> $couchdb_state/stagingarea/workqueue
+    # push app, clean views on startup
+    echo "couchapp push $wqapp/lib/couchapps/WorkQueue $couch_string" \
+      >> $couchdb_state/stagingarea/workqueue
 
-        echo "$couchdb_config/manage cleanviews $db 'I did read documentation'" \
-          >> $couchdb_state/stagingarea/workqueue
-      done
+    echo "$couchdb_config/manage cleanviews $db 'I did read documentation'" \
+      >> $couchdb_state/stagingarea/workqueue
+  done
 
-      # Setup workqueue cronjobs
-      local cmd="$manage reqmgr_sync"
-      $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
-      local req_sync="5-45/20 * * * * $cmd"
+  # Setup workqueue cronjobs
+  local cmd="$manage reqmgr_sync"
+  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
+  local req_sync="5-45/20 * * * * $cmd"
 
-      local cmd="$manage location_refresh"
-      $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
-      local locations="30 * * * * $cmd"
+  local cmd="$manage location_refresh"
+  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
+  local locations="30 * * * * $cmd"
 
-      local cmd="$manage housekeep"
-      $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
-      local housekeep="15-55/20 * * * * $cmd"
+  local cmd="$manage housekeep"
+  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
+  local housekeep="15-55/20 * * * * $cmd"
 
-      (mkcrontab
+  (mkcrontab;
+   case $host in
+     vocms10[67] | vocms13[2689] )
+       ;;
+     * )
        echo "${req_sync}"
        echo "${locations}"
-       echo "${housekeep}") | crontab -
-      ;;
-  esac
-
+       echo "${housekeep}"
+       ;;
+   esac) | crontab -
 }
 
 deploy_workqueue_auth()
