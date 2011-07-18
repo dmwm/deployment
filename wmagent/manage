@@ -550,7 +550,6 @@ init_wmagent(){
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
-                       --workqueue_port=$LOCAL_WORKQUEUE_PORT \
                        --wmbs_service_port=$WMBS_SERVICE_PORT
     wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
