@@ -229,7 +229,7 @@ print_settings(){
 . $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
 
 export WMCORE_ROOT=$ROOT_DIR/apps/wmcore
-
+export YUI_ROOT
 
 print_environment(){
     echo $WMCORE_ROOT
