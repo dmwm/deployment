@@ -42,6 +42,8 @@ COUCH_PASS=
 COUCH_HOST=127.0.0.1
 COUCH_PORT=5984
 COUCH_HOST_NAME=`hostname`
+COUCH_CERT_FILE=
+COUCH_KEY_FILE=
 
 REQMGR_HOSTNAME=
 REQMGR_PORT=8687
@@ -125,6 +127,8 @@ load_secrets_file(){
     local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
     local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
     local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
+    local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
     local MATCH_REQMGR_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_HOSTNAME | sed s/REQMGR_HOSTNAME=//`
     local MATCH_REQMGR_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_PORT | sed s/REQMGR_PORT=//`
     local MATCH_GLOBAL_WORKQUEUE_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_HOSTNAME | sed s/GLOBAL_WORKQUEUE_HOSTNAME=//`
@@ -161,6 +165,18 @@ load_secrets_file(){
     fi
     if [ ! "x$MATCH_COUCH_HOST" == "x" ]; then
         COUCH_HOST=$MATCH_COUCH_HOST;
+    fi
+    # look for couch ssl certificate if not found check X509_USER_CERT and X509_USER_PROXY
+    if [ ! "x${X509_USER_CERT:-$X509_USER_PROXY}" == "x" ]; then
+        COUCH_CERT_FILE=$MATCH_COUCH_CERT_FILE;
+    elif [ ! "x$X509_USER_CERT" == "x" ]; then
+        COUCH_CERT_FILE=${X509_USER_CERT:-$X509_USER_PROXY};
+    fi
+    # look for couch ssl key if not found check X509_USER_KEY and X509_USER_PROXY
+    if [ ! "x$MATCH_COUCH_KEY_FILE" == "x" ]; then
+        COUCH_KEY_FILE=$MATCH_COUCH_KEY_FILE;
+    elif [ ! "x${X509_USER_KEY:-$X509_USER_PROXY}" == "x" ]; then
+        COUCH_KEY_FILE=${X509_USER_KEY:-$X509_USER_PROXY};
     fi
     if [ ! "x$MATCH_REQMGR_HOSTNAME" == "x" ]; then
         REQMGR_HOSTNAME=$MATCH_REQMGR_HOSTNAME;
@@ -206,6 +222,8 @@ print_settings(){
     echo "COUCH_PASS=               $COUCH_PASS                 "
     echo "COUCH_HOST=               $COUCH_HOST                 "
     echo "COUCH_PORT=               $COUCH_PORT                 "
+    echo "COUCH_CERT_FILE=          $COUCH_CERT_FILE            "
+    echo "COUCH_KEY_FILE=           $COUCH_KEY_FILE             "
     echo "REQMGR_HOSTNAME=          $REQMGR_HOSTNAME            "
     echo "REQMGR_PORT=              $REQMGR_PORT                "
     echo "GLOBAL_WORKQUEUE_HOSTNAME= $GLOBAL_WORKQUEUE_HOSTNAME "
@@ -444,6 +462,17 @@ init_couch_pre(){
     perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
+    if [ "x$COUCH_CERT_FILE" != "x" ] && [ "x$COUCH_KEY_FILE" != "x" ]; then
+      mkdir -p $INSTALL_COUCH/certs
+      perl -p -i -e "s{;cert_file =}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+      perl -p -i -e "s{;key_file =}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
+      # Assume a proxy if key == cert, need cacert_file if using a proxy
+      if [ "x$COUCH_CERT_FILE" == "x$COUCH_KEY_FILE" ]; then
+        perl -p -i -e "s{;cacert_file =}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+      fi
+      ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
+      ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
+    fi
 }
 
 init_couch_post(){
