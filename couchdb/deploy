@@ -5,11 +5,13 @@ deploy_couchdb_deps()
 {
   deploy backend
   deploy wmcore-auth
+  case $variant in default ) ;; * ) deploy admin ;; esac
 }
 
 deploy_couchdb_prep()
 {
   mkproj database replication stagingarea
+  case $variant in default ) ;; * ) mkproxy ;; esac
 }
 
 deploy_couchdb_sw()
@@ -22,12 +24,11 @@ deploy_couchdb_sw()
     default )
       ;;
     * )
-      # *FIX* Should properly use a user proxy here once couch
-      # ssl client accepts it. Would also need the proxy renewal setup there.
       (echo
        echo "[ssl]"
-       echo "cert_file = $root/certs/cert.pem"
-       echo "key_file = $root/certs/key.pem"
+       echo "cert_file = $project_state/proxy/proxy.cert"
+       echo "key_file = $project_state/proxy/proxy.cert"
+       echo "cacert_file = $project_state/proxy/proxy.cert"
       ) >> $project_config/local.ini
       ;;
   esac
