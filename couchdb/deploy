@@ -24,6 +24,7 @@ deploy_couchdb_sw()
     default )
       ;;
     * )
+      perl -p -i -e "s|bind_address = 0.0.0.0|bind_address = 127.0.0.1|g" $project_config/local.ini
       (echo
        echo "[ssl]"
        echo "cert_file = $project_state/proxy/proxy.cert"
