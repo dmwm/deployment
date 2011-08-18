@@ -83,11 +83,11 @@ deploy_reqmgr_post()
       (mkcrontab
        sysboot
        case $host in
-         vocms13[89] ) ;;
+         vocms10[67] | vocms13[2689] ) ;;
 	 * )
            local cmd="$project_config/manage updateversions 'I did read documentation'"
            $nogroups || cmd="sudo -H -u _reqmgr bashs -l -c \"${cmd}\""
-           echo "58 4 * * * $cmd" ;;
+           echo "58 * * * * $cmd" ;;
        esac) | crontab -
       ;;
   esac
