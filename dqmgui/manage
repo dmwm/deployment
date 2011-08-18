@@ -259,15 +259,25 @@ start()
           $DQM_DATA/agents/vcontrol \
           $DQM_DATA/data
 
+        startagent $D/agent-ixmerge \
+            visDQMIndexMergeDaemon \
+            $DQM_DATA/agents/ixmerge \
+            $DQM_DATA/ix
+
         if [ $D = offline ]; then
           startagent $D/agent-osync \
             visDQMOnlineSyncDaemon \
-	    $DQM_DATA/data/OnlineData
+            -s https://cmsweb.cern.ch/dqm/online/data/browse/Original \
+            -d 14400 \
+            -n 50 \
+            /dev/null \
+            $DQM_DATA/data/OnlineData/original
 
           startagent $D/agent-coinfo \
             visDQMCreateInfoDaemon \
             $DQM_DATA/data/OnlineData \
             $DQM_DATA/agents/zip
+
         fi
       done
       ;;
