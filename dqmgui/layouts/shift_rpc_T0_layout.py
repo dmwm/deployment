@@ -30,7 +30,7 @@ shiftrpclayout(dqmitems, "04-RPC_Occupancy",
 
 
 shiftrpclayout(dqmitems, "05-Statistics",
-               [{ 'path': "RPC/RPCEfficiency/AllStatistics", 'description': eff + rpclink }])
+               [{ 'path': "RPC/RPCEfficiency/Statistics", 'description': eff + rpclink }])
 
 
 shiftrpclayout(dqmitems, "06-Efficiency_Distribution",

@@ -84,21 +84,58 @@ for fed in range(770, 775):
 #### TRIGGER SYNCH ##############################################################################
 
 for wheel in range(-2, 3):
-    name = "05-TriggerSynch/CorrectBX_Wh" + str(wheel) + "_DDU"
+    name = "05-TriggerSynch/00-CorrectBX_Wh" + str(wheel) + "_DDU"
     histoname = "DT/04-LocalTrigger-DDU/Wheel" + str(wheel) + "/DDU_CorrectBXPhi_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
-    name = "05-TriggerSynch/CorrectBX_Wh" + str(wheel) + "_DCC"
+    name = "05-TriggerSynch/01-CorrectBX_Wh" + str(wheel) + "_DCC"
     histoname = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/DCC_CorrectBXPhi_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
-    name = "05-TriggerSynch/DDU-DCC_BXDifference_Wh" + str(wheel)
+    name = "05-TriggerSynch/02-DDU-DCC_BXDifference_Wh" + str(wheel)
     histoname = "DT/04-LocalTrigger-DDU/Wheel" + str(wheel) + "/COM_BXDiff_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
-    name = "05-TriggerSynch/Peak-Mean/Peak-Mean_Wh" + str(wheel) + "_DDU"
+    name = "05-TriggerSynch/Peak-Mean/00-Peak-Mean_Wh" + str(wheel) + "_DDU"
     histoname = "DT/04-LocalTrigger-DDU/Wheel" + str(wheel) + "/DDU_ResidualBXPhi_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
-    name = "05-TriggerSynch/Peak-Mean/Peak-Mean_Wh" + str(wheel) + "_DCC"
+    name = "05-TriggerSynch/Peak-Mean/01-Peak-Mean_Wh" + str(wheel) + "_DCC"
     histoname = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/DCC_ResidualBXPhi_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
+
+#### TRIGGER BASICS ##############################################################################
+
+for wheel in range(-2, 3):
+    name = "06-TriggerBasics/00-CorrFraction_Wh" + str(wheel) + "_DDU"
+    histoname = "DT/04-LocalTrigger-DDU/Wheel" + str(wheel) + "/DDU_CorrFractionPhi_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+    name = "06-TriggerBasics/01-CorrFraction_Wh" + str(wheel) + "_DCC"
+    histoname = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/DCC_CorrFractionPhi_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+    name = "06-TriggerBasics/02-2ndFractionPhi_Wh" + str(wheel)
+    histoname = "DT/04-LocalTrigger-DDU/Wheel" + str(wheel) + "/DDU_2ndFractionPhi_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+    name = "06-TriggerBasics/03-2ndFractionPhi_Wh" + str(wheel)
+    histoname = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/DCC_2ndFractionPhi_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+
+#### TRIGGER POS LUTs ###########################################################################
+for wheel in range(-2, 3):
+    for sector in range (1, 13):
+        name = "07-TriggerPosLUTs/Wheel" + str(wheel) + "/Sec" + str(sector)
+        histoname1 = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/DCC_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
+        histoname2 = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/DCC_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
+        histoname3 = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station3/Segment/DCC_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St3"
+        histoname4 = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/DCC_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
+        dtlayout(dqmitems, name,[{ 'path': histoname1},{ 'path': histoname2}],
+                 [{ 'path': histoname3},{ 'path': histoname4}])
+
+
+#### TRIGGER POS LUTs ###########################################################################
+for wheel in range(-2, 3):
+    for sector in range (1, 13):
+        name = "08-TriggerDirLUTs/Wheel" + str(wheel) + "/Sec" + str(sector)
+        histoname1 = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/DCC_PhibResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
+        histoname2 = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/DCC_PhibResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
+        histoname4 = "DT/03-LocalTrigger-DCC/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/DCC_PhibResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
+        dtlayout(dqmitems, name,[{ 'path': histoname1},{ 'path': histoname2},{ 'path': histoname4}])
 
 #
 #

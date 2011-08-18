@@ -10,7 +10,7 @@
  * Implementation:
  *
  *      Render histograms filled with status of quality tests. The status is defined in
- *      DQMServices/Core/interface/DQMDefinitions.h
+ *      DQM/DQMDefinitions.h
  *
  *      Try to keep it compatible with utils.h from the same directory
  *

@@ -1,16 +1,16 @@
 def tklayout(i, p, *rows): i["Collisions/TrackingFeedBack/" + p] = DQMItem(layout=rows)
 
 tklayout(dqmitems, "00 - Number Of Tracks",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfTracks_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfGoodTracks_GenTk",
     'description': "Number of Reconstructed Tracks  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "01 - Track Pt",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/TrackPt_ImpactPoint_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackPt_ImpactPoint_GenTk",
     'description': "Pt of Reconstructed Track  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "02 - Track Phi",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/TrackPhi_ImpactPoint_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackPhi_ImpactPoint_GenTk",
     'description': "Phi distribution of Reconstructed Tracks  -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "03 - Track Eta",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_ImpactPoint_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackEta_ImpactPoint_GenTk",
     'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "04 - X-Position Of Closest Approach",
  [{ 'path': "Tracking/TrackParameters/GeneralProperties/xPointOfClosestApproach_GenTk",

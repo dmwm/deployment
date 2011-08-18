@@ -11,17 +11,13 @@ server.workspace('DQMContent', 10, 'Tracker/Muons', 'Pixel', '^Pixel/',
                  'Pixel/Layouts/05 - Barrel OnTrack cluster positions',
                  'Pixel/Layouts/06 - Endcap OnTrack cluster positions')
 
-server.workspace('DQMContent', 10, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracking|AlcaBeamMonitor|OfflinePV)/',
+server.workspace('DQMContent', 11, 'Tracker/Muons', 'SiStrip', '^SiStrip/',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
                  'SiStrip/Layouts/01 - FED-Detected Errors Summary',
                  'SiStrip/Layouts/02 - FED-Detected Errors',
                  'SiStrip/Layouts/03 - # of Cluster Trend',
                  'SiStrip/Layouts/04 - OnTrackCluster (StoN)',
-                 'SiStrip/Layouts/05 - OffTrackCluster (Total Number)',
-                 'SiStrip/Layouts/06 - Tracking ReportSummary',
-                 'SiStrip/Layouts/07 - Tracks (pp collisions)',
-                 'SiStrip/Layouts/09 - Beam Monitor Test',
-                 'SiStrip/Layouts/10 - Tracks (Cosmic Tracking)'
+                                  'SiStrip/Layouts/05 - OffTrackCluster (Total Number)'
                  )
 
 server.workspace('DQMContent', 12, 'Tracker/Muons', 'CSC', '^CSC/',
@@ -59,8 +55,7 @@ server.workspace('DQMContent', 24, 'Calorimeter', 'HCAL', '^Hcal/',
                  'Hcal/Layouts/04 HCAL Raw Data',
                  'Hcal/Layouts/05 HCAL Digi Problems',
                  'Hcal/Layouts/06 HCAL Dead Cell Check',
-                 'Hcal/Layouts/07 HCAL Hot Cell Check',
-                 'Hcal/Layouts/08 HCAL HF Luminosity Check'
+                 'Hcal/Layouts/07 HCAL Hot Cell Check'
                  )
 
 server.workspace('DQMContent', 20, 'Calorimeter', 'CASTOR', '^Castor/',
@@ -93,7 +88,14 @@ server.workspace('DQMContent', 44, 'POG', 'Btag', '^Btag/',
                  'Btag/Layouts/06 - 3D-Impact Parameter'
 )
 
-server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel)/',
+server.workspace('DQMContent', 45, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonitor|OfflinePV)/',
+                                  'Tracking/Layouts/01 - Tracking ReportSummary',
+                                  'Tracking/Layouts/02 - Tracks (pp collisions)',
+                                  'Tracking/Layouts/03 - Tracks (pp data) - no track selection',
+                                  'Tracking/Layouts/04 - Beam Monitor'
+                                  )
+
+server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/',
                  'Collisions/TrackingFeedBack/00 - Number Of Tracks',
                  'Collisions/TrackingFeedBack/01 - Track Pt',
                  'Collisions/TrackingFeedBack/02 - Track Phi',

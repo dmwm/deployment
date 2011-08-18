@@ -269,6 +269,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_L1A_out_of_sync_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -353,6 +354,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_Unpacked_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -363,6 +365,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_wo_ALCT_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -373,6 +376,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_wo_CLCT_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -383,6 +387,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_wo_CFEB_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -403,6 +408,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_Format_Errors_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -427,6 +433,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_Format_Warnings_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -441,6 +448,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_input_fifo_full_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -451,6 +459,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_input_timeout_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -471,6 +480,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/DMB_L1A_out_of_sync_Fract$", o.name)) {
     /** Applying definition [DMBMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -585,6 +595,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_Format_Errors_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -599,6 +610,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_DMB_input_fifo_full_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -609,6 +621,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_DMB_input_timeout_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -619,6 +632,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_wo_ALCT_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -629,6 +643,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_wo_CLCT_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -639,6 +654,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_wo_CFEB_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -649,6 +665,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_Unpacked_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -669,6 +686,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_Format_Warnings_Fract$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMaximum(1.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -789,6 +807,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_ALCT0_BXN_mean$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -799,6 +818,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_ALCT0_BXN_rms$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -821,6 +841,8 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_CLCT0_BXN_mean$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(-170.);
+    obj->SetMaximum(-140.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -831,6 +853,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_CLCT0_BXN_rms$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -853,6 +876,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_AFEB_RawHits_Time_mean$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -863,6 +887,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_AFEB_RawHits_Time_rms$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -885,6 +910,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_CFEB_SCA_CellPeak_Time_mean$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -895,6 +921,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_CFEB_SCA_CellPeak_Time_rms$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -916,6 +943,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   }
   if(reMatch(".*/CSC_CFEB_Comparators_Time_mean$", o.name)) {
     /** Applying definition [chamberMap] **/
+    obj->SetMinimum(0.);
     obj->SetStats(false);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
@@ -926,6 +954,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   }
   if(reMatch(".*/CSC_CFEB_Comparators_Time_rms$", o.name)) {
     /** Applying definition [chamberMap] **/
+    obj->SetMinimum(0.);
     obj->SetStats(false);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
@@ -949,6 +978,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_ALCT_CLCT_Match_mean$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -959,6 +989,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_ALCT_CLCT_Match_rms$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -981,6 +1012,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_ALCT_Planes_with_Hits$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -991,6 +1023,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_CLCT_Planes_with_Hits$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -1001,6 +1034,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_ALCT0_Quality$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();
@@ -1011,6 +1045,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
   if(reMatch(".*/CSC_CLCT0_Quality$", o.name)) {
     /** Applying definition [chamberMap] **/
     obj->SetStats(false);
+    obj->SetMinimum(0.);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
     gPad->SetGridx();

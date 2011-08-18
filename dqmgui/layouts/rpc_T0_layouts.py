@@ -100,13 +100,8 @@ rpclayout(dqmitems, "10-Barrel_1DOccupancy",
           )
 
 rpclayout(dqmitems, "11-EndCap_1DOccupancy",
-          [{ 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Disk_3", 'description': occupancy + rpclink },
-           { 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Disk_2", 'description': occupancy + rpclink },
-           { 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Disk_1", 'description': occupancy + rpclink }],
-
-          [{ 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Disk_-3", 'description':occupancy  + rpclink},
-           { 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Disk_-2", 'description':occupancy  + rpclink},
-           { 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Disk_-1", 'description':occupancy  + rpclink}]
+          [{ 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Ring_2", 'description': occupancy + rpclink },
+           { 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Ring_3", 'description': occupancy + rpclink }]
           )
 
 ##------------------------
@@ -183,7 +178,7 @@ rpclayout(dqmitems, "19-EndCap_Bunch_Crossing",
         ##Efficiency
 
 rpclayout(dqmitems, "21-Statistics",
-          [{ 'path': "RPC/RPCEfficiency/AllStatistics", 'description': eff + rpclink }])
+          [{ 'path': "RPC/RPCEfficiency/Statistics", 'description': eff + rpclink }])
 
 rpclayout(dqmitems, "22-Barrel_Efficiency_Distribution",
           [{ 'path': "RPC/RPCEfficiency/EffBarrelRoll", 'description': eff + rpclink }]

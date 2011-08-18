@@ -66,7 +66,10 @@ hcallayout(dqmitems, "05 HCAL Raw Data",
            [{ 'path': "Hcal/RawDataMonitor_Hcal/problem_rawdata/HE Depth 3  Problem Raw Data Rate",
               'description': "A Raw Data error indicates that the data received from this channel was somehow corrupted or compromised.  This plot is over HE depth 3. iPhi (1 to 72) by iEta (-41 to 41) More at <a href=https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMHistograms>HcalDQMHistograms</a>" },
             { 'path': "Hcal/RawDataMonitor_Hcal/problem_rawdata/HO Depth 4  Problem Raw Data Rate",
-              'description': "A Raw Data error indicates that the data received from this channel was somehow corrupted or compromised.  This plot is over HO depth 4. iPhi (1 to 72) by iEta (-41 to 41) More at <a href=https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMHistograms>HcalDQMHistograms</a>" }]
+              'description': "A Raw Data error indicates that the data received from this channel was somehow corrupted or compromised.  This plot is over HO depth 4. iPhi (1 to 72) by iEta (-41 to 41) More at <a href=https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMHistograms>HcalDQMHistograms</a>" }],
+           [{ 'path': "Hcal/RawDataMonitor_Hcal/Total_RAW_Problems_HBHEHF_vs_LS",
+              'description': "Total number of raw data errors in HBHEHF vs luminosity section"}
+            ]
            )
 
 hcallayout(dqmitems, "06 HCAL Trigger Primitives",

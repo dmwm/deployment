@@ -1,12 +1,12 @@
-// $Id: EERenderPlugin.cc,v 1.166 2011/05/28 09:49:03 emanuele Exp $
+// $Id: EERenderPlugin.cc,v 1.170 2011/08/12 13:25:48 yiiyama Exp $
 
 /*!
   \file EERenderPlugin
   \brief Display Plugin for Quality Histograms
   \author G. Della Ricca
   \author B. Gobbo
-  \version $Revision: 1.166 $
-  \date $Date: 2011/05/28 09:49:03 $
+  \version $Revision: 1.170 $
+  \date $Date: 2011/08/12 13:25:48 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -74,6 +74,8 @@ class EERenderPlugin : public DQMRenderPlugin
   int pCol6[7];
 
   TGaxis* timingAxis;
+
+  static float TMTProf2DShift;
 
 public:
   virtual void initialise( int, char ** )
@@ -478,8 +480,8 @@ private:
         gPad->SetGridy();
         obj->GetXaxis()->SetNdivisions(10, kFALSE);
         obj->GetYaxis()->SetNdivisions(10, kFALSE);
-        obj->SetMinimum(45.);
-        obj->SetMaximum(55.);
+        obj->SetMinimum(TMTProf2DShift - 5.);
+        obj->SetMaximum(TMTProf2DShift + 5.);
 
         gStyle->SetPalette(1);
         obj->SetContour(255);
@@ -572,9 +574,14 @@ private:
       if( name.find( "EETMT timing" ) != std::string::npos )
       {
         gPad->SetBottomMargin(0.2);
-        obj->GetXaxis()->LabelsOption("v");
-        obj->SetMinimum(-25.);
-        obj->SetMaximum(25.);
+        //        obj->GetXaxis()->LabelsOption("v");
+        if( name.find("rms") != std::string::npos ){
+          obj->SetMinimum(0.);
+          obj->SetMaximum(2.);
+        }else{
+          obj->SetMinimum(-2.);
+          obj->SetMaximum(2.);
+        }
       }
     }
 
@@ -682,6 +689,16 @@ private:
         gStyle->SetPalette(1);
         gPad->SetRightMargin(0.15);
         if( r.drawOptions.size() == 0 ) r.drawOptions = "colz";
+
+        if( name.find( "amplitude" ) != std::string::npos ) gPad->SetLogx(kTRUE);
+        return;
+      }
+
+      if( name.find( "laser amplitude summary" ) != std::string::npos )
+        {
+          obj->SetMinimum(0.00001);
+          gStyle->SetPalette(1);
+          if( r.drawOptions.size() == 0 ) r.drawOptions = "colz";
         return;
       }
 
@@ -952,7 +969,7 @@ private:
       obj->SetStats(kTRUE);
       gPad->SetLogy(kFALSE);
 
-      if( obj->GetMaximum() > 0. ) gPad->SetLogy(kTRUE);
+      if( obj->GetBinContent( obj->GetMaximumBin() ) > 0. ) gPad->SetLogy(kTRUE);
 
       if( name.find( "timing" ) != std::string::npos ||
           name.find( "rec hit thr" ) != std::string::npos ||
@@ -962,7 +979,6 @@ private:
       {
         gPad->SetLogy(kFALSE);
         gStyle->SetOptStat("e");
-        return;
       }
 
       if( name.find( "EVTTYPE" ) != std::string::npos )
@@ -1026,6 +1042,22 @@ private:
         gPad->SetBottomMargin(0.2);
         obj->GetXaxis()->LabelsOption("v");
       }
+
+      if( name.find( "EETMT" ) != std::string::npos )
+        {
+          if(name.find( "timing mean" ) != std::string::npos ||
+               name.find( "timing rms" ) != std::string::npos ||
+               name.find( "timing 1D" ) != std::string::npos ||
+               name.find( "EE+ - EE-" ) != std::string::npos)
+            {
+              if( obj->GetBinContent(obj->GetMaximumBin()) > 0. ) gPad->SetLogy(kTRUE);
+            }
+          else
+            {
+              obj->SetMaximum(10.);
+              obj->SetMinimum(-10.);
+            }
+        }
     }
 
   void postDrawTProfile2D( TCanvas *c, const VisDQMObject &o )
@@ -1306,13 +1338,15 @@ private:
           float ymin = c->PadtoY(c->GetUymin());
           float ymax = c->PadtoY(c->GetUymax());
           timingAxis = new TGaxis(xmax, ymin, xmax, ymax,
-                                  obj->GetMinimum()-50.,
-                                  obj->GetMaximum()-50., 10, "+LB");
+                                  obj->GetMinimum()-TMTProf2DShift,
+                                  obj->GetMaximum()-TMTProf2DShift, 10, "+LB");
           timingAxis->Draw();
         }
       }
 
-      if( nbx == 20 && nby == 20 && name.find( "EETMT" ) != std::string::npos )
+      if( nbx == 20 && nby == 20 &&
+          ( name.find( "EETMT" ) != std::string::npos ||
+            name.find( "EELT amplitude map" ) != std::string::npos ) )
       {
         if( name.find( "EE -" ) != std::string::npos )
         {
@@ -1365,12 +1399,7 @@ private:
       {
         if( (ixSectorsEE[i]!=0 || iySectorsEE[i]!=0) && (ixSectorsEE[i+1]!=0 || iySectorsEE[i+1]!=0) )
         {
-          if( name.find( "reportSummaryMap") != std::string::npos && nbx == 40 && nby == 20 )
-          {
-            l.DrawLine(0.2*ixSectorsEE[i], 0.2*iySectorsEE[i], 0.2*ixSectorsEE[i+1], 0.2*iySectorsEE[i+1]);
-            l.DrawLine(20+0.2*ixSectorsEE[i], 0.2*iySectorsEE[i], 20+0.2*ixSectorsEE[i+1], 0.2*iySectorsEE[i+1]);
-          }
-          else if( (name.find( "reportSummaryMap") != std::string::npos && nbx == 200 && nby == 100) ||
+          if( name.find( "reportSummaryMap") != std::string::npos ||
                    name.find( "DAQSummaryMap") != std::string::npos ||
                    name.find( "DCSSummaryMap") != std::string::npos ||
                    name.find( "CertificationSummaryMap") != std::string::npos )
@@ -1802,19 +1831,7 @@ private:
         return;
       }
 
-      if( name.find( "reportSummaryMap" ) != std::string::npos && nbx == 40 && nby == 20 )
-      {
-        int x1 = text10->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmin());
-        int x2 = text10->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmax());
-        int y1 = text10->GetYaxis()->FindFixBin(obj->GetYaxis()->GetXmin());
-        int y2 = text10->GetYaxis()->FindFixBin(obj->GetYaxis()->GetXmax());
-        text10->GetXaxis()->SetRange(x1, x2);
-        text10->GetYaxis()->SetRange(y1, y2);
-        text10->Draw("text,same");
-        return;
-      }
-
-      if( (name.find( "reportSummaryMap" ) != std::string::npos && nbx == 200 && nby == 100) ||
+      if( name.find( "reportSummaryMap" ) != std::string::npos ||
           name.find( "DAQSummaryMap" ) != std::string::npos ||
           name.find( "DCSSummaryMap" ) != std::string::npos ||
           name.find( "CertificationSummaryMap" ) != std::string::npos )
@@ -1998,5 +2015,7 @@ const int EERenderPlugin::ixLabels[720]={99, 99, 97, 97, 95, 94, 92, 91, 87, 84,
 const int EERenderPlugin::iyLabels[720]={54, 58, 61, 64, 69, 74, 77, 79, 84, 87, 91, 92, 94, 95, 97, 97, 99, 99, 99, 99, 97, 96, 94, 94, 91, 91, 86, 84, 79, 77, 74, 69, 64, 61, 57, 52, 47, 43, 40, 37, 32, 27, 24, 22, 17, 14, 10, 9, 7, 6, 4, 4, 2, 2, 2, 2, 4, 5, 7, 7, 10, 10, 15, 17, 22, 24, 27, 32, 37, 40, 44, 49, 52, 57, 61, 65, 69, 72, 75, 78, 81, 84, 87, 89, 91, 92, 94, 94, 96, 96, 96, 95, 94, 94, 92, 91, 89, 86, 85, 82, 78, 75, 72, 68, 64, 60, 57, 52, 49, 44, 40, 36, 32, 29, 26, 23, 19, 16, 14, 12, 10, 9, 7, 7, 5, 5, 5, 6, 7, 7, 9, 10, 12, 15, 16, 19, 23, 26, 29, 33, 37, 41, 44, 49, 52, 57, 60, 64, 67, 70, 73, 76, 78, 81, 84, 85, 87, 89, 90, 91, 92, 92, 91, 91, 91, 90, 89, 87, 85, 84, 81, 78, 76, 73, 70, 67, 64, 60, 57, 52, 49, 44, 41, 37, 34, 31, 28, 25, 23, 20, 17, 16, 14, 12, 11, 10, 9, 9, 10, 10, 10, 11, 12, 14, 16, 17, 20, 23, 25, 28, 31, 34, 37, 41, 44, 49, 53, 56, 59, 62, 66, 68, 71, 74, 76, 78, 81, 82, 84, 87, 87, 87, 87, 88, 88, 87, 87, 87, 86, 84, 82, 81, 78, 76, 74, 71, 67, 65, 62, 59, 56, 52, 48, 45, 42, 39, 35, 33, 30, 27, 25, 23, 20, 19, 17, 14, 14, 14, 14, 13, 13, 14, 14, 14, 15, 17, 19, 20, 23, 25, 27, 30, 34, 36, 39, 42, 45, 49, 52, 56, 58, 61, 64, 67, 69, 72, 73, 75, 78, 79, 80, 82, 84, 83, 84, 85, 85, 84, 83, 83, 82, 80, 79, 78, 75, 74, 72, 69, 67, 64, 61, 58, 55, 52, 49, 45, 43, 40, 37, 34, 32, 29, 28, 26, 23, 22, 21, 19, 17, 18, 17, 16, 16, 17, 18, 18, 19, 21, 22, 23, 26, 27, 29, 32, 34, 37, 40, 43, 46, 49, 52, 54, 57, 59, 62, 64, 67, 69, 71, 74, 76, 77, 78, 79, 80, 80, 80, 82, 81, 80, 80, 79, 79, 77, 77, 75, 73, 71, 69, 66, 64, 62, 59, 57, 54, 52, 49, 47, 44, 42, 39, 37, 34, 32, 30, 27, 25, 24, 23, 22, 21, 21, 21, 19, 20, 21, 21, 22, 22, 24, 24, 26, 28, 30, 32, 35, 37, 39, 42, 44, 47, 49, 52, 54, 57, 59, 62, 64, 66, 67, 69, 71, 72, 74, 74, 76, 77, 77, 77, 77, 77, 77, 77, 77, 75, 74, 74, 72, 70, 69, 67, 66, 63, 62, 59, 56, 54, 51, 49, 47, 44, 42, 39, 37, 35, 34, 32, 30, 29, 27, 27, 25, 24, 24, 24, 24, 24, 24, 24, 24, 26, 27, 27, 29, 31, 32, 34, 35, 38, 39, 42, 45, 47, 50, 52, 54, 55, 58, 59, 62, 64, 65, 67, 68, 69, 71, 72, 72, 74, 74, 74, 74, 74, 74, 73, 74, 72, 72, 71, 69, 69, 67, 64, 63, 61, 59, 58, 55, 53, 51, 49, 47, 46, 43, 42, 39, 37, 36, 34, 33, 32, 30, 29, 29, 27, 27, 27, 27, 27, 27, 28, 27, 29, 29, 30, 32, 32, 34, 37, 38, 40, 42, 43, 46, 48, 50, 52, 54, 55, 57, 59, 60, 61, 62, 64, 66, 67, 68, 69, 69, 69, 69, 71, 71, 71, 71, 69, 69, 69, 68, 68, 67, 65, 64, 62, 61, 60, 58, 56, 54, 54, 51, 49, 47, 46, 44, 42, 41, 40, 39, 37, 35, 34, 33, 32, 32, 32, 32, 30, 30, 30, 30, 32, 32, 32, 33, 33, 34, 36, 37, 39, 40, 41, 43, 45, 47, 47, 50, 52, 54, 57, 60, 62, 64, 66, 67, 67, 66, 66, 66, 64, 62, 59, 57, 54, 52, 49, 47, 44, 41, 39, 37, 35, 34, 34, 35, 35, 35, 37, 39, 42, 44, 47, 49, 52, 54, 56, 59, 59, 62, 62, 63, 64, 64, 63, 62, 62, 59, 59, 56, 54, 52, 49, 47, 45, 42, 42, 39, 39, 38, 37, 37, 38, 39, 39, 42, 42, 45, 47, 49};
 
 const int EERenderPlugin::bincontentLabels[720]={3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25};
+
+float EERenderPlugin::TMTProf2DShift = 50.;
 
 static EERenderPlugin instance;

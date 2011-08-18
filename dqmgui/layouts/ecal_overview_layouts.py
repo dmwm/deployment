@@ -66,3 +66,7 @@ ecaloverviewlayout(dqmitems, "10 ES Timing Plot",
   [{ 'path': "EcalPreshower/ESTimingTask/ES Timing Z 1 P 2", 'description': "ES Timing Z 1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
    { 'path': "EcalPreshower/ESTimingTask/ES Timing Z -1 P 2", 'description': "ES Timing Z -1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
 
+ecaloverviewlayout(dqmitems, "11 Ecal Z Mass",
+  [{ 'path': "EcalCalibration/Zmass/Gaussian mean WP80 EB-EB", 'description': "Z mass formed by EB-EB electron combination" }],
+  [{ 'path': "EcalCalibration/Zmass/Gaussian mean WP80 EB-EE", 'description': "Z mass formed by EB-EE electron combination" }],
+  [{ 'path': "EcalCalibration/Zmass/Gaussian mean WP80 EE-EE", 'description': "Z mass formed by EB-EE electron combination" }])
