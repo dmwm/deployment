@@ -16,7 +16,11 @@ deploy_stagemanager_sw()
 {
   deploy_pkg comp cms+stagemanager 0.0.2
   case $variant in
-    t1_* ) deploy_pkg comp cms+stagemanager-agent 0.0.2 ;;
+    t1_* )
+      deploy_pkg comp cms+stagemanager-agent 0.0.3
+      (echo -n "-v -s "
+       echo -n $variant | tr '[:lower:]' '[:upper:]') > $project_config/AgentOpts.txt
+      ;;
   esac
 }
 
@@ -50,11 +54,14 @@ deploy_stagemanager_post()
 
   case $variant in
     t1_* )
+      enable
       # Setup database replication
       (echo {,https://cmsweb.cern.ch/couchdb/}${variant}_statistics statistics/repfilter # unidirectional
        echo {,https://cmsweb.cern.ch/couchdb/}${variant}_requests requests/repfilter
        echo {https://cmsweb.cern.ch/couchdb/,}${variant}_requests requests/repfilter
       ) > $couchdb_state/replication/stagemanager
+      # Setup to start after boot
+      (mkcrontab; sysboot) | crontab -
       ;;
   esac
 }
