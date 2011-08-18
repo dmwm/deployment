@@ -30,6 +30,9 @@ deploy_couchdb_sw()
        echo "cert_file = $project_state/proxy/proxy.cert"
        echo "key_file = $project_state/proxy/proxy.cert"
        echo "cacert_file = $project_state/proxy/proxy.cert"
+       echo
+       echo "[replicator]"
+       echo "max_replication_retry_count = infinity"
       ) >> $project_config/local.ini
       ;;
   esac
