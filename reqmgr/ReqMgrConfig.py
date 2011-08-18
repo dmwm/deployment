@@ -26,6 +26,7 @@ config.reqmgr.views.active.RequestOverview.templates = TEMPLATES
 config.reqmgr.views.active.RequestOverview.javascript = os.path.join(INSTALL, '../../javascript')
 config.reqmgr.views.active.RequestOverview.html  = os.path.join(INSTALL, '../../html')
 config.reqmgr.views.active.reqMgr.templates = TEMPLATES
+config.reqmgr.views.active.reqMgr.html = os.path.join(INSTALL, '../../html/RequestManager')
 config.reqmgr.security_roles.extend(['facops', 'FacOps'])
 
 config.component_('SecurityModule')
