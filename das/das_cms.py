@@ -15,14 +15,14 @@ config.web_server.port = 8212
 config.web_server.pid = '%s/state/das/das_web_server.pid' % __file__.rsplit('/', 4)[0]
 config.web_server.status_update = 3000
 config.web_server.number_of_workers = 8
-config.web_server.queue_limit = 20
+config.web_server.queue_limit = 100
 config.web_server.adjust_input = True
 
 # mongodb configuration
 config.component_('mongodb')
 config.mongodb.bulkupdate_size = 5000
 config.mongodb.dburi = ['mongodb://localhost:8230']
-config.mongodb.lifetime = 86400
+config.mongodb.lifetime = 3600
 config.mongodb.dbname = 'das'
 
 # dasdb configuration
