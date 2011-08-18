@@ -5,6 +5,5 @@
 ^/auth/complete/(?:couchdb|workqueue)(?:/|$) vocms133.cern.ch :affinity
 ^/auth/complete/filemover(?:/|$) vocms133.cern.ch
 ^/overview(?:/|$) vocms132.cern.ch
-^/phedex(?!/datasvc) vocms132.cern.ch
 ^/das(?:/|$) vocms133.cern.ch
 ^ vocms132.cern.ch|vocms133.cern.ch

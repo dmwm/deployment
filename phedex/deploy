@@ -33,14 +33,12 @@ deploy_phedex_sw()
 
 deploy_phedex_post()
 {
-  case $host in vocms53 | vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
-
   case $host in
-    vocms53 | vocms13[89] | vocms140 )
+    vocms13[89] | vocms140 )
+      disable
       opts="" ;;
-    vocms10[67] | vocms133 )
-      opts="-DPHEDEX_DATASVC -DPHEDEX_WEBAPP" ;;
     * )
+      enable
       opts="-DPHEDEX_DATASVC -DPHEDEX_WEBAPP -DPHEDEX_WEB" ;;
   esac
 
