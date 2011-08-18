@@ -39,24 +39,17 @@ deploy_couchdb_post()
 {
   $MIGRATION rm -rf $PWD/{backup,compaction}
 
-  case $variant in
-    default )
-      (mkcrontab
-       case $host in
-         vocms10[67] | vocms50 | vocms13[2689] )
-	   disable ;;
-         * )
-	   enable
-           sysboot
-	   local cmd="$project_config/manage compact all 'I did read documentation'"
-	   $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-	   echo "12 0 * * * $cmd" ;;
-       esac) | crontab -
-      ;;
-    * )
-      enable
-      ;;
-  esac
+  (mkcrontab
+   case $host in
+     vocms10[67] | vocms50 | vocms13[2689] )
+       disable ;;
+     * )
+       enable
+       sysboot
+       local cmd="$project_config/manage compact all 'I did read documentation'"
+       $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
+       echo "12 0 * * * $cmd" ;;
+   esac) | crontab -
 }
 
 deploy_couchdb_auth()
