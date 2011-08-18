@@ -37,11 +37,9 @@ deploy_couchdb_sw()
 
 deploy_couchdb_post()
 {
-  $MIGRATION rm -rf $PWD/{backup,compaction}
-
   (mkcrontab
    case $host in
-     vocms10[67] | vocms50 | vocms13[2689] )
+     vocms10[67] | vocms13[2689] )
        disable ;;
      * )
        enable
