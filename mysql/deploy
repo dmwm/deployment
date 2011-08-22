@@ -6,5 +6,5 @@ deploy_mysql_prep()
 
 deploy_mysql_sw()
 {
-  deploy_pkg comp external+mysql 5.1.37
+  deploy_pkg comp external+mysql 5.1.37-comp2
 }

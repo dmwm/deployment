@@ -14,10 +14,10 @@ deploy_stagemanager_prep()
 
 deploy_stagemanager_sw()
 {
-  deploy_pkg comp cms+stagemanager 0.0.2
+  deploy_pkg comp cms+stagemanager 0.0.4
   case $variant in
     t1_* )
-      deploy_pkg comp cms+stagemanager-agent 0.0.3
+      deploy_pkg comp cms+stagemanager-agent 0.0.4
       (echo -n "-v -s "
        echo -n $variant | tr '[:lower:]' '[:upper:]') > $project_config/AgentOpts.txt
       ;;

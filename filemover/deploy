@@ -14,7 +14,7 @@ deploy_filemover_prep()
 
 deploy_filemover_sw()
 {
-  deploy_pkg comp cms+filemover 1.0.8-comp3
+  deploy_pkg comp cms+filemover 1.0.8-comp4
 }
 
 deploy_filemover_post()
