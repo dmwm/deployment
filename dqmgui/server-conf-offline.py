@@ -5,12 +5,11 @@ STATEDIR  = "%s/state/dqmgui/offline" % BASEDIR
 LOGDIR    = "%s/logs/dqmgui/offline" % BASEDIR
 
 LAYOUTS = ["%s/layouts/shift_%s_T0_layout.py" % (CONFIGDIR, x) for x in
-           ("castor","eb", "ee", "es", "csc", "rpc", "hcal", "hcalcalib", "l1t", "l1temulator", "hlt", "pixel", "sistrip", "dt", "muons", "jetmet", "egamma")]
+           ("castor", "csc", "dt", "eb", "ee", "egamma", "es", "hcal", "hlt", "jetmet", "l1temulator", "l1t", "muons", "pixel", "rpc", "sistrip", "tracking")]
 LAYOUTS += ["%s/layouts/%s_overview_layouts.py" % (CONFIGDIR, x) for x in
-            ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
+           ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
 LAYOUTS += ["%s/layouts/%s_T0_layouts.py" % (CONFIGDIR, x) for x in
-           ("btag","castor","csc","pixel","sistrip","hcal", "hcalcalib", "eb", "ee", "es", "hltmuon", "rpc")]
-
+           ("btag", "castor", "csc", "eb", "ee", "es", "hcal", "hltmuon", "pixel", "rpc", "sistrip", "tracking")]
 modules = ("Monitoring.DQM.GUI",)
 
 #server.instrument  = 'valgrind --num-callers=999 `cmsvgsupp` --error-limit=no'

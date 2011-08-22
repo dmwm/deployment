@@ -5,9 +5,9 @@ STATEDIR  = "%s/state/dqmgui/dev" % BASEDIR
 LOGDIR    = "%s/logs/dqmgui/dev" % BASEDIR
 
 LAYOUTS = ["%s/layouts/shift_%s_T0_layout.py" % (CONFIGDIR, x) for x in
-	   ("castor","eb", "ee", "csc", "rpc", "hcal", "hcalcalib", "l1t", "l1temulator", "hlt", "pixel", "sistrip", "sistriplas", "dt", "muons", "jetmet", "egamma")]
+           ("castor", "csc", "dt", "eb", "ee", "egamma", "es", "hcal", "hlt", "jetmet", "l1temulator", "l1t", "muons", "pixel", "rpc", "sistrip", "tracking")]
 LAYOUTS += ["%s/layouts/%s_T0_layouts.py" % (CONFIGDIR, x) for x in
-           ("castor","pixel","sistrip","hcal", "hcalcalib", "eb", "ee", "sistriplas", "hltmuon")]
+           ("btag", "castor", "csc", "eb", "ee", "es", "hcal", "hltmuon", "pixel", "rpc", "sistrip", "tracking")]
 LAYOUTS += [CONFIGDIR + "/layouts/shift_hlt_relval_layout.py"]
 LAYOUTS += [CONFIGDIR + "/layouts/hlt_relval-layouts.py"]
 
