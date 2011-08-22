@@ -1,12 +1,17 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_reqmgr_variants="default offsite"
+deploy_reqmgr_variants="default prod preprod dev offsite"
 
 deploy_reqmgr_deps()
 {
   deploy backend
   deploy wmcore-auth
-  deploy couchdb $variant
-  case $variant in offsite ) deploy wmcore ;; esac
+  case $variant in
+    offsite )
+      deploy couchdb offsite
+      deploy wmcore ;;
+    * )
+      deploy couchdb ;;
+  esac
 }
 
 deploy_reqmgr_prep()
@@ -18,17 +23,6 @@ deploy_reqmgr_prep()
 deploy_reqmgr_sw()
 {
   case $variant in
-    default )
-      deploy_pkg \
-        -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
-        -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        -a reqmgr/ReqMgrSecrets.py comp cms+reqmgr 0.7.9b-comp2
-
-      if grep -rq "replace me" $project_auth; then
-        note "WARNING: replace certificates in $project_auth with real ones"
-      else :; fi
-      ;;
-
     offsite )
       deploy_pkg comp external+cherrypy 3.1.2-cmp6
       deploy_pkg comp external+py2-cheetah 2.4.0-cmp6
@@ -51,6 +45,17 @@ deploy_reqmgr_sw()
       # grab the WMAgent MySQL config
       cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
       ;;
+    * )
+      case $variant in *prod ) secrets= ;; * ) secrets=Dev ;; esac
+      deploy_pkg \
+        -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
+        -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+        -a ReqMgrSecrets.py:reqmgr/ReqMgrSecrets${secrets}.py comp cms+reqmgr 0.7.9b-comp2
+
+      if grep -rq "replace me" $project_auth; then
+        note "WARNING: replace certificates in $project_auth with real ones"
+      else :; fi
+      ;;
   esac
 }
 
@@ -61,7 +66,7 @@ deploy_reqmgr_post()
   case $variant in
     offsite )
       ;;
-    default )
+    * )
       # Tell couchdb to pick up reqmgr on the next restart
       local couchdb_config=$root/current/config/couchdb
       local couchdb_state=$root/state/couchdb
@@ -100,7 +105,7 @@ deploy_reqmgr_auth()
       echo "replace me with your dmwm service certificate" ;;
     */*-key.pem )
       echo "replace me with your dmwm service key" ;;
-    */ReqMgrSecrets.py )
+    */ReqMgrSecrets*.py )
       echo 'connectUrl = "oracle://FOO:BAR@ZOINKS"' ;;
   esac
 }
