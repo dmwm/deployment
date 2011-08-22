@@ -5,7 +5,6 @@ deploy_couchdb_deps()
 {
   deploy backend
   deploy wmcore-auth
-  case $variant in default ) ;; * ) deploy admin ;; esac
 }
 
 deploy_couchdb_prep()
