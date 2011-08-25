@@ -262,7 +262,8 @@ start()
         startagent $D/agent-ixmerge \
             visDQMIndexMergeDaemon \
             $DQM_DATA/agents/ixmerge \
-            $DQM_DATA/ix
+            $DQM_DATA/ix \
+            $DQM_DATA/agents/register
 
         if [ $D = offline ]; then
           startagent $D/agent-osync \
