@@ -1,0 +1,316 @@
+#!/bin/bash
+
+
+#
+# Global variables etc
+#
+THIS_SCRIPT=$(readlink -f $0)
+PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
+ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
+
+INSTALL_AS="$ROOT_DIR/install/asyncstageout"
+INSTALL_COUCH="$ROOT_DIR/install/couchdb"
+
+CONFIG_COUCH="$ROOT_DIR/config/couchdb"
+CONFIG_AS="$ROOT_DIR/config/asyncstageout"
+
+COUCH_INIT_DONE=0
+AS_INIT_DONE=0
+
+
+COUCH_USER=couch_db_user
+COUCH_PASS=couch_db_password
+
+COUCH_HOST=127.0.0.1
+COUCH_PORT=5984
+COUCH_HOST_NAME=`hostname`
+
+
+# Flags to show which tools have been initialised
+if [ -e $INSTALL_AS/.init ]; then AS_INIT_DONE=1; else AS_INIT_DONE=0; fi;
+if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; fi;
+
+#callbacks to activate or show initialisation has been done
+activate_asyncstageout(){
+    touch $INSTALL_AS/.using
+    cp $ROOT_DIR/apps/asyncstageout/configuration/Example.py $CONFIG_AS/config-template.py
+}
+
+inited_asyncstageout(){
+    touch $INSTALL_AS/.init
+}
+inited_couch(){
+    touch $INSTALL_COUCH/.init
+}
+
+#
+# Passwords/Secrets handling
+#
+load_secrets_file(){
+    if [ "x$ASYNC_SECRETS_LOCATION" == "x" ]; then
+        ASYNC_SECRETS_LOCATION=$HOME/Async.secrets;
+    fi
+    if [ ! -e $ASYNC_SECRETS_LOCATION ]; then
+        echo "Password file: $ASYNC_SECRETS_LOCATION does not exist"
+        echo "Either set ASYNC_SECRETS_LOCATION to a valid file or check that $HOME/Async.secrets exists"
+        exit 1;
+    fi
+
+    local MATCH_COUCH_USER=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_HOST=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_PORT=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_COUCH_CERT_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
+    local MATCH_COUCH_KEY_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
+
+    if [ "x$MATCH_COUCH_USER" == "x" ]; then
+        COUCH_USER=asynccouch;
+    else
+        COUCH_USER=$MATCH_COUCH_USER;
+    fi
+    if [ "x$MATCH_COUCH_PASS" == "x" ]; then
+        echo "Secrets file doesnt contain COUCH_PASS";
+        exit 1
+    else
+        COUCH_PASS=$MATCH_COUCH_PASS;
+    fi
+    if [ ! "x$MATCH_COUCH_PORT" == "x" ]; then
+        COUCH_PORT=$MATCH_COUCH_PORT;
+    fi
+    if [ ! "x$MATCH_COUCH_HOST" == "x" ]; then
+        COUCH_HOST=$MATCH_COUCH_HOST;
+    fi
+    # look for couch ssl certificate if not found check X509_USER_CERT and X509_USER_PROXY
+    if [ ! "x${X509_USER_CERT:-$X509_USER_PROXY}" == "x" ]; then
+        COUCH_CERT_FILE=$MATCH_COUCH_CERT_FILE;
+    elif [ ! "x$X509_USER_CERT" == "x" ]; then
+        COUCH_CERT_FILE=${X509_USER_CERT:-$X509_USER_PROXY};
+    fi
+    # look for couch ssl key if not found check X509_USER_KEY and X509_USER_PROXY
+    if [ ! "x$MATCH_COUCH_KEY_FILE" == "x" ]; then
+        COUCH_KEY_FILE=$MATCH_COUCH_KEY_FILE;
+    elif [ ! "x${X509_USER_KEY:-$X509_USER_PROXY}" == "x" ]; then
+        COUCH_KEY_FILE=${X509_USER_KEY:-$X509_USER_PROXY};
+    fi
+}
+
+print_settings(){
+    echo "INSTALL_AS=               $INSTALL_AS                 "
+    echo "CONFIG_COUCH=             $CONFIG_COUCH               "
+    echo "CONFIG_AS=                $CONFIG_AS                  "
+    echo "COUCH_USER=               $COUCH_USER                 "
+    echo "COUCH_PASS=               $COUCH_PASS                 "
+    echo "COUCH_HOST=               $COUCH_HOST                 "
+    echo "COUCH_PORT=               $COUCH_PORT                 "
+
+}
+
+
+#
+# Environment
+#
+
+. $ROOT_DIR/apps/pystack/etc/profile.d/init.sh
+. $ROOT_DIR/apps/couchdb/etc/profile.d/init.sh
+. $ROOT_DIR/apps/asyncstageout/etc/profile.d/init.sh
+
+
+#########################
+#  CouchDB              #
+#########################
+
+#
+# first time startup for couch: disable admin party and create user based on secrets file
+#
+init_couch_pre(){
+
+    echo "Initialising CouchDB on $COUCH_HOST:$COUCH_PORT..."
+    mkdir -p $INSTALL_COUCH/logs
+    mkdir -p $INSTALL_COUCH/database
+    perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_COUCH}" $CONFIG_COUCH/local.ini
+    # couch ini file requires IP based hostname
+    perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
+}
+
+init_couch_post(){
+    inited_couch;
+}
+
+status_of_couch(){
+    echo "+ Couch Status:"
+    if [ ! -e $INSTALL_COUCH/logs/couchdb.pid ]; then
+        echo "++ Couch process file not found"
+        return
+    fi
+    local COUCH_PID=`cat $INSTALL_COUCH/logs/couchdb.pid`
+    kill -0 $COUCH_PID;
+    local COUCH_STATUS=$?
+    if [ $COUCH_STATUS -eq 0 ]; then
+        echo "++ Couch running with process: $COUCH_PID";
+    else
+        echo "++ Couch process not running"
+    fi
+    echo "++" `curl -s $COUCH_HOST:$COUCH_PORT`
+}
+
+#
+# Startup couch
+#
+start_couch(){
+   load_secrets_file;
+   echo "starting couch..."
+   if [ $COUCH_INIT_DONE -eq 0 ]; then
+       echo "CouchDB has not been initialised... running pre initialisation";
+       init_couch_pre;
+   fi
+   couchdb -b -a $CONFIG_COUCH/local.ini \
+           -p $INSTALL_COUCH/logs/couchdb.pid \
+           -e $INSTALL_COUCH/logs/stderr.log \
+           -o $INSTALL_COUCH/logs/stdout.log
+   if [ $COUCH_INIT_DONE -eq 0 ]; then
+       echo "CouchDB has not been initialised... running post initialisation"
+       init_couch_post;
+   fi
+
+
+}
+
+#
+# shutdown couch
+#
+stop_couch(){
+   echo "stopping couch...";
+   couchdb  -d  -p $INSTALL_COUCH/logs/couchdb.pid;
+
+}
+
+clean_couch(){
+    echo "cleaning couch installation..."
+    stop_couch
+    echo "removing files"
+    rm -f $INSTALL_COUCH/.init
+    rm -rf $INSTALL_COUCH/database/*
+
+}
+
+
+#
+# combined startup of all required services
+#
+start_services(){
+    echo "Starting Services..."
+    #start up the services required by the async
+    start_couch;
+}
+
+stop_services(){
+    #shut down all services
+    echo "Shutting down services..."
+    stop_couch;
+}
+
+
+
+init_async(){
+    load_secrets_file;
+    wmcore-db-init --config $CONFIG_AS/config.py --create --modules=WMCore.Agent.Database;
+    export ASYNC_CONFIG=$CONFIG_AS/config.py
+    couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/AsyncTransfer/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
+    couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/monitor/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
+    couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/stat http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_stat
+    couchapp push $ROOT_DIR/apps/wmcore/couchapps/Agent http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_agent
+    unset ASYNC_CONFIG
+    inited_asyncstageout;
+
+}
+
+#
+# initialise the async
+#
+init_asyncstageout(){
+
+    if [ $AS_INIT_DONE -eq 0 ]; then
+      echo "Initialising AsyncStageOut..."
+      init_async;
+    fi
+}
+
+start_asyncstageout(){
+    init_asyncstageout;
+    echo "Starting AsyncStageOut..."
+    wmcoreD --start --config=$CONFIG_AS/config.py
+
+}
+
+stop_asyncstageout(){
+    echo "Shutting down asyncstageot...";
+    wmcoreD --shutdown --config=$CONFIG_AS/config.py;
+}
+
+status_of_asyncstageout(){
+    echo "Status of Asyncstageout:"
+    wmcoreD --status --config=$CONFIG_AS/config.py
+}
+
+
+#
+# revert async back to pre initialised state & wipe out
+# everything currently in existence.
+clean_asyncstageout(){
+    load_secrets_file;
+    stop_asyncstageout;
+    # Todo: clean couchapps?
+    echo "Cleaning asyncstageout..."
+    rm -rf $INSTALL_AS/*
+    rm -f $CONFIG_AS/config.py;
+    rm -f $INSTALL_AS/.init
+
+}
+
+
+status(){
+    load_secrets_file;
+    status_of_couch;
+    status_of_asyncstageout;
+
+
+}
+
+clean_all(){
+    clean_couch;
+    clean_asyncstageout;
+}
+
+#######################################################
+# Main
+#######################################################
+
+case $1 in
+  status)
+    status ;;
+  activate-asyncstageout)
+    activate_asyncstageout;;
+  start-services)
+    start_services;;
+  stop-services)
+    stop_services;;
+  start-couch)
+     start_couch;;
+  stop-couch)
+     stop_couch;;
+  clean-couch)
+     clean_couch;;
+  init-asyncstageout)
+     init_asyncstageout;;
+  start-asyncstageout)
+     start_asyncstageout;;
+  stop-asyncstageout)
+     stop_asyncstageout;;
+  clean-asyncstageout)
+     clean_asyncstageout;;
+  clean-all)
+     clean_all;;
+  execute-agent)
+esac

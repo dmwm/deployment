@@ -6,25 +6,38 @@ deploy_asyncstageout_deps()
 
 deploy_asyncstageout_prep()
 {
-  mkproj -l -s
+  mkproj
 }
 
 deploy_asyncstageout_sw()
 {
-  deploy_pkg comp cms+asyncstageout 0.0.1
+  deploy_pkg comp.pre  cms+asyncstageout test_tag1
 }
 
 deploy_asyncstageout_post()
 {
+
+  mkdir -p $root/current/install/mysql
+  mkdir -p $root/current/install/couchdb
+
+  mkdir -p $root/current/install/asyncstageout
+  mkdir -p $root/current/config/asyncstageout
+
   # Tell couchdb to pick up AsyncTransfer on the next restart
   # and configure replication, compaction and backup, too
   local couchdb_config=$root/current/config/couchdb
   local couchdb_state=$root/state/couchdb
+  local hour=0
 
-  for area in stagingarea replication; do
+  local couchdb_ini=$root/current/config/asyncstageout/local.ini
+  perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
+  cp -f $couchdb_ini $root/current/config/couchdb
+
+  for area in compaction stagingarea replication backup; do
     rm -f $couchdb_state/$area/asyncstageout
     touch $couchdb_state/$area/asyncstageout
   done
 
   echo "couchapp push $root/current/apps/asyncstageout/AsyncTransfer http://localhost:5984/asyncstageout" >> $couchdb_state/stagingarea/asyncstageout
+  echo "1 $hour * * * $couchdb_config/manage compact asyncstageout" >> $couchdb_state/compaction/asyncstageout
 }
