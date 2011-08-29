@@ -71,14 +71,18 @@ load_secrets_file(){
         exit 1;
     fi
 
-    local MATCH_MYSQL_USER=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_USER | sed s/MYSQL_USER=//`
-    local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_PASS | sed s/MYSQL_PASS=//`
-    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
-    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
-    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
-    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
-    local MATCH_CS_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep CS_HOSTNAME | sed s/CS_HOSTNAME=//`
-    local MATCH_CS_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep CS_PORT | sed s/CS_PORT=//`
+    local MATCH_MYSQL_USER=`cat $WMAGENT_SECRETS_LOCATION  | grep MYSQL_USER    | sed s/MYSQL_USER=//`
+    local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION  | grep MYSQL_PASS    | sed s/MYSQL_PASS=//`
+    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_USER    | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_PASS    | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_HOST    | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_PORT    | sed s/COUCH_PORT=//`
+    local MATCH_CS_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep CS_HOSTNAME   | sed s/CS_HOSTNAME=//`
+    local MATCH_CS_PORT=`cat $WMAGENT_SECRETS_LOCATION     | grep CS_PORT       | sed s/CS_PORT=//`
+    local MATCH_HOST_DN=`cat $WMAGENT_SECRETS_LOCATION     | grep HOST_DN       | sed s/HOST_DN=//`
+    local MATCH_UFC_CACHEDIR=`cat $WMAGENT_SECRETS_LOCATION | grep UFC_CACHEDIR | sed s/UFC_CACHEDIR=//`
+    local MATCH_UFC_PORT=`cat $WMAGENT_SECRETS_LOCATION    | grep UFC_PORT      | sed s/UFC_PORT=//`
+    local MATCH_SB_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep SB_HOSTNAME   | sed s/SB_HOSTNAME=//`
 
     if [ "x$MATCH_MYSQL_USER" == "x" ]; then
         MYSQL_USER=wmagentmysql;
@@ -114,6 +118,20 @@ load_secrets_file(){
     if [ ! "x$MATCH_CS_PORT" == "x" ]; then
         CS_PORT=$MATCH_CS_PORT;
     fi
+    if [ ! "x$MATCH_HOST_DN" == "x" ]; then  
+        HOST_DN=$MATCH_HOST_DN;
+    fi
+    if [ ! "x$MATCH_UFC_CACHEDIR" == "x" ]; then
+        UFC_CACHEDIR=$MATCH_UFC_CACHEDIR;
+    fi
+    if [ ! "x$MATCH_UFC_PORT" == "x" ]; then
+        UFC_PORT=$MATCH_UFC_PORT;
+    fi
+    if [ ! "x$MATCH_SB_HOSTNAME" == "x" ]; then
+        SB_HOSTNAME=$MATCH_SB_HOSTNAME;
+    fi
+
+
 }
 
 init_server(){
@@ -123,9 +141,17 @@ init_server(){
                        --output=$CONFIG_CS/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --working_dir=$INSTALL_CS  \
                        --cs_hostname=$CS_HOSTNAME \
-                       --cs_port=$CS_PORT
+                       --cs_port=$CS_PORT \
+                       --host_dn=$HOST_DN \
+                       --sb_hostname=$SB_HOSTNAME \
+                       --sb_port=$UFC_PORT \
+                       --ufc_cachedir=$UFC_CACHEDIR \
+                       --ufc_service_url=https://$SB_HOSTNAME:$UFC_PORT/userfilecache/userfilecache \
+                       --ufc_port=$UFC_PORT \
+                       --ufc_hostname=$SB_HOSTNAME 
     inited_server;
 }
 
