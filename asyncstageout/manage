@@ -215,12 +215,11 @@ stop_services(){
 
 init_async(){
     load_secrets_file;
-    wmcore-db-init --config $CONFIG_AS/config.py --create --modules=WMCore.Agent.Database;
     export ASYNC_CONFIG=$CONFIG_AS/config.py
     couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/AsyncTransfer/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
     couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/monitor/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
     couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/stat http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_stat
-    couchapp push $ROOT_DIR/apps/wmcore/couchapps/Agent http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_agent
+    couchapp push $ROOT_DIR/apps/asyncstageout/lib/couchapps/Agent http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_agent
     unset ASYNC_CONFIG
     inited_asyncstageout;
 
