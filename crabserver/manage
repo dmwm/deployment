@@ -41,6 +41,7 @@ if [ -e $INSTALL_CS/.init ]; then CS_INIT_DONE=1; else CS_INIT_DONE=0; fi;
 activate_crabserver(){
     touch $INSTALL_CS/.using
     cp $ROOT_DIR/apps/crab-server3/configuration/Example.py $CONFIG_CS/config-template.py
+    cp $ROOT_DIR/apps/crab-server3/configuration/ClientMapping.py $CONFIG_CS/clientMapping-template.py
     $PROJ_DIR/wmagent/manage activate-agent
     $PROJ_DIR/wmagent/manage activate-reqmgr
     $PROJ_DIR/wmagent/manage activate-workqueue
@@ -143,6 +144,7 @@ init_server(){
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --working_dir=$INSTALL_CS  \
+                       --client_mapping=$CONFIG_CS/clientMapping-template.py \
                        --cs_hostname=$CS_HOSTNAME \
                        --cs_port=$CS_PORT \
                        --host_dn=$HOST_DN \
