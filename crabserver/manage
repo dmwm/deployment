@@ -200,6 +200,21 @@ help(){
     echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
 }
 
+execute_command_crabserver(){
+    shift;
+    local RUNTHIS=$1
+    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
+    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in WMCore/bin"
+        exit 1
+    fi
+    shift;
+    load_secrets_file;
+    export WMAGENT_CONFIG=$CONFIG_CS/config.py
+    echo "Executing $RUNTHIS $@ ..."
+    $RUNTHIS $@;
+}
+
 execute_agent(){
     shift;
     $PROJ_DIR/wmagent/manage  execute-agent $@
@@ -266,6 +281,8 @@ case $1 in
     clean_crabserver;;
   clean-all)
     clean_all;;
+  execute-crabserver)
+    execute_command_crabserver $@;;
   execute-agent)
     execute_agent $@;;
   execute-workqueue)
