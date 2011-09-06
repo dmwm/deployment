@@ -205,7 +205,7 @@ load_secrets_file(){
     if [ ! "x$MATCH_LOCAL_WORKQUEUE_DBNAME" == "x" ]; then
         LOCAL_WORKQUEUE_DBNAME=$MATCH_LOCAL_WORKQUEUE_DBNAME;
     fi
-    if [ ! "x$MATCH_WMBS_SERVICE_PORT" ==WORKLOAD_SUMMARY_HOST "x" ]; then
+    if [ ! "x$MATCH_WMBS_SERVICE_PORT" == "x" ]; then
         WMBS_SERVICE_PORT=$MATCH_WMBS_SERVICE_PORT;
     fi
     if [ ! "x$MATCH_WORKLOAD_SUMMARY_HOSTNAME" == "x" ]; then
@@ -601,7 +601,7 @@ init_wmagent(){
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
-                       --wmbs_service_port=$WMBS_SERVICE_PORT\
+                       --wmbs_service_port=$WMBS_SERVICE_PORT \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL
     wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
@@ -626,7 +626,7 @@ init_reqmgr(){
                        --working_dir=$INSTALL_RM \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_port=$REQMGR_PORT \
-                       --reqmgr_hostname=$REQMGR_HOSTNAME\
+                       --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL
     wmcore-db-init --config $CONFIG_RM/config.py --create --modules=WMCore.Agent.Database,WMCore.RequestManager.RequestDB
     export WMAGENT_CONFIG=$CONFIG_RM/config.py
