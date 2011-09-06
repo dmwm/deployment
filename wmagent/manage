@@ -57,6 +57,9 @@ LOCAL_WORKQUEUE_DBNAME=workqueue
 
 WMBS_SERVICE_PORT=9999
 
+WORKLOAD_SUMMARY_HOSTNAME=
+WORKLOAD_SUMMARY_PORT=5984
+WORKLOAD_SUMMARY_DBNAME=workloadsummary
 #
 # Init checks
 #
@@ -137,6 +140,9 @@ load_secrets_file(){
     local MATCH_GLOBAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_DBNAME | sed s/GLOBAL_WORKQUEUE_DBNAME=//`
     local MATCH_LOCAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_DBNAME | sed s/LOCAL_WORKQUEUE_DBNAME=//`
     local MATCH_WMBS_SERVICE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep WMBS_SERVICE_PORT | sed s/WMBS_SERVICE_PORT=//`
+    local MATCH_WORKLOAD_SUMMARY_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_HOSTNAME | sed s/WORKLOAD_SUMMARY_HOSTNAME=//`
+    local MATCH_WORKLOAD_SUMMARY_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_PORT | sed s/WORKLOAD_SUMMARY_PORT=//`
+    local MATCH_WORKLOAD_SUMMARY_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_DBNAME | sed s/WORKLOAD_SUMMARY_DBNAME=//`
     
     if [ "x$MATCH_MYSQL_USER" == "x" ]; then
         MYSQL_USER=wmagentmysql;
@@ -199,8 +205,17 @@ load_secrets_file(){
     if [ ! "x$MATCH_LOCAL_WORKQUEUE_DBNAME" == "x" ]; then
         LOCAL_WORKQUEUE_DBNAME=$MATCH_LOCAL_WORKQUEUE_DBNAME;
     fi
-    if [ ! "x$MATCH_WMBS_SERVICE_PORT" == "x" ]; then
+    if [ ! "x$MATCH_WMBS_SERVICE_PORT" ==WORKLOAD_SUMMARY_HOST "x" ]; then
         WMBS_SERVICE_PORT=$MATCH_WMBS_SERVICE_PORT;
+    fi
+    if [ ! "x$MATCH_WORKLOAD_SUMMARY_HOSTNAME" == "x" ]; then
+        WORKLOAD_SUMMARY_HOSTNAME=$MATCH_WORKLOAD_SUMMARY_HOSTNAME;
+    fi
+    if [ ! "x$MATCH_WORKLOAD_SUMMARY_PORT" == "x" ]; then
+        WORKLOAD_SUMMARY_PORT=$MATCH_WORKLOAD_SUMMARY_PORT;
+    fi
+    if [ ! "x$MATCH_WORKLOAD_SUMMARY_DBNAME" == "x" ]; then
+        WORKLOAD_SUMMARY_DBNAME=$MATCH_WORKLOAD_SUMMARY_DBNAME;
     fi
 }
 
@@ -231,7 +246,9 @@ print_settings(){
     echo "LOCAL_WORKQUEUE_PORT=     $LOCAL_WORKQUEUE_PORT       "
     echo "GLOBAL_WORKQUEUE_DBNAME=  $GLOBAL_WORKQUEUE_DBNAME    "
     echo "LOCAL_WORKQUEUE_DBNAME=  $LOCAL_WORKQUEUE_DBNAME    "
-
+    echo "WORKLOAD_SUMMARY_HOSTNAME= $WORKLOAD_SUMMARY_HOSTNAME "
+    echo "WORKLOAD_SUMMARY_PORT=    $WORKLOAD_SUMMARY_PORT      "
+    echo "WORKLOAD_SUMMARY_DBNAME=  $WORKLOAD_SUMMARY_DBNAME    "
 
 }
 
@@ -571,6 +588,11 @@ init_wmagent(){
     else
         GLOBAL_WORKQUEUE_URL=http://$GLOBAL_WORKQUEUE_HOSTNAME:$GLOBAL_WORKQUEUE_PORT/$GLOBAL_WORKQUEUE_DBNAME;
     fi
+    if [ "x$WORKLOAD_SUMMARY_HOSTNAME" == "x" ]; then
+        WORKLOAD_SUMMARY_URL=;
+    else
+        WORKLOAD_SUMMARY_URL=http://$WORKLOAD_SUMMARY_HOSTNAME:$WORKLOAD_SUMMARY_PORT/$WORKLOAD_SUMMARY_DBNAME;
+    fi
     wmagent-mod-config --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
@@ -579,7 +601,8 @@ init_wmagent(){
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
-                       --wmbs_service_port=$WMBS_SERVICE_PORT
+                       --wmbs_service_port=$WMBS_SERVICE_PORT\
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL
     wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
     wmagent-couchapp-init;
@@ -591,6 +614,11 @@ init_wmagent(){
 
 init_reqmgr(){
     load_secrets_file;
+    if [ "x$WORKLOAD_SUMMARY_HOSTNAME" == "x" ]; then
+        WORKLOAD_SUMMARY_URL=;
+    else
+        WORKLOAD_SUMMARY_URL=http://$WORKLOAD_SUMMARY_HOSTNAME:$WORKLOAD_SUMMARY_PORT/$WORKLOAD_SUMMARY_DBNAME;
+    fi
     wmagent-mod-config --input=$CONFIG_RM/config-template.py \
                        --output=$CONFIG_RM/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
@@ -598,7 +626,8 @@ init_reqmgr(){
                        --working_dir=$INSTALL_RM \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_port=$REQMGR_PORT \
-                       --reqmgr_hostname=$REQMGR_HOSTNAME
+                       --reqmgr_hostname=$REQMGR_HOSTNAME\
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL
     wmcore-db-init --config $CONFIG_RM/config.py --create --modules=WMCore.Agent.Database,WMCore.RequestManager.RequestDB
     export WMAGENT_CONFIG=$CONFIG_RM/config.py
     wmagent-couchapp-init;
