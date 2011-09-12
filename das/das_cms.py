@@ -17,12 +17,21 @@ config.web_server.status_update = 3000
 config.web_server.number_of_workers = 8
 config.web_server.queue_limit = 100
 config.web_server.adjust_input = True
+config.web_server.dbs_daemon = True
+config.web_server.dbs_daemon_interval = 600
+config.web_server.dbs_daemon_expire = 3600
+
+# dbs configuration
+config.component_('dbs')
+config.dbs.dbs_instances = ['cms_dbs_prod_global', 'cms_dbs_caf_analysis_01', 'cms_dbs_ph_analysis_01', 'cms_dbs_ph_analysis_02', 'cms_dbs_prod_local_01', 'cms_dbs_prod_local_02', 'cms_dbs_prod_local_03', 'cms_dbs_prod_local_04', 'cms_dbs_prod_local_05', 'cms_dbs_prod_local_06', 'cms_dbs_prod_local_07', 'cms_dbs_prod_local_08', 'cms_dbs_prod_local_09', 'cms_dbs_prod_local_10']
+config.dbs.dbs_global_instance = 'cms_dbs_prod_global'
+config.dbs.dbs_global_url = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
 
 # mongodb configuration
 config.component_('mongodb')
 config.mongodb.bulkupdate_size = 5000
 config.mongodb.dburi = ['mongodb://localhost:8230']
-config.mongodb.lifetime = 3600
+config.mongodb.lifetime = 600
 config.mongodb.dbname = 'das'
 
 # dasdb configuration
@@ -64,4 +73,4 @@ config.das.verbose = 0
 config.das.multitask = True
 config.das.error_expire = 300
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
-config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','ip_service','combined','conddb']
+config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','ip_service','combined','conddb','reqmgr']
