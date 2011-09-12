@@ -92,7 +92,7 @@ server.workspace('DQMContent', 45, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonito
                                   'Tracking/Layouts/01 - Tracking ReportSummary',
                                   'Tracking/Layouts/02 - Tracks (pp collisions)',
                                   'Tracking/Layouts/03 - Tracks (pp data) - no track selection',
-                                  'Tracking/Layouts/04 - Beam Monitor'
+                                  'Tracking/Layouts/04 - Tracks (Cosmic Tracking)'
                                   )
 
 server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/',

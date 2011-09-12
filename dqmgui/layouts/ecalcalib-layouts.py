@@ -1,9 +1,14 @@
 def ecalcaliblayout(i, p, *rows): i["EcalCalibration/Layouts/" + p] = DQMItem(layout=rows)
 def ecalcaliblclayout(i, p, *rows): i["EcalCalibration/Layouts/00 Light Checker/" + p] = DQMItem(layout=rows)
+
+# Quick Collections
 ecalcaliblayout(dqmitems, "00 Laser Sequence Validation",
                 [{ 'path': "EcalCalibration/Laser/EcalLaser sequence validation", 'description': "EcalLaser: time, FED number, and status of the laser sequence. Legend: green = good; yellow = warning; red = bad" }])
+
+# Light Checker Layout
 ecalcaliblclayout(dqmitems, "00 Laser Sequence Validation",
                 [{ 'path': "EcalCalibration/Laser/EcalLaser sequence validation", 'description': "EcalLaser: time, FED number, and status of the laser sequence. Legend: green = good; yellow = warning; red = bad" }])
+
 ecalcaliblclayout(dqmitems, "01 Laser Amplitude Trend",
                 [{ 'path': "EcalCalibration/Laser/EcalLaser L1 (blue) amplitude trend", 'description': "Amplitude of the blue laser measured at the source" }],
                   [{ 'path': "EcalCalibration/Laser/EcalLaser L4 (red) amplitude trend", 'description': "Amplitude of the IR laser measured at the source" }])
@@ -29,11 +34,13 @@ ecalcaliblclayout(dqmitems, "08 Laser GPIB Action Duration",
                   [{ 'path': "EcalCalibration/Laser/EcalLaser region move duration", 'description': "" }],
                   [{ 'path': "EcalCalibration/Laser/EcalLaser attenuator change duration", 'description': "" }],
                   [{ 'path': "EcalCalibration/Laser/EcalLaser color change duration", 'description': "" }])
-ecalcaliblclayout(dqmitems, "09 Laser Amplitude Map Barrel",
-                  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser amplitude summary L1", 'description': "Amplitude of the blue laser measured at the detector"}],
-                  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser amplitude summary L4", 'description': "Amplitude of the IR laser measured at the detector"}])
-ecalcaliblclayout(dqmitems, "10 Laser Amplitude Map Endcap",
-                  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser amplitude summary L1", 'description': "Amplitude of the blue laser measured at the detector EE-"},
-                   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser amplitude summary L1", 'description': "Amplitude of the blue laser measured at the detector EE+" }],
-                  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser amplitude summary L4", 'description': "Amplitude of the IR laser measured at the detector EE-"},
-                   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser amplitude summary L4", 'description': "Amplitude of the IR laser measured at the detector EE+" }])
+
+# ecalcaliblclayout(dqmitems, "09 Laser Amplitude Map Barrel",
+#                   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/EBLT amplitude map L1", 'description': "Amplitude of the blue laser measured at the detector"}],
+#                   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/EBLT amplitude map L4", 'description': "Amplitude of the IR laser measured at the detector"}])
+
+# ecalcaliblclayout(dqmitems, "10 Laser Amplitude Map Endcap",
+#                   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT amplitude map L1 EE -", 'description': "Amplitude of the blue laser measured at the detector EE -"},
+#                    { 'path': "EcalEndcap/EELaserTask/Laser1/EELT amplitude map L1 EE +", 'description': "Amplitude of the blue laser measured at the detector EE +" }],
+#                   [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE -", 'description': "Amplitude of the IR laser measured at the detector EE -"},
+#                    { 'path': "EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE +", 'description': "Amplitude of the IR laser measured at the detector EE +" }])

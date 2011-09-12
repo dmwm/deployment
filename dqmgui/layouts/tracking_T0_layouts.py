@@ -30,7 +30,39 @@ trackinglayout(dqmitems, "03 - Tracks (pp data) - no track selection",
   { 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_ImpactPoint_GenTk",
     'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
 
-trackinglayout(dqmitems, "04 - Beam Monitor",
+trackinglayout(dqmitems, "04 - Tracks (Cosmic Tracking)",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfTracks_CKFTk",
+    'description': "Number of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+  { 'path': "Tracking/TrackParameters/HitProperties/NumberOfRecHitsPerTrack_CKFTk",
+    'description': "Number of RecHits per Track  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+  { 'path': "Tracking/TrackParameters/GeneralProperties/TrackPt_CKFTk",
+    'description': "Pt of Reconstructed Track  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}],
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/Chi2oNDF_CKFTk",
+    'description': "Chi Sqare per DoF  -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+  { 'path': "Tracking/TrackParameters/GeneralProperties/TrackPhi_CKFTk",
+    'description': "Phi distribution of Reconstructed Tracks -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+  { 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_CKFTk",
+    'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
+
+
+trackinglayout(dqmitems, "05 - Fraction of Good Tracks vs LS",
+  [ { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTracksFractionVsLS_GenTk",
+      'description': "Fraction of good tracks versus Lumi Section",
+      'draw': { 'withref': "yes" }}])
+
+trackinglayout(dqmitems, "06 - Number of rec hits per good track vs LS",
+  [ { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTracksNumberOfRecHitsPerTrackVsLS_GenTk",
+      'description': "Number of rec hits per good track vs LS",
+      'draw': { 'withref': "yes" }}])
+
+trackinglayout(dqmitems, "07 - Offline PV",
+  [{ 'path': "OfflinePV/offlinePrimaryVertices/tagDiffX",
+     'description': "Difference between good PV and beamspot in x-direction"},
+   { 'path': "OfflinePV/offlinePrimaryVertices/tagDiffY",
+     'description': "Difference between good PV and beamspot in y-direction"}
+    ])
+
+trackinglayout(dqmitems, "08 - Beam Monitor",
   [{ 'path': "AlcaBeamMonitor/Validation/hxLumibased PrimaryVertex-DataBase",
      'description': ""},
    { 'path': "AlcaBeamMonitor/Validation/hyLumibased PrimaryVertex-DataBase",
@@ -46,35 +78,3 @@ trackinglayout(dqmitems, "04 - Beam Monitor",
     { 'path': "AlcaBeamMonitor/Debug/hsigmaZLumibased PrimaryVertex-DataBase fit",
      'description': ""},
    ])
-
-trackinglayout(dqmitems, "05 - Tracks (Cosmic Tracking)",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfTracks_CKFTk",
-    'description': "Number of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/HitProperties/NumberOfRecHitsPerTrack_CKFTk",
-    'description': "Number of RecHits per Track  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/GeneralProperties/TrackPt_CKFTk",
-    'description': "Pt of Reconstructed Track  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}],
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/Chi2oNDF_CKFTk",
-    'description': "Chi Sqare per DoF  -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/GeneralProperties/TrackPhi_CKFTk",
-    'description': "Phi distribution of Reconstructed Tracks -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_CKFTk",
-    'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
-
-
-trackinglayout(dqmitems, "06 - Fraction of Good Tracks vs LS",
-  [ { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTracksFractionVsLS_GenTk",
-      'description': "Fraction of good tracks versus Lumi Section",
-      'draw': { 'withref': "yes" }}])
-
-trackinglayout(dqmitems, "07 - Number of rec hits per good track vs LS",
-  [ { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTracksNumberOfRecHitsPerTrackVsLS_GenTk",
-      'description': "Number of rec hits per good track vs LS",
-      'draw': { 'withref': "yes" }}])
-
-trackinglayout(dqmitems, "08 - Offline PV",
-  [{ 'path': "OfflinePV/offlinePrimaryVertices/tagDiffX",
-     'description': "Difference between good PV and beamspot in x-direction"},
-   { 'path': "OfflinePV/offlinePrimaryVertices/tagDiffY",
-     'description': "Difference between good PV and beamspot in y-direction"}
-    ])
