@@ -9,7 +9,7 @@ deploy_couchdb_deps()
 
 deploy_couchdb_prep()
 {
-  mkproj compaction backup database replication stagingarea
+  mkproj database replication stagingarea
   case $variant in default ) ;; * ) mkproxy ;; esac
 }
 
