@@ -29,14 +29,14 @@ server.extend('DQMToJSON')
 server.extend('DQMFileAccess', None, "%s/uploads" % STATEDIR,
               { "ROOT": "%s/data" % STATEDIR,
                 "ZIP": "%s/zipped" % STATEDIR })
-server.extend('DQMLayoutAccess', None, "%s/layouts" % STATEDIR,
+server.extend('DQMLayoutAccess', None, STATEDIR,
               ['/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=lilopera/CN=692665/CN=Luis Ignacio Lopera Gonzalez',
                '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere' ])
 server.source('DQMUnknown')
 server.source('DQMOverlay')
 server.source('DQMStripChart')
 server.source('DQMArchive', "%s/ix" % STATEDIR, '^/Global/')
-server.source('DQMLayout', *LAYOUTS)
+server.source('DQMLayout')
 
 execfile(CONFIGDIR + "/dqm-services.py")
 execfile(CONFIGDIR + "/workspaces-tier-0.py")

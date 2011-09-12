@@ -45,7 +45,7 @@ server.source('DQMUnknown')
 server.source('DQMOverlay')
 server.source('DQMStripChart')
 server.source('DQMLive', "%s:9090" % COLLHOST)
-server.source('DQMLayout', *LAYOUTS)
+server.source('DQMLayout')
 
 execfile(CONFIGDIR + "/dqm-services.py")
 execfile(CONFIGDIR + "/workspaces-online.py")

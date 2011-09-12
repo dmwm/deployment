@@ -58,4 +58,7 @@ deploy_dqmgui_post()
        echo "6 */3 * * * $host $project_config/manage -q xstart afs-sync 'I did read documentation'") | acrontab
       ;;
   esac
+
+  # Trigger plugins and layouts rebuild.
+  sudo -H -u _dqmgui bashs -l -c "$project_config/manage compile 'I did read documentation'"
 }
