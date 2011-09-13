@@ -27,17 +27,13 @@ deploy_asyncstageout_post()
   # and configure replication, compaction and backup, too
   local couchdb_config=$root/current/config/couchdb
   local couchdb_state=$root/state/couchdb
-  local hour=0
 
   local couchdb_ini=$root/current/config/asyncstageout/local.ini
   perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
   cp -f $couchdb_ini $root/current/config/couchdb
 
-  for area in compaction stagingarea replication backup; do
+  for area in stagingarea replication; do 
     rm -f $couchdb_state/$area/asyncstageout
     touch $couchdb_state/$area/asyncstageout
   done
-
-  echo "couchapp push $root/current/apps/asyncstageout/AsyncTransfer http://localhost:5984/asyncstageout" >> $couchdb_state/stagingarea/asyncstageout
-  echo "1 $hour * * * $couchdb_config/manage compact asyncstageout" >> $couchdb_state/compaction/asyncstageout
 }
