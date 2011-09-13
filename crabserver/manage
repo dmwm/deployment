@@ -142,7 +142,7 @@ init_server(){
                        --output=$CONFIG_CS/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST:$COUCH_PORT \
                        --working_dir=$INSTALL_CS  \
                        --client_mapping=$CONFIG_CS/clientMapping-template.py \
                        --cs_hostname=$CS_HOSTNAME \
