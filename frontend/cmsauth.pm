@@ -949,7 +949,7 @@ sub authz_maybe_reload($)
     {
       foreach my $r (values %{$$u{ROLES}})
       {
-	splice(@$r, 0, -1, sort { $a cmp $b } @$r);
+	splice(@$r, 0, scalar @$r, sort { $a cmp $b } @$r);
       }
     }
   };
