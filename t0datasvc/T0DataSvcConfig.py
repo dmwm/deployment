@@ -22,7 +22,7 @@ config.Webtools.expires=800
   # no caching as general policy, Mott0 has special rules defined in its service  source
 config.component_('tier0')
 
-config.tier0.templates = getWMBASE() + '/templates/WMCore/WebTools'
+config.tier0.templates = getWMBASE() + '/../../templates/WMCore/WebTools'
 config.tier0.admin = 'gowdy@cern.ch'
 config.tier0.title = 'T0DataSvc'
 config.tier0.description = 'Tier-0 Data Service'
@@ -35,7 +35,7 @@ active = config.tier0.views.section_('active')
 tier0 = active.section_('tier0')
 # The class to load for this view/page
 tier0.object = 'WMCore.WebTools.RESTApi'
-tier0.templates = getWMBASE() + '/templates/WMCore/WebTools/'
+tier0.templates = getWMBASE() + '/../../templates/WMCore/WebTools'
 tier0.section_("database")
 tier0.database.connectUrl = connectURL
 
