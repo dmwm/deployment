@@ -17,6 +17,14 @@ usage()
   exit 1
 }
 
+try()
+{
+  for try in 1 2 3; do
+    (set -x; eval ${1+"$@"})
+    [ $? = 0 ] && return
+  done
+}
+
 type=dev dest=/data/current/auth/proxy
 pxparam="-x -c 720 -t 36 -s myproxy.cern.ch"
 shost=$(hostname -s | tr [:upper:]- [:lower:]_)
@@ -37,17 +45,15 @@ done
 
 [ $# = 0 ] || usage
 
-set -e
 source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
 export GT_PROXY_MODE=old
 
-set -x
 case $type in
   dev )
-    myproxy-init $pxparam -R "*/CN=$fhost" -l devvm_${shost}_$me ;;
+    try myproxy-init $pxparam -R "*/CN=$fhost" -l devvm_${shost}_$me ;;
 
   prod )
-    myproxy-init $pxparam -R "*/CN=*cms*.cern.ch" -l cmsweb_backends_$me ;;
+    try myproxy-init $pxparam -R "*/CN=*cms*.cern.ch" -l cmsweb_backends_$me ;;
 esac
-voms-proxy-init -voms cms -valid 36:00
-scp -p /tmp/x509up_u$(id -u) $dest/seed-$me.cert
+try voms-proxy-init -voms cms -valid 36:00
+try scp -p /tmp/x509up_u$(id -u) $dest/seed-$me.cert
