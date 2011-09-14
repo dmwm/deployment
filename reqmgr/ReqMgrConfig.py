@@ -19,15 +19,20 @@ elif re.match(r"^vocms127\.cern\.ch$", HOST):
 config = ReqMgrConfig.reqMgrConfig(installation=INSTALL,
   couchurl = COUCH)
 
-config.webapp_("reqmgr")
+TEMPLATES = os.path.normpath(os.path.join(INSTALL, '../../templates/WMCore/WebTools'))
+JAVASCRIPT_PATH = os.path.join(INSTALL, '../../javascript')
+HTML_PATH = os.path.join(INSTALL, '../../html')
 
-config.reqmgr.templates = os.path.normpath(os.path.join(INSTALL, '../../templates/WMCore/WebTools/RequestManager'))
-WEBTOOLSTEMPLATES= os.path.normpath(os.path.join(INSTALL, '../../templates/WMCore/WebTools'))
-HTML=os.path.normpath(os.path.join(INSTALL, '../../html/RequestManager'))
-config.reqmgr.html = HTML
-config.reqmgr.views.active.reqMgr.templates = WEBTOOLSTEMPLATES
-config.reqmgr.views.active.rest.templates = WEBTOOLSTEMPLATES
-config.reqmgr.views.active.reqMgr.html = os.path.join(INSTALL, '../../html/RequestManager')
+config.webapp_("reqmgr")
+config.reqmgr.html = os.path.join(HTML_PATH, 'RequestManager')
+config.reqmgr.templates = os.path.join(TEMPLATES, 'RequestManager')
+config.reqmgr.views.active.GlobalMonitor.templates = os.path.join(TEMPLATES, 'GlobalMonitor')
+config.reqmgr.views.active.GlobalMonitor.javascript = JAVASCRIPT_PATH
+config.reqmgr.views.active.GlobalMonitor.html = HTML_PATH
+config.reqmgr.views.active.reqMgr.html = os.path.join(HTML_PATH, 'RequestManager')
+config.reqmgr.views.active.reqMgr.templates = TEMPLATES
+config.reqmgr.views.active.rest.templates = TEMPLATES
+config.reqmgr.views.active.monitorSvc.templates = TEMPLATES
 config.reqmgr.security_roles.extend(['facops', 'FacOps'])
 
 config.component_('SecurityModule')
