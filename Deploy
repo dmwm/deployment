@@ -28,7 +28,6 @@
 MIGRATION=
 
 repoedit=n
-arch=slc5_amd64_gcc434
 now=$(date +%Y%m%d%H%M%S)
 host=$(hostname -s)
 stages="prep sw"
@@ -36,6 +35,12 @@ nogroups=true
 servicedir="$(cd $(dirname $0) && pwd)"
 cfgversion=
 privauthdir=
+
+case $(uname) in
+  Darwin ) arch=osx106_amd64_gcc421 ;;
+  Linux  ) arch=slc5_amd64_gcc434 ;;
+  *      ) echo "unsupported architecture" 1>&2; exit 1 ;;
+esac
 
 while [ $# -ge 1 ]; do
   case $1 in
@@ -52,7 +57,7 @@ while [ $# -ge 1 ]; do
   esac
 done
 
-chgrp=/bin/true chown=/bin/true chmod=/bin/true
+chgrp=true chown=true chmod=true
 $nogroups || chgrp=chgrp chown=chown chmod=chmod
 
 if [ $# -lt 1 ]; then
@@ -218,7 +223,7 @@ inrepo()
      rm -fr $swarea
      mkdir -p $swarea
      cd $swarea
-     wget -q http://cmsrep.cern.ch/cmssw/$(echo $repo | cut -d. -f1)/bootstrap.sh
+     curl -sO http://cmsrep.cern.ch/cmssw/$repo/bootstrap.sh
      sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
        setup > $PWD/bootstrap-$arch.log 2>&1
      touch .bootstrapped)
@@ -340,7 +345,7 @@ deploy_pkg()
 
   (cd $project_config_src; find . -type f -print0 |
    tar --null -T /dev/stdin -cf -) | tar -C $project_config -xvvf - \
-     --no-anchored --exclude CVS --exclude .svn --exclude .git \
+     --exclude CVS --exclude .svn --exclude .git \
      --exclude '*~' --exclude '.#*' --exclude '*.swp'
   setgroup ug+r,go-w _config $(find $project_config -type f)
 

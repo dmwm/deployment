@@ -27,7 +27,7 @@ deploy_dbsweb_sw()
    cd lib/python*/site-packages
    rm -f YUI yui WEBTOOLS
    ln -s $YUI_ROOT/build YUI
-   ln -s $YUI_ROOT yui
+   case $(uname) in Darwin ) ;; * ) ln -s $YUI_ROOT yui ;; esac
    ln -s $WEBTOOLS_ROOT/lib/python2.6/site-packages/Controllers WEBTOOLS)
 }
 

@@ -22,8 +22,6 @@ pxparam="-x -c 720 -t 36 -s myproxy.cern.ch"
 shost=$(hostname -s | tr [:upper:]- [:lower:]_)
 fhost=$(hostname -f)
 me=$(id -un)
-eval set -- $(getopt -n $0 -o ht:d: -- ${1+"$@"})
-[ $? = 0 ] || usage
 for arg; do
   case $arg in
     -t) case $2 in
