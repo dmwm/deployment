@@ -12,7 +12,7 @@ deploy_dbs_prep()
 
 deploy_dbs_sw()
 {
-  deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3 3.0.11-comp
+  deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3 3.0.11.b
 }
 
 deploy_dbs_post()
