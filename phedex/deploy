@@ -11,9 +11,9 @@ deploy_phedex_prep()
 
 deploy_phedex_sw()
 {
-  deploy_pkg -a phedex/DBParam -a phedex/DBGraph comp cms+PHEDEX-web 4.0.9
-  deploy_pkg comp cms+PHEDEX-webapp 1.1.9
   deploy_pkg comp cms+PHEDEX-datasvc 2.1.9
+  deploy_pkg comp cms+PHEDEX-webapp 1.1.9
+  deploy_pkg -a phedex/DBParam -a phedex/DBGraph comp cms+PHEDEX-web 4.0.9
 
   (set -e
    for app in PHEDEX-{web,webapp,datasvc}; do
