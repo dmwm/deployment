@@ -151,7 +151,7 @@ init_server(){
                        --sb_hostname=$SB_HOSTNAME \
                        --sb_port=$UFC_PORT \
                        --ufc_cachedir=$UFC_CACHEDIR \
-                       --ufc_service_url=https://$SB_HOSTNAME:$UFC_PORT/userfilecache/userfilecache \
+                       --ufc_service_url=http://$SB_HOSTNAME:$UFC_PORT/userfilecache/userfilecache \
                        --ufc_port=$UFC_PORT \
                        --ufc_hostname=$SB_HOSTNAME 
     inited_server;
