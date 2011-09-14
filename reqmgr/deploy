@@ -50,7 +50,7 @@ deploy_reqmgr_sw()
       deploy_pkg \
         -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
         -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        -a ReqMgrSecrets.py:reqmgr/ReqMgrSecrets${secrets}.py comp cms+reqmgr 0.7.9b-comp2
+        -a ReqMgrSecrets.py:reqmgr/ReqMgrSecrets${secrets}.py comp cms+reqmgr 0.8.3
 
       if grep -rq "replace me" $project_auth; then
         note "WARNING: replace certificates in $project_auth with real ones"
@@ -82,6 +82,9 @@ deploy_reqmgr_post()
         >> $couchdb_state/stagingarea/reqmgr
       echo "couchapp push $reqmgrapp/lib/couchapps/ConfigCache" \
            "http://localhost:5984/reqmgr_config_cache" \
+        >> $couchdb_state/stagingarea/reqmgr
+      echo "couchapp push $reqmgrapp/lib/couchapps/OpsClipboard" \
+           "http://localhost:5984/ops_clipboard" \
         >> $couchdb_state/stagingarea/reqmgr
 
       # Setup ReqMgr cronjobs
