@@ -27,7 +27,7 @@ rpclayout(dqmitems, "02-RPC_Events",
 
 #RPC Events
 rpclayout(dqmitems, "03-RPC_HV_Status",
-          [{ 'path': "RPC/DCSInfo/rpcHVStatus", 'description': rpcevents + rpclink }])
+          [{ 'path': "RPC/DCSInfo/rpcHV", 'description': rpcevents + rpclink }])
 ##-------------------
 
 

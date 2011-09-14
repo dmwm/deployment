@@ -5,8 +5,11 @@
   \\
 
 
-  $Id: HLTMuonOfflineRenderPlugin.cc,v 1.6 2011/03/24 20:13:38 klukas Exp $
+  $Id: HLTMuonOfflineRenderPlugin.cc,v 1.7 2011/09/09 11:53:42 lilopera Exp $
   $Log: HLTMuonOfflineRenderPlugin.cc,v $
+  Revision 1.7  2011/09/09 11:53:42  lilopera
+  updated render plugins to v6 of the GUI
+
   Revision 1.6  2011/03/24 20:13:38  klukas
   Updated to fit new offline DQM plots; changed efficiency plot styles
 

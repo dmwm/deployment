@@ -2,8 +2,8 @@
   \file DQMMessageLoggerRenderPlugin
   \brief Display Plugin for Quality Histograms
   \author E. Nesvold
-  \version $Revision: 1.4 $
-  \date $Date: 2010/02/03 20:45:50 $
+  \version $Revision: 1.5 $
+  \date $Date: 2011/09/09 11:53:42 $
 */
 
 #include "DQM/DQMRenderPlugin.h"

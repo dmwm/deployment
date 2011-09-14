@@ -2,8 +2,8 @@
   \file SiStripRenderPlugin
   \brief Display Plugin for SiStrip DQM Histograms
   \author S. Dutta
-  \version $Revision: 1.39 $
-  \date $Date: 2011/05/23 15:22:58 $
+  \version $Revision: 1.40 $
+  \date $Date: 2011/09/09 11:53:43 $
 */
 
 #include "DQM/DQMRenderPlugin.h"

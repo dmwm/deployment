@@ -2,8 +2,8 @@
   \File BeamRenderPlugin
   \Display Plugin for BeamSpot DQM Histograms
   \author
-  \version $Revision: 1.11 $
-  \date $Date: 2010/07/12 13:35:41 $
+  \version $Revision: 1.12 $
+  \date $Date: 2011/09/09 11:53:42 $
 */
 
 #include "DQM/DQMRenderPlugin.h"

@@ -2,8 +2,8 @@
   \file SiStripLASRenderPlugin
   \brief Display Plugin for Pixel DQM Histograms
   \author A. Perieanu
-  \version $Revision: 1.2 $
-  \date $Date: 2011/03/18 01:41:36 $
+  \version $Revision: 1.3 $
+  \date $Date: 2011/09/09 11:53:43 $
 */
 
 #include "DQM/DQMRenderPlugin.h"

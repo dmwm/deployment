@@ -14,8 +14,8 @@
  *      New render plugin for report summary map
  *
  *
- * $Date: 2011/03/11 11:05:44 $
- * $Revision: 1.11 $
+ * $Date: 2011/09/09 11:53:43 $
+ * $Revision: 1.12 $
  *
 */
 

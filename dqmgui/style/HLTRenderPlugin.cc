@@ -7,8 +7,11 @@
   \\ subdetector plugins
   \\ preDraw and postDraw methods now check whether histogram was a TH1
   \\ or TH2, and call a private method appropriate for the histogram type
-  $Id: HLTRenderPlugin.cc,v 1.21 2011/02/15 18:16:43 rekovic Exp $
+  $Id: HLTRenderPlugin.cc,v 1.22 2011/09/09 11:53:42 lilopera Exp $
   $Log: HLTRenderPlugin.cc,v $
+  Revision 1.22  2011/09/09 11:53:42  lilopera
+  updated render plugins to v6 of the GUI
+
   Revision 1.21  2011/02/15 18:16:43  rekovic
   Move up the bottom margin from 0.16 to 0.3 for FourVector Filters histograms so that the names of filters can be seen
 
