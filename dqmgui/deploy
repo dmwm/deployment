@@ -59,6 +59,10 @@ deploy_dqmgui_post()
       ;;
   esac
 
-  # Trigger plugins and layouts rebuild.
-  sudo -H -u _dqmgui bashs -l -c "$project_config/manage compile 'I did read documentation'"
+  # Trigger plugins and layouts rebuild if server is enabled.
+  [ ! -f $root/enabled/$project ] || {
+    cmd="$project_config/manage compile 'I did read documentation'"
+    $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
+    eval "$cmd"
+  }
 }
