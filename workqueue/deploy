@@ -16,7 +16,7 @@ deploy_workqueue_sw()
   deploy_pkg \
     -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-    comp cms+workqueue 0.0.18-comp
+    comp cms+workqueue 0.8.3
 
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
@@ -41,14 +41,12 @@ deploy_workqueue_post()
     touch $couchdb_state/$area/workqueue
   done
 
-  local wqapp=$root/current/apps/workqueue
-  for db in workqueue workqueue_inbox; do
-    local couch_string="${couch_url}/${db}"
-
-    # push app, clean views on startup
-    echo "couchapp push $wqapp/lib/couchapps/WorkQueue $couch_string" \
+  # push app
+  echo "$project_config/workqueue_task pushcouchapp $couch_url" \
       >> $couchdb_state/stagingarea/workqueue
 
+  for db in workqueue workqueue_inbox; do
+    # clean views on startup
     echo "$couchdb_config/manage cleanviews $db 'I did read documentation'" \
       >> $couchdb_state/stagingarea/workqueue
   done

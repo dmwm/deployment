@@ -3,11 +3,12 @@
 ##H Usage: manage ACTION [SECURITY-STRING]
 ##H
 ##H Available actions:
-##H   help               show this help
-##H   version            get current version of the service
-##H   location_refresh   refresh location info for input data
-##H   reqmgr_sync        sync with RequsetManager (get requests & report back)
-##H   housekeep          perform internal housekeeping actions
+##H   help                       show this help
+##H   version                    get current version of the service
+##H   location_refresh           refresh location info for input data
+##H   reqmgr_sync                sync with RequsetManager (get requests & report back)
+##H   housekeep                  perform internal housekeeping actions
+##H   pushcouchapp <couchdb url> push workqueue couchapp to couchdb
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/GlobalWorkQueue
@@ -28,6 +29,8 @@ AUTHDIR=$TOP/current/auth/workqueue
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 export WORKQUEUE_ROOT
+export WMCORE_ROOT=$WORKQUEUE_ROOT/lib
+export YUI_ROOT
 export WMAGENT_CONFIG=${CFGFILE}
 export WQ_CLI="${WORKQUEUE_ROOT}/bin/wmagent-workqueue"
 logcmd="rotatelogs $LOGDIR/workqueue-%Y%m%d.log 86400 2>&1"
@@ -84,6 +87,20 @@ case ${1:-status} in
     cd $STATEDIR
     add_cert
     ${WQ_CLI} -i
+    ;;
+
+  pushcouchapp )
+    url=$2
+    [ -n "$url" ] ||
+    { echo "You must specify the couchdb url"; exit 1; }
+
+    # need to use localhost interface to get admin role to allow push
+    file=$(mktemp -t $$.py) # need a .py extension (and only suffix X's are used in the template)
+    cp ${WMAGENT_CONFIG} ${file}
+    perl -p -i -e "s{config.WorkQueueManager.couchurl.*}{config.WorkQueueManager.couchurl = \"$url\"}g" ${file}
+    WMAGENT_CONFIG=${file}
+    wmagent-couchapp-init --skip-cron
+    rm -f ${file}
     ;;
 
   * )
