@@ -1,5 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_sitedb_variants="default prod preprod dev"
+deploy_sitedb_variants="default legacy prod preprod dev"
 deploy_sitedb_deps()
 {
   deploy backend
@@ -13,7 +13,13 @@ deploy_sitedb_prep()
 
 deploy_sitedb_sw()
 {
-  deploy_pkg -a sitedb/sitedb.ini -a sitedb/security.ini comp cms+sitedb 1.2.3-comp4
+  case $variant in
+    default )
+      deploy_pkg -a sitedb/SiteDBAuth.py comp cms+sitedb 2.0.0 ;;
+    * )
+      deploy_pkg -a sitedb/sitedb.ini -a sitedb/security.ini -a sitedb/SiteDBAuth.py \
+        comp cms+sitedb 2.0.0 ;;
+  esac
 }
 
 deploy_sitedb_post()
@@ -27,23 +33,24 @@ deploy_sitedb_post()
 
 deploy_sitedb_auth()
 {
-  local certs
-  if [ -r $root/certs/hostcert.pem ]; then
-    certs=$root/certs
-  elif [ -r /data/certs/hostcert.pem ]; then
-    certs=/data/certs
-  else
-    note "ERROR: cannot find hostcert to use"
-    exit 1
-  fi
-
   case $1 in
     */security.ini )
       echo "[database]"
       echo "dbtype = oracle"
-      echo "dbname = oracle://FOO:BAR@ZOINKS" ;;
+      echo "dbname = oracle://FOO:BAR@ZOINKS"
+      ;;
 
     */sitedb.ini )
+      local certs
+      if [ -r $root/certs/hostcert.pem ]; then
+        certs=$root/certs
+      elif [ -r /data/certs/hostcert.pem ]; then
+        certs=/data/certs
+      else
+        note "ERROR: cannot find hostcert to use for legacy server"
+        exit 1
+      fi
+
       echo "[endpoint]"
       echo "phedex = http://cmsweb.cern.ch/phedex/prod/Request::Create?dest="
       echo "dbs = https://cmsweb.cern.ch/dbs_discovery/getData?dbsInst=cms_dbs_prod_global&proc=&ajax=0&userMode=user&group=*&tier=*&app=*&site="
@@ -67,5 +74,65 @@ deploy_sitedb_auth()
           echo "basepath = https://$(hostname -f)/sitedb" ;;
       esac
       ;;
+
+    */SiteDBAuth.py)
+      cat <<- \EOF
+	import cx_Oracle as DB
+	import socket
+
+	fqdn = socket.getfqdn().lower()
+	def pool(user, password, database, min, max, increment, timeout):
+	  p = DB.SessionPool(user, password, database, min, max, increment)
+	  p.timeout = timeout
+	  return p
+
+	def dbparam(nthreads):
+	  return { 'prod':
+		   { 'GET':
+		     { 'type': DB,
+		       'trace': False,
+		       'schema': "cms_sitedb",
+		       'clientid': "sitedb-web@%s" % fqdn,
+		       'liveness': "select sysdate from dual",
+		       'pool': pool(user = "cms_sitedb_reader_fixme",
+			            password = "FIXME",
+			            database = "cms_sitedb",
+			            min = min(1, nthreads),
+			            max = 2 + nthreads,
+			            increment = 2,
+			            timeout = 300) },
+
+		     '*':
+		     { 'type': DB,
+		       'trace': False,
+		       'schema': "cms_sitedb",
+		       'clientid': "sitedb-web@%s" % fqdn,
+		       'liveness': "select sysdate from dual",
+		       'pool': pool(user = "cms_sitedb_writer_fixme",
+			            password = "FIXME",
+			            database = "cms_sitedb",
+			            min = min(1, nthreads),
+			            max = nthreads,
+			            increment = 1,
+			            timeout = 60) } },
+
+		   'dev':
+		   { '*':
+		     { 'type': DB,
+		       'trace': False,
+		       'schema': "cms_sitedb",
+		       'clientid': "sitedb-web@%s" % fqdn,
+		       'liveness': "select sysdate from dual",
+		       'pool': pool(user = "cms_sitedb_dev_fixme",
+			            password = "FIXME",
+			            database = "cms_sitedb",
+			            min = min(1, nthreads),
+			            max = 2 + nthreads,
+			            increment = 1,
+			            timeout = 60) }
+		   }
+	       }
+EOF
+    ;;
   esac
 }
