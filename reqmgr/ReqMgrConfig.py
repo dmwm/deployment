@@ -20,8 +20,8 @@ config = ReqMgrConfig.reqMgrConfig(installation=INSTALL,
   couchurl = COUCH)
 
 TEMPLATES = os.path.normpath(os.path.join(INSTALL, '../../templates/WMCore/WebTools'))
-JAVASCRIPT_PATH = os.path.join(INSTALL, '../../javascript')
-HTML_PATH = os.path.join(INSTALL, '../../html')
+JAVASCRIPT_PATH = os.path.normpath(os.path.join(INSTALL, '../../javascript'))
+HTML_PATH = os.path.normpath(os.path.join(INSTALL, '../../html'))
 
 config.webapp_("reqmgr")
 config.reqmgr.html = os.path.join(HTML_PATH, 'RequestManager')
@@ -33,6 +33,7 @@ config.reqmgr.views.active.reqMgr.html = os.path.join(HTML_PATH, 'RequestManager
 config.reqmgr.views.active.reqMgr.templates = TEMPLATES
 config.reqmgr.views.active.rest.templates = TEMPLATES
 config.reqmgr.views.active.monitorSvc.templates = TEMPLATES
+config.reqmgr.views.active.monitorSvc.serviceURL = "https://%s/reqmgr/rest" % HOST
 config.reqmgr.security_roles.extend(['facops', 'FacOps'])
 
 config.component_('SecurityModule')
