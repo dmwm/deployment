@@ -11,7 +11,7 @@ deploy_t0mon_prep()
 
 deploy_t0mon_sw()
 {
-  deploy_pkg comp cms+T0Mon 4.2.11-comp4
+  deploy_pkg comp cms+T0Mon 4.2.11-comp5
 }
 
 deploy_t0mon_post()
