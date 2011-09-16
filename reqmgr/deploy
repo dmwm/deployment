@@ -86,6 +86,9 @@ deploy_reqmgr_post()
       echo "couchapp push $reqmgrapp/lib/couchapps/OpsClipboard" \
            "http://localhost:5984/ops_clipboard" \
         >> $couchdb_state/stagingarea/reqmgr
+      echo "couchapp push $reqmgrapp/lib/couchapps/WorkloadSummary" \
+           "http://localhost:5984/workloadsummary" \
+        >> $couchdb_state/stagingarea/reqmgr
 
       # Setup ReqMgr cronjobs
       (mkcrontab
