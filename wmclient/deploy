@@ -6,7 +6,7 @@ deploy_wmclient_prep()
 
 deploy_wmclient_sw()
 {
-  WMCORE_VERSION="0.7.5"
+  WMCORE_VERSION="0.8.4"
   deploy_pkg comp cms+wmcore $WMCORE_VERSION
 }
 
@@ -15,7 +15,7 @@ deploy_wmclient_post(){
   local wmclient_root=$root/current/etc
   mkdir -p $wmclient_root
   local wmclient_setup=$wmclient_root/wmclient.sh
-  local wmclient_setup_csh=$wmclient_root/wmclient.csh
+
 
   echo '#!/bin/bash' > $wmclient_setup
   echo "THIS_SCRIPT=$wmclient_setup" >> $wmclient_setup
@@ -29,12 +29,8 @@ export PATH=$PATH:$PROJ_DIR/apps/wmcore/bin
 
 EOF
 
-  echo '#!/bin/tcsh' > $wmclient_setup_csh
-  echo '/bin/bash'   >> $wmclient_setup_csh
-  echo " . $wmclient_setup " >> $wmclient_setup_csh
-
    chmod +x $wmclient_setup
-   chmod +x $wmclient_setup_csh
 
-   echo "Post";
+
+
 }
