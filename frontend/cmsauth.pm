@@ -380,8 +380,8 @@ sub auth_hnlogin_handler : method
   my $csrf_value = sprintf("r%xu%xs%x#%s%s%s", (map { length $_ } @csrf), @csrf);
   my $is_valid_submission
     = ($r->method() eq 'POST'
-       && $form_service =~ m{^/([-a-z0-9]+(/.*)?)?$}
-       && $url_service =~ m{^/([-a-z0-9]+(/.*)?)?$}
+       && $form_service =~ m{^/([-a-z0-9_]+(/.*)?)?$}
+       && $url_service =~ m{^/([-a-z0-9_]+(/.*)?)?$}
        && $form_account =~ m{^[a-z0-9]+(?:\.nocern|\.notcms)?$}
        && $form_passwd ne ''
        && $form_token =~ m{^[0-9a-f]{40}$}
