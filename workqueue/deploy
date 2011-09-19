@@ -16,7 +16,7 @@ deploy_workqueue_sw()
   deploy_pkg \
     -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-    comp cms+workqueue 0.8.3
+    comp cms+workqueue 0.8.5
 
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
