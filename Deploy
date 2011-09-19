@@ -319,6 +319,11 @@ deploy_pkg()
      apt-get -y install $pkg+$ver)
     [ $? = 0 ]
 
+    (set -e
+     inrepo $repo $swarea
+     apt-get clean)
+    [ $? = 0 ]
+
     # Fix privs dropped by apt/rpm
     setgroup ug+rw,o-w _sw $swarea
     if $nogroups; then :; else
