@@ -17,7 +17,8 @@ deploy_wmagent_sw()
 
 
   # need to link in wmcore codebase for binaries etc
-  ln -s $root/current/sw/$SCRAM_ARCH/cms/wmcore/$AGENT_VERSION $root/current/apps/wmcore
+  link=$(ls -d $root/current/*/*/*/wmcore/${project_version_override:-$AGENT_VERSION})
+  ln -s ${link} $root/current/apps/wmcore
 
   mkdir -p $root/current/install/wmagent
   mkdir -p $root/current/install/reqmgr
