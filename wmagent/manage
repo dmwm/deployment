@@ -481,12 +481,9 @@ init_couch_pre(){
     perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
     if [ "x$COUCH_CERT_FILE" != "x" ] && [ "x$COUCH_KEY_FILE" != "x" ]; then
       mkdir -p $INSTALL_COUCH/certs
-      perl -p -i -e "s{;cert_file =}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
-      perl -p -i -e "s{;key_file =}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
-      # Assume a proxy if key == cert, need cacert_file if using a proxy
-      if [ "x$COUCH_CERT_FILE" == "x$COUCH_KEY_FILE" ]; then
-        perl -p -i -e "s{;cacert_file =}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
-      fi
+      perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+      perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
+      perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
       ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
       ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
     fi
