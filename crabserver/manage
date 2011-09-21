@@ -8,19 +8,15 @@ PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
 ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
 
 INSTALL_CS="$ROOT_DIR/install/crabserver"
+INSTALL_AS="$ROOT_DIR/install/asyncstageout"
 
 CONFIG_CS="$ROOT_DIR/config/crabserver"
+
 USING_CS=0
+USING_AS=0
 
 CS_INIT_DONE=0
-
-REQMGR_HOSTNAME=
-REQMGR_PORT=8687
-
-GLOBAL_WORKQUEUE_HOSTNAME=
-GLOBAL_WORKQUEUE_PORT=9996
-
-LOCAL_WORKQUEUE_PORT=9997
+AS_INIT_DONE=0
 
 CS_HOSTNAME=
 CS_PORT=8888
@@ -28,11 +24,13 @@ CS_PORT=8888
 MYSQL_DATABASE_RM=reqmgr
 INSTALL_MYSQL="$ROOT_DIR/install/mysql"
 
+COUCH_HOST_NAME=`hostname`
 
 #
 # Init checks
 #
 if [ -e $INSTALL_CS/.using ]; then USING_CS=1; else USING_CS=0; fi;
+if [ -e $INSTALL_AS/.using ]; then USING_AS=1; else USING_AS=0; fi;
 
 # Flags to show the tools have been initialised
 if [ -e $INSTALL_CS/.init ]; then CS_INIT_DONE=1; else CS_INIT_DONE=0; fi;
@@ -47,6 +45,11 @@ activate_crabserver(){
     $PROJ_DIR/wmagent/manage activate-workqueue
 }
 
+activate_asyncstageout(){
+    touch $INSTALL_AS/.using
+    $PROJ_DIR/asyncstageout/manage activate-asyncstageout
+}
+
 inited_server(){
     touch $INSTALL_CS/.init
 }
@@ -58,8 +61,8 @@ inited_server(){
 . $ROOT_DIR/apps/crab-server3/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
+. $ROOT_DIR/apps/asyncstageout/etc/profile.d/init.sh
 
-export CRABSERVER_ROOT=$ROOT_DIR/apps/crab-server3
 export WMCORE_ROOT=$ROOT_DIR/apps/wmcore
 
 load_secrets_file(){
@@ -132,7 +135,6 @@ load_secrets_file(){
         SB_HOSTNAME=$MATCH_SB_HOSTNAME;
     fi
 
-
 }
 
 init_server(){
@@ -142,7 +144,7 @@ init_server(){
                        --output=$CONFIG_CS/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST:$COUCH_PORT \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --working_dir=$INSTALL_CS  \
                        --client_mapping=$CONFIG_CS/clientMapping-template.py \
                        --cs_hostname=$CS_HOSTNAME \
@@ -161,43 +163,80 @@ init_server(){
 #
 init_crabserver(){
 
-    $PROJ_DIR/wmagent/manage init-agent
 
-    if [ $CS_INIT_DONE -eq 0 ]; then
-        echo "Initialising server..."
-        init_server;
+    if [ $USING_CS -eq 1 ]; then
+        if [ $CS_INIT_DONE -eq 0 ]; then
+            echo "Initialising server..."
+            init_server;
+            $PROJ_DIR/wmagent/manage init-agent
+        fi
+    fi
+
+    if [ $USING_AS -eq 1 ]; then
+        if [ $AS_INIT_DONE -eq 0 ]; then
+            echo "Initialising Agent..."
+            $PROJ_DIR/asyncstageout/manage init-asyncstageout
+        fi
+    fi
+
+}
+
+status(){
+    if [ $USING_CS -eq 1 ]; then
+        echo "Status of CRABServer:"
+        wmcoreD --status --config=$CONFIG_CS/config.py
+        $PROJ_DIR/wmagent/manage status
+    fi
+    if [ $USING_AS -eq 1 ]; then
+        $PROJ_DIR/asyncstageout/manage status
     fi
 }
 
-
-
-status(){
-    wmcoreD --status --config=$CONFIG_CS/config.py
-    $PROJ_DIR/wmagent/manage status
-}
-
 start_services(){
-    $PROJ_DIR/wmagent/manage start-services
+    if [ $USING_CS -eq 1 ]; then
+        echo "Starting CRABServer services:"
+        $PROJ_DIR/wmagent/manage start-services
+    fi
+#    if [ $USING_AS -eq 1 ]; then
+#        echo "Starting AsyncStageOut services:"
+#        $PROJ_DIR/asyncstageout/manage start-services
+#    fi
 }
 
 start_crabserver(){
-    $PROJ_DIR/wmagent/manage start-agent
-    init_crabserver;
-    wmcoreD --start --config=$CONFIG_CS/config.py
+    if [ $USING_CS -eq 1 ]; then
+        $PROJ_DIR/wmagent/manage start-agent
+        init_crabserver;
+        wmcoreD --start --config=$CONFIG_CS/config.py
+    fi
+    if [ $USING_AS -eq 1 ]; then
+        $PROJ_DIR/asyncstageout/manage start-asyncstageout
+    fi  
 }
 
 stop_crabserver(){
-    wmcoreD --shutdown --config=$CONFIG_CS/config.py;
-
-    $PROJ_DIR/wmagent/manage stop-agent
+    if [ $USING_CS -eq 1 ]; then
+        wmcoreD --shutdown --config=$CONFIG_CS/config.py;
+        $PROJ_DIR/wmagent/manage stop-agent
+    fi
+    if [ $USING_AS -eq 1 ]; then
+        $PROJ_DIR/asyncstageout/manage stop-asyncstageout
+    fi
 }
 
 stop_services(){
-    $PROJ_DIR/wmagent/manage stop-services
+    if [ $USING_CS -eq 1 ]; then
+        echo "Stop CRABServer services:"
+        $PROJ_DIR/wmagent/manage stop-services
+    fi
+#    if [ $USING_AS -eq 1 ]; then
+#        echo "Stop AsyncStageOut services:"
+#        $PROJ_DIR/asyncstageout/manage stop-services
+#    fi
 }
 
 help(){
-    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
+    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/CRABServerManagement";
 }
 
 execute_command_crabserver(){
@@ -230,6 +269,15 @@ execute_reqmgr(){
     $PROJ_DIR/wmagent/manage  execute-reqmgr $@
 }
 
+execute_asyncstageout(){
+    shift;
+    $PROJ_DIR/asyncstageout/manage  execute-asyncstageout $@
+}
+
+mysql_prompt(){
+    shift;
+    $PROJ_DIR/wmagent/manage mysql-prompt $@
+}
 
 clean_mysql(){
     $PROJ_DIR/wmagent/manage clean-mysql
@@ -239,20 +287,41 @@ clean_couch(){
     $PROJ_DIR/wmagent/manage clean-couch
 }
 
+start_mysql(){
+    $PROJ_DIR/wmagent/manage start-mysql
+}
+
+start_couch(){
+    $PROJ_DIR/wmagent/manage start-couch
+}
+
+stop_mysql(){
+    $PROJ_DIR/wmagent/manage stop-mysql
+}
+
+stop_couch(){
+    $PROJ_DIR/wmagent/manage stop-couch
+}
+
 clean_crabserver(){
-    $PROJ_DIR/wmagent/manage clean-agent
-    load_secrets_file;
-    echo "Cleaning CRABInterface..."
-    rm -rf $INSTALL_CS/*
-    rm -f $CONFIG_CS/config.py;
-    rm -f $INSTALL_CS/.init
+    if [ $USING_CS -eq 1 ]; then
+        $PROJ_DIR/wmagent/manage clean-agent
+        load_secrets_file;
+        echo "Cleaning CRABInterface..."
+        rm -rf $INSTALL_CS/*
+        rm -f $CONFIG_CS/config.py;
+        rm -f $INSTALL_CS/.init
+    fi 
+    if [ $USING_AS -eq 1 ]; then
+        $PROJ_DIR/asyncstageout/manage clean-asyncstageout
+    fi 
+
 }
 clean_all(){
     clean_mysql;
     clean_couch;
     clean_crabserver;
 }
-
 
 #######################################################
 # Main
@@ -265,10 +334,22 @@ case $1 in
      init_crabserver;;
   activate-crabserver)
     activate_crabserver;;
+  activate-asyncstageout)
+    activate_asyncstageout;;
   start-services)
     start_services;;
   start-crabserver)
     start_crabserver;;
+  start-mysql)
+    start_mysql;;
+  start-couch)
+    start_couch;;
+  mysql-prompt) 
+     mysql_prompt $@;; 
+  stop-mysql)
+    stop_mysql;;
+  stop-couch)
+    stop_couch;;
   stop-crabserver)
     stop_crabserver;;
   stop-services)
@@ -289,10 +370,13 @@ case $1 in
     execute_workqueue $@;;
   execute-reqmgr)
     execute_reqmgr $@;;
+  execute-asyncstageout)
+    execute_asyncstageout $@;;
   help)
     help ;;
   version)
-    echo "Management script for CRABServer. No idea what version, at least 2 though" ;;
+    echo "Management script for CRABServer version 3" ;;
   * )
-    $PROJ_DIR/wmagent/manage $1;;
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1 ;;
 esac

@@ -47,21 +47,22 @@ inited_couch(){
 # Passwords/Secrets handling
 #
 load_secrets_file(){
-    if [ "x$ASYNC_SECRETS_LOCATION" == "x" ]; then
-        ASYNC_SECRETS_LOCATION=$HOME/Async.secrets;
+    if [ "x$WMAGENT_SECRETS_LOCATION" == "x" ]; then
+        WMAGENT_SECRETS_LOCATION=$HOME/WMAgent.secrets;
     fi
-    if [ ! -e $ASYNC_SECRETS_LOCATION ]; then
-        echo "Password file: $ASYNC_SECRETS_LOCATION does not exist"
-        echo "Either set ASYNC_SECRETS_LOCATION to a valid file or check that $HOME/Async.secrets exists"
+    if [ ! -e $WMAGENT_SECRETS_LOCATION ]; then
+        echo "Password file: $WMAGENT_SECRETS_LOCATION does not exist"
+        echo "Either set WMAGENT_SECRETS_LOCATION to a valid file or check that $HOME/WMagent.secrets exists"
         exit 1;
     fi
 
-    local MATCH_COUCH_USER=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
-    local MATCH_COUCH_PASS=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
-    local MATCH_COUCH_HOST=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
-    local MATCH_COUCH_PORT=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
-    local MATCH_COUCH_CERT_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
-    local MATCH_COUCH_KEY_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
+    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
+    local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
+    local MATCH_HOST_DN=`cat $WMAGENT_SECRETS_LOCATION     | grep HOST_DN       | sed s/HOST_DN=//`
 
     if [ "x$MATCH_COUCH_USER" == "x" ]; then
         COUCH_USER=asynccouch;
@@ -92,6 +93,10 @@ load_secrets_file(){
     elif [ ! "x${X509_USER_KEY:-$X509_USER_PROXY}" == "x" ]; then
         COUCH_KEY_FILE=${X509_USER_KEY:-$X509_USER_PROXY};
     fi
+    if [ ! "x$MATCH_HOST_DN" == "x" ]; then
+        HOST_DN=$MATCH_HOST_DN;
+    fi
+
 }
 
 print_settings(){
@@ -104,7 +109,6 @@ print_settings(){
     echo "COUCH_PORT=               $COUCH_PORT                 "
 
 }
-
 
 #
 # Environment
@@ -211,18 +215,24 @@ stop_services(){
     stop_couch;
 }
 
-
-
 init_async(){
     load_secrets_file;
+    wmagent-mod-config --input=$CONFIG_AS/config-template.py \
+                       --output=$CONFIG_AS/config.py \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --working_dir=$INSTALL_AS \
+                       --host_dn=$HOST_DN \
+
     export ASYNC_CONFIG=$CONFIG_AS/config.py
+
     couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/AsyncTransfer/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
     couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/monitor/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
     couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/stat http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_stat
     couchapp push $ROOT_DIR/apps/asyncstageout/lib/couchapps/Agent http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_agent
-    unset ASYNC_CONFIG
-    inited_asyncstageout;
 
+    unset ASYNC_CONFIG
+
+    inited_asyncstageout;
 }
 
 #
@@ -253,6 +263,21 @@ status_of_asyncstageout(){
     wmcoreD --status --config=$CONFIG_AS/config.py
 }
 
+execute_command_asyncstageout(){
+    shift;
+    local RUNTHIS=$1
+    local ASYNCSTAGEOUT_BIN_DIR=$ROOT_DIR/apps/asyncstageout/bin
+    if [ ! -e $ASYNCSTAGEOUT_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in asyncstageout/bin"
+        exit 1
+    fi
+    shift;
+    load_secrets_file;
+    export WMAGENT_CONFIG=$CONFIG_AS/config.py
+    echo "Executing $RUNTHIS $@ ..."
+    $RUNTHIS $@;
+}
+
 
 #
 # revert async back to pre initialised state & wipe out
@@ -273,8 +298,6 @@ status(){
     load_secrets_file;
     status_of_couch;
     status_of_asyncstageout;
-
-
 }
 
 clean_all(){
@@ -282,6 +305,9 @@ clean_all(){
     clean_asyncstageout;
 }
 
+help(){
+    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/AsyncStageOutManagement";
+}
 #######################################################
 # Main
 #######################################################
@@ -292,9 +318,9 @@ case $1 in
   activate-asyncstageout)
     activate_asyncstageout;;
   start-services)
-    start_services;;
+     start_services;;
   stop-services)
-    stop_services;;
+     stop_services;;
   start-couch)
      start_couch;;
   stop-couch)
@@ -311,5 +337,11 @@ case $1 in
      clean_asyncstageout;;
   clean-all)
      clean_all;;
-  execute-agent)
+  execute-asyncstageout)
+     execute_command_asyncstageout $@;;
+  version) 
+    echo "Management script for AsyncStageOut version 0" ;; 
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1 ;;
 esac

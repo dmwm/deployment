@@ -2,6 +2,7 @@
 deploy_crabserver_deps()
 {
   deploy wmagent
+  deploy asyncstageout
 }
 
 deploy_crabserver_prep()
@@ -11,7 +12,7 @@ deploy_crabserver_prep()
 
 deploy_crabserver_sw()
 {
-  SERVER_VERSION="3.0.0"
+  SERVER_VERSION="3.0.2"
 
   deploy_pkg comp cms+crab-server3 $SERVER_VERSION
 

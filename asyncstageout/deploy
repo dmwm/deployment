@@ -11,13 +11,13 @@ deploy_asyncstageout_prep()
 
 deploy_asyncstageout_sw()
 {
-  deploy_pkg comp.pre  cms+asyncstageout test_tag1
+  ASYNCSTAGEOUT_VERSION="0.0.1"
+  deploy_pkg comp  cms+asyncstageout $ASYNCSTAGEOUT_VERSION
 }
 
 deploy_asyncstageout_post()
 {
 
-  mkdir -p $root/current/install/mysql
   mkdir -p $root/current/install/couchdb
 
   mkdir -p $root/current/install/asyncstageout
