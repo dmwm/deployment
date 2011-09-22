@@ -58,10 +58,10 @@ inited_server(){
 # Environment
 #
 
+. $ROOT_DIR/apps/asyncstageout/etc/profile.d/init.sh
 . $ROOT_DIR/apps/crab-server3/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
-. $ROOT_DIR/apps/asyncstageout/etc/profile.d/init.sh
 
 export WMCORE_ROOT=$ROOT_DIR/apps/wmcore
 
