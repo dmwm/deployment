@@ -1,3 +1,6 @@
+import thread
+thread.stack_size(128*1024)
+
 import socket
 import re
 import WMCore.HTTPFrontEnd.RequestManager.ReqMgrConfiguration as ReqMgrConfig
@@ -40,5 +43,6 @@ config.component_('SecurityModule')
 config.SecurityModule.key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 #config.Webtools.environment = 'development'
 config.Webtools.proxy_base = 'True'
+config.Webtools.thread_pool = 30
 config.Webtools.environment = 'production'
 
