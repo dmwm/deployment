@@ -17,7 +17,7 @@ HOST = "cmsweb-dev.cern.ch"
 REQMGR = "https://cmsweb-dev.cern.ch/reqmgr/reqMgr"
 COUCH = "https://cmsweb-dev.cern.ch/couchdb"
 TEAMS = 'TestTeam'
-WEBURL = "https://cmsweb-dev.cern.ch/workqueue"
+WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 
 
 root = __file__.rsplit('/', 4)[0]
