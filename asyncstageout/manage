@@ -223,14 +223,11 @@ init_async(){
                        --working_dir=$INSTALL_AS \
                        --host_dn=$HOST_DN \
 
-    export ASYNC_CONFIG=$CONFIG_AS/config.py
-
-    couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/AsyncTransfer/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
-    couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/monitor/ http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer
-    couchapp push $ROOT_DIR/apps/asyncstageout/couchapp/stat http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_stat
-    couchapp push $ROOT_DIR/apps/asyncstageout/lib/couchapps/Agent http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT/asynctransfer_agent
-
-    unset ASYNC_CONFIG
+    export WMAGENT_CONFIG=$CONFIG_AS/config.py
+    export ASYNC_ROOT=$ROOT_DIR/apps/asyncstageout
+    wmagent-couchapp-init;
+    unset ASYNC_ROOT
+    unset WMAGENT_CONFIG
 
     inited_asyncstageout;
 }
@@ -339,8 +336,8 @@ case $1 in
      clean_all;;
   execute-asyncstageout)
      execute_command_asyncstageout $@;;
-  version) 
-    echo "Management script for AsyncStageOut version 0" ;; 
+  version)
+    echo "Management script for AsyncStageOut version 0" ;;
   * )
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
     exit 1 ;;
