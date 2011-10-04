@@ -39,7 +39,7 @@ privauthdir=
 
 case $(uname) in
   Darwin ) arch=osx106_amd64_gcc461 ;;
-  Linux  ) arch=slc5_amd64_gcc434 ;;
+  Linux  ) arch=slc5_amd64_gcc461 ;;
   *      ) echo "unsupported architecture" 1>&2; exit 1 ;;
 esac
 
