@@ -274,19 +274,13 @@ void CSC_TPE_hAll::draw(TH3*& me) {
     int mode=k;
     for(int i=0; i<36; i++) {
       for(int j=0; j<18; j++) {
-	bool red_pass=false;
-	for(int redi=0; redi<6; redi++) {
-	  if(den[redi][i][j]!=0) red_pass=true;
-	}
 	int ij=j;
 	int ix=i;
 	if(j<9) ij=9+j;
 	else {
 	  ij=17-j;
 	}
-	int m=1;
 	if(ij==1 || ij==3 || ij==5 || ij==12 || ij==14 || ij==16)  {
-	  m=2;
 	  if(i>=18) continue;
 	}
 
@@ -385,9 +379,7 @@ void CSC_TPE_hAll::draw(TH3*& me) {
 	else {
 	  ij=17-j;
 	}
-	int m=1;
 	if(ij==1 || ij==3 || ij==5 || ij==12 || ij==14 || ij==16)  {
-	  m=2;
 	  if(i>=18) continue;
 	}
 	int _num1=num[k][i][j];

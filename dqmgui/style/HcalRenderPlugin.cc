@@ -1039,8 +1039,6 @@ private:
 
     std::string name = o.name.substr(o.name.rfind("/")+1);
 
-    bool foundfirst=false;
-    int firstnonzerobin=1;
     int lastnonzerobin=1;
 
     if( (o.name.find("DeadCellMonitor_Hcal/TotalDeadCells_HCAL_vs_LS") !=std::string::npos) ||
@@ -1051,11 +1049,6 @@ private:
 	//Search for the last deadcell count
 	for (int i=1;i<=obj->GetNbinsX();++i)
 	  {
-	    if (foundfirst==false && obj->GetBinContent(i)!=0)
-	      {
-		foundfirst=true;
-		firstnonzerobin=i;
-	      }
 	    if (obj->GetBinContent(i)!=0)
 	      lastnonzerobin=i+1;
 	  }
