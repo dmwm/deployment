@@ -5,6 +5,7 @@
 ##H Deploy one or more SERVICEs into the ROOT directory.
 ##H
 ##H Possible options:
+##H  -A ARCH        Install platform ARCH instead of the default one.
 ##H  -M             Activate $MIGRATION commands.
 ##H  -a             Activate production installation under multiple accounts.
 ##H  -r A=B         Use repository B instead of A (e.g. comp=comp.pre).
@@ -44,6 +45,7 @@ esac
 
 while [ $# -ge 1 ]; do
   case $1 in
+    -A ) arch="$2"; shift; shift ;;
     -M ) MIGRATION=true; shift ;;
     -a ) nogroups=false; shift ;;
     -r ) repoedit="s/${2%=*}/${2#*=}/; $repoedit"; shift; shift ;;
