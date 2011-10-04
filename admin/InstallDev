@@ -1,11 +1,11 @@
 #!/bin/sh
 
 ### Usage: InstallDev -h
-### Usage: InstallDev [-d DIR] -s image -v VER -p PKGS [-r A=B] [-a AUTH]
-### Usage: InstallDev [-d DIR] -s post[:HOST] -v VER -p PKGS
-### Usage: InstallDev [-d DIR] -s status[:what]
-### Usage: InstallDev [-d DIR] -s start[:what]
-### Usage: InstallDev [-d DIR] -s stop[:what]
+### Usage: InstallDev [-A arch] [-d DIR] -s image -v VER -p PKGS [-r A=B] [-a AUTH]
+### Usage: InstallDev [-A arch] [-d DIR] -s post[:HOST] -v VER -p PKGS
+### Usage: InstallDev [-A arch] [-d DIR] -s status[:what]
+### Usage: InstallDev [-A arch] [-d DIR] -s start[:what]
+### Usage: InstallDev [-A arch] [-d DIR] -s stop[:what]
 
 usage()
 {
@@ -19,10 +19,11 @@ help()
   exit 0
 }
 
-STAGE= VER= REPO= ACFG= PKGS=
+STAGE= VER= REPO= ACFG= PKGS= ARCH=
 for arg; do
   case $arg in
     -d) cd "$2" || exit $?; shift; shift ;;
+    -A) ARCH="-A $2"; shift; shift ;;
     -s) STAGE="$2"; shift; shift ;;
     -v) VER="$2"; shift; shift ;;
     -r) REPO="-r $2"; shift; shift ;;
@@ -57,15 +58,15 @@ esac
 case $STAGE in
   image )
     set -ex
-    $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD $PKGS
+    $PWD/cfg/Deploy $ARCH $ACFG -t $VER -a -s prep $PWD $PKGS
     $PWD/cfg/admin/ProxySeed -t dev -d $PWD/$VER/auth/proxy
-    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD $PKGS"
-    $PWD/cfg/Deploy $REPO -t $VER -a -s post $PWD $PKGS
+    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ARCH $ACFG $REPO -t $VER -a -s sw $PWD $PKGS"
+    $PWD/cfg/Deploy $ARCH $REPO -t $VER -a -s post $PWD $PKGS
     ;;
 
   post )
     set -ex
-    $PWD/cfg/Deploy -H $WHAT $REPO -t $VER -a -s post $PWD $PKGS
+    $PWD/cfg/Deploy $ARCH -H $WHAT $REPO -t $VER -a -s post $PWD $PKGS
     ;;
 
   start | status | stop )

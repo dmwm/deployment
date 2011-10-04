@@ -1,26 +1,26 @@
 #!/bin/sh
 
 ### Usage: InstallProd -h
-### Usage: InstallProd [-d DIR] -x PROD -s image -v VER -p PKGS -u PXUSER [-r A=B] [-a AUTH]
-### Usage: InstallProd [-d DIR] -x PROD -s kstart
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:maintenance -u USER
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s dnswait:ALIAS
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s shutdown
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s checkprocs
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s backup:save
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sysprep:{image|backend|frontend}
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s sync -v VER
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s backup:restore
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s post -v VER -p PKGS
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s migrate -p PKGS
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s reboot
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s status[:what]
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s start[:what]
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s stop[:what]
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s check -v VER
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:check
-### Usage: InstallProd [-d DIR] -x PROD -t HOSTS -s state:production -u USER
-### Usage: InstallProd [-d DIR] -x PROD -s kstop
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -s image -v VER -p PKGS -u PXUSER [-r A=B] [-a AUTH]
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -s kstart
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s state:maintenance -u USER
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s dnswait:ALIAS
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s shutdown
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s checkprocs
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s backup:save
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s sysprep:{image|backend|frontend}
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s sync -v VER
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s backup:restore
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s post -v VER -p PKGS
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s migrate -p PKGS
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s reboot
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s status[:what]
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s start[:what]
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s stop[:what]
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s check -v VER
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s state:check
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -t HOSTS -s state:production -u USER
+### Usage: InstallProd [-A arch] [-d DIR] -x PROD -s kstop
 
 usage()
 {
@@ -46,12 +46,13 @@ confirm()
   esac
 }
 
-STAGE= VER= REPO= ACFG= PKGS= HOSTS= PXUSER= STEM=
+STAGE= VER= REPO= ACFG= PKGS= HOSTS= PXUSER= STEM= ARCH=
 eval set -- $(getopt -n $0 -o hs:d:v:r:a:p:t:u:x: -- ${1+"$@"})
 [ $? = 0 ] || usage
 for arg; do
   case $arg in
     -d) cd "$2" || exit $?; shift; shift ;;
+    -A) ARCH="-A $2"; shift; shift ;;
     -t) HOSTS="$2"; shift; shift ;;
     -s) STAGE="$2"; shift; shift ;;
     -v) VER="$2"; shift; shift ;;
@@ -133,12 +134,12 @@ case $STAGE in
     rm -f srv
     ln -s srv-$STEM srv
     mkdir -p srv-$STEM
-    $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD/srv $PKGS
+    $PWD/cfg/Deploy $ARCH $ACFG -t $VER -a -s prep $PWD/srv $PKGS
     case $VER in hg* | be* )
       ssh -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed \
         -t prod -d cmsweb@$(hostname -f):$PWD/srv/$VER/auth/proxy ;;
     esac
-    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS"
+    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ARCH $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS"
     ;;
 
   kstart | kstop )
@@ -258,7 +259,7 @@ case $STAGE in
       rsync -zavmH --delete --delete-excluded --exclude .svn $PWD/cfg/ cmsweb@$host:/tmp/foo/
       (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
        echo "cd /tmp/foo"
-       echo "./Deploy -t dummy -s post \$PWD system/$WHAT"
+       echo "./Deploy $ARCH -t dummy -s post \$PWD system/$WHAT"
        echo "cat /tmp/foo/.deploy/*"
        echo "rm -rf /tmp/foo"
        echo "exit 0") |
@@ -326,7 +327,7 @@ case $STAGE in
     set -e
     for host in $HOSTS; do
       (echo "exec 2>&1; set -ex; hostname -f; cd $PWD; klist -s"
-       echo "\$PWD/cfg/Deploy $REPO -t $VER -a -s post $PWD/srv $PKGS") |
+       echo "\$PWD/cfg/Deploy $ARCH $REPO -t $VER -a -s post $PWD/srv $PKGS") |
        ssh cmsweb@$host bashs -l
     done
 
