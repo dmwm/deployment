@@ -134,11 +134,11 @@ case $STAGE in
     ln -s srv-$STEM srv
     mkdir -p srv-$STEM
     $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD/srv $PKGS
-    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS"
     case $VER in hg* | be* )
       ssh -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed \
         -t prod -d cmsweb@$(hostname -f):$PWD/srv/$VER/auth/proxy ;;
     esac
+    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS"
     ;;
 
   kstart | kstop )

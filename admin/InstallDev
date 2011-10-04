@@ -58,8 +58,8 @@ case $STAGE in
   image )
     set -ex
     $PWD/cfg/Deploy $ACFG -t $VER -a -s prep $PWD $PKGS
-    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD $PKGS"
     $PWD/cfg/admin/ProxySeed -t dev -d $PWD/$VER/auth/proxy
+    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ACFG $REPO -t $VER -a -s sw $PWD $PKGS"
     $PWD/cfg/Deploy $REPO -t $VER -a -s post $PWD $PKGS
     ;;
 
