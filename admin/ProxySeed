@@ -45,7 +45,9 @@ done
 
 [ $# = 0 ] || usage
 
-source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
+if [ -x /usr/bin/myproxy-init -a -x /usr/bin/voms-proxy-init ]; then :; else
+  source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
+fi
 export GT_PROXY_MODE=old
 
 case $type in
