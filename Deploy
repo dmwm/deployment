@@ -38,8 +38,8 @@ cfgversion=
 privauthdir=
 
 case $(uname) in
-  Darwin ) arch=osx106_amd64_gcc461 ;;
-  Linux  ) arch=slc5_amd64_gcc461 ;;
+  Darwin ) arch=osx106_amd64_gcc461 xargsr="xargs" ;;
+  Linux  ) arch=slc5_amd64_gcc461 xargsr="xargs -r" ;;
   *      ) echo "unsupported architecture" 1>&2; exit 1 ;;
 esac
 
@@ -331,10 +331,10 @@ deploy_pkg()
     if $nogroups; then :; else
       BADFILES=$(find $swarea/$arch -type f ! -group _sw -print)
       [ X"$BADFILES" = X ] || note "WARNING: removing $BADFILES"
-      find $swarea/$arch -type f ! -group _sw -print0 | xargs -r -t -0 rm -f
-      find $swarea/$arch ! -type l -perm -2 -print0 | xargs -r -t -0 chmod o-w
-      find $swarea/$arch -type d ! -perm -660 -print0 | xargs -r -t -0 chmod ug+rw
-      find $swarea/$arch -type f ! -group _sw -print0 | xargs -r -t -0 chgrp _sw
+      find $swarea/$arch -type f ! -group _sw -print0 | $xargsr -t -0 rm -f
+      find $swarea/$arch ! -type l -perm -2 -print0 | $xargsr -t -0 chmod o-w
+      find $swarea/$arch -type d ! -perm -660 -print0 | $xargsr -t -0 chmod ug+rw
+      find $swarea/$arch -type f ! -group _sw -print0 | $xargsr -t -0 chgrp _sw
     fi
 
     # Create application link.
@@ -347,7 +347,7 @@ deploy_pkg()
   if $nogroups; then :; else
     BADFILES=$(find $project_config -type f ! -group _config -print)
     [ X"$BADFILES" = X ] || note "WARNING: removing $BADFILES"
-    find $project_config -type f ! -group _config -print0 | xargs -r -t -0 rm -f
+    find $project_config -type f ! -group _config -print0 | $xargsr -t -0 rm -f
   fi
 
   (cd $project_config_src; find . -type f -print0 |
