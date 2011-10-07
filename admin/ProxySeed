@@ -8,8 +8,8 @@
 ###
 ### Examples:
 ###   ProxySeed
-###   ProxySeed DevVM /data/current/auth/proxy
-###   ProxySeed Production cmsweb@$(hostname):/data/srv/hg1103a/auth/proxy
+###   ProxySeed -t dev -d /data/current/auth/proxy
+###   ProxySeed -t prod -d cmsweb@$(hostname):/data/srv/hg1103a/auth/proxy
 
 usage()
 {
@@ -42,6 +42,8 @@ for arg; do
     -*) usage; exit 1 ;;
   esac
 done
+
+[ $(uname) = Darwin ] && exit 0 # deactivated for now
 
 [ $# = 0 ] || usage
 

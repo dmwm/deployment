@@ -34,6 +34,8 @@
 ###    cmsweb@vocmsNNN.cern.ch:/data/system/current/auth/proxy/seed-$(id -un).cert
 ###
 
+[ $(uname) = Darwin ] && exit 0 # deactivated for now
+
 verbose=false
 export GT_PROXY_MODE=old
 if [ -x /usr/bin/myproxy-init -a -x /usr/bin/voms-proxy-init ]; then :; else
