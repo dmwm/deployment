@@ -16,11 +16,24 @@
 
 case ${1:-status} in
   status | graceful | stop | configtest )
-    sudo /sbin/service httpd $1
+    case $(uname) in
+      Linux )
+        sudo /sbin/service httpd $1 ;;
+      Darwin )
+        ME=$(basename $(dirname $0))
+        TOP=$(cd $(dirname $0)/../../.. && pwd)
+        sudo $TOP/state/$ME/etc/httpd $1 ;;
+    esac
     ;;
 
   start | restart )
-    sudo /sbin/service httpd restart
+    case $(uname) in
+      Linux )
+        sudo /sbin/service httpd restart ;;
+      Darwin )
+        sudo launchctl unload -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist
+        sudo launchctl load -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist ;;
+    esac
     ;;
 
   help )

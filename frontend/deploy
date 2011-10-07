@@ -74,13 +74,10 @@ deploy_frontend_post()
   fi
 
   case $host in * ) enable ;; esac
-  (echo "PATH=/sbin:/bin:/usr/sbin:/usr/bin";
-   echo "X509_USER_CERT=$certs/hostcert.pem";
-   echo "X509_USER_KEY=$certs/hostkey.pem";
-   mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
-   echo "13 */6 * * * (/opt/edg/libexec/edg-mkgridmap/edg-mkgridmap.pl" \
-      "--conf=$project_config/mkgridmap.conf --output=$PWD/etc/voms-gridmap.txt" \
-      "--safe) >> $project_logs/mkgridmap.log 2>&1";
+  (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
+   echo "13 */6 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
+        " --cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
+        " -o $PWD/etc/voms-gridmap.txt --vo cms"
    case $host in
      vocms105 | vocms135 ) ;;
      vocms65)  echo "23 */6 * * * $project_config/update-keys $PWD vocms105" ;;
@@ -91,10 +88,25 @@ deploy_frontend_post()
   (crontab -l | grep -e '^[A-Z0-9_]*=' -e $project_config/ |
    perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
 
-  sudo rm -f /etc/rc.d/init.d/httpd
-  sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
-  sudo /sbin/chkconfig --add httpd
-  sudo /sbin/chkconfig --levels 2345 httpd on
+  sudo rm -f $PWD/etc/httpd.plist
+  perl -p -i -e "s|\@STATEDIR\@|$PWD|g" \
+    < $project_config/httpd.plist.in \
+    > $PWD/etc/httpd.plist
+  chmod 644 $PWD/etc/httpd.plist
+  sudo chown root:$(id -gn) $PWD/etc/httpd.plist
+
+  if [ -d /etc/rc.d/init.d ]; then
+    sudo rm -f /etc/rc.d/init.d/httpd
+    sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
+    sudo /sbin/chkconfig --add httpd
+    sudo /sbin/chkconfig --levels 2345 httpd on
+  elif [ -d /Library/LaunchDaemons ]; then
+    sudo rm -f /Library/LaunchDaemons/ch.cern.cms.httpd.plist
+    sudo ln -s $PWD/etc/httpd.plist /Library/LaunchDaemons/ch.cern.cms.httpd.plist
+  else
+    note "ERROR: how do you install a httpd service on this system?"
+    exit 1
+  fi
 }
 
 deploy_frontend_auth()

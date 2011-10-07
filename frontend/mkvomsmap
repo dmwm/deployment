@@ -1,0 +1,146 @@
+#!/usr/bin/env python
+""" mkvomsmap -o OUTPUT --cert CERT --key KEY [--vo VONAME]
+                  [-c CONFIG-FILE] [URI...]
+
+Queries VOMS for member data and writes out a gridmap file into OUTPUT
+as VONAME memberships (default: 'cms'). The CERT and KEY should normally
+be the host certificate and key, respectively. Queries all given URIs
+and combines all their results into one combined output list.
+
+The output file is written in a manner which guarantees it will not be
+removed or truncated in case of a failure, however it may disappear for
+a very short time while the new file is moved in place.
+
+The URIs should be of the form:
+
+  vomss://voms.cern.ch:8443/voms/cms?/cms/Role=production
+  vomss://voms.cern.ch:8443/voms/cms?/cms
+
+If CONFIG-FILE is given, it's assumed to consist of lines in format
+'group URI VONAME', compatible with edg-mkgridmap. The VONAME given
+in CONFIG-FILE must match the value given with --vo option."""
+
+import sys, re, urllib2, httplib, os, os.path
+from xml.sax import saxutils, handler as sax_handler, parseString
+from urlparse import urlsplit, urlunparse
+from optparse import OptionParser
+from tempfile import mkstemp
+
+ident = "mkvomsmap/1.0 python/%d.%d.%d" % sys.version_info[:3]
+opts = None
+args = None
+
+# Utility adapter to activate X509 client authentication with HTTPS.
+class HTTPSCertAuth(httplib.HTTPSConnection):
+  def __init__(self, host, *args, **kwargs):
+    httplib.HTTPSConnection.__init__(self, host, key_file = opts.key,
+				     cert_file = opts.cert, **kwargs)
+
+class HTTPSCertAuthenticate(urllib2.AbstractHTTPHandler):
+  def default_open(self, req):
+    return self.do_open(HTTPSCertAuth, req)
+
+# SAX parser for VOMS SOAP reply for "getGridmapUsers" call. We ignore
+# the SOAPy features and simply just look for "getGridmapUsersReturn" XML
+# elements. Their element contents are subject strings of VO members.
+class GridMapData(sax_handler.ContentHandler):
+  users = set()
+  save = False
+  name = ""
+
+  def startElement(self, name, attrs):
+    self.save = (name == "getGridmapUsersReturn")
+    self.name = ""
+
+  def endElement(self, name):
+    if self.save:
+      self.users.add(str(self.name))
+    self.save = False
+
+  def characters(self, content):
+    if self.save: self.name += content
+
+# Make VOMS request to retrieve members in gridmap style. This simply
+# transforms "voms" to "http" and "vomss" to "https" in the URI, then
+# mangles the URI a bit to make "getGridmapUsers" call, and returns
+# the XML body of the response. Note that we rely on exceptions being
+# thrown if anything goes wrong with the request.
+def request(url):
+  if url.startswith("voms"): url = "http" + url[4:]
+  (scheme, netloc, path, query, frag) = urlsplit(url)
+  query = "method=getGridmapUsers" + ((query and "&container=" + query) or "")
+  path += "/services/VOMSCompatibility"
+  req = urllib2.Request(urlunparse((scheme, netloc, path, '', query, frag)))
+  req.add_header("User-agent", ident)
+  result = urllib2.build_opener(HTTPSCertAuthenticate()).open(req)
+  return result.read()
+
+# Parse VOMS SOAP response to extract member subject strings. Returns
+# a set of the member names.
+def parse(body):
+  data = GridMapData()
+  parseString(body, data)
+  return data.users
+
+# Get current umask.
+def current_umask():
+  val = os.umask(0)
+  os.umask(val)
+  return val
+
+# Parse command line options.
+myumask = current_umask()
+opt = OptionParser(__doc__)
+opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
+opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
+opt.add_option("--cert", dest="cert", metavar="FILE", help="certificate file")
+opt.add_option("--key", dest="key", metavar="FILE", help="private key file")
+opt.add_option("--vo", dest="vo", default="cms", metavar="NAME", help="VO name")
+opts, args = opt.parse_args()
+
+if not opts.key or not os.path.exists(opts.key):
+  print >>sys.stderr, "no certificate private key file found"
+  sys.exit(1)
+
+if not opts.cert or not os.path.exists(opts.cert):
+  print >>sys.stderr, "no certificate public key file found"
+  sys.exit(1)
+
+if not opts.out:
+  print >>sys.stderr, "output file name is required"
+  sys.exit(1)
+
+# Any remaining command line arguments are URIs to process. If we were given
+# a configuration file, parse it too and add to the URI list.
+uris = args
+if opts.conf:
+  nline = 0
+  for line in open(opts.conf, "r"):
+    nline += 1
+    m = re.match(r"^group (vomss?:\S+) (\S+)$", line)
+    if not m:
+      print "%s: %d: line not understood" % (opts.conf, nline)
+      sys.exit(1)
+    if m.group(2) != opts.vo:
+      print "%s: %d: vo %s differs from expected %s" % (m.group(2), opts.vo)
+      sys.exit(1)
+    uris.append(m.group(1))
+
+# Fetch VOMS membership info. Combine all of them into single set of users.
+users = set()
+for uri in uris:
+  users |= parse(request(uri))
+
+# Now write this out, first in a temporary file in the same directory as
+# the final output file, then move the output file into place. This avoids
+# wiping out the file in case the disk fills up or some other error occurs.
+fd, tmpname = mkstemp(dir = os.path.dirname(opts.out))
+outfile = os.fdopen(fd, "w")
+for user in users:
+  print >> outfile, '"%s" %s' % (user, opts.vo)
+outfile.close()
+os.chmod(tmpname, 0666 & ~myumask)
+if os.path.exists(opts.out):
+  os.remove(opts.out)
+os.rename(tmpname, opts.out)
+sys.exit(0)
