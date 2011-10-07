@@ -1,43 +1,214 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_system_variants="frontend backend image devvm"
+deploy_system_variants="frontend backend image devvm devmac"
+system_arch=$(uname)
+: ${CMS_DEV_ROOT:=/data}
 
 # Add a local group if it doesn't already exist.
 add_local_group()
 {
   local add_user=$1 id=$2 name=$3
-  if getent group | grep -q "^$name:"; then :; else
-    sudo /usr/sbin/groupadd -g $id $name
-    [ X$add_user != XT ] || sudo /usr/sbin/usermod -a -G $name $USER
-  fi
+  case $system_arch in
+    Linux )
+      if getent group | grep -q "^$name:"; then :; else
+        sudo /usr/sbin/groupadd -g $id $name
+        [ X$add_user != XT ] || sudo /usr/sbin/usermod -a -G $name $USER
+      fi ;;
+
+    Darwin )
+      if sudo dscl . -read /Groups/$name 2>/dev/null; then
+        local gid=$(sudo dscl . -read /Groups/$name PrimaryGroupID | awk '{print $NF}')
+        if [ X"$gid" = X$id ]; then :; else
+          note "WARNING: group $name already exists with id $gid != requested $id"
+	fi
+      else
+        sudo dscl . -create /Groups/$name
+	sudo dscl . -create /Groups/$name PrimaryGroupID $id
+	sudo dscl . -create /Groups/$name RealName "CMSWEB $name"
+	sudo dscl . -create /Groups/$name Password "*"
+	if [ X$add_user != XT ]; then :; else
+	  sudo dscl . -append /Groups/$name GroupMembership $USER
+	fi
+      fi
+      ;;
+
+    * )
+      note "ERROR: don't know how to create groups on this system"
+      exit 1 ;;
+  esac
 }
 
 # Create a local user if it doesn't already exist.
 add_local_user()
 {
   local id=$1 login=$2 xgroup=$3 name=$4
-  if getent passwd | grep -q "^$login:"; then :; else
-    sudo /usr/sbin/useradd -M -g $login -G $login$xgroup -c "CMSWEB $name,,," \
-                           -d /data/empty -s /sbin/nologin -u $id $login
-  fi
+  case $system_arch in
+    Linux )
+      if getent passwd | grep -q "^$login:"; then :; else
+        sudo /usr/sbin/useradd -M -g $login -G $login$xgroup -c "CMSWEB $name,,," \
+                               -d $CMS_DEV_ROOT/empty -s /sbin/nologin -u $id $login
+      fi ;;
+
+    Darwin )
+      local gid=$(sudo dscl . -read /Groups/$login PrimaryGroupID | awk '{print $NF}')
+      sudo dscl . -create /Users/$login
+      sudo dscl . -create /Users/$login UserShell /sbin/nologin
+      sudo dscl . -create /Users/$login RealName "CMSWEB $name"
+      sudo dscl . -create /Users/$login UniqueID $id
+      sudo dscl . -create /Users/$login PrimaryGroupID $gid
+      sudo dscl . -create /Users/$login NFSHomeDirectory $CMS_DEV_ROOT/empty
+      sudo dscl . -passwd /Users/$login "*"
+      for group in $(echo $xgroup | tr , ' '); do
+        sudo dscl . -append /Groups/$group GroupMembership $login
+      done
+      ;;
+
+    * )
+      note "ERROR: don't know how to create accounts on this system"
+      exit 1 ;;
+  esac
 }
 
-# Set protections on local (/data/certs) host certificate files.
+# Set protections on local ($CMS_DEV_ROOT/certs) host certificate files.
 hostcert_local_prot()
 {
-  sudo chown $USER:_config /data/certs/host{cert,key}.pem
-  sudo chmod 644 /data/certs/hostcert.pem
-  sudo chmod 400 /data/certs/hostkey.pem
+  sudo chown $USER:_config $CMS_DEV_ROOT/certs/host{cert,key}.pem
+  sudo chmod 644 $CMS_DEV_ROOT/certs/hostcert.pem
+  sudo chmod 400 $CMS_DEV_ROOT/certs/hostkey.pem
 }
 
-# Install host certificate from local (/data/certs) to the system
+# Install host certificate from local ($CMS_DEV_ROOT/certs) to the system
 # directory (/etc/grid-security), with appropriate file ownerships.
 hostcert_to_system()
 {
   [ -d /etc/grid-security ] || { note "ERROR: no /etc/grid-security!?"; exit 1; }
-  sudo cp /data/certs/host{cert,key}.pem /etc/grid-security
-  sudo chown root:root /etc/grid-security/host{cert,key}.pem
+  sudo cp $CMS_DEV_ROOT/certs/host{cert,key}.pem /etc/grid-security
+  sudo chown root:$(id -gn root) /etc/grid-security/host{cert,key}.pem
   sudo chmod 644 /etc/grid-security/hostcert.pem
   sudo chmod 400 /etc/grid-security/hostkey.pem
+}
+
+# Create all the special groups and accounts.
+system_groups_and_accounts()
+{
+  # Create groups. Add myself to all the groups.
+  for ng in T:100000:_config    F:100001:_empty     T:100002:_sw          \
+            T:100003:_auth      T:100010:_frontend  T:100020:_admin       \
+	    T:100021:_base      T:100022:_couchdb   T:100023:_das         \
+	    T:100024:_dbs       T:100025:_dbsweb    T:100026:_dqmgui      \
+	    T:100027:_filemover T:100028:_overview  T:100029:_phedex      \
+            T:100030:_sitedb    T:100031:_t0mon     T:100032:_mongodb     \
+	    T:100033:_reqmgr    T:100034:_workqueue T:100035:_configcache \
+	    T:100036:_plotfairy T:100037:_t0datasvc; do
+    add_local_group $(echo $ng | tr : " ")
+  done
+
+  # Create accounts
+  add_local_user 100001 _empty       ""       "Void"
+  add_local_user 100002 _sw          ,_config "Master"
+  add_local_user 100003 _auth        ,_config "Auth Agent"
+  add_local_user 100010 _frontend    ,_config "Front-End"
+  add_local_user 100020 _admin       ,_config "Admin"
+  add_local_user 100021 _base        ,_config "Base App"
+  add_local_user 100022 _couchdb     ,_config "CouchDB App"
+  add_local_user 100023 _das         ,_config "DAS App"
+  add_local_user 100024 _dbs         ,_config "DBS App"
+  add_local_user 100025 _dbsweb      ,_config "DBS-Discovery App"
+  add_local_user 100026 _dqmgui      ,_config "DQM GUI App"
+  add_local_user 100027 _filemover   ,_config "FileMover App"
+  add_local_user 100028 _overview    ,_config "Overview App"
+  add_local_user 100029 _phedex      ,_config "PhEDEx App"
+  add_local_user 100030 _sitedb      ,_config "SiteDB App"
+  add_local_user 100031 _t0mon       ,_config "T0Mon App"
+  add_local_user 100032 _mongodb     ,_config "MongoDB App"
+  add_local_user 100033 _reqmgr      ,_config "ReqMgr App"
+  add_local_user 100034 _workqueue   ,_config "WorkQueue App"
+  add_local_user 100035 _configcache ,_config "ConfigCache App"
+  add_local_user 100036 _plotfairy   ,_config "PlotFairy App"
+  add_local_user 100037 _t0datasvc   ,_config "T0DataSvc App"
+
+  # Restart nscd to flush account changes. Current account will _not_
+  # see these changes before logout/login however, so commands below
+  # cannot rely on fully propagated group ownership!
+  case $system_arch in Linux )
+    sudo /sbin/service nscd restart ;;
+  esac
+}
+
+# Create basic required directories.
+system_basic_directories()
+{
+  sudo mkdir -p $CMS_DEV_ROOT
+  sudo chown $USER:_sw $CMS_DEV_ROOT
+  sudo chmod 0775 $CMS_DEV_ROOT
+
+  mkdir -p $CMS_DEV_ROOT/user
+  chown $USER:$MYGROUP $CMS_DEV_ROOT/user
+  chmod 0775 $CMS_DEV_ROOT/user
+
+  sudo rm -fr $CMS_DEV_ROOT/empty
+  mkdir -p $CMS_DEV_ROOT/empty
+  echo "umask 002" > $CMS_DEV_ROOT/empty/.profile
+  chmod 444 $CMS_DEV_ROOT/empty/.profile
+  chmod 555 $CMS_DEV_ROOT/empty
+  sudo chown -R _empty:_empty $CMS_DEV_ROOT/empty
+}
+
+# Install host certificate $USER:_config owned in $CMS_DEV_ROOT/certs.
+system_install_hostcert()
+{
+  # If we don't have host{cert,key}.pem in $CMS_DEV_ROOT/certs nor in
+  # /etc/grid-security, create a pair using whatever means known,
+  # falling back on creating a fake one. If we have the certs
+  # already in one place, copy them to the other.
+  [ -d /etc/grid-security ]
+  mkdir -p $CMS_DEV_ROOT/certs
+  sudo chown $USER:_config $CMS_DEV_ROOT/certs
+  sudo chmod 0775 $CMS_DEV_ROOT/certs
+  if [ ! -f $CMS_DEV_ROOT/certs/hostcert.pem ] && [ ! -f /etc/grid-security/hostcert.pem ]; then
+    case $(hostname -f) in
+      *.cern.ch )
+	(set -e
+	 cd /tmp
+	 tmp=$(mktemp -d -t cert-$$-XXXXX)
+	 req=$(hostname -s).csr
+	 der=$(hostname -s).der
+	 cn=/CN=$(hostname -f)
+	 cd $tmp
+         note "WARNING: requesting now a new host certificate via ca.cern.ch"
+         note "WARNING: you will prompted for your login or grid certificate password"
+         note "WARNING: by supplying your password you agree to CERN computing rules"
+	 openssl req -new -subj $cn -out $req -nodes -keyout hostkey.pem
+	 $project_config_src/careq-cern-ch $req $der 1>&11 2>&22
+	 openssl x509 -inform DER -in $der -outform PEM > hostcert.pem
+	 chmod 400 $req $der hostkey.pem
+	 chmod 644 hostcert.pem
+	 mv $req $der host{key,cert}.pem $CMS_DEV_ROOT/certs
+	 rm -r $tmp)
+	[ $? = 0 ]
+	;;
+
+      * )
+	note "WARNING: no hostcert.pem in $CMS_DEV_ROOT/certs or /etc/grid-security"
+	note "WARNING: creating fake host certificate, replace with real one!"
+	(set -e
+	 umask 077
+	 openssl genrsa -out $CMS_DEV_ROOT/certs/hostkey.pem 1024
+	 umask 022
+	 openssl req -new -key $CMS_DEV_ROOT/certs/hostkey.pem \
+	   -subj /DC=ch/DC=cern/OU=computers$cn | openssl x509 -req -days 365 \
+	   -signkey $CMS_DEV_ROOT/certs/hostkey.pem -out $CMS_DEV_ROOT/certs/hostcert.pem)
+	[ $? = 0 ]
+	;;
+    esac
+  fi
+
+  if [ -f $CMS_DEV_ROOT/certs/hostcert.pem ]; then
+    hostcert_local_prot
+    hostcert_to_system
+  else
+    sudo cp /etc/grid-security/host{cert,key}.pem $CMS_DEV_ROOT/certs
+    hostcert_local_prot
+  fi
 }
 
 deploy_system_post()
@@ -193,6 +364,30 @@ deploy_system_post()
       sudo /usr/sbin/logwatch
       ;;
 
+    devmac )
+      # Verify mandatory applications have been installed.
+      for required in git stg; do
+        if [ X"$(which $required 2>/dev/null)" = X ]; then
+	  note "ERROR: $required is not installed, try installing from macports"
+	  exit 1
+	fi
+      done
+
+      # Make bashs an alias for bash.
+      if [ -x /bin/bashs ]; then :; else
+        sudo ln -s bash /bin/bashs
+      fi
+
+      # Create groups and accounts.
+      system_groups_and_accounts
+
+      # Create basic required directories.
+      system_basic_directories
+
+      # Install host certificate.
+      system_install_hostcert
+      ;;
+
     devvm )
       MYGROUP=$(id -gn)
 
@@ -233,117 +428,14 @@ deploy_system_post()
       sudo /sbin/iptables -I $fwchain 6 -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
       sudo sh -c '/sbin/iptables-save > /etc/sysconfig/iptables'
 
-      # Create groups. Add myself to all the groups.
-      for ng in T:100000:_config    F:100001:_empty     T:100002:_sw          \
-                T:100003:_auth      T:100010:_frontend  T:100020:_admin       \
-		T:100021:_base      T:100022:_couchdb   T:100023:_das         \
-		T:100024:_dbs       T:100025:_dbsweb    T:100026:_dqmgui      \
-		T:100027:_filemover T:100028:_overview  T:100029:_phedex      \
-                T:100030:_sitedb    T:100031:_t0mon     T:100032:_mongodb     \
-		T:100033:_reqmgr    T:100034:_workqueue T:100035:_configcache \
-		T:100036:_plotfairy T:100037:_t0datasvc; do
-	add_local_group $(echo $ng | tr : " ")
-      done
-
-      # Create accounts
-      add_local_user 100001 _empty       ""       "Void"
-      add_local_user 100002 _sw          ,_config "Master"
-      add_local_user 100003 _auth        ,_config "Auth Agent"
-      add_local_user 100010 _frontend    ,_config "Front-End"
-      add_local_user 100020 _admin       ,_config "Admin"
-      add_local_user 100021 _base        ,_config "Base App"
-      add_local_user 100022 _couchdb     ,_config "CouchDB App"
-      add_local_user 100023 _das         ,_config "DAS App"
-      add_local_user 100024 _dbs         ,_config "DBS App"
-      add_local_user 100025 _dbsweb      ,_config "DBS-Discovery App"
-      add_local_user 100026 _dqmgui      ,_config "DQM GUI App"
-      add_local_user 100027 _filemover   ,_config "FileMover App"
-      add_local_user 100028 _overview    ,_config "Overview App"
-      add_local_user 100029 _phedex      ,_config "PhEDEx App"
-      add_local_user 100030 _sitedb      ,_config "SiteDB App"
-      add_local_user 100031 _t0mon       ,_config "T0Mon App"
-      add_local_user 100032 _mongodb     ,_config "MongoDB App"
-      add_local_user 100033 _reqmgr      ,_config "ReqMgr App"
-      add_local_user 100034 _workqueue   ,_config "WorkQueue App"
-      add_local_user 100035 _configcache ,_config "ConfigCache App"
-      add_local_user 100036 _plotfairy   ,_config "PlotFairy App"
-      add_local_user 100037 _t0datasvc   ,_config "T0DataSvc App"
-
-      # Restart nscd to flush account changes. Current account will _not_
-      # see these changes before logout/login however, so commands below
-      # cannot rely on fully propagated group ownership!
-      sudo /sbin/service nscd restart
+      # Create groups and accounts.
+      system_groups_and_accounts
 
       # Create basic required directories.
-      sudo mkdir -p /data
-      sudo chown $USER:_sw /data
-      sudo chmod 0775 /data
+      system_basic_directories
 
-      mkdir -p /data/user
-      chown $USER:$MYGROUP /data/user
-      chmod 0775 /data/user
-
-      sudo rm -fr /data/empty
-      mkdir -p /data/empty
-      echo "umask 002" > /data/empty/.profile
-      chmod 444 /data/empty/.profile
-      chmod 555 /data/empty
-      sudo chown -R _empty:_empty /data/empty
-
-      # Install host certificate $USER:_config owned in /data/certs.
-      # If we don't have host{cert,key}.pem in /data/certs nor in
-      # /etc/grid-security, create a pair using whatever means known,
-      # falling back on creating a fake one. If we have the certs
-      # already in one place, copy them to the other.
-      [ -d /etc/grid-security ]
-      mkdir -p /data/certs
-      sudo chown $USER:_config /data
-      sudo chmod 0775 /data
-      if [ ! -f /data/certs/hostcert.pem ] && [ ! -f /etc/grid-security/hostcert.pem ]; then
-        case $(hostname -f) in
-	  *.cern.ch )
-	    (set -e
-	     cd /tmp
-	     tmp=$(mktemp -t -d cert-$$-XXXXX)
-	     req=$(hostname -s).csr
-	     der=$(hostname -s).der
-	     cn=/CN=$(hostname -f)
-	     cd $tmp
-             note "WARNING: requesting now a new host certificate via ca.cern.ch"
-             note "WARNING: you will prompted for your login or grid certificate password"
-             note "WARNING: by supplying your password you agree to CERN computing rules"
-	     openssl req -new -subj $cn -out $req -nodes -keyout hostkey.pem
-	     $project_config_src/careq-cern-ch $req $der 1>&11 2>&22
-	     openssl x509 -inform DER -in $der -outform PEM > hostcert.pem
-	     chmod 400 $req $der hostkey.pem
-	     chmod 644 hostcert.pem
-	     mv $req $der host{key,cert}.pem /data/certs
-	     rm -r $tmp)
-	    [ $? = 0 ]
-	    ;;
-
-          * )
-	    note "WARNING: no hostcert.pem in /data/certs or /etc/grid-security"
-	    note "WARNING: creating fake host certificate, replace with real one!"
-	    (set -e
-	     umask 077
-	     openssl genrsa -out /data/certs/hostkey.pem 1024
-	     umask 022
-	     openssl req -new -key /data/certs/hostkey.pem \
-	      -subj /DC=ch/DC=cern/OU=computers$cn | openssl x509 -req -days 365 \
-	      -signkey /data/certs/hostkey.pem -out /data/certs/hostcert.pem)
-	    [ $? = 0 ]
-	    ;;
-	esac
-      fi
-
-      if [ -f /data/certs/hostcert.pem ]; then
-	hostcert_local_prot
-        hostcert_to_system
-      else
-        sudo cp /etc/grid-security/host{cert,key}.pem /data/certs
-        hostcert_local_prot
-      fi
+      # Install host certificate.
+      system_install_hostcert
       ;;
   esac
 }
