@@ -207,8 +207,6 @@ deploy_system_post()
         /etc/sudoers
 
       # Install additional yum repositories (glite-VOBOX instead of glite-SCAS?)
-      sudo wget -q -O /etc/yum.repos.d/HEP_OSlibs.repo \
-        http://cern.ch/grid-deployment/download/HEP/repo/HEP_OSlibs.repo
       sudo wget -q -O /etc/yum.repos.d/glite-lcg-ca.repo \
         http://cern.ch/grid-deployment/glite/repos/3.2/lcg-CA.repo
       sudo wget -q -O /etc/yum.repos.d/glite-scas.repo \
@@ -216,10 +214,13 @@ deploy_system_post()
 
       # Install additional required packages.
       sudo yum -y install \
-        HEP_OSlibs_SL5 'ca_*' dummy-ca-certs lcg-CA \
-        fetch-crl edg-mkgridmap git-all stgit colordiff
+        tk compat-libstdc++-33 'ca_*' dummy-ca-certs lcg-CA \
+	fetch-crl edg-mkgridmap git-all stgit colordiff \
+	$(yum -q list compat-{readline5,libtermcap} perl-ExtUtils-Embed 2>/dev/null | \
+	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}')
       if rpm --quiet -q bashs; then :; else
-        sudo rpm -ivh http://swrepsrv.cern.ch/swrep/x86_64_slc5/bashs-3.2-21.x86_64.rpm
+        sudo rpm -ivh http://swrepsrv.cern.ch/swrep/x86_64_slc5/bashs-3.2-21.x86_64.rpm ||
+	  sudo ln /bin/bash{,s}
       fi
 
       # Update firewall rules, persist change across reboot.
