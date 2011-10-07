@@ -19,6 +19,13 @@ if [ $(id -un)  = cmsweb ]; then
   exit 1
 fi
 
+echo_e=-e
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e=
+  ;;
+esac
+
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
@@ -92,9 +99,9 @@ status()
       pid=$(pgrep -u $(id -u) -f "[/]analytics_controller.py" | sort -n)
     fi
     if [ X"$pid" = X ]; then
-      echo -e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+      echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
     else
-      echo -e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+      echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
     fi
   done
 }

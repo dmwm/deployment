@@ -19,6 +19,13 @@ if [ $(id -un)  = cmsweb ]; then
   exit 1
 fi
 
+echo_e=-e bsdstart=bsdstart
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e= bsdstart=start
+  ;;
+esac
+
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
@@ -32,13 +39,6 @@ COLOR_NORMAL="\\033[0;39m"    # LEGACY ONLY
 
 . $ROOT/apps/$ME/etc/profile.d/env.sh
 PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
-
-echo_e=-e
-case $(uname) in Darwin )
-  md5sum() { md5 -r ${1+"$@"}; }
-  echo_e=
-  ;;
-esac
 
 # Set up environment for legacy server if one was installed.
 use_legacy=false
@@ -92,7 +92,7 @@ stop()
   wmc-httpd -k -d $STATEDIR $CFGFILE
   if $use_legacy; then
     for PID in $(pgrep -u $(id -u) -f "cmsWeb.*[/]sitedb" | sort -rn); do
-      PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
+      PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
                perl -n -e 'print join(" ", (split)[0..6])')
       echo "Stopping $PID ($PSLINE):"
       kill -9 $PID
@@ -107,9 +107,9 @@ status()
   if $use_legacy; then
     pid=$(pgrep -u $(id -u) -f "cmsWeb.*[/]sitedb" | sort -n)
     if [ X"$pid" = X ]; then
-      echo -e "$ME legacy is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+      echo $echo_e "$ME legacy is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
     else
-      echo -e "$ME legacy is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+      echo $echo_e "$ME legacy is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
     fi
   fi
 }

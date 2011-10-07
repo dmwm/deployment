@@ -24,6 +24,11 @@ if [ $(id -un)  = cmsweb ]; then
   exit 1
 fi
 
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  ;;
+esac
+
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)

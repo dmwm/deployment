@@ -21,6 +21,13 @@ if [ $(id -un)  = cmsweb ]; then
   exit 1
 fi
 
+echo_e=-e bsdstart=bsdstart
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e= bsdstart=start
+  ;;
+esac
+
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
@@ -55,7 +62,7 @@ start_graphs()
 kill_graphs()
 {
   for PID in $(pgrep -u $(id -u) -f "$GRAPHS_PATTERN" | sort -rn); do
-    PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
+    PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
              perl -n -e 'print join(" ", (split)[0..6])')
     [ $(ps h $PID | wc -l) = 0 ] && break
     echo "Stopping $PID ($PSLINE):"
@@ -87,7 +94,7 @@ stop()
   echo "stopping $ME"
   for pat in "$PHEDEX_PATTERN" "$GRAPHS_PATTERN"; do
     for PID in $(pgrep -u $(id -u) -f "$pat" | sort -n); do
-      PSLINE=$(ps -o pid=,bsdstart=,args= $PID |
+      PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
                perl -n -e 'print join(" ", (split)[0..6])')
       [ $(ps h $PID | wc -l) = 0 ] && break
       echo "Stopping $PID ($PSLINE):"
@@ -103,16 +110,16 @@ status()
 {
   pid=$(pgrep -u $(id -u) -f "$PHEDEX_PATTERN" | sort -n)
   if [ X"$pid" = X ]; then
-    echo -e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+    echo $echo_e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
-    echo -e "$ME is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+    echo $echo_e "$ME is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
 
   pid=$(pgrep -u $(id -u) -f "$GRAPHS_PATTERN" | sort -rn)
   if [ X"$pid" = X ]; then
-    echo -e "$ME grapher is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+    echo $echo_e "$ME grapher is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
-    echo -e "$ME grapher is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+    echo $echo_e "$ME grapher is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
 }
 

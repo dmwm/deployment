@@ -23,6 +23,13 @@
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
 
+echo_e=-e bsdstart=bsdstart
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e= bsdstart=start
+  ;;
+esac
+
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
@@ -58,7 +65,11 @@ esac
 
 message()
 {
-  $QUIET || echo ${1+"$@"}
+  $QUIET && return
+  case $1 in
+    -n ) shift; printf "%s" "$*" ;;
+    * ) echo ${1+"$@"} ;;
+  esac
 }
 
 refuseproc()
@@ -84,9 +95,9 @@ statproc()
   title="$1" pat="$2"
   pid=$(pgrep -u $user -f "$pat" | sort -n)
   if [ X"$pid" = X ]; then
-    message -e "$title is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+    message $echo_e "$title is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
-    message -e "$title is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+    message $echo_e "$title is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
 }
 
@@ -96,18 +107,18 @@ killproc()
   T=1 title="$1" pat="$2"
   nextmsg="${newline}Stopping ${title}:"
   for pid in $(pgrep -u $(id -u) -f "$pat" | sort -rn); do
-    psline=$(ps -o pid=,bsdstart=,args= $pid |
+    psline=$(ps -o pid=,$bsdstart=,args= $pid |
              perl -n -e 'print join(" ", (split)[0..4])')
-    [ -n "$nextmsg" ] && { message -e "$nextmsg"; nextmsg=; }
+    [ -n "$nextmsg" ] && { message $echo_e "$nextmsg"; nextmsg=; }
     message -n "Stopping $pid ($psline):"
     for sig in TERM TERM QUIT KILL; do
       message -n " SIG$sig"
       kill -$sig $pid
       sleep 1
-      [ $(ps h $pid | wc -l) = 0 ] && break
+      [ $(ps -o pid= -p $pid | wc -l) = 0 ] && break
       sleep $T
       T=$(expr $T \* 2)
-      [ $(ps h $pid | wc -l) = 0 ] && break
+      [ $(ps -o pid= -p $pid | wc -l) = 0 ] && break
     done
     message
     newline="\n"
