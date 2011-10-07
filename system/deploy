@@ -224,10 +224,13 @@ deploy_system_post()
       fi
 
       # Update firewall rules, persist change across reboot.
+      local fwchain=INPUT
       [ -f /etc/sysconfig/iptables.vmoriginal ] || sudo cp -p /etc/sysconfig/iptables{,.vmoriginal}
       sudo sh -c '/sbin/iptables-restore < /etc/sysconfig/iptables.vmoriginal'
-      sudo /sbin/iptables -I RH-Firewall-1-INPUT 3 -p tcp -m tcp --dport 80 -j ACCEPT
-      sudo /sbin/iptables -I RH-Firewall-1-INPUT 3 -p tcp -m tcp --dport 443 -j ACCEPT
+      [ X"$(sudo fgrep -c RH-Firewall-1-INPUT /etc/sysconfig/iptables.vmoriginal)" = X0 ] ||
+        fwchain=RH-Firewall-1-INPUT
+      sudo /sbin/iptables -I $fwchain 5 -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+      sudo /sbin/iptables -I $fwchain 6 -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
       sudo sh -c '/sbin/iptables-save > /etc/sysconfig/iptables'
 
       # Create groups. Add myself to all the groups.
