@@ -95,7 +95,7 @@ case ${1:-status} in
     { echo "You must specify the couchdb url"; exit 1; }
 
     # need to use localhost interface to get admin role to allow push
-    file=$(mktemp -t $$.py) # need a .py extension (and only suffix X's are used in the template)
+    file=$(mktemp -t $$-XXXXXX.py) # need a .py extension (and only suffix X's are used in the template)
     cp ${WMAGENT_CONFIG} ${file}
     perl -p -i -e "s{config.WorkQueueManager.couchurl.*}{config.WorkQueueManager.couchurl = \"$url\"}g" ${file}
     WMAGENT_CONFIG=${file}
