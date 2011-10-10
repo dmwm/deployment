@@ -1,9 +1,4 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_wmagent_deps()
-{
-  deploy couchdb
-  deploy mysql
-}
 
 deploy_wmagent_prep()
 {
@@ -34,7 +29,9 @@ deploy_wmagent_sw()
   local mysql_config=$root/current/config/wmagent/my.cnf
   perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
 
+  mkdir -p $root/current/config/couchdb
   cp -f $couchdb_ini $root/current/config/couchdb
+  mkdir -p $root/current/config/mysql
   cp -f $mysql_config $root/current/config/mysql
 
 

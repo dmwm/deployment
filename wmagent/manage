@@ -263,11 +263,7 @@ print_settings(){
 # Environment
 #
 
-. $ROOT_DIR/apps/pystack/etc/profile.d/init.sh
-. $ROOT_DIR/apps/couchdb/etc/profile.d/init.sh
-. $ROOT_DIR/apps/mysql/etc/profile.d/init.sh
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
-. $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
 
 export WMCORE_ROOT=$ROOT_DIR/apps/wmcore
 export YUI_ROOT
