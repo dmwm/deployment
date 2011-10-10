@@ -78,7 +78,6 @@ class ProcessMonitor(Monitor):
 
     @param task_queue -- queue for incoming tasks."""
     Monitor.__init__(self, task_queue)
-    self.start()
 
   def _do(self, svc, can_talk, pattern):
     """Perform process scan.
@@ -121,7 +120,6 @@ class URLMonitor(Monitor):
       methods.append(urllib2.HTTPHandler(debuglevel = debug_level))
     methods.append(urllib2.HTTPRedirectHandler())
     self.opener = urllib2.build_opener(*methods)
-    self.start()
 
   def _do(self, svc, can_talk, url, regex):
     """Ping a URL and check the response matches a regexp.
@@ -131,7 +129,6 @@ class URLMonitor(Monitor):
     @param url -- the server to connect to, should be http (not https)
     @param regex -- regular expression to match against the reply."""
     try:
-
       req = urllib2.Request(url)
       req.add_header("User-Agent", "ServerMonitor/2.0")
       if sys.version_info < (2, 6, 0):
@@ -174,7 +171,6 @@ class LogMonitor(Monitor):
     self.state = self._load_state()
     self.modified = False
     self.last_save = 0
-    self.start()
 
   def _read_lines(self, file):
     """Generator to read a log file breaking it to lines. This is vastly
@@ -575,6 +571,8 @@ class MonitorDaemon:
            [LogErrorMonitor(qletask, self.feeddir)],
            [LogValueMonitor(qlvtask, self.feeddir)],
            [URLMonitor(qutask) for i in xrange(0, 10)]]
+    for m in mon:
+      map(lambda i: i.start(), m)
 
     # Install signal handlers to drain processing on termination.
     def _sigstop(signum, frame):
