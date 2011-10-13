@@ -1,0 +1,54 @@
+#!/bin/sh
+
+##H Usage: dmwmbld_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   version             get current version of the service
+##H   build               process build requests
+##H   logclean [minutes]  clean logs older than [minutes] (def. 3 months)
+##H   tagclean [minutes]  clean CMSDIST tags older than [minutes] (def. 3 months)
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/DMWMBuilderAgent
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+CFGDIR=$(dirname $0)
+STATEDIR=$TOP/state/$ME
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+TERM=dumb
+
+WEBDIR={WEBDIR}
+DMWMBLD_VER={VER}
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  build )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    $CFGDIR/builder-agent.sh $CFGDIR/config
+    [ -d "$WEBDIR" ] && rsync -q -rvu $STATEDIR/webarea/ $WEBDIR/ || true
+    ;;
+
+  logclean )
+    $CFGDIR/log-cleaner.sh $CFGDIR/config $2
+    ;;
+
+  tagclean )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    $CFGDIR/tag-cleaner.sh $CFGDIR/config $2
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "${DMWMBLD_VER:-unknown}"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

@@ -1,0 +1,60 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dmwmbld_variants="default sl5 sl6 osx"
+
+deploy_dmwmbld_prep()
+{
+  mkproj webarea
+}
+
+deploy_dmwmbld_sw()
+{
+  deploy_pkg
+  baver=1.2.0
+
+  cd $root/current/apps
+  export CVSROOT=":gserver:cmscvs.cern.ch:/cvs_server/repositories/CMSSW"
+  cvs co -d PKGTOOLS19 -r V00-19-05 PKGTOOLS
+  cvs co -d PKGTOOLS18 -r V00-18-00 PKGTOOLS
+  cvs co -d PKGTOOLS17 -r V00-17-05 PKGTOOLS
+
+  isdev="false" webdir=/afs/cern.ch/user/d/dmwmbld/www
+  case $variant in
+    sl5 ) archsre="slc5_amd64_gcc(434|461)" ;;
+    sl6 ) archsre="slc6_amd64_gcc461" ;;
+    osx ) archsre="osx106_amd64_gcc461" ;;
+    * )   archsre=$arch isdev="true" webdir=$HOME/www/dmwmbld ;;
+  esac
+
+  perl -p -i -e "s,{ARCHS_RE},$archsre,g; \
+                 s,{ROOT},$root,g;        \
+                 s,{ISDEV},$isdev,g;      " $project_config/config
+
+  perl -p -i -e "s,{WEBDIR},$webdir,g; \
+                 s,{VER},$baver,g;     " $project_config/dmwmbld_task
+}
+
+deploy_dmwmbld_post()
+{
+  (mkcrontab; echo "0 0 * * * $project_config/dmwmbld_task logclean") | crontab -
+
+  case $variant in sl6 ) h="15-55/20" ;; * ) h="*/20" ;; esac
+
+  if [ -z "$(which acrontab)" ]; then :; else
+    klist -s
+    (acrontab -l | { fgrep -v -e "$host $project_config/" -e "$host ssh macms07" || true; }
+     echo "$h * * * * $host $project_config/dmwmbld_task build"
+     echo "0 0 * * * $host $project_config/dmwmbld_task tagclean"
+     case $variant in
+       sl5 )
+         # run in the osx machine too due to lack of acron+afs there
+         webdir=/afs/cern.ch/user/d/dmwmbld/www
+         echo "10-50/20 * * * * $host ssh macms07 $project_config/dmwmbld_task build" \
+                          "&& rsync -q -rvu macms07:$project_state/webarea/ $webdir/"
+         echo "0 0 * * * $host ssh macms07 $project_config/dmwmbld_task tagclean" ;;
+       * ) ;;
+     esac
+    ) | acrontab
+  fi
+
+  note "NOTE: you must request to add your public key to be able to upload to cmsrep."
+}

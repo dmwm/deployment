@@ -1,0 +1,14 @@
+BUILDER_ROOT="{ROOT}"
+BUILDFUNCS="$BUILDER_ROOT/current/config/dmwmbld/build-funcs"
+CMSBUILD17="$BUILDER_ROOT/current/apps/PKGTOOLS17/cmsBuild"
+CMSBUILD18="$BUILDER_ROOT/current/apps/PKGTOOLS18/cmsBuild"
+CMSBUILD19="$BUILDER_ROOT/current/apps/PKGTOOLS19/cmsBuild"
+ARCHS_RE="{ARCHS_RE}"
+STATE="$BUILDER_ROOT/state/dmwmbld"
+WEB="$STATE/webarea"
+BUILDS="$STATE/BUILDS"
+TIMEOUT=21600 # timeout in seconds (6 hours)
+LOGDIR=$BUILDER_ROOT/logs/dmwmbld
+LOG_FILE="$LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)"
+export CVSROOT=":gserver:cmscvs.cern.ch:/cvs_server/repositories/CMSSW"
+ISDEV={ISDEV}
