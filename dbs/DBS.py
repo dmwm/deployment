@@ -10,10 +10,9 @@ DBSVERSION = os.getenv('DBS3_VERSION')
 
 sys.path.append(os.path.join(ROOTDIR,'auth/dbs'))
 
-from DBSSecrets import connectUrlReader
-from DBSSecrets import databaseOwnerReader
-from DBSSecrets import connectUrlWriter
-from DBSSecrets import databaseOwnerWriter
+from DBSSecrets import dbs3_l3_i2
+from DBSSecrets import dbs3_l2_i2
+from DBSSecrets import dbs3_l1_i2
 
 config = Configuration()
 config.component_('SecurityModule')
@@ -24,6 +23,7 @@ config.Webtools.port = 8250
 config.Webtools.log_screen = True
 config.Webtools.proxy_base = 'True'
 config.Webtools.application = 'dbs'
+config.Webtools.environment = 'production'
 
 config.component_('dbs')
 config.dbs.templates = os.path.join(getWMBASE(),'../../templates/WMCore/WebTools')
@@ -32,6 +32,7 @@ config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 300
+config.dbs.instances = ['prod/global','dev/global','int/global']
 
 active = config.dbs.views.section_('active')
 active.section_('DBSReader')
@@ -40,13 +41,26 @@ active.DBSReader.section_('model')
 active.DBSReader.model.object = 'dbs.web.DBSReaderModel'
 active.DBSReader.section_('formatter')
 active.DBSReader.formatter.object = 'WMCore.WebTools.RESTFormatter'
-
-#Oracle
-active.DBSReader.dbowner = databaseOwnerReader
-active.DBSReader.version = DBSVERSION
 active.DBSReader.section_('database')
-active.DBSReader.database.connectUrl = connectUrlReader
-active.DBSReader.database.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+instances = active.DBSReader.database.section_('instances')
+
+ProductionGlobal = instances.section_('prod/global')
+ProductionGlobal.dbowner = dbs3_l2_i2['databaseOwner']
+ProductionGlobal.version = DBSVERSION
+ProductionGlobal.connectUrl = dbs3_l2_i2['connectUrl']['reader']
+ProductionGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+
+DevelopmentGlobal = instances.section_('dev/global')
+DevelopmentGlobal.dbowner = dbs3_l1_i2['databaseOwner']
+DevelopmentGlobal.version = DBSVERSION
+DevelopmentGlobal.connectUrl = dbs3_l1_i2['connectUrl']['reader']
+DevelopmentGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+
+IntegrationGlobal = instances.section_('int/global')
+IntegrationGlobal.dbowner = dbs3_l3_i2['databaseOwner']
+IntegrationGlobal.version = DBSVERSION
+IntegrationGlobal.connectUrl = dbs3_l3_i2['connectUrl']['reader']
+IntegrationGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
 
 active.section_('DBSWriter')
 active.DBSWriter.object = 'WMCore.WebTools.RESTApi'
@@ -54,10 +68,23 @@ active.DBSWriter.section_('model')
 active.DBSWriter.model.object = 'dbs.web.DBSWriterModel'
 active.DBSWriter.section_('formatter')
 active.DBSWriter.formatter.object = 'WMCore.WebTools.RESTFormatter'
-
-#Oracle
-active.DBSWriter.dbowner = databaseOwnerWriter
-active.DBSWriter.version = DBSVERSION
 active.DBSWriter.section_('database')
-active.DBSWriter.database.connectUrl = connectUrlWriter
-active.DBSWriter.database.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+instances = active.DBSWriter.database.section_('instances')
+
+ProductionGlobal = instances.section_('prod/global')
+ProductionGlobal.dbowner = dbs3_l2_i2['databaseOwner']
+ProductionGlobal.version = DBSVERSION
+ProductionGlobal.connectUrl = dbs3_l2_i2['connectUrl']['writer']
+ProductionGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+
+DevelopmentGlobal = instances.section_('dev/global')
+DevelopmentGlobal.dbowner = dbs3_l1_i2['databaseOwner']
+DevelopmentGlobal.version = DBSVERSION
+DevelopmentGlobal.connectUrl = dbs3_l1_i2['connectUrl']['writer']
+DevelopmentGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+
+IntegrationGlobal = instances.section_('int/global')
+IntegrationGlobal.dbowner = dbs3_l3_i2['databaseOwner']
+IntegrationGlobal.version = DBSVERSION
+IntegrationGlobal.connectUrl = dbs3_l3_i2['connectUrl']['writer']
+IntegrationGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }

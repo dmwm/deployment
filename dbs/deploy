@@ -12,7 +12,7 @@ deploy_dbs_prep()
 
 deploy_dbs_sw()
 {
-  deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3 3.0.11.b
+  deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3 3.0.12a
 }
 
 deploy_dbs_post()
@@ -23,8 +23,10 @@ deploy_dbs_post()
 
 deploy_dbs_auth()
 {
-  echo "connectUrlReader='oracle://owner:secret@instance'"
-  echo "databaseOwnerReader='owner'"
-  echo "connectUrlWriter='oracle://owner:secret@instance'"
-  echo "databaseOwnerWriter='owner'"
+  echo "db = {'connectUrl' : {"
+  echo "      'reader' : 'oracle://reader:secret@instance',"
+  echo "      'writer' : 'oracle://writer:secret@instance'"
+  echo "       },"
+  echo "      'databaseOwner' : 'owner'"
+  echo "     }"
 }
