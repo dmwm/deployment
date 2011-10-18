@@ -12,7 +12,7 @@ deploy_admin_prep()
 
 deploy_admin_sw()
 {
-  deploy_pkg -a proxy/.turd comp external+rotatelogs 2.2.19
+  deploy_pkg -a proxy/.turd comp external+rotatelogs 2.2.19-comp
   (echo ". $root/current/apps/rotatelogs/etc/profile.d/init.sh"
    echo ". $root/current/apps/pystack/etc/profile.d/init.sh") \
    > $project_config/init.sh
