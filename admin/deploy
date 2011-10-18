@@ -26,8 +26,8 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms65 | vocms10[567] | vocms5[03] | vocms13[2345689] | \
-    vocms140 | vocms127 )
+    vocms65 | vocms10[567] | vocms13[2345689] | \
+    vocms140 | vocms16[0123] | vocms127 )
       pxlabel=cmsweb_backends ;;
 
     * )
@@ -58,7 +58,8 @@ deploy_admin_post()
 
   case $host:$root in
     vocms65:/data/srv | vocms105:/data/srv | vocms108:/data/srv | \
-    vocms127:/data/srv | vocms134:/data/srv | vocms135:/data/srv )
+    vocms127:/data/srv | vocms134:/data/srv | vocms135:/data/srv | \
+    vocms160:/data/srv | vocm162:/data/srv )
       klist -s # must have afs kerberos token
       LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; } | \

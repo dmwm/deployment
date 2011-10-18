@@ -16,6 +16,6 @@ deploy_t0mon_sw()
 
 deploy_t0mon_post()
 {
-  case $host in vocms53 | vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
+  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 }

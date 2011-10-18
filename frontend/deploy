@@ -79,9 +79,9 @@ deploy_frontend_post()
         " --cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
         " -o $PWD/etc/voms-gridmap.txt --vo cms"
    case $host in
-     vocms105 | vocms135 ) ;;
-     vocms65)  echo "23 */6 * * * $project_config/update-keys $PWD vocms105" ;;
-     vocms134) echo "23 */6 * * * $project_config/update-keys $PWD vocms135" ;;
+     vocms105 | vocms135 | vocms162 ) ;;
+     vocms65 | vocms160 )  echo "23 */6 * * * $project_config/update-keys $PWD vocms105" ;;
+     vocms134 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms135" ;;
      *)        echo "23 */6 * * * $project_config/update-keys $PWD" ;;
    esac) | crontab -
 

@@ -17,7 +17,7 @@ deploy_dbs_sw()
 
 deploy_dbs_post()
 {
-  case $host in vocms53 | vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
+  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 }
 

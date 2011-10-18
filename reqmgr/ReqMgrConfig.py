@@ -13,7 +13,7 @@ HOST = socket.getfqdn().lower()
 COUCH = "https://%s/couchdb" % HOST
 ADD_MONITOR_FLAG = False
 
-if re.match(r"^vocms(?:10[67]|13[689]|140)\.cern\.ch$", HOST):
+if re.match(r"^vocms(?:10[67]|13[689]|140|16[13])\.cern\.ch$", HOST):
   COUCH = "https://cmsweb.cern.ch/couchdb"
 elif re.match(r"^vocms(?:13[23])\.cern\.ch$", HOST):
   COUCH = "https://cmsweb-testbed.cern.ch/couchdb"

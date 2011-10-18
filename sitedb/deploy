@@ -24,9 +24,9 @@ deploy_sitedb_sw()
 
 deploy_sitedb_post()
 {
-  case $host in vocms53 | vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
+  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot
-   case $host in vocms106 )
+   case $host in vocms106 | vocms161 )
      echo "3 * * * * $project_config/HNSync";;
    esac) | crontab -
 }

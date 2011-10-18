@@ -22,7 +22,7 @@
 ### (-R pattern) should be registered with px.support@cern.ch prior to use.
 ###
 ###  export GT_PROXY_MODE=old
-###  myproxy-init -x -R "*/CN=vocms(10[4-9]|116|5[013]|65).cern.ch" \
+###  myproxy-init -x -R "*/CN=vocms(65|10[5-7]|13[2345689]|140|16[0-3]).cern.ch" \
 ###    -c 720 -t 36 -s myproxy.cern.ch -l cmsweb_backends_$(id -un)
 ###
 ### In addition on the first time and whenever the proxy has expired, the

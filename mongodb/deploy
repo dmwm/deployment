@@ -16,6 +16,6 @@ deploy_mongodb_sw()
 
 deploy_mongodb_post()
 {
-  case $host in vocms10[67] | vocms50 | vocms13[2689] ) disable ;; * ) enable ;; esac
+  case $host in vocms10[67] | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 }

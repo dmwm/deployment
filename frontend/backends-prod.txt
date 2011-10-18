@@ -6,4 +6,4 @@
 ^/auth/complete/filemover(?:/|$) vocms140.cern.ch
 ^/overview(?:/|$) vocms107.cern.ch
 ^/das(?:/|$) vocms140.cern.ch
-^ vocms106.cern.ch|vocms107.cern.ch|vocms136.cern.ch
+^ vocms161.cern.ch|vocms107.cern.ch|vocms136.cern.ch
