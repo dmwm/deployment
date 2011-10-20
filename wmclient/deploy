@@ -6,7 +6,7 @@ deploy_wmclient_prep()
 
 deploy_wmclient_sw()
 {
-  WMCORE_VERSION="0.8.4"
+  WMCORE_VERSION=" 0.8.11a"
   deploy_pkg comp cms+wmcore $WMCORE_VERSION
 }
 
