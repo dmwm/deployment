@@ -1,0 +1,56 @@
+#!/bin/sh
+
+##H Usage: cmssls_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   version             get current version of the service
+##H   run                 process job status from sites
+##H   updateweb           update web area with the output of last run
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/GridmapSLS
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+
+WEBDIR={WEBDIR}
+SLS_VER={VER}
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  run )
+    for sls in $ROOT/apps/$ME/*; do
+       [ -x $sls ] || continue;
+       feeder=${sls##*Feed}
+       if [ "$feeder" = "CMSWEB" ]; then
+         $ROOT/apps/$ME/Feed$feeder $STATEDIR
+       else
+         $ROOT/apps/$ME/Feed$feeder > $STATEDIR/sls_$(echo $feeder| tr '[A-Z]' '[a-z]').xml
+       fi
+    done
+    ;;
+
+  updateweb )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    rsync -q -au $STATEDIR/ $WEBDIR/
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "${SLS_VER:-unknown}"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

@@ -1,0 +1,36 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_happyface_prep()
+{
+  mkproj webpage
+}
+
+deploy_happyface_sw()
+{
+  hfver=r656
+  deploy_pkg comp cms+happyface $hfver
+
+  webdir=/afs/cern.ch/cms/LCG/www/t1jobmon
+
+  perl -p -i -e "s,{WEBDIR},$webdir,g; \
+                 s,{VER},$hfver,g;     " $project_config/hf_task
+  perl -p -i -e "s,/data/HappyFace/webpage,$project_state/webpage,g; \
+                 s,/data/state/happyface/webpage,$project_state/webpage,g" \
+                $root/current/apps/happyface/lib/python*/site-packages/HappyFace/run.cfg
+}
+
+deploy_happyface_post()
+{
+  cp -rp $root/current/apps/happyface/webpage/* $project_state/webpage/
+  (mkcrontab
+   echo "*/15 * * * * $project_config/hf_task run"
+   echo "0 0 * * * $project_config/hf_task logclean"
+  ) | crontab -
+
+  klist -s
+  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
+   echo "10-55/15 * * * * $host $project_config/hf_task updateweb"
+  ) | acrontab
+
+  note "NOTE: you must configure a CERN web area serving files from $webdir."
+}

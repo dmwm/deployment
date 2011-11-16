@@ -1,0 +1,31 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_cmssls_prep()
+{
+  mkproj
+}
+
+deploy_cmssls_sw()
+{
+  deploy_pkg
+
+  hfver=r23 webdir=/afs/cern.ch/cms/LCG/www/SLS
+  cd $root/current/apps
+  svn co svn+ssh://svn.cern.ch/reps/cmsfomon/GridmapSLS/trunk cmssls
+
+  perl -p -i -e "s,{WEBDIR},$webdir,g; \
+                 s,{VER},$hfver,g;     " $project_config/cmssls_task
+}
+
+deploy_cmssls_post()
+{
+  (mkcrontab
+   echo "*/10 * * * * $project_config/cmssls_task run") | crontab -
+
+  klist -s
+  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
+   echo "05-55/10 * * * * $host $project_config/cmssls_task updateweb"
+  ) | acrontab
+
+  note "NOTE: you must configure a CERN web area serving files from $webdir."
+}
