@@ -1,0 +1,37 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_downtimecal_prep()
+{
+  mkproj
+}
+
+deploy_downtimecal_sw()
+{
+  deploy_pkg -a downtimecal/googleauth
+
+  cd $root/current/apps
+  svn co svn+ssh://svn.cern.ch/reps/cmsfomon/DowntimeCalendar/trunk downtimecal
+
+  acct=$(grep email $project_auth/googleauth |sed 's,@,\\@,g')
+  pass=$(grep password $project_auth/googleauth|sed 's,@,\\@,g')
+  perl -p -i -e "s,email =.*,$acct,g; s,password =.*,$pass,g;" \
+                $root/current/apps/downtimecal/gcalendar.cfg
+  chmod 400 $root/current/apps/downtimecal/gcalendar.cfg
+}
+
+deploy_downtimecal_post()
+{
+  (mkcrontab | { fgrep -v -e "$root/current/apps/downtimecal/" || true; }
+   echo "8,23,38,53 * * * * python2.6 $root/current/apps/downtimecal/gcalendar.py" \
+        "> $project_logs/output.log 2> $project_logs/error.log") | crontab -
+
+  note "NOTE: you must create the calendars under the google account" \
+       "$(grep email $project_auth/googleauth | cut -d'=' -f2)."
+}
+
+deploy_downtimecal_auth()
+{
+  echo "[auth]"
+  echo "email = fill_me_in@gmail.com"
+  echo "password = FILL_ME_IN"
+}
