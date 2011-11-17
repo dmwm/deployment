@@ -5,11 +5,11 @@ STATEDIR  = "%s/state/dqmgui/relval" % BASEDIR
 LOGDIR    = "%s/logs/dqmgui/relval" % BASEDIR
 
 LAYOUTS = ["%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, x) for x in
-           ("hlt", )]
+           ("hlt", "ecal" )]
 LAYOUTS += ["%s/layouts/%s_overview_layouts.py" % (CONFIGDIR, x) for x in
             ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
 LAYOUTS += ["%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, x) for x in
-           ("hlt", )]
+           ("hlt", "ecal" )]
 
 modules = ("Monitoring.DQM.GUI",)
 
