@@ -57,6 +57,10 @@ job_process_file() {
     cat $LOG_FILE.*.$REPO.chk 2>/dev/null; echo;
     rm -f $LOG_FILE.*.$REPO.chk
 
+    for ARCH in $(ls $WEB/*$REPO | cut -d. -f2 | sort -u | egrep ${ARCHS_RE}); do
+        (for F in $WEB/*$ARCH.$REPO; do cat $F; echo; done) > $WEB/$ARCH.$REPO.snapshot
+    done
+
     exit 0 # job succeeded
 }
 
