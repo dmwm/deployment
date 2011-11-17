@@ -17,7 +17,6 @@ TOP=$(cd $(dirname $0)/../../.. && pwd)
 CFGDIR=$(dirname $0)
 STATEDIR=$TOP/state/$ME
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
-TERM=dumb
 
 WEBDIR={WEBDIR}
 DMWMBLD_VER={VER}
@@ -26,7 +25,7 @@ DMWMBLD_VER={VER}
 case ${1:-help} in
   build )
     klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    $CFGDIR/builder-agent.sh $CFGDIR/config
+    TERM=dumb $CFGDIR/builder-agent.sh $CFGDIR/config
     [ -d "$WEBDIR" ] && rsync -q -rvu $STATEDIR/webarea/ $WEBDIR/ || true
     ;;
 
