@@ -9,7 +9,6 @@ deploy_dmwmbld_prep()
 deploy_dmwmbld_sw()
 {
   deploy_pkg
-  baver=1.2.0
 
   cd $root/current/apps
   export CVSROOT=":gserver:cmscvs.cern.ch:/cvs_server/repositories/CMSSW"
@@ -30,7 +29,7 @@ deploy_dmwmbld_sw()
                  s,{ISDEV},$isdev,g;      " $project_config/config
 
   perl -p -i -e "s,{WEBDIR},$webdir,g; \
-                 s,{VER},$baver,g;     " $project_config/dmwmbld_task
+                 s,{VER},$cfgversion,g;     " $project_config/dmwmbld_task
 }
 
 deploy_dmwmbld_post()
