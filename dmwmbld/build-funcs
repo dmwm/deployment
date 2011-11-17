@@ -211,12 +211,11 @@ update_status() {
 
     # Prepares the status information
     local DATE=$(date +"%Y-%m-%d %H:%M:%S %z %a")
-    local DIFF="-"
 
     # Updates the status pages
     for RPM in $RPMS; do
 	local PKG=$(echo $RPM|cut -d"+" -f2)
-	local ENTRY="| $PKG  | $RPM  | $DATE  | $DIFF  | $TAG  |"
+	local ENTRY="| $PKG  | $RPM  | $DATE  | $TAG  |"
 	echo "$ENTRY" >> $WEB/$PKG.$ARCH.$REPO.history
 	echo -n "$ENTRY" > $WEB/$PKG.$ARCH.$REPO
     done
