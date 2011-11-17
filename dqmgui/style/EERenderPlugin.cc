@@ -1,12 +1,12 @@
-// $Id: EERenderPlugin.cc,v 1.171 2011/09/02 14:18:55 yiiyama Exp $
+// $Id: EERenderPlugin.cc,v 1.172 2011/10/27 21:43:39 yiiyama Exp $
 
 /*!
   \file EERenderPlugin
   \brief Display Plugin for Quality Histograms
   \author G. Della Ricca
   \author B. Gobbo
-  \version $Revision: 1.171 $
-  \date $Date: 2011/09/02 14:18:55 $
+  \version $Revision: 1.172 $
+  \date $Date: 2011/10/27 21:43:39 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -893,6 +893,16 @@ private:
 
       if( name.find( "EESFT" ) != std::string::npos &&
           name.find( "summary" ) == std::string::npos )
+      {
+        obj->SetMinimum(0.0);
+        gStyle->SetPalette(10, pCol5);
+        gPad->SetRightMargin(0.15);
+        gStyle->SetPaintTextFormat("+g");
+        if( r.drawOptions.size() == 0 ) r.drawOptions = "colz";
+        return;
+      }
+
+      if( name.find( "EERDT" ) != std::string::npos )
       {
         obj->SetMinimum(0.0);
         gStyle->SetPalette(10, pCol5);
@@ -1828,6 +1838,31 @@ private:
             text13->Draw("text,same");
           }
         }
+        return;
+      }
+
+      if(name.find("EERDT") != std::string::npos){
+        if( name.find( "EE -" ) != std::string::npos )
+          {
+            int x1 = text6->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmin());
+            int x2 = text6->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmax());
+            int y1 = text6->GetYaxis()->FindFixBin(obj->GetYaxis()->GetXmin());
+            int y2 = text6->GetYaxis()->FindFixBin(obj->GetYaxis()->GetXmax());
+            text6->GetXaxis()->SetRange(x1, x2);
+            text6->GetYaxis()->SetRange(y1, y2);
+            text6->Draw("text,same");
+          }
+
+        if( name.find( "EE +" ) != std::string::npos )
+          {
+            int x1 = text7->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmin());
+            int x2 = text7->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmax());
+            int y1 = text7->GetYaxis()->FindFixBin(obj->GetYaxis()->GetXmin());
+            int y2 = text7->GetYaxis()->FindFixBin(obj->GetYaxis()->GetXmax());
+            text7->GetXaxis()->SetRange(x1, x2);
+            text7->GetYaxis()->SetRange(y1, y2);
+            text7->Draw("text,same");
+          }
         return;
       }
 

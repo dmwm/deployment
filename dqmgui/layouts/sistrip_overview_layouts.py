@@ -1,25 +1,25 @@
 def tklayout(i, p, *rows): i["Collisions/TrackingFeedBack/" + p] = DQMItem(layout=rows)
 
 tklayout(dqmitems, "00 - Number Of Tracks",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfGoodTracks_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfTracks_HeavyIonTk",
     'description': "Number of Reconstructed Tracks  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "01 - Track Pt",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackPt_ImpactPoint_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/TrackPt_ImpactPoint_HeavyIonTk",
     'description': "Pt of Reconstructed Track  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "02 - Track Phi",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackPhi_ImpactPoint_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/TrackPhi_ImpactPoint_HeavyIonTk",
     'description': "Phi distribution of Reconstructed Tracks  -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "03 - Track Eta",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackEta_ImpactPoint_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_ImpactPoint_HeavyIonTk",
     'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOnlineDQMInstructions>SiStripOnlineDQMInstructions</a> "}])
 tklayout(dqmitems, "04 - X-Position Of Closest Approach",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/xPointOfClosestApproach_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/xPointOfClosestApproach_HeavyIonTk",
     'description': "x coordinate of closest point wrt the beam "}])
 tklayout(dqmitems, "05 - Y-Position Of Closest Approach",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/yPointOfClosestApproach_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/yPointOfClosestApproach_HeavyIonTk",
     'description': "y coordinate of closest point wrt the beam "}])
 tklayout(dqmitems, "06 - Z-Position Of Closest Approach",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/zPointOfClosestApproach_GenTk",
+ [{ 'path': "Tracking/TrackParameters/GeneralProperties/zPointOfClosestApproach_HeavyIonTk",
     'description': "z coordinate of closest point wrt the beam "}])
 tklayout(dqmitems, "07 - Cluster y width vs. cluster eta",
  [{ 'path': "Pixel/Barrel/sizeYvsEta_siPixelClusters_Barrel",

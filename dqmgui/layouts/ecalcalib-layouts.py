@@ -35,12 +35,12 @@ ecalcaliblclayout(dqmitems, "08 Laser GPIB Action Duration",
                   [{ 'path': "EcalCalibration/Laser/EcalLaser attenuator change duration", 'description': "" }],
                   [{ 'path': "EcalCalibration/Laser/EcalLaser color change duration", 'description': "" }])
 
-# ecalcaliblclayout(dqmitems, "09 Laser Amplitude Map Barrel",
-#                   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/EBLT amplitude map L1", 'description': "Amplitude of the blue laser measured at the detector"}],
-#                   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/EBLT amplitude map L4", 'description': "Amplitude of the IR laser measured at the detector"}])
+ecalcaliblclayout(dqmitems, "09 Laser Amplitude Map Barrel",
+                  [{ 'path': "EcalBarrel/EBLaserTask/Laser1/EBLT amplitude map L1", 'description': "Amplitude of the blue laser measured at the detector"}],
+                  [{ 'path': "EcalBarrel/EBLaserTask/Laser4/EBLT amplitude map L4", 'description': "Amplitude of the IR laser measured at the detector"}])
 
-# ecalcaliblclayout(dqmitems, "10 Laser Amplitude Map Endcap",
-#                   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT amplitude map L1 EE -", 'description': "Amplitude of the blue laser measured at the detector EE -"},
-#                    { 'path': "EcalEndcap/EELaserTask/Laser1/EELT amplitude map L1 EE +", 'description': "Amplitude of the blue laser measured at the detector EE +" }],
-#                   [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE -", 'description': "Amplitude of the IR laser measured at the detector EE -"},
-#                    { 'path': "EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE +", 'description': "Amplitude of the IR laser measured at the detector EE +" }])
+ecalcaliblclayout(dqmitems, "10 Laser Amplitude Map Endcap",
+                  [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT amplitude map L1 EE -", 'description': "Amplitude of the blue laser measured at the detector EE -"},
+                   { 'path': "EcalEndcap/EELaserTask/Laser1/EELT amplitude map L1 EE +", 'description': "Amplitude of the blue laser measured at the detector EE +" }],
+                  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE -", 'description': "Amplitude of the IR laser measured at the detector EE -"},
+                   { 'path': "EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE +", 'description': "Amplitude of the IR laser measured at the detector EE +" }])

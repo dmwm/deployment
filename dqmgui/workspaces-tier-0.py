@@ -1,8 +1,7 @@
 server.workspace('DQMQuality', 0, 'Summaries', 'Summary')
 server.workspace('DQMSummary', 1, 'Summaries', 'Reports')
 server.workspace('DQMShift',   2, 'Summaries', 'Shift')
-server.workspace('DQMCertification',   3, 'Summaries', 'Certification')
-server.workspace('DQMContent', 4, 'Summaries', 'Everything', '^')
+server.workspace('DQMContent', 3, 'Summaries', 'Everything', '^')
 
 server.workspace('DQMContent', 10, 'Tracker/Muons', 'Pixel', '^Pixel/',
                  'Pixel/Layouts/00b - Pixel_Error_Summary',
@@ -91,9 +90,8 @@ server.workspace('DQMContent', 44, 'POG', 'Btag', '^Btag/',
 
 server.workspace('DQMContent', 45, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonitor|OfflinePV)/',
                                   'Tracking/Layouts/01 - Tracking ReportSummary',
-                                  'Tracking/Layouts/02 - Tracks (pp collisions)',
-                                  'Tracking/Layouts/03 - Tracks (pp data) - no track selection',
-                                  'Tracking/Layouts/04 - Tracks (Cosmic Tracking)'
+                                  'Tracking/Layouts/02 - Tracks (HI collisions)',
+                                  'Tracking/Layouts/03 - Tracks (Cosmic Tracking)'
                                   )
 
 server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/',

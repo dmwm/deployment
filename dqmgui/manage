@@ -314,17 +314,19 @@ start()
     vocms138:*afs-sync* )
       refuseproc "afs sync" "visDQMAfsSync"
 
-      DIRS=OnlineData,OfflineData/Run2011/StreamExpress
-      DIRS=$DIRS,OfflineData/Run2011/StreamExpressCosmics
-      DIRS=$DIRS,OfflineData/Run2011/Commissioning
-      DIRS=$DIRS,OfflineData/Run2011/Cosmics,OfflineData/Run2011/MinimumBias
+      DIRS=OnlineData,OfflineData/HIRun2011/StreamHIExpress
+      DIRS=$DIRS,OfflineData/HIRun2011/StreamExpressCosmics
+      DIRS=$DIRS,OfflineData/HIRun2011/Commissioning
+      DIRS=$DIRS,OfflineData/ComissioningHI11
+      DIRS=$DIRS,OfflineData/HIRun2011/Cosmics
+      DIRS=$DIRS,OfflineData/HIRun2011/MinimumBias
 
       for D in offline; do
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-afssync \
           visDQMAfsSync \
           --dirs $DIRS \
-          --dirs_quotas=30G,20G,20G,20G,20G,20G 130G \
+          --dirs_quotas=30G,20G,20G,15G,15G,15G,15G 130G \
           $DQM_DATA/data /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data
       done
       ;;

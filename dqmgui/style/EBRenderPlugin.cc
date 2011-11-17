@@ -1,12 +1,12 @@
-// $Id: EBRenderPlugin.cc,v 1.147 2011/09/02 14:18:55 yiiyama Exp $
+// $Id: EBRenderPlugin.cc,v 1.148 2011/10/27 21:43:39 yiiyama Exp $
 
 /*!
   \file EBRenderPlugin
   \brief Display Plugin for Quality Histograms
   \author G. Della Ricca
   \author B. Gobbo
-  \version $Revision: 1.147 $
-  \date $Date: 2011/09/02 14:18:55 $
+  \version $Revision: 1.148 $
+  \date $Date: 2011/10/27 21:43:39 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -698,6 +698,15 @@ private:
         return;
       }
 
+      if(name.find("EBRDT") != std::string::npos){
+        obj->SetMinimum(0.0);
+        gStyle->SetPalette(10, pCol5);
+        gPad->SetRightMargin(0.15);
+        gStyle->SetPaintTextFormat("+g");
+        if( r.drawOptions.size() == 0 ) r.drawOptions = "colz";
+        return;
+      }
+
       if( name.find( "G12 RMS map" ) != std::string::npos )
       {
         obj->SetMinimum(0.5);
@@ -1160,7 +1169,8 @@ private:
       if( nbx == 72 && nby == 34 )
         {
           if( name.find( "seed" ) != std::string::npos ||
-              name.find( "EBTMT timing quality summary" ) != std::string::npos )
+              name.find( "EBTMT timing quality summary" ) != std::string::npos ||
+              name.find("EBRDT") != std::string::npos)
             {
               int x1 = text6->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmin());
               int x2 = text6->GetXaxis()->FindFixBin(obj->GetXaxis()->GetXmax());

@@ -26,7 +26,7 @@ server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracki
                  'SiStrip/Layouts/05 - OnTrackCluster (StoN)',
                  'SiStrip/Layouts/06 - OffTrackCluster (Total Number)',
                  'SiStrip/Layouts/07 - Tracking ReportSummary',
-                 'SiStrip/Layouts/08 - Tracks (pp collisions)',
+                 'SiStrip/Layouts/08 - Tracks (HI collisions)',
                  'SiStrip/Layouts/09 - Tracks (Cosmic Tracking)')
 
 server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStripLAS', '^SiStripLAS/',
@@ -146,7 +146,7 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'Castor', '^Castor/',
                  'Castor/Layouts/CASTOR Total Energy ratio EM to HAD per event'
                 )
 
-server.workspace('DQMContent', 40, 'Trigger/Lumi', 'HLX', '^HLX',
+server.workspace('DQMContent', 40, 'Trigger/Lumi', 'HLX', '^HLX/',
                  'HLX/Layouts/HF-Comparison',
                  'HLX/Layouts/HLX-Averages',
                  'HLX/Layouts/HLX-Luminosity',
