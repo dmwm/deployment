@@ -37,7 +37,7 @@ deploy_dmwmbld_post()
 {
   (mkcrontab; echo "0 0 * * * $project_config/dmwmbld_task logclean") | crontab -
 
-  case $variant in sl6 ) h="15-55/20" ;; * ) h="*/20" ;; esac
+  case $variant in sl6 ) h="05-55/10" ;; * ) h="*/10" ;; esac
 
   if [ -z "$(which acrontab)" ]; then :; else
     klist -s
@@ -48,7 +48,7 @@ deploy_dmwmbld_post()
        sl5 )
          # run in the osx machine too due to lack of acron+afs there
          webdir=/afs/cern.ch/user/d/dmwmbld/www
-         echo "10-50/20 * * * * $host ssh macms07 $project_config/dmwmbld_task build" \
+         echo "05-55/10 * * * * $host ssh macms07 $project_config/dmwmbld_task build" \
                           "&& rsync -q -rvu macms07:$project_state/webarea/ $webdir/"
          echo "0 0 * * * $host ssh macms07 $project_config/dmwmbld_task tagclean" ;;
        * ) ;;
