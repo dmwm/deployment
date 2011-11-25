@@ -85,7 +85,7 @@ case $STAGE in
 
     for host in $HOSTS; do
       sudo rsync -nzcavmH -e "ssh -c arcfour" \
-        --rsync-path="sudo rsync" --delete --delete-excluded \
+        --rsync-path="sudo rsync" --delete \
         -f "+ /srv-dev/$VER" -f ". $PWD/cfg/admin/rsync-dev.rules" \
         $PWD/ cmsweb@$host:$PWD/
     done
