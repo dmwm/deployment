@@ -48,8 +48,11 @@ cd $STATEDIR
 clean_db()
 {
     set -e
-    echo "Clean $1"
-    mongo --port 8230 stagingarea/clean_$1.js
+    dbname=`echo $1 | sed "s/_db//g"`
+    if [ -f $STATEDIR/db/$dbname.ns ]; then
+        echo "Clean $1"
+        mongo --port 8230 stagingarea/clean_$1.js
+    fi
     set +e
 }
 update_db()
@@ -86,9 +89,8 @@ start()
   $MONGO_ROOT/bin/mongod --dbpath=$STATEDIR/db \
       --port 8230 --nohttpinterface --bind_ip 127.0.0.1 \
       </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-%Y%m%d.log 86400 >/dev/null 2>&1 &
-  sleep 2
+  sleep 60
   echo "$ME is ready"
-  sleep 2
   clean_db "das_db"
   update_db "mapping_db"
 }
