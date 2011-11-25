@@ -1,5 +1,5 @@
 """
-DBS Server  configuration file
+DBS Server cmsweb prod configuration file
 """
 import os,logging,sys
 from WMCore.Configuration import Configuration
@@ -11,7 +11,7 @@ DBSVERSION = os.getenv('DBS3_VERSION')
 sys.path.append(os.path.join(ROOTDIR,'auth/dbs'))
 
 from DBSSecrets import dbs3_l3_i2
-from DBSSecrets import dbs3_l2_i2
+from DBSSecrets import dbs3_p1_i2
 from DBSSecrets import dbs3_l1_i2
 
 config = Configuration()
@@ -45,9 +45,9 @@ active.DBSReader.section_('database')
 instances = active.DBSReader.database.section_('instances')
 
 ProductionGlobal = instances.section_('prod/global')
-ProductionGlobal.dbowner = dbs3_l2_i2['databaseOwner']
+ProductionGlobal.dbowner = dbs3_p1_i2['databaseOwner']
 ProductionGlobal.version = DBSVERSION
-ProductionGlobal.connectUrl = dbs3_l2_i2['connectUrl']['reader']
+ProductionGlobal.connectUrl = dbs3_p1_i2['connectUrl']['reader']
 ProductionGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
 
 DevelopmentGlobal = instances.section_('dev/global')
@@ -72,9 +72,9 @@ active.DBSWriter.section_('database')
 instances = active.DBSWriter.database.section_('instances')
 
 ProductionGlobal = instances.section_('prod/global')
-ProductionGlobal.dbowner = dbs3_l2_i2['databaseOwner']
+ProductionGlobal.dbowner = dbs3_p1_i2['databaseOwner']
 ProductionGlobal.version = DBSVERSION
-ProductionGlobal.connectUrl = dbs3_l2_i2['connectUrl']['writer']
+ProductionGlobal.connectUrl = dbs3_p1_i2['connectUrl']['writer']
 ProductionGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
 
 DevelopmentGlobal = instances.section_('dev/global')
