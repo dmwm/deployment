@@ -3,6 +3,6 @@
 DIR=${1-/data}
 cd $DIR
 sudo rsync -zavuH -e 'ssh -c arcfour' --rsync-path="sudo rsync" --exclude '**/phedex*/cache' cmsweb@vocms136.cern.ch:/data/ ./
-sudo rsync -zavuH -e 'ssh -c arcfour' --rsync-path="sudo rsync" --exclude '**/phedex*/cache' cmsweb@vocms107.cern.ch:/data/ ./
+sudo rsync -zavuH -e 'ssh -c arcfour' --rsync-path="sudo rsync" --exclude '**/phedex*/cache' cmsweb@vocms163.cern.ch:/data/ ./
 sudo rsync -zavuH -e 'ssh -c arcfour' --rsync-path="sudo rsync" --exclude '/pool/store/*' --exclude '**/download/[a-y]*' --exclude '**/download/z[^ah]*' --exclude '**/phedex*/cache' cmsweb@vocms140.cern.ch:/data/ ./
 sudo /usr/sbin/ncm-ncd --configure grid_service_certificates

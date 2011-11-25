@@ -4,6 +4,6 @@
 ^/auth/complete/dqm/dev(?:/|$) vocms133.cern.ch
 ^/auth/complete/(?:couchdb|workqueue)(?:/|$) vocms140.cern.ch :affinity
 ^/auth/complete/filemover(?:/|$) vocms140.cern.ch
-^/overview(?:/|$) vocms107.cern.ch
+^/overview(?:/|$) vocms163.cern.ch
 ^/das(?:/|$) vocms140.cern.ch
-^ vocms161.cern.ch|vocms107.cern.ch|vocms136.cern.ch
+^ vocms161.cern.ch|vocms163.cern.ch|vocms136.cern.ch
