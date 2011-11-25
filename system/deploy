@@ -276,15 +276,6 @@ deploy_system_post()
       /usr/kerberos/bin/klist -s
       sudo -l
 
-      # Fetch CRLs. Do this only for front-end and combined front-/back-end.
-      case $variant in
-        frontend )
-          sudo sh -c 'http_proxy="http://ca-proxy.cern.ch/" /opt/edg/etc/cron/edg-fetch-crl-cron' ;;
-        backend )
-          [ ! -f /opt/edg/etc/cron/edg-fetch-crl-cron ] ||
-            sudo sh -c 'http_proxy="http://ca-proxy.cern.ch/" /opt/edg/etc/cron/edg-fetch-crl-cron' ;;
-      esac
-
       # Verify the host certificate is ok.
       note "INFO: cert subject:    " $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -subject)
       note "INFO: cert fingerprint:" $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -fingerprint)
