@@ -46,7 +46,7 @@ deploy_reqmgr_sw()
       cp $wmcore_etc/deploy/wmagent-mysql.cnf $mysql_config
       ;;
     * )
-      case $variant in *prod ) secrets= ;; * ) secrets=Dev ;; esac
+      case $variant in prod ) secrets= ;; preprod ) secrets=Preprod ;; * ) secrets=Dev ;; esac
       deploy_pkg \
         -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
         -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
