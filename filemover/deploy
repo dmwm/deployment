@@ -1,4 +1,6 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_filemover_variants="default prod preprod dev"
+
 deploy_filemover_deps()
 {
   deploy backend
@@ -14,7 +16,9 @@ deploy_filemover_prep()
 
 deploy_filemover_sw()
 {
-  deploy_pkg comp cms+filemover 1.0.11
+  deploy_pkg comp cms+filemover 1.1.0
+  case $variant in dev ) suff="-dev";; preprod ) suff="-testbed";; * ) suff="";; esac
+  perl -p -i -e "s|cmsweb.cern.ch/|cmsweb${suff}.cern.ch/|g" $project_config/fm_config.py
 }
 
 deploy_filemover_post()

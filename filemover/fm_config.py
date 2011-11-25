@@ -24,6 +24,14 @@ config.FileMover.title = 'CMS FileMover Documentation'
 config.FileMover.description = 'Documentation on the FileMover'
 config.FileMover.index = "FileMover"
 
+# phedex section
+phedex = config.FileMover.section_('phedex')
+phedex.url = 'https://cmsweb.cern.ch/phedex/datasvc/json/prod'
+
+# sitedb section
+sitedb = config.FileMover.section_('sitedb')
+sitedb.url = 'https://cmsweb.cern.ch/sitedb/json/index'
+
 # dbs section
 dbs = config.FileMover.section_('dbs')
 dbs.url = 'http://cmsdbsprod.cern.ch'
