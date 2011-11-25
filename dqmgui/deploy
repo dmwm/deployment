@@ -33,7 +33,7 @@ deploy_dqmgui_prep()
 
 deploy_dqmgui_sw()
 {
-  deploy_pkg comp cms+dqmgui 6.1.1
+  deploy_pkg comp cms+dqmgui 6.1.2
 }
 
 deploy_dqmgui_post()
