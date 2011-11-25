@@ -28,7 +28,9 @@ deploy_workqueue_sw()
 deploy_workqueue_post()
 {
   # Do cache cleanup
-  sudo -H -u _workqueue bashs -lc "rm -rf $root/state/workqueue/cache/*"
+  local cmd="rm -rf $root/state/workqueue/cache/*"
+  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
+  eval $cmd
 
   # Tell couchdb to push workqueue apps on the next restart
   local manage=$root/current/config/workqueue/workqueue_task
