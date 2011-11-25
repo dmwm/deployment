@@ -73,4 +73,4 @@ config.das.verbose = 0
 config.das.multitask = True
 config.das.error_expire = 300
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
-config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','ip_service','combined','conddb','reqmgr']
+config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb','tier0','combined','conddb','reqmgr']

@@ -15,7 +15,7 @@ deploy_das_prep()
 
 deploy_das_sw()
 {
-  deploy_pkg comp cms+das 0.9.8
+  deploy_pkg comp cms+das 1.0.1
   perl -p -i -e "s|{ROOT}|$root|" $project_config/analytics_cfg.py
 }
 
@@ -31,7 +31,9 @@ deploy_das_post()
   (echo 'mapping = db.getSisterDB("mapping");'
    echo 'mapping.dropDatabase();') > \
    $mongodb_stage/clean_mapping_db.js
-  (echo 'das = db.getSisterDB("das");'
+  (echo 'parser = db.getSisterDB("parser");'
+   echo 'parser.db.drop();'
+   echo 'das = db.getSisterDB("das");'
    echo 'das.dropDatabase();') > \
    $mongodb_stage/clean_das_db.js
   cp $root/current/apps/das/lib/python2.6/site-packages/DAS/services/cms_maps/das_maps.js \
