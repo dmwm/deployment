@@ -16,7 +16,7 @@ workqueueInboxDbName = 'workqueue_inbox'
 HOST = "cmsweb-testbed.cern.ch"
 REQMGR = "https://cmsweb-testbed.cern.ch/reqmgr/reqMgr"
 COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
-TEAMS = 'testbed-dataops,testbed-dmwm,testbed-integration,testbed-processing,testbed-production,testbed-relval,testbed-analysis'
+TEAMS = 'testbed-dataops,testbed-dmwm,testbed-integration,testbed-processing,testbed-production,testbed-relval,testbed-analysis,testbed-t1,testbed-t1_highprio,testbed-mc,testbed-mc_highprio'
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 
 
