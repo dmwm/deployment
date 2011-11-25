@@ -12,7 +12,7 @@ deploy_dbsweb_prep()
 deploy_dbsweb_sw()
 {
   app=$root/current/apps/dbs-web
-  deploy_pkg comp cms+dbs-web V06_00_52
+  deploy_pkg comp cms+dbs-web V06_00_52-comp
   perl -p -i -e "s|{ROOT}|$root|g" $project_config/DBSDD.conf
   setgroup ug+r,g-w,o-rwx _config $project_config/DBSDD.conf
   chmod g-w,o-rwx $project_config/DBSDD.conf

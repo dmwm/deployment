@@ -15,10 +15,10 @@ deploy_sitedb_sw()
 {
   case $variant in
     default )
-      deploy_pkg -a sitedb/SiteDBAuth.py comp cms+sitedb 2.0.0 ;;
+      deploy_pkg -a sitedb/SiteDBAuth.py comp cms+sitedb 2.0.0-comp ;;
     * )
       deploy_pkg -a sitedb/sitedb.ini -a sitedb/security.ini -a sitedb/SiteDBAuth.py \
-        comp cms+sitedb 2.0.0 ;;
+        comp cms+sitedb 2.0.0-comp ;;
   esac
 }
 
