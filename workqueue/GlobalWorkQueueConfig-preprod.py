@@ -18,7 +18,7 @@ REQMGR = "https://cmsweb-testbed.cern.ch/reqmgr/reqMgr"
 COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
 TEAMS = 'testbed-dataops,testbed-dmwm,testbed-integration,testbed-processing,testbed-production,testbed-relval,testbed-analysis,testbed-t1,testbed-t1_highprio,testbed-mc,testbed-mc_highprio'
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
-
+PHEDEX = "https://cmsweb-testbed.cern.ch/phedex/datasvc/json/prod/"
 
 root = __file__.rsplit('/', 4)[0]
 cache_dir = os.path.join(root, 'state', 'workqueue', 'cache')
@@ -37,7 +37,7 @@ config.WorkQueueManager.couchurl = COUCH
 config.WorkQueueManager.dbname = workqueueDBName
 config.WorkQueueManager.inboxDatabase = workqueueInboxDbName
 config.WorkQueueManager.level = "GlobalQueue"
-config.WorkQueueManager.queueParams = {}
+config.WorkQueueManager.queueParams = {'PhEDExEndpoint' : PHEDEX}
 config.WorkQueueManager.queueParams['QueueURL'] = WEBURL
 config.WorkQueueManager.reqMgrConfig = {}
 config.WorkQueueManager.reqMgrConfig['endpoint'] = REQMGR
