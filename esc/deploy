@@ -1,0 +1,26 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_esc_variants="comp cmssw"
+deploy_esc_prep()
+{
+  mkproj -s -l
+}
+
+deploy_esc_sw()
+{
+  case $variant in
+    cmssw )
+      deploy_pkg cms cms+cmssw CMSSW_4_4_1
+      ;;
+
+    comp )
+      deploy_pkg comp cms+esc-webdoc 2011c
+      rm -f $root/current/apps/esc-webdoc
+      deploy_pkg comp cms+esc 2011c
+
+      rm -f $root/env-*.sh
+      for f in $project_config/env-*.sh; do
+        ln -s $f $root/$(basename $f)
+      done
+      ;;
+  esac
+}
