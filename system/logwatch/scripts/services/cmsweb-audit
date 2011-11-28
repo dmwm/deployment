@@ -32,7 +32,123 @@ rxapcachehdrv = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header\.vary"
 rxapcachehdrvd = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header\.vary"
                             r"(?:/[A-Za-z0-9_@]+){3}\.data$")
 
+# Python interpreter.
+rxpython = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+		      r"external/python/[-.a-z0-9]+/bin/python$")
+
+# Python config and auth .pyc files (not writeable).
+rxsecretconfig = re.compile(r"^(/data/srv/current/)(?:auth|config)(/[a-z0-9]+/)"
+                            r"[A-Za-z0-9_]*(?:[Ss]ecrets|[Cc]onfig|[Aa]uth|DBS)\.pyc$")
+
+# Filemover downloads.
+rxfmcache = re.compile(r"^(/data/srv/state/filemover/download/)"
+                       r"[0-9a-f]+(/softlinks)?/[-A-Za-z0-9_]+\.root$")
+rxfmdirdl = re.compile(r"^(/data/srv/state/filemover/download/)"
+                       r"[0-9a-f]+(/softlinks)$")
+rxfmdirst = re.compile(r"^(/data/srv/state/filemover/store/)"
+                       r"(?:[-A-Za-z0-9_/]+)$")
+rxfmcmd = ((re.compile(r"^(/bin/sh) (/data/srv/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                       r"external/srmcp/[-.a-z0-9_]+/(?:sbin/srm|bin/srmcp))"
+                       r"( -[a-z_]+(?:=[a-z0-9]+)?)*"
+                       r" 'srm://[-.a-z0-9]+:\d+/srm/(?:v2/server|managerv2)\?SFN="
+                       r"[-A-Za-z0-9/._]*/store/[-A-Za-z0-9/_]+\.root'"
+                       r" (file:////data/srv/state/filemover/store/)"
+                       r"(?:[-A-Za-z0-9_/]+)\.root$"),
+            [r"\1", r"\2", r"-OPTION=VAL...",
+             r"srm://server:port/srm/managerv2?SFN=/A/B/C.root",
+             r"\4A/B/C.root"]),
+           (re.compile(r"^(python) (-c) '(import os, sys; os\.setpgrp\(\); "
+                       r"os\.execvp\(sys\.argv\[1\], sys\.argv\[2:\]\))' "
+                       r"(srmcp) (srmcp)( -[a-z_]+=[a-z0-9]+)*"
+                       r" 'srm://[-.a-z0-9]+:\d+/srm/(?:v2/server|managerv2)\?SFN="
+                       r"[-A-Za-z0-9/._]*/store/[-A-Za-z0-9/_]+\.root'"
+                       r" (file:////data/srv/state/filemover/store/)"
+                       r"(?:[-A-Za-z0-9_/]+)\.root$"),
+            [r"\1", r"\2", r"\3", r"\4", r"\5", r"-OPTION=VAL...",
+             r"srm://server:port/srm/managerv2?SFN=/A/B/C.root",
+             r"\7A/B/C.root"]),
+           (re.compile(r"^(java) (-cp) (:?/data/srv/[a-z0-9]+/sw[.a-z]*/"
+                       r"[_a-z0-9]+/external/srmcp/[-.a-z0-9_]+/lib/"
+                       r"[-A-Za-z0-9/._]+\.jar)+( -D[A-Za-z._]+=[A-Za-z0-9.]+)*"
+                       r" ([A-Za-z0-9.]+)"
+                       r"( -(?:x509[a-z_]+=(?:/etc/grid-security/certificates"
+                       r"|/data/srv/state/filemover/proxy/proxy\.cert)"
+                       r"|[a-z0-9_]+(?:=[a-z0-9]+)?))*"
+                       r" 'srm://[-.a-z0-9]+:\d+/srm/(?:v2/server|managerv2)\?SFN="
+                       r"[-A-Za-z0-9/._]*/store/[-A-Za-z0-9/_]+\.root'"
+                       r" (file:////data/srv/state/filemover/store/)"
+                       r"(?:[-A-Za-z0-9_/]+)\.root$"),
+            [r"\1", r"\2", r"JAR:...", r"-DOPTION=VAL...", r"\5",
+             r"-OPTION=VAL...", r"srm://server:port/srm/managerv2?SFN=/A/B/C.root",
+             r"\7A/B/C.root"]))
+
+# Workqueue cache files.
+rxwq = re.compile(r"^(/data/srv/state/workqueue/cache/\.wmcore_cache_\d+"
+                  r"/requests/cmsweb[-a-z]*\.cern\.ch/)[-0-9]+(_[A-Z]+_[A-Za-z]+)$")
+rxwqcmd = ((re.compile(r"^(/bin/rm) (-f)(?: '?(/data/srv/state/workqueue/cache/"
+                       r"\.wmcore_cache_\d+/requests/cmsweb[-a-z]*\.cern\.ch/"
+                       r"\.cache/cmsweb[-a-z]*\.cern\.ch)(,[-A-Za-z0-9_]+)+"
+                       r"([,&][A-Za-z0-9]+=[-A-Za-z0-9%._]*)*,[0-9a-f]+'?)+$"),
+	    [r"\1", r"\2", r"\3/A/B/C+"]),)
+
+# CouchDB all_docs + compaction commands, database info queries.
+rxcurl = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+		    r"external/curl/[-.a-z0-9]+/bin/curl$")
+rxcouch = ((re.compile(r"^(curl) (-s) '(localhost:5984/)[0-9a-z_]+(/_all_docs"
+                       r"\?startkey=%22_design%22&endkey=%22_design/z+%22)'$"),
+            [r"\1", r"\2", r"\3DB\4"]),
+
+           (re.compile(r"^(curl) (-s) (-H) '(Content-Type: application/json)'"
+                       r" (-X) (POST) (http://localhost:5984/)[0-9a-z_]+"
+                       r"(/_compact)[/A-Za-z0-9]*$"),
+            [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", r"\7DB\8/VIEW"]),
+
+           (re.compile(r"^(curl) (-s) (-H) '(Content-Type: application/json)'"
+                       r" (-X) (POST) (http://localhost:5984/)[0-9a-z_]+"
+                       r"(/_view_cleanup)$"),
+            [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", r"\7DB\8"]),
+
+           (re.compile(r"^(curl) (-s) (localhost:5984/)[0-9a-z_]+$"),
+            [r"\1", r"\2", r"\3DB"]),
+
+           (re.compile(r"^(curl) (-s) (localhost:5984/)[0-9a-z_]+(/_design/)"
+                       r"[0-9A-Za-z]+(/_info)$"),
+            [r"\1", r"\2", r"\3DB\4VIEW\5"]))
+
+# MongoDB external sorts.
+rxmongod = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+		      r"external/mongo/[-.a-z0-9]+/bin/mongod$")
+rxmongo = re.compile(r"^(/data/srv/state/mongodb/db/_tmp/esort)(?:.\d+){2}/$")
+
+# Commands we suppress.
+rxcmdsuppress = ((re.compile(r"^/bin/cat$"), re.compile(r"^cat$")),
+                 (re.compile(r"^/bin/hostname$"), re.compile(r"^/bin/hostname$")),
+                 (re.compile(r"^/bin/uname$"), re.compile(r"^uname$")),
+                 (re.compile(r"^/usr/bin/md5sum$"), re.compile(r"^md5sum$")),
+                 (re.compile(r"^/bin/grep$"),
+                  re.compile(r"^(?:/bin/)?grep -q /usr/(?:sue|kerberos)/s?bin$")),
+                 (re.compile(r"^/sbin/consoletype$"),
+                  re.compile(r"^/sbin/consoletype stdout$")),
+                 (re.compile(r"^/usr/bin/dircolors$"),
+                  re.compile(r"^dircolors --sh /etc/DIR_COLORS$")),
+                 (re.compile(r"^/usr/bin/id"),
+                  re.compile(r"^(?:/usr/bin/)?id -un?$")))
+
+# Log rotation
+rxlogrotate = re.compile(r"^(/var/log/)(?:[-a-z]+/)?(?:rpmpkgs|[-A-Za-z0-9_]+\.log)\.\d+(\.gz)?$")
+
+# Non-empty directories from rsync rmdir.
+rxrsyncrmd = re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/(?:config|auth|apps|bin|sw[.a-z]*))"
+                        r"(?:/(?!\./|\.\./)[-A-Za-z0-9@+._]+)*$")
+
 # Regexps for compacting DQM GUI commands and file names.
+rxdqmsess = re.compile(r"^(/data/srv/state/dqmgui/[a-z]+/sessions/)[A-Za-z0-9_]{6}$")
+rxdqmunlink = re.compile(r"^(/data/srv/state/dqmgui/offline/data/OnlineData/"
+                         r"original/)\d{5}xxxx/\d{7}xx/tmp[A-Za-z0-9_]{6}$")
+rxdqmmkdir = re.compile(r"^(/data/srv/state/dqmgui/|"
+                        r"/data/user/reindex/seed/partialixs/)"
+                        r"[-a-z0-9/]+ix/[a-z]+/\d+$")
+
 rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineData"
                      r"/(?:merged|original))/\d{5}xxxx$"),
           [r"\1", r"\2/NNNNNxxxx"]),
@@ -77,6 +193,10 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
                      r"(?:Merged|Original)(?:/$|/\d+x+){0,2}(?:/DQM[-_A-Za-z0-9]+\.root)?$"),
           [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", r"\7", r"\8", r"\9", r"\10/A/Rx/Rx/DQM.root" ]),
 
+         (re.compile(r"^(visDQMRender) (--state-directory) (/data/srv/state/dqmgui/[a-z]+/render-)\d+"
+                     r" (--load) (/data/srv/state/dqmgui/[a-z]+/render/)[0-9a-f]+\.ext$"),
+          [r"\1", r"\2", r"\3N", r"\4", r"\5FILE.ext"]),
+
          (re.compile(r"^sh -c \"(exec perl -e 'alarm\(\d+\); exec qw\(root -n -l -b -q)"
                      r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
                      r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
@@ -105,31 +225,119 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
          (re.compile(r"^sh -c '((?:exec )?visDQMIndex) (add)"
                      r" (/data/srv/state/dqmgui/[a-z]+/ix)"
                      r" (/data/srv/state/dqmgui/[a-z]+/data)"
-                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root'$"),
+                     r"(?:/[-A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root'$"),
           ["sh", "-c", r"\1 \2 \3 \4/A/B/C/Rx/DQM.root"]),
 
          (re.compile(r"^(visDQMIndex) (add) (/data/srv/state/dqmgui/[a-z]+/ix)"
                      r" (/data/srv/state/dqmgui/[a-z]+/data)"
-                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root$"),
+                     r"(?:/[-A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root$"),
           [r"\1", r"\2", r"\3", r"\4/A/B/C/Rx/DQM.root"]),
+
+         (re.compile(r"^(visDQMIndex) (merge) (/data/srv/state/dqmgui/[a-z]+/ix)"
+                     r" (/data/user/reindex/seed/partialixs/)[-0-9a-z]+-ix$"),
+          [r"\1", r"\2", r"\3", r"\4A-B-ix"]),
 
          (re.compile(r"^sh -c '((?:exec )?zip) (-0oqj)"
                      r" (/data/srv/state/dqmgui/[a-z]+/zipped)"
-                     r"(?:/[A-Za-z0-9_]+){1,3}/DQM[-_A-Za-z0-9]+\.zip"
+                     r"(?:/[-A-Za-z0-9_]+){1,3}/DQM[-_A-Za-z0-9]+\.zip"
                      r"(?: +(/data/srv/state/dqmgui/[a-z]+/data)"
-                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root)+'$"),
+                     r"(?:/[-A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root)+'$"),
           ["sh", "-c", r"\1 \2 \3/A/B/C/DQM.zip \4/A/B/C/Rx/DQM.root+"]),
+
+         (re.compile(r"^python -c \"(a=eval\(file\('"
+                     r"/data/srv/state/dqmgui/)[a-z]+(/agents/clean/)"
+                     r"DQM_[-_A-Za-z0-9]+(\.zip\.zinfo'\).read\(\)\);"
+                     r"print a\['zpath'])\"$"),
+          ["python", "-c", r"\1INSTANCE\2DQM\3"]),
 
          (re.compile(r"^(zip) (-0oqj)"
                      r" (/data/srv/state/dqmgui/[a-z]+/zipped)"
-                     r"(?:/[A-Za-z0-9_]+){1,3}/DQM[-_A-Za-z0-9]+\.zip"
+                     r"(?:/[-A-Za-z0-9_]+){1,3}/DQM[-_A-Za-z0-9]+\.zip"
                      r"(?: +(/data/srv/state/dqmgui/[a-z]+/data)"
-                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root)+$"),
+                     r"(?:/[-A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.root)+$"),
           [r"\1", r"\2", r"\3/A/B/C/DQM.zip", r"\4/A/B/C/Rx/DQM.root+"]),
 
+         (re.compile(r"^(rm) (-f)( /data/srv/state/dqmgui/[a-z]+/sessions/[A-Za-z0-9_]+)*$"),
+          [r"\1", r"\2", r"/data/srv/state/dqmgui/INSTANCE/sessions/ID+"]),
+
+         (re.compile(r"^(rm) (/data/srv/state/dqmgui/[a-z]+/zipped/)"
+                     r"[-A-Za-z0-9/_]+\.zip"
+                     r" (/data/srv/state/dqmgui/[a-z]+/agents/clean/)"
+                     r"[-A-Za-z0-9_]+\.zip\.zinfo$"),
+          [r"\1", r"\2A/B/C.zip", r"\3C.zip.zinfo"]),
+
+         (re.compile(r"^(c\+\+)(?: "
+                     r"-(?:[UD][A-Z0-9_]+(?:=[A-Z0-9]+)?"
+                     r"|[-A-Za-z0-9]+"
+                     r"|I(?:\.|/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+(?:/python[.\d]+)?)))*"
+                     r" -c (/data/srv/current/config/dqmgui/style/)[A-Za-z0-9_]+\.cc"
+                     r" -o (/data/srv/state/dqmgui/[a-z]+/render/)[A-Za-z0-9_]+\.o$"),
+          [r"\1", r"OPTION...", r"\2FILE.cc", r"\3FILE.o"]),
+
+         (re.compile(r"^(c\+\+)(?: "
+                     r"-(?:[UD][A-Z0-9_]+(?:=[A-Z0-9]+)?"
+                     r"|I(?:\.|/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+(?:/python[.\d]+)?)"
+                     r"|(?!shared|o)[-A-Za-z0-9]+))*"
+                     r" (-shared) (-o) (/data/srv/state/dqmgui/[a-z]+/render/[0-9a-f]+\.ext)"
+                     r"(?: /data/srv/state/dqmgui/[a-z]+/render/[A-Za-z0-9_]+\.o)*"
+                     r"(?: -(?:[-A-Za-z0-9,]+"
+                     r"|L(?:\.|/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+)"
+                     r"|l[A-Za-z0-9_]+))*$"),
+          [r"\1", r"OPTION...", r"\2", r"\3", r"\4", r"FILE.o...", r"OPTION..."]),
+
+         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+		     r"external/gcc/[-.a-z0-9]+/bin/\.\./libexec/gcc/[-a-z0-9_]+/"
+                     r"\d+(?:\.\d+)*/cc1plus)(?: "
+                     r"(?:/data/srv/current/config/dqmgui/style/[A-Za-z0-9_]+\.cc"
+                     r"|/data/srv/state/dqmgui/[a-z]+/render/[A-Za-z0-9_]+\.o"
+                     r"|-[UD] ?[A-Z0-9_]+(?:=[A-Z0-9]+)?"
+                     r"|-dumpbase [A-Za-z0-9_]+\.cc"
+                     r"|-(?:I|iprefix) ?(?:\.|/data/srv[-a-z]*/[a-z0-9]+/"
+                     r"sw[.a-z]*/[_a-z0-9]+/(?:[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+"
+		     r"(?:/python[.\d]+)?|external/gcc/[-.a-z0-9]+/bin/\.\./"
+                     r"lib/gcc/[-a-z0-9_]+/\d+(?:\.\d+)*/))"
+                     r"|-[-A-Za-z0-9]+(?:=[-A-Za-z0-9_]+)?))*"
+                     r" -o /tmp/[A-Za-z0-9_]+\.s$"),
+          [r"\1", r"args..."]),
+
+         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+		     r"external/gcc/[-.a-z0-9]+/bin/\.\./lib(?:exec)?/gcc/[-a-z0-9_]+/"
+                     r"\d+(?:\.\d+)*/(?:collect2|(?:\.\./){4}[-a-z0-9_]+/bin/ld))"
+                     r"(?: (?:/data/srv/state/dqmgui/[a-z]+/render/[A-Za-z0-9_]+\.o"
+                     r"|-l[A-Za-z0-9+_]+"
+                     r"|-[mz] [-a-z0-9=_]+"
+                     r"|-o (/data/srv/state/dqmgui/[a-z]+/render/[0-9a-f]+\.ext)"
+                     r"|/usr/lib(?:/\.\./lib)?64/crt[A-Za-z0-9]*\.o"
+                     r"|/data/srv[[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"external/gcc/[-.a-z0-9]+/bin/\.\./lib/gcc/[-a-z0-9_]+/"
+                     r"\d+(?:\.\d+)*/crt[A-Za-z0-9]*\.o"
+                     r"|-L(?:\.|(?:/usr)?/lib(?:/\.\./lib)?64|"
+                     r"/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"(?:[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+|"
+                     r"external/gcc/[-.a-z0-9]+/bin/\.\./lib/gcc"
+                     r"(?:/[-a-z0-9_]+/\d+(?:\.\d+)*(?:(?:/\.\.){4}/lib64)?)?))"
+                     r"|-[-A-Za-z0-9]+(?:=[-A-Za-z0-9_]+)?))*"),
+          [r"\1", r"args..."]),
+
+         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+		     r"external/gcc/[-.a-z0-9]+/bin/\.\./lib/gcc/[-a-z0-9_]+/"
+                     r"\d+(?:\.\d+)*/(?:\.\./){4}[-a-z0-9_]+/bin/as)"
+                     r" (--64) (-o) (/data/srv/state/dqmgui/[a-z]+/render/)[A-Za-z0-9_]+\.o"
+                     r" /tmp/[A-Za-z0-9_]+\.s$"),
+          [r"\1", r"\2", r"\3", r"\4FILE.o", r"/tmp/TMPFILE.s"]),
+
          (re.compile(r"^(nsls) (-T) (/castor/cern.ch/cms/store/dqm/data/[a-z]+)"
-                     r"(?:/[A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.zip$"),
+                     r"(?:/[-A-Za-z0-9_]+){1,4}/DQM[-_A-Za-z0-9]+\.zip$"),
           [r"\1", r"\2", r"\3/A/B/C/DQM.zip"]))
+
+# Admin command path noise.
+rxadmin = ((re.compile(r"^(/data/srv[-a-z]+/[a-z0-9]+/auth/proxy/proxy-)"
+                       r"[a-z]+(\.cert\.)[a-z]+$"), r"\1ID\2XXX"),
+           (re.compile(r"^(/tmp/(?:krb5(?:_-_|cc_)|tkt))\d+(_\*)?$"), r"\1NNN"),
+           (re.compile(r"^(/tmp/tmp_x509up_u)\d+_\d+$"), r"\1NNN_NNN"))
 
 # Parse one input block. Turns the block into a tuple (type, dict) where the
 # dictionary describes all the relevant information for one audit entry.
@@ -182,7 +390,7 @@ def command(info):
   if 'execve-args' not in info:
     return "(no command recorded!)"
 
-  args = info['execve-args']
+  args = [i for i in info['execve-args']]
   for i in xrange(0, len(args)):
     if not re.match(r"^[-_.,:/@+=%A-Za-z0-9]+$", args[i]):
       args[i] = repr(args[i])
@@ -284,26 +492,177 @@ def filter_path(info):
     path = info['paths'][0][m.end()-1:]
     if info['syscall'] == 'mkdir' and info['exit'] == '-17(File exists)':
       if rxapcachedir.match(path):
-        info['paths'][0] = prefix + "/a/b"
+        info['paths'][0] = prefix + "/A/B"
       elif rxapcachedirv.match(path):
-        info['paths'][0] = prefix + "/a/b/c.header.vary/a/b"
+        info['paths'][0] = prefix + "/A/B/C.header.vary/A/B"
     elif info['syscall'] == 'unlink' and info['exit'] == '-2(No such file or directory)':
       if rxapcachehdr.match(path):
-        info['paths'][0] = prefix + "/a/b/c.header"
+        info['paths'][0] = prefix + "/A/B/C.header"
       elif rxapcachehdrv.match(path):
-        info['paths'][0] = prefix + "/a/b/c.header.vary/x/y/z.header"
+        info['paths'][0] = prefix + "/A/B/C.header.vary/X/Y/Z.header"
       elif rxapcachehdrvd.match(path):
-        info['paths'][0] = prefix + "/a/b/c.header.vary/x/y/z.data"
+        info['paths'][0] = prefix + "/A/B/C.header.vary/X/Y/Z.data"
     return False
 
   # Collapse file processing commands in DQM GUI.
-  if info['uid'] == '_dqmgui' and info['syscall'] == 'execve' and info['success'] == 'yes':
+  if (info['uid'] == '_dqmgui'
+      and info['syscall'] == 'execve'
+      and info['success'] == 'yes'):
     cmd = command(info)
     for rx, argv in rxdqm:
       m = rx.match(cmd)
       if m:
         info['execve-args'] = [m.expand(i) for i in argv]
         return False
+
+  if (info['uid'] == '_dqmgui'
+      and info['syscall'] == 'mkdir'
+      and info['exit'] == '-17(File exists)'):
+    m = rxdqmmkdir.match(info['paths'][0])
+    if m:
+      info['paths'][0] = m.group(1) + "ix/TYPE/NNN"
+      return False
+
+  if (info['uid'] == '_dqmgui'
+      and info['syscall'] == 'unlink'
+      and info['exit'] == '-2(No such file or directory)'
+      and rxpython.match(info['exe'])):
+    m = rxdqmunlink.match(info['paths'][0])
+    if m:
+      info['paths'][0] = m.group(1) + "NNNNNxxxx/NNNNNNNxx/tmpXXXXXX"
+      return False
+    m = rxdqmsess.match(info['paths'][0])
+    if m:
+      info['paths'][0] = m.group(1) + "XXXXXX"
+      return False
+
+  # Collapse rsync rmdir as cmsweb.
+  if (info['uid'] == 'root'
+      and info['syscall'] == 'rmdir'
+      and info['exit'] == '-39(Directory not empty)'
+      and info['exe'] == '/usr/bin/rsync'
+      and len(info.get('paths', [])) >= 2):
+    m = rxrsyncrmd.match(info['paths'][1])
+    if m:
+      info['paths'][1] = m.group(1) + "/DIR"
+      return False
+
+  # Collapse logrotate rename operations.
+  if (info['uid'] == 'root'
+      and info['syscall'] == 'rename'
+      and info['exe'] == '/usr/sbin/logrotate'
+      and info.get('paths', None)
+      and len(info['paths']) == 2):
+    m1 = rxlogrotate.match(info['paths'][0])
+    m2 = rxlogrotate.match(info['paths'][1])
+    if m1 and m2:
+      info['paths'][0] = m1.group(1) + "FILE.log.N" + (m1.group(2) or "")
+      info['paths'][1] = m1.group(1) + "FILE.log.N++"+ (m1.group(2) or "")
+      return False
+
+  # Collapse .pyc unlink/create accesses for auth secrets and config files.
+  if (info['uid'].startswith("_")
+      and ((info['syscall'] == 'unlink'
+            and info['exit'] == '-2(No such file or directory)')
+           or (info['syscall'] == 'open'
+               and info['exit'] == '-13(Permission denied)'))
+      and rxpython.match(info['exe'])):
+    m = rxsecretconfig.match(info['paths'][0])
+    if m:
+      info['paths'][0] = m.group(1) + "AUTHCFG" + m.group(2) + "FILE.pyc"
+      return False
+
+  # Collapse MongoDB external sort directory creation.
+  if (info['uid'] == '_mongodb'
+      and ((info['syscall'] == 'mkdir' and info['exit'] == '-17(File exists)')
+           or (info['syscall'] == 'unlink' and info['exit'] == '-21(Is a directory)'))
+      and rxmongod.match(info['exe'])):
+    m = rxmongo.match(info['paths'][0])
+    if m:
+      info['paths'][0] = m.group(1) + ".N.M/"
+      return False
+
+  # Collapse unlink on non-existent filemover downloads and mkdir on directory.
+  if info['uid'] == '_filemover':
+    if (info['syscall'] == 'unlink'
+        and info['exit'] == '-2(No such file or directory)'
+        and rxpython.match(info['exe'])):
+      m = rxfmcache.match(info['paths'][0])
+      if m:
+        prefix, softlinks = m.groups()
+        info['paths'][0] = prefix + "A" + (softlinks or "") + "/B"
+        return False
+
+    elif (info['syscall'] == 'mkdir'
+          and info['exit'] == '-17(File exists)'
+          and info.get('paths', None)
+          and rxpython.match(info['exe'])):
+      m = rxfmdirdl.match(info['paths'][0])
+      if m:
+        info['paths'][0] = m.group(1) + "A" + (m.group(2) or "")
+        return False
+      m = rxfmdirst.match(info['paths'][0])
+      if m:
+        info['paths'][0] = m.group(1) + "A/B/C"
+        return False
+
+    elif info['syscall'] == 'execve' and info['success'] == 'yes':
+      cmd = command(info)
+      for rx, argv in rxfmcmd:
+        m = rx.match(cmd)
+        if m:
+          info['execve-args'] = [m.expand(i) for i in argv]
+          return False
+
+  # Collapse workqueue wmcore http request cache files and commands.
+  if info['uid'] == '_workqueue':
+    if (info['syscall'] == 'unlink'
+        and info['exit'] == '-2(No such file or directory)'
+        and rxpython.match(info['exe'])):
+     m = rxwq.match(info['paths'][0])
+     if m:
+       prefix, req = m.groups()
+       info['paths'][0] = prefix + "NNNN" + req
+       return False
+
+    if info['syscall'] == 'execve' and info['success'] == 'yes':
+      cmd = command(info)
+      for rx, argv in rxwqcmd:
+        m = rx.match(cmd)
+        if m:
+          info['execve-args'] = [m.expand(i) for i in argv]
+          return False
+
+  # Collapse CouchDB compaction and state query commands.
+  if (info['uid'] == '_couchdb'
+      and info['syscall'] == 'execve'
+      and info['success'] == 'yes'
+      and rxcurl.match(info['exe'])):
+    cmd = command(info)
+    for rx, argv in rxcouch:
+      m = rx.match(cmd)
+      if m:
+        info['execve-args'] = [m.expand(i) for i in argv]
+        return False
+
+  # Collapse admin command paths from unlink system calls.
+  if (info['uid'] == 'cmsweb'
+      and info['syscall'] == 'unlink'
+      and info['exit'] == '-2(No such file or directory)'):
+    for rx, repl in rxadmin:
+      m = rx.match(info['paths'][0])
+      if m:
+        info['paths'][0] = m.expand(repl)
+        return False
+
+  # Suppress benign basic commands from shell environment and manage script.
+  if (info['uid'].startswith("_")
+      and info['syscall'] == 'execve'
+      and info['success'] == 'yes'):
+    cmd = command(info)
+    for rxexe, rxcmd in rxcmdsuppress:
+      if rxexe.match(info['exe']) and rxcmd.match(cmd):
+        return True
 
   return False
 
