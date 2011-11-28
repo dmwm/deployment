@@ -50,16 +50,23 @@ add_local_user()
 
     Darwin )
       local gid=$(sudo dscl . -read /Groups/$login PrimaryGroupID | awk '{print $NF}')
-      sudo dscl . -create /Users/$login
-      sudo dscl . -create /Users/$login UserShell /sbin/nologin
-      sudo dscl . -create /Users/$login RealName "CMSWEB $name"
-      sudo dscl . -create /Users/$login UniqueID $id
-      sudo dscl . -create /Users/$login PrimaryGroupID $gid
-      sudo dscl . -create /Users/$login NFSHomeDirectory $CMS_DEV_ROOT/empty
-      sudo dscl . -passwd /Users/$login "*"
-      for group in $(echo $xgroup | tr , ' '); do
-        sudo dscl . -append /Groups/$group GroupMembership $login
-      done
+      if sudo dscl . -read /Users/$login 2>/dev/null; then
+        local uid=$(sudo dscl . -read /Users/$name UniqueID | awk '{print $NF}')
+        if [ X"$uid" = X$id ]; then :; else
+          note "WARNING: user $login already exists with id $uid != requested $id"
+	fi
+      else
+        sudo dscl . -create /Users/$login
+        sudo dscl . -create /Users/$login UserShell /sbin/nologin
+        sudo dscl . -create /Users/$login RealName "CMSWEB $name"
+        sudo dscl . -create /Users/$login UniqueID $id
+        sudo dscl . -create /Users/$login PrimaryGroupID $gid
+        sudo dscl . -create /Users/$login NFSHomeDirectory $CMS_DEV_ROOT/empty
+        sudo dscl . -passwd /Users/$login "*"
+        for group in $(echo $xgroup | tr , ' '); do
+          sudo dscl . -append /Groups/$group GroupMembership $login
+        done
+      fi
       ;;
 
     * )
@@ -356,6 +363,15 @@ deploy_system_post()
       ;;
 
     devmac )
+      # Give myself silent bashs sudo access to all accounts we create.
+      # We don't want to grant as liberal sudo access as in devvm, but
+      # we need NOPASSWD access for the same reasons.
+      sudo perl -n -i -e \
+       'print if !/^'$USER'\s+ALL=\(\%_config\)/;
+	if (! $done && /^\%admin\s+/) {
+          ++$done; print "'$USER'\tALL=(%_config) NOPASSWD: /bin/bashs\n";
+        }' /etc/sudoers
+
       # Verify mandatory applications have been installed.
       for required in git stg; do
         if [ X"$(which $required 2>/dev/null)" = X ]; then
