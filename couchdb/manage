@@ -101,7 +101,7 @@ clean_views()
 push_apps()
 {
   n=0 started=false
-  while [ $n -le 50 ]; do
+  while [ $n -le 100 ]; do
     couchdb -p $STATEDIR/couchdb.pid -s &> /dev/null &&
       curl -s localhost:5984 | grep -q '{"couchdb":"Welcome","version":"1.[0-9.]*"}' && 
       started=true && break
