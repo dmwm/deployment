@@ -274,8 +274,7 @@ case $STAGE in
     for host in $HOSTS; do
       sudo rsync -nzavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
         --rsync-path="sudo rsync" --delete \
-        -f "+ /srv-$STEM/$VER" $EXTRA \
-        -f ". $PWD/cfg/admin/rsync-$STEM.rules" -f "-r /compsw" \
+        -f "+ /srv-$STEM/$VER" $EXTRA -f ". $PWD/cfg/admin/rsync-$STEM.rules" \
         $PWD/ cmsweb@$host:$PWD/
       set +x; confirm "is sync ok for $host"; set -x
     done
@@ -283,8 +282,7 @@ case $STAGE in
     for host in $HOSTS; do
       sudo rsync -zavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
         --rsync-path="sudo rsync" --delete \
-        -f "+ /srv-$STEM/$VER" $EXTRA \
-        -f ". $PWD/cfg/admin/rsync-$STEM.rules" -f "-r /compsw" \
+        -f "+ /srv-$STEM/$VER" $EXTRA -f ". $PWD/cfg/admin/rsync-$STEM.rules" \
         $PWD/ cmsweb@$host:$PWD/
     done
     ;;
@@ -391,7 +389,7 @@ case $STAGE in
         --rsync-path="sudo rsync" --delete \
         -f "+ /srv-$STEM/$VER" $EXTRA -f "-s /cfg" \
         -f "-s /srv-$STEM/$VER/auth/proxy/seed*.cert" \
-        -f ". $PWD/cfg/admin/rsync-$STEM.rules" -f "-r /compsw" \
+        -f ". $PWD/cfg/admin/rsync-$STEM.rules" \
         $PWD/ cmsweb@$host:$PWD/
     done
     ;;
