@@ -283,6 +283,10 @@ deploy_system_post()
       /usr/kerberos/bin/klist -s
       sudo -l
 
+      # Fetch CRLs
+      sudo sh -c '/usr/sbin/fetch-crl3' ||
+          note "WARNING: CRL update failed with exit code $? (probably harmless)."
+ 
       # Verify the host certificate is ok.
       note "INFO: cert subject:    " $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -subject)
       note "INFO: cert fingerprint:" $(openssl x509 -noout -in /etc/grid-security/hostcert.pem -fingerprint)
