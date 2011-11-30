@@ -48,8 +48,7 @@ cd $STATEDIR
 clean_db()
 {
     set -e
-    dbname=`echo $1 | sed "s/_db//g"`
-    if [ -f $STATEDIR/db/$dbname.ns ]; then
+    if [ -f $STATEDIR/db/${1%_db}.ns ]; then
         echo "Clean $1"
         mongo --port 8230 stagingarea/clean_$1.js
     fi
@@ -89,10 +88,24 @@ start()
   $MONGO_ROOT/bin/mongod --dbpath=$STATEDIR/db \
       --port 8230 --nohttpinterface --bind_ip 127.0.0.1 \
       </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-%Y%m%d.log 86400 >/dev/null 2>&1 &
-  sleep 60
-  echo "$ME is ready"
-  clean_db "das_db"
-  update_db "mapping_db"
+
+  n=0 started=false
+  while [ $n -le 100 ]; do
+    curl -s 127.0.0.1:8230 | grep -q 'You are trying to access MongoDB' &&
+      started=true && break
+    echo "waiting for $ME..."
+    sleep 1
+    n=$(expr $n + 1)
+  done
+
+  if $started; then
+    echo "$ME is ready"
+    clean_db "das_db"
+    update_db "mapping_db"
+  else
+    echo "$ME did not start, not cleaning nor updating."
+    exit 1
+  fi
 }
 
 # Stop the service.
