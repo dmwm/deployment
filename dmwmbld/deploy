@@ -47,9 +47,10 @@ deploy_dmwmbld_post()
        sl5 )
          # run in the osx machine too due to lack of acron+afs there
          webdir=/afs/cern.ch/user/d/dmwmbld/www
-         echo "05-55/10 * * * * $host ssh macms07 $project_config/dmwmbld_task build" \
-                          "&& rsync -q -rvu macms07:$project_state/webarea/ $webdir/"
-         echo "0 0 * * * $host ssh macms07 $project_config/dmwmbld_task tagclean" ;;
+         macroot=/build1/dmwmbld
+         echo "05-55/10 * * * * $host ssh macms07 ${project_config/$root/$macroot}/dmwmbld_task build" \
+                          "&& rsync -q -rvu macms07:${project_state/$root/$macroot}/webarea/ $webdir/"
+         echo "0 0 * * * $host ssh macms07 ${project_config/$root/$macroot}/dmwmbld_task tagclean" ;;
        * ) ;;
      esac
     ) | acrontab
