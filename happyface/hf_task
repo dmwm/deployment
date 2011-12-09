@@ -8,6 +8,7 @@
 ##H   run                 process job status from sites
 ##H   updateweb           update web area with the output of last run
 ##H   logclean [minutes]  clean logs older than [minutes] (def. 2 weeks)
+##H   histclean [minutes] clean historical data older than [minutes] (def. 2 weeks)
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/HappyFace
@@ -50,6 +51,18 @@ case ${1:-help} in
     done
     ;;
 
+  histclean )
+    MIN=$(($2)); [ $MIN -lt 1 ] && MIN=20160 # defaults to 2 weeks 
+    AGE=$(($(date +%s)-$MIN*60));
+
+    echo $STATEDIR/webpage/archive/*/*/* | sed "s|$STATEDIR/webpage/archive/||g" | \
+    while IFS="/" read -d " " YY MM DD; do
+       X=$(date -d "$YY-$MM-$DD" +%s 2>/dev/null || date +%s)
+       [ $X -lt $AGE ] && rm -rf $STATEDIR/webpage/archive/$YY/$MM/$DD
+    done
+    find $STATEDIR/webpage/archive/ -type d -empty | xargs rmdir 2>/dev/null
+    ;;  
+  
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
     ;;

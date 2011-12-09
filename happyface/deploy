@@ -25,6 +25,7 @@ deploy_happyface_post()
   (mkcrontab
    echo "*/15 * * * * $project_config/hf_task run"
    echo "0 0 * * * $project_config/hf_task logclean"
+   echo "10 0 * * * $project_config/hf_task histclean"
   ) | crontab -
 
   klist -s
