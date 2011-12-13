@@ -136,7 +136,7 @@ case $STAGE in
     mkdir -p srv-$STEM
     $PWD/cfg/Deploy $ARCH $ACFG -t $VER -a -s prep $PWD/srv $PKGS
     case $VER in hg* | be* )
-      ssh -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed \
+      ssh -o PubkeyAuthentication=no -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed \
         -t prod -d cmsweb@$(hostname -f):$PWD/srv/$VER/auth/proxy ;;
     esac
     sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ARCH $ACFG $REPO -t $VER -a -s sw $PWD/srv $PKGS"
@@ -234,14 +234,14 @@ case $STAGE in
         set -x
         case $WHAT:$update in
           maintenance:vocms* )
-            ssh $PXUSER@lxvoadm.cern.ch sms set maint other upgrade $update
+            ssh -o PubkeyAuthentication=no $PXUSER@lxvoadm.cern.ch sms set maint other upgrade $update
 	    ;;
           production:vocms* )
             for host in $update; do
               ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 15 || true
 	    done
             set +x; confirm "ok to put $update into $WHAT"; set -x
-	    ssh $PXUSER@lxvoadm.cern.ch sms clear maint other $update
+	    ssh -o PubkeyAuthentication=no $PXUSER@lxvoadm.cern.ch sms clear maint other $update
 	    ;;
         esac
         set +x
