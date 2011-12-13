@@ -2,7 +2,6 @@
 -rs /certs
 -rs /*/.deploy
 -rs /srv-*/current
--r **/auth/proxy/proxy*.cert
 -r /user/***
 -r /srv-*/logs/***
 -r /srv-*/enabled/***
