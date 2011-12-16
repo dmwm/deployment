@@ -13,9 +13,9 @@ deploy_frontend_prep()
 
 deploy_frontend_sw()
 {
-  deploy_pkg -a frontend/db-params.txt comp cms+frontend 4.1-comp
+  deploy_pkg -a frontend/sitedbread.py comp cms+frontend 4.3
 
-  if grep -q Oracle $project_auth/db-params.txt; then :; else
+  if grep -q Oracle $project_auth/sitedbread.py; then :; else
     deploy_frontend_fakeauth $project_auth/users.db
   fi
 
@@ -36,7 +36,7 @@ deploy_frontend_sw()
   esac
 
   (. $root/current/apps/frontend/etc/profile.d/init.sh
-   export AUTH_DB_PARAMS=$project_auth/db-params.txt
+   export AUTH_JSON_MAP=$PWD/etc/authmap.json
    export HOST_MAP_FILE=$project_config/$backends
    export CONFIG_DIR=$project_config
    mkserver                                           \
@@ -51,7 +51,6 @@ deploy_frontend_sw()
    -d $project_config/htdocs                          \
    -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"             \
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
-   -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so  \
    -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so)
   [ $? = 0 ]
 
@@ -76,11 +75,15 @@ deploy_frontend_post()
   case $host in * ) enable ;; esac
   (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
    echo "13 */6 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
-        " --cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
-        " -o $PWD/etc/voms-gridmap.txt --vo cms"
+        "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
+        "-o $PWD/etc/voms-gridmap.txt --vo cms"
+   case $host in vocms* ) silent= ;; * ) silent=-q;; esac
+   echo "*/10 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
+        "PYTHONPATH=$project_auth:\$PYTHONPATH $project_config/mkauthmap" \
+        "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
    case $host in
      vocms105 | vocms135 | vocms162 ) ;;
-     vocms65 | vocms160 )  echo "23 */6 * * * $project_config/update-keys $PWD vocms162" ;;
+     vocms65 | vocms160 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms162" ;;
      vocms134 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms135" ;;
      *)        echo "23 */6 * * * $project_config/update-keys $PWD" ;;
    esac) | crontab -
@@ -111,16 +114,8 @@ deploy_frontend_post()
 
 deploy_frontend_auth()
 {
-  if [ X"$privauthdir" != X ] && [ -f $privauthdir/sitedb/security.ini ]; then
-    perl -ne '
-      if (m{^dbname\s*=.*//(\S+):(\S+)\@(\S+)}) {
-        print "type Oracle\n", "database $3\n", "user $1\n",
-              "password $2\n", "schema-prefix $3\n"
-      }' < $privauthdir/sitedb/security.ini
-  else
-    echo "type SQLite"
-    echo "database dbname=$project_auth/users.db"
-  fi
+  echo "import sqlite3"
+  echo "db = { 'type': sqlite3, 'database': '$project_auth/users.db' }"
 }
 
 deploy_frontend_fakeauth()

@@ -8,10 +8,12 @@
 # request headers are modified to report authentication information.
 #
 # If authentication succeeds, the users' roles are retrieved from the
-# CMS authorisation database (SiteDB). If the user is known and has
-# authorisation roles, the information is added to the HTTP request
-# headers. The back-end apps should use the information from headers
-# to determine actions applicable to the user.
+# CMS authorisation database (SiteDB), although this happens via an
+# intermediary JSON file so the httpd server isn't dependent on the
+# database availability. If the user is known and has authorisation
+# roles, the information is added to the HTTP request headers. The
+# back-end apps should use the information from headers to determine
+# actions applicable to the user.
 #
 # Any authn/authz headers present in the original HTTP request are
 # always completely removed. The module adds headers based on the
@@ -201,7 +203,7 @@
 #  AUTH_HOST_EXEMPT   List of files with exempted host ip-address name pairs.
 #  AUTH_GRID_MAPS     List of files with additional cert VO memberships.
 #  AUTH_REVOKED       List of files containing revoked users.
-#  AUTH_DB_PARAMS     File containing SiteDB connection parameters.
+#  AUTH_JSON_MAP      File containing SiteDB authn/authz info from mkauthmap.
 
 package cmsauth;
 use strict;
@@ -215,7 +217,7 @@ use HTML::Entities;
 use Compress::Zlib;
 use MIME::Base64;
 use Sys::Hostname;
-use Apache::DBI;
+use JSON::XS 'decode_json';
 use cmstools;
 use CGI;
 
@@ -232,12 +234,10 @@ sub make_auth_cookie($$$$);
 sub parse_auth_cookie($);
 sub decode_auth_cookie($);
 
-my %authz_dbparam;
-my @authz_dbargs;
+my $authz_json_file;
+my $authz_json_stat = " ";
 my %authz_by_dn;
 my %authz_by_login;
-my %authz_warnings;
-my $authz_reload = 0;
 my $NULL_COOKIE = ";path=/;secure;httponly;expires=Thu, 01-Jan-1970 00:00:01 GMT";
 my $initialised = 0;
 my %host_exempt = ();
@@ -792,170 +792,45 @@ sub init($)
     close(F);
   }
 
-  # Connect to authz database if any.
-  if (my $db = $r->dir_config->get("AUTH_DB_PARAMS"))
-  {
-    $db = rel2abs($db, $server_root);
-    if (! open(F, "< $db"))
-    {
-      $r->log->error("$me $db: cannot read");
-      die;
-    }
-
-    my $dbpfx = "";
-    my $dbuser = "";
-    my $dbpass = "";
-    my $dbid = "cmsauth\@@{[Sys::Hostname::hostname()]}";
-    my ($dbtype, $dbname);
-    while (<F>)
-    {
-      chomp;
-      s/#.*//;
-      s/^\s+//;
-      s/\s+$//;
-      s/\s+/ /g;
-      next if /^$/;
-      if (/^type (\S+)$/) {
-        $dbtype = $1;
-      } elsif (/^database (\S+)$/) {
-        $dbname = $1;
-      } elsif (/^user (\S+)$/) {
-        $dbuser = $1;
-      } elsif (/^password (.*)$/) {
-        $dbpass = $1;
-      } elsif (/^id (\S+)$/) {
-        $dbid = $1;
-      } elsif (/^schema-prefix (\S+)$/) {
-        $dbpfx = $1;
-      } elsif (/^log-sql (\S+)$/) {
-        $log_all_sql = 1 if ($1 eq 'yes' || $1 eq 'on');
-      } else {
-        $r->log->error("$me $db:$.: line not understood");
-        die;
-      }
-    }
-    close(F);
-
-    if (! $dbtype || ! $dbname)
-    {
-      $r->log->error("$me $db: missing parameters");
-      die;
-    }
-
-    @authz_dbargs = ("DBI:$dbtype:$dbname", $dbuser, $dbpass,
-		     { RaiseError => 1, AutoCommit => 0,
-		       PrintError => 0, ora_module_name => $dbid });
-    %authz_dbparam = (FetchHashKeyName => "NAME_uc",
-                      LongReadLen => 4096,
-                      RowCacheSize => 10000,
-                      private_prefix => $dbpfx);
-  }
+  # Remember authn/authz json file if any.
+  $authz_json_file = $r->dir_config->get("AUTH_JSON_MAP");
 
   $initialised = 1;
 }
 
-# Reload authentication and authorisation information from SiteDB,
-# but only if at least one minute has passed from the previous use.
-# As we have interest to make sure all HTTPD processes reload their
-# roles about the same time to avoid inconsistent answers, we reload
-# on first HTTP request after the UTC minute has rolled.
+# Reload SiteDB authentication and authorisation information. The data
+# is updated periodically by a separate process. The update is atomic,
+# and the file is modified only if the data has actually changed. Load
+# the new data on any request after the JSON file has changed, so all
+# HTTPD processes tend to see the same data after the file changes.
 sub authz_maybe_reload($)
 {
-  return if ! @authz_dbargs;
+  # If we don't have a file, do not change any state. While mkauthmap
+  # should update the file atomically in place, don't let ops flukes
+  # disable authn/z in the front-end.
+  return if ! $authz_json_file;
 
-  my $minute = int(time() / 60);
-  return if $minute == $authz_reload;
+  # If the file hasn't change since last we looked, no update needed.
+  my $stat = join(" ", map { $_ || "" } -M $authz_json_file, -s _);
+  return if $stat eq $authz_json_stat;
 
-  my ($req) = @_;
-  $authz_reload = $minute;
+  # Reload the JSON data.
+  open(JSON, "<", $authz_json_file) || return;
+  my $data = do { local $/ = undef; scalar <JSON> };
+  close(JSON);
+
+  # Rebuild authz tables.
   %authz_by_dn = ();
   %authz_by_login = ();
-  my %uid;
-  my $dbh;
-
-  eval
+  my $people = decode_json($data);
+  foreach my $p (@$people)
   {
-    $dbh = DBI->connect(@authz_dbargs);
-    @$dbh{keys %authz_dbparam} = values %authz_dbparam;
-    $$dbh{private_stmts} ||= {};
+    $authz_by_login{$$p{LOGIN}} = $p if $$p{LOGIN} && ! $authz_by_login{$$p{LOGIN}};
+    $authz_by_dn{$$p{DN}} = $p if $$p{DN} && ! $authz_by_dn{$$p{DN}};
+  }
 
-    # Read users and passwords.
-    my $q = dbexec($dbh, qq{
-      select c.id, c.username, c.forename, c.surname, c.dn, p.passwd
-      from contact c left join user_passwd p on p.username = c.username});
-
-    while (my $r = $q->fetchrow_arrayref())
-    {
-      my ($id, $login, $first, $last, $dn, $pass)
-         = map { (defined $_ ? $_ : '') } @$r;
-      $login = lc $login;
-      # Fix up datatabase junk
-      $login =~ s/^\s+//; $login =~ s/\s+$//;
-      $dn =~ s/^\s+//; $dn =~ s/\s+$//;
-      $dn =~ s/^DN unknown.*//;
-      $dn =~ s/^\d+$//;
-
-      # Skip any unsafe material
-      if ("$dn:$login:$first:$last" =~ /[\x00-\x1f]/
-          || ($dn ne '' && $dn !~ m{^/(?:C|O|DC)=.*/CN=.})
-	  || $login !~ m{^[a-z0-9]*(?:\.nocern|\.notcms)?$})
-      {
-	if (! $authz_warnings{"login:$login"})
-        {
-          $r = [ map { (defined $_ ? $_ : '') } @$r ];
-          $req->log->error("$me skipping unsafe user id $$r[0], login '$$r[1]',"
-		           . " dn '$$r[4]', forename '$$r[2]', surname '$$r[3]'");
-	  $authz_warnings{"login:$login"} = 1;
-        }
-
-	next;
-      }
-
-      # Build human name.
-      my $name = join(" ", grep($_, $first, $last));
-
-      # Remember this user.
-      $authz_by_dn{$dn} = $authz_by_login{$login} = $uid{$id}
-        = { ID => $id, LOGIN => $login, NAME => $name,
-            DN => $dn, PASSWD => $pass, ROLES => {} };
-    }
-
-    # Read site and group roles of users.
-    foreach my $sql (qq{select 'site' type, sr.contact, r.title, c.name
-                        from site_responsibility sr
-                        join role r on r.id = sr.role
-                        join site s on s.id = sr.site
-                        join site_cms_name_map sn on sn.site_id = s.id
-                        join cms_name c on c.id = sn.cms_name_id},
-		     qq{select 'group' type, gr.contact, r.title, g.name
-                        from group_responsibility gr
-                        join role r on r.id = gr.role
-                        join user_group g on g.id = gr.user_group})
-    {
-      $q = dbexec($dbh, $sql);
-      while (my $r = $q->fetchrow_arrayref())
-      {
-        my ($type, $id, $role, $name) = @$r;
-        next if not exists $uid{$id};
-
-        ($role = lc $role) =~ s/[^a-z0-9]+/-/g;
-        ($name = lc $name) =~ s/[^a-z0-9]+/-/g;
-        push(@{$uid{$id}{ROLES}{$role}}, "$type:$name");
-      }
-    }
-
-    # Sort capabilities.
-    foreach my $u (values %uid)
-    {
-      foreach my $r (values %{$$u{ROLES}})
-      {
-	splice(@$r, 0, scalar @$r, sort { $a cmp $b } @$r);
-      }
-    }
-  };
-
-  $req->log->error("$me database error: $@") if $@;
-  eval { $dbh->rollback() } if $dbh;
+  # Remember last update time.
+  $authz_json_stat = $stat;
 }
 
 # Internal utility to go to the next stage of authentication.

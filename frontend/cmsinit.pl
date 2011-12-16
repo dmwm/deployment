@@ -28,7 +28,7 @@ use File::Temp ();
 use Compress::Zlib ();
 use MIME::Base64 ();
 use Sys::Hostname ();
-use Apache::DBI ();
+use JSON::XS ();
 use cmstools ();
 use cmsauth ();
 use cmserror ();

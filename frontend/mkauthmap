@@ -1,0 +1,171 @@
+#!/usr/bin/env python
+"""mkauthmap [-v] [-q] -c MODULE.NAME -o FILE
+
+Generate JSON text file database of SiteDB user and role authentication
+and authorisation information. Loads the SiteDB database as specified in
+MODULE.NAME database configuration file, reads all user, authn and authz
+information, and generates a JSON version of it. If FILE does not exist,
+or does not contain the same information, atomically replaces contents
+of FILE with the new information.
+
+Records whose data is suspected to be invalid is automatically discarded.
+If -v/--verbose option is used, prints out a warning for omitted details.
+
+This runs as a separate script from front-end so that any oracle outages
+will not cause the httpd servers themselves to freeze, plus it allows
+servers outside cmsweb cluster to use other means to generate an authn/z
+map.  The http servers will automatically load the updated authn/authz
+information whenever it is updated by this script."""
+
+from optparse import OptionParser
+from traceback import format_exc
+from tempfile import NamedTemporaryFile
+import sys, os, signal, json, re
+
+# Get current umask.
+def current_umask():
+  val = os.umask(0)
+  os.umask(val)
+  return val
+
+# Print a message and die.
+def die(fmt, *args):
+  print "%s: error: %s" % (sys.argv[0], fmt % args)
+  sys.exit(1)
+
+# Main routine to perform the update.
+def update(outfile, dbcfg, verbose, quiet):
+  people = []
+  byuid = {}
+
+  # Connect to the database.
+  if quiet:
+    try: conn = dbcfg["type"].connect(dbcfg["database"])
+    except: return
+  else:
+    conn = dbcfg["type"].connect(dbcfg["database"])
+
+  if "schema" in dbcfg:
+    conn.current_schema = dbcfg["schema"]
+  if "clientid" in dbcfg:
+    conn.current_schema = dbcfg["schema"]
+    conn.client_identifier = dbcfg["clientid"]
+    conn.clientinfo = conn.module = "mkvomsmap"
+
+  # Read users and passwords.
+  c = conn.cursor()
+  c.execute("""select c.id, c.username, c.forename, c.surname, c.dn, p.passwd
+            from contact c left join user_passwd p on p.username = c.username""")
+  for row in c:
+    # Unpack values but convert nulls to empty strings.
+    id, login, first, last, dn, passwd = [x or '' for x in row]
+
+    # Fix up database junk.
+    login = login.lower()
+    login = login.strip().rstrip()
+    dn = dn.strip().rstrip()
+    dn = re.sub(r"^DN unknown.*", "", re.sub(r"^\d+$", "", dn))
+
+    # Skip any unsafe material.
+    if (re.search(r"[\x00-\x1f]", ":".join((dn, login, first, last)))
+        or (dn != '' and not re.match(r"^/(?:C|O|DC)=.*/CN=.", dn))
+        or not re.match(r"^[a-z0-9]*(?:\.nocern|\.notcms)?$", login)):
+      if verbose:
+        print ("WARNING: skipping unsafe user id %(id)s, login '%(login)s',"
+               " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
+               % locals())
+        continue
+
+    # Build human name.
+    name = " ".join([n for n in (first, last) if n])
+
+    # Remember this user.
+    p = { "ID": id, "LOGIN": login, "NAME": name, "DN": dn,
+          "PASSWD": passwd, "ROLES": {} }
+    byuid[id] = p
+    people.append(p)
+
+  # Read site and group roles of users.
+  for sql in ("""select 'site' type, sr.contact, r.title, c.name
+                 from site_responsibility sr
+                 join role r on r.id = sr.role
+                 join site s on s.id = sr.site
+                 join site_cms_name_map sn on sn.site_id = s.id
+                 join cms_name c on c.id = sn.cms_name_id""",
+              """select 'group' type, gr.contact, r.title, g.name
+                 from group_responsibility gr
+                 join role r on r.id = gr.role
+                 join user_group g on g.id = gr.user_group"""):
+    c.execute(sql)
+    for type, id, role, name in c:
+      if id not in byuid:
+       continue
+      p = byuid[id]
+
+      role = re.sub(r"[^a-z0-9]+", "-", role.lower())
+      name = re.sub(r"[^a-z0-9]+", "-", name.lower())
+
+      if role not in p["ROLES"]:
+        p["ROLES"][role] = []
+      p["ROLES"][role].append("%s:%s" % (type, name))
+
+  # Sort roles and people.
+  people.sort(key = lambda p: p["ID"])
+  for p in people:
+    for role, items in p["ROLES"].iteritems():
+      items.sort()
+
+  # Generate stable JSON representation.
+  enc = json.JSONEncoder(sort_keys=True)
+  jsondata = "[\n " + ",\n ".join(enc.encode(p) for p in people) + "\n]\n"
+
+  # Update the file if the information has changed.
+  old = ""
+  try: old = open(outfile).read()
+  except: pass
+
+  if old != jsondata:
+    if verbose: print "%s: updating contents" % outfile
+    indir = os.path.dirname(outfile) or '.'
+    myumask = current_umask()
+    with NamedTemporaryFile(dir = indir, delete = False) as temp:
+      temp.write(jsondata)
+      temp.close()
+      os.chmod(temp.name, 0666 & ~myumask)
+      os.rename(temp.name, outfile)
+  elif verbose:
+    print "%s: up-to-date, not modifying" % outfile
+
+# Main program.
+if __name__ == "__main__":
+  # Process options.
+  parser = OptionParser(__doc__)
+  parser.add_option("-v", action="store_true", dest="verbose", help="be verbose")
+  parser.add_option("-q", action="store_true", dest="quiet", help="squelch database errors")
+  parser.add_option("-o", metavar="FILE", dest="out", help="output file")
+  parser.add_option("-c", metavar="MODULE.NAME", dest="cfg", help="database configuration")
+  options, args = parser.parse_args()
+
+  # Check options; try to load database configuration.
+  options.out or die("output file name (-o FILE) required")
+  options.cfg or die("database configuration file (-c MODULE.NAME) required")
+  modname, item = options.cfg.rsplit(".", 1)
+  try:
+    module = __import__(modname, globals(), locals(), [item])
+    dbcfg = getattr(module, item)
+  except Exception, e:
+    die("failed to load '%s', %s\n  %s", options.cfg, str(e),
+        format_exc().replace("\n", "  \n"))
+
+  # Set a timeout alarm to commit suicide in case database connection hangs.
+  signal.alarm(60)
+
+  # Attempt to update, report errors.
+  try:
+    update(options.out, dbcfg, options.verbose, options.quiet)
+  except Exception, e:
+    die("failed to update %s: %s\n  %s", options.out, str(e),
+        format_exc().replace("\n", "  \n"))
+
+  # We're done.
+  sys.exit(0)
