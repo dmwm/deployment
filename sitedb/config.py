@@ -1,6 +1,6 @@
 from SiteDB.Config import Config
 
-THREADS = 30
+THREADS = 50
 KEY_FILE = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 config = Config(nthreads = THREADS, authkey = KEY_FILE)
 
