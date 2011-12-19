@@ -15,7 +15,7 @@ deploy_dbs_prep()
 
 deploy_dbs_sw()
 {
-  deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3 3.0.13
+  deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3 3.0.13-comp
   cp -p $project_config/DBS-${variant}.py $project_config/DBS.py
 }
 

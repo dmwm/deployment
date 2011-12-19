@@ -16,7 +16,7 @@ deploy_filemover_prep()
 
 deploy_filemover_sw()
 {
-  deploy_pkg comp cms+filemover 1.1.1
+  deploy_pkg comp cms+filemover 1.1.1-comp
   case $variant in dev ) suff="-dev";; preprod ) suff="-testbed";; * ) suff="";; esac
   perl -p -i -e "s|cmsweb.cern.ch/|cmsweb${suff}.cern.ch/|g" $project_config/fm_config.py
 }
