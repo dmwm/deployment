@@ -16,13 +16,23 @@ deploy_filemover_prep()
 
 deploy_filemover_sw()
 {
-  deploy_pkg comp cms+filemover 1.1.1-comp
+  deploy_pkg comp cms+filemover 1.1.2
   case $variant in dev ) suff="-dev";; preprod ) suff="-testbed";; * ) suff="";; esac
   perl -p -i -e "s|cmsweb.cern.ch/|cmsweb${suff}.cern.ch/|g" $project_config/fm_config.py
 }
 
 deploy_filemover_post()
 {
-  case $host in vocms10[67] | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
-  (mkcrontab; sysboot) | crontab -
+  (mkcrontab
+   case $host in
+     vocms13[2689] | vocms16[13])
+       disable ;;
+     * )
+       enable
+       sysboot
+       local cmd="$project_config/manage cleaner"
+       $nogroups || cmd="sudo -H -u _filemover bashs -l -c \"${cmd}\""
+       echo "0 1 * * sun $cmd"
+       ;;
+   esac) | crontab -
 }

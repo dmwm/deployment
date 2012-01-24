@@ -52,6 +52,14 @@ sysboot()
   fi
 }
 
+# Clean FM pool area
+cleaner()
+{
+  python -u $FILEMOVER_ROOT/lib/python*/site-packages/fm/tools/fm_cleaner.py \
+        --time=7d --dir=$STATEDIR --url=https://`hostname -f`/filemover
+}
+
+
 # Start the service.
 start()
 {
