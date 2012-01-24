@@ -54,6 +54,17 @@ add_cert()
   fi
 }
 
+run()
+{
+  if [ $(pgrep -u $(id -u) -f "${WQ_CLI}" | wc -l) = 0 ]; then
+    cd $STATEDIR
+    ${WQ_CLI} $@
+  else
+    echo "Another process of ${WQ_CLI} is still running. Skipping."
+    exit 4
+  fi
+}
+
 # Main routine, perform action requested on command line.
 case ${1:-status} in
   help )
@@ -66,21 +77,20 @@ case ${1:-status} in
 
   location_refresh )
     # PHEDEX cant handle proxy certs yet...
-    cd $STATEDIR
     add_cert
-    ${WQ_CLI} --locations 2>&1 | $logcmd
+    run --locations 2>&1 | $logcmd
     ;;
 
   reqmgr_sync )
     cd $STATEDIR
     add_cert
-    ${WQ_CLI} --reqmgr 2>&1 | $logcmd
+    run --reqmgr 2>&1 | $logcmd
     ;;
 
   housekeep )
     cd $STATEDIR
     add_cert
-    ${WQ_CLI} --clean 2>&1 | $logcmd
+    run --clean 2>&1 | $logcmd
     ;;
 
   interactive )
