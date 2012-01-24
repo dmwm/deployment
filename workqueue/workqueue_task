@@ -29,7 +29,7 @@ AUTHDIR=$TOP/current/auth/workqueue
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 export WORKQUEUE_ROOT
-export WMCORE_ROOT=$WORKQUEUE_ROOT/lib
+export WMCORE_ROOT=$WORKQUEUE_ROOT
 export YUI_ROOT
 export WMAGENT_CONFIG=${CFGFILE}
 export WQ_CLI="${WORKQUEUE_ROOT}/bin/wmagent-workqueue"
