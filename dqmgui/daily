@@ -10,7 +10,8 @@
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 STATEDIR=$TOP/state/$ME
-FILER=/dqmdata
+LOGDIR=$TOP/logs
+HOST=$(hostname -s | tr [:upper:] [:lower:])
 
 if [ X"$STATEDIR" = X ]; then
   echo "$0: cannot figure out server location"
@@ -51,25 +52,16 @@ for i in offline caf dev; do
   fi
 done
 
-######################################################################
-# Compact monitoring logs.
-if [ -d $FILER/status ]; then
-  HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
-  for f in $(find $FILER/status/*/$HOST/* -name '20[0-9][0-9][01][0-9]*.txt' -mmin +60 | sort); do
-    set -e
-    [ -f "$f" ] || continue
-    month=$(echo "$f" | perl -pe 's|.*/||; s|^([0-9]{6}).*|$1|')
-    day=$(echo "$f" | perl -pe 's|.*/||; s|^([0-9]{8}).*|$1|')
-    case $month in 20[0-9][0-9][01][0-9] ) ;; * )
-      echo "$f: could not determine month from log file name (got: $month)"
-      continue ;;
-    esac
-    case $day in 20[0-9][0-9][01][0-9][0123][0-9] ) ;; * )
-      echo "$f: could not determine day from log file name (got: $day)"
-      continue ;;
-    esac
-
-    zip -9Tmoqj $(dirname "$f")/$day.zip $f
-    set +e
+####################################################################
+# See if we are in online to do some more clean up. Move old
+# zip archives to the filer
+case $HOST in dqm-c2d07-* )
+  LOGFILER=/dqmdata/logs/$HOST
+  for a in $(find  $LOGDIR -name \*.zip -mtime +2)
+  do
+    service=$(dirname ${a/$LOGDIR\//})
+    [ ! -d $LOGFILER/$service ] && mkdir -p $LOGFILER/$service
+    mv $a $LOGFILER/$service
   done
-fi
+  ;;
+esac

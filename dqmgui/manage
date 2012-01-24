@@ -6,6 +6,7 @@
 ##H   help        show this help
 ##H   version     get current version of the service
 ##H   status      show current service's status
+##H   dstatus      show current service's detailed status
 ##H   sysboot     start server from crond if not running
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
@@ -16,6 +17,7 @@
 ##H COMPONENTs: webserver collector renderer logger agents afs-sync migration
 ##H
 ##H   xstatus     show status for COMPONENTs
+##H   xdstatus     show detailed status for COMPONENTs
 ##H   xstart      (re)start COMPONENTs
 ##H   xrestart    (re)start COMPONENTs
 ##H   xstop       stop COMPONENTs
@@ -101,6 +103,27 @@ statproc()
   fi
 }
 
+sdproc()
+{
+  local user=$(id -u) title pat
+  while [ $# -ge 1 ]; do
+    case $1 in
+      -u ) user=$2; shift; shift ;;
+      -- ) shift; break ;;
+      -* ) echo "$0 (sdproc): bad option '$1'" 1>&2; exit 1 ;;
+      *  ) break ;;
+    esac
+  done
+  title="$1" pat="$2"
+  local title="$1" pat="$2"
+  message $echo_e "${COLOR_OK}${newline}${title}:${COLOR_NORMAL}"
+  pgrep -u $(id -u) -f "$pat" | xargs -r ps -o pid=,bsdstart=,args= |
+    perl -p -e 'use Term::ANSIColor qw(:constants);s/^/  /; END { $. || print RED,"  (none running)\n" } ' |
+    sort -k 4
+  newline="\n"
+}
+
+
 killproc()
 {
   local T title pat nextmsg
@@ -145,7 +168,14 @@ start()
   cd $STATEDIR
   message "starting $ME ${1:-(default)}"
 
-  # first start agents
+  # first start webserver
+  case $HOST:${1:-webserver} in *:*webserver* )
+    for cfg in $CONFIGS; do
+      monControl start all from $CFGDIR/server-conf-$cfg.py
+    done ;;
+  esac
+
+  # then start agents
   case $HOST:${1:-agents} in
     dqm-c2d07-01:*agents* ) # dqm-prod-local
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
@@ -191,6 +221,28 @@ start()
       startagent agent-delete \
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online/ \
+        $STATEDIR/ix \
+        $CFGDIR/quota-dd-online.py
+      ;;
+    dqm-c2d07-11:*agents* ) # dqm-integration
+      refuseproc "file agents" "visDQMIndex" "refusing to restart"
+
+      DQM_DATA=$STATEDIR
+      startagent agent-receive \
+        visDQMReceiveDaemon \
+        $DQM_DATA/uploads \
+        $DQM_DATA/data \
+        $DQM_DATA/agents/register \
+
+      startagent agent-import \
+        visDQMImportDaemon \
+        $DQM_DATA/agents/register \
+        $DQM_DATA/data \
+        $STATEDIR/ix
+
+      startagent agent-delete \
+        visDQMDeleteDaemon \
+        http://localhost:8030/dqm/online-playback/ \
         $STATEDIR/ix \
         $CFGDIR/quota-dd-online.py
       ;;
@@ -422,20 +474,15 @@ start()
       ;;
   esac
 
-  # start collector
+  # finally start collector
   case $HOST:${1:-collector} in
     dqm-c2d07-[01]1:*collector* | dqm-c2d07-2[12]:*collector* )
       DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+    dqm-c2d07-*:*collector* ) ;;
     *:*collector* )
       DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/dev/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
   esac
 
-  # finally web server(s)
-  case $HOST:${1:-webserver} in *:*webserver* )
-    for cfg in $CONFIGS; do
-      monControl start all from $CFGDIR/server-conf-$cfg.py
-    done ;;
-  esac
 }
 
 # Stop the service.
@@ -490,6 +537,35 @@ status()
   esac
 }
 
+# Give details of server componenets
+detailstatus()
+{
+  case ${1:-webserver} in *webserver* )
+    sdproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  esac
+  case ${1:-renderer} in *renderer* )
+    sdproc "$ME renderer" "visDQMRender" ;;
+  esac
+  case ${1:-collector} in *collector* )
+    sdproc "$ME collector" "DQMCollector" ;;
+  esac
+  case ${1:-logger} in *logger* )
+    sdproc "$ME loggers" "rotatelogs" ;;
+  esac
+  case ${1:-agents} in *agents* )
+    sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+  esac
+  case ${1:-stageout} in *stageout* )
+    sdproc -u cmsweb "$ME stageout agent" "visDQMZipCastorStager" ;;
+  esac
+  case ${1:-afs-sync} in *afs-sync* )
+    sdproc -u cmsweb "$ME afs sync" "visDQMAfsSync" ;;
+  esac
+  case $1 in *migration* )
+    sdproc "$ME migration" "visDQMMigration|sleep" ;;
+  esac
+}
+
 # (Re)compile render plugins.
 compile()
 {
@@ -518,7 +594,7 @@ while [ $# -ge 1 ]; do
     *  ) break ;;
   esac
 done
-
+newline=""
 # Check user name. Everything except afs-sync and castor stageout must
 # run as non-cmsweb account, afs-sync and castor stageout must be under
 # cmsweb, refuse to run otherwise.
@@ -551,6 +627,10 @@ case ${1:-status} in
     status
     ;;
 
+  dstatus )
+    detailstatus
+    ;;
+
   stop )
     check "$2"
     stop
@@ -568,6 +648,10 @@ case ${1:-status} in
 
   xstatus)
     status "$2"
+    ;;
+
+  xdstatus )
+    detailstatus "$2"
     ;;
 
   xstop )

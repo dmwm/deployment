@@ -1,20 +1,27 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_dqmgui_variants="default bare"
+deploy_dqmgui_variants="default bare online"
 deploy_dqmgui_deps()
 {
   deploy backend
-  deploy admin $variant
+  [ $variant == online ] && deploy admin default || deploy admin $variant
 }
 
 deploy_dqmgui_prep()
 {
   extra=
   case $host in
-    dqm-c2d07-* )
+    dqm-C2D07-0[12] | dqm-C2D07-12 )
       extra="$extra /dqmdata/dqm/uploads"
       extra="$extra /dqmdata/dqm/agents"
       extra="$extra /dqmdata/dqm/repository/original"
-      extra="$extra agents sessions"
+      extra="$extra sessions"
+      for a in import-local  import-offsite  import-test; do
+        extra="$extra /dqmdata/dqm/agents/$a"
+      done
+      ;;
+    dqm-C2D07-11 )
+      extra="$extra sessions agents data uploads"
+      extra="$extra agents/register"
       ;;
 
     * )
@@ -27,7 +34,7 @@ deploy_dqmgui_prep()
       ;;
   esac
   mkproj $extra
-  mkproxy
+  [ ! $variant == online ] &&  mkproxy
   $nogroups || chmod g+ws */data */zipped */agents/*
 }
 
@@ -65,4 +72,7 @@ deploy_dqmgui_post()
     $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
     eval "$cmd"
   }
+
+  #Clear black list
+  find $project_state -maxdepth 2 -name blacklist.txt -exec rm {} \;
 }

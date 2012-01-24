@@ -15,6 +15,6 @@
   [COSMICS_RUN,3 * 30,25],
   [COSMICS_RUN,30,0],
   [TEST_RUN,1,0],
-  [TEST_RUN,30,25],
-  [TEST_RUN,3 * 30,100]
+  [TEST_RUN,10,25],
+  [TEST_RUN,20,100]
   ]}}
