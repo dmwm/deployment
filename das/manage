@@ -59,7 +59,7 @@ sysboot()
   if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
       dostart=true
   fi
-  if [ $(pgrep -u $(id -u) -f "[/]analytics_controller.py" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "[/]controller.py" | wc -l) = 0 ]; then
     dostart=true
   fi
   $dostart && start
@@ -72,7 +72,7 @@ start()
   python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
        </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 
-  python -u $DAS_PYTHONPATH/DAS/analytics/analytics_controller.py $DAS_ANALYTICS \
+  python -u $DAS_PYTHONPATH/DAS/analytics/controller.py $DAS_ANALYTICS \
     </dev/null 2>&1 | rotatelogs $LOGDIR/das-analytics-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
@@ -84,7 +84,7 @@ stop()
       kill -9 $pid
   done
 
-  for pid in $(pgrep -u $(id -u) -f "[/]analytics_controller.py"); do
+  for pid in $(pgrep -u $(id -u) -f "[/]controller.py"); do
     kill -9 $pid
   done
 }
@@ -96,7 +96,7 @@ status()
     if [ $pat == "web" ]; then
       pid=$(pgrep -u $(id -u) -f "[/]das_server.py" | sort -n)
     elif [ $pat == "analytics" ]; then
-      pid=$(pgrep -u $(id -u) -f "[/]analytics_controller.py" | sort -n)
+      pid=$(pgrep -u $(id -u) -f "[/]controller.py" | sort -n)
     fi
     if [ X"$pid" = X ]; then
       echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
