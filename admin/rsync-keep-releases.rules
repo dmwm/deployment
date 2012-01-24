@@ -1,6 +1,6 @@
 -s /srv-*/[a-z][a-z]110*[a-z]
 -s /srv-*/[a-z][a-z]1111[a-z]
 -rs /srv-*/[a-z][a-z]1112[a-z]
--rs /srv-*/[a-z][a-z]1101[a-z]
+-rs /srv-*/[a-z][a-z]1201[a-z]
 -r /srv-*/[a-z][a-z]1112[a-z]/auth/proxy/proxy*.cert
 -r /srv-*/[a-z][a-z]1201[a-z]/auth/proxy/proxy*.cert
