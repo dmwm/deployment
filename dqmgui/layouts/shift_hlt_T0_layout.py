@@ -1,11 +1,9 @@
 
-
 ###---- GENERIC - FourVector selection goes here: ####
 ######################################################
 
 ###---- GENERIC - FourVector Muon
 def trigvalFVMuon(i, p, *rows): i["00 Shift/HLT/FourVector/Muon/" + p] = DQMItem(layout=rows)
-
 
 trigvalFVMuon(dqmitems,"Muon Eff HLT to L1",
 [{'path': "HLT/FourVector/paths/HLT_Mu9/custom-eff/HLT_Mu9_wrt__l1Et_Eff_OnToL1", 'description':"Efficiency of HLT to L1 for path HLT_Mu9"}])
@@ -22,11 +20,8 @@ trigvalFVMuon(dqmitems,"HLT_Mu9: Et of HLT Muon Objects",
 trigvalFVMuon(dqmitems,"HLT_Mu9: Et of RECO Muon Objects",
 [{'path': "HLT/FourVector/paths/HLT_Mu9/HLT_Mu9_wrt__offEtOff", 'description':"Et of RECO Muon object for path HLT_Mu9"}])
 
-
-
 ###---- GENERIC - FourVector Electron
 def trigvalFVEle(i, p, *rows): i["00 Shift/HLT/FourVector/Electron/" + p] = DQMItem(layout=rows)
-
 
 trigvalFVEle(dqmitems,"Electron Eff HLT to L1",
 [{'path': "HLT/FourVector/paths/HLT_Ele10_LW_L1R/custom-eff/HLT_Ele10_LW_L1R_wrt__l1Et_Eff_OnToL1", 'description':"Efficiency of HLT to L1 for path HLT_Ele10_LW_L1R"}])
@@ -43,11 +38,8 @@ trigvalFVEle(dqmitems,"HLT_Ele10_LW_L1R: Et of HLT Electron Objects",
 trigvalFVEle(dqmitems,"HLT_Ele10_LW_L1R: Et of RECO Electron Objects",
 [{'path': "HLT/FourVector/paths/HLT_Ele10_LW_L1R/HLT_Ele10_LW_L1R_wrt__offEtOff", 'description':"Et of RECO Electron object for path HLT_Ele10_LW_L1R"}])
 
-
-
 ###---- GENERIC - FourVector Jet
 def trigvalFVJet(i, p, *rows): i["00 Shift/HLT/FourVector/Jet/" + p] = DQMItem(layout=rows)
-
 
 trigvalFVJet(dqmitems,"Jet Eff HLT to L1",
 [{'path': "HLT/FourVector/paths/HLT_Jet30U/custom-eff/HLT_Jet30U_wrt__l1Et_Eff_OnToL1", 'description':"Efficiency of HLT to L1 for path HLT_Jet30U"}])
@@ -67,7 +59,6 @@ trigvalFVJet(dqmitems,"HLT_Jet30U: Et of RECO Jet Objects",
 ###---- GENERIC - FourVector Photon
 def trigvalFVPho(i, p, *rows): i["00 Shift/HLT/FourVector/Photon/" + p] = DQMItem(layout=rows)
 
-
 trigvalFVPho(dqmitems,"Photon Eff HLT to L1",
 [{'path': "HLT/FourVector/paths/HLT_Photon15_L1R/custom-eff/HLT_Photon15_L1R_wrt__l1Et_Eff_OnToL1", 'description':"Efficiency of HLT to L1 for path HLT_Photon15_L1R"}])
 
@@ -84,7 +75,6 @@ trigvalFVPho(dqmitems,"HLT_Photon15_L1R: Et of RECO Photon objects",
 [{'path': "HLT/FourVector/paths/HLT_Photon15_L1R/HLT_Photon15_L1R_wrt__offEtOff", 'description':"Et of RECO Photon object for path HLT_Photon15_L1R"}])
 
 def hltCollLayout(i, p, *rows): i["00 Shift/HLT/Collisions/" + p] = DQMItem(layout=rows)
-
 
 hltCollLayout(dqmitems,"Eff of HLT_Ele65_CaloIdVT_TrkIdT wrt RECO in RECO pt space",
 [{'path': "HLT/FourVector/paths/HLT_Ele65_CaloIdVT_TrkIdT/custom-eff/HLT_Ele65_CaloIdVT_TrkIdT_wrt_HLT_Mu_offEt_Eff_OnToOff", 'description':"Efficiency of HLT_Ele65_CaloIdVT_TrkIdT to RECO (pt). For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
@@ -128,7 +118,6 @@ hltCollLayout(dqmitems,"Eff of HLT_HT550 wrt RECO in RECO pt space",
 hltCollLayout(dqmitems,"Eff of HLT_HT550 wrt RECO in RECO phi space",
 [{'path': "HLT/FourVector/paths/HLT_HT550/custom-eff/HLT_HT550_wrt__offEtaoffPhi_Eff_OnToOff", 'description':"Efficiency of HLT_HT550 to RECO (phi). For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-
 def hltlayout(i, p, *rows): i["00 Shift/HLT/Cosmics/" + p] = DQMItem(layout=rows)
 
 hltlayout(dqmitems,"N of HLT_L1SingleMuOpen_AntiBPTX muons" ,
@@ -143,20 +132,13 @@ hltlayout(dqmitems,"Eff HLT_L1SingleMuOpen_AntiBPTX to its L1 vs Pt",
 hltlayout(dqmitems,"Eff HLT_L1SingleMuOpen_AntiBPTX to its L1 vs eta-phi",
         [{'path': "HLT/FourVector/paths/HLT_L1SingleMuOpen_AntiBPTX/custom-eff/HLT_L1SingleMuOpen_AntiBPTX_wrt_HLT_Jet_l1Etal1Phi_Eff_OnToL1", 'description': "Fraction of L1 muons that triggered this HLT path as function of eta-phi.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineHLT\">here</a>."}])
 
-
-
-
-
 ##########################################
 #
 #    TPG Layouts
 #
 ##########################################
 
-
-
 def tpgOfflineLayout(i, p, *rows): i["HLT/Layouts/TPG-Summary-HLTOffline/" + p] = DQMItem(layout=rows)
-
 
 ################  Muons ###########################
 
@@ -172,9 +154,7 @@ tpgOfflineLayout(dqmitems,"02 - HLT Muon Passthru Pt",
 tpgOfflineLayout(dqmitems,"03 - HLT Muon Passthru Eta Phi ",
 [{'path': "HLT/Muon/Distributions/HLT_L1MuOpen/allMuons/recPhiVsRecEta_L1Filtered", 'description':"HLT_L1MuOpen EtaVsPhi"}])
 
-
 ################ JETMET  ###########################
-
 
 tpgOfflineLayout(dqmitems,"04 - HLT JetMet ",
 [{'path': "HLT/JetMET/EffWrtMBTrigger/HLT_Jet30U/ME_Eff_Eta", 'description':""}])
@@ -194,7 +174,6 @@ tpgOfflineLayout(dqmitems,"08 - ",
 tpgOfflineLayout(dqmitems,"09 - ",
 [{'path': "HLT/JetMET/EffWrtMBTrigger/HLT_L1Jet6U/ME_Eff_Pt", 'description':""}])
 
-
 ################ ELECTRONS ###########################
 
 tpgOfflineLayout(dqmitems,"10 - HLT Ele",
@@ -212,10 +191,8 @@ tpgOfflineLayout(dqmitems,"13 - HLT Ele",
 tpgOfflineLayout(dqmitems,"14 - HLT Ele",
 [{'path': "HLT/EgOffline/hltL1NonIsoHLTNonIsoSinglePhotonEt10HcalIsolFilter_trigEffTo_hltPreL1SingleEG5_pho_trigCuts_vs_phi_eb", 'description':""}])
 
-
 tpgOfflineLayout(dqmitems,"15 - HLT Ele",
 [{'path': "HLT/EgOffline/hltL1NonIsoHLTNonIsoSinglePhotonEt10HcalIsolFilter_trigEffTo_hltPreL1SingleEG5_pho_trigCuts_vs_phi_ee", 'description':""}])
-
 
 tpgOfflineLayout(dqmitems,"16 - HLT Ele",
 [{'path': "HLT/EgOffline/hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter_trigEffTo_hltL1NonIsoHLTNonIsoSinglePhotonEt10HcalIsolFilter_gsfEle_trigCuts_vs_et_eb", 'description':""}])

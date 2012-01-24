@@ -6,7 +6,6 @@ if __name__=="__main__":
 
     dqmitems={}
 
-
 def shifthcallayout(i, p, *rows): i["00 Shift/Hcal/" + p] = DQMItem(layout=rows)
 
 # Report Summary Map

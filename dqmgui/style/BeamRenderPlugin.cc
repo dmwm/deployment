@@ -182,7 +182,6 @@ private:
     }
   }
 
-
   void postDrawTH2F( TCanvas *c, const VisDQMObject &o ) {
 
     TH2F* obj = dynamic_cast<TH2F*>( o.object );

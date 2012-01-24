@@ -26,4 +26,3 @@ ecallayout(dqmitems, "02-Cluster-Summary",
   [None,
    { 'path': "EcalEndcap/EEClusterTask/EECLT BC energy map EE -", 'description': "EcalEndcap (z<0) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/EcalDQM>EcalDQM</a>" },
    None])
-

@@ -5,7 +5,6 @@ if __name__=="__main__":
             print layout
     dqmitems={}
 
-
 def shifthcallayout(i, p, *rows): i["00 Shift/Hcal/" + p] = DQMItem(layout=rows)
 shifthcallayout(dqmitems, "01 Hcal Report Summary",
                 [{'path':"Hcal/EventInfo/reportSummaryMap",
@@ -23,7 +22,6 @@ shifthcallayout(dqmitems, "03 HCAL Raw Data",
                 [{ 'path': "Hcal/RawDataMonitor_Hcal/ ProblemRawData",
                    'description': "A Raw Data Format error indicates that the data received from this channel was somehow corrupted or compromised.  This plot is the sum of bad digis over all depths. iPhi (1 to 72) by iEta (-41 to 41) More at <a href=https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMHistograms>HcalDQMHistograms</a>" }]
                 )
-
 
 shifthcallayout(dqmitems, "04 HCAL Digi Problems",
                 [{ 'path': "Hcal/DigiMonitor_Hcal/ ProblemDigis",

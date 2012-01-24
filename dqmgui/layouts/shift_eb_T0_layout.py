@@ -26,4 +26,3 @@ shifteblayout(dqmitems, "06 Clusters Energy",
   [{ 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy map", 'description': "Average energy (in GeV) of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEcal>DQMShiftOfflineEcal</a>" }],
   [{ 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy projection eta", 'description': "Eta projection of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEcal>DQMShiftOfflineEcal</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy projection phi", 'description': "Phi projection of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEcal>DQMShiftOfflineEcal</a>", 'draw': { 'withref': "yes" } }])
-

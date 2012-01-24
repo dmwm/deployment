@@ -56,7 +56,6 @@ void dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(TH2* obj) {
     // custom color palette
     static int pallete[colorNum];
 
-
     if (!QualityTestStatusRenderPlugin::init) {
 
         QualityTestStatusRenderPlugin::init = true;
@@ -145,4 +144,3 @@ void dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(TH2* obj) {
 
 // initialization of static constants
 bool dqm::QualityTestStatusRenderPlugin::init = false;
-

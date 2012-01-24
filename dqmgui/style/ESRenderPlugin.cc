@@ -228,7 +228,6 @@ void ESRenderPlugin::preDrawTH2F( TCanvas *, const VisDQMObject &o ) {
    gPad->SetRightMargin(0.15);
    gStyle->SetPaintTextFormat("+g");
 
-
    if (name.find( "OptoRX" ) != std::string::npos||name.find( "KChip" ) != std::string::npos||name.find( "Fiber Bad Status" ) != std::string::npos || name.find( "Fiber Off" ) != std::string::npos) {
      gStyle->SetPalette(10,colorbar1);
    }

@@ -12,7 +12,6 @@ shiftdtlayout(dqmitems, "02-SegmentReso-Sigma",
 shiftdtlayout(dqmitems, "03-EfficiencySummary",
   [{ 'path': "DT/05-ChamberEff/EfficiencyGlbSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineDT>Description for the <b>Central DQM Offline shifter</b></a>" }])
 
-
 # shiftdtlayout(dqmitems, "01-SegmentOccupancy_W-2",
 #   [{ 'path': "DT/02-Segments/Wheel-2/numberOfSegments_W-2", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineDT>Description for the <b>Central DQM Offline shifter</b></a>" }])
 

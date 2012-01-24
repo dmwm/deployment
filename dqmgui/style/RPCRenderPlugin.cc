@@ -57,10 +57,7 @@ private:
 	  obj->StatOverflows(false);
    }
 
-
   }
-
-
 
   void preDrawTH2( TCanvas *c, const VisDQMObject &o )
     {
@@ -83,7 +80,6 @@ private:
       obj->GetYaxis()->CenterLabels();
       c->SetGridx();
       c->SetGridy();
-
 
       if(o.name.find("SummaryMap") != std::string::npos)
 	{
@@ -188,7 +184,6 @@ private:
 //         gPad->Update();
       }
 
-
       if(o.name.find("OccupancyNormByGeoAndRPCEvents")!= std::string::npos)
       {
         obj->SetMaximum(0.2);
@@ -227,8 +222,6 @@ private:
         return;
       }
 
-
-
  if(o.name.find("ClusterSizeMean") != std::string::npos)
       {
         obj->SetMinimum(0.0);
@@ -241,7 +234,6 @@ private:
         colorPalette_m[2]= 416; // Orange
         colorPalette_m[3]= 807; // Red
         colorPalette_m[4]= 632;
-
 
         gStyle->SetPalette(5, colorPalette_m);
         return;
@@ -306,9 +298,7 @@ private:
 	obj->SetStats( kTRUE );
 	return;
 
-
 	}
-
 
       if(o.name.find("RPCChamberQuality") != std::string::npos)
       {
@@ -341,10 +331,6 @@ private:
 	return;
       }
 
-
-
-
-
       if(o.name.find("VStatus_Wheel") != std::string::npos)
       {
         obj->SetMinimum(-0.5);
@@ -370,7 +356,6 @@ private:
 	return;
       }
 
-
       if(o.name.find("RPCNoisyStrips") != std::string::npos) {
 
 	obj->SetMinimum(-0.5);
@@ -388,8 +373,6 @@ private:
 
 	return;
       }
-
-
 
       if(o.name.find("NumberOfDigi_Mean") != std::string::npos)
       {
@@ -431,7 +414,6 @@ private:
         return;
       }
 
-
       if(o.name.find("rpcHVStatus") != std::string::npos)
         {
           //obj->Reset();
@@ -445,8 +427,6 @@ private:
           gStyle->SetPalette(2, colorPaletteDCS);
           return;
         }
-
-
 
       if(o.name.find("RollPercentage") != std::string::npos)
         {

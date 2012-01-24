@@ -38,4 +38,3 @@ l1temulayout(dqmitems,"10-GMT (Dis)Agreement Flag",
 
 l1temulayout(dqmitems,"11-GT (Dis)Agreement Flag",
              [{'path': "L1TEMU/GT/GLTErrorFlag", 'description': "Data|Emulator disagreement type for GT. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
-

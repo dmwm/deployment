@@ -32,4 +32,3 @@ l1tlayout(dqmitems,"09 Global Calorimeter Trigger Jets Occupancy",
 
 l1tlayout(dqmitems,"10 Global Calorimeter Trigger Tau Jets Occupancy",
   [{'path': "L1T/L1TGCT/TauJetsEtEtaPhi", 'description': "(Eta,Phi) map of Tau Jet Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
-

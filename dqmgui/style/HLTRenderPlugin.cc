@@ -187,10 +187,8 @@ private:
 				obj->GetXaxis()->SetRange(0, maxRange);
 			}
 
-
       // FourVector histograms
       if ( o.name.find("FourVector/paths/") != std::string::npos){
-
 
 	      if( o.name.find("custom-eff") != std::string::npos)
 	      {
@@ -296,7 +294,6 @@ private:
       gStyle->SetCanvasBorderMode( 0 );
       gStyle->SetPadBorderMode( 0 );
       gStyle->SetPadBorderSize( 0 );
-
 
       // I don't think we want to set stats to 0 for Hcal
       //gStyle->SetOptStat( 0 );
@@ -416,7 +413,6 @@ private:
 	obj->GetXaxis()->SetRange(0, maxRangex);
 	obj->GetYaxis()->SetRange(0, maxRangey);
       }
-
 
   }
 

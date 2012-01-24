@@ -18,5 +18,3 @@ shifthlxlayout(dqmitems, "Shifter HLX Lumi Errors Summary",
 shifthlxlayout(dqmitems, "Shifter HLX CheckSum Summary",
   [ {'path':"HLX/CheckSums/SumAllOccSet1",'description':"<a href=https://twiki.cern.ch/twiki/bin/view/CMS/HLXLumiDQMCellSumMonitor>Cell's alive per wedge, occupancy set 1.</a>"},
     {'path':"HLX/CheckSums/SumAllOccSet2",'description':"<a href=https://twiki.cern.ch/twiki/bin/view/CMS/HLXLumiDQMCellSumMonitor>Cell's alive per wedge, occupancy set 1.</a>"} ])
-
-

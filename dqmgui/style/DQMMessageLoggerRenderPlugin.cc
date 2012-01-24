@@ -78,7 +78,6 @@ private:
 
       Double_t bm = 0.4;
 
-
       if(o.name.find("categoriesErrorsFound")!=std::string::npos){
 	if(obj->ComputeIntegral() > 0.5){
 	  gPad->SetBottomMargin(bm);
@@ -133,4 +132,3 @@ private:
 };
 
 static DQMMessageLoggerRenderPlugin instance;
-

@@ -213,8 +213,6 @@ private:
       }
       return;
 
-
-
     }
 
   void preDrawTH1F( TCanvas *, const VisDQMObject &o )

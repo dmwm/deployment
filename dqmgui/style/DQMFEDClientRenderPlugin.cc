@@ -42,7 +42,6 @@ public:
       if ( o.name.find( "Fatal" )  != std::string::npos)
          gPad->SetLogy(1);
 
-
       // object is TH2 histogram
       if ( dynamic_cast<TH2F*>( o.object ) )
       {

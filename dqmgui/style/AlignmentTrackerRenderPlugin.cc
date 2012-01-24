@@ -20,7 +20,6 @@ public:
     else return false;
   }
 
-
   virtual void preDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo &)
   {
     c->cd();
@@ -43,7 +42,6 @@ public:
     }
   }
 
-
   virtual void postDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &)
   {
     c->cd();
@@ -65,7 +63,6 @@ public:
       this->postDrawTProfile2D( c, o );
     }
   }
-
 
 private:
 
@@ -95,7 +92,6 @@ private:
     if((o.name.find( "/GlobalTrackVariables/" ) != std::string::npos))return;
     if((o.name.find( "h_summary" ) != std::string::npos))return;
 
-
     obj->GetXaxis()->SetTitleSize(0.06);
     obj->GetXaxis()->SetLabelSize(0.06);
     obj->GetXaxis()->SetTitleOffset(1.05);
@@ -109,14 +105,12 @@ private:
     obj->SetStats(kTRUE);
   }
 
-
   void preDrawTH2F(TCanvas *, const VisDQMObject &o)
   {
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
 
   }
-
 
   void preDrawTProfile(TCanvas *, const VisDQMObject &o)
   {
@@ -125,14 +119,12 @@ private:
 
   }
 
-
   void preDrawTProfile2D(TCanvas *, const VisDQMObject &o)
   {
     TProfile2D* obj = dynamic_cast<TProfile2D*>( o.object );
     assert( obj );
 
   }
-
 
   void postDrawTH1F(TCanvas *, const VisDQMObject &o)
   {
@@ -152,7 +144,6 @@ private:
     stats->SetY2NDC(0.925);
   }
 
-
   void postDrawTH2F(TCanvas *, const VisDQMObject &o)
   {
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
@@ -160,14 +151,12 @@ private:
 
   }
 
-
   void postDrawTProfile(TCanvas *, const VisDQMObject &o)
   {
     TProfile* obj = dynamic_cast<TProfile*>( o.object );
     assert( obj );
 
   }
-
 
 void postDrawTProfile2D(TCanvas *, const VisDQMObject &o)
   {

@@ -64,7 +64,6 @@ public:
         }
       }
 
-
       for( int i=0; i<60; i++ ){
 
 	if ( i < 15 ){
@@ -116,7 +115,6 @@ public:
       b_box_r->SetFillColor(1941);
       b_box_w->SetFillColor(0);
       b_box_b->SetFillColor(1923);
-
 
     }
 
@@ -270,7 +268,6 @@ private:
         return;
       }
 
-
       // rate histograms
       if ( (o.name.find("rate_algobit") != std::string::npos ||
 	    o.name.find("rate_ttbit") != std::string::npos ||
@@ -373,7 +370,6 @@ private:
 	obj->GetYaxis()->SetRangeUser(0,
 				      obj->GetBinContent(obj->GetMaximumBin() ) * 1.1 );
 
-
 	if ( o.name.find("bx") != std::string::npos ) {
 
 	  obj->GetXaxis()->SetNdivisions(3);
@@ -404,7 +400,6 @@ private:
 	return;
 
       }
-
 
       // Code used in SiStripRenderPlugin -- do we want similar defaults?
 
@@ -548,7 +543,6 @@ private:
           return;
         }
 
-
         // HF Ring correlations
         if (o.name.find("TowerCountCorr") != std::string::npos ||
             o.name.find("HFRing1Corr") != std::string::npos ||
@@ -644,13 +638,11 @@ private:
 
       }
 
-
       else if(REMATCH("BX_Correlation_*", o.name)) {
         TAxis* yBX = obj->GetYaxis();
         yBX->SetTitleOffset(1.1);
         return;
       }
-
 
       if(o.name.find("CSCTF_Chamber_Occupancies") != std::string::npos)
       {
@@ -714,13 +706,10 @@ private:
 	  return;
 	}
 
-
     }
 
   void postDrawTH1F( TCanvas *, const VisDQMObject & )
     {
-
-
 
       /*
         // Add error/warning text to 1-D histograms.  Do we want this at this time?
@@ -758,15 +747,12 @@ private:
   void postDrawTH2F( TCanvas *, const VisDQMObject &o )
     {
 
-
       TH2F* obj = dynamic_cast<TH2F*>( o.object );
       assert( obj );
-
 
       TBox* b_box = new TBox();
       TLine* l_line = new TLine();
       TText* t_text = new TText();
-
 
       if( o.name.find( "reportSummaryMap" )  != std::string::npos)
       {
@@ -832,8 +818,6 @@ private:
 	l_line->DrawLine(1,10,3,10);
 	l_line->DrawLine(1,11,3,11);
 
-
-
 	TLegend* leg = new TLegend(0.16, 0.11, 0.44, 0.38);
 	leg->AddEntry(b_box_g,"Good",   "f");
 // 	leg->AddEntry(b_box_y,"Warning","f");
@@ -844,8 +828,6 @@ private:
 
 	return;
       }
-
-
 
       if( o.name.find( "CSCTF_Chamber_Occupancies" )  != std::string::npos)
       {
@@ -883,7 +865,6 @@ private:
 
 	return;
       }
-
 
       if(
         ( o.name.find( "Rct" ) != std::string::npos ||
@@ -925,8 +906,6 @@ private:
 
 	return;
       }
-
-
 
       // nothing to put here just yet
       // in the future, we can add text output based on error status,
@@ -1032,7 +1011,6 @@ private:
       //   pt[i]->Draw("same");
       //to draw your text object
       //  }
-
 
     }
 };

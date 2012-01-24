@@ -13,7 +13,6 @@ nrofdigi = "Number of Digi"
 eff = "Efficiency"
 bx  = "RPC BX distribution "
 
-
 ################### Links to TOP Summary Histograms #################################
 #FED Fatal
 rpclayout(dqmitems, "01-Fatal_FED_Errors",
@@ -30,7 +29,6 @@ rpclayout(dqmitems, "03-RPC_HV_Status",
           [{ 'path': "RPC/DCSInfo/rpcHV", 'description': rpcevents + rpclink }])
 ##-------------------
 
-
 #Roll Quality
 
 rpclayout(dqmitems, "04-Barrel_TOP_summary_Distribution",
@@ -42,8 +40,6 @@ rpclayout(dqmitems, "04-Barrel_TOP_summary_Distribution",
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Distribution_Wheel-2", 'description': top + rpclink  }]
           )
 
-
-
 rpclayout(dqmitems, "05-Barrel_TOP_Summary",
           [{ 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel2", 'description': top + rpclink },
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel1", 'description': top + rpclink }],
@@ -52,7 +48,6 @@ rpclayout(dqmitems, "05-Barrel_TOP_Summary",
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel-1", 'description': top + rpclink},
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel-2", 'description': top + rpclink}]
           )
-
 
 rpclayout(dqmitems, "06-EndCap_TOP_Summary_Distribution",
           [{ 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Distribution_Disk3", 'description': top + rpclink },
@@ -64,8 +59,6 @@ rpclayout(dqmitems, "06-EndCap_TOP_Summary_Distribution",
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Distribution_Disk-1", 'description': top + rpclink}]
           )
 
-
-
 rpclayout(dqmitems, "07-EndCap_TOP_Summary",
           [{ 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk3", 'description': top + rpclink },
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk2", 'description': top + rpclink },
@@ -75,7 +68,6 @@ rpclayout(dqmitems, "07-EndCap_TOP_Summary",
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-2", 'description': top + rpclink},
            { 'path': "RPC/Noise/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-1", 'description': top + rpclink}]
           )
-
 
 ##------------------------
 
@@ -88,7 +80,6 @@ rpclayout(dqmitems, "08-Barrel_Occupancy",
 rpclayout(dqmitems, "09-Endcap_Occupancy",
           [{ 'path': "RPC/Noise/SummaryHistograms/Occupancy_for_Endcap", 'description': occupancy + rpclink }]
           )
-
 
 rpclayout(dqmitems, "10-Barrel_1DOccupancy",
           [{ 'path': "RPC/Noise/SummaryHistograms/1DOccupancy_Wheel_2", 'description': occupancy + rpclink },
@@ -106,12 +97,9 @@ rpclayout(dqmitems, "11-EndCap_1DOccupancy",
 
 ##------------------------
 
-
-
 ##Number Digi
 rpclayout(dqmitems, "12-Barrel_Multiplicity",
           [{ 'path': "RPC/Noise/SummaryHistograms/Multiplicity_Barrel", 'description': nrofdigi + rpclink }])
-
 
 rpclayout(dqmitems, "13-Endcap_Multiplicity",
           [ { 'path': "RPC/Noise/SummaryHistograms/Multiplicity_Endcap-", 'description': nrofdigi + rpclink },
@@ -119,15 +107,11 @@ rpclayout(dqmitems, "13-Endcap_Multiplicity",
           )
 ##-----------------------
 
-
-
 ##Number Cluster
-
 
 rpclayout(dqmitems, "14-Barrel_Number_Of_Clusters",
           [{ 'path': "RPC/Muon/SummaryHistograms/NumberOfClusters_Barrel", 'description': nrofcl + rpclink }]
           )
-
 
 rpclayout(dqmitems, "15-Endcap_Number_Of_Clusters",
           [ { 'path': "RPC/Muon/SummaryHistograms/NumberOfClusters_Endcap-", 'description': nrofcl + rpclink },
@@ -140,14 +124,12 @@ rpclayout(dqmitems, "16-Barrel_Cluster_Size",
           [{ 'path': "RPC/Muon/SummaryHistograms/ClusterSize_Barrel", 'description': clsize + rpclink }]
           )
 
-
 rpclayout(dqmitems, "17-Endcap_Cluster_Size",
           [ { 'path': "RPC/Muon/SummaryHistograms/ClusterSize_Endcap-", 'description':  clsize + rpclink },
             { 'path': "RPC/Muon/SummaryHistograms/ClusterSize_Endcap+", 'description':  clsize + rpclink  }]
           )
 
 ##-----------------------
-
 
 ##BX
 rpclayout(dqmitems, "18-Barrel_Bunch_Crossing",
@@ -158,7 +140,6 @@ rpclayout(dqmitems, "18-Barrel_Bunch_Crossing",
            { 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Wheel_-1", 'description': bx + rpclink  },
            { 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Wheel_-2", 'description': bx + rpclink  }]
           )
-
 
 rpclayout(dqmitems, "19-EndCap_Bunch_Crossing",
           [{ 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Disk_3", 'description': bx + rpclink },
@@ -171,9 +152,7 @@ rpclayout(dqmitems, "19-EndCap_Bunch_Crossing",
           )
 ##------------------------
 
-
 ############# number 20 is missing ######### Comming soon!
-
 
         ##Efficiency
 
@@ -197,11 +176,9 @@ rpclayout(dqmitems, "24-Endcap_Positive_Efficiency_Distribution",
           [{ 'path': "RPC/RPCEfficiency/EffEndcapPlusRoll", 'description': eff + rpclink }]
           )
 
-
 rpclayout(dqmitems, "25-Endcap_Negative_Efficiency_Distribution",
           [{ 'path': "RPC/RPCEfficiency/EffEndcapMinusRoll", 'description': eff + rpclink }]
           )
-
 
 rpclayout(dqmitems, "26-EndCap_Efficiency",
           [{ 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Segment_Disk_-3", 'description': eff + rpclink },

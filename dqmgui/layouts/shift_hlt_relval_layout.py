@@ -11,13 +11,11 @@
 # """
 ###
 
-
 ###---- GENERIC - FourVector selection goes here: ####
 ######################################################
 
 ###---- GENERIC - FourVector Muon
 def trigvalFVMuon(i, p, *rows): i["00 Shift/HLT/RelVal/FourVector/Muon/" + p] = DQMItem(layout=rows)
-
 
 trigvalFVMuon(dqmitems,"Eff HLT to MC",
 [{'path': "HLT/FourVector_Val/client/HLT_Mu9/custom-eff/HLT_Mu9_wrt__mcEt_Eff_OnToMc", 'description':"Efficiency of HLT to MC for path HLT_Mu9"}])
@@ -40,7 +38,6 @@ trigvalFVMuon(dqmitems,"Eff L1 to RECO",
 ###---- GENERIC - FourVector Electron
 def trigvalFVEle(i, p, *rows): i["00 Shift/HLT/RelVal/FourVector/Electron/" + p] = DQMItem(layout=rows)
 
-
 trigvalFVEle(dqmitems,"Eff HLT to MC",
 [{'path': "HLT/FourVector_Val/client/HLT_Ele10_LW_L1R/custom-eff/HLT_Ele10_LW_L1R_wrt__mcEt_Eff_OnToMc", 'description':"Efficiency of HLT to MC for path HLT_Ele10_LW_L1R"}])
 
@@ -61,7 +58,6 @@ trigvalFVEle(dqmitems,"Eff L1 to RECO",
 
 ###---- GENERIC - FourVector Jet
 def trigvalFVJet(i, p, *rows): i["00 Shift/HLT/RelVal/FourVector/Jet/" + p] = DQMItem(layout=rows)
-
 
 trigvalFVJet(dqmitems,"Eff HLT to MC",
 [{'path': "HLT/FourVector_Val/client/HLT_Jet30U/custom-eff/HLT_Jet30U_wrt__mcEt_Eff_OnToMc", 'description':"Efficiency of HLT to MC for path HLT_Jet30U"}])
@@ -84,7 +80,6 @@ trigvalFVJet(dqmitems,"Eff L1 to RECO",
 ###---- GENERIC - FourVector Photon
 def trigvalFVPho(i, p, *rows): i["00 Shift/HLT/RelVal/FourVector/Photon/" + p] = DQMItem(layout=rows)
 
-
 trigvalFVPho(dqmitems,"Eff HLT to MC",
 [{'path': "HLT/FourVector_Val/client/HLT_Photon15_L1R/custom-eff/HLT_Photon15_L1R_wrt__mcEt_Eff_OnToMc", 'description':"Efficiency of HLT to MC for path HLT_Photon15_L1R"}])
 
@@ -102,7 +97,6 @@ trigvalFVPho(dqmitems,"Eff L1 to MC",
 
 trigvalFVPho(dqmitems,"Eff L1 to RECO",
 [{'path': "HLT/FourVector_Val/client/HLT_Photon15_L1R/custom-eff/HLT_Photon15_L1R_wrt__offEt_Eff_L1ToOff", 'description':"Efficiency of L1 to RECO for path HLT_Photon15_L1R"}])
-
 
 ###---- EGAMMA selection goes here: ----
 
@@ -124,7 +118,6 @@ trigvalegammaW(dqmitems,"Ele10LWL1R",
 
 trigvalegammaW(dqmitems,"Ele10LWEleIdL1R",
 [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_EleId_L1RDQMWenu/efficiency_by_step_MC_matched", 'description':"per-event efficiency (MC matched) for Ele10LWEleIdL1R"}])
-
 
 ###---- MUON selection goes here: ----
 
@@ -152,7 +145,6 @@ trigvalmuon(dqmitems, "Efficiency of L3",
 trigvalmuon(dqmitems, "Efficiency of L3 After Isolation Step",
             [{'path': muonPath + "genEffEta_L3Iso",
               'description': "Efficiency to find an isolated gen-matched L3 muon associated to a gen-matched L1 muon vs. eta" + muonDocumentation}])
-
 
 ###---- TAU selection goes here: ----
 def trigvaltau(i, p, *rows): i["00 Shift/HLT/Tau/" + p] = DQMItem(layout=rows)
@@ -193,8 +185,6 @@ trigvaltau(dqmitems,"L2 Resolution",
                [
                   {'path': "HLT/TauRelVal/MC_"+hltTAUlumi+ "/L2/L2TauEtResol", 'description':"L2 Tau ET resolution with ref to MC  for "+hltTAUlumi}
                ])
-
-
 
 ###---- JETMET selection goes here: ----
 def trigvaljetmet(i, p, *rows): i["00 Shift/HLT/JetMET/" + p] = DQMItem(layout=rows)
@@ -251,14 +241,10 @@ trigvalalca(dqmitems,"Pi0 inv mass",
 trigvalalca(dqmitems,"event energy eb",
             [{'path': "HLT/EcalPhiSym/eventEnergyEB", 'description': "Event energy EB . For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSpecialHLTOfflinePerformance\">here</a>."}])
 
-
-
 ###---- HEAVYFLAVOR selection goes here: ----
 def trigvalbphys(i, p, *rows): i["00 Shift/HLT/HeavyFlavor/" + p] = DQMItem(layout=rows)
 trigvalbphys(dqmitems,"Quakonium efficiency",
              [{'path': "HLT/HeavyFlavor/QuarkoniumEfficiencies/genQuakonium_genPt", 'description': ". For more information please click <a href=\"\">here</a>."}])
-
-
 
 ###---- TOP selection goes here: ----
 def trigvaltop(i, p, *rows): i["00 Shift/HLT/Top/" + p] = DQMItem(layout=rows)
@@ -268,13 +254,11 @@ trigvaltop(dqmitems,"HLT_Mu9 eff vs Eta",
 trigvaltop(dqmitems,"HLT_Mu9 eff vs Pt",
     [{'path': "HLT/Top/Semileptonic_muon/EffVsPt_HLT_Mu9", 'description': "Trigger efficiency for HLT_Mu9 versus muon pt. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/TriggerValidationTop\">here</a>."}])
 
-
 trigvaltop(dqmitems,"HLT_Ele15SWLooseTrkIso eff vs Eta",
     [{'path': "HLT/Top/Semileptonic_electron/EffVsEta_HLT_Ele15_SW_LooseTrackIso_L1R", 'description': "Trigger efficiency for HLT_Ele15_SW_LooseTrackIso_L1R versus electron eta. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/TriggerValidationTop\">here</a>."}])
 
 trigvaltop(dqmitems,"HLT_Ele15SWLooseTrkIso eff vs Pt",
     [{'path': "HLT/Top/Semileptonic_electron/EffVsPt_HLT_Ele15_SW_LooseTrackIso_L1R", 'description': "Trigger efficiency for HLT_Ele15_SW_LooseTrackIso_L1R versus electron pt. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/TriggerValidationTop\">here</a>."}])
-
 
 ###---- SUSYEXO selection goes here: ----
 def trigvalsusybsm(i, p, *rows): i["00 Shift/HLT/SusyExo/" + p] = DQMItem(layout=rows)
@@ -328,8 +312,6 @@ trigvalsusybsm(dqmitems,"00 NoSelection/01 HLT/06 Hlt_XTrigger",
 trigvalsusybsm(dqmitems,"00 NoSelection/01 HLT/07 Hlt_Others",
                [{'path': "HLT/SusyExo/TriggerBits/Hlt_Overflow", 'description': "Efficiency for other HLT paths. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
-
 ###---- HIGGS selection goes here: ----
 def trigvalhiggs(i, p, *rows): i["00 Shift/HLT/Higgs/" + p] = DQMItem(layout=rows)
 
@@ -350,20 +332,9 @@ trigvalhiggs(dqmitems,"HLTDoublePhoton10L1R eff vs eta",
 trigvalhiggs(dqmitems,"HLTDoublePhoton10L1R eff vs pt",
         [{'path': "HLT/Higgs/Hgg/EffVsPt_HLT_DoublePhoton10_L1R", 'description': "Trigger efficiency for HLT_DoublePhoton10_L1R vs photon pt .For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/TriggerValidationHiggs\">here</a>."}])
 
-
-
 ###---- QCD selection goes here: ----
 def trigvalqcd(i, p, *rows): i["00 Shift/HLT/QCD/" + p] = DQMItem(layout=rows)
 #trigvalqcd(dqmitems,"", [{'path': "HLT/", 'description': ". For more information please click <a href=\"\">here</a>."}])
 
-
-
-
 #trigvallayout(dqmitems,"HLT Histograms",
 #    [{'path': "HLT/", 'description': "Trigger efficiency . For more information please click <a href=\"https:\">here</a>."}])
-
-
-
-
-
-

@@ -1,6 +1,5 @@
 def castorlayout(i, p, *rows): i["Castor/Layouts/" + p] = DQMItem(layout=rows)
 
-
 castorlayout(dqmitems, "CASTOR All Digi Values",
            [{ 'path': "Castor/CastorDigiMonitor/Castor All Digi Values",
              'description':"all CASTOR ADC values"}]
@@ -66,7 +65,6 @@ castorlayout(dqmitems, "CASTOR RecHit Energy 2D Map",
              'description':"2D Energy Map"}]
            )
 
-
 castorlayout(dqmitems, "CASTOR hits 3D- cumulative",
            [{ 'path': "Castor/CastorEventDisplay/CASTOR 3D hits- cumulative",
              'description':"cumulative event display"}]
@@ -76,7 +74,6 @@ castorlayout(dqmitems, "CASTOR hits 3D- event with the largest deposited E",
            [{ 'path': "Castor/CastorEventDisplay/CASTOR 3D hits- event with the largest deposited E",
              'description':"display of the event with largest deposited energy"}]
            )
-
 
 castorlayout(dqmitems, "CASTOR RecHit Energy per event",
            [{ 'path': "Castor/CastorHIMonitor/EnergyUnits/CASTOR Absolute RecHit Energy per event",

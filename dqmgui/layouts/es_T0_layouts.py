@@ -94,4 +94,3 @@ ecalpreshoweroccupancyexpertlayout(dqmitems, "07 ES RecHit Energy Z 1 P 2",
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 2", 'description': "ES RecHit Energy Z 1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
 ecalpreshoweroccupancyexpertlayout(dqmitems, "08 ES RecHit Energy Z -1 P 2",
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z -1 P 2", 'description': "ES RecHit Energy Z -1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
-

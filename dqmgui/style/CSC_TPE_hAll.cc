@@ -70,7 +70,6 @@ CSC_TPE_hAll::CSC_TPE_hAll() {
     h_ratio->GetYaxis()->SetBinLabel(i+1,label[i]);
   }
 
-
   for(int k=0; k<3; k++) {
     for(int i=0; i<36; i++) {
       for(int j=0; j<18; j++) {
@@ -258,7 +257,6 @@ void CSC_TPE_hAll::draw(TH3*& me) {
 
   int problem_cnt[6]={0};
 
-
   int num_cnt1[3]={0};
   int den_cnt1[3]={0};
   int num_cnt2[3]={0};
@@ -268,7 +266,6 @@ void CSC_TPE_hAll::draw(TH3*& me) {
   int denb_cnt1[3]={0};
   int numb_cnt2[3]={0};
   int denb_cnt2[3]={0};
-
 
   for(int k=0; k<3; k++) {
     int mode=k;
@@ -293,7 +290,6 @@ void CSC_TPE_hAll::draw(TH3*& me) {
 	den_cnt1[k]+=_den1;
 	num_cnt2[k]+=_num2;
 	den_cnt2[k]+=_den2;
-
 
 	if(bad_chambers[0][j][i]!=1 && mode==0) {
 	  numb_cnt1[k]+=_num1;

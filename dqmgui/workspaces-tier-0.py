@@ -1,7 +1,8 @@
 server.workspace('DQMQuality', 0, 'Summaries', 'Summary')
 server.workspace('DQMSummary', 1, 'Summaries', 'Reports')
 server.workspace('DQMShift',   2, 'Summaries', 'Shift')
-server.workspace('DQMContent', 3, 'Summaries', 'Everything', '^')
+server.workspace('DQMCertification', 3, 'Summaries', 'Certification')
+server.workspace('DQMContent', 4, 'Summaries', 'Everything', '^')
 
 server.workspace('DQMContent', 10, 'Tracker/Muons', 'Pixel', '^Pixel/',
                  'Pixel/Layouts/00b - Pixel_Error_Summary',
@@ -149,4 +150,3 @@ server.workspace('DQMContent', 56, 'FeedBack for Collisions', 'CSC FeedBack', '^
                 'CSC/Layouts/04 Timing/00 ALCT Timing',
                 'CSC/Layouts/04 Timing/01 CLCT Timing'
                 )
-

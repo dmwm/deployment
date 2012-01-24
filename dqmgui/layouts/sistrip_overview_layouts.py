@@ -29,4 +29,3 @@ tklayout(dqmitems, "08 - Pixel event BX distribution",
   [{ 'path': "Pixel/pixEvtsPerBX",
      'description': "Distribution of Pixel events (at least 4 modules with digis) versus bucket number. The main contributions of Pixel events should come from the colliding bunches. Filled, but non-colliding bunches should be at least 2 orders of magnitudelower. Empty bunches should be close to zero.",
      'draw': { 'withref': "no" }}])
-

@@ -84,7 +84,6 @@ ecalvalidationlayout(dqmitems, "22 Basic Clusters Hits Flags",
   [{ 'path': "EcalBarrel/EBRecoSummary/basicClusters_recHits_EB_recoFlag", 'description': "Flags of hits associated to basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EERecoSummary/basicClusters_recHits_EE_recoFlag", 'description': "Flags of hits associated to basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-
 ecalvalidationlayout(dqmitems, "23 Number of basic clusters",
   [{ 'path': "EcalBarrel/EBClusterTask/EBCLT BC number", 'description': "Number of Basic Clusters (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEClusterTask/EECLT BC number", 'description': "Number of Basic Clusters (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])

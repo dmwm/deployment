@@ -278,7 +278,6 @@ class EmuChamber : public EmuDrawable {
 
 };
 
-
 /**
  * @class EmuEventDisplay
  * @brief Class that draws CSC Map diagram

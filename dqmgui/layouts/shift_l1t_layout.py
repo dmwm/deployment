@@ -41,7 +41,6 @@ l1tlayout(dqmitems,"11 Physics Trigger Rate",
 l1tlayout(dqmitems,"12 Random Trigger Rate",
     [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/Random_Trigger_Rate", 'description': "Random Trigger Rate. x-axis: Time(lumisection); y-axis: Rate (Hz).  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
 
-
 l1tlayout_coll(dqmitems,"00 Rate BSC MinBias (Tech Bit 41)",
     [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/TechnicalRates/Rate_TechBit_041", 'description': "Rate of Minbias BSC trigger"}])
 

@@ -78,7 +78,6 @@ namespace cscdqm {
     return label;
   }
 
-
   /**
    * @brief  Break string into tokens
    * @param  str source string to break
@@ -111,7 +110,6 @@ namespace cscdqm {
     } else
       str.erase(str.begin(), str.end());
   }
-
 
   /**
    * @brief  Match RegExp expression against string message and return result
@@ -244,7 +242,6 @@ namespace cscdqm {
 
     return hash;
   }
-
 
   /**
    * @brief  Check the hypothesis that observed events (n) value is too low or too high comparing with the expected N

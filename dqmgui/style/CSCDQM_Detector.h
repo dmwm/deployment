@@ -137,7 +137,6 @@ struct AddressBox {
   float ymax;
 };
 
-
 /** Map of partitions and partition covering adresses indexes type */
 typedef std::map<unsigned int, std::vector<unsigned int> > PartitionMap;
 

@@ -163,7 +163,6 @@ i + 1, j + 1, map->GetMinimum(), map->GetMaximum())), 5,
 
 }
 
-
 TGraphPolar* makeSlice(Double_t rA, Double_t rB, Double_t phiA, Double_t phiB, Int_t
 color, Int_t npts, std::string title){
 	Double_t *r = new Double_t[2*npts+3];
@@ -177,7 +176,6 @@ color, Int_t npts, std::string title){
 		r[npts+2+i] = rA;
 		th[npts+2+i] = phiB - i * (phiB - phiA) / npts;
 	}
-
 
 	TGraphPolar *grP = new TGraphPolar(2*npts+3,th,r);
 
@@ -285,7 +283,6 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
           return;
         }
 
-
       TH2F* obj2 = dynamic_cast<TH2F*>( o.object );
 
       if( o.name.find( "reportSummaryMap" ) != std::string::npos )
@@ -357,7 +354,6 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
       if( o.name.find( "SUMOFF_charge_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(15.); obj->SetMaximum(31.); }
       if( o.name.find( "SUMOFF_nclusters_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(0.8); obj->SetMaximum(1.9); }
       if( o.name.find( "SUMOFF_size_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(1.2); obj->SetMaximum(2.5); }
-
 
      // prettify for shifters:
 //       if( o.name.find( "SUMDIG_ndigis_" ) != std::string::npos ||

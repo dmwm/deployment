@@ -35,7 +35,6 @@ shiftjetmetlayout(dqmitems, "06 CaloTower Plots", [{ 'path': "JetMET/CaloTowers/
 
 def shiftjetmetcosmicslayout(i, p, *rows): i["00 Shift/JetMET/Cosmics/" + p] = DQMItem(layout=rows)
 
-
 shiftjetmetcosmicslayout(dqmitems, "00 Jet Plots (for cosmics)", [{ 'path': "JetMET/Jet/AntiKtJets/Pt2", 'draw': { 'withref': 'yes' }, 'description': "Distribution of Jet Pt for all cleaned jets (event primary vertex requirement, the distribution should be fast falling with no spikes) (<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineJetMET#jet_pt_plots>more</a>)" },
 { 'path': "JetMET/Jet/AntiKtJets/Eta", 'draw': { 'withref': 'yes' }, 'description': "Eta distribution for all jets.  Should be smooth and without spikes (<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineJetMET#jet_summary_plots#jet_eta_plots>more</a>)" }],
 [{ 'path': "JetMET/Jet/AntiKtJets/Phi", 'draw': { 'withref': 'yes' }, 'description': "Phi distribution for all jets.  Should be smooth and without spikes (<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineJetMET#jet_phi_plots>more</a>)" },

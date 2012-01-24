@@ -41,7 +41,6 @@ l1t_rct_expert(dqmitems, "RctEmNonIsoEmEtEtaPhi",
 l1t_rct_expert(dqmitems, "RctRegionsEtEtaPhi",
   [{ 'path': "L1T/L1TRCT/RctRegionsEtEtaPhi", 'description': "For description see - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/RCTDataQualityMonitoring>RCTDQM</a> CAL/RCT/GCT mapping is here <a href=https://twiki.cern.ch/twiki/pub/CMS/RCTDataQualityMonitoring/RCTGCTCAL.jpeg> mapping </a>" }])
 
-
 def l1t_summary(i, p, *rows): i["L1T/Layouts/08-L1T-Summary/" + p] = DQMItem(layout=rows)
 
 l1t_summary(dqmitems,"00 Physics Trigger Rate",
@@ -49,8 +48,6 @@ l1t_summary(dqmitems,"00 Physics Trigger Rate",
 
 l1t_summary(dqmitems,"01 Random Trigger Rate",
     [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/Random Trigger Rate", 'description': "Random Trigger Rate. x-axis: Time(lumisection); y-axis: Rate (Hz).  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
-
-
 
 # list of summary GT histograms (dqmitems, dirPath , histoName)
 l1t_gt_single(dqmitems, "L1TGT", "algo_bits")
@@ -124,7 +121,6 @@ l1t_rpctf_single(dqmitems, "L1TRPCTF", "RPCDigi_bx")
 ## l1t_dttf_single(dqmitems, "L1TDTTF/DTTF_TRACKS/INTEG", "2nd Track Summary")
 ## l1t_dttf_single(dqmitems, "L1TDTTF/DTTF_TRACKS/INTEG", "Fractional High Quality Summary")
 
-
 #dqmitems["dttf_03_tracks_distr_summary"]['description'] = "DTTF Tracks distribution by Sector and Wheel. N0 contains usually 5-10% tracks w.r.t. P0: the violet band is normal. Normalized to total DTTF tracks number at BX=0. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DTTFDataQualityMonitoring#\"  target=\"_blank\">here</a>."
 
 l1t_dttf_single(dqmitems,  "01 - Number of Tracks per Event",
@@ -180,8 +176,6 @@ l1t_dttf_single(dqmitems,  "17 - Integrated Packed Charge",
 
 l1t_dttf_single(dqmitems,  "18 - 2nd Track Summary",
                 [{'path' : "L1T/L1TDTTF/01-INCLUSIVE/dttf_18_2ndTrack_occupancy_summary", 'description' : "DTTF 2nd Tracks Only Distribution by Sector and Wheel normalized to the total Number of tracks. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DTTFDataQualityMonitoring#18_2nd_Track_Summary\"  target=\"_blank\">here</a>."}])
-
-
 
 # list of summary SCAL histograms (dqmitems, dirPath , histoName)
 l1t_scal_single(dqmitems, "Rate_AlgoBit_002",

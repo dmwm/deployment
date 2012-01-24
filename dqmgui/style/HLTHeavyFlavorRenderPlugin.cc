@@ -151,4 +151,3 @@ private:
 };
 
 static HLTHeavyFlavorRenderPlugin instance;
-

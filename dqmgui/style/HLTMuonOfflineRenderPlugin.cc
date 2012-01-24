@@ -4,7 +4,6 @@
   \\ Based on HLTRenderPlugin
   \\
 
-
   $Id: HLTMuonOfflineRenderPlugin.cc,v 1.7 2011/09/09 11:53:42 lilopera Exp $
   $Log: HLTMuonOfflineRenderPlugin.cc,v $
   Revision 1.7  2011/09/09 11:53:42  lilopera
@@ -59,8 +58,6 @@
 
 // Define constants
 TPRegexp efficiencyRegexp("(efficiency[^_]*$|genEff|recEff|TurnOn|MaxPt)");
-
-
 
 class HLTMuonOfflineRenderPlugin : public DQMRenderPlugin
 {
@@ -159,11 +156,9 @@ private:
       TH1F* obj = dynamic_cast<TH1F*>( o.object );
       assert (obj); // checks that object indeed exists
 
-
       // if this isn't a muon hlt plot, skip it
       if (o.name.find("HLT/Muon") == std::string::npos)
         return;
-
 
       // Do these for all your histos
       gStyle->SetOptStat(10);

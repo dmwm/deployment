@@ -62,7 +62,6 @@ EmuEventDisplay::EmuEventDisplay() {
     histo_xy->GetYaxis()->SetLabelSize(0.02);
     histo_xy->SetStats(kFALSE);
 
-
     EmuChamberPart chPart;
     while (chPart.next(detector)) {
 
@@ -103,7 +102,6 @@ EmuEventDisplay::EmuEventDisplay() {
         }
 
         { // X-Y plane elements
-
 
             EmuChamber* ch = new EmuChamber();
 

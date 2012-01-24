@@ -21,4 +21,3 @@ shiftbeamlayout(dqmitems, "05 - fitted y0, sigma(y0) vs LS",
 shiftbeamlayout(dqmitems, "06 - fitted z0, sigma(z0) vs LS",
  [{ 'path': "BeamMonitor/Fit/z0_lumi",'description': "z coordinate of beamspot vs LS"}],
  [{ 'path': "BeamMonitor/Fit/sigmaZ0_lumi",'description': "sigma Z of beamspot vs LS"}])
-

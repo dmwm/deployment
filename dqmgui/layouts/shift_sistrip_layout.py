@@ -65,5 +65,3 @@ shiftsistriplayout(dqmitems, "06 - Cosmic Tracks",
     'description': "Phi distribution of cosmic tracks -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "yes" }},
   { 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_CKFTk",
     'description': " Eta distribution of cosmic tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "yes" }}])
-
-

@@ -393,7 +393,6 @@ void ChamberMap::drawStats(TH2*& me) {
 
     } else {
 
-
         double status = 1.0;
 
         if (status_all > 0) {

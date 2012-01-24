@@ -6,8 +6,6 @@ if __name__=="__main__":
 
     dqmitems={}
 
-
-
 def hcallayout(i, p, *rows): i["Hcal/Layouts/" + p] = DQMItem(layout=rows)
 
 hcallayout(dqmitems, "01 HCAL Summaries",

@@ -153,7 +153,6 @@ server.workspace('DQMContent', 40, 'Trigger/Lumi', 'HLX', '^HLX/',
                  'HLX/Layouts/HLX-Occupancy-Check-Sums',
                  'HLX/Layouts/HLX-EtSumAndLumi-History-Plots')
 
-
 server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1T', '^(L1T|L1TEMU)/',
                  'L1T/L1TGT/algo_bits',
                  'L1T/L1TGT/tt_bits',
@@ -293,4 +292,3 @@ server.workspace('DQMContent', 56, 'FeedBack for Collisions', 'CSC FeedBack', '^
                 'CSC/Layouts/04 Timing/00 ALCT Timing',
                 'CSC/Layouts/04 Timing/01 CLCT Timing'
                 )
-

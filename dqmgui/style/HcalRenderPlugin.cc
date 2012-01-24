@@ -154,7 +154,6 @@ public:
 	  }
       }
 
-
     //make summaryColors, with a value of -1 indicated in gray, values >-1 and <0 in white,
     // values 0-0.98 scaling from red to yellow, and values > 0.98 in green.
     // assign values 1201-1300
@@ -437,7 +436,6 @@ private:
       }
   } // void preDrawTH1(...)
 
-
   void preDrawTH2 ( TCanvas *c, const VisDQMObject &o )
   {
     TH2* obj = dynamic_cast<TH2*>( o.object );
@@ -715,7 +713,6 @@ private:
 	  }
       }
 
-
     // in the future, we can add text output based on error status,
     // or set bin range based on filled histograms, etc.
     if ( (o.name.find("RawDataMonitor_Hcal/Corruption")      != std::string::npos)   ||
@@ -740,14 +737,12 @@ private:
 	pal->SetX2NDC(0.90);
       }
 
-
     // Want to move colz palette, but this crashes code, and does not move the palette.  Hmm...
     obj->GetYaxis()->SetTickLength(0.0);
     obj->GetXaxis()->SetTickLength(0.0);
 
     if (o.name.find("Data Flow/DCC Data Block Size Each FED")!=std::string::npos)
       c->SetLogy();
-
 
     if ( (o.name.find("Corruption/Chan") != std::string::npos )         )
       {
@@ -1004,7 +999,6 @@ private:
 	  }
       }
 
-
     if ((o.name.find("RecHitMonitor_Hcal")!=std::string::npos) &&
 	(o.name.find("FlagCorrelation")!=std::string::npos))
       {
@@ -1076,8 +1070,6 @@ private:
   }
 
   /////////////
-
-
 
 void setRainbowColor(TH2* obj)
   {

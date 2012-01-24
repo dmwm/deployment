@@ -21,21 +21,17 @@ dtlayout(dqmitems, "00-Summary/04-DDU_Trigger2ndFractionSummary",
 dtlayout(dqmitems, "00-Summary/05-DCC_TriggerCorrFractionSummary",
   [{ 'path': "DT/03-LocalTrigger-DCC/DCC_CorrFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
 
-
 dtlayout(dqmitems, "00-Summary/06-DCC_Trigger2ndFractionSummary",
   [{ 'path': "DT/03-LocalTrigger-DCC/DCC_2ndFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
 
-
 dtlayout(dqmitems, "00-Summary/07-NoiseChannelsSummary",
   [{ 'path': "DT/05-Noise/NoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
-
 
 dtlayout(dqmitems, "00-Summary/08-SynchNoiseSummary",
          [{ 'path': "DT/05-Noise/SynchNoise/SynchNoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
 
 #dtlayout(dqmitems, "00-Summary/09-TestPulseOccupancy",
 #         [{ 'path': "DT/10-TestPulses/OccupancySummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
-
 
 #### OCCUPANCIES #################################################################################
 
@@ -47,7 +43,6 @@ for wheel in range(-2, 3):
             name = "01-Occupancy/Wheel" + str(wheel) + "/St" + str(station) + "_Sec" + str(sector)
             histoname = "DT/01-Digi/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station" + str(station) +  "/OccupancyAllHits_perCh_W" + str(wheel) + "_St" + str(station) + "_Sec" +  str(sector)
             dtlayout(dqmitems, name,[{ 'path': histoname}])
-
 
 #### TIME BOXES #################################################################################
 
@@ -68,7 +63,6 @@ for wheel in range(-2, 3):
             else:
                 dtlayout(dqmitems, name,[{ 'path': histoname_SL1}],
                          [{ 'path': histoname_SL3}])
-
 
 #### EVENT SIZE #################################################################################
 for fed in range(770, 775):
@@ -127,7 +121,6 @@ for wheel in range(-2, 3):
         dtlayout(dqmitems, name,[{ 'path': histoname1},{ 'path': histoname2}],
                  [{ 'path': histoname3},{ 'path': histoname4}])
 
-
 #### TRIGGER POS LUTs ###########################################################################
 for wheel in range(-2, 3):
     for sector in range (1, 13):
@@ -142,5 +135,3 @@ for wheel in range(-2, 3):
 #
 #
 #
-
-

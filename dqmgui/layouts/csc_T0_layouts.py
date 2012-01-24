@@ -152,7 +152,6 @@ csclayout(dqmitems,"CSC DQM Shifter/00 Dump/48 Wire TBin ME-41",
 csclayout(dqmitems,"CSC DQM Shifter/00 Dump/49 Wire TBin ME-42",
   [{'path': "CSC/CSCOfflineMonitor/Digis/hWireTBin_m42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_DMB_input_timeout_Fract\">here</a>."}])
 
-
 csclayout(dqmitems,"CSC DQM Shifter/00 Dump/50 Wire TBin ME+11",
   [{'path': "CSC/CSCOfflineMonitor/Digis/hWireTBin_p11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_DMB_input_timeout_Fract\">here</a>."}])
 
@@ -334,7 +333,6 @@ csclayout(dqmitems,"CSC DQM Shifter/00 Dump/108 Resolution ME-41",
 csclayout(dqmitems,"CSC DQM Shifter/00 Dump/109 Resolution ME-42",
   [{'path': "CSC/CSCOfflineMonitor/Resolution/hSResidm42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_DMB_input_timeout_Fract\">here</a>."}])
 
-
 csclayout(dqmitems,"CSC DQM Shifter/00 Dump/110 Resolution ME+11a",
   [{'path': "CSC/CSCOfflineMonitor/Resolution/hSResidp11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_DMB_input_timeout_Fract\">here</a>."}])
 
@@ -496,7 +494,6 @@ csclayout(dqmitems,"CSC DQM Shifter/00 Dump/160 L1-CLCT Pretrigger check 4",
 csclayout(dqmitems,"CSC DQM Shifter/00 Dump/161 L1-CLCT Pretrigger check 5",
      [{'path': "CSC/CSCOfflineMonitor/BXMonitor/hCLCTL1A2DMeans", 'description': "Histogram shows the position of ALCT. Shoild be close to 3. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#Summary_ME\">here</a>."}])
 
-
 csclayout(dqmitems,"CSC DQM Shifter/00 Dump/162 ALCT and CLCT check 1",
     [{'path': "CSC/CSCOfflineMonitor/BXMonitor/hALCTMatch2Denominator", 'description': "Histogram shows L1-CLCT pretrigger check at TMB. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#Summary_ME\">here</a>."}])
 
@@ -525,7 +522,6 @@ csclayout(dqmitems,"CSC DQM Shifter/01 Data Integrity/4 Chambers with Errors and
          {'path': "CSC/Summary/CSC_L1A_out_of_sync_Fract", 'description': "(no description). For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_L1A_out_of_sync\">here</a>."}],
         [{'path': "CSC/Summary/CSC_DMB_input_fifo_full_Fract", 'description': "Shows a frequency of FIFO-FULL condition on DMB inputs (OR of 7 FIFOs: 5 CFEBs, ALCT, TMB). Appearance of entries in this histogram is very bad and would typically imply a loss of synchronization, even if FIFO-FULL condition clears away. To dig out which of the 7 boards is actually responsible for the trouble, one needs to refer the FEB Status (Timeouts, FIFO, L1 pipe) canvas for the offensive chamber (this canvas can be found in the DMB group) For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_DMB_input_fifo_full_Fract\">here</a>."},
          {'path': "CSC/Summary/CSC_DMB_input_timeout_Fract", 'description': "Shows a frequency of a TIMEOUT condition on DMB inputs (OR start/stop timeouts for 5 CFEBs, ALCT, TMB). Appearance of entries in this histogram is very bad and typically implies badly timed-in CSCs. To dig out which of the 7 boards is actually responsible for the trouble, one needs to refer the FEB Status (Timeouts, FIFO, L1 pipe) canvas for the offensive chamber (this canvas can be found in the DMB group) For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_DMB_input_timeout_Fract\">here</a>."}])
-
 
 csclayout(dqmitems,"CSC DQM Shifter/02 Chamber Occupancy/1 Overall Chamber Occupancy",
     [{'path': "CSC/CSCOfflineMonitor/Occupancy/hCSCOccupancy", 'description': "Histogram shows overal occupancy of CSCs by different types of signals. If there is a substantial difference a problem with overal occupancy should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
@@ -846,8 +842,6 @@ csclayout(dqmitems,"CSC DQM Shifter/08 Segments/02 Segment Direction",
 
 csclayout(dqmitems,"CSC DQM Shifter/08 Segments/03 Segment Overal chi2",
     [{'path': "CSC/CSCOfflineMonitor/Segments/hSChiSq", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
-
-
 
 csclayout(dqmitems,"CSC DQM Shifter/08 Segments/04 Segment normalized Chi2 ME-",
         [None,

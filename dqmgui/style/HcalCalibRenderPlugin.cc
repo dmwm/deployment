@@ -73,7 +73,6 @@ class HcalCalibRenderPlugin : public DQMRenderPlugin
   Int_t NRGBs_hcalError;
   Int_t NCont_hcalError;
 
-
 public:
   virtual void initialise (int, char **)
   {
@@ -139,7 +138,6 @@ public:
 	    highestIndex++;
 	  }
       }
-
 
     // repeat for hcal error colors.  Assign color positions starting at 1501
     NRGBs_hcalError = 9; // specify number of RGB boundaries for hcalError
@@ -305,7 +303,6 @@ private:
 
   } // void preDrawTH1(...)
 
-
   void preDrawTH2 ( TCanvas *c, const VisDQMObject &o )
   {
     c->cd();
@@ -337,7 +334,6 @@ private:
 	obj->SetOption("colztext90"); // draw marker at 90 degrees
 	setColorScheme(obj,NCont_summary,summaryColors);
       }
-
 
    // Normalized error rate histograms plotted with error Fraction colors (0 = green, 1 = red)
     if ( (o.name.find("RecHitMonitor_Hcal/ ProblemRecHits")!= std::string::npos ) ||
@@ -507,14 +503,12 @@ private:
 	pal->SetX2NDC(0.90);
       }
 
-
     // Want to move colz palette, but this crashes code, and does not move the palette.  Hmm...
     obj->GetYaxis()->SetTickLength(0.0);
     obj->GetXaxis()->SetTickLength(0.0);
 
     if (o.name.find("Data Flow/DCC Data Block Size Each FED")!=std::string::npos)
       c->SetLogy();
-
 
     if ( (o.name.find("Corruption/Chan") != std::string::npos )         )
       {
@@ -727,8 +721,6 @@ private:
     gStyle->SetPalette(cont, Colors);
   }
 
-
 }; // HcalCalibRenderPlugin class
 
 static HcalCalibRenderPlugin instance;
-

@@ -449,10 +449,8 @@ private:
   void postDrawTH2F( TCanvas *, const VisDQMObject &o )
   {
 
-
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
-
 
     TBox* b_box = new TBox();
     TLine* l_line = new TLine();

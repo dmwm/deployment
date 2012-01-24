@@ -24,6 +24,4 @@ shiftegammalayout(dqmitems, "8-Background Photons", [{ 'path': "Egamma/PhotonAna
 
 shiftegammalayout(dqmitems, "9-Converted Photons", [{ 'path': "Egamma/PhotonAnalyzer/AllPhotons/Et above 0 GeV/Conversions/phoConvEta", 'description': "Eta distribution of conversions - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEgamma>Shift Instructions</a>" }])
 
-
 shiftegammalayout(dqmitems, "10-PiZeros", [{ 'path': "Egamma/PiZeroAnalyzer/Pi0InvmassEB", 'description': "Reconstructed mass of the PiZero particle - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEgamma>Shift Instructions</a>" }])
-

@@ -330,7 +330,6 @@ namespace cscdqm {
     return 0.0;
   }
 
-
   /**
    * @brief   Transform eta coordinate to local canvas coordinate
    * @param  eta Eta coordinate
@@ -734,7 +733,6 @@ double Detector::PhiDegChamberCenter ( int station, int ring, int chamber ) cons
 
   return phiDegChamberCenter;
 }
-
 
 double Detector::LocalYtoBeam(int side, int station, int ring, int wgroup) const {
   double localYtoBeam = 100000.0; // Some default large value

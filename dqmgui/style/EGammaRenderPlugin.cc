@@ -16,7 +16,6 @@
 class EGammaRenderPlugin : public DQMRenderPlugin
 {
 
-
 public:
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
     {

@@ -29,7 +29,6 @@ eeshifterlayout(dqmitems, "02 StatusFlags Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EESFT EE - front-end status summary", 'description': "DCC front-end status quality summary. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: Each tower is required not to have front-end errors among the following: TIMEOUT, HEADER, CHANNEL ID, LINK, BLOCKSIZE, L1A SYNC, BX SYNC, L1A+BX SYNC, FIFO+L1A, H PARITY, v PARITY. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EESFT EE + front-end status summary", 'description': "DCC front-end status quality summary. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: Each tower is required not to have front-end errors among the following: TIMEOUT, HEADER, CHANNEL ID, LINK, BLOCKSIZE, L1A SYNC, BX SYNC, L1A+BX SYNC, FIFO+L1A, H PARITY, v PARITY. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-
 eeshifterlayout(dqmitems, "03 Pedestal Online Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EEPOT EE - pedestal quality summary G12", 'description': "Pedestal quality summary. Pedestal is evaluated using the first 3/10 samples of the pulse shape for all the events (on physics events only). Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 175 < mean < 225 ADCs, RMS < 4 ADCs <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EEPOT EE + pedestal quality summary G12", 'description': "pedestal quality summary. Pedestal is evaluated using the first 3/10 samples of the pulse shape for all the events (on physics events only). Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 175 < mean < 225 ADCs, RMS < 4 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -78,12 +77,12 @@ eeshifterlayout(dqmitems, "08 Blue Laser (L1) Quality",
 #  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of infrared laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
 eeshifterlayout(dqmitems, "09 Lambda 1 Led Quality",
-  [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of lambda_1 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }, 
+  [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of lambda_1 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of lambda_1 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT PN led quality summary L1", 'description': "Quality summary of lambda_1 led pulses on PN diodes. Expect green where the led sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
 eeshifterlayout(dqmitems, "09 Lambda 2 Led Quality",
-  [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of lambda_2 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }, 
+  [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of lambda_2 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of lambda_2 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT PN led quality summary L2", 'description': "Quality summary of lambda_2 led pulses on PN diodes. Expect green where the led sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
@@ -104,7 +103,6 @@ eeshifterlayout(dqmitems, "12 DCC Event Size and Synch Errors",
 eeshifterlayout(dqmitems, "13 Selective Readout High Interest TTs",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT high interest TT Flags EE -", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout.  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT high interest TT Flags EE +", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
-
 
 # ECAL shifters
 eeecalshifterlayout(dqmitems, "00 Event Type",
@@ -319,9 +317,6 @@ eeecalshifterlayout(dqmitems, "05 Timing/04 Single Event Timing",
   [{ 'path': "EcalEndcap/EETimingTask/EETMT timing EE+ - EE-", 'description': "Event by event difference between the average timing in EE+ and EE- of the good rechits. Expected 0. Required in each endcap one crystal with E_T > 300 MeV and one crystal with energy > 3(6) GeV (|eta| <(>) 2.4), good DB status and rechit flag = kGood OR KOutOfTime. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EETimingTask/EETMT timing EE+ vs EE-", 'description': "Average timing in EE- vs average timing in EE+. Only rechits with energy > 3(6) GeV (|eta| <(>) 2.4) and kGood or kOutOfTime considered here. Expect one spot centered in (0,0) for collisions, two spots in (0,-20), (-20,0) for beam-halos. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
-
-
 eeecalshifterlayout(dqmitems, "06 L1 Trigger/00 TP Spectra EE -",
   [{ 'path': "EcalEndcap/EETriggerTowerTask/EETTT Et spectrum Real Digis EE -", 'description': "Average transverse energy (2 ADC count = 1 GeV) of real L1 trigger primitives. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETriggerTowerTask/Emulated/EETTT Et spectrum Emulated Digis EE -", 'description': "Average transverse energy (2 ADC count = 1 GeV) of emulated L1 trigger primitives. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -409,7 +404,6 @@ eeecalshifterlayout(dqmitems, "07 Selective Readout/04 Zero Suppression Flags",
 eeecalshifterlayout(dqmitems, "07 Selective Readout/05 Tower Size",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT tower event size EE -", 'description': "Event size distribution per tower. This plot allows to verify the correctness of the ZS thresholds applied. The average of the plot has to be ~ 2kB / 68 ~ 30 bytes.<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT tower event size EE +", 'description': "Event size distribution per tower. This plot allows to verify the correctness of the ZS thresholds applied. The average of the plot has to be ~ 2kB / 68 ~ 30 bytes.<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 
 eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/00 Blue Laser (L1) Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of Blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -545,8 +539,6 @@ eeecalshifterlayout(dqmitems, "09 Trend/11 EE + FEDs Size ",
 eeecalshifterlayout(dqmitems, "09 Trend/12 Selective Readout Flags Size ",
   [{ 'path': "EcalEndcap/EETrendTask/AverageNumberOfEESRFlagVs5Minutes", 'description': "Average number of Selective Readout Flags. (5 minutes range). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EETrendTask/AverageNumberOfEESRFlagVs1Hour", 'description': "Average number of Selective Readout Flags. (1 hour range). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/00 Integrity (Channel Global)",
   [{ 'path': "EcalEndcap/EEIntegrityClient/EEIT data integrity quality EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -4448,7 +4440,6 @@ eelayout(dqmitems, "00 By Task/00 Summary/11 StatusFlags Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EESFT EE - front-end status summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EESFT EE + front-end status summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-
 eelayout(dqmitems, "00 By Task/01 Integrity/00 Integrity Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EEIT EE - integrity quality summary", 'description': "Quality summary of EE - checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -4562,7 +4553,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-01 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -4595,7 +4585,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-01/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-01 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -4627,7 +4616,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-01/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-01 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-01 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-01 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -4802,7 +4790,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-02 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -4835,7 +4822,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-02/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-02 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -4867,7 +4853,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-02/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-02 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-02 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-02 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5042,7 +5027,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-03 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5075,7 +5059,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-03/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-03 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5107,7 +5090,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-03/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-03 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-03 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-03 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5282,7 +5264,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-04 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5315,7 +5296,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-04/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-04 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5347,7 +5327,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-04/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-04 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-04 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-04 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5522,7 +5501,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-05 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5555,7 +5533,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-05/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-05 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5587,7 +5564,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-05/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-05 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-05 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-05 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5762,7 +5738,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-06 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5795,7 +5770,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-06/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-06 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5827,7 +5801,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-06/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-06 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-06 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-06 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6002,7 +5975,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-07 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6035,7 +6007,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-07/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-07 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6067,7 +6038,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-07/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-07 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-07 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-07 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6242,7 +6212,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-08 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6275,7 +6244,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-08/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-08 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6307,7 +6275,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-08/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-08 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-08 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-08 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6482,7 +6449,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-09 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6515,7 +6481,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-09/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE-09 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6547,7 +6512,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE-09/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE-09 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE-09 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE-09 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6722,7 +6686,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+01 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6755,7 +6718,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+01/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+01 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6787,7 +6749,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+01/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+01 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+01 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+01 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6962,7 +6923,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+02 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6995,7 +6955,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+02/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+02 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7027,7 +6986,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+02/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+02 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+02 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+02 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7202,7 +7160,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+03 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7235,7 +7192,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+03/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+03 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7267,7 +7223,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+03/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+03 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+03 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+03 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7442,7 +7397,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+04 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7475,7 +7429,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+04/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+04 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7507,7 +7460,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+04/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+04 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+04 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+04 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7682,7 +7634,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+05 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7715,7 +7666,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+05/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+05 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7747,7 +7697,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+05/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+05 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+05 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+05 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7922,7 +7871,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+06 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7955,7 +7903,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+06/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+06 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7987,7 +7934,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+06/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+06 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+06 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+06 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8162,7 +8108,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+07 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8195,7 +8140,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+07/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+07 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8227,7 +8171,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+07/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+07 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+07 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+07 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8402,7 +8345,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+08 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8435,7 +8377,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+08/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+08 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8467,7 +8408,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+08/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+08 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+08 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+08 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8642,7 +8582,6 @@ eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+09 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8675,7 +8614,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+09/L1/05 PNs Gain16",
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain16/EELDT PNs amplitude EE+09 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL2 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8707,7 +8645,6 @@ eelayout(dqmitems, "00 By Task/06 Led/EE+09/L2/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs pedestal EE+09 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELedClient/EELDT PNs pedestal rms EE+09 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELedTask/Led2/PN/Gain16/EELDT PNs amplitude EE+09 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8841,7 +8778,6 @@ eelayout(dqmitems, "00 By Task/11 Cluster/16 Best Pair Combinatorics (No sel)",
    { 'path': "EcalEndcap/EEClusterTask/EECLT dicluster invariant mass JPsi", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EEClusterTask/EECLT dicluster invariant mass Z0", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEClusterTask/EECLT dicluster invariant mass high", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eelayout(dqmitems, "00 By Task/12 Occupancy/00 Occupancy",
   [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT digi occupancy EE -", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -9024,5 +8960,3 @@ eelayout(dqmitems, "00 By Task/14 SelectiveReadout/19 ZS Filter Output High Inte
 eelayout(dqmitems, "00 By Task/14 SelectiveReadout/20 ZS Filter Output Low Interest",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT low interest ZS filter output EE -", 'description': "Endcap - Low Interest ZS emulation. Signal of channels from barrel low interest regions as reconstructed by the ZS emulator. A sharp cut at zero suppression threshold is expected, with all bins below this threshold empty. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT low interest ZS filter output EE +", 'description': "Endcap + Low Interest ZS emulation. Signal of channels from barrel low interest regions as reconstructed by the ZS emulator. A sharp cut at zero suppression threshold is expected, with all bins below this threshold empty. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-

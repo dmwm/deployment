@@ -35,8 +35,6 @@ trigvalegammaZ(dqmitems,"doubleEle5SWL1R/pixel match",
            [{'path': "HLT/HLTEgammaValidation/HLT_DoubleEle5_SW_L1RDQMZee/efficiency_hltL1NonIsoHLTNonIsoDoubleElectronEt5PixelMatchFilter_vs_eta_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoDoubleElectronEt5PixelMatchFilter in doubleEle5SWL1R_vs_eta"},
             {'path': "HLT/HLTEgammaValidation/HLT_DoubleEle5_SW_L1RDQMZee/efficiency_hltL1NonIsoHLTNonIsoDoubleElectronEt5PixelMatchFilter_vs_et_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoDoubleElectronEt5PixelMatchFilter in doubleEle5SWL1R_vs_et"}])
 
-
-
 trigvalegammaZ(dqmitems,"Ele10LWL1R/total",
            [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_L1RDQMZee/efficiency_by_step_MC_matched", 'description':"per-event efficiency (MC matched) for Ele10LWL1R"},
             {'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_L1RDQMZee/efficiency_by_step", 'description':"per-event efficiency (MC matched) for Ele10LWL1R"}])
@@ -60,8 +58,6 @@ trigvalegammaZ(dqmitems,"Ele10LWL1R/Hcal isolation",
 trigvalegammaZ(dqmitems,"Ele10LWL1R/pixel match",
            [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_L1RDQMZee/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter_vs_eta_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter in Ele10LWL1R_vs_eta"},
             {'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_L1RDQMZee/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter_vs_et_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter in Ele10LWL1R_vs_et"}])
-
-
 
 trigvalegammaZ(dqmitems,"Ele10LWEleIdL1R/total",
            [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_EleId_L1RDQMZee/efficiency_by_step_MC_matched", 'description':"per-event efficiency (MC matched) for Ele10LWEleIdL1R"},
@@ -103,10 +99,6 @@ trigvalegammaZ(dqmitems,"Ele10LWEleIdL1R/ delta-phi cut",
            [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_EleId_L1RDQMZee/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter_vs_eta_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter in Ele10LWEleIdL1R_vs_eta"},
             {'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_EleId_L1RDQMZee/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter_vs_et_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter in Ele10LWEleIdL1R_vs_et"}])
 
-
-
-
-
 def hltlayoutW(i, p, *rows): i["HLT/HLTEgammaValidation/Wenu Preselection/" + p] = DQMItem(layout=rows)
 
 hltlayoutW(dqmitems,"Ele10LWL1R/total",
@@ -132,8 +124,6 @@ hltlayoutW(dqmitems,"Ele10LWL1R/Hcal isolation",
 hltlayoutW(dqmitems,"Ele10LWL1R/pixel match",
            [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_L1RDQMWenu/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter_vs_eta_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter in Ele10LWL1R_vs_eta"},
             {'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_L1RDQMWenu/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter_vs_et_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10PixelMatchFilter in Ele10LWL1R_vs_et"}])
-
-
 
 hltlayoutW(dqmitems,"Ele10LWEleIdL1R/total",
            [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_EleId_L1RDQMWenu/efficiency_by_step_MC_matched", 'description':"per-event efficiency (MC matched) for Ele10LWEleIdL1R"},
@@ -175,7 +165,6 @@ hltlayoutW(dqmitems,"Ele10LWEleIdL1R/ delta-phi cut",
            [{'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_EleId_L1RDQMWenu/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter_vs_eta_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter in Ele10LWEleIdL1R_vs_eta"},
             {'path': "HLT/HLTEgammaValidation/HLT_Ele10_LW_EleId_L1RDQMWenu/efficiency_hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter_vs_et_MC_matched", 'description':"per-object (MC matched) for hltL1NonIsoHLTNonIsoSingleElectronLWEt10EleIdDphiFilter in Ele10LWEleIdL1R_vs_et"}])
 
-
 def hltLayoutGammaJet(i, p, *rows): i["HLT/HLTEgammaValidation/Photon Summary" + p] = DQMItem(layout=rows)
 hltLayoutGammaJet(dqmitems,"/HLT_Photon10_L1R Efficiency vs Et",
                   [{'path':"HLT/HLTEgammaValidation/HLT_Photon10_L1R_DQMGammaJet/final_eff_vs_et", 'description':"Efficiency of HLT_Photon10_L1R vs Et of generated photon"}])
@@ -193,7 +182,6 @@ hltLayoutGammaJet(dqmitems,"/HLT_Photon15_TrackIso_L1R Efficiency vs Et",
                   [{'path':"HLT/HLTEgammaValidation/HLT_Photon15_TrackIso_L1R_DQMGammaJet/final_eff_vs_et",'description':"Efficiency of HLT_Photon15_TrackIso_L1R vs Et of generated photon"}])
 hltLayoutGammaJet(dqmitems,"/HLT_Photon15_TrackIso_L1R Efficiency vs eta",
                   [{'path':"HLT/HLTEgammaValidation/HLT_Photon15_TrackIso_L1R_DQMGammaJet/final_eff_vs_eta",'description':"Efficiency of HLT_Photon15_TrackIso_L1R vs eta of generated photon"}])
-
 
 ###---- MUON selection goes here: ----
 
@@ -234,7 +222,6 @@ for thisPath in paths:
         trigvalmuon(dqmitems, thisPath + "/Efficiency L3 Isolated vs. Gen",
             [{'path': thisDir + "/genEffEta_L3Iso", 'description':"Efficiency to find an isolated gen-matched L3 muon associated to a gen-matched L1 muon vs. eta" + thisDocumentation}])
 
-
 ###---- TAU selection goes here: ----
 def trigvaltau(i, p, *rows): i["HLT/TauRelVal/Summary For " + p] = DQMItem(layout=rows)
 
@@ -258,7 +245,6 @@ for lumi in ["8E29","1E31"]:
                   {'path': "HLT/TauRelVal/MC_"+lumi+ "/L1/L1TauEtEff", 'description':"L1 Tau Efficiency vs pt with  ref to MC for "+lumi},
                   {'path': "HLT/TauRelVal/MC_"+lumi+ "/L1/L1TauEtaEff", 'description':"L1 Tau Efficiency vs pt with  ref to MC for "+lumi},
                ])
-
 
     trigvaltau(dqmitems,"MC_"+lumi+" Menu/L2 Efficency",
                [
@@ -385,7 +371,6 @@ trigvaltopmuon(dqmitems,"Muon trigger efficiencies wrt gen",
 trigvaltopmuon(dqmitems,"Muon trigger efficiencies wrt gen+reco",
         [{'path': "HLT/Top/Semileptonic_muon/Efficiencies_MuonTriggers", 'description': "Muon trigger efficiencies wrt mc acceptance+offline  (acc: 1 muon from W, pt>10, eta<2.4; off: at least 1 rec muon, pt>20, eta<2.1 and 2 jets Et_raw>13, eta<2.4)"}])
 
-
 def trigvaltopelectron(i, p, *rows): i["HLT/Top/TopValidationReport/Semileptonic_electron/" + p] = DQMItem(layout=rows)
 
 trigvaltopelectron(dqmitems,"HLTEle15SWL1R eff vs eta",
@@ -393,7 +378,6 @@ trigvaltopelectron(dqmitems,"HLTEle15SWL1R eff vs eta",
 
 trigvaltopelectron(dqmitems,"HLTEle15SWL1R eff vs pt",
         [{'path': "HLT/Top/Semileptonic_electron/EffVsPt_HLT_Ele15_SW_L1R", 'description': "Trigger efficiency for HLT_Ele15_SW_L1R versus pt of the highest pt reconstructed electron with pt>20, eta<2.4"}])
-
 
 trigvaltopelectron(dqmitems,"HLTEle15SWLooseTrackIsoL1R eff vs eta",
         [{'path': "HLT/Top/Semileptonic_electron/EffVsEta_HLT_Ele15_SW_LooseTrackIso_L1R", 'description': "Trigger efficiency for HLT_Ele15_SW_LooseTrackIso_L1R versus eta of the highest pt reconstructed electron with pt>20, eta<2.4"}])
@@ -406,9 +390,6 @@ trigvaltopelectron(dqmitems,"Electron trigger efficiencies wrt gen",
 
 trigvaltopelectron(dqmitems,"Electron trigger efficiencies wrt gen+reco",
         [{'path': "HLT/Top/Semileptonic_electron/Efficiencies_Electrontriggers", 'description': "Electron trigger efficiencies wrt mc acceptance+offline  (acc: 1 electron from W, pt>10, eta<2.4; off: at least 1 rec electron, pt>20, eta<2.4 and 2 jets Et_raw>13, eta<2.4)"}])
-
-
-
 
 ###---- HEAVYFLAVOR selection goes here: ----
 
@@ -817,7 +798,6 @@ trigvalsusybsm(dqmitems,"01 McSelection/00 RA1/01 HLT/06 Hlt_XTrigger",
 trigvalsusybsm(dqmitems,"01 McSelection/00 RA1/01 HLT/07 Hlt_Others",
                [{'path': "HLT/SusyExo/McSelection/RA1/Hlt_RA1_Overflow", 'description': "Efficiency for other HLT paths. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ### RA2
 
 # L1
@@ -915,7 +895,6 @@ trigvalsusybsm(dqmitems,"01 McSelection/02 RA3/01 HLT/06 Hlt_XTrigger",
 
 trigvalsusybsm(dqmitems,"01 McSelection/02 RA3/01 HLT/07 Hlt_Others",
                [{'path': "HLT/SusyExo/McSelection/RA3/Hlt_RA3_Overflow", 'description': "Efficiency for other HLT paths. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
-
 
 ### RA4_e
 
@@ -1358,7 +1337,6 @@ trigvalsusybsm(dqmitems,"01 McSelection/11 RA7_3m/01 HLT/06 Hlt_XTrigger",
 trigvalsusybsm(dqmitems,"01 McSelection/11 RA7_3m/01 HLT/07 Hlt_Others",
                [{'path': "HLT/SusyExo/McSelection/RA7_3m/Hlt_RA7_3m_Overflow", 'description': "Efficiency for other HLT paths. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ############# Reco Distributions
 def trigvalsusybsm(i, p, *rows): i["HLT/SusyExo/00 SusyExoValidationReport/01 Reco Distributions/" + p] = DQMItem(layout=rows)
 
@@ -1632,7 +1610,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_Jet110",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ######## HLT_Jet140
 
 ### Reco Electrons
@@ -1902,7 +1879,6 @@ trigvalsusybsm(dqmitems,
                "03 HLT_MET60/19 SumEt",
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_MET60",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
-
 
 ######## HLT_MET100
 
@@ -2174,7 +2150,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_HT200",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ######## HLT_HT240
 
 ### Reco Electrons
@@ -2309,7 +2284,6 @@ trigvalsusybsm(dqmitems,
                "06 HLT_HT240/19 SumEt",
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_HT240",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
-
 
 ######## HLT_HT300_MHT100
 
@@ -2446,7 +2420,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_HT300_MHT100",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ######## HLT_Mu9
 
 ### Reco Electrons
@@ -2582,7 +2555,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_Mu9",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ######## HLT_Mu11
 
 ### Reco Electrons
@@ -2717,7 +2689,6 @@ trigvalsusybsm(dqmitems,
                "09 HLT_Mu11/19 SumEt",
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_Mu11",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
-
 
 ######## HLT_IsoMu9
 
@@ -3934,7 +3905,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_BTagIP_Jet80",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ######## HLT_BTagIP_Jet120
 
 ### Reco Electrons
@@ -4069,7 +4039,6 @@ trigvalsusybsm(dqmitems,
                "19 HLT_BTagIP_Jet120/19 SumEt",
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_BTagIP_Jet120",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
-
 
 ######## HLT_L2Mu5_Photon9
 
@@ -4206,7 +4175,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_L2Mu5_Photon9",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ######## HLT_L2Mu8_HT50
 
 ### Reco Electrons
@@ -4341,7 +4309,6 @@ trigvalsusybsm(dqmitems,
                "21 HLT_L2Mu8_HT50/19 SumEt",
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_L2Mu8_HT50",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
-
 
 ######## HLT_Ele10_LW_L1R_HT180
 
@@ -4478,8 +4445,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_Ele10_LW_L1R_HT180",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
-
 ######## HLT_Ele10_SW_L1R_TripleJet30
 
 ### Reco Electrons
@@ -4615,7 +4580,6 @@ trigvalsusybsm(dqmitems,
                [{'path': "HLT/SusyExo/RecoMET/HLT/SumEt_HLT_Ele10_SW_L1R_TripleJet30",
                  'description': "SumEt distribution. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideSUSYBSMHLTOfflinePerformance\">here</a>."}])
 
-
 ###---- HIGGS selection goes here: ----
 
 def trigvalhiggsHWW(i, p, *rows): i["HLT/Higgs/HiggsValidationReport/HWW/" + p] = DQMItem(layout=rows)
@@ -4647,7 +4611,6 @@ trigvalhiggsHWW(dqmitems,"ee selection: global Efficiencies ",
 trigvalhiggsHWW(dqmitems,"emu selection: global Efficiencies ",
         [{'path': "HLT/Higgs/HWW/TriggerEfficiencies_EmuChannel", 'description': "Trigger efficiencies in the emu channel wrt the events passing the selection ( at least 2 leptons pt>10,20,eta<2.4, opp. charge, muons:globalMuons, electrons:H/E<0.05, 0.6< E/p<2.5)"}])
 
-
 def trigvalhiggsHgg(i, p, *rows): i["HLT/Higgs/HiggsValidationReport/Hgg/" + p] = DQMItem(layout=rows)
 trigvalhiggsHgg(dqmitems,"HLTDoublePhoton10L1R eff vs eta",
         [{'path': "HLT/Higgs/Hgg/EffVsEta_HLT_DoublePhoton10_L1R", 'description': "Trigger efficiency for HLTDoublePhoton10 versus eta of the highest pt reconstructed photon in the event passing the selection (at least 2 reconstructed photons pt>20, eta<2.4)"}])
@@ -4656,9 +4619,6 @@ trigvalhiggsHgg(dqmitems,"HLTDoublePhoton10L1R vs pt",
 
 trigvalhiggsHgg(dqmitems,"Photon global Efficiencies ",
         [{'path': "HLT/Higgs/Hgg/Efficiencies_PhotonTriggers", 'description': "Photon Trigger efficiencies  wrt the events passing the selection (at least 2 reco photons pt>20, eta<2.4)"}])
-
-
-
 
 def trigvalhiggsH2tau(i, p, *rows): i["HLT/Higgs/HiggsValidationReport/H2tau/" + p] = DQMItem(layout=rows)
 trigvalhiggsH2tau(dqmitems,"semimu channel: HLTMu3 eff vs eta",
@@ -4678,8 +4638,6 @@ trigvalhiggsH2tau(dqmitems,"semimuonic channel : global Efficiencies ",
 
 trigvalhiggsH2tau(dqmitems,"semielectronic channel: global Efficiencies ",
         [{'path': "HLT/Higgs/H2tau/Efficiencies_ElectronTriggers", 'description': "Electron Trigger efficiencies  wrt the events passing the electron selection ( 1 electron from tau pt>15,eta<2.4)"}])
-
-
 
 def trigvalhiggsHZZ(i, p, *rows): i["HLT/Higgs/HiggsValidationReport/HZZ/" + p] = DQMItem(layout=rows)
 
@@ -4710,18 +4668,10 @@ trigvalhiggsHZZ(dqmitems,"4e selection: global Efficiencies ",
 trigvalhiggsHZZ(dqmitems,"2e2mu selection: global Efficiencies ",
         [{'path': "HLT/Higgs/HZZ/TriggerEfficiencies_EmuChannel", 'description': "Trigger efficiencies  wrt the events passing the selection ( at least 2 muons and 2 electrons pt>10,20,eta<2.4, opp. charge, muons:globalMuons, electrons:H/E<0.05, 0.6< E/p<2.5)"}])
 
-
 def trigvalhiggsHtaunu(i, p, *rows): i["HLT/Higgs/HiggsValidationReport/Htaunu/" + p] = DQMItem(layout=rows)
 
 trigvalhiggsHtaunu(dqmitems,"Tau global Efficiencies ",
         [{'path': "HLT/Higgs/Htaunu/globalEfficiencies", 'description': "Tau trigger efficiencies  wrt the events passing the selection ( at least 1 gen tau pt>100,eta<2.4)"}])
-
-
-
-
-
-
-
 
 ###---- QCD selection goes here: ----
 #def trigvalqcd(i, p, *rows): i["HLT//Preselection" + p] = DQMItem(layout=rows)

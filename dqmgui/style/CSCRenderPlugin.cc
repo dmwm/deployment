@@ -76,7 +76,6 @@ class CSCRenderPlugin : public DQMRenderPlugin {
       gStyle->SetPalette(1,0);
       obj->SetFillColor(45);
 
-
   // ============== Start generated from emuDQMBooking.xml by emuBooking2RenderPlugin.xsl ==================
 
   if(reMatch(".*/FEDEntries$", o.name)) {

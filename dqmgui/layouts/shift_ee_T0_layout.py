@@ -44,4 +44,3 @@ shifteelayout(dqmitems, "06 Clusters Energy EE +",
   [{ 'path': "EcalEndcap/EEClusterTask/EECLT BC energy map EE +", 'description': "Average energy (in GeV) of 5x5 basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEcal>DQMShiftOfflineEcal</a>" }],
   [{ 'path': "EcalEndcap/EEClusterTask/EECLT BC energy projection eta EE +", 'description': "eta projection of 5x5 basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEcal>DQMShiftOfflineEcal</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEClusterTask/EECLT BC energy projection phi EE +", 'description': "phi projection of 5x5 basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineEcal>DQMShiftOfflineEcal</a>", 'draw': { 'withref': "yes" } }])
-

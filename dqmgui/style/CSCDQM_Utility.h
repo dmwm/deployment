@@ -91,7 +91,6 @@ namespace cscdqm {
 
   };
 
-
 #ifndef CSC_RENDER_PLUGIN
 
 #define XERCES_TRANSCODE(str) cscdqm::XercesStringTranscoder(str).unicodeForm()

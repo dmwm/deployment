@@ -5,5 +5,3 @@ shiftinfolayout(dqmitems, "00-InfoReportSummary",
 
 shiftinfolayout(dqmitems, "01-InfoBeamMode",
   [{ 'path': "Info/LhcInfo/beamMode", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftInfo>Description and Instructions</a>" }])
-
-

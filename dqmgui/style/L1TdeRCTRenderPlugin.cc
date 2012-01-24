@@ -915,7 +915,6 @@ private:
         return;
       }
 
-
     }
 
   void postDrawTProfile2D( TCanvas *, const VisDQMObject & )

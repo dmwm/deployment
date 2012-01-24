@@ -214,7 +214,3 @@ hlxlayout(dqmitems, "HLX-Occupancy-History-Plots",
           ["HLX/HistoryRaw/HistAvgOccBelowSet2HFP","HLX/HistoryRaw/HistAvgOccBelowSet2HFM"],
           ["HLX/HistoryRaw/HistAvgOccBetweenSet2HFP","HLX/HistoryRaw/HistAvgOccBetweenSet2HFM"],
           ["HLX/HistoryRaw/HistAvgOccAboveSet2HFP","HLX/HistoryRaw/HistAvgOccAboveSet2HFM"])
-
-
-
-

@@ -1,6 +1,5 @@
 def tkallayout(i, p, *rows): i["Alignment/Tracker/Layouts/" + p] = DQMItem(layout=rows)
 
-
 tkallayout(dqmitems,"00 - PIXEL absolute Residuals",
   ["Alignment/Tracker/Pixel/h_Xprime_TPBBarrel_1",
    "Alignment/Tracker/Pixel/h_Yprime_TPBBarrel_1"],

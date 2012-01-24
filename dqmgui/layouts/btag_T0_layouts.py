@@ -139,4 +139,3 @@ btaglayout(dqmitems, "06 - 3D-Impact Parameter",
   { 'path': "Btag/IPTag_GLOBAL/jetDist_3D_IPTag_GLOBALALL",
     'description': "3D Jet Distance",
     'draw': { 'withref': "no" }}])
-

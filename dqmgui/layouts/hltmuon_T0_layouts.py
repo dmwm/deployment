@@ -1,5 +1,4 @@
 
-
 ###---- GENERIC - FourVector selection goes here: ####
 ######################################################
 
@@ -24,11 +23,9 @@ for i, path in enumerate(paths):
         [{'path': "HLT/Muon/DistributionsVbtf/%s/efficiencyTurnOn" % path, 'description':"Efficiency for VBTF muons to match HLT"}],
         [{'path': "HLT/Muon/DistributionsVbtf/%s/efficiencyPhiVsEta" % path, 'description':"Efficiency for VBTF muons to match HLT"}])
 
-
 ###---- GENERIC - FourVector Muon
 def trigHltMuonOfflineSummary(i, p, *rows):
    i["HLT/Muon/MuonHLTSummary/" + p] = DQMItem(layout=rows)
-
 
 ######################################################
 
@@ -65,4 +62,3 @@ trigHltMuonOfflineSummary(dqmitems,"05 - HLT_L2Mu10_v2",
 trigHltMuonOfflineSummary(dqmitems,"06 - HLT_L2Mu20_v2",
    [{'path': "HLT/Muon/Distributions/HLT_L2Mu20_v2/allMuons/recEffPt_L2Filtered", 'description':"Efficiency for RECO muons to match HLT"}],
    [{'path': "HLT/Muon/Distributions/HLT_L2Mu20_v2/allMuons/recEffPhiVsEta_L2Filtered", 'description':"Efficiency for RECO muons to match HLT"}])
-

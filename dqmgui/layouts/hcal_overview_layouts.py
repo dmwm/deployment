@@ -33,7 +33,6 @@ hcaloverviewlayout(dqmitems, "03 - HE+,HE- distributions for MinBias",
                      'description':"Sum(E_HEplus - E_HEminus)/Sum(E_HEplus+E_HEminus), in events passing Hcal HLT trigger with HT_HFP>1 GeV and HT_HFM>1 GeV, and at least one hit above threshold in both HE+ and HE-."}
                      ])
 
-
 # Digi Shape plots for digis with ADC sum > threshold N
 hcaloverviewlayout(dqmitems, "04 - Digi Shapes for Total Digi Signals > N counts",
                    [{'path':"Hcal/DigiMonitor_Hcal/digi_info/HB/HB Digi Shape - over thresh",
@@ -58,7 +57,6 @@ hcaloverviewlayout(dqmitems,"05 - Lumi Bunch Crossing Checks",
                      'description':"BC # for all events with HT_HF+ > 1 GeV, HT_HF- > 1 GeV, Hcal HLT trigger passed"}]
                    )
 
-
 hcaloverviewlayout(dqmitems,"06 - Events Per Lumi Section",
                    [{'path':"Hcal/RecHitMonitor_Hcal/Distributions_AllRecHits/AllEventsPerLS",
                      'description':"LS # for all processed events"}],
@@ -67,7 +65,6 @@ hcaloverviewlayout(dqmitems,"06 - Events Per Lumi Section",
                    [{'path':"Hcal/RecHitMonitor_Hcal/Distributions_PassedHcalHLTriggers/HcalHLTEventsPerLS_notimecut",
                      'description':"LS# for all events with HT_HF+ > 1 GeV, HT_HF- > 1 GeV, passed Hcal HLT trigger"}]
                    )
-
 
 hcaloverviewlayout(dqmitems,"07 - Lumi Distributions",
                    [
@@ -87,7 +84,6 @@ hcaloverviewlayout(dqmitems,"07 - Lumi Distributions",
      'description':"HF+ vs HF- total energy, for events passing Minbias HLT, with HT_HFP>1 GeV and HT_HFM>1 GeV"}
                    ],
                    )
-
 
 hcaloverviewlayout(dqmitems,"08 - RecHit Average Occupancy",
                    [
@@ -166,5 +162,3 @@ hcaloverviewlayout(dqmitems,"1729 - Temporary HF Timing Study Plots",
                     {'path':"Hcal/DigiMonitor_Hcal/HFTimingStudy/HFM_signal_shape",
                      'description':"Normalized HFM Signal Shape passing timing study requirements (pass minbias trigger, 20<maxenergy<100, 2<=maxtime<=5)"}],
                    )
-
-

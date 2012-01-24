@@ -6,14 +6,12 @@ if __name__=="__main__":
 
     dqmitems={}
 
-
 def shifthcalcaliblayout(i, p, *rows): i["00 Shift/HcalCalib/" + p] = DQMItem(layout=rows)
 
 shifthcalcaliblayout(dqmitems, "01 HcalCalib Summary",
            [{ 'path':"HcalCalib/EventInfo/reportSummaryMap",
              'description':"This shows the fraction of bad cells in each subdetector.  All subdetectors should appear green.  Values should all be above 98%."}]
            )
-
 
 shifthcalcaliblayout(dqmitems, "02 HcalCalib Problem Pedestals",
                 [{ 'path':"HcalCalib/DetDiagPedestalMonitor_Hcal/ ProblemDetDiagPedestal",

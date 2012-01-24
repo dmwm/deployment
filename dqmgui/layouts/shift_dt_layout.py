@@ -29,4 +29,3 @@ shiftdtlayout(dqmitems, "04-NoiseChannelsSummary",
 
 shiftdtlayout(dqmitems, "05-SynchNoiseSummary",
               [{ 'path': "DT/05-Noise/SynchNoise/SynchNoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
-

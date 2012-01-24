@@ -7,7 +7,6 @@ rpcevents = "Events processed by the RPC DQM"
 quality = "Overview of system quality. Expressed in percentage of chambers."
 occupancy = "Occupancy per sector"
 
-
 ################### Links to Histograms #################################
 
 #FED Fatal
@@ -18,10 +17,8 @@ shiftrpclayout(dqmitems, "01-Fatal_FED_Errors",
 shiftrpclayout(dqmitems, "02-RPC_Events",
                [{ 'path': "RPC/AllHits/RPCEvents", 'description': rpcevents + rpclink }])
 
-
 shiftrpclayout(dqmitems, "03-Quality_State_Overview",
                [{ 'path': "RPC/AllHits/SummaryHistograms/RPC_System_Quality_Overview", 'description': quality + rpclink }])
-
 
 shiftrpclayout(dqmitems, "04-RPC_Occupancy",
                [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Barrel", 'description': occupancy + rpclink  }],

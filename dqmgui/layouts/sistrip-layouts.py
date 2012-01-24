@@ -409,4 +409,3 @@ sistriplayout(dqmitems, "30 - TECB Residual",
      'description': "Hit Residual in TECB Wheel #8"},
    { 'path': "SiStrip/MechanicalView/TEC/side_1/wheel_9/HitResiduals_TEC__wheel__9",
      'description': "Hit Residual in TECB Wheel #9"}])
-

@@ -68,7 +68,6 @@ ebshifterlayout(dqmitems, "12 DCC Event Size and Synch Errors",
 ebshifterlayout(dqmitems, "13 Selective Readout High Interest TTs",
   [{ 'path': "EcalBarrel/EBSelectiveReadoutTask/EBSRT high interest TT Flags", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout. Expected higher occupancy at lower |eta| (the threshold is on transverse energy). Calibration events are excluded. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-
 # ECAL shifters
 ebecalshifterlayout(dqmitems, "00 Event Type",
   [{ 'path': "EcalBarrel/EcalInfo/EVTTYPE", 'description': "Frequency of the event types found in the DQM event-stream. If the calibration sequence is ON, histograms should show entries in COSMICS_GLOBAL, LASER_GAP, PEDESTAL_GAP, TESTPULSE_GAP. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -362,7 +361,6 @@ ebecalshifterlayout(dqmitems, "09 Trend/11 Barrel FEDs Size ",
 ebecalshifterlayout(dqmitems, "09 Trend/12 Selective Readout Flags Size ",
   [{ 'path': "EcalBarrel/EBTrendTask/AverageNumberOfEBSRFlagVs5Minutes", 'description': "Average number of Selective Readout Flags. (5 minutes range). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTrendTask/AverageNumberOfEBSRFlagVs1Hour", 'description': "Average number of Selective Readout Flags. (1 hour range). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 
 eblayout(dqmitems, "01 By Supermodule/EB-01/00 Integrity (Channel Global)",
   [{ 'path': "EcalBarrel/EBIntegrityClient/EBIT data integrity quality EB-01", 'description': "uality summary checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -6769,7 +6767,6 @@ eblayout(dqmitems, "00 By Task/00 Summary/10 Trigger Summary",
 eblayout(dqmitems, "00 By Task/00 Summary/11 StatusFlags Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBSFT front-end status summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-
 eblayout(dqmitems, "00 By Task/01 Integrity/00 Integrity Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBIT integrity quality summary", 'description': "Quality summary checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -6840,7 +6837,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-01/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-01 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-01 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -6872,7 +6868,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-01/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-01 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-01 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -6903,7 +6898,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-01/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-01 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-01 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-01 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-01 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7024,7 +7018,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-02/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-02 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-02 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7056,7 +7049,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-02/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-02 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-02 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7087,7 +7079,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-02/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-02 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-02 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-02 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-02 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7208,7 +7199,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-03/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-03 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-03 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7240,7 +7230,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-03/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-03 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-03 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7271,7 +7260,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-03/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-03 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-03 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-03 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-03 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7392,7 +7380,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-04/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-04 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-04 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7424,7 +7411,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-04/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-04 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-04 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7455,7 +7441,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-04/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-04 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-04 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-04 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-04 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7576,7 +7561,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-05/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-05 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-05 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7608,7 +7592,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-05/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-05 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-05 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7639,7 +7622,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-05/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-05 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-05 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-05 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-05 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7760,7 +7742,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-06/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-06 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-06 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7792,7 +7773,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-06/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-06 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-06 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7823,7 +7803,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-06/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-06 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-06 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-06 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-06 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7944,7 +7923,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-07/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-07 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-07 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7976,7 +7954,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-07/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-07 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-07 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8007,7 +7984,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-07/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-07 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-07 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-07 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-07 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8128,7 +8104,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-08/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-08 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-08 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8160,7 +8135,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-08/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-08 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-08 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8191,7 +8165,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-08/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-08 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-08 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-08 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-08 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8312,7 +8285,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-09/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-09 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-09 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8344,7 +8316,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-09/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-09 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-09 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8375,7 +8346,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-09/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-09 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-09 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-09 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-09 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8496,7 +8466,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-10/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-10 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-10 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8528,7 +8497,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-10/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-10 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-10 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-10 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-10 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8559,7 +8527,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-10/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-10 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-10 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-10 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-10 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-10 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-10 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8680,7 +8647,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-11/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-11 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-11 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8712,7 +8678,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-11/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-11 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-11 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-11 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-11 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8743,7 +8708,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-11/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-11 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-11 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-11 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-11 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-11 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-11 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8864,7 +8828,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-12/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-12 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-12 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8896,7 +8859,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-12/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-12 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-12 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-12 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-12 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8927,7 +8889,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-12/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-12 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-12 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-12 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-12 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-12 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-12 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9048,7 +9009,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-13/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-13 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-13 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9080,7 +9040,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-13/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-13 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-13 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-13 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-13 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9111,7 +9070,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-13/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-13 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-13 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-13 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-13 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-13 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-13 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9232,7 +9190,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-14/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-14 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-14 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9264,7 +9221,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-14/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-14 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-14 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-14 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-14 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9295,7 +9251,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-14/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-14 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-14 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-14 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-14 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-14 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-14 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9416,7 +9371,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-15/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-15 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-15 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9448,7 +9402,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-15/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-15 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-15 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-15 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-15 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9479,7 +9432,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-15/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-15 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-15 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-15 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-15 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-15 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-15 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9600,7 +9552,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-16/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-16 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-16 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9632,7 +9583,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-16/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-16 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-16 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-16 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-16 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9663,7 +9613,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-16/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-16 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-16 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-16 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-16 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-16 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-16 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9784,7 +9733,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-17/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-17 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-17 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9816,7 +9764,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-17/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-17 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-17 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-17 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-17 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9847,7 +9794,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-17/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-17 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-17 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-17 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-17 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-17 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-17 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9968,7 +9914,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB-18/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB-18 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB-18 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10000,7 +9945,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-18/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-18 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB-18 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB-18 G16 L1", 'description': "Amplitudes of the 10 PNs of EB-18 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10031,7 +9975,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB-18/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB-18 G16 L4", 'description': "Average pedestals of the 10 PNs of EB-18 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB-18 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB-18 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB-18 G16 L4", 'description': "Amplitudes of the 10 PNs of EB-18 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -10152,7 +10095,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+01/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+01 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+01 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10184,7 +10126,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+01/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+01 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+01 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10215,7 +10156,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+01/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+01 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+01 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+01 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+01 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -10336,7 +10276,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+02/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+02 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+02 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10368,7 +10307,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+02/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+02 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+02 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10399,7 +10337,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+02/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+02 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+02 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+02 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+02 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -10520,7 +10457,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+03/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+03 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+03 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10552,7 +10488,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+03/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+03 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+03 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10583,7 +10518,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+03/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+03 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+03 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+03 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+03 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -10704,7 +10638,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+04/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+04 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+04 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10736,7 +10669,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+04/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+04 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+04 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10767,7 +10699,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+04/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+04 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+04 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+04 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+04 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -10888,7 +10819,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+05/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+05 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+05 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10920,7 +10850,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+05/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+05 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+05 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10951,7 +10880,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+05/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+05 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+05 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+05 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+05 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11072,7 +11000,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+06/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+06 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+06 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11104,7 +11031,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+06/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+06 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+06 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11135,7 +11061,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+06/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+06 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+06 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+06 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+06 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11256,7 +11181,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+07/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+07 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+07 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11288,7 +11212,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+07/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+07 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+07 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11319,7 +11242,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+07/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+07 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+07 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+07 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+07 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11440,7 +11362,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+08/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+08 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+08 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11472,7 +11393,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+08/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+08 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+08 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11503,7 +11423,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+08/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+08 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+08 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+08 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+08 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11624,7 +11543,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+09/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+09 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+09 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11656,7 +11574,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+09/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+09 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+09 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11687,7 +11604,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+09/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+09 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+09 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+09 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+09 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11808,7 +11724,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+10/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+10 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+10 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11840,7 +11755,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+10/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+10 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+10 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+10 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+10 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11871,7 +11785,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+10/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+10 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+10 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+10 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+10 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+10 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+10 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11992,7 +11905,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+11/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+11 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+11 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12024,7 +11936,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+11/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+11 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+11 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+11 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+11 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12055,7 +11966,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+11/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+11 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+11 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+11 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+11 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+11 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+11 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -12176,7 +12086,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+12/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+12 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+12 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12208,7 +12117,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+12/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+12 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+12 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+12 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+12 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12239,7 +12147,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+12/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+12 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+12 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+12 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+12 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+12 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+12 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -12360,7 +12267,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+13/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+13 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+13 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12392,7 +12298,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+13/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+13 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+13 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+13 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+13 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12423,7 +12328,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+13/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+13 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+13 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+13 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+13 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+13 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+13 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -12544,7 +12448,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+14/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+14 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+14 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12576,7 +12479,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+14/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+14 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+14 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+14 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+14 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12607,7 +12509,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+14/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+14 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+14 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+14 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+14 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+14 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+14 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -12728,7 +12629,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+15/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+15 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+15 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12760,7 +12660,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+15/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+15 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+15 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+15 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+15 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12791,7 +12690,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+15/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+15 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+15 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+15 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+15 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+15 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+15 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -12912,7 +12810,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+16/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+16 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+16 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12944,7 +12841,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+16/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+16 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+16 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+16 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+16 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12975,7 +12871,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+16/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+16 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+16 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+16 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+16 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+16 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+16 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -13096,7 +12991,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+17/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+17 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+17 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -13128,7 +13022,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+17/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+17 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+17 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+17 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+17 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -13159,7 +13052,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+17/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+17 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+17 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+17 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+17 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+17 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+17 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -13280,7 +13172,6 @@ eblayout(dqmitems, "00 By Task/04 TestPulse/EB+18/02 PNs Variables Gain16",
    { 'path': "EcalBarrel/EBTestPulseClient/EBTPT PNs pedestal rms EB+18 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBTestPulseTask/PN/Gain16/EBTPT PNs amplitude EB+18 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -13312,7 +13203,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+18/L1/05 PNs Gain16",
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+18 G16 L1", 'description': "RMS of the pedestals of PN diodes of EB+18 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser1/PN/Gain16/EBLT PNs amplitude EB+18 G16 L1", 'description': "Amplitudes of the 10 PNs of EB+18 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-
 eblayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -13343,7 +13233,6 @@ eblayout(dqmitems, "00 By Task/05 Laser/EB+18/L4/05 PNs Gain16",
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs pedestal EB+18 G16 L4", 'description': "Average pedestals of the 10 PNs of EB+18 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBLaserClient/EBLT PNs pedestal rms EB+18 G16 L4", 'description': "RMS of the pedestals of PN diodes of EB+18 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBLaserTask/Laser4/PN/Gain16/EBLT PNs amplitude EB+18 G16 L4", 'description': "Amplitudes of the 10 PNs of EB+18 in Gain 16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 
 eblayout(dqmitems, "00 By Task/07 Timing/00 Timing Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing quality summary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -13559,4 +13448,3 @@ eblayout(dqmitems, "00 By Task/14 SelectiveReadout/11 Tower Size",
 eblayout(dqmitems, "00 By Task/14 SelectiveReadout/11 ZS Filter Output",
   [{ 'path': "EcalBarrel/EBSelectiveReadoutTask/EBSRT high interest ZS filter output", 'description': "Barrel High Interest ZS emulation. Signal of channels from barrel high interest regions as reconstructed by the ZS emulator. Notes: These plots rely on the match of the ZS configuration with the online setting. Little excess in bin ADC_count = 0 is expected. It is due to the rounding done in the ZS filter. Positive values are round down, while negative values are round up. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBSelectiveReadoutTask/EBSRT low interest ZS filter output", 'description': "Barrel Low Interest ZS emulation. Signal of channels from barrel low interest regions as reconstructed by the ZS emulator. A sharp cut at zero suppression threshold is expected, with all bins below this threshold empty. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-

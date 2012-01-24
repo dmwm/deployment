@@ -402,4 +402,3 @@ int EventDisplay::countStripsNose(int station, int ring) const {
   if (station == 1 && ring == 1) return 16;
   return 0;
 }
-

@@ -18,11 +18,7 @@
 class CASTORRenderPlugin : public DQMRenderPlugin
 {
 
-
  public:
-
-
-
 
   ////---- define the histograms
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &) {
@@ -66,7 +62,6 @@ class CASTORRenderPlugin : public DQMRenderPlugin
       return false;
     }
 
-
   //==========================================================//
   //==================== preDraw ============================//
   //==========================================================//
@@ -99,7 +94,6 @@ class CASTORRenderPlugin : public DQMRenderPlugin
   virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &){
       c->cd();
 
-
       ////--- TH3
       if( dynamic_cast<TH3*>( o.object ) ) {
         postDrawTH3( c, o );
@@ -117,11 +111,7 @@ class CASTORRenderPlugin : public DQMRenderPlugin
 
   }
 
-
-
-
 private:
-
 
   //==========================================================//
   //==================== preDrawTH3 ==========================//
@@ -145,7 +135,6 @@ private:
       obj->GetXaxis()->SetTitleOffset(0.12);
       obj->GetYaxis()->SetTitleOffset(0.12);
       obj->GetZaxis()->SetTitleOffset(0.12);
-
 
       if(o.name.find("CASTOR 3D hits- cumulative") != std::string::npos) {
       gStyle->SetOptStat(0);
@@ -193,8 +182,6 @@ private:
       obj->SetOption("colz");
       obj->GetXaxis()->SetLabelSize(0.05);
       obj->GetYaxis()->SetLabelSize(0.05);
-
-
 
      if(o.name.find("reportSummaryMap") != std::string::npos)
       {
@@ -307,7 +294,6 @@ private:
         return;
       }
 
-
     if(o.name.find("SaturationSummaryMap") != std::string::npos)
       {
         obj->GetXaxis()->SetNdivisions(15,true);
@@ -366,9 +352,6 @@ private:
         return;
       }
 
-
-
-
      if(o.name.find("RecHitEnergyBasedSummaryMap") != std::string::npos)
       {
         obj->GetXaxis()->SetNdivisions(15,true);
@@ -408,8 +391,6 @@ private:
         obj->GetYaxis()->SetBinLabel(15,"15");
         obj->GetYaxis()->SetBinLabel(16,"16");
 
-
-
         obj->GetXaxis()->SetTitle("z-module");
         obj->GetYaxis()->SetTitle("#phi-sector");
 
@@ -426,9 +407,6 @@ private:
         gStyle->SetPalette(3, colorError1);
         return;
       }
-
-
-
 
     if(o.name.find("CastorRecHit 2D Energy Map- above threshold") != std::string::npos)
       {
@@ -469,7 +447,6 @@ private:
         obj->GetYaxis()->SetBinLabel(15,"15");
         obj->GetYaxis()->SetBinLabel(16,"16");
 
-
         obj->GetXaxis()->SetTitle("z-module");
         obj->GetYaxis()->SetTitle("#phi-sector");
 
@@ -479,7 +456,6 @@ private:
         c->SetGrid(1,1);
         return;
       }
-
 
     if(o.name.find("CastorRecHits Occupancy Map") != std::string::npos)
       {
@@ -530,8 +506,6 @@ private:
         return;
       }
 
-
-
     if(o.name.find("CASTOR Digi Occupancy Map") != std::string::npos)
       {
         obj->GetXaxis()->SetNdivisions(15,true);
@@ -571,7 +545,6 @@ private:
         obj->GetYaxis()->SetBinLabel(15,"15");
         obj->GetYaxis()->SetBinLabel(16,"16");
 
-
         obj->GetXaxis()->SetTitle("z-module");
         obj->GetYaxis()->SetTitle("#phi-sector");
 
@@ -581,8 +554,6 @@ private:
         c->SetGrid(1,1);
         return;
       }
-
-
 
     if(o.name.find("CASTOR spigot status") != std::string::npos)
       {
@@ -708,8 +679,6 @@ private:
 
       }
 
-
-
       if(o.name.find("CASTOR spigot status") != std::string::npos)
       {
 
@@ -728,7 +697,6 @@ private:
         leg->Draw();
 
       }
-
 
       if(o.name.find("testOccupancy") != std::string::npos)
       {
@@ -749,8 +717,6 @@ private:
         return;
       }
     }
-
-
 
   //==========================================================//
   //==================== preDrawTH1 ==========================//
@@ -793,7 +759,6 @@ private:
 	c->SetGridx(1);
         return;
         }
-
 
      if( o.name.find("CastorRecHit Energy in modules- above threshold") != std::string::npos) {
         obj->GetXaxis()->SetBinLabel(1,"1");
@@ -847,7 +812,6 @@ private:
 
         return;
        }
-
 
     if( o.name.find("CastorRecHit Energy in sectors- above threshold") != std::string::npos) {
         obj->GetXaxis()->SetBinLabel(1,"1");
@@ -927,7 +891,6 @@ private:
     TH1* obj = dynamic_cast<TH1*>( o.object );
     assert( obj );
 
-
       if(o.name.find("CASTOR FEDFatal errors") != std::string::npos){
 
       TText t;
@@ -944,7 +907,6 @@ private:
         t.DrawText(690.3,1.0,"ATTENTION: Fatal Errors Found");
         }
 
-
         gPad->SetGridx();
         return;
       }
@@ -959,9 +921,7 @@ private:
         return;
       }
 
-
     }
-
 
 };
 

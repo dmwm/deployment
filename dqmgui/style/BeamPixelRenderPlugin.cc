@@ -21,12 +21,10 @@
 #include <cassert>
 #include <math.h>
 
-
 class BeamPixelRenderPlugin : public DQMRenderPlugin {
 
   int hcalRainbowColors[100];
   int NCont_rainbow;
-
 
 public:
 
@@ -79,7 +77,6 @@ public:
 
     if (dynamic_cast<TProfile*>(o.object)) preDrawTProfile(c, o);
   }
-
 
 private:
 
@@ -224,6 +221,5 @@ private:
   }
 
 };
-
 
 static BeamPixelRenderPlugin instance;
