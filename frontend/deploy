@@ -78,7 +78,7 @@ deploy_frontend_post()
         "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
         "-o $PWD/etc/voms-gridmap.txt --vo cms"
    case $host in vocms* ) silent= ;; * ) silent=-q;; esac
-   echo "*/10 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
+   echo "*/4 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
         "PYTHONPATH=$project_auth:\$PYTHONPATH $project_config/mkauthmap" \
         "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
    case $host in
