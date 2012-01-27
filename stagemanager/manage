@@ -10,6 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
+##H   dbclean [minutes]   clean old docs from req/stat db older than [minutes] (def. 2 weeks)
 ##H
 ##H For more details please refer to operations page:
 ##H   https://svnweb.cern.ch/trac/CMSDMWM/wiki/StageManagerDeployment
@@ -81,6 +82,25 @@ status()
   fi
 }
 
+dbclean()
+{
+  min=$(($1)); [ $min -lt 1 ] && min=20160 # defaults to 2 weeks
+  age=$(($(date +%s)-$min*60))
+  sitename=$(egrep -o 'T[0-3]_[A-Z][A-Z]_[A-Z0-9]+' $CFGFILE \
+             | tr '[:upper:]' '[:lower:]')
+
+  for db in requests statistics; do
+    docs=$(curl -s "localhost:5984/${sitename}_$db/_design/$db/_view/doc_age?reduce=false" \
+           | grep '^{"id":"[^_]' | awk -F\" '{print $4,$8,$11}' | tr -d ":},")
+    if [ -n "$docs" ]; then
+      echo "$docs" | while read ID REV DOCAGE; do
+        [ ${DOCAGE%.*} -gt $age ] || \
+          curl -s -X DELETE localhost:5984/${sitename}_$db/$ID?rev=$REV > /dev/null
+      done
+    fi
+  done
+}
+
 # Verify the security string.
 check()
 {
@@ -115,6 +135,10 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  dbclean )
+    dbclean $2
     ;;
 
   help )

@@ -56,12 +56,17 @@ deploy_stagemanager_post()
     t1_* )
       enable
       # Setup database replication
-      (echo {,https://cmsweb.cern.ch/couchdb/}${variant}_statistics statistics/repfilter # unidirectional
+      (echo {,https://cmsweb.cern.ch/couchdb/}${variant}_statistics statistics/repfilter
+       echo {https://cmsweb.cern.ch/couchdb/,}${variant}_statistics statistics/repfilter
        echo {,https://cmsweb.cern.ch/couchdb/}${variant}_requests requests/repfilter
        echo {https://cmsweb.cern.ch/couchdb/,}${variant}_requests requests/repfilter
       ) > $couchdb_state/replication/stagemanager
       # Setup to start after boot
-      (mkcrontab; sysboot) | crontab -
+      (mkcrontab; sysboot
+       local cmd="$project_config/manage dbclean"
+       $nogroups || cmd="sudo -H -u _stagemanager bashs -l -c \"${cmd}\""
+       echo "0 0 * * * $cmd"
+      ) | crontab -
       ;;
   esac
 }
