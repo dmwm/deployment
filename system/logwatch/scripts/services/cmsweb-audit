@@ -517,7 +517,8 @@ def filter_path(info):
 
   if (info['uid'] == '_dqmgui'
       and info['syscall'] == 'mkdir'
-      and info['exit'] == '-17(File exists)'):
+      and info['exit'] == '-17(File exists)'
+      and info.get('paths', None)):
     m = rxdqmmkdir.match(info['paths'][0])
     if m:
       info['paths'][0] = m.group(1) + "ix/TYPE/NNN"
@@ -526,7 +527,8 @@ def filter_path(info):
   if (info['uid'] == '_dqmgui'
       and info['syscall'] == 'unlink'
       and info['exit'] == '-2(No such file or directory)'
-      and rxpython.match(info['exe'])):
+      and rxpython.match(info['exe'])
+      and info.get('paths', None)):
     m = rxdqmunlink.match(info['paths'][0])
     if m:
       info['paths'][0] = m.group(1) + "NNNNNxxxx/NNNNNNNxx/tmpXXXXXX"
@@ -566,7 +568,8 @@ def filter_path(info):
             and info['exit'] == '-2(No such file or directory)')
            or (info['syscall'] == 'open'
                and info['exit'] == '-13(Permission denied)'))
-      and rxpython.match(info['exe'])):
+      and rxpython.match(info['exe'])
+      and info.get('paths', None)):
     m = rxsecretconfig.match(info['paths'][0])
     if m:
       info['paths'][0] = m.group(1) + "AUTHCFG" + m.group(2) + "FILE.pyc"
@@ -576,7 +579,8 @@ def filter_path(info):
   if (info['uid'] == '_mongodb'
       and ((info['syscall'] == 'mkdir' and info['exit'] == '-17(File exists)')
            or (info['syscall'] == 'unlink' and info['exit'] == '-21(Is a directory)'))
-      and rxmongod.match(info['exe'])):
+      and rxmongod.match(info['exe'])
+      and info.get('paths', None)):
     m = rxmongo.match(info['paths'][0])
     if m:
       info['paths'][0] = m.group(1) + ".N.M/"
@@ -586,7 +590,8 @@ def filter_path(info):
   if info['uid'] == '_filemover':
     if (info['syscall'] == 'unlink'
         and info['exit'] == '-2(No such file or directory)'
-        and rxpython.match(info['exe'])):
+        and rxpython.match(info['exe'])
+        and info.get('paths', None)):
       m = rxfmcache.match(info['paths'][0])
       if m:
         prefix, softlinks = m.groups()
@@ -595,8 +600,8 @@ def filter_path(info):
 
     elif (info['syscall'] == 'mkdir'
           and info['exit'] == '-17(File exists)'
-          and info.get('paths', None)
-          and rxpython.match(info['exe'])):
+          and rxpython.match(info['exe'])
+          and info.get('paths', None)):
       m = rxfmdirdl.match(info['paths'][0])
       if m:
         info['paths'][0] = m.group(1) + "A" + (m.group(2) or "")
@@ -618,7 +623,8 @@ def filter_path(info):
   if info['uid'] == '_workqueue':
     if (info['syscall'] == 'unlink'
         and info['exit'] == '-2(No such file or directory)'
-        and rxpython.match(info['exe'])):
+        and rxpython.match(info['exe'])
+        and info.get('paths', None)):
      m = rxwq.match(info['paths'][0])
      if m:
        prefix, req = m.groups()
@@ -648,7 +654,8 @@ def filter_path(info):
   # Collapse admin command paths from unlink system calls.
   if (info['uid'] == 'cmsweb'
       and info['syscall'] == 'unlink'
-      and info['exit'] == '-2(No such file or directory)'):
+      and info['exit'] == '-2(No such file or directory)'
+      and info.get('paths', None)):
     for rx, repl in rxadmin:
       m = rx.match(info['paths'][0])
       if m:
