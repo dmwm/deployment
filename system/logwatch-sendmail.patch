@@ -1,0 +1,11 @@
+--- logwatch/scripts/services/sendmail.orig	2012-01-27 14:27:28.000000000 +0100
++++ logwatch/scripts/services/sendmail	2012-01-27 14:27:41.000000000 +0100
+@@ -246,7 +246,7 @@ for my $i (0..9) {
+ }
+ 
+ # QueueID formats: in 8.11 it was \w{7}\d{5}, in 8.12+ it is \w{8}\d{6}
+-my $QueueIDFormat = "(?:\\w{7,9}\\d{5}|NOQUEUE)";
++my $QueueIDFormat = "(?:\\w{7,9}\\d{5,6}|NOQUEUE)";
+ 
+ # ENOENT refers to "no such file or directory"
+ my $ENOENT = Errno::ENOENT();

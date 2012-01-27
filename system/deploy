@@ -318,11 +318,15 @@ deploy_system_post()
           exit 1 ;;
       esac
 
-      # Install logwatch / bashs scanner.
+      # Install logwatch / bashs scanner and patch sendmail scanner.
       (cd $project_config_src/logwatch; find . -type f -print0 |
        tar --null -T /dev/stdin -cf -) | sudo tar -C /etc/logwatch -xvvf - \
          --no-anchored --exclude CVS --exclude .svn --exclude .git \
          --exclude '*~' --exclude '.#*' --exclude '*.swp'
+      sudo mkdir -p /etc/logwatch/scripts/services
+      sudo cp {/usr/share,/etc}/logwatch/scripts/services/sendmail
+      sudo patch /etc/logwatch/scripts/services/sendmail \
+        < $project_config_src/logwatch-sendmail.patch
 
       # Make sure the permissions for /home/cmsweb are right.
       sudo /usr/sbin/ncm-ncd --configure dirperm
