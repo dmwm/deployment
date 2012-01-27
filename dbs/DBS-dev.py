@@ -3,7 +3,6 @@ DBS Server cmsweb dev configuration file
 """
 import os,logging,sys
 from WMCore.Configuration import Configuration
-from WMCore.WMInit import getWMBASE
 
 ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
 DBSVERSION = os.getenv('DBS3_VERSION')
@@ -26,7 +25,7 @@ config.Webtools.application = 'dbs'
 config.Webtools.environment = 'production'
 
 config.component_('dbs')
-config.dbs.templates = os.path.join(getWMBASE(),'../../templates/WMCore/WebTools')
+config.dbs.templates = os.path.join(ROOTDIR,'apps/dbs/data/templates/WMCore/WebTools')
 config.dbs.title = 'DBS Server'
 config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')
