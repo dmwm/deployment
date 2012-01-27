@@ -44,7 +44,7 @@ COLOR_NORMAL="\\033[0;39m"
 # Start service conditionally on crond restart.
 sysboot()
 {
-  if [ $(pgrep -u $(id -u) -f "StageManagerAgent.py.*$CFGOPTS" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "StageManagerAgent.py" | wc -l) = 0 ]; then
     start
   fi
 }
@@ -63,7 +63,7 @@ start()
 stop()
 {
   echo "stopping $ME"
-  for PID in $(pgrep -u $(id -u) -f "StageManagerAgent.py.*$CFGOPTS" | sort -rn); do
+  for PID in $(pgrep -u $(id -u) -f "StageManagerAgent.py" | sort -rn); do
     PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
              perl -n -e 'print join(" ", (split)[0..6])')
     echo "Stopping $PID ($PSLINE):"
@@ -74,7 +74,7 @@ stop()
 # Check if the server is running.
 status()
 {
-  pid=$(pgrep -u $(id -u) -f "StageManagerAgent.py.*$CFGOPTS" | sort -n)
+  pid=$(pgrep -u $(id -u) -f "StageManagerAgent.py" | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
