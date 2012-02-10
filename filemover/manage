@@ -10,6 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
+##H   cleaner     clean the pool area
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/FileMover
@@ -112,6 +113,10 @@ case ${1:-status} in
       echo "$0: sysboot is for cron only" 1>&2
       exit 1
     fi
+    ;;
+
+  cleaner )
+    cleaner
     ;;
 
   start | restart )
