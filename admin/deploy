@@ -1,5 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_admin_variants="default bare"
+deploy_admin_variants="default devtools bare"
 deploy_admin_deps()
 {
   deploy backend
@@ -12,10 +12,16 @@ deploy_admin_prep()
 
 deploy_admin_sw()
 {
+  local p pkgs="rotatelogs pystack"
+  case $variant in devtools )
+    deploy_pkg comp cms+wmcore-devtools 1.0
+    pkgs="$pkgs wmcore-devtools"
+    ;;
+  esac
   deploy_pkg -a proxy/.turd comp external+rotatelogs 2.2.19-comp
-  (echo ". $root/current/apps/rotatelogs/etc/profile.d/init.sh"
-   echo ". $root/current/apps/pystack/etc/profile.d/init.sh") \
-   > $project_config/init.sh
+  (for p in $pkgs; do
+     echo ". $root/current/apps/$p/etc/profile.d/init.sh"
+   done) > $project_config/init.sh
   setgroup u+rw,go-w _config $project_config/init.sh
   rm -f $project_config/{Clone,Install,Image,rsync}*
 }
