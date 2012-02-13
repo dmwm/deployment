@@ -91,7 +91,7 @@ dbclean()
 
   for db in requests statistics; do
     docs=$(curl -s "localhost:5984/${sitename}_$db/_design/$db/_view/doc_age?reduce=false" \
-           | grep '^{"id":"[^_]' | awk -F\" '{print $4,$8,$11}' | tr -d ":},")
+           | grep '^{"id":"[^_]' | awk -F\" '{print $4,$8,$11}' | tr -d ":},\r")
     if [ -n "$docs" ]; then
       echo "$docs" | while read ID REV DOCAGE; do
         [ ${DOCAGE%.*} -gt $age ] || \
