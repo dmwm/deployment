@@ -385,7 +385,7 @@ sub auth_hnlogin_handler : method
     = ($r->method() eq 'POST'
        && $form_service =~ m{^/([-a-z0-9_]+(/.*)?)?$}
        && $url_service =~ m{^/([-a-z0-9_]+(/.*)?)?$}
-       && $form_account =~ m{^[a-z0-9]+(?:\.nocern|\.notcms)?$}
+       && $form_account =~ m{^[a-z0-9_]+(?:\.nocern|\.notcms)?$}
        && $form_passwd ne ''
        && $form_token =~ m{^[0-9a-f]{40}$}
        && $sid_token =~ /^([0-9a-f]{40})([0-9a-f]{40})$/
@@ -1215,7 +1215,7 @@ sub authn_hnlogin($$)
 
   # Verify the account is valid.
   my $account = $$data{A};
-  if ($account !~ m{^[a-z0-9]+(?:\.nocern|\.notcms)?$}
+  if ($account !~ m{^[a-z0-9_]+(?:\.nocern|\.notcms)?$}
       || ! exists $authz_by_login{$account})
   {
     $r->log->warn("$me rejecting cookie for bad account '$account'");
