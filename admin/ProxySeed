@@ -45,6 +45,14 @@ done
 
 [ $(uname) = Darwin ] && exit 0 # deactivated for now
 
+# Skip proxy seeding if we don't appear to have apps that need one.
+case $dest in /* )
+  if [ -d $dest ]; then :; else
+    echo "$dest: no such directory, skipping proxy setup" 1>&2
+    exit 0
+  fi ;;
+esac
+
 [ $# = 0 ] || usage
 
 if [ -x /usr/bin/myproxy-init -a -x /usr/bin/voms-proxy-init ]; then :; else
