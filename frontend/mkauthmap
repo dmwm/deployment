@@ -50,7 +50,7 @@ def update(outfile, dbcfg, verbose, quiet):
   if "clientid" in dbcfg:
     conn.current_schema = dbcfg["schema"]
     conn.client_identifier = dbcfg["clientid"]
-    conn.clientinfo = conn.module = "mkvomsmap"
+    conn.clientinfo = conn.module = "mkauthmap"
 
   # Read users and passwords.
   c = conn.cursor()
@@ -75,7 +75,23 @@ def update(outfile, dbcfg, verbose, quiet):
         print ("WARNING: skipping unsafe user id %(id)s, login '%(login)s',"
                " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
                % locals())
-        continue
+      continue
+
+    # Skip deactivated accounts.
+    if passwd.find("*") >= 0 or passwd.find("Removed") >= 0:
+      if verbose:
+        print ("WARNING: deactivated user id %(id)s, login '%(login)s',"
+               " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
+               % locals())
+      continue
+
+    # If there is no password, lock the account.
+    if not passwd:
+      if verbose:
+        print ("WARNING: locking account user id %(id)s, login '%(login)s',"
+               " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
+               % locals())
+      passwd = "*"
 
     # Build human name.
     name = " ".join([n for n in (first, last) if n])
