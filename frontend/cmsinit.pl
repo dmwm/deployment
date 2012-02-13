@@ -21,6 +21,7 @@ use Apache2::ModSSL ();
 use Apache2::Log ();
 use Apache2::Const ();
 use APR::Const ();
+use Encode ();
 use Digest::SHA1 ();
 use Digest::HMAC_SHA1 ();
 use File::Spec::Functions ();

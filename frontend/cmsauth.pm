@@ -141,20 +141,21 @@
 #   The value of this header is the DN of the client's X509 cert. It
 #   is always present when CMS-AuthN-Method is X509Cert/Proxy, and if
 #   CMS-AuthN-Method is HNLogin and SiteDB has DN account association.
+#   This string is UTF-8.
 #
 #  CMS-AuthN-Login
 #
 #   The value of this header is the CMS hypernew login of the client.
 #   It is always present always when CMS-AuthN-Method is HNLogin, and
 #   if CMS-AuthN-Method is X509Cert/Proxy and SiteDB has DN account
-#   association.
+#   association. This string is ASCII.
 #
 #  CMS-AuthN-Name
 #
 #   The value of this header is the SiteDB registered forename and
 #   surname of the client. It may not be present if the fields have
 #   not been recorded in SiteDB. If authentication method is HostIP
-#   or None, this header is not present.
+#   or None, this header is not present. This string is UTF-8.
 #
 #  CMS-AuthZ-<Role>
 #
@@ -163,7 +164,7 @@
 #   the entities -- roles, groups and sites -- are in canonical form
 #   where the permitted letters are lowercase letters a-z, numbers
 #   and the dash "-". All other characters are converted to "-" and
-#   consecutive dashes are collapsed to one dash.
+#   consecutive dashes are collapsed to one dash. This string is ASCII.
 #
 #  CMS-AuthN-HMAC
 #
@@ -188,6 +189,7 @@
 #   characters in total. If the resulting string compares byte for
 #   byte equal with the CMS-AuthN-HMAC header value, the application
 #   can trust the authentication and authorisation header values.
+#   Since string consists of hexadecimal letters, it's always ASCII.
 #
 #  CMS-Auth-Host
 #  CMS-Auth-Cert
@@ -208,6 +210,7 @@
 package cmsauth;
 use strict;
 use warnings;
+use Encode ();
 use Apache2::ServerUtil;
 use Apache2::Const -compile => ':common', ':http';
 use Digest::HMAC_SHA1 'hmac_sha1';
@@ -519,6 +522,11 @@ sub auth_trouble_handler : method
   my $vend = $ir->subprocess_env->get('SSL_CLIENT_V_END');
   my $iscms;
 
+  # For now we pretend strings are UTF-8, so we force the UTF-8 flag
+  # on. This is actually the case only with Apache 2.3+, in earlier
+  # versions it's the raw ASN.1 byte stream, usually subsets of ASCII.
+  Encode::_utf8_on($dn);
+
   # Analyse the DN.
   if (! $dn)
   {
@@ -527,6 +535,12 @@ sub auth_trouble_handler : method
               . " Check that you have installed a grid certificate "
 	      . " by suitable certificate authority and your browser "
 	      . " trust settings offer that certificate to this site.</p>";
+  }
+  elsif (! utf8::is_utf8($dn))
+  {
+    $dn = encode_entities($dn);
+    $message .= "<p>Your browser offered a DN '$dn' which was rejected"
+              . " because it is not UTF-8.</p>";
   }
   elsif ($dn =~ /[\x00-\x1f]/)
   {
@@ -910,7 +924,9 @@ sub authz_complete($$$%)
 
     if (! $uinfo && $args{DN})
     {
-      $hdrs{"cms-authn-dn"} = $args{DN};
+      my $utf8dn = $args{DN};
+      utf8::encode($utf8dn);
+      $hdrs{"cms-authn-dn"} = $utf8dn;
       $uinfo = $authz_by_dn{$args{DN}}
         if exists $authz_by_dn{$args{DN}};
     }
@@ -934,9 +950,13 @@ sub authz_complete($$$%)
         }
       }
 
-      $hdrs{"cms-authn-dn"} = $$uinfo{DN} if $$uinfo{DN};
+      my $utf8dn = $$uinfo{DN};
+      my $utf8name = $$uinfo{NAME};
+      utf8::encode($utf8dn) if $utf8dn;
+      utf8::encode($utf8name) if $utf8name;
+      $hdrs{"cms-authn-dn"} = $utf8dn if $utf8dn;
       $hdrs{"cms-authn-login"} = $$uinfo{LOGIN};
-      $hdrs{"cms-authn-name"} = $$uinfo{NAME} if $$uinfo{NAME};
+      $hdrs{"cms-authn-name"} = $utf8name if $utf8name;
       $hdrs{"cms-authz-$_"} = "@{$groups{$_}}" for @roles;
     }
 
@@ -993,8 +1013,15 @@ sub authn_cert($$)
   # However silently keep plodding if there is no DN at all.
   return authn_step($r, $opts) if ! $dn;
 
+  # For now we pretend strings are UTF-8, so we force the UTF-8 flag
+  # on. This is actually the case only with Apache 2.3+, in earlier
+  # versions it's the raw ASN.1 byte stream, usually subsets of ASCII.
+  Encode::_utf8_on($dn);
+
   # Report failure if DN seems funny.
-  if ($dn =~ /[\x00-\x1f]/ || $dn !~ m{^/(?:C|O|DC)=.*/CN=.})
+  if (! utf8::is_utf8($dn)
+      || $dn =~ /[\x00-\x1f]/
+      || $dn !~ m{^/(?:C|O|DC)=.*/CN=.})
   {
     $r->log->notice("$me rejecting unexpected certificate $dn,"
 	            . " verify $verify, vstart $vstart, vend $vend,"
@@ -1024,7 +1051,10 @@ sub authn_cert($$)
   return authn_fail($r, "authorisation revoked for dn $dn")
     if exists $revoked{DN}{$dn};
 
-  # Certificate is valid. Check it belongs to our VO.
+  # Certificate is valid. Now make it unicode.
+  utf8::decode($dn);
+
+  # Check the certificate belongs to our VO.
   my $method;
   if (exists $vocms{$dn})
   {
@@ -1076,9 +1106,11 @@ sub authn_cert($$)
   }
 
   # We accepted it. Add authentication headers to the request.
+  my $utf8dn = $dn;
+  utf8::encode($utf8dn);
   $r->subprocess_env->set("AUTH_DONE" => "OK");
   $r->headers_in->set("CMS-Auth-Status" => "OK");
-  $r->headers_in->set("CMS-Auth-Cert" => $dn);
+  $r->headers_in->set("CMS-Auth-Cert" => $utf8dn);
   return authz_complete($ir, $r, $opts, METHOD => $method, DN => $dn);
 }
 

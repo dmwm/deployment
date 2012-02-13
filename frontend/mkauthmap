@@ -54,7 +54,8 @@ def update(outfile, dbcfg, verbose, quiet):
 
   # Read users and passwords.
   c = conn.cursor()
-  c.execute("""select c.id, c.username, c.forename, c.surname, c.dn, p.passwd
+  c.execute("""select c.id, c.username, to_nchar(c.forename),
+                      to_nchar(c.surname), to_nchar(c.dn), p.passwd
             from contact c left join user_passwd p on p.username = c.username""")
   for row in c:
     # Unpack values but convert nulls to empty strings.
@@ -138,6 +139,9 @@ def update(outfile, dbcfg, verbose, quiet):
 
 # Main program.
 if __name__ == "__main__":
+  # Tell Oracle we want real UTF-8 encoding.
+  os.environ["NLS_LANG"] = ".AL32UTF8"
+
   # Process options.
   parser = OptionParser(__doc__)
   parser.add_option("-v", action="store_true", dest="verbose", help="be verbose")
