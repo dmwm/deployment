@@ -105,7 +105,7 @@ system_groups_and_accounts()
 	    T:100027:_filemover T:100028:_overview  T:100029:_phedex      \
             T:100030:_sitedb    T:100031:_t0mon     T:100032:_mongodb     \
 	    T:100033:_reqmgr    T:100034:_workqueue T:100035:_configcache \
-	    T:100037:_t0datasvc T:100038:_reqmon; do
+	    T:100037:_t0datasvc T:100038:_reqmon    T:100039:_crabserver; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -132,6 +132,7 @@ system_groups_and_accounts()
   add_local_user 100035 _configcache ,_config "ConfigCache App"
   add_local_user 100037 _t0datasvc   ,_config "T0DataSvc App"
   add_local_user 100038 _reqmon      ,_config "ReqMon App"
+  add_local_user 100039 _crabserver  ,_config "CRABServer App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
@@ -270,7 +271,8 @@ deploy_system_post()
       G=$(id -Gn)
       for g in _config _sw _auth _frontend _admin _base _couchdb _das _dbs \
                _dbsweb _dqmgui _filemover _overview _phedex _sitedb _t0mon \
-               _mongodb _reqmgr _workqueue _configcache _t0datasvc _reqmon; do
+               _mongodb _reqmgr _workqueue _configcache _t0datasvc _reqmon \
+               _crabserver; do
         case " $G " in *" $g "* ) ;; * ) note "ERROR: no $g group"; exit 1;; esac
       done
 
