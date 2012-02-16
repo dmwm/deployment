@@ -52,11 +52,14 @@ def update(outfile, dbcfg, verbose, quiet):
     conn.client_identifier = dbcfg["clientid"]
     conn.clientinfo = conn.module = "mkauthmap"
 
+  # Use TO_NCHAR() with oracle, TO_CHAR() otherwise.
+  uniconv = (("Oracle" in dbcfg["type"].__name__) and "to_nchar") or ""
+
   # Read users and passwords.
   c = conn.cursor()
-  c.execute("""select c.id, c.username, to_nchar(c.forename),
-                      to_nchar(c.surname), to_nchar(c.dn), p.passwd
-            from contact c left join user_passwd p on p.username = c.username""")
+  c.execute("""select c.id, c.username, %s(c.forename), %s(c.surname), %s(c.dn), p.passwd
+            from contact c left join user_passwd p on p.username = c.username"""
+           % (uniconv, uniconv, uniconv))
   for row in c:
     # Unpack values but convert nulls to empty strings.
     id, login, first, last, dn, passwd = [x or '' for x in row]
