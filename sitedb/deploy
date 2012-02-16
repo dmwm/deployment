@@ -81,55 +81,43 @@ deploy_sitedb_auth()
 	import socket
 
 	fqdn = socket.getfqdn().lower()
-	def pool(user, password, database, min, max, increment, timeout):
-	  p = DB.SessionPool(user, password, database, min, max, increment)
-	  p.timeout = timeout
-	  return p
+	dbparam = {
+	  'prod': { '.title': 'Production',
+                    '.order': 0,
 
-	def dbparam(nthreads):
-	  return { 'prod':
-		   { 'GET':
-		     { 'type': DB,
-		       'trace': False,
-		       'schema': "cms_sitedb",
-		       'clientid': "sitedb-web@%s" % fqdn,
-		       'liveness': "select sysdate from dual",
-		       'pool': pool(user = "cms_sitedb_reader_fixme",
-			            password = "FIXME",
-			            database = "cms_sitedb",
-			            min = min(1, nthreads),
-			            max = 2 + nthreads,
-			            increment = 2,
-			            timeout = 300) },
+		    'GET': { 'type': DB,
+		             'trace': False,
+		             'schema': "cms_sitedb",
+		             'clientid': "sitedb-web@%s" % fqdn,
+		             'liveness': "select sysdate from dual",
+		             'user': "cms_sitedb_reader_fixme",
+			     'password': "FIXME",
+			     'dsn': "cms_sitedb",
+			     'timeout': 300 },
 
-		     '*':
-		     { 'type': DB,
-		       'trace': False,
-		       'schema': "cms_sitedb",
-		       'clientid': "sitedb-web@%s" % fqdn,
-		       'liveness': "select sysdate from dual",
-		       'pool': pool(user = "cms_sitedb_writer_fixme",
-			            password = "FIXME",
-			            database = "cms_sitedb",
-			            min = min(1, nthreads),
-			            max = nthreads,
-			            increment = 1,
-			            timeout = 60) } },
+		     '*': { 'type': DB,
+		            'trace': False,
+		            'schema': "cms_sitedb",
+		            'clientid': "sitedb-web@%s" % fqdn,
+		            'liveness': "select sysdate from dual",
+		            'user': "cms_sitedb_writer_fixme",
+			    'password': "FIXME",
+			    'dsn': "cms_sitedb",
+			    'timeout': 60 }
+                  },
 
-		   'dev':
-		   { '*':
-		     { 'type': DB,
-		       'trace': False,
-		       'schema': "cms_sitedb",
-		       'clientid': "sitedb-web@%s" % fqdn,
-		       'liveness': "select sysdate from dual",
-		       'pool': pool(user = "cms_sitedb_dev_fixme",
-			            password = "FIXME",
-			            database = "cms_sitedb",
-			            min = min(1, nthreads),
-			            max = 2 + nthreads,
-			            increment = 1,
-			            timeout = 60) }
+	  'dev':  { '.title': 'Dev',
+                    '.order': 1,
+
+		     '*': { 'type': DB,
+		            'trace': False,
+		            'schema': "cms_sitedb",
+		            'clientid': "sitedb-web@%s" % fqdn,
+		            'liveness': "select sysdate from dual",
+		            'user': "cms_sitedb_dev_fixme",
+			    'password': "FIXME",
+			    'dsn': "cms_sitedb",
+			    'timeout': 60 }
 		   }
 	       }
 EOF
