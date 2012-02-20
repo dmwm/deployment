@@ -6,8 +6,8 @@ LOGDIR    = "%s/logs/dqmgui/relval" % BASEDIR
 
 LAYOUTS = ["%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, x) for x in
            ("hlt", "ecal" )]
-LAYOUTS += ["%s/layouts/%s_overview_layouts.py" % (CONFIGDIR, x) for x in
-            ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
+LAYOUTS += ["%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, x) for x in
+            ("ecal", )]
 LAYOUTS += ["%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, x) for x in
            ("hlt", "ecal" )]
 
