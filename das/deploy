@@ -15,7 +15,7 @@ deploy_das_prep()
 
 deploy_das_sw()
 {
-  deploy_pkg comp cms+das 1.1.10
+  deploy_pkg comp cms+das 1.1.12
   perl -p -i -e "s|{ROOT}|$root|" $project_config/analytics_cfg.py
 }
 
