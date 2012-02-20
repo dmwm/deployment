@@ -8,6 +8,8 @@ LAYOUTS = ["%s/layouts/shift_%s_T0_layout.py" % (CONFIGDIR, x) for x in
            ("castor", "csc", "dt", "eb", "ee", "egamma", "es", "hcal", "hlt", "jetmet", "l1temulator", "l1t", "muons", "pixel", "rpc", "sistrip", "tracking")]
 LAYOUTS += ["%s/layouts/%s_T0_layouts.py" % (CONFIGDIR, x) for x in
            ("btag", "castor", "csc", "eb", "ee", "es", "hcal", "hltmuon", "pixel", "rpc", "sistrip", "tracking")]
+LAYOUTS += ["%s/%s_overview_layouts.py" % (CONFIGDIR, x) for x in
+           ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
 LAYOUTS += [CONFIGDIR + "/layouts/shift_hlt_relval_layout.py"]
 LAYOUTS += [CONFIGDIR + "/layouts/hlt_relval-layouts.py"]
 

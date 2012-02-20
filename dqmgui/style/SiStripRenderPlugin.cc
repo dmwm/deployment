@@ -2,8 +2,8 @@
   \file SiStripRenderPlugin
   \brief Display Plugin for SiStrip DQM Histograms
   \author S. Dutta
-  \version $Revision: 1.43 $
-  \date $Date: 2011/11/11 09:52:16 $
+  \version $Revision: 1.45 $
+  \date $Date: 2011/11/16 17:35:55 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -40,6 +40,9 @@ public:
         return true;
 
       if( o.name.find( "/TrackParameters/" ) != std::string::npos )
+        return true;
+
+      if( o.name.find( "/BaselineValidator/" ) != std::string::npos )
         return true;
 
       return false;
@@ -175,6 +178,7 @@ private:
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
+	return;
       }
 
       if( o.name.find( "SeedPhiVsEta" )  != std::string::npos)
@@ -182,6 +186,7 @@ private:
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
+	return;
       }
 
       if( o.name.find( "SeedsVsClusters" )  != std::string::npos)
@@ -189,6 +194,7 @@ private:
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
+	return;
       }
 
       if( o.name.find( "TracksVsClusters" )  != std::string::npos)
@@ -196,6 +202,7 @@ private:
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
+	return;
       }
 
       if( o.name.find( "DeltaBx_vs_ApvCycle" )  != std::string::npos)
@@ -203,6 +210,7 @@ private:
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
+	return;
       }
 
       if( o.name.find( "ADCvsAPVs" )  != std::string::npos)
@@ -211,8 +219,8 @@ private:
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
       }
-      return;
 
+      return;
     }
 
   void preDrawTH1F( TCanvas *, const VisDQMObject &o )
@@ -241,28 +249,33 @@ private:
       if( o.name.find( "Summary_MeanNumberOfDigis" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(20.0);
+        obj->SetMaximum(5.0);
+	//obj->SetMaximum(120.0);
         obj->SetMinimum(-0.1);
-        return;
+	//do not return, because Summary_MeanNumberOfDigis__TOB string (below) is found here as well
+	//return;
       }
       if( o.name.find( "Summary_MeanNumberOfDigis__TOB" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(15.0);
+        obj->SetMaximum(5.0);
+	//obj->SetMaximum(70.0);
         obj->SetMinimum(-0.1);
         return;
       }
       if( o.name.find( "Summary_MeanNumberOfClusters" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(10.0);
+        //obj->SetMaximum(10.0);
+	obj->SetMaximum(1.0);
         obj->SetMinimum(-0.001);
-        return;
+        //return;
       }
       if( o.name.find( "Summary_MeanNumberOfClusters__TOB" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(5.0);
+        //obj->SetMaximum(5.0);
+	obj->SetMaximum(1.0);
         obj->SetMinimum(-0.001);
         return;
       }
@@ -309,6 +322,20 @@ private:
         }
         return;
       }
+      if( o.name.find( "GoodTrackNumberOfRecHitVsPhiVsEtaPerTrack" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+      return;
+    }
+      if( o.name.find( "NumberOfRecHitVsPhiVsEta" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+	return;
+      }
       return;
     }
   void preDrawTProfile( TCanvas *, const VisDQMObject &o )
@@ -349,7 +376,10 @@ private:
 
       if( name.find( "NumberOfTracks_" ) != std::string::npos ||
           name.find( "Chi2oNDF_" ) != std::string::npos ||
-          name.find( "TrackPt_" ) != std::string::npos )
+          name.find( "TrackPt_" ) != std::string::npos ||
+	  name.find( "NumberOfSeeds_") != std::string::npos ||
+	  name.find( "SeedPt_") != std::string::npos )
+
 	{
           if (obj->GetEntries() > 10.0) c->SetLogy(1);
 	  c->SetGridy();
@@ -446,7 +476,6 @@ private:
     float TIDLimit2 = 300.0;
     float TECLimit2 = 1200.0;
     */
-    /*
     float TIBLimit1 = 10000.0;
     float TOBLimit1 = 11000.0;
     float TIDLimit1 = 2000.0;
@@ -456,7 +485,7 @@ private:
     float TOBLimit2 = 2000.0;
     float TIDLimit2 = 600.0;
     float TECLimit2 = 2400.0;
-    */
+    /*
     //FOR HI
     float TIBLimit1 = 70000.0;
     float TOBLimit1 = 70000.0;
@@ -467,6 +496,7 @@ private:
     float TOBLimit2 = 15000.0;
     float TIDLimit2 = 4000.0;
     float TECLimit2 = 20000.0;
+    */
 
     if( name.find( "TotalNumberOfDigiProfile__" ) != std::string::npos )
       {

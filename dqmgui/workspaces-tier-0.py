@@ -6,11 +6,12 @@ server.workspace('DQMContent', 4, 'Summaries', 'Everything', '^')
 
 server.workspace('DQMContent', 10, 'Tracker/Muons', 'Pixel', '^Pixel/',
                  'Pixel/Layouts/00b - Pixel_Error_Summary',
-                 'Pixel/Layouts/01 - Pixel_Digi_Summary',
+                 'Pixel/Layouts/01 - Pixel_FEDOccupancy_Summary',
                  'Pixel/Layouts/02 - Pixel_Cluster_Summary',
                  'Pixel/Layouts/03 - Pixel_Track_Summary',
                  'Pixel/Layouts/05 - Barrel OnTrack cluster positions',
-                 'Pixel/Layouts/06 - Endcap OnTrack cluster positions')
+                 'Pixel/Layouts/06 - Endcap OnTrack cluster positions',
+                 'Pixel/Layouts/07 - Pixel_Digi_Summary',)
 
 server.workspace('DQMContent', 11, 'Tracker/Muons', 'SiStrip', '^SiStrip/',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
@@ -91,8 +92,8 @@ server.workspace('DQMContent', 44, 'POG', 'Btag', '^Btag/',
 
 server.workspace('DQMContent', 45, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonitor|OfflinePV)/',
                                   'Tracking/Layouts/01 - Tracking ReportSummary',
-                                  'Tracking/Layouts/02 - Tracks (HI collisions)',
-                                  'Tracking/Layouts/03 - Tracks (Cosmic Tracking)'
+                                  'Tracking/Layouts/02 - Tracks (Cosmic Tracking)',
+                                  'Tracking/Layouts/03 - Tracks (pp collisions)'
                                   )
 
 server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/',

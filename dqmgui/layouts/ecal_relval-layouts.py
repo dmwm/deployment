@@ -53,11 +53,11 @@ ecalvalidationlayout(dqmitems, "13 EE RecHit phi",
 
 #Timing : missing in the offline
 ecalvalidationlayout(dqmitems, "14 EB RecHit time",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBTMT timing mean 1D summary", 'description': "Rec hits time(barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }])
+  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_time", 'description': "Rec hits time(barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }])
 
 ecalvalidationlayout(dqmitems, "15 EE RecHit time",
-  [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE - timing mean 1D summary", 'description': "Rec hits time(EE-) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }],
-  [{ 'path': "EcalEndcap/EESummaryClient/EETMT EE + timing mean 1D summary", 'description': "Rec hits time(EE+) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }])
+  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEP_time", 'description': "Rec hits time(EE-) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }],
+  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEM_time", 'description': "Rec hits time(EE+) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }])
 
 ecalvalidationlayout(dqmitems, "16 Preshower timing",
   [{ 'path': "EcalPreshower/ESRecoSummary/recHits_ES_time", 'description': "Preshower timing. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -69,8 +69,8 @@ ecalvalidationlayout(dqmitems, "18 EE RecHit chi2",
   [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEP_Chi2", 'description': "Reconstructed hits shape chi2. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEM_Chi2", 'description': "Reconstructed hits shape chi2. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-ecalvalidationlayout(dqmitems, "19 EB RecHit E1/E4",
-  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_E1oE4", 'description': "Reconstructed hits E1/E4. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+ecalvalidationlayout(dqmitems, "19 EB RecHit swiss cross",
+  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_E1oE4", 'description': "Reconstructed hits swiss cross. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 ecalvalidationlayout(dqmitems, "20 RecHitsFlags",
   [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_recoFlag", 'description': "Reconstructed hits flags. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -116,8 +116,7 @@ ecalvalidationlayout(dqmitems, "30 EE Super Clusters nBC",
   [{ 'path': "EcalEndcap/EERecoSummary/superClusters_EEM_nBC", 'description': "Number of basic clusters in Super Clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 ecalvalidationlayout(dqmitems, "31 Super cluster seed swiss cross",
-  [{ 'path': "EcalBarrel/EBRecoSummary/superClusters_EB_E1oE4", 'description': "SC seed swiss cross (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/superClusters_EE_E1oE4", 'description': "SC seed swiss cross (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+  [{ 'path': "EcalBarrel/EBRecoSummary/superClusters_EB_E1oE4", 'description': "SC seed swiss cross (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 ecalvalidationlayout(dqmitems, "32 Preshower planes energy",
   [{ 'path': "EcalPreshower/ESRecoSummary/esClusters_energy_plane1", 'description': "Preshower rechits energy on plane 1. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },

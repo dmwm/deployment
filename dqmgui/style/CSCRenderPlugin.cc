@@ -82,6 +82,10 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     /** Applying definition [FEDIntegrityMap] **/
     obj->SetStats(false);
     obj->SetOption("bar1text");
+
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetMinimum(0.);
     /** Applying histogram **/
     return;
   }
@@ -89,6 +93,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     /** Applying definition [FEDIntegrityMap] **/
     obj->SetStats(false);
     obj->SetOption("bar1text");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetMinimum(0.);
     /** Applying histogram **/
     return;
   }
@@ -96,6 +103,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     /** Applying definition [FEDIntegrityMap] **/
     obj->SetStats(false);
     obj->SetOption("bar1text");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetMinimum(0.);
     /** Applying histogram **/
     return;
   }
@@ -103,6 +113,74 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     /** Applying definition [FEDIntegrityMap] **/
     obj->SetStats(false);
     obj->SetOption("bar1text");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetMinimum(0.);
+    /** Applying histogram **/
+    return;
+  }
+
+  if(reMatch(".*/FEDFormat_Errors$", o.name)) {
+    /** Applying histogram **/
+    gPad->SetLeftMargin(0.4);
+    obj->SetStats(false);
+    gStyle->SetOptStat("e");
+    obj->SetOption("textcolz");
+    gPad->SetGridx();
+    gPad->SetGridy();
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
+    return;
+  }
+
+  if(reMatch(".*/FED_DDU_L1A_mismatch$", o.name)) {
+    /** Applying definition [FEDIntegrityMap] **/
+    obj->SetStats(false);
+    obj->SetOption("bar1text");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetMinimum(0.);
+    /** Applying histogram **/
+    return;
+  }
+
+  if(reMatch(".*/FED_DDU_L1A_mismatch_fract$", o.name)) {
+    /** Applying definition [FEDIntegrityMap] **/
+    obj->SetStats(false);
+    obj->SetOption("bar1text");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetMinimum(0.);
+    obj->SetMaximum(1.);
+    /** Applying histogram **/
+    return;
+  }
+
+  if(reMatch(".*/FEDBufferSize$", o.name))
+  {
+    obj->SetStats(false);
+    gStyle->SetOptStat("e");
+    obj->SetOption("colz");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+  }
+  if(reMatch(".*/FEDTotalEventSize$", o.name) ||
+    reMatch(".*/DCCBufferSize$", o.name)) {
+    /** Applying definition [FEDIntegrityMap] **/
+    gStyle->SetOptStat("emro");
+    obj->SetFillColor(45);
+    gPad->SetLogy();
+    /** Applying histogram **/
+    return;
+  }
+  if(reMatch(".*/FEDTotalCSCs$", o.name) ||
+    reMatch(".*/FEDTotalCFEBs$", o.name) ||
+    reMatch(".*/FEDTotalALCTs$", o.name) ||
+    reMatch(".*/FEDTotalTMBs$", o.name)) {
+    /** Applying definition [FEDIntegrityMap] **/
+    gStyle->SetOptStat("emro");
+    obj->SetFillColor(45);
     /** Applying histogram **/
     return;
   }
@@ -704,6 +782,7 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetOption("colz");
     gPad->SetGridx();
     gPad->SetGridy();
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_in_Readout$", o.name)) {
@@ -711,12 +790,19 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetStats(false);
     gStyle->SetOptStat("em");
     obj->SetOption("bar1text");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
+    obj->SetMinimum(0.);
     return;
   }
   if(reMatch(".*/All_DDUs_L1A_Increment$", o.name)) {
     /** Applying histogram **/
     obj->SetStats(false);
     obj->SetOption("textcolz");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_Trailer_Errors$", o.name)) {
@@ -727,6 +813,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetOption("colz");
     gPad->SetGridx();
     gPad->SetGridy();
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_Format_Errors$", o.name)) {
@@ -737,6 +826,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetOption("colz");
     gPad->SetGridx();
     gPad->SetGridy();
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_Event_Size$", o.name)) {
@@ -744,6 +836,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetStats(false);
     gStyle->SetOptStat("e");
     obj->SetOption("colz");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_Average_Event_Size$", o.name)) {
@@ -751,6 +846,10 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetStats(false);
     gStyle->SetOptStat("e");
     obj->SetOption("E1");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
+    obj->SetMinimum(0.);
     return;
   }
   if(reMatch(".*/All_DDUs_Live_Inputs$", o.name)) {
@@ -760,6 +859,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetOption("textcolz");
     gPad->SetGridx();
     gPad->SetGridy();
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_Average_Live_Inputs$", o.name)) {
@@ -767,6 +869,10 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetStats(false);
     gStyle->SetOptStat("e");
     obj->SetOption("E1");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
+    obj->SetMinimum(0.);
     return;
   }
   if(reMatch(".*/All_DDUs_Inputs_with_Data$", o.name)) {
@@ -776,6 +882,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetOption("textcolz");
     gPad->SetGridx();
     gPad->SetGridy();
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_Average_Inputs_with_Data$", o.name)) {
@@ -783,6 +892,10 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetStats(false);
     gStyle->SetOptStat("e");
     obj->SetOption("E1");
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
+    obj->SetMinimum(0.);
     return;
   }
   if(reMatch(".*/All_DDUs_Inputs_Errors$", o.name)) {
@@ -792,6 +905,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetOption("textcolz");
     gPad->SetGridx();
     gPad->SetGridy();
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/All_DDUs_Inputs_Warnings$", o.name)) {
@@ -801,6 +917,9 @@ class CSCRenderPlugin : public DQMRenderPlugin {
     obj->SetOption("textcolz");
     gPad->SetGridx();
     gPad->SetGridy();
+    obj->SetNdivisions(obj->GetNbinsX(),"X");
+    obj->GetXaxis()->CenterLabels(true);
+    obj->SetLabelSize(0.025,"X");
     return;
   }
   if(reMatch(".*/CSC_ALCT0_BXN_mean$", o.name)) {
@@ -2014,16 +2133,53 @@ class CSCRenderPlugin : public DQMRenderPlugin {
 
   // ============== End generated from emuDQMBooking.xml by emuBooking2RenderPlugin.xsl ==================
 
+  if(reMatch(".*FEDIntegrity/FED_DDU_L1A_mismatch_fract$", o.name))
+   {
+     obj->SetMaximum(1.);
+   }
+
       if(reMatch(".*FEDIntegrity/FEDEntries$", o.name) ||
          reMatch(".*FEDIntegrity/FEDFatal$", o.name) ||
          reMatch(".*FEDIntegrity/FEDFormatFatal$", o.name) ||
-         reMatch(".*FEDIntegrity/FEDNonFatal$", o.name))
+     reMatch(".*FEDIntegrity/FEDNonFatal$", o.name) ||
+     reMatch(".*FEDIntegrity/FED_DDU_L1A_mismatch$", o.name) ||
+     reMatch(".*FEDIntegrity/FED_DDU_L1A_mismatch_fract$", o.name))
       {
         obj->SetStats(false);
         obj->SetFillColor(45);
+     obj->SetNdivisions(obj->GetNbinsX(),"X");
+     obj->GetXaxis()->CenterLabels(true);
         gStyle->SetOptStat("em");
+     obj->SetMinimum(0.);
         return;
       }
+
+ if(reMatch(".*FEDIntegrity/FEDBufferSize$", o.name))
+   {
+     obj->SetStats(false);
+     gStyle->SetOptStat("e");
+     obj->SetOption("colz");
+     obj->SetNdivisions(obj->GetNbinsX(),"X");
+     obj->GetXaxis()->CenterLabels(true);
+   }
+
+ if(reMatch(".*FEDIntegrity/FEDTotalSize$", o.name))
+   {
+     gStyle->SetOptStat("emro");
+     obj->SetFillColor(45);
+     gPad->SetLogy();
+     return;
+   }
+
+ if(reMatch(".*FEDIntegrity/FEDTotalCSCs$", o.name) ||
+    reMatch(".*FEDIntegrity/FEDTotalCFEBs$", o.name) ||
+    reMatch(".*FEDIntegrity/FEDTotalALCTs$", o.name) ||
+    reMatch(".*FEDIntegrity/FEDTotalTMBs$", o.name))
+   {
+     gStyle->SetOptStat("emro");
+     obj->SetFillColor(45);
+     return;
+   }
 
       if(reMatch(".*/CSC_L1A_out_of_sync$", o.name))
       {
@@ -2033,7 +2189,40 @@ class CSCRenderPlugin : public DQMRenderPlugin {
         gPad->SetGridy();
         return;
       }
+
+   // ============== DQMOffline/Muon/CSCOfflineMonitor histograms ==================
+
+ if(reMatch(".*/CSCOfflineMonitor/Occupancy/hOWiresAndCLCT$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Occupancy/hOWires$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Occupancy/hOStrips$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Occupancy/hOStrips$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Occupancy/hOStripsAndWiresAndCLCT$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Occupancy/hORecHits$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Occupancy/hOSegments$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Efficiency/hSEff2$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Efficiency/hRHEff2$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Efficiency/hStripReadoutEff2$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Efficiency/hStripEff2$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Efficiency/hWireEff2$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/Efficiency/hSensitiveAreaEvt$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTgetBX2DMeans$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTgetBX2Denominator$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTMatch2DMeans$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTMatch2Denominator$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1A2DMeans$", o.name) ||
+    reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1A2Denominator$", o.name))
+  {
+    /** Applying definition [chamberMap] **/
+    obj->SetStats(true);
+    gStyle->SetOptStat("e");
+    obj->SetOption("colz");
+    // gPad->SetGridx();
+    // gPad->SetGridy();
+    /** Applying histogram **/
+    return;
     }
+
+ }
 
   virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & ) {
 

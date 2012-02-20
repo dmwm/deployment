@@ -523,6 +523,114 @@ private:
         return;
       }
 
+      if( name.find( "rctNIsoEmBitDiff" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctIsoEmBitDiff" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctRegBitDiff" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctNIsoEmBitOff" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctIsoEmBitOff" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctRegBitOff" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctNIsoEmBitOn" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctIsoEmBitOn" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
+      if( name.find( "rctRegBitOn" ) != std::string::npos )
+      {
+	gStyle->SetPalette(1);
+	obj->SetOption("colz");
+        obj->GetXaxis()->SetNdivisions(22,true);
+        obj->GetYaxis()->SetNdivisions(18,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        gPad->SetGrid(1,1);
+        obj->GetXaxis()->LabelsOption("v");
+      }
+
       if( name.find( "rctRegEff2D" ) != std::string::npos )
       {
         gStyle->SetPalette(paletteSize, pEff);
