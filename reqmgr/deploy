@@ -50,7 +50,7 @@ deploy_reqmgr_sw()
       deploy_pkg \
         -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
         -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        -a ReqMgrSecrets.py:reqmgr/ReqMgrSecrets${secrets}.py comp cms+reqmgr 0.8.11-comp4
+        -a ReqMgrSecrets.py:reqmgr/ReqMgrSecrets${secrets}.py comp cms+reqmgr 0.8.26pre5
 
       if grep -rq "replace me" $project_auth; then
         note "WARNING: replace certificates in $project_auth with real ones"
@@ -77,16 +77,16 @@ deploy_reqmgr_post()
         touch $couchdb_state/$area/reqmgr
       done
 
-      echo "couchapp push $reqmgrapp/lib/couchapps/ReqMgr" \
+      echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr" \
            "http://localhost:5984/reqmgr_workload_cache" \
         >> $couchdb_state/stagingarea/reqmgr
-      echo "couchapp push $reqmgrapp/lib/couchapps/ConfigCache" \
+      echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache" \
            "http://localhost:5984/reqmgr_config_cache" \
         >> $couchdb_state/stagingarea/reqmgr
-      echo "couchapp push $reqmgrapp/lib/couchapps/OpsClipboard" \
+      echo "couchapp push $reqmgrapp/data/couchapps/OpsClipboard" \
            "http://localhost:5984/ops_clipboard" \
         >> $couchdb_state/stagingarea/reqmgr
-      echo "couchapp push $reqmgrapp/lib/couchapps/WorkloadSummary" \
+      echo "couchapp push $reqmgrapp/data/couchapps/WorkloadSummary" \
            "http://localhost:5984/workloadsummary" \
         >> $couchdb_state/stagingarea/reqmgr
 
