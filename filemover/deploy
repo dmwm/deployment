@@ -16,7 +16,12 @@ deploy_filemover_prep()
 
 deploy_filemover_sw()
 {
-  deploy_pkg comp cms+filemover 1.1.2
+  deploy_pkg comp cms+filemover 1.1.3
+
+  case $variant in dev | preprod | prod ) ;; * )
+    perl -p -i -e "s|cleaner.url = 'https://cmsweb.cern.ch/filemover'|cleaner.url = 'https://\\\$\(hostname -f\)/filemover'|g" \
+         $project_config/fm_config.py ;;
+  esac
   case $variant in dev ) suff="-dev";; preprod ) suff="-testbed";; * ) suff="";; esac
   perl -p -i -e "s|cmsweb.cern.ch/|cmsweb${suff}.cern.ch/|g" $project_config/fm_config.py
 }

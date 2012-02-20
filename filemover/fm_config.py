@@ -74,3 +74,7 @@ transfer_wrapper.transfer_command = 'srmcp -debug=true -srm_protocol_version=2 -
 # Security module stuff
 config.component_('SecurityModule')
 config.SecurityModule.key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
+
+# cleaner section
+cleaner = config.FileMover.section_('cleaner')
+cleaner.url = 'https://cmsweb.cern.ch/filemover'
