@@ -14,7 +14,7 @@ deploy_stagemanager_prep()
 
 deploy_stagemanager_sw()
 {
-  deploy_pkg comp cms+stagemanager 1.0.1
+  deploy_pkg comp cms+stagemanager 1.0.1-comp
   case $variant in
     t1_* )
       deploy_pkg comp cms+stagemanager-agent 1.0.1
