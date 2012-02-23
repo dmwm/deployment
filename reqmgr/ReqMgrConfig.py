@@ -23,9 +23,9 @@ elif re.match(r"^vocms127\.cern\.ch$", HOST):
 config = ReqMgrConfig.reqMgrConfig(installation=INSTALL,
   couchurl = COUCH, addMonitor = ADD_MONITOR_FLAG)
 
-TEMPLATES = os.path.normpath(os.path.join(INSTALL, '../../../data/templates/WMCore/WebTools'))
-JAVASCRIPT_PATH = os.path.normpath(os.path.join(INSTALL, '../../../data/javascript'))
-HTML_PATH = os.path.normpath(os.path.join(INSTALL, '../../../data/html'))
+TEMPLATES = os.path.normpath(os.path.join(INSTALL, '../../templates/WMCore/WebTools'))
+JAVASCRIPT_PATH = os.path.normpath(os.path.join(INSTALL, '../../javascript'))
+HTML_PATH = os.path.normpath(os.path.join(INSTALL, '../../html'))
 
 config.webapp_("reqmgr")
 config.reqmgr.html = os.path.join(HTML_PATH, 'RequestManager')
