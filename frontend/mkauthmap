@@ -73,15 +73,17 @@ def update(outfile, dbcfg, verbose, quiet):
     # Skip any unsafe material.
     if (re.search(r"[\x00-\x1f]", ":".join((dn, login, first, last)))
         or (dn != '' and not re.match(r"^/(?:C|O|DC)=.*/CN=.", dn))
-        or not re.match(r"^[a-z0-9_]*(?:\.nocern|\.notcms)?$", login)):
+        or not re.match(r"^(?:[a-z0-9_]*(?:\.nocern|\.notcms)?"
+                        r"|[a-z0-9]+@(?:[-a-z0-9]+\.)+[a-z]{2,5})$", login)):
       if verbose:
         print ("WARNING: skipping unsafe user id %(id)s, login '%(login)s',"
                " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
                % locals())
       continue
 
-    # Skip deactivated accounts.
-    if passwd.find("*") >= 0 or passwd.find("Removed") >= 0:
+    # Skip deactivated non-service accounts.
+    is_service = (login.find("@") >= 0 and dn and passwd == "*")
+    if (passwd.find("*") >= 0 or passwd.find("Removed") >= 0) and not is_service:
       if verbose:
         print ("WARNING: deactivated user id %(id)s, login '%(login)s',"
                " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
