@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_tier0_prep()
+{
+  mkproj tier0
+}
+
+deploy_tier0_sw()
+{
+  TIER0_VERSION="1.0.1"
+  deploy_pkg comp.pre cms+t0 $TIER0_VERSION
+
+  mkdir -p $root/current/install/tier0
+  mkdir -p $root/current/install/couchdb
+
+  local couchdb_ini=$root/current/config/tier0/local.ini
+  perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
+
+  mkdir -p $root/current/config/couchdb
+  cp -f $couchdb_ini $root/current/config/couchdb
+}
