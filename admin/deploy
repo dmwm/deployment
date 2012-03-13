@@ -14,11 +14,11 @@ deploy_admin_sw()
 {
   local p pkgs="rotatelogs pystack"
   case $variant in devtools )
-    deploy_pkg comp cms+wmcore-devtools 1.0
+    deploy_pkg comp cms+wmcore-devtools
     pkgs="$pkgs wmcore-devtools"
     ;;
   esac
-  deploy_pkg -a proxy/.turd comp external+rotatelogs 2.2.19-comp
+  deploy_pkg -a proxy/.turd comp external+rotatelogs
   (for p in $pkgs; do
      echo ". $root/current/apps/$p/etc/profile.d/init.sh"
    done) > $project_config/init.sh

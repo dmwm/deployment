@@ -24,12 +24,12 @@ deploy_reqmgr_sw()
 {
   case $variant in
     offsite )
-      deploy_pkg comp external+cherrypy 3.1.2-cmp6
-      deploy_pkg comp external+py2-cheetah 2.4.0-cmp6
-      deploy_pkg comp external+py2-openid 2.2.4-cmp6
-      deploy_pkg comp external+py2-cjson 1.0.5-cmp5
-      deploy_pkg comp cms+dls-client DLS_1_1_2-cmp6
-      deploy_pkg comp cms+dbs-client DBS_2_1_1_patch1_1
+      deploy_pkg comp external+cherrypy
+      deploy_pkg comp external+py2-cheetah
+      deploy_pkg comp external+py2-openid
+      deploy_pkg comp external+py2-cjson
+      deploy_pkg comp cms+dls-client
+      deploy_pkg comp cms+dbs-client
 
       local wmcore_etc=$root/current/apps/wmcore/etc
       local couchdb_ini=$root/current/config/couchdb/local.ini
@@ -50,7 +50,7 @@ deploy_reqmgr_sw()
       deploy_pkg \
         -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
         -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-        -a ReqMgrSecrets.py:reqmgr/ReqMgrSecrets${secrets}.py comp cms+reqmgr 0.8.11-comp4
+        -a ReqMgrSecrets.py:reqmgr/ReqMgrSecrets${secrets}.py comp cms+reqmgr
 
       if grep -rq "replace me" $project_auth; then
         note "WARNING: replace certificates in $project_auth with real ones"

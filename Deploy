@@ -6,6 +6,7 @@
 ##H
 ##H Possible options:
 ##H  -A ARCH        Install platform ARCH instead of the default one.
+##H  -R RELEASE     Take package versions from RELEASE meta-package.
 ##H  -M             Activate $MIGRATION commands.
 ##H  -a             Activate production installation under multiple accounts.
 ##H  -r A=B         Use repository B instead of A (e.g. comp=comp.pre).
@@ -36,6 +37,7 @@ nogroups=true
 servicedir="$(cd $(dirname $0) && pwd)"
 cfgversion=
 privauthdir=
+release=
 
 case $(uname) in
   Darwin ) arch=osx106_amd64_gcc461 xargsr="xargs" ;;
@@ -46,6 +48,7 @@ esac
 while [ $# -ge 1 ]; do
   case $1 in
     -A ) arch="$2"; shift; shift ;;
+    -R ) release="$(echo $2 | tr @ +)"; shift; shift ;;
     -M ) MIGRATION=true; shift ;;
     -a ) nogroups=false; shift ;;
     -r ) repoedit="s/${2%=*}/${2#*=}/; $repoedit"; shift; shift ;;
@@ -311,14 +314,27 @@ deploy_pkg()
     local repo=$(echo $1 | sed -e "$repoedit")
     local label=$(echo $repo | sed 's/^comp//; s/^\([^.]\)/.\1/; s/^/sw/; n')
     local swarea=$root/$cfgversion/$label
-    local ver=${project_version_override:-$3}
+    local ver=${project_version_override:-${3:-auto}}
     local pkg=$2
+
+    case $ver:$release in auto: )
+      note "ERROR: deploying '$pkg' version 'auto' requires -R META-RELEASE"
+      exit 4 ;;
+    esac
 
     (set -e
      inrepo $repo $swarea
+     [ X"$ver" != Xauto ] ||
+       ver=$(apt-cache depends "cms+$release" |
+             fgrep "Depends: $pkg+" | awk -F+ '{print $NF}')
      apt-get update
      apt-get -y install $(apt-cache pkgnames | grep fake)
-     apt-get -y install $pkg+$ver)
+     apt-get -y install $pkg+$ver
+
+     # Create application link.
+     [ X"$link" != X ] || link=${pkg#*+}
+     rm -f $root/current/apps/$link
+     ln -s ../$label/$arch/$(echo $pkg+$ver | tr + /) $root/current/apps/$link)
     [ $? = 0 ]
 
     (set -e
@@ -336,11 +352,6 @@ deploy_pkg()
       find $swarea/$arch -type d ! -perm -660 -print0 | $xargsr -t -0 chmod ug+rw
       find $swarea/$arch -type f ! -group _sw -print0 | $xargsr -t -0 chgrp _sw
     fi
-
-    # Create application link.
-    [ X"$link" != X ] || link=${pkg#*+}
-    rm -f $root/current/apps/$link
-    ln -s ../$label/$arch/$(echo $pkg+$ver | tr + /) $root/current/apps/$link
   fi
 
   # Install configuration.

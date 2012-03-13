@@ -11,8 +11,7 @@ deploy_asyncstageout_prep()
 
 deploy_asyncstageout_sw()
 {
-  ASYNCSTAGEOUT_VERSION="0.0.1"
-  deploy_pkg comp  cms+asyncstageout $ASYNCSTAGEOUT_VERSION
+  deploy_pkg comp cms+asyncstageout
 }
 
 deploy_asyncstageout_post()

@@ -7,9 +7,7 @@ deploy_wmagent_prep()
 
 deploy_wmagent_sw()
 {
-  AGENT_VERSION="0.8.1"
-  deploy_pkg comp cms+wmagent $AGENT_VERSION
-
+  deploy_pkg comp cms+wmagent
 
   # need to link in wmcore codebase for binaries etc
   link=$(ls -d $root/current/*/*/*/wmcore/${project_version_override:-$AGENT_VERSION})

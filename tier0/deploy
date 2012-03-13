@@ -7,8 +7,7 @@ deploy_tier0_prep()
 
 deploy_tier0_sw()
 {
-  TIER0_VERSION="1.0.1"
-  deploy_pkg comp.pre cms+t0 $TIER0_VERSION
+  deploy_pkg comp.pre cms+t0
 
   mkdir -p $root/current/install/tier0
   mkdir -p $root/current/install/couchdb

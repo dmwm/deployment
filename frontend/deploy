@@ -13,7 +13,7 @@ deploy_frontend_prep()
 
 deploy_frontend_sw()
 {
-  deploy_pkg -a frontend/sitedbread.py comp cms+frontend 4.3
+  deploy_pkg -a frontend/sitedbread.py comp cms+frontend
 
   if grep -q Oracle $project_auth/sitedbread.py; then :; else
     deploy_frontend_fakeauth $project_auth/users.db

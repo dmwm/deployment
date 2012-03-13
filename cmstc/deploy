@@ -6,7 +6,7 @@ deploy_cmstc_prep()
 
 deploy_cmstc_sw()
 {
-  deploy_pkg comp cms+CmsTC 0.0.1
+  deploy_pkg comp cms+CmsTC
 }
 
 deploy_cmstc_post()
