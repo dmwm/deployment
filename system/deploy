@@ -98,14 +98,14 @@ hostcert_to_system()
 system_groups_and_accounts()
 {
   # Create groups. Add myself to all the groups.
-  for ng in T:100000:_config    F:100001:_empty     T:100002:_sw          \
-            T:100003:_auth      T:100010:_frontend  T:100020:_admin       \
-	    T:100021:_base      T:100022:_couchdb   T:100023:_das         \
-	    T:100024:_dbs       T:100025:_dbsweb    T:100026:_dqmgui      \
-	    T:100027:_filemover T:100028:_overview  T:100029:_phedex      \
-            T:100030:_sitedb    T:100031:_t0mon     T:100032:_mongodb     \
-	    T:100033:_reqmgr    T:100034:_workqueue T:100035:_configcache \
-	    T:100037:_t0datasvc T:100038:_reqmon    T:100039:_crabserver; do
+  for ng in T:100000:_config    F:100001:_empty       T:100002:_sw         \
+            T:100003:_auth      T:100010:_frontend    T:100020:_admin      \
+            T:100021:_base      T:100022:_couchdb     T:100023:_das        \
+            T:100024:_dbs       T:100026:_dqmgui      T:100027:_filemover  \
+            T:100028:_overview  T:100029:_phedex      T:100030:_sitedb     \
+            T:100031:_t0mon     T:100032:_mongodb     T:100033:_reqmgr     \
+            T:100034:_workqueue T:100035:_configcache T:100037:_t0datasvc  \
+            T:100038:_reqmon    T:100039:_crabserver  T:100040:_crabcache; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -119,7 +119,6 @@ system_groups_and_accounts()
   add_local_user 100022 _couchdb     ,_config "CouchDB App"
   add_local_user 100023 _das         ,_config "DAS App"
   add_local_user 100024 _dbs         ,_config "DBS App"
-  add_local_user 100025 _dbsweb      ,_config "DBS-Discovery App"
   add_local_user 100026 _dqmgui      ,_config "DQM GUI App"
   add_local_user 100027 _filemover   ,_config "FileMover App"
   add_local_user 100028 _overview    ,_config "Overview App"
@@ -133,6 +132,7 @@ system_groups_and_accounts()
   add_local_user 100037 _t0datasvc   ,_config "T0DataSvc App"
   add_local_user 100038 _reqmon      ,_config "ReqMon App"
   add_local_user 100039 _crabserver  ,_config "CRABServer App"
+  add_local_user 100040 _crabcache   ,_config "CRABCache App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
@@ -270,9 +270,9 @@ deploy_system_post()
       # Verify the user has required local groups.
       G=$(id -Gn)
       for g in _config _sw _auth _frontend _admin _base _couchdb _das _dbs \
-               _dbsweb _dqmgui _filemover _overview _phedex _sitedb _t0mon \
+               _dqmgui _filemover _overview _phedex _sitedb _t0mon \
                _mongodb _reqmgr _workqueue _configcache _t0datasvc _reqmon \
-               _crabserver; do
+               _crabserver _crabcache; do
         case " $G " in *" $g "* ) ;; * ) note "ERROR: no $g group"; exit 1;; esac
       done
 
