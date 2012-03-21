@@ -48,7 +48,7 @@ esac
 while [ $# -ge 1 ]; do
   case $1 in
     -A ) arch="$2"; shift; shift ;;
-    -R ) release="$(echo $2 | tr @ +)"; shift; shift ;;
+    -R ) release="cms+$(echo $2 | tr @ +)"; shift; shift ;;
     -M ) MIGRATION=true; shift ;;
     -a ) nogroups=false; shift ;;
     -r ) repoedit="s/${2%=*}/${2#*=}/; $repoedit"; shift; shift ;;
@@ -317,6 +317,10 @@ deploy_pkg()
     local ver=${project_version_override:-${3:-auto}}
     local pkg=$2
 
+    case $ver:$pkg in auto:${release%+*} )
+      ver=${release##*+} ;;
+    esac
+
     case $ver:$release in auto: )
       note "ERROR: deploying '$pkg' version 'auto' requires -R META-RELEASE"
       exit 4 ;;
@@ -325,7 +329,7 @@ deploy_pkg()
     (set -e
      inrepo $repo $swarea
      [ X"$ver" != Xauto ] ||
-       ver=$(apt-cache depends "cms+$release" |
+       ver=$(apt-cache depends "$release" |
              fgrep "Depends: $pkg+" | awk -F+ '{print $NF}')
      apt-get update
      apt-get -y install $(apt-cache pkgnames | grep fake)
