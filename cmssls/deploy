@@ -9,12 +9,12 @@ deploy_cmssls_sw()
 {
   deploy_pkg
 
-  hfver=r23 webdir=/afs/cern.ch/cms/LCG/www/SLS
+  cmsslsver=43 webdir=/afs/cern.ch/cms/LCG/www/SLS
   cd $root/current/apps
-  svn co svn+ssh://svn.cern.ch/reps/cmsfomon/GridmapSLS/trunk cmssls
+  svn co svn+ssh://svn.cern.ch/reps/cmsfomon/GridmapSLS/trunk@$cmsslsver cmssls
 
   perl -p -i -e "s,{WEBDIR},$webdir,g; \
-                 s,{VER},$hfver,g;     " $project_config/cmssls_task
+                 s,{VER},$cmsslsver,g;     " $project_config/cmssls_task
 }
 
 deploy_cmssls_post()
