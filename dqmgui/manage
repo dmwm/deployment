@@ -1,6 +1,6 @@
 #!/bin/sh
 
-##H Usage 1: manage ACTION [SECURITY-STRING]
+##H Usage 1: manage [options] ACTION [SECURITY-STRING]
 ##H
 ##H Available actions:
 ##H   help        show this help
@@ -13,7 +13,7 @@
 ##H   stop        stop the service
 ##H   compile     refresh render plugins
 ##H
-##H Usage 2: manage ACTION COMPONENTs [SECURITY-STRING]
+##H Usage 2: manage [options] ACTION COMPONENTs [SECURITY-STRING]
 ##H COMPONENTs: webserver collector renderer logger agents afs-sync migration
 ##H
 ##H   xstatus     show status for COMPONENTs
@@ -22,6 +22,9 @@
 ##H   xrestart    (re)start COMPONENTs
 ##H   xstop       stop COMPONENTs
 ##H
+##H Options:
+##H -f flavor     Overide default flavor selected by server and domain.
+##H               Flavors are: {online, caf, offline, offline-caf, dev, relval}
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
 
@@ -39,10 +42,14 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 HOST=$(hostname -s | tr '[:upper:]' '[:lower:]')
+DOMAIN=$(hostname -d | tr '[:upper:]' '[:lower:]')
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
+CONFIGS=
 QUIET=false
+FLAVOR=dev
+ALTERNATIVE_USER=$(stat $TOP -c %U)
 
 . $ROOT/apps/dqmgui/etc/profile.d/env.sh
 
@@ -54,16 +61,25 @@ export X509_USER_KEY=$X509_USER_PROXY
 export STAGE_HOST=${STAGE_HOST:-castorcms}
 export RFIO_USE_CASTOR_V2=YES
 
-case $HOST in
-  dqm-c2d07-0[12] ) CONFIGS="online" ;;
-  dqm-c2d07-11 )    CONFIGS="online-playback" ;;
-  dqm-c2d07-12 )    CONFIGS="online-test" ;;
-  dqm-c2d07-21 )    CONFIGS="gui-test" ;;
-  dqm-c2d07-22 )    CONFIGS="online-dev" ;;
-  vocms138 )        CONFIGS="offline offline-caf" ;;
-  vocms139 )        CONFIGS="offline-relval" ;;
-  * )               CONFIGS="offline-dev" ;;
+# Set Flavor for HOST:DOMAIN
+case $HOST:$DOMAIN in
+  *:cms  ) FLAVOR=online ;;
+  vocms138:* ) FLAVOR=offline-caf; ALTERNATIVE_USER='cmsweb' ;;
+  vocms139:* ) FLAVOR=relval; ALTERNATIVE_USER='cmsweb' ;;
+  vocms133:* ) FLAVOR=dev; ALTERNATIVE_USER='cmsweb' ;;
+  *:cern.ch ) FLAVOR=offline;;
 esac
+# Select the right configuration and ALTERNATIVE_USER based on FLAVOR
+getconfigs(){
+case $FLAVOR in
+  caf ) CONFIGS="caf" ;;
+  online ) CONFIGS="online" ;;
+  offline-caf ) CONFIGS="offline caf";;
+  offline ) CONFIGS="offline";;
+  relval ) CONFIGS="relval";;
+  dev ) CONFIGS="dev";;
+esac
+}
 
 message()
 {
@@ -166,11 +182,13 @@ sysboot()
 start()
 {
   cd $STATEDIR
-  message "starting $ME ${1:-(default)}"
+  message "starting $ME/$FLAVOR ${1:-(default)}"
 
   # first start webserver
-  case $HOST:${1:-webserver} in *:*webserver* )
+  case ${1:-webserver} in *webserver* )
     for cfg in $CONFIGS; do
+      [ ! -d $STATEDIR/$cfg/ix ] && \
+        (echo Creating index $STATEDIR/$cfg/ix; visDQMIndex create $STATEDIR/$cfg/ix)
       monControl start all from $CFGDIR/server-conf-$cfg.py
     done ;;
   esac
@@ -180,8 +198,9 @@ start()
     dqm-c2d07-01:*agents* ) # dqm-prod-local
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
 
+      D=online
       DQM_DATA=/dqmdata/dqm
-      startagent agent-receive \
+      startagent $D/agent-receive \
         visDQMReceiveDaemon \
         $DQM_DATA/uploads \
         $DQM_DATA/repository/original \
@@ -189,78 +208,81 @@ start()
         $DQM_DATA/agents/import-offsite \
         $DQM_DATA/agents/import-test
 
-      startagent agent-import \
+      startagent $D/agent-import \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-local \
         $DQM_DATA/repository/original \
-        $STATEDIR/ix
+        $STATEDIR/online/ix
 
-      startagent agent-delete \
+      startagent $D/agent-delete \
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online/ \
-        $STATEDIR/ix \
+        $STATEDIR/online/ix \
         $CFGDIR/quota-dd-online.py
 
-      startagent agent-sound \
+      startagent $D/agent-sound \
         visDQMSoundAlarmDaemon \
         http://localhost:8030/dqm/online \
         scx5scr24mac.cms \
-        50505 60 3
+        50505 600 2
       ;;
 
     dqm-c2d07-02:*agents* ) # dqm-prod-offsite
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
 
+      D=online
       DQM_DATA=/dqmdata/dqm
-      startagent agent-import \
+      startagent $D/agent-import \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-offsite \
         $DQM_DATA/repository/original \
-        $STATEDIR/ix
+        $STATEDIR/online/ix
 
-      startagent agent-delete \
+      startagent $D/agent-delete \
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online/ \
-        $STATEDIR/ix \
+        $STATEDIR/online/ix \
         $CFGDIR/quota-dd-online.py
       ;;
     dqm-c2d07-11:*agents* ) # dqm-integration
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
 
-      DQM_DATA=$STATEDIR
-      startagent agent-receive \
+      D=online
+      DQM_DATA=$STATEDIR/online
+      startagent $D/agent-receive \
         visDQMReceiveDaemon \
         $DQM_DATA/uploads \
         $DQM_DATA/data \
         $DQM_DATA/agents/register \
 
-      startagent agent-import \
+      startagent $D/agent-import \
         visDQMImportDaemon \
         $DQM_DATA/agents/register \
         $DQM_DATA/data \
-        $STATEDIR/ix
+        $STATEDIR/online/ix
 
-      startagent agent-delete \
+      startagent $D/agent-delete \
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online-playback/ \
-        $STATEDIR/ix \
+        $STATEDIR/online/ix \
         $CFGDIR/quota-dd-online.py
       ;;
 
     dqm-c2d07-12:*agents* ) # dqm-test
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
 
+      D=online
       DQM_DATA=/dqmdata/dqm
-      startagent agent-import \
+      startagent $D/agent-import \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-test \
         $DQM_DATA/repository/original \
-        $STATEDIR/ix
+        $STATEDIR/online/ix
 
-      startagent agent-delete \
+      startagent $D/agent-delete \
         visDQMDeleteDaemon \
         http://localhost:8030/dqm/online-test/ \
-        $STATEDIR/ix \
+        $STATEDIR/online/ix \
         $CFGDIR/quota-dd-online.py
       ;;
 
@@ -269,7 +291,7 @@ start()
 
       # standard lot of agents
       for D in $CONFIGS; do
-        D=${D/offline-}
+        D=${D}
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-receive \
@@ -315,7 +337,7 @@ start()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-offline-${D}.py
+          $CFGDIR/quota-rfqc-${D}.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -351,7 +373,7 @@ start()
 
       # standard lot of agents
       for D in $CONFIGS; do
-        D=${D/offline-}
+        D=${D}
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-zstager \
@@ -383,11 +405,11 @@ start()
       done
       ;;
 
-    *:*agents* ) # dev
+    *:*agents* )
       refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
 
       # standard lot of agents
-      for D in dev; do
+      for D in $FLAVOR; do
         DQM_DATA=$STATEDIR/$D
         startagent $D/agent-receive \
           visDQMReceiveDaemon \
@@ -408,7 +430,7 @@ start()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-offline-${D}.py
+          $CFGDIR/quota-rfqc-${D}.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -475,12 +497,14 @@ start()
   esac
 
   # finally start collector
-  case $HOST:${1:-collector} in
-    dqm-c2d07-[01]1:*collector* | dqm-c2d07-2[12]:*collector* )
-      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
-    dqm-c2d07-*:*collector* ) ;;
-    *:*collector* )
-      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/dev/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+  case $FLAVOR:$HOST:${1:-collector} in
+    online:dqm-c2d07-[01]1:*collector* )
+      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+    online:dqm-c2d07-[01]2:*collector* ) ;;
+    online:*:*collector* )
+      DQMCollector --listen 9190 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+    *:*:*collector* )
+      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
   esac
 
 }
@@ -488,7 +512,7 @@ start()
 # Stop the service.
 stop()
 {
-  message "stopping $ME ${1:-(default)}"
+  message "stopping $ME/$FLAVOR ${1:-(default)}"
   case ${1:-agents} in *agents* )
     killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
   esac
@@ -527,10 +551,10 @@ status()
     statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
   esac
   case ${1:-stageout} in *stageout* )
-    statproc -u cmsweb "$ME stageout agent" "visDQMZipCastorStager" ;;
+    statproc -u $ALTERNATIVE_USER "$ME stageout agent" "visDQMZipCastorStager" ;;
   esac
   case ${1:-afs-sync} in *afs-sync* )
-    statproc -u cmsweb "$ME afs sync" "visDQMAfsSync" ;;
+    statproc -u $ALTERNATIVE_USER "$ME afs sync" "visDQMAfsSync" ;;
   esac
   case $1 in *migration* )
     statproc "$ME migration" "visDQMMigration|sleep" ;;
@@ -556,10 +580,10 @@ detailstatus()
     sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
   esac
   case ${1:-stageout} in *stageout* )
-    sdproc -u cmsweb "$ME stageout agent" "visDQMZipCastorStager" ;;
+    sdproc -u $ALTERNATIVE_USER "$ME stageout agent" "visDQMZipCastorStager" ;;
   esac
   case ${1:-afs-sync} in *afs-sync* )
-    sdproc -u cmsweb "$ME afs sync" "visDQMAfsSync" ;;
+    sdproc -u $ALTERNATIVE_USER "$ME afs sync" "visDQMAfsSync" ;;
   esac
   case $1 in *migration* )
     sdproc "$ME migration" "visDQMMigration|sleep" ;;
@@ -588,6 +612,7 @@ check()
 while [ $# -ge 1 ]; do
   case $1 in
     -q ) QUIET=true; shift ;;
+    -f ) FLAVOR=$2; shift;shift;;
     -h ) set -- help ;;
     -- ) shift; break ;;
     -* ) echo "$0: unrecognised option '$1'" 1>&2; exit 1;;
@@ -595,14 +620,20 @@ while [ $# -ge 1 ]; do
   esac
 done
 newline=""
+getconfigs
+
 # Check user name. Everything except afs-sync and castor stageout must
-# run as non-cmsweb account, afs-sync and castor stageout must be under
-# cmsweb, refuse to run otherwise.
-case $(id -un):$1:$2 in
-  cmsweb:xstart:afs-sync | cmsweb:xstart:stageout )
+# run as non-$ALTERNATIVE_USER account, afs-sync and castor stageout must be under
+# $ALTERNATIVE_USER, refuse to run otherwise.
+case $FLAVOR:$(id -un):$1:$2 in
+  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:*:stageout )
     ;;
 
-  cmsweb:* | *:afs-sync | *:stageout )
+  offline-caf:$ALTERNATIVE_USER:* | offline-caf:*:afs-sync | offline-caf:*:stageout )
+    echo "ERROR: please use another account" 1>&2
+    exit 1 ;;
+
+  relval:$ALTERNATIVE_USER:* | relval:*:afs-sync | relval:*:stageout )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 esac

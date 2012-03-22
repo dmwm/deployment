@@ -14,18 +14,14 @@ deploy_dqmgui_prep()
       extra="$extra /dqmdata/dqm/uploads"
       extra="$extra /dqmdata/dqm/agents"
       extra="$extra /dqmdata/dqm/repository/original"
-      extra="$extra sessions"
+      extra="$extra online online/sessions $project_logs/online"
       for a in import-local  import-offsite  import-test; do
         extra="$extra /dqmdata/dqm/agents/$a"
       done
       ;;
-    dqm-C2D07-11 )
-      extra="$extra sessions agents data uploads"
-      extra="$extra agents/register"
-      ;;
 
     * )
-      for d in offline caf relval dev devtest; do
+      for d in online offline caf relval dev; do
         extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
 	for a in clean freezer ixmerge qcontrol vcontrol register stageout verify zip; do
 	  extra="$extra $d/agents/$a"

@@ -1,15 +1,14 @@
 import os.path, socket; global CONFIGDIR
+from glob import glob
 CONFIGDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 1)[0]
 BASEDIR   = CONFIGDIR.replace("/current/config/dqmgui", "")
 STATEDIR  = "%s/state/dqmgui/offline" % BASEDIR
 LOGDIR    = "%s/logs/dqmgui/offline" % BASEDIR
 
-LAYOUTS = ["%s/layouts/shift_%s_T0_layout.py" % (CONFIGDIR, x) for x in
-           ("castor", "csc", "dt", "eb", "ee", "egamma", "es", "hcal", "hlt", "jetmet", "l1temulator", "l1t", "muons", "pixel", "rpc", "sistrip", "tracking")]
-LAYOUTS += ["%s/layouts/%s_overview_layouts.py" % (CONFIGDIR, x) for x in
-           ("sistrip","ecal","hcal","beammonitor","l1t","hlt")]
-LAYOUTS += ["%s/layouts/%s_T0_layouts.py" % (CONFIGDIR, x) for x in
-           ("btag", "castor", "csc", "eb", "ee", "es", "hcal", "hltmuon", "pixel", "rpc", "sistrip", "tracking")]
+LAYOUTS = glob("%s/layouts/shift_*_T0_layout.py" % CONFIGDIR)
+LAYOUTS += glob("%s/layouts/*_overview_layouts.py" % CONFIGDIR)
+LAYOUTS += glob("%s/layouts/*_T0_layouts.py" % CONFIGDIR)
+
 modules = ("Monitoring.DQM.GUI",)
 
 #server.instrument  = 'valgrind --num-callers=999 `cmsvgsupp` --error-limit=no'
@@ -40,4 +39,4 @@ server.source('DQMArchive', "%s/ix" % STATEDIR, '^/Global/')
 server.source('DQMLayout')
 
 execfile(CONFIGDIR + "/dqm-services.py")
-execfile(CONFIGDIR + "/workspaces-tier-0.py")
+execfile(CONFIGDIR + "/workspaces-offline.py")
