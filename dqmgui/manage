@@ -66,7 +66,7 @@ case $HOST:$DOMAIN in
   *:cms  ) FLAVOR=online ;;
   vocms138:* ) FLAVOR=offline-caf; ALTERNATIVE_USER='cmsweb' ;;
   vocms139:* ) FLAVOR=relval; ALTERNATIVE_USER='cmsweb' ;;
-  vocms133:* ) FLAVOR=dev; ALTERNATIVE_USER='cmsweb' ;;
+  vocms*:* ) FLAVOR=dev; ALTERNATIVE_USER='cmsweb' ;;
   *:cern.ch ) FLAVOR=offline;;
 esac
 # Select the right configuration and ALTERNATIVE_USER based on FLAVOR
