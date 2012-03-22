@@ -9,8 +9,9 @@ deploy_downtimecal_sw()
 {
   deploy_pkg -a downtimecal/googleauth
 
+  dtcver=44
   cd $root/current/apps
-  svn co svn+ssh://svn.cern.ch/reps/cmsfomon/DowntimeCalendar/trunk downtimecal
+  svn co svn+ssh://svn.cern.ch/reps/cmsfomon/DowntimeCalendar/trunk@$dtcver downtimecal
 
   acct=$(grep email $project_auth/googleauth |sed 's,@,\\@,g')
   pass=$(grep password $project_auth/googleauth|sed 's,@,\\@,g')
@@ -22,8 +23,8 @@ deploy_downtimecal_sw()
 deploy_downtimecal_post()
 {
   (mkcrontab | { fgrep -v -e "$root/current/apps/downtimecal/" || true; }
-   echo "8,23,38,53 * * * * python2.6 $root/current/apps/downtimecal/gcalendar.py" \
-        "> $project_logs/output.log 2> $project_logs/error.log") | crontab -
+   echo "8,23,38,53 * * * * $root/current/apps/downtimecal/gcalendar.py" \
+        ">> $project_logs/output.log 2>> $project_logs/error.log") | crontab -
 
   note "NOTE: you must create the calendars under the google account" \
        "$(grep email $project_auth/googleauth | cut -d'=' -f2)."
