@@ -197,7 +197,7 @@ private:
 	return;
       }
 
-      if( o.name.find( "TracksVsClusters" )  != std::string::npos)
+      if( o.name.find( "TracksVs" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
@@ -218,8 +218,15 @@ private:
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
+	return;
       }
 
+      if( o.name.find( "FedIdVsApvId" )  != std::string::npos)
+	{
+	  obj->SetStats( kFALSE );
+	  gStyle->SetPalette(1,0);
+	  obj->SetOption("colz");
+	}
       return;
     }
 
@@ -249,8 +256,9 @@ private:
       if( o.name.find( "Summary_MeanNumberOfDigis" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(5.0);
-	//obj->SetMaximum(120.0);
+  //        obj->SetMaximum(5.0); // COSMICS
+  obj->SetMaximum(20.0); // COLLISIONS run179828 (2011highPU)
+  //obj->SetMaximum(120.0); // HEAVY IONS
         obj->SetMinimum(-0.1);
 	//do not return, because Summary_MeanNumberOfDigis__TOB string (below) is found here as well
 	//return;
@@ -258,8 +266,9 @@ private:
       if( o.name.find( "Summary_MeanNumberOfDigis__TOB" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        obj->SetMaximum(5.0);
-	//obj->SetMaximum(70.0);
+  obj->SetMaximum(10.0); // COLLISIONS run179828 (2011highPU)
+  //obj->SetMaximum(5.0); // COSMICS
+  //obj->SetMaximum(70.0); // HEAVY IONS
         obj->SetMinimum(-0.1);
         return;
       }
@@ -322,20 +331,23 @@ private:
         }
         return;
       }
-      if( o.name.find( "GoodTrackNumberOfRecHitVsPhiVsEtaPerTrack" )  != std::string::npos)
+
+      if( o.name.find( "NumberOfRecHitVsPhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
       return;
     }
-      if( o.name.find( "NumberOfRecHitVsPhiVsEta" )  != std::string::npos)
+
+      if( o.name.find( "NumberOfLayersVsPhiVsEta" ) != std::string::npos )
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
 	return;
       }
+
       return;
     }
   void preDrawTProfile( TCanvas *, const VisDQMObject &o )
@@ -364,8 +376,84 @@ private:
       obj->SetStats( kFALSE );
       obj->SetOption("e");
 
+      if( o.name.find( "TkHMap" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        if (o.name.find( "TkHMap_FractionOfBadChannels" )  != std::string::npos) {
+          obj->SetMinimum(0.0001);
+          obj->SetMaximum(1.0);
+        }
       return;
     }
+
+      if ( o.name.find( "DistanceOfClosestApproachToBSVsPhi") != std::string::npos ) {
+  obj->SetMinimum(-0.02);
+  obj->SetMaximum( 0.02);
+      }
+
+      if ( o.name.find( "zPointOfClosestApproachVsPhi") != std::string::npos ) {
+  obj->SetMinimum(-5.);
+  obj->SetMaximum( 5.);
+      }
+
+      if ( o.name.find( "TECLayersPerTrackVs") != std::string::npos or
+     o.name.find( "TECRecHitsPerTrackVs") != std::string::npos
+     ) {
+  obj->SetMinimum(-0.5);
+  obj->SetMaximum(12.);
+      }
+      if ( o.name.find( "TIBLayersPerTrackVs") != std::string::npos or
+     o.name.find( "TIBRecHitsPerTrackVs") != std::string::npos
+     ) {
+  obj->SetMinimum(-0.5);
+  obj->SetMaximum(6.);
+      }
+      if ( o.name.find( "TIDLayersPerTrackVs") != std::string::npos or
+     o.name.find( "TIDRecHitsPerTrackVs") != std::string::npos
+     ) {
+  obj->SetMinimum(-0.5);
+  obj->SetMaximum(6.);
+      }
+      if ( o.name.find( "TOBLayersPerTrackVs") != std::string::npos or
+     o.name.find( "TOBRecHitsPerTrackVs") != std::string::npos
+     ) {
+  obj->SetMinimum(-0.5);
+  obj->SetMaximum(10.);
+      }
+      if ( o.name.find( "NumberOfLayersPerTrackVs") != std::string::npos or
+     o.name.find( "NumberOfRecHitsPerTrackVs") != std::string::npos or
+     o.name.find( "NumberOfFoundRecHitsPerTrackVs") != std::string::npos
+     ) {
+  obj->SetMinimum(-0.5);
+  obj->SetMaximum(20.);
+      }
+
+      if ( o.name.find( "PixEndcapLayersPerTrackVs" ) != std::string::npos or
+     o.name.find( "PixEndcapRecHitsPerTrackVs") != std::string::npos
+     ) {
+  obj->SetMinimum(-0.5);
+  obj->SetMaximum(3.);
+      }
+
+      if ( o.name.find( "PixBarrelLayersPerTrackVs"  ) != std::string::npos or
+     o.name.find( "PixBarrelRecHitsPerTrackVs" ) != std::string::npos
+     ) {
+  obj->SetMinimum(-0.5);
+  obj->SetMaximum(4.);
+      }
+
+      if ( o.name.find( "ProbVs" ) != std::string::npos or
+     o.name.find( "Chi2oNDFVs" )  != std::string::npos
+     ){
+  obj->SetMinimum(0.);
+  obj->SetMaximum(1.5);
+      }
+
+      return;
+    }
+
   void postDrawTH1F( TCanvas *c, const VisDQMObject &o )
     {
 
@@ -374,16 +462,38 @@ private:
 
       std::string name = o.name.substr(o.name.rfind("/")+1);
 
-      if( name.find( "NumberOfTracks_" ) != std::string::npos ||
-          name.find( "Chi2oNDF_" ) != std::string::npos ||
-          name.find( "TrackPt_" ) != std::string::npos ||
-	  name.find( "NumberOfSeeds_") != std::string::npos ||
-	  name.find( "SeedPt_") != std::string::npos )
-
-	{
+      if( name.find( "NumberOfTracks_" ) != std::string::npos or
+          name.find( "Chi2oNDF_" ) != std::string::npos or
+          name.find( "TrackPt_" ) != std::string::npos or
+          name.find( "TrackP_" ) != std::string::npos or
+    name.find( "NumberOfSeeds_") != std::string::npos or
+    name.find( "SeedPt_") != std::string::npos
+    ) {
           if (obj->GetEntries() > 10.0) c->SetLogy(1);
 	  c->SetGridy();
         }
+
+      if ( name.find( "Summary_ClusterCharge_OffTrack__" )!= std::string::npos or
+     (name.find( "Track" )!= std::string::npos and
+      name.find( "Err" )!= std::string::npos) or
+     name.find( "NumberOfRecHitsLostPerTrack_") != std::string::npos
+     ) {
+  if (obj->GetEntries() > 10.0) c->SetLogy(1);
+      }
+
+      if ( name.find( "TrackPhi_" ) != std::string::npos or
+     name.find( "TrackEta_" ) != std::string::npos or
+     name.find( "SeedPhi_" )  != std::string::npos
+     ) {
+
+  size_t nbins        = obj->GetNbinsX();
+  double entries      = obj->GetEntries();
+  double meanbinentry = entries/double(nbins);
+  double ymax = obj->GetMaximum();
+
+  obj->SetMinimum(ymax-meanbinentry);
+
+      }
 
       TText tt;
       tt.SetTextSize(0.12);
@@ -406,6 +516,7 @@ private:
           tt.DrawTextNDC(0.5, 0.5, "Other ");
         }
       }
+
     }
 
   void postDrawTH2F( TCanvas *c, const VisDQMObject &o )
