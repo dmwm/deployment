@@ -265,21 +265,12 @@ case $STAGE in
        echo "rm -rf /tmp/foo"
        echo "exit 0") |
        ssh cmsweb@$host bashs -l
-      confirm "is sysprep ok for $host"
     done
     ;;
 
   sync )
     set -ex
     (cd srv && rm current && ln -s $VER current)
-    for host in $HOSTS; do
-      sudo rsync -nzavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
-        --rsync-path="sudo rsync" --delete \
-        -f "+ /srv-$STEM/$VER" $EXTRA -f ". $PWD/cfg/admin/rsync-$STEM.rules" \
-        $PWD/ cmsweb@$host:$PWD/
-      set +x; confirm "is sync ok for $host"; set -x
-    done
-
     for host in $HOSTS; do
       sudo rsync -zavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
         --rsync-path="sudo rsync" --delete \
