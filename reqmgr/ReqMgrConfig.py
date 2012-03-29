@@ -38,6 +38,7 @@ if ADD_MONITOR_FLAG:
     config.reqmgr.views.active.monitorSvc.templates = TEMPLATES
     config.reqmgr.views.active.monitorSvc.serviceURL = "local"
 
+config.reqmgr.views.active.assign.opshold = False
 config.reqmgr.views.active.reqMgr.html = os.path.join(HTML_PATH, 'RequestManager')
 config.reqmgr.views.active.reqMgr.templates = TEMPLATES
 config.reqmgr.views.active.rest.templates = TEMPLATES
