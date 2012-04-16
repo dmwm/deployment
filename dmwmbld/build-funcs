@@ -120,10 +120,9 @@ job_build() {
     init_job
     local REPO=$1; local BASETAG=$2; local PROJ=$3; local ARCH=${4:1}; shift 4;
     local CMSDIST="CMSDIST.$REPO"
-    local CMSBUILD=$CMSBUILD17
+    local CMSBUILD=$CMSBUILD20
     case $BASETAG in
-      HG12* | HG111* ) CMSBUILD=$CMSBUILD19 ;;
-      HG110[789]* )    CMSBUILD=$CMSBUILD18 ;;
+      HG120[1234]* | HG111* ) CMSBUILD=$CMSBUILD19 ;;
     esac
 
     exec &> $LOG_FILE.$PROJ.$ARCH.$REPO.chk  # Set new log file

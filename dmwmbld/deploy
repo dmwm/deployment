@@ -12,9 +12,8 @@ deploy_dmwmbld_sw()
 
   cd $root/current/apps
   export CVSROOT=":gserver:cmscvs.cern.ch:/cvs_server/repositories/CMSSW"
-  cvs co -d PKGTOOLS19 -r V00-19-05 PKGTOOLS
-  cvs co -d PKGTOOLS18 -r V00-18-00 PKGTOOLS
-  cvs co -d PKGTOOLS17 -r V00-17-05 PKGTOOLS
+  cvs co -d PKGTOOLS19 -r V00-19-07 PKGTOOLS
+  cvs co -d PKGTOOLS20 -r V00-20-26 PKGTOOLS
 
   isdev="false" webdir=/afs/cern.ch/user/d/dmwmbld/www
   case $variant in
