@@ -6,7 +6,7 @@
 ##H   help                show this help
 ##H   version             get current version of the service
 ##H   build               process build requests
-##H   logclean [minutes]  clean logs older than [minutes] (def. 3 months)
+##H   logclean [minutes]  archive logs older than 24h and deletes those older than [minutes] (def. 2 weeks)
 ##H   tagclean [minutes]  clean CMSDIST tags older than [minutes] (def. 3 months)
 ##H
 ##H For more details please refer to operations page:
@@ -16,6 +16,7 @@ ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 CFGDIR=$(dirname $0)
 STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
 WEBDIR={WEBDIR}
@@ -30,7 +31,16 @@ case ${1:-help} in
     ;;
 
   logclean )
-    $CFGDIR/log-cleaner.sh $CFGDIR/config $2
+    # archive logs that have not been touched in last 24h
+    FILES=$(find $LOGDIR -maxdepth 1 -type f -name '*-*-*_*-*-*' -mtime +0 | sort)
+    [ X"$FILES" = X ] || zip -9Tmojq $LOGDIR/old-logs$(date +%Y%m%d-%H%M).zip $FILES
+
+    # and deletes them
+    [ X"$FILES" = X ] || rm -f $FILES
+
+    # also delete old archives
+    MIN=$(($2)); [ $MIN -lt 1 ] && MIN=20160 # defaults to 2 weeks
+    find $LOGDIR -maxdepth 1 -name '*.zip' -cmin +$MIN -exec rm {} \;
     ;;
 
   tagclean )
