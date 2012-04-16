@@ -20,6 +20,8 @@ config.web_server.adjust_input = True
 config.web_server.dbs_daemon = True
 config.web_server.dbs_daemon_interval = 600
 config.web_server.dbs_daemon_expire = 3600
+config.web_server.hot_threshold = 3000
+config.web_server.onhold_daemon = True
 
 # dbs configuration
 config.component_('dbs')
