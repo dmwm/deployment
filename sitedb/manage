@@ -127,12 +127,7 @@ check()
 # Main routine, perform action requested on command line.
 case ${1:-status} in
   sysboot )
-    if ps -oargs= $PPID | grep -q crond; then
-      sysboot
-    else
-      echo "$0: sysboot is for cron only" 1>&2
-      exit 1
-    fi
+    sysboot
     ;;
 
   start | restart )
