@@ -1,21 +1,62 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_crabserver_variants="default prod preprod dev"
+
 deploy_crabserver_deps()
 {
-  deploy wmagent
-  deploy asyncstageout
+  deploy backend
+  deploy wmcore-auth
+  deploy couchdb
 }
 
 deploy_crabserver_prep()
 {
-  mkproj crabserver
+  mkproj
+  mkproxy
 }
 
 deploy_crabserver_sw()
 {
-  deploy_pkg comp cms+crab-server3
+  local secrets=
+  case $variant in preprod ) secrets=Preprod ;; * ) secrets=Dev ;; esac
+  deploy_pkg \
+     -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
+     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+     -a CRABServerAuth.py:reqmgr/ReqMgrSecrets${secrets}.py \
+     comp cms+crabserver
+  if grep -rq "replace me" $project_auth; then
+    note "WARNING: replace certificates in $project_auth with real ones"
+  else :; fi
+}
 
-  mkdir -p $root/current/install/crabserver
+deploy_crabserver_post()
+{
+  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
 
-  mkdir -p $root/current/config/crabserver
+  # Tell couchdb to pick up crabserver on the next restart
+  local couchdb_config=$root/current/config/couchdb
+  local couchdb_state=$root/state/couchdb
+  local crabsrvapp=$root/current/apps/crabserver
 
+  for area in stagingarea replication; do
+    rm -f $couchdb_state/$area/crabserver
+    touch $couchdb_state/$area/crabserver
+  done
+
+  echo "couchapp push $crabsrvapp/couchapps/WMStats" \
+       "http://localhost:5984/wmstats" \
+    >> $couchdb_state/stagingarea/crabserver
+
+  (mkcrontab; sysboot) | crontab -
+}
+
+deploy_crabserver_auth()
+{
+  case $1 in
+    */*-cert.pem )
+      echo "replace me with your dmwm service certificate" ;;
+    */*-key.pem )
+      echo "replace me with your dmwm service key" ;;
+    */CRABServerAuth.py )
+      echo 'connectUrl = "oracle://FOO:BAR@ZOINKS"' ;;
+  esac
 }

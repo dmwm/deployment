@@ -1,382 +1,113 @@
-#!/bin/bash
+#!/bin/sh
 
-#
-# Global variables etc
-#
-THIS_SCRIPT=$(readlink -f $0)
-PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
-ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H
 
-INSTALL_CS="$ROOT_DIR/install/crabserver"
-INSTALL_AS="$ROOT_DIR/install/asyncstageout"
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
 
-CONFIG_CS="$ROOT_DIR/config/crabserver"
+echo_e=-e bsdstart=bsdstart
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e= bsdstart=start
+  ;;
+esac
 
-USING_CS=0
-USING_AS=0
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+CFGFILE=$CFGDIR/config.py
+AUTHDIR=$ROOT/auth/$ME
 
-CS_INIT_DONE=0
-AS_INIT_DONE=0
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+PYTHONPATH=$AUTHDIR:$PYTHONPATH
+if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
+  export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
+  export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
+fi
 
-CS_HOSTNAME=
-CS_PORT=8888
-
-MYSQL_DATABASE_RM=reqmgr
-INSTALL_MYSQL="$ROOT_DIR/install/mysql"
-
-COUCH_HOST_NAME=`hostname`
-
-#
-# Init checks
-#
-if [ -e $INSTALL_CS/.using ]; then USING_CS=1; else USING_CS=0; fi;
-if [ -e $INSTALL_AS/.using ]; then USING_AS=1; else USING_AS=0; fi;
-
-# Flags to show the tools have been initialised
-if [ -e $INSTALL_CS/.init ]; then CS_INIT_DONE=1; else CS_INIT_DONE=0; fi;
-
-#callbacks to activate or show initialisation has been done
-activate_crabserver(){
-    touch $INSTALL_CS/.using
-    cp $ROOT_DIR/apps/crab-server3/configuration/Example.py $CONFIG_CS/config-template.py
-    cp $ROOT_DIR/apps/crab-server3/configuration/ClientMapping.py $CONFIG_CS/clientMapping-template.py
-    $PROJ_DIR/wmagent/manage activate-agent
-    $PROJ_DIR/wmagent/manage activate-reqmgr
-    $PROJ_DIR/wmagent/manage activate-workqueue
+# Start service conditionally on crond restart.
+sysboot()
+{
+  wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/crabserver-%Y%m%d.log 86400" $CFGFILE
 }
 
-activate_asyncstageout(){
-    touch $INSTALL_AS/.using
-    $PROJ_DIR/asyncstageout/manage activate-asyncstageout
+# Start the service.
+start()
+{
+  echo "starting $ME"
+  wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/crabserver-%Y%m%d.log 86400" $CFGFILE
 }
 
-inited_server(){
-    touch $INSTALL_CS/.init
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
+  wmc-httpd -k -d $STATEDIR $CFGFILE
 }
 
-#
-# Environment
-#
-
-. $ROOT_DIR/apps/asyncstageout/etc/profile.d/init.sh
-. $ROOT_DIR/apps/crab-server3/etc/profile.d/init.sh
-. $ROOT_DIR/apps/wmcore/etc/profile.d/init.sh
-. $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
-
-export WMCORE_ROOT=$ROOT_DIR/apps/wmcore
-
-load_secrets_file(){
-    if [ "x$WMAGENT_SECRETS_LOCATION" == "x" ]; then
-        WMAGENT_SECRETS_LOCATION=$HOME/WMAgent.secrets;
-    fi
-    if [ ! -e $WMAGENT_SECRETS_LOCATION ]; then
-        echo "Password file: $WMAGENT_SECRETS_LOCATION does not exist"
-        echo "Either set WMAGENT_SECRETS_LOCATION to a valid file or check that $HOME/WMAgent.secrets exists"
-        exit 1;
-    fi
-
-    local MATCH_MYSQL_USER=`cat $WMAGENT_SECRETS_LOCATION  | grep MYSQL_USER    | sed s/MYSQL_USER=//`
-    local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION  | grep MYSQL_PASS    | sed s/MYSQL_PASS=//`
-    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_USER    | sed s/COUCH_USER=//`
-    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_PASS    | sed s/COUCH_PASS=//`
-    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_HOST    | sed s/COUCH_HOST=//`
-    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION  | grep COUCH_PORT    | sed s/COUCH_PORT=//`
-    local MATCH_CS_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep CS_HOSTNAME   | sed s/CS_HOSTNAME=//`
-    local MATCH_CS_PORT=`cat $WMAGENT_SECRETS_LOCATION     | grep CS_PORT       | sed s/CS_PORT=//`
-    local MATCH_HOST_DN=`cat $WMAGENT_SECRETS_LOCATION     | grep HOST_DN       | sed s/HOST_DN=//`
-    local MATCH_UFC_CACHEDIR=`cat $WMAGENT_SECRETS_LOCATION | grep UFC_CACHEDIR | sed s/UFC_CACHEDIR=//`
-    local MATCH_UFC_PORT=`cat $WMAGENT_SECRETS_LOCATION    | grep UFC_PORT      | sed s/UFC_PORT=//`
-    local MATCH_SB_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep SB_HOSTNAME   | sed s/SB_HOSTNAME=//`
-
-    if [ "x$MATCH_MYSQL_USER" == "x" ]; then
-        MYSQL_USER=wmagentmysql;
-    else
-        MYSQL_USER=$MATCH_MYSQL_USER;
-    fi
-    if [ "x$MATCH_MYSQL_PASS" == "x" ]; then
-        echo "Secrets file doesnt contain MYSQL_PASS";
-        exit 1
-    else
-        MYSQL_PASS=$MATCH_MYSQL_PASS;
-    fi
-    if [ "x$MATCH_COUCH_USER" == "x" ]; then
-        COUCH_USER=wmagentcouch;
-    else
-        COUCH_USER=$MATCH_COUCH_USER;
-    fi
-    if [ "x$MATCH_COUCH_PASS" == "x" ]; then
-        echo "Secrets file doesnt contain COUCH_PASS";
-        exit 1
-    else
-        COUCH_PASS=$MATCH_COUCH_PASS;
-    fi
-    if [ ! "x$MATCH_COUCH_PORT" == "x" ]; then
-        COUCH_PORT=$MATCH_COUCH_PORT;
-    fi
-    if [ ! "x$MATCH_COUCH_HOST" == "x" ]; then
-        COUCH_HOST=$MATCH_COUCH_HOST;
-    fi
-    if [ ! "x$MATCH_CS_HOSTNAME" == "x" ]; then
-        CS_HOSTNAME=$MATCH_CS_HOSTNAME;
-    fi
-    if [ ! "x$MATCH_CS_PORT" == "x" ]; then
-        CS_PORT=$MATCH_CS_PORT;
-    fi
-    if [ ! "x$MATCH_HOST_DN" == "x" ]; then  
-        HOST_DN=$MATCH_HOST_DN;
-    fi
-    if [ ! "x$MATCH_UFC_CACHEDIR" == "x" ]; then
-        UFC_CACHEDIR=$MATCH_UFC_CACHEDIR;
-    fi
-    if [ ! "x$MATCH_UFC_PORT" == "x" ]; then
-        UFC_PORT=$MATCH_UFC_PORT;
-    fi
-    if [ ! "x$MATCH_SB_HOSTNAME" == "x" ]; then
-        SB_HOSTNAME=$MATCH_SB_HOSTNAME;
-    fi
-
+# Check if the server is running.
+status()
+{
+  wmc-httpd -s -d $STATEDIR $CFGFILE
 }
 
-init_server(){
-    load_secrets_file;
-
-    wmagent-mod-config --input=$CONFIG_CS/config-template.py \
-                       --output=$CONFIG_CS/config.py \
-                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
-                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --working_dir=$INSTALL_CS  \
-                       --client_mapping=$CONFIG_CS/clientMapping-template.py \
-                       --cs_hostname=$CS_HOSTNAME \
-                       --cs_port=$CS_PORT \
-                       --host_dn=$HOST_DN \
-                       --sb_hostname=$SB_HOSTNAME \
-                       --sb_port=$UFC_PORT \
-                       --ufc_cachedir=$UFC_CACHEDIR \
-                       --ufc_service_url=http://$SB_HOSTNAME:$UFC_PORT/userfilecache/userfilecache \
-                       --ufc_port=$UFC_PORT \
-                       --ufc_hostname=$SB_HOSTNAME 
-    inited_server;
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
 }
 
-# initialise the server and its subsystems
-#
-init_crabserver(){
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    sysboot
+    ;;
 
+  start | restart )
+    check "$2"
+    echo $2
+    stop
+    start
+    ;;
 
-    if [ $USING_CS -eq 1 ]; then
-        if [ $CS_INIT_DONE -eq 0 ]; then
-            echo "Initialising server..."
-            init_server;
-            $PROJ_DIR/wmagent/manage init-agent
-        fi
-    fi
+  status )
+    status
+    ;;
 
-    if [ $USING_AS -eq 1 ]; then
-        if [ $AS_INIT_DONE -eq 0 ]; then
-            echo "Initialising Agent..."
-            $PROJ_DIR/asyncstageout/manage init-asyncstageout
-        fi
-    fi
+  stop )
+    check "$2"
+    stop
+    ;;
 
-}
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
 
-status(){
-    if [ $USING_CS -eq 1 ]; then
-        echo "Status of CRABServer:"
-        wmcoreD --status --config=$CONFIG_CS/config.py
-        $PROJ_DIR/wmagent/manage status
-    fi
-    if [ $USING_AS -eq 1 ]; then
-        $PROJ_DIR/asyncstageout/manage status
-    fi
-}
+  version )
+    echo "$CRABINTERFACE_VERSION"
+    ;;
 
-start_services(){
-    if [ $USING_CS -eq 1 ]; then
-        echo "Starting CRABServer services:"
-        $PROJ_DIR/wmagent/manage start-services
-    fi
-#    if [ $USING_AS -eq 1 ]; then
-#        echo "Starting AsyncStageOut services:"
-#        $PROJ_DIR/asyncstageout/manage start-services
-#    fi
-}
-
-start_crabserver(){
-    if [ $USING_CS -eq 1 ]; then
-        $PROJ_DIR/wmagent/manage start-agent
-        init_crabserver;
-        wmcoreD --start --config=$CONFIG_CS/config.py
-    fi
-    if [ $USING_AS -eq 1 ]; then
-        $PROJ_DIR/asyncstageout/manage start-asyncstageout
-    fi  
-}
-
-stop_crabserver(){
-    if [ $USING_CS -eq 1 ]; then
-        wmcoreD --shutdown --config=$CONFIG_CS/config.py;
-        $PROJ_DIR/wmagent/manage stop-agent
-    fi
-    if [ $USING_AS -eq 1 ]; then
-        $PROJ_DIR/asyncstageout/manage stop-asyncstageout
-    fi
-}
-
-stop_services(){
-    if [ $USING_CS -eq 1 ]; then
-        echo "Stop CRABServer services:"
-        $PROJ_DIR/wmagent/manage stop-services
-    fi
-#    if [ $USING_AS -eq 1 ]; then
-#        echo "Stop AsyncStageOut services:"
-#        $PROJ_DIR/asyncstageout/manage stop-services
-#    fi
-}
-
-help(){
-    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/CRABServerManagement";
-}
-
-execute_command_crabserver(){
-    shift;
-    local RUNTHIS=$1
-    local WMCORE_BIN_DIR=$ROOT_DIR/apps/wmcore/bin
-    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
-        echo "$RUNTHIS is not a binary in WMCore/bin"
-        exit 1
-    fi
-    shift;
-    load_secrets_file;
-    export WMAGENT_CONFIG=$CONFIG_CS/config.py
-    echo "Executing $RUNTHIS $@ ..."
-    $RUNTHIS $@;
-}
-
-execute_agent(){
-    shift;
-    $PROJ_DIR/wmagent/manage  execute-agent $@
-}
-
-execute_workqueue(){
-    shift;
-    $PROJ_DIR/wmagent/manage  execute-workqueue $@
-}
-
-execute_reqmgr(){
-    shift;
-    $PROJ_DIR/wmagent/manage  execute-reqmgr $@
-}
-
-execute_asyncstageout(){
-    shift;
-    $PROJ_DIR/asyncstageout/manage  execute-asyncstageout $@
-}
-
-mysql_prompt(){
-    shift;
-    $PROJ_DIR/wmagent/manage mysql-prompt $@
-}
-
-clean_mysql(){
-    $PROJ_DIR/wmagent/manage clean-mysql
-}
-
-clean_couch(){
-    $PROJ_DIR/wmagent/manage clean-couch
-}
-
-start_mysql(){
-    $PROJ_DIR/wmagent/manage start-mysql
-}
-
-start_couch(){
-    $PROJ_DIR/wmagent/manage start-couch
-}
-
-stop_mysql(){
-    $PROJ_DIR/wmagent/manage stop-mysql
-}
-
-stop_couch(){
-    $PROJ_DIR/wmagent/manage stop-couch
-}
-
-clean_crabserver(){
-    if [ $USING_CS -eq 1 ]; then
-        $PROJ_DIR/wmagent/manage clean-agent
-        load_secrets_file;
-        echo "Cleaning CRABInterface..."
-        rm -rf $INSTALL_CS/*
-        rm -f $CONFIG_CS/config.py;
-        rm -f $INSTALL_CS/.init
-    fi 
-    if [ $USING_AS -eq 1 ]; then
-        $PROJ_DIR/asyncstageout/manage clean-asyncstageout
-    fi 
-
-}
-clean_all(){
-    clean_mysql;
-    clean_couch;
-    clean_crabserver;
-}
-
-#######################################################
-# Main
-#######################################################
-
-case $1 in
-  status)
-    status;;
-  init-crabserver)
-     init_crabserver;;
-  activate-crabserver)
-    activate_crabserver;;
-  activate-asyncstageout)
-    activate_asyncstageout;;
-  start-services)
-    start_services;;
-  start-crabserver)
-    start_crabserver;;
-  start-mysql)
-    start_mysql;;
-  start-couch)
-    start_couch;;
-  mysql-prompt) 
-     mysql_prompt $@;; 
-  stop-mysql)
-    stop_mysql;;
-  stop-couch)
-    stop_couch;;
-  stop-crabserver)
-    stop_crabserver;;
-  stop-services)
-    stop_services;;
-  clean-mysql)
-    clean_mysql;;
-  clean-couch)
-    clean_couch;;
-  clean-crabserver)
-    clean_crabserver;;
-  clean-all)
-    clean_all;;
-  execute-crabserver)
-    execute_command_crabserver $@;;
-  execute-agent)
-    execute_agent $@;;
-  execute-workqueue)
-    execute_workqueue $@;;
-  execute-reqmgr)
-    execute_reqmgr $@;;
-  execute-asyncstageout)
-    execute_asyncstageout $@;;
-  help)
-    help ;;
-  version)
-    echo "Management script for CRABServer version 3" ;;
   * )
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
-    exit 1 ;;
+    exit 1
+    ;;
 esac
