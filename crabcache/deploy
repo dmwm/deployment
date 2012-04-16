@@ -1,0 +1,33 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_crabcache_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+}
+
+deploy_crabcache_prep()
+{
+  mkproj files
+}
+
+deploy_crabcache_sw()
+{
+  deploy_pkg comp cms+crabcache
+}
+
+deploy_crabcache_post()
+{
+  case $host in vocms13[39] | vocms127 ) enable ;; vocms* ) disable ;; * ) enable ;; esac
+
+  local cmd_u="/usr/bin/find $project_state/files -type f -mtime +30 ! -name \*_publish.tgz  -exec rm {} \;"
+  cmd_u="sudo -H -u _crabcache bashs -l -c \"${cmd_u}\""
+  local cleaning_user="0 0 * * * $cmd_u"
+
+  local cmd_s="/usr/bin/find $project_state/files -type f -mtime +90 -name \*_publish.tgz  -exec rm {} \;"
+  cmd_s="sudo -H -u _crabcache bashs -l -c \"${cmd_s}\""
+  local cleaning_sys="0 0 * * * $cmd_s"
+
+  (mkcrontab; sysboot
+   [ ! -f $root/enabled/$project ] || { echo "${cleaning_user}"; echo "${cleaning_sys}"; }
+  ) | crontab -
+}
