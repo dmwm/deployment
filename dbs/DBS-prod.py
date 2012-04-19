@@ -19,7 +19,7 @@ config.SecurityModule.key_file = os.path.join(ROOTDIR,'auth/wmcore-auth/header-a
 
 config.component_('Webtools')
 config.Webtools.port = 8250
-config.Webtools.log_screen = True
+config.Webtools.log_screen = False
 config.Webtools.proxy_base = 'True'
 config.Webtools.application = 'dbs'
 config.Webtools.environment = 'production'
