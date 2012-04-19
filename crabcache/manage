@@ -10,6 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
+##H   clean       clean old user files
 ##H
 
 if [ $(id -un)  = cmsweb ]; then
@@ -76,6 +77,14 @@ check()
   fi
 }
 
+# Clean old user files
+clean_cache()
+{
+  cd $STATEDIR
+  /usr/bin/find $STATEDIR/files -type f -mtime +30 ! -name \*_publish.tgz  -exec rm {} \;
+  /usr/bin/find $STATEDIR/files -type f -mtime +90 -name \*_publish.tgz  -exec rm {} \;
+}
+
 # Main routine, perform action requested on command line.
 case ${1:-status} in
   sysboot )
@@ -99,6 +108,10 @@ case ${1:-status} in
 
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  clean )
+    clean_cache
     ;;
 
   * )
