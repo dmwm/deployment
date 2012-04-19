@@ -7,11 +7,8 @@ deploy_wmagent_prep()
 
 deploy_wmagent_sw()
 {
+  deploy_pkg comp cms+wmcore
   deploy_pkg comp cms+wmagent
-
-  # need to link in wmcore codebase for binaries etc
-  link=$(ls -d $root/current/*/*/*/wmcore/${project_version_override:-$AGENT_VERSION})
-  ln -s ${link} $root/current/apps/wmcore
 
   mkdir -p $root/current/install/wmagent
   mkdir -p $root/current/install/reqmgr
