@@ -134,7 +134,7 @@ sdproc()
   local title="$1" pat="$2"
   message $echo_e "${COLOR_OK}${newline}${title}:${COLOR_NORMAL}"
   pgrep -u $(id -u) -f "$pat" | xargs -r ps -o pid=,bsdstart=,args= |
-    perl -p -e 'use Term::ANSIColor qw(:constants);s/^/  /; END { $. || print RED,"  (none running)\n" } ' |
+    perl -p -e 'use Term::ANSIColor qw(:constants);s/^/  /; END { $. || print RED,"  (none running)", RESET, "\n" } ' |
     sort -k 4
   newline="\n"
 }

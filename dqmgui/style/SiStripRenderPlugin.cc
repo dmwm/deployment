@@ -220,13 +220,14 @@ private:
         obj->SetOption("colz");
 	return;
       }
-
       if( o.name.find( "FedIdVsApvId" )  != std::string::npos)
 	{
 	  obj->SetStats( kFALSE );
 	  gStyle->SetPalette(1,0);
 	  obj->SetOption("colz");
+	return;
 	}
+      
       return;
     }
 

@@ -30,7 +30,8 @@ server.extend('DQMFileAccess', None, "%s/uploads" % STATEDIR,
                 "ZIP": "%s/zipped" % STATEDIR })
 server.extend('DQMLayoutAccess', None, STATEDIR,
               ['/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=lilopera/CN=692665/CN=Luis Ignacio Lopera Gonzalez',
-               '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere' ])
+               '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere',
+	       '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=erosales/CN=725205/CN=Edgar Eduardo Rosales Rosero' ])
 server.source('DQMUnknown')
 server.source('DQMOverlay')
 server.source('DQMStripChart')

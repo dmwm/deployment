@@ -320,3 +320,12 @@ sistriplayout(dqmitems, "26 - TECB Residual",
      'description': "Hit Residual in TECB Wheel #8"},
    { 'path': "SiStrip/MechanicalView/TEC/side_1/wheel_9/HitResiduals_TEC__wheel__9",
      'description': "Hit Residual in TECB Wheel #9"}])
+sistriplayout(dqmitems, "27 - APVe Timing",
+  [{ 'path': "SiStrip/ReadoutView/FedSummary/FE/APVe/FETimeDiffTECB",
+     'description': "Timing difference FE - TECB"},
+   { 'path': "SiStrip/ReadoutView/FedSummary/FE/APVe/FETimeDiffTECF",
+     'description': "Timing difference FE - TECF"}],
+  [{ 'path': "SiStrip/ReadoutView/FedSummary/FE/APVe/FETimeDiffTIB",
+     'description': "Timing difference FE - TIB"},
+   { 'path': "SiStrip/ReadoutView/FedSummary/FE/APVe/FETimeDiffTOB",
+     'description': "Timing difference FE - TOB"}])

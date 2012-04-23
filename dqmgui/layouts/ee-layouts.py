@@ -29,6 +29,7 @@ eeshifterlayout(dqmitems, "02 StatusFlags Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EESFT EE - front-end status summary", 'description': "DCC front-end status quality summary. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: Each tower is required not to have front-end errors among the following: TIMEOUT, HEADER, CHANNEL ID, LINK, BLOCKSIZE, L1A SYNC, BX SYNC, L1A+BX SYNC, FIFO+L1A, H PARITY, v PARITY. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EESFT EE + front-end status summary", 'description': "DCC front-end status quality summary. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: Each tower is required not to have front-end errors among the following: TIMEOUT, HEADER, CHANNEL ID, LINK, BLOCKSIZE, L1A SYNC, BX SYNC, L1A+BX SYNC, FIFO+L1A, H PARITY, v PARITY. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
+
 eeshifterlayout(dqmitems, "03 Pedestal Online Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EEPOT EE - pedestal quality summary G12", 'description': "Pedestal quality summary. Pedestal is evaluated using the first 3/10 samples of the pulse shape for all the events (on physics events only). Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 175 < mean < 225 ADCs, RMS < 4 ADCs <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EEPOT EE + pedestal quality summary G12", 'description': "pedestal quality summary. Pedestal is evaluated using the first 3/10 samples of the pulse shape for all the events (on physics events only). Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 175 < mean < 225 ADCs, RMS < 4 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -72,9 +73,9 @@ eeshifterlayout(dqmitems, "08 Blue Laser (L1) Quality",
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L1", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-#eeshifterlayout(dqmitems, "08 Infrared Laser (L4) Quality",
-#  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of infrared laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
-#  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of infrared laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+eeshifterlayout(dqmitems, "08 Infrared Laser (L4) Quality",
+ [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of infrared laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+ [{ 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of infrared laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
 eeshifterlayout(dqmitems, "09 Lambda 1 Led Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of lambda_1 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
@@ -103,6 +104,7 @@ eeshifterlayout(dqmitems, "12 DCC Event Size and Synch Errors",
 eeshifterlayout(dqmitems, "13 Selective Readout High Interest TTs",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT high interest TT Flags EE -", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout.  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT high interest TT Flags EE +", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+
 
 # ECAL shifters
 eeecalshifterlayout(dqmitems, "00 Event Type",
@@ -317,6 +319,9 @@ eeecalshifterlayout(dqmitems, "05 Timing/04 Single Event Timing",
   [{ 'path': "EcalEndcap/EETimingTask/EETMT timing EE+ - EE-", 'description': "Event by event difference between the average timing in EE+ and EE- of the good rechits. Expected 0. Required in each endcap one crystal with E_T > 300 MeV and one crystal with energy > 3(6) GeV (|eta| <(>) 2.4), good DB status and rechit flag = kGood OR KOutOfTime. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EETimingTask/EETMT timing EE+ vs EE-", 'description': "Average timing in EE- vs average timing in EE+. Only rechits with energy > 3(6) GeV (|eta| <(>) 2.4) and kGood or kOutOfTime considered here. Expect one spot centered in (0,0) for collisions, two spots in (0,-20), (-20,0) for beam-halos. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
+
+
+    
 eeecalshifterlayout(dqmitems, "06 L1 Trigger/00 TP Spectra EE -",
   [{ 'path': "EcalEndcap/EETriggerTowerTask/EETTT Et spectrum Real Digis EE -", 'description': "Average transverse energy (2 ADC count = 1 GeV) of real L1 trigger primitives. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETriggerTowerTask/Emulated/EETTT Et spectrum Emulated Digis EE -", 'description': "Average transverse energy (2 ADC count = 1 GeV) of emulated L1 trigger primitives. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -405,23 +410,77 @@ eeecalshifterlayout(dqmitems, "07 Selective Readout/05 Tower Size",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT tower event size EE -", 'description': "Event size distribution per tower. This plot allows to verify the correctness of the ZS thresholds applied. The average of the plot has to be ~ 2kB / 68 ~ 30 bytes.<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT tower event size EE +", 'description': "Event size distribution per tower. This plot allows to verify the correctness of the ZS thresholds applied. The average of the plot has to be ~ 2kB / 68 ~ 30 bytes.<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/00 Blue Laser (L1) Quality",
-  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of Blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of Blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/00 BlueQuantronix Laser (L1) Quality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of BlueQuantronix laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of BlueQuantronix laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/01 Blue Laser (L1) Errors",
-  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser quality errors summary L1", 'description': "Errors occupancy for Blue laser events for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/01 BlueQuantronix Laser (L1) Errors",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser quality errors summary L1", 'description': "Errors occupancy for BlueQuantronix laser events for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/02 Blue Laser (L1) Amplitude",
-  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L1 amplitude summary", 'description': "Laser Blue laser average amplitude for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L1 amplitude over PN summary", 'description': "Blue laser average VPT/PN ratio for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/02 BlueQuantronix Laser (L1) Amplitude",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L1 amplitude summary", 'description': "Laser BlueQuantronix laser average amplitude for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L1 amplitude over PN summary", 'description': "BlueQuantronix laser average VPT/PN ratio for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/03 Blue Laser (L1) Timing",
-  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L1 timing summary", 'description': "Blue laser average timing (in pulse shape samples) for fired light modules in EE. Expect value around 6.5. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/03 BlueQuantronix Laser (L1) Timing",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L1 timing summary", 'description': "BlueQuantronix laser average timing (in pulse shape samples) for fired light modules in EE. Expect value around 6.5. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/04 Blue Laser (L1) PNQuality",
-  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L1", 'description': "Quality summary of Blue laser events on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. White for DCC without MEM boxes attached (EE+/-1,4,5,6,9). Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: amplitude (G1 and G16) > 100 ADCs; 650 < PN pedestal < 850 ADCs;  PN RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/04 BlueQuantronix Laser (L1) PNQuality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L1", 'description': "Quality summary of BlueQuantronix laser events on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. White for DCC without MEM boxes attached (EE+/-1,4,5,6,9). Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: amplitude (G1 and G16) > 100 ADCs; 650 < PN pedestal < 850 ADCs;  PN RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality errors summary L1", 'description': "Error occupancy for laser L1 events on PN diodes for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/00 Green Laser (L2) Quality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of Green laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of Green laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/01 Green Laser (L2) Errors",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser quality errors summary L2", 'description': "Errors occupancy for Green laser events for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/02 Green Laser (L2) Amplitude",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L2 amplitude summary", 'description': "Laser Green laser average amplitude for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L2 amplitude over PN summary", 'description': "Green laser average VPT/PN ratio for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/03 Green Laser (L2) Timing",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L2 timing summary", 'description': "Green laser average timing (in pulse shape samples) for fired light modules in EE. Expect value around 6.5. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/04 Green Laser (L2) PNQuality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L2", 'description': "Quality summary of Green laser events on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. White for DCC without MEM boxes attached (EE+/-1,4,5,6,9). Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: amplitude (G1 and G16) > 100 ADCs; 650 < PN pedestal < 850 ADCs;  PN RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality errors summary L2", 'description': "Error occupancy for laser L2 events on PN diodes for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/00 BluePhotonics Laser (L3) Quality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of BluePhotonics laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of BluePhotonics laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/01 BluePhotonics Laser (L3) Errors",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser quality errors summary L3", 'description': "Errors occupancy for BluePhotonics laser events for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/02 BluePhotonics Laser (L3) Amplitude",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L3 amplitude summary", 'description': "Laser BluePhotonics laser average amplitude for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L3 amplitude over PN summary", 'description': "BluePhotonics laser average VPT/PN ratio for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/03 BluePhotonics Laser (L3) Timing",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L3 timing summary", 'description': "BluePhotonics laser average timing (in pulse shape samples) for fired light modules in EE. Expect value around 6.5. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/04 BluePhotonics Laser (L3) PNQuality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L3", 'description': "Quality summary of BluePhotonics laser events on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. White for DCC without MEM boxes attached (EE+/-1,4,5,6,9). Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: amplitude (G1 and G16) > 100 ADCs; 650 < PN pedestal < 850 ADCs;  PN RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality errors summary L3", 'description': "Error occupancy for laser L3 events on PN diodes for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/00 IR Laser (L4) Quality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of IR laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of IR laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/01 IR Laser (L4) Errors",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser quality errors summary L4", 'description': "Errors occupancy for IR laser events for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/02 IR Laser (L4) Amplitude",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L4 amplitude summary", 'description': "Laser IR laser average amplitude for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L4 amplitude over PN summary", 'description': "IR laser average VPT/PN ratio for fired light modules in EE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/03 IR Laser (L4) Timing",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT laser L4 timing summary", 'description': "IR laser average timing (in pulse shape samples) for fired light modules in EE. Expect value around 6.5. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eeecalshifterlayout(dqmitems, "08 Calibration/00 Laser/04 IR Laser (L4) PNQuality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L4", 'description': "Quality summary of IR laser events on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. White for DCC without MEM boxes attached (EE+/-1,4,5,6,9). Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: amplitude (G1 and G16) > 100 ADCs; 650 < PN pedestal < 850 ADCs;  PN RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality errors summary L4", 'description': "Error occupancy for laser L4 events on PN diodes for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eeecalshifterlayout(dqmitems, "08 Calibration/01 Led/00 L1 Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -652,13 +711,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -667,16 +724,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-01 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -689,16 +742,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-01 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-01 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -712,24 +761,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-01 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -866,13 +910,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -881,16 +923,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-02 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -903,16 +941,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-02 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-02 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -926,24 +960,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-02 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1080,13 +1109,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -1095,16 +1122,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-03 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1117,16 +1140,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-03 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-03 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1140,24 +1159,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-03 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1294,13 +1308,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -1309,16 +1321,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-04 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1331,16 +1339,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-04 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-04 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1354,24 +1358,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-04 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1508,13 +1507,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -1523,16 +1520,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-05 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1545,16 +1538,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-05 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-05 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1568,24 +1557,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-05 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1722,13 +1706,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -1737,16 +1719,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-06 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1759,16 +1737,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-06 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-06 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1782,24 +1756,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-06 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1936,13 +1905,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -1951,16 +1918,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-07 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1973,16 +1936,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-07 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-07 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1996,24 +1955,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-07 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2150,13 +2104,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -2165,16 +2117,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-08 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2187,16 +2135,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-08 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-08 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2210,24 +2154,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-08 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2364,13 +2303,11 @@ eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -2379,16 +2316,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-09 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2401,16 +2334,12 @@ eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-09 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-09 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2424,24 +2353,19 @@ eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE-09 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2578,13 +2502,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -2593,16 +2515,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+01 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2615,16 +2533,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+01 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+01 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2638,24 +2552,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+01 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2792,13 +2701,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -2807,16 +2714,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+02 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2829,16 +2732,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+02 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+02 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2852,24 +2751,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+02 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3006,13 +2900,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -3021,16 +2913,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+03 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3043,16 +2931,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+03 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+03 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3066,24 +2950,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+03 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3220,13 +3099,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -3235,16 +3112,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+04 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3257,16 +3130,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+04 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+04 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3280,24 +3149,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+04 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3434,13 +3298,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -3449,16 +3311,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+05 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3471,16 +3329,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+05 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+05 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3494,24 +3348,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+05 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3648,13 +3497,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -3663,16 +3510,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+06 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3685,16 +3528,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+06 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+06 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3708,24 +3547,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+06 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3862,13 +3696,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -3877,16 +3709,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+07 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3899,16 +3727,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+07 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+07 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3922,24 +3746,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+07 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4076,13 +3895,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -4091,16 +3908,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+08 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4113,16 +3926,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+08 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+08 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4136,24 +3945,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+08 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4290,13 +4094,11 @@ eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/02 TestPulse/05 PNs Gain16",
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/00 Laser L1",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/01 Laser L4",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])  
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/02 Laser PNs",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -4305,16 +4107,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/02 Laser PNs",
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L1/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L1/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L1/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+09 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4327,16 +4125,12 @@ eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L1/03 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+09 G16 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L4/00 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L4/01 Laser",
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELaserClient/EELT laser shape L4B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L4/02 Laser",
   [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+09 G01 L4", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4350,24 +4144,19 @@ eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/03 Laser/L4/03 Laser",
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/04 Led/00 Led",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/04 Led/01 Led PNs",
   [{ 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G01 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELedClient/EELDT led quality L1 PNs G16 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/04 Led/L1/00 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT amplitude over PN L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/04 Led/L1/01 Led",
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1A EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EELedClient/EELDT led shape L1B EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led timing L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELedClient/EELDT led shape L1 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/04 Led/L1/02 Led",
   [{ 'path': "EcalEndcap/EELedTask/Led1/PN/Gain01/EELDT PNs pedestal EE+09 G01 L1", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4521,37 +4310,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-01/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-01 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-01 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-01", 'description': "Average amplitude for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-01", 'description': "Average APD/PN for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-01", 'description': "Average timing for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-01", 'description': "Mean timing of the channels in EE-01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-01", 'description': "Timing RMS of the channels in EE-01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-01 L1", 'description': "Pulse shape of all the crystals in EE-01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-01 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-01 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-01 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-01 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-01", 'description': "Average amplitude for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-01", 'description': "Average APD/PN for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-01", 'description': "Average timing for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-01", 'description': "Mean timing of the channels in EE-01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-01", 'description': "Timing RMS of the channels in EE-01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-01 L2", 'description': "Pulse shape of all the crystals in EE-01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-01 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-01 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-01 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-01 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-01", 'description': "Average amplitude for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-01", 'description': "Average APD/PN for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-01", 'description': "Average timing for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-01", 'description': "Mean timing of the channels in EE-01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-01", 'description': "Timing RMS of the channels in EE-01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-01 L3", 'description': "Pulse shape of all the crystals in EE-01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-01 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-01 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-01 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-01 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-01", 'description': "Average amplitude for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-01", 'description': "Average APD/PN for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-01", 'description': "Average timing for each channel of EE-01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-01", 'description': "Mean timing of the channels in EE-01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-01", 'description': "Timing RMS of the channels in EE-01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-01 L4", 'description': "Pulse shape of all the crystals in EE-01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-01 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-01 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-01/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-01 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-01 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-01 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -4758,37 +4643,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-02/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-02 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-02 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-02", 'description': "Average amplitude for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-02", 'description': "Average APD/PN for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-02", 'description': "Average timing for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-02", 'description': "Mean timing of the channels in EE-02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-02", 'description': "Timing RMS of the channels in EE-02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-02 L1", 'description': "Pulse shape of all the crystals in EE-02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-02 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-02 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-02 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-02 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-02", 'description': "Average amplitude for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-02", 'description': "Average APD/PN for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-02", 'description': "Average timing for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-02", 'description': "Mean timing of the channels in EE-02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-02", 'description': "Timing RMS of the channels in EE-02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-02 L2", 'description': "Pulse shape of all the crystals in EE-02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-02 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-02 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-02 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-02 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-02", 'description': "Average amplitude for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-02", 'description': "Average APD/PN for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-02", 'description': "Average timing for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-02", 'description': "Mean timing of the channels in EE-02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-02", 'description': "Timing RMS of the channels in EE-02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-02 L3", 'description': "Pulse shape of all the crystals in EE-02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-02 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-02 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-02 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-02 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-02", 'description': "Average amplitude for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-02", 'description': "Average APD/PN for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-02", 'description': "Average timing for each channel of EE-02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-02", 'description': "Mean timing of the channels in EE-02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-02", 'description': "Timing RMS of the channels in EE-02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-02 L4", 'description': "Pulse shape of all the crystals in EE-02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-02 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-02 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-02/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-02 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-02 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-02 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -4995,37 +4976,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-03/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-03 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-03 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-03", 'description': "Average amplitude for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-03", 'description': "Average APD/PN for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-03", 'description': "Average timing for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-03", 'description': "Mean timing of the channels in EE-03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-03", 'description': "Timing RMS of the channels in EE-03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-03 L1", 'description': "Pulse shape of all the crystals in EE-03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-03 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-03 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-03 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-03 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-03", 'description': "Average amplitude for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-03", 'description': "Average APD/PN for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-03", 'description': "Average timing for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-03", 'description': "Mean timing of the channels in EE-03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-03", 'description': "Timing RMS of the channels in EE-03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-03 L2", 'description': "Pulse shape of all the crystals in EE-03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-03 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-03 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-03 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-03 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-03", 'description': "Average amplitude for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-03", 'description': "Average APD/PN for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-03", 'description': "Average timing for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-03", 'description': "Mean timing of the channels in EE-03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-03", 'description': "Timing RMS of the channels in EE-03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-03 L3", 'description': "Pulse shape of all the crystals in EE-03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-03 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-03 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-03 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-03 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-03", 'description': "Average amplitude for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-03", 'description': "Average APD/PN for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-03", 'description': "Average timing for each channel of EE-03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-03", 'description': "Mean timing of the channels in EE-03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-03", 'description': "Timing RMS of the channels in EE-03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-03 L4", 'description': "Pulse shape of all the crystals in EE-03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-03 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-03 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-03/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-03 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-03 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-03 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -5232,37 +5309,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-04/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-04 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-04 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-04", 'description': "Average amplitude for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-04", 'description': "Average APD/PN for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-04", 'description': "Average timing for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-04", 'description': "Mean timing of the channels in EE-04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-04", 'description': "Timing RMS of the channels in EE-04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-04 L1", 'description': "Pulse shape of all the crystals in EE-04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-04 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-04 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-04 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-04 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-04", 'description': "Average amplitude for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-04", 'description': "Average APD/PN for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-04", 'description': "Average timing for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-04", 'description': "Mean timing of the channels in EE-04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-04", 'description': "Timing RMS of the channels in EE-04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-04 L2", 'description': "Pulse shape of all the crystals in EE-04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-04 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-04 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-04 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-04 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-04", 'description': "Average amplitude for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-04", 'description': "Average APD/PN for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-04", 'description': "Average timing for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-04", 'description': "Mean timing of the channels in EE-04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-04", 'description': "Timing RMS of the channels in EE-04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-04 L3", 'description': "Pulse shape of all the crystals in EE-04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-04 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-04 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-04 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-04 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-04", 'description': "Average amplitude for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-04", 'description': "Average APD/PN for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-04", 'description': "Average timing for each channel of EE-04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-04", 'description': "Mean timing of the channels in EE-04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-04", 'description': "Timing RMS of the channels in EE-04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-04 L4", 'description': "Pulse shape of all the crystals in EE-04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-04 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-04 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-04/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-04 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-04 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-04 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -5469,37 +5642,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-05/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-05 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-05 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-05", 'description': "Average amplitude for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-05", 'description': "Average APD/PN for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-05", 'description': "Average timing for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-05", 'description': "Mean timing of the channels in EE-05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-05", 'description': "Timing RMS of the channels in EE-05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-05 L1", 'description': "Pulse shape of all the crystals in EE-05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-05 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-05 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-05 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-05 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-05", 'description': "Average amplitude for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-05", 'description': "Average APD/PN for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-05", 'description': "Average timing for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-05", 'description': "Mean timing of the channels in EE-05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-05", 'description': "Timing RMS of the channels in EE-05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-05 L2", 'description': "Pulse shape of all the crystals in EE-05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-05 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-05 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-05 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-05 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-05", 'description': "Average amplitude for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-05", 'description': "Average APD/PN for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-05", 'description': "Average timing for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-05", 'description': "Mean timing of the channels in EE-05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-05", 'description': "Timing RMS of the channels in EE-05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-05 L3", 'description': "Pulse shape of all the crystals in EE-05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-05 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-05 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-05 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-05 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-05", 'description': "Average amplitude for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-05", 'description': "Average APD/PN for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-05", 'description': "Average timing for each channel of EE-05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-05", 'description': "Mean timing of the channels in EE-05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-05", 'description': "Timing RMS of the channels in EE-05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-05 L4", 'description': "Pulse shape of all the crystals in EE-05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-05 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-05 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-05/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-05 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-05 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-05 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -5706,37 +5975,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-06/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-06 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-06 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-06", 'description': "Average amplitude for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-06", 'description': "Average APD/PN for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-06", 'description': "Average timing for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-06", 'description': "Mean timing of the channels in EE-06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-06", 'description': "Timing RMS of the channels in EE-06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-06 L1", 'description': "Pulse shape of all the crystals in EE-06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-06 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-06 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-06 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-06 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-06", 'description': "Average amplitude for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-06", 'description': "Average APD/PN for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-06", 'description': "Average timing for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-06", 'description': "Mean timing of the channels in EE-06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-06", 'description': "Timing RMS of the channels in EE-06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-06 L2", 'description': "Pulse shape of all the crystals in EE-06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-06 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-06 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-06 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-06 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-06", 'description': "Average amplitude for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-06", 'description': "Average APD/PN for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-06", 'description': "Average timing for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-06", 'description': "Mean timing of the channels in EE-06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-06", 'description': "Timing RMS of the channels in EE-06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-06 L3", 'description': "Pulse shape of all the crystals in EE-06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-06 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-06 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-06 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-06 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-06", 'description': "Average amplitude for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-06", 'description': "Average APD/PN for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-06", 'description': "Average timing for each channel of EE-06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-06", 'description': "Mean timing of the channels in EE-06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-06", 'description': "Timing RMS of the channels in EE-06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-06 L4", 'description': "Pulse shape of all the crystals in EE-06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-06 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-06 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-06/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-06 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-06 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-06 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -5943,37 +6308,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-07/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-07 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-07 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-07", 'description': "Average amplitude for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-07", 'description': "Average APD/PN for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-07", 'description': "Average timing for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-07", 'description': "Mean timing of the channels in EE-07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-07", 'description': "Timing RMS of the channels in EE-07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-07 L1", 'description': "Pulse shape of all the crystals in EE-07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-07 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-07 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-07 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-07 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-07", 'description': "Average amplitude for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-07", 'description': "Average APD/PN for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-07", 'description': "Average timing for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-07", 'description': "Mean timing of the channels in EE-07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-07", 'description': "Timing RMS of the channels in EE-07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-07 L2", 'description': "Pulse shape of all the crystals in EE-07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-07 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-07 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-07 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-07 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-07", 'description': "Average amplitude for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-07", 'description': "Average APD/PN for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-07", 'description': "Average timing for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-07", 'description': "Mean timing of the channels in EE-07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-07", 'description': "Timing RMS of the channels in EE-07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-07 L3", 'description': "Pulse shape of all the crystals in EE-07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-07 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-07 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-07 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-07 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-07", 'description': "Average amplitude for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-07", 'description': "Average APD/PN for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-07", 'description': "Average timing for each channel of EE-07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-07", 'description': "Mean timing of the channels in EE-07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-07", 'description': "Timing RMS of the channels in EE-07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-07 L4", 'description': "Pulse shape of all the crystals in EE-07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-07 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-07 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-07/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-07 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-07 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-07 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -6180,37 +6641,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-08/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-08 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-08 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-08", 'description': "Average amplitude for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-08", 'description': "Average APD/PN for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-08", 'description': "Average timing for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-08", 'description': "Mean timing of the channels in EE-08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-08", 'description': "Timing RMS of the channels in EE-08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-08 L1", 'description': "Pulse shape of all the crystals in EE-08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-08 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-08 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-08 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-08 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-08", 'description': "Average amplitude for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-08", 'description': "Average APD/PN for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-08", 'description': "Average timing for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-08", 'description': "Mean timing of the channels in EE-08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-08", 'description': "Timing RMS of the channels in EE-08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-08 L2", 'description': "Pulse shape of all the crystals in EE-08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-08 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-08 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-08 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-08 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-08", 'description': "Average amplitude for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-08", 'description': "Average APD/PN for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-08", 'description': "Average timing for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-08", 'description': "Mean timing of the channels in EE-08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-08", 'description': "Timing RMS of the channels in EE-08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-08 L3", 'description': "Pulse shape of all the crystals in EE-08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-08 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-08 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-08 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-08 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-08", 'description': "Average amplitude for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-08", 'description': "Average APD/PN for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-08", 'description': "Average timing for each channel of EE-08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-08", 'description': "Mean timing of the channels in EE-08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-08", 'description': "Timing RMS of the channels in EE-08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-08 L4", 'description': "Pulse shape of all the crystals in EE-08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-08 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-08 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-08/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-08 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-08 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-08 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -6417,37 +6974,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE-09/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE-09 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE-09 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE-09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE-09", 'description': "Average amplitude for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE-09", 'description': "Average APD/PN for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE-09", 'description': "Average timing for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE-09", 'description': "Mean timing of the channels in EE-09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE-09", 'description': "Timing RMS of the channels in EE-09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE-09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE-09 L1", 'description': "Pulse shape of all the crystals in EE-09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE-09 G01 L1", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE-09 G01 L1", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE-09 G16 L1", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE-09 G16 L1", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE-09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE-09", 'description': "Average amplitude for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE-09", 'description': "Average APD/PN for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE-09", 'description': "Average timing for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE-09", 'description': "Mean timing of the channels in EE-09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE-09", 'description': "Timing RMS of the channels in EE-09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE-09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE-09 L2", 'description': "Pulse shape of all the crystals in EE-09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE-09 G01 L2", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE-09 G01 L2", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE-09 G16 L2", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE-09 G16 L2", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE-09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE-09", 'description': "Average amplitude for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE-09", 'description': "Average APD/PN for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE-09", 'description': "Average timing for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE-09", 'description': "Mean timing of the channels in EE-09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE-09", 'description': "Timing RMS of the channels in EE-09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE-09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE-09 L3", 'description': "Pulse shape of all the crystals in EE-09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE-09 G01 L3", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE-09 G01 L3", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE-09 G16 L3", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE-09 G16 L3", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE-09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE-09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE-09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE-09", 'description': "Average amplitude for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE-09", 'description': "Average APD/PN for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE-09", 'description': "Average timing for each channel of EE-09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE-09", 'description': "Mean timing of the channels in EE-09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE-09", 'description': "Timing RMS of the channels in EE-09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE-09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE-09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE-09 L4", 'description': "Pulse shape of all the crystals in EE-09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE-09 G01 L4", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE-09 G01 L4", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE-09/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE-09 G16 L4", 'description': "Average pedestals of the 10 PNs of EE-09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE-09 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE-09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE-09 G16 L4", 'description': "Amplitudes of the 10 PNs of EE-09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -6654,37 +7307,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+01/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+01 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+01 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+01", 'description': "Average amplitude for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+01", 'description': "Average APD/PN for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+01", 'description': "Average timing for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+01", 'description': "Mean timing of the channels in EE+01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+01", 'description': "Timing RMS of the channels in EE+01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+01 L1", 'description': "Pulse shape of all the crystals in EE+01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+01 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+01 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+01 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+01 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+01", 'description': "Average amplitude for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+01", 'description': "Average APD/PN for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+01", 'description': "Average timing for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+01", 'description': "Mean timing of the channels in EE+01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+01", 'description': "Timing RMS of the channels in EE+01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+01 L2", 'description': "Pulse shape of all the crystals in EE+01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+01 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+01 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+01 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+01 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+01", 'description': "Average amplitude for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+01", 'description': "Average APD/PN for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+01", 'description': "Average timing for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+01", 'description': "Mean timing of the channels in EE+01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+01", 'description': "Timing RMS of the channels in EE+01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+01 L3", 'description': "Pulse shape of all the crystals in EE+01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+01 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+01 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+01 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+01 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+01", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+01", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+01, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+01", 'description': "Average amplitude for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+01", 'description': "Average APD/PN for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+01", 'description': "Average timing for each channel of EE+01 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+01", 'description': "Mean timing of the channels in EE+01. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+01", 'description': "Timing RMS of the channels in EE+01. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+01", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+01) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+01 L4", 'description': "Pulse shape of all the crystals in EE+01, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+01 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+01 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+01/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+01 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+01 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+01 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+01 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+01 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+01 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -6891,37 +7640,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+02/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+02 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+02 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+02", 'description': "Average amplitude for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+02", 'description': "Average APD/PN for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+02", 'description': "Average timing for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+02", 'description': "Mean timing of the channels in EE+02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+02", 'description': "Timing RMS of the channels in EE+02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+02 L1", 'description': "Pulse shape of all the crystals in EE+02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+02 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+02 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+02 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+02 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+02", 'description': "Average amplitude for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+02", 'description': "Average APD/PN for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+02", 'description': "Average timing for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+02", 'description': "Mean timing of the channels in EE+02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+02", 'description': "Timing RMS of the channels in EE+02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+02 L2", 'description': "Pulse shape of all the crystals in EE+02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+02 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+02 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+02 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+02 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+02", 'description': "Average amplitude for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+02", 'description': "Average APD/PN for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+02", 'description': "Average timing for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+02", 'description': "Mean timing of the channels in EE+02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+02", 'description': "Timing RMS of the channels in EE+02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+02 L3", 'description': "Pulse shape of all the crystals in EE+02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+02 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+02 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+02 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+02 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+02", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+02", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+02, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+02", 'description': "Average amplitude for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+02", 'description': "Average APD/PN for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+02", 'description': "Average timing for each channel of EE+02 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+02", 'description': "Mean timing of the channels in EE+02. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+02", 'description': "Timing RMS of the channels in EE+02. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+02", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+02) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+02 L4", 'description': "Pulse shape of all the crystals in EE+02, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+02 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+02 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+02/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+02 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+02 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+02 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+02 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+02 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+02 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -7128,37 +7973,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+03/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+03 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+03 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+03", 'description': "Average amplitude for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+03", 'description': "Average APD/PN for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+03", 'description': "Average timing for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+03", 'description': "Mean timing of the channels in EE+03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+03", 'description': "Timing RMS of the channels in EE+03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+03 L1", 'description': "Pulse shape of all the crystals in EE+03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+03 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+03 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+03 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+03 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+03", 'description': "Average amplitude for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+03", 'description': "Average APD/PN for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+03", 'description': "Average timing for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+03", 'description': "Mean timing of the channels in EE+03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+03", 'description': "Timing RMS of the channels in EE+03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+03 L2", 'description': "Pulse shape of all the crystals in EE+03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+03 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+03 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+03 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+03 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+03", 'description': "Average amplitude for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+03", 'description': "Average APD/PN for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+03", 'description': "Average timing for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+03", 'description': "Mean timing of the channels in EE+03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+03", 'description': "Timing RMS of the channels in EE+03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+03 L3", 'description': "Pulse shape of all the crystals in EE+03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+03 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+03 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+03 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+03 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+03", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+03", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+03, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+03", 'description': "Average amplitude for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+03", 'description': "Average APD/PN for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+03", 'description': "Average timing for each channel of EE+03 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+03", 'description': "Mean timing of the channels in EE+03. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+03", 'description': "Timing RMS of the channels in EE+03. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+03", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+03) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+03 L4", 'description': "Pulse shape of all the crystals in EE+03, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+03 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+03 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+03/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+03 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+03 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+03 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+03 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+03 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+03 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -7365,37 +8306,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+04/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+04 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+04 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+04", 'description': "Average amplitude for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+04", 'description': "Average APD/PN for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+04", 'description': "Average timing for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+04", 'description': "Mean timing of the channels in EE+04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+04", 'description': "Timing RMS of the channels in EE+04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+04 L1", 'description': "Pulse shape of all the crystals in EE+04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+04 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+04 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+04 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+04 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+04", 'description': "Average amplitude for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+04", 'description': "Average APD/PN for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+04", 'description': "Average timing for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+04", 'description': "Mean timing of the channels in EE+04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+04", 'description': "Timing RMS of the channels in EE+04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+04 L2", 'description': "Pulse shape of all the crystals in EE+04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+04 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+04 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+04 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+04 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+04", 'description': "Average amplitude for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+04", 'description': "Average APD/PN for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+04", 'description': "Average timing for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+04", 'description': "Mean timing of the channels in EE+04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+04", 'description': "Timing RMS of the channels in EE+04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+04 L3", 'description': "Pulse shape of all the crystals in EE+04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+04 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+04 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+04 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+04 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+04", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+04", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+04, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+04", 'description': "Average amplitude for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+04", 'description': "Average APD/PN for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+04", 'description': "Average timing for each channel of EE+04 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+04", 'description': "Mean timing of the channels in EE+04. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+04", 'description': "Timing RMS of the channels in EE+04. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+04", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+04) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+04 L4", 'description': "Pulse shape of all the crystals in EE+04, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+04 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+04 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+04/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+04 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+04 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+04 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+04 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+04 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+04 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -7602,37 +8639,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+05/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+05 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+05 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+05", 'description': "Average amplitude for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+05", 'description': "Average APD/PN for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+05", 'description': "Average timing for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+05", 'description': "Mean timing of the channels in EE+05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+05", 'description': "Timing RMS of the channels in EE+05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+05 L1", 'description': "Pulse shape of all the crystals in EE+05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+05 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+05 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+05 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+05 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+05", 'description': "Average amplitude for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+05", 'description': "Average APD/PN for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+05", 'description': "Average timing for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+05", 'description': "Mean timing of the channels in EE+05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+05", 'description': "Timing RMS of the channels in EE+05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+05 L2", 'description': "Pulse shape of all the crystals in EE+05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+05 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+05 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+05 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+05 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+05", 'description': "Average amplitude for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+05", 'description': "Average APD/PN for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+05", 'description': "Average timing for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+05", 'description': "Mean timing of the channels in EE+05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+05", 'description': "Timing RMS of the channels in EE+05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+05 L3", 'description': "Pulse shape of all the crystals in EE+05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+05 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+05 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+05 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+05 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+05", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+05", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+05, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+05", 'description': "Average amplitude for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+05", 'description': "Average APD/PN for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+05", 'description': "Average timing for each channel of EE+05 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+05", 'description': "Mean timing of the channels in EE+05. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+05", 'description': "Timing RMS of the channels in EE+05. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+05", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+05) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+05 L4", 'description': "Pulse shape of all the crystals in EE+05, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+05 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+05 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+05/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+05 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+05 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+05 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+05 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+05 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+05 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -7839,37 +8972,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+06/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+06 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+06 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+06", 'description': "Average amplitude for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+06", 'description': "Average APD/PN for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+06", 'description': "Average timing for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+06", 'description': "Mean timing of the channels in EE+06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+06", 'description': "Timing RMS of the channels in EE+06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+06 L1", 'description': "Pulse shape of all the crystals in EE+06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+06 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+06 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+06 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+06 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+06", 'description': "Average amplitude for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+06", 'description': "Average APD/PN for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+06", 'description': "Average timing for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+06", 'description': "Mean timing of the channels in EE+06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+06", 'description': "Timing RMS of the channels in EE+06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+06 L2", 'description': "Pulse shape of all the crystals in EE+06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+06 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+06 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+06 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+06 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+06", 'description': "Average amplitude for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+06", 'description': "Average APD/PN for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+06", 'description': "Average timing for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+06", 'description': "Mean timing of the channels in EE+06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+06", 'description': "Timing RMS of the channels in EE+06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+06 L3", 'description': "Pulse shape of all the crystals in EE+06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+06 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+06 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+06 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+06 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+06", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+06", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+06, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+06", 'description': "Average amplitude for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+06", 'description': "Average APD/PN for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+06", 'description': "Average timing for each channel of EE+06 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+06", 'description': "Mean timing of the channels in EE+06. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+06", 'description': "Timing RMS of the channels in EE+06. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+06", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+06) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+06 L4", 'description': "Pulse shape of all the crystals in EE+06, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+06 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+06 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+06/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+06 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+06 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+06 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+06 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+06 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+06 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -8076,37 +9305,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+07/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+07 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+07 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+07", 'description': "Average amplitude for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+07", 'description': "Average APD/PN for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+07", 'description': "Average timing for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+07", 'description': "Mean timing of the channels in EE+07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+07", 'description': "Timing RMS of the channels in EE+07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+07 L1", 'description': "Pulse shape of all the crystals in EE+07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+07 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+07 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+07 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+07 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+07", 'description': "Average amplitude for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+07", 'description': "Average APD/PN for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+07", 'description': "Average timing for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+07", 'description': "Mean timing of the channels in EE+07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+07", 'description': "Timing RMS of the channels in EE+07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+07 L2", 'description': "Pulse shape of all the crystals in EE+07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+07 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+07 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+07 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+07 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+07", 'description': "Average amplitude for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+07", 'description': "Average APD/PN for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+07", 'description': "Average timing for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+07", 'description': "Mean timing of the channels in EE+07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+07", 'description': "Timing RMS of the channels in EE+07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+07 L3", 'description': "Pulse shape of all the crystals in EE+07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+07 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+07 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+07 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+07 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+07", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+07", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+07, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+07", 'description': "Average amplitude for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+07", 'description': "Average APD/PN for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+07", 'description': "Average timing for each channel of EE+07 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+07", 'description': "Mean timing of the channels in EE+07. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+07", 'description': "Timing RMS of the channels in EE+07. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+07", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+07) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+07 L4", 'description': "Pulse shape of all the crystals in EE+07, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+07 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+07 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+07/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+07 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+07 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+07 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+07 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+07 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+07 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -8313,37 +9638,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+08/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+08 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+08 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+08", 'description': "Average amplitude for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+08", 'description': "Average APD/PN for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+08", 'description': "Average timing for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+08", 'description': "Mean timing of the channels in EE+08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+08", 'description': "Timing RMS of the channels in EE+08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+08 L1", 'description': "Pulse shape of all the crystals in EE+08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+08 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+08 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+08 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+08 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+08", 'description': "Average amplitude for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+08", 'description': "Average APD/PN for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+08", 'description': "Average timing for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+08", 'description': "Mean timing of the channels in EE+08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+08", 'description': "Timing RMS of the channels in EE+08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+08 L2", 'description': "Pulse shape of all the crystals in EE+08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+08 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+08 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+08 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+08 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+08", 'description': "Average amplitude for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+08", 'description': "Average APD/PN for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+08", 'description': "Average timing for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+08", 'description': "Mean timing of the channels in EE+08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+08", 'description': "Timing RMS of the channels in EE+08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+08 L3", 'description': "Pulse shape of all the crystals in EE+08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+08 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+08 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+08 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+08 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+08", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+08", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+08, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+08", 'description': "Average amplitude for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+08", 'description': "Average APD/PN for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+08", 'description': "Average timing for each channel of EE+08 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+08", 'description': "Mean timing of the channels in EE+08. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+08", 'description': "Timing RMS of the channels in EE+08. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+08", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+08) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+08 L4", 'description': "Pulse shape of all the crystals in EE+08, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+08 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+08 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+08/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+08 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+08 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+08 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+08 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+08 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+08 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -8550,37 +9971,133 @@ eelayout(dqmitems, "00 By Task/04 TestPulse/EE+09/02 PNs Variables Gain16",
    { 'path': "EcalEndcap/EETestPulseClient/EETPT PNs pedestal rms EE+09 G16", 'description': "RMS of the pedestals of the PNs in testpulse events. It should be < 1ADC count in Gain 01 and < 3 ADC counts in Gain 16. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EETestPulseTask/PN/Gain16/EETPT PNs amplitude EE+09 G16", 'description': "Amplitude of the PNs in testpulse events. It should be > 100 ADC counts and each channel within 20% of the others. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 Summary",
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL1 BlueQuantronix Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1/00 Quality",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1 BlueQuantronix/00 Quality",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 EE+09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G01 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
    { 'path': "EcalEndcap/EELaserClient/EELT laser quality L1 PNs G16 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1/01 Amplitude",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1 BlueQuantronix/01 Amplitude",
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L1 EE+09", 'description': "Average amplitude for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L1 EE+09", 'description': "Average APD/PN for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1/02 Timing",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1 BlueQuantronix/02 Timing",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L1 EE+09", 'description': "Average timing for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L1 EE+09", 'description': "Mean timing of the channels in EE+09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L1 EE+09", 'description': "Timing RMS of the channels in EE+09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1/03 Pulse Shape",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1 BlueQuantronix/03 Pulse Shape",
   [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L1 EE+09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/EELT shape EE+09 L1", 'description': "Pulse shape of all the crystals in EE+09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1/04 PNs Gain01",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1 BlueQuantronix/04 PNs Gain01",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs pedestal EE+09 G01 L1", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G01 L1", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain01/EELT PNs amplitude EE+09 G01 L1", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1/05 PNs Gain16",
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L1 BlueQuantronix/05 PNs Gain16",
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs pedestal EE+09 G16 L1", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G16 L1", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EELaserTask/Laser1/PN/Gain16/EELT PNs amplitude EE+09 G16 L1", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL2 Green Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L2 Green/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 EE+09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G01 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L2 PNs G16 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L2 Green/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L2 EE+09", 'description': "Average amplitude for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L2 EE+09", 'description': "Average APD/PN for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L2 Green/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L2 EE+09", 'description': "Average timing for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L2 EE+09", 'description': "Mean timing of the channels in EE+09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L2 EE+09", 'description': "Timing RMS of the channels in EE+09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L2 Green/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L2 EE+09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/EELT shape EE+09 L2", 'description': "Pulse shape of all the crystals in EE+09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L2 Green/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs pedestal EE+09 G01 L2", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G01 L2", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain01/EELT PNs amplitude EE+09 G01 L2", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L2 Green/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs pedestal EE+09 G16 L2", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G16 L2", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser2/PN/Gain16/EELT PNs amplitude EE+09 G16 L2", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL3 BluePhotonics Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L3 BluePhotonics/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 EE+09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G01 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L3 PNs G16 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L3 BluePhotonics/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L3 EE+09", 'description': "Average amplitude for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L3 EE+09", 'description': "Average APD/PN for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L3 BluePhotonics/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L3 EE+09", 'description': "Average timing for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L3 EE+09", 'description': "Mean timing of the channels in EE+09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L3 EE+09", 'description': "Timing RMS of the channels in EE+09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L3 BluePhotonics/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L3 EE+09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/EELT shape EE+09 L3", 'description': "Pulse shape of all the crystals in EE+09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L3 BluePhotonics/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs pedestal EE+09 G01 L3", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G01 L3", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain01/EELT PNs amplitude EE+09 G01 L3", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L3 BluePhotonics/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs pedestal EE+09 G16 L3", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G16 L3", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser3/PN/Gain16/EELT PNs amplitude EE+09 G16 L3", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/00 LaserL4 IR Summary",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L4 IR/00 Quality",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 EE+09", 'description': "Quality histogram of laser events on crystals. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G01 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 1. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser quality L4 PNs G16 EE+09", 'description': "Quality histogram of laser events on PNs in Gain 16. Expect green if the laser sequence fired supermodule EE+09, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L4 IR/01 Amplitude",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude L4 EE+09", 'description': "Average amplitude for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: amplitude > 100 ADC; RMS < 30% of the mean. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT amplitude over PN L4 EE+09", 'description': "Average APD/PN for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: APD/PN > XXX. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L4 IR/02 Timing",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing L4 EE+09", 'description': "Average timing for each channel of EE+09 (error is the RMS of the distribution). Quality cuts are: timing is within 5.5 - 6.5 clocks. RMS is < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser timing mean L4 EE+09", 'description': "Mean timing of the channels in EE+09. Timing is expected within 5.5 - 6.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT laser timing rms L4 EE+09", 'description': "Timing RMS of the channels in EE+09. Timing RMS is expected < 0.5 clocks. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L4 IR/03 Pulse Shape",
+  [{ 'path': "EcalEndcap/EELaserClient/EELT laser shape L4 EE+09", 'description': "Pulse shape of a reference crystal (crystal 1 of EE+09) averaged on all the events. Clear pulse should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/EELT shape EE+09 L4", 'description': "Pulse shape of all the crystals in EE+09, averaged on all the events. Clear pulses should be seen. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L4 IR/04 PNs Gain01",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs pedestal EE+09 G01 L4", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 1. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G01 L4", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 1. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain01/EELT PNs amplitude EE+09 G01 L4", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain1. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+
+eelayout(dqmitems, "00 By Task/05 Laser/EE+09/L4 IR/05 PNs Gain16",
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs pedestal EE+09 G16 L4", 'description': "Average pedestals of the 10 PNs of EE+09 in Gain 16. Expected around 760 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
+   { 'path': "EcalEndcap/EELaserClient/EELT PNs pedestal rms EE+09 G16 L4", 'description': "RMS of the pedestals of PN diodes of EE+09 in Gain 16. Expected around 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
+  [{ 'path': "EcalEndcap/EELaserTask/Laser4/PN/Gain16/EELT PNs amplitude EE+09 G16 L4", 'description': "Amplitudes of the 10 PNs of EE+09 in Gain16. Expected values around 1500 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/06 Led/00 LedL1 Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -8960,3 +10477,4 @@ eelayout(dqmitems, "00 By Task/14 SelectiveReadout/19 ZS Filter Output High Inte
 eelayout(dqmitems, "00 By Task/14 SelectiveReadout/20 ZS Filter Output Low Interest",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT low interest ZS filter output EE -", 'description': "Endcap - Low Interest ZS emulation. Signal of channels from barrel low interest regions as reconstructed by the ZS emulator. A sharp cut at zero suppression threshold is expected, with all bins below this threshold empty. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT low interest ZS filter output EE +", 'description': "Endcap + Low Interest ZS emulation. Signal of channels from barrel low interest regions as reconstructed by the ZS emulator. A sharp cut at zero suppression threshold is expected, with all bins below this threshold empty. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
+

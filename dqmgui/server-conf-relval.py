@@ -1,15 +1,15 @@
 import os.path, socket; global CONFIGDIR
+from glob import glob
 CONFIGDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 1)[0]
 BASEDIR   = CONFIGDIR.replace("/current/config/dqmgui", "")
 STATEDIR  = "%s/state/dqmgui/relval" % BASEDIR
 LOGDIR    = "%s/logs/dqmgui/relval" % BASEDIR
 
-LAYOUTS = ["%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, x) for x in
-           ("hlt", "ecal" )]
-LAYOUTS += ["%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, x) for x in
-            ("ecal", )]
-LAYOUTS += ["%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, x) for x in
-           ("hlt", "ecal" )]
+LAYOUTS = glob("%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, "hlt"))
+LAYOUTS += glob("%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, "ecal"))
+LAYOUTS += glob("%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, "ecal"))
+LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "hlt"))
+LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "ecal"))
 
 modules = ("Monitoring.DQM.GUI",)
 
@@ -32,7 +32,8 @@ server.extend('DQMFileAccess', None, "%s/uploads" % STATEDIR,
                 "ZIP": "%s/zipped" % STATEDIR })
 server.extend('DQMLayoutAccess', None, STATEDIR,
               ['/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=lilopera/CN=692665/CN=Luis Ignacio Lopera Gonzalez',
-               '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere' ])
+               '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere',
+	       '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=erosales/CN=725205/CN=Edgar Eduardo Rosales Rosero' ])
 server.source('DQMUnknown')
 server.source('DQMOverlay')
 server.source('DQMStripChart')

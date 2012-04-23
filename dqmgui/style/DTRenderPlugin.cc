@@ -1,11 +1,11 @@
-// $Id: DTRenderPlugin.cc,v 1.62 2011/09/09 11:53:42 lilopera Exp $
+// $Id: DTRenderPlugin.cc,v 1.63 2011/11/11 13:34:29 lilopera Exp $
 
 /*!
   \file EBRenderPlugin
   \brief Display Plugin for Quality Histograms
   \author G. Masetti
-  \version $Revision: 1.62 $
-  \date $Date: 2011/09/09 11:53:42 $
+  \version $Revision: 1.63 $
+  \date $Date: 2011/11/11 13:34:29 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -102,6 +102,54 @@ public:
 
 private:
   // private functions...
+  void setOccupancyPalette( TH2F &h, double brokenHz) {
+    // set new palette for Occupancy TH2 per chamber:
+    // bin filled with value -1 == no real channels: displayed color code gray.
+    // bin with no entries == broken channels: displayed color code white.
+
+    gStyle->SetPalette(1);
+    int nc = gStyle->GetNumberOfColors();
+
+    double max = h.GetMaximum();
+
+    if( max == 0 ) {
+      nc=0;
+    } else if( max > 0 && max <= (brokenHz+1) ) {
+      brokenHz=max/2.;
+    } else {
+      brokenHz=brokenHz + 1.;
+    }
+
+    gStyle->SetNumberContours(nc+2);
+    int *colors = new int[nc+2];
+
+    colors[0] = 14;
+    colors[1] = 0;
+
+    for(int c=2;c<nc+2;c++) {
+      colors[c] = gStyle->GetColorPalette(c-2);
+    }
+
+    gStyle->SetPalette(nc+2,colors);
+
+    double *cont = new double[nc+2];
+
+    cont[0] = -1;
+    cont[1] = 0;
+
+    if( nc != 0 ) {
+      cont[2] = brokenHz;
+      for(int l=3; l<52; l++) {
+        cont[l] = (max-brokenHz)/50.*(l-2) + brokenHz;
+      }
+    }
+
+    h.SetContour(nc+2,cont);
+
+    return;
+
+  }
+
   void preDrawTProfile2D( TCanvas *c, const VisDQMObject &o)
     {
       TProfile2D* obj = dynamic_cast<TProfile2D*>( o.object );
@@ -1277,6 +1325,9 @@ private:
       if(o.name.find("OccupancyAllHits_perCh") != std::string::npos)
       {
         TH2F * histo =  dynamic_cast<TH2F*>( o.object );
+
+      setOccupancyPalette(*histo,0.);
+
         int nBinsX = histo->GetNbinsX();
         for(int i = 0; i !=12; ++i)
         {

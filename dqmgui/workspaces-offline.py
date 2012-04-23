@@ -93,10 +93,31 @@ server.workspace('DQMContent', 44, 'POG', 'Btag', '^Btag/', '',
 server.workspace('DQMContent', 45, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonitor|OfflinePV)/', '',
                                   'Tracking/Layouts/01 - Tracking ReportSummary',
                                   'Tracking/Layouts/02 - Tracks (pp collisions)',
-                                  'Tracking/Layouts/03 - Tracks (Cosmic Tracking)'
+                 'Tracking/Layouts/03 - Tracks (Cosmic Tracking)',
+                 'Tracking/Layouts/08 - Tracks (pp collisions) old layout'
                                   )
+server.workspace('DQMContent', 46, 'POG', 'Tau', '^RecoTauV/', '',
+        "RecoTauV/Layouts/SingleMu/00aa - Fake rate from muons vs pt",
+        "RecoTauV/Layouts/SingleMu/00ab - Fake rate from muons vs pt",
+        "RecoTauV/Layouts/SingleMu/01a - Muon rejection fake rate vs pt",
+        "RecoTauV/Layouts/SingleMu/02aa - Fake rate from jets vs pt",
+        "RecoTauV/Layouts/SingleMu/02ab - Fake rate from jets vs pt",
+        "RecoTauV/Layouts/Jet/00aa - Fake rate from jets vs pt",
+        "RecoTauV/Layouts/Jet/00ab - Fake rate from jets vs pt",
+        "RecoTauV/Layouts/DoubleElectron_OR_TauPlusX/00aa - Fake rate from electrons vs pt",
+        "RecoTauV/Layouts/DoubleElectron_OR_TauPlusX/00ab - Fake rate from electrons vs pt",
+        "RecoTauV/Layouts/DoubleElectron_OR_TauPlusX/01a - Electron rejection fake rate vs pt",
+        "RecoTauV/Layouts/SingleMu/00ba - Fake rate from muons vs pileup",
+        "RecoTauV/Layouts/SingleMu/00bb - Fake rate from muons vs pileup",
+        "RecoTauV/Layouts/SingleMu/02ba - Fake rate from jets vs pileup",
+        "RecoTauV/Layouts/SingleMu/02bb - Fake rate from jets vs pileup",
+        "RecoTauV/Layouts/Jet/00ba - Fake rate from jets vs pileup",
+        "RecoTauV/Layouts/Jet/00bb - Fake rate from jets vs pileup",
+        "RecoTauV/Layouts/DoubleElectron_OR_TauPlusX/00ba - Fake rate from electrons vs pileup",
+        "RecoTauV/Layouts/DoubleElectron_OR_TauPlusX/00bb - Fake rate from electrons vs pileup",
+    )
 
-server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/', '',
+server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/', 'Collisions/TrackingFeedBack',
                  'Collisions/TrackingFeedBack/00 - Number Of Tracks',
                  'Collisions/TrackingFeedBack/01 - Track Pt',
                  'Collisions/TrackingFeedBack/02 - Track Phi',
@@ -106,7 +127,7 @@ server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack'
                  'Collisions/TrackingFeedBack/06 - Z-Position Of Closest Approach',
                  'Collisions/TrackingFeedBack/07 - Cluster y width vs. cluster eta'
 )
-server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|EcalBarrel|EcalEndcap|EcalPreshower)/', '',
+server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|EcalBarrel|EcalEndcap|EcalPreshower)/', 'Collisions/EcalFeedBack',
                  "Collisions/EcalFeedBack/00 Single Event Timing EE",
                  "Collisions/EcalFeedBack/01 Timing Mean EE",
                  "Collisions/EcalFeedBack/02 Timing Map EE -",
@@ -121,7 +142,7 @@ server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^
                  "Collisions/EcalFeedBack/09 ES Energy Map",
                  "Collisions/EcalFeedBack/10 ES Timing Plot"
                  )
-server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', '',
+server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', 'Collisions/HcalFeedBack',
                  "Collisions/HcalFeedBack/01 - HF+,HF- coincidences (with BPTX)",
                  "Collisions/HcalFeedBack/02 - HF+,HF- coincidences (without BPTX)",
                  "Collisions/HcalFeedBack/03 - Digi Shapes for Total Digi Signals > N counts",
@@ -130,7 +151,7 @@ server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^
                  "Collisions/HcalFeedBack/06 - Lumi Distributions",
                  )
 
-server.workspace('DQMContent', 54,'FeedBack for Collisions', 'L1T FeedBack','^(Collisions|L1T)/', '',
+server.workspace('DQMContent', 54,'FeedBack for Collisions', 'L1T FeedBack','^(Collisions|L1T)/', 'Collisions/L1TFeedBack',
                 "Collisions/L1TFeedBack/00 Rate BSCL.BSCR",
                 "Collisions/L1TFeedBack/01 Rate BSC splash right",
                 "Collisions/L1TFeedBack/02 Rate BSC splash left",
@@ -139,7 +160,7 @@ server.workspace('DQMContent', 54,'FeedBack for Collisions', 'L1T FeedBack','^(C
                 "Collisions/L1TFeedBack/05 Integ HF Triggers vs LS"
                 )
 
-server.workspace('DQMContent', 55,'FeedBack for Collisions', 'HLT FeedBack','^(Collisions|HLT)/', '',
+server.workspace('DQMContent', 55,'FeedBack for Collisions', 'HLT FeedBack','^(Collisions|HLT)/', 'Collisions/HLTFeedBack',
                 "Collisions/HLTFeedBack/00 HLT_Egamma_Pass_Any",
                 "Collisions/HLTFeedBack/01 HLT_JetMet_Pass_Any",
                 "Collisions/HLTFeedBack/02 HLT_Muon_Pass_Any",
