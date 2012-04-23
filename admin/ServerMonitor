@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, os.path, sys, re, urllib2, socket, traceback, errno, thread
+import os, os.path, sys, re, urllib2, socket, traceback, errno, thread, hmac, hashlib
 from time import time, sleep, strftime, localtime
 from subprocess import Popen, PIPE
 from threading import Thread
@@ -17,6 +17,28 @@ def logmsg(*args):
   # result in jumbled output.
   sys.stdout.write(strftime("%b %d %H:%M:%S ", localtime(time()))
 		   + " ".join(args) + "\n")
+
+def authz_headers(hmac_key):
+  """Create fake authentication and authorisation headers compatible
+  with the CMSWEB front-ends. Assumes you have the HMAC signing key
+  the back-end will use to validate the headers.
+
+  :arg str hmac_key: binary key data for signing headers.
+  :returns: list of header name, value tuples to add to a HTTP request."""
+  headers = { "cms-auth-status": "OK",
+              "cms-authn-method": "ServerMonitor",
+              "cms-authn-login": "server-monitor",
+              "cms-authn-name": "Server Monitor" }
+  prefix = suffix = ""
+  hkeys = headers.keys()
+  for hk in sorted(hkeys):
+    if hk != "cms-auth-status":
+      prefix += "h%xv%x" % (len(hk), len(headers[hk]))
+      suffix += "%s%s" % (hk, headers[hk])
+
+  cksum = hmac.new(hmac_key, prefix + "#" + suffix, hashlib.sha1).hexdigest()
+  headers["cms-authn-hmac"] = cksum
+  return headers.items()
 
 class FileState:
   """Cached information about a file: size, mtime and last read position."""
@@ -121,16 +143,20 @@ class URLMonitor(Monitor):
     methods.append(urllib2.HTTPRedirectHandler())
     self.opener = urllib2.build_opener(*methods)
 
-  def _do(self, svc, can_talk, url, regex):
+  def _do(self, svc, can_talk, url, regex, headers):
     """Ping a URL and check the response matches a regexp.
 
     @param svc -- service name
     @param can_talk -- can talk about problems
     @param url -- the server to connect to, should be http (not https)
-    @param regex -- regular expression to match against the reply."""
+    @param regex -- regular expression to match against the reply.
+    @param headers -- extra http request headers required."""
     try:
       req = urllib2.Request(url)
       req.add_header("User-Agent", "ServerMonitor/2.0")
+      for h, v in headers:
+        req.add_header(h, v)
+
       if sys.version_info < (2, 6, 0):
         socket.setdefaulttimeout(10)
         obj = self.opener.open(req)
@@ -553,6 +579,11 @@ class MonitorDaemon:
       m = re.match(r'^PING_REGEX="(.*)"$', line)
       if m: s.ping_regex = m.group(1); continue
 
+      m = re.match(r"^PING_HEADER='(.*?): (.*)'$", line)
+      if m: s.ping_headers.append((m.group(1), m.group(2))); continue
+      m = re.match(r'^PING_HEADER="(.*?): (.*)"$', line)
+      if m: s.ping_headers.append((m.group(1), m.group(2))); continue
+
       logmsg("ADMIN", "BADCONFIG", "%s:%d:" % (cfgfile, nline),
              "unrecognised line <%s>" % line)
 
@@ -608,6 +639,13 @@ class MonitorDaemon:
       if ncleared > 0:
         logmsg("ADMIN", "OVERFLOW", "%d tasks discarded" % ncleared)
 
+      # If we find an authz key, automatically use it.
+      authz_key = "%s/current/auth/wmcore-auth/header-auth-key" % self.rootdir
+      if os.path.exists(authz_key):
+        authz = authz_headers(open(authz_key).read())
+      else:
+        authz = []
+
       # Reload any updated configuration files.
       oldconfigs = cfgs.keys()
       for cfgfile in glob("%s/current/config/*/monitoring*.ini" % self.rootdir):
@@ -632,6 +670,7 @@ class MonitorDaemon:
           s.ps_regex = None
           s.ping_url = None
           s.ping_regex = None
+          s.ping_headers = []
 	  s.enable_if = "app_is_enabled"
 	  s.can_talk = True
 
@@ -665,7 +704,7 @@ class MonitorDaemon:
         if s.ps_regex:
           qptask.put((s.svcname, s.can_talk, s.ps_regex))
         if s.ping_url and s.ping_regex:
-          qutask.put((s.svcname, s.can_talk, s.ping_url, s.ping_regex))
+          qutask.put((s.svcname, s.can_talk, s.ping_url, s.ping_regex, s.ping_headers + authz))
 
       # Have a nap, but stop if signalled.
       try: qexit.get(timeout = 30); break
