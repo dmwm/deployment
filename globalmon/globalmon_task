@@ -1,0 +1,47 @@
+#!/bin/sh
+
+##H Usage: globalmon_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   run                 process job status from sites
+##H   updateweb           update web area with the output of last run
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+WEBDIR={WEBDIR}
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  run )
+    . /afs/cern.ch/cms/slc5_amd64_gcc462/cms/dbs-client/DBS_2_1_1_patch1_1/etc/profile.d/init.sh
+    for variant in dev pre prod; do
+      case $variant in dev) a=dev b="-dev";; pre) a=pre b="-testbed";; *) a= b= ;; esac
+      $CFGDIR/getRequestsJSON.py https://vocms204.cern.ch/reqmgr$a/ \
+                                 https://cmsweb$b.cern.ch/ > $STATEDIR/webpage/${variant}.json
+      $CFGDIR/parseRequests.py < $STATEDIR/webpage/${variant}.json \
+                               > $STATEDIR/webpage/prioritized_queues_${variant}.txt
+      bzip2 -f $STATEDIR/webpage/${variant}.json
+    done
+    ;;
+
+  updateweb )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    rsync -q -au --exclude='.svn' --delete $STATEDIR/webpage/ $WEBDIR/
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

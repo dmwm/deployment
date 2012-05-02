@@ -1,0 +1,28 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_globalmon_prep()
+{
+  mkproj webpage
+  mkproxy
+}
+
+deploy_globalmon_sw()
+{
+  deploy_pkg
+  webdir=/afs/cern.ch/cms/LCG/www/otherops
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/globalmon_task
+}
+
+deploy_globalmon_post()
+{
+  (mkcrontab
+   echo "0 0 * * * $project_config/globalmon_task run"
+  ) | crontab -
+
+  klist -s
+  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
+   echo "0 1 * * * $host $project_config/globalmon_task updateweb"
+  ) | acrontab
+
+  note "NOTE: you must configure a CERN web area serving files from $webdir."
+}
