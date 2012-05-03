@@ -107,11 +107,11 @@ for request in requests:
                 localargs = shlex.split(commandline)
                 output = subprocess.Popen(localargs, shell=False, stdout=subprocess.PIPE)
                 lines = output.communicate()[0].split('\n')
-                if len(lines) < 1:
-                    print 'something wrong with:',commandline
-                    break
-                else:
+                try:
                     evnts += int(lines[0].split()[2])
+                except:
+                    print 'something wrong with:',commandline
+                    continue
             else:
                 tmp["RequestNumEvents"] = evnts
         elif len(tmp['RunWhitelist']) > 0:
@@ -128,11 +128,11 @@ for request in requests:
                 localargs = shlex.split(commandline)
                 output = subprocess.Popen(localargs, shell=False, stdout=subprocess.PIPE)
                 lines = output.communicate()[0].split('\n')
-                if len(lines) < 1:
-                    print 'something wrong with:',commandline
-                    break
-                else:
+                try:
                     evnts += int(lines[0].split()[2])
+                except:
+                    print 'something wrong with:',commandline
+                    continue
             else:
                 tmp["RequestNumEvents"] = evnts
         else:
