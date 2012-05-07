@@ -42,6 +42,11 @@
 #   certificates which are CMS VO members or on a special exemption
 #   list of known important service certificates are accepted.
 #
+#  limited-proxy
+#
+#   Add this option to also permit limited proxies in addition to the
+#   normal certificates and proxies allowed by 'cert'.
+#
 #  hnlogin
 #
 #   Allow access if the user has logged in using CMS hypernews login.
@@ -125,6 +130,14 @@
 #     X509Proxy  Client used fully verified X509 grid certificate
 #                proxy, whose main DN is a member of CMS VO.
 #
+#     X509LimitedProxy
+#                Client used fully verified X509 grid certificate
+#                *LIMITED* proxy, whose main DN is a member of CMS VO.
+#                Applications should not necessarily grant these the
+#                same powers as X509Proxy as the proxy may have been
+#                harvested from a worker node. Note that this value is
+#                possible only if 'limited-proxy' is active on service.
+#
 #     HNLogin    Client has logged in using CMS hypernews account.
 #
 #     HostIP     Client IP address was exempted from authentication
@@ -139,16 +152,16 @@
 #  CMS-AuthN-DN
 #
 #   The value of this header is the DN of the client's X509 cert. It
-#   is always present when CMS-AuthN-Method is X509Cert/Proxy, and if
-#   CMS-AuthN-Method is HNLogin and SiteDB has DN account association.
-#   This string is UTF-8.
+#   is always present when CMS-AuthN-Method is X509Cert/(Limited)Proxy,
+#   and if CMS-AuthN-Method is HNLogin and SiteDB has DN account
+#   association. This string is UTF-8.
 #
 #  CMS-AuthN-Login
 #
 #   The value of this header is the CMS hypernew login of the client.
 #   It is always present always when CMS-AuthN-Method is HNLogin, and
-#   if CMS-AuthN-Method is X509Cert/Proxy and SiteDB has DN account
-#   association. This string is ASCII.
+#   if CMS-AuthN-Method is X509Cert/(Limited)Proxy and SiteDB has DN
+#   account association. This string is ASCII.
 #
 #  CMS-AuthN-Name
 #
@@ -594,9 +607,11 @@ sub auth_trouble_handler : method
   }
   elsif ($dn
 	 && (($dn =~ m{(.*?)/CN=\d+$}o && exists $vocms{$1})
-	     || ($dn =~ m{(.*?)(?:/CN=proxy)+$}o && exists $vocms{$1})))
+	     || ($dn =~ m{(.*?)(?:(?:/CN=proxy)+|(/CN=limited proxy))$}o
+                 && exists $vocms{$1})))
   {
-    $message .= "<p>Your certificate is a proxy of a CMS VO member.</p>";
+    $message .= "<p>Your certificate is a " . ($2 ? "limited ": "")
+                . "proxy of a CMS VO member.</p>";
   }
   else
   {
@@ -899,6 +914,11 @@ sub authn_step($$)
   {
     return authn_cert($r, $opts);
   }
+  elsif ($method eq 'limited-proxy')
+  {
+    $$opts{ALLOW_LIMITED_PROXY} = 1;
+    return authn_step($r, $opts);
+  }
   elsif ($method eq 'aucookie')
   {
     return authn_aucookie($r, $opts);
@@ -1065,6 +1085,13 @@ sub authn_cert($$)
   {
     $dn = $1;
     $method = "X509Proxy";
+  }
+  elsif ($$opts{ALLOW_LIMITED_PROXY}
+         && $dn =~ m{(.*?)(?:/CN=proxy)*/CN=limited proxy$}o
+         && exists $vocms{$1})
+  {
+    $dn = $1;
+    $method = "X509LimitedProxy";
   }
   else
   {
