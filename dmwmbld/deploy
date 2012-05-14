@@ -11,7 +11,7 @@ deploy_dmwmbld_sw()
   deploy_pkg
 
   cd $root/current/apps
-  export CVSROOT=":gserver:cmscvs.cern.ch:/cvs_server/repositories/CMSSW"
+  [ "$CVSROOT"X != X ] || export CVSROOT=":gserver:cmssw.cvs.cern.ch:/local/reps/CMSSW"
   cvs co -d PKGTOOLS19 -r V00-19-07 PKGTOOLS
   cvs co -d PKGTOOLS20 -r V00-20-26 PKGTOOLS
 
