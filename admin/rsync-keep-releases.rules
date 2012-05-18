@@ -1,8 +1,7 @@
--rs /srv-*/[a-z][a-z]1205[a-z]
--rs /srv-dev/[a-z][a-z]1204[g-z]
--rs /srv-preprod/[a-z][a-z]1204[h-z]
--rs /srv-prod/[a-z][a-z]1204[h-z]
--r /srv-*/[a-z][a-z]1204[a-z]/auth/proxy/proxy*.cert
+-rs /srv-*/[a-z][a-z]1206[a-z]
+-rs /srv-dev/[a-z][a-z]1205[d-z]
+-rs /srv-preprod/[a-z][a-z]1205[f-z]
+-rs /srv-prod/[a-z][a-z]1205[f-z]
 -r /srv-*/[a-z][a-z]1205[a-z]/auth/proxy/proxy*.cert
--s /srv-*/[a-z][a-z]11*[a-z]
--s /srv-*/[a-z][a-z]120[1-4][a-z]
+-r /srv-*/[a-z][a-z]1206[a-z]/auth/proxy/proxy*.cert
+-s /srv-*/[a-z][a-z]120[1-5][a-z]
