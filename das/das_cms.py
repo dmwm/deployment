@@ -23,6 +23,12 @@ config.web_server.dbs_daemon_expire = 3600
 config.web_server.hot_threshold = 3000
 config.web_server.onhold_daemon = True
 
+# cache requests configuration
+config.component_('cacherequests')
+config.cacherequests.Admin = 5000
+config.cacherequests.Unlimited = 10000
+config.cacherequests.ProductionAccess = 5000
+
 # dbs configuration
 config.component_('dbs')
 config.dbs.dbs_instances = ['cms_dbs_prod_global', 'cms_dbs_caf_analysis_01', 'cms_dbs_ph_analysis_01', 'cms_dbs_ph_analysis_02', 'cms_dbs_prod_local_01', 'cms_dbs_prod_local_02', 'cms_dbs_prod_local_03', 'cms_dbs_prod_local_04', 'cms_dbs_prod_local_05', 'cms_dbs_prod_local_06', 'cms_dbs_prod_local_07', 'cms_dbs_prod_local_08', 'cms_dbs_prod_local_09', 'cms_dbs_prod_local_10']

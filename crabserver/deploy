@@ -43,7 +43,7 @@ deploy_crabserver_post()
   done
 
   echo "couchapp push $crabsrvapp/couchapps/WMStats" \
-       "http://localhost:5984/wmstats" \
+       "http://localhost:5984/analysis_wmstats" \
     >> $couchdb_state/stagingarea/crabserver
 
   (mkcrontab; sysboot) | crontab -
