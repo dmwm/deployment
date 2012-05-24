@@ -30,7 +30,7 @@ config.dbs.title = 'DBS Server'
 config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
-config.dbs.default_expires = 300
+config.dbs.default_expires = 900
 config.dbs.instances = ['prod/global','dev/global','int/global']
 
 active = config.dbs.views.section_('active')
@@ -41,25 +41,25 @@ active.DBSReader.model.object = 'dbs.web.DBSReaderModel'
 active.DBSReader.section_('formatter')
 active.DBSReader.formatter.object = 'WMCore.WebTools.RESTFormatter'
 active.DBSReader.section_('database')
-instances = active.DBSReader.database.section_('instances')
+db_instances = active.DBSReader.database.section_('instances')
 
-ProductionGlobal = instances.section_('prod/global')
-ProductionGlobal.dbowner = dbs3_l2_i2['databaseOwner']
-ProductionGlobal.version = DBSVERSION
-ProductionGlobal.connectUrl = dbs3_l2_i2['connectUrl']['reader']
-ProductionGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+db_production_global = db_instances.section_('prod/global')
+db_production_global.dbowner = dbs3_l2_i2['databaseOwner']
+db_production_global.version = DBSVERSION
+db_production_global.connectUrl = dbs3_l2_i2['connectUrl']['reader']
+db_production_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
 
-DevelopmentGlobal = instances.section_('dev/global')
-DevelopmentGlobal.dbowner = dbs3_l1_i2['databaseOwner']
-DevelopmentGlobal.version = DBSVERSION
-DevelopmentGlobal.connectUrl = dbs3_l1_i2['connectUrl']['reader']
-DevelopmentGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+db_development_global = db_instances.section_('dev/global')
+db_development_global.dbowner = dbs3_l1_i2['databaseOwner']
+db_development_global.version = DBSVERSION
+db_development_global.connectUrl = dbs3_l1_i2['connectUrl']['reader']
+db_development_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
 
-IntegrationGlobal = instances.section_('int/global')
-IntegrationGlobal.dbowner = dbs3_l3_i2['databaseOwner']
-IntegrationGlobal.version = DBSVERSION
-IntegrationGlobal.connectUrl = dbs3_l3_i2['connectUrl']['reader']
-IntegrationGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+db_integration_global = db_instances.section_('int/global')
+db_integration_global.dbowner = dbs3_l3_i2['databaseOwner']
+db_integration_global.version = DBSVERSION
+db_integration_global.connectUrl = dbs3_l3_i2['connectUrl']['reader']
+db_integration_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
 
 active.section_('DBSWriter')
 active.DBSWriter.object = 'WMCore.WebTools.RESTApi'
@@ -68,22 +68,31 @@ active.DBSWriter.model.object = 'dbs.web.DBSWriterModel'
 active.DBSWriter.section_('formatter')
 active.DBSWriter.formatter.object = 'WMCore.WebTools.RESTFormatter'
 active.DBSWriter.section_('database')
-instances = active.DBSWriter.database.section_('instances')
+db_instances = active.DBSWriter.database.section_('instances')
 
-ProductionGlobal = instances.section_('prod/global')
-ProductionGlobal.dbowner = dbs3_l2_i2['databaseOwner']
-ProductionGlobal.version = DBSVERSION
-ProductionGlobal.connectUrl = dbs3_l2_i2['connectUrl']['writer']
-ProductionGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+db_production_global = db_instances.section_('prod/global')
+db_production_global.dbowner = dbs3_l2_i2['databaseOwner']
+db_production_global.version = DBSVERSION
+db_production_global.connectUrl = dbs3_l2_i2['connectUrl']['writer']
+db_production_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
 
-DevelopmentGlobal = instances.section_('dev/global')
-DevelopmentGlobal.dbowner = dbs3_l1_i2['databaseOwner']
-DevelopmentGlobal.version = DBSVERSION
-DevelopmentGlobal.connectUrl = dbs3_l1_i2['connectUrl']['writer']
-DevelopmentGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+db_development_global = db_instances.section_('dev/global')
+db_development_global.dbowner = dbs3_l1_i2['databaseOwner']
+db_development_global.version = DBSVERSION
+db_development_global.connectUrl = dbs3_l1_i2['connectUrl']['writer']
+db_development_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
 
-IntegrationGlobal = instances.section_('int/global')
-IntegrationGlobal.dbowner = dbs3_l3_i2['databaseOwner']
-IntegrationGlobal.version = DBSVERSION
-IntegrationGlobal.connectUrl = dbs3_l3_i2['connectUrl']['writer']
-IntegrationGlobal.engineParameters = { 'pool_size': 15, 'max_overflow': 10, 'pool_timeout' : 200 }
+db_integration_global = db_instances.section_('int/global')
+db_integration_global.dbowner = dbs3_l3_i2['databaseOwner']
+db_integration_global.version = DBSVERSION
+db_integration_global.connectUrl = dbs3_l3_i2['connectUrl']['writer']
+db_integration_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
+
+active.DBSWriter.section_('security')
+security_instances = active.DBSWriter.security.section_('instances')
+security_production_global = security_instances.section_('prod/global')
+security_production_global.params = {'dbs' : 'operator', 'dataops' : 'production operator'}
+security_development_global = security_instances.section_('dev/global')
+security_development_global.params = {}
+security_integration_global = security_instances.section_('int/global')
+security_integration_global.params = {}
