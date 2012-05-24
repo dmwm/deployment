@@ -1,0 +1,81 @@
+#!/bin/sh
+
+WEBDIR=/afs/cern.ch/user/c/cmsweb/www/apidoc
+SWDIR=/afs/cern.ch/cms/cmsweb/sw
+OLD_ARCH=slc5_amd64_gcc434
+NEW_ARCH=slc5_amd64_gcc461
+
+set -e
+for A in $OLD_ARCH $NEW_ARCH; do
+  export SCRAM_ARCH=$A
+
+  # Update RPMs
+  (. $SWDIR/cmsset_default.sh
+   . $SWDIR/$SCRAM_ARCH/external/apt/*/etc/profile.d/init.sh
+   apt-get -qq update
+   apt-get -qq -y install $(apt-cache pkgnames | grep fake)
+   apt-get -qq -y install $(apt-cache pkgnames | grep webdoc)
+   rm -f $SWDIR/$SCRAM_ARCH/var/lib/cache/*/*.rpm)
+  [ $? = 0 ] || exit $?
+
+  # Update API doc links
+  for appdir in $SWDIR/$SCRAM_ARCH/cms/*; do
+    [ -d $appdir ] || continue
+    app=$(echo $appdir | awk -F/ '{print $NF}')
+    for ver in $(cd $appdir && ls | sed 's/-co*mp[0-9]*$//' | sort | uniq); do
+      dir=$(ls -dtr $appdir/$ver*/doc 2>/dev/null | tail -1)
+      [ X"$dir" != X -a -d "$dir" ] || continue
+      vlink=$WEBDIR/$app/$ver
+
+      relink=true
+      mkdir -p $WEBDIR/$app
+      if [ -e $vlink ]; then
+        newdir=${dir/$OLD_ARCH/$NEW_ARCH}
+        target=$(readlink $vlink)
+        newver=$(echo $newdir | sed 's|/doc$||; s|.*/||; s/[^0-9]/ /g; s/  */ /g')
+        oldver=$(echo $dir | sed 's|/doc$||; s|.*/||; s/[^0-9]/ /g; s/  */ /g')
+        newer=$((echo "$newver"; echo "$oldver") | sort -g | head -1)
+        if [ X"$target" = X"$dir" ]; then
+          relink=false
+        elif [ $A = $OLD_ARCH -a X"$target" = X"$newdir" ]; then
+          relink=false
+        elif [ $A = $OLD_ARCH -a X"$newver" = X"$newer" ]; then
+          relink=false
+        fi
+      fi
+
+      if $relink; then
+        rm -f $vlink
+        ln -s $dir $vlink
+        echo "Updating link $vlink to $dir"
+      else
+        true
+      fi
+    done
+  done
+done
+
+# Refresh 'current' symlinks.
+for app in $WEBDIR/*; do
+  [ -d $app ] || continue
+  current=$(cd $app; ls | python -c "$(echo '
+              import re, sys
+              allv = map(lambda l: l.rstrip(), sys.stdin.readlines())
+              allv.sort(reverse=True, key=lambda v: map(lambda d: int(d), re.findall(r"(\d+)", v)))
+              print allv[0]' | sed 's/^ *//')" 2>/dev/null)
+  if [ X"$current" = X ]; then
+    echo "Removing link $app/current"
+    rm -f $app/current
+  else
+    if [ -e $app/current ] && [ X"$(readlink $app/current)" = X$current ]; then :; else
+      echo "Updating link $app/current to $current"
+    fi
+    rm -f $app/current
+    ln -s $current $app/current
+  fi
+done
+
+# Update .htaccess files.
+find $WEBDIR -type d | while read dir; do
+  echo "Options +Indexes" > $dir/.htaccess
+done
