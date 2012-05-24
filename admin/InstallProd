@@ -255,17 +255,24 @@ case $STAGE in
     ;;
 
   sysprep )
+    errlog=$(mktemp /tmp/$(basename $0).XXXXXX)
+    trap "rm $errlog*" EXIT
+    echo "Running sysprep for $HOSTS. This can take a few minutes..."
     set -e
     for host in $HOSTS; do
-      rsync -zavmH --delete -f '-s .svn' $PWD/cfg/ cmsweb@$host:/tmp/foo/
-      (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
-       echo "cd /tmp/foo"
-       echo "./Deploy $ARCH -t dummy -s post \$PWD system/$WHAT"
-       echo "cat /tmp/foo/.deploy/*"
-       echo "rm -rf /tmp/foo"
-       echo "exit 0") |
-       ssh cmsweb@$host bashs -l
+      (rsync -zavmH --delete -f '-s .svn' $PWD/cfg/ cmsweb@$host:/tmp/foo/
+       (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
+        echo "cd /tmp/foo"
+        echo "./Deploy $ARCH -t dummy -s post \$PWD system/$WHAT"
+        echo "cat /tmp/foo/.deploy/*"
+        echo "rm -rf /tmp/foo"
+        echo "exit 0") |
+        ssh cmsweb@$host bashs -l
+      ) &> $errlog.$host &
     done
+    wait
+    cat $errlog.*
+    confirm "sysprep passed for $HOSTS"
     ;;
 
   sync )
