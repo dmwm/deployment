@@ -276,14 +276,21 @@ case $STAGE in
     ;;
 
   sync )
+    errlog=$(mktemp /tmp/$(basename $0).XXXXXX)
+    trap "rm $errlog*" EXIT
+    echo "Running sync for $HOSTS. This can take a few minutes..."
     set -ex
     (cd srv && rm current && ln -s $VER current)
     for host in $HOSTS; do
-      sudo rsync -zavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
+      (sudo rsync -zavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
         --rsync-path="sudo rsync" --delete \
         -f "+ /srv-$STEM/$VER" $EXTRA -f ". $PWD/cfg/admin/rsync-$STEM.rules" \
-        $PWD/ cmsweb@$host:$PWD/
+        $PWD/ cmsweb@$host:$PWD/) &> $errlog.$host &
     done
+    wait
+    cat $errlog.*
+    set +x
+    confirm "sync passed for $HOSTS"
     ;;
 
   shutdown )
