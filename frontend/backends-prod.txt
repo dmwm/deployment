@@ -4,8 +4,7 @@
 ^/auth/complete/dqm/dev(?:/|$) vocms133.cern.ch
 ^/auth/complete/(?:couchdb|workqueue)(?:/|$) vocms140.cern.ch :affinity
 ^/auth/complete/sitedb/data/[a-z]+/hnsync vocms161.cern.ch
-^/auth/complete/filemover(?:/|$) vocms140.cern.ch
+^/auth/complete/(?:filemover|das)(?:/|$) vocms140.cern.ch
 ^/auth/complete/crabcache(?:/|$) vocms139.cern.ch
 ^/overview(?:/|$) vocms163.cern.ch
-^/das(?:/|$) vocms140.cern.ch
 ^ vocms161.cern.ch|vocms163.cern.ch|vocms136.cern.ch
