@@ -28,20 +28,26 @@ HOST = socket.gethostname().lower()
 if re.match(r"^vocms(136|16[13])", HOST):
     data.monurl = "https://cmsweb.cern.ch/couchdb/"
     data.asomonurl = 'https://cmsweb.cern.ch/couchdb/'
+    data.configcacheurl = 'https://cmsweb.cern.ch/couchdb'
+    data.reqmgrurl = 'https://cmsweb.cern.ch/couchdb'
 elif re.match(r"^vocms13[23]", HOST):
     data.monurl = "https://cmsweb-testbed.cern.ch/couchdb/"
     data.asomonurl = 'https://cmsweb-testbed.cern.ch/couchdb/'
+    data.configcacheurl = 'https://cmsweb-testbed.cern.ch/couchdb'
+    data.reqmgrurl = 'https://cmsweb-testbed.cern.ch/couchdb'
 elif re.match(r"^vocms127", HOST):
     data.monurl = "https://cmsweb-dev.cern.ch/couchdb/"
     data.asomonurl = 'https://cmsweb-dev.cern.ch/couchdb/'
+    data.configcacheurl = 'https://cmsweb-dev.cern.ch/couchdb'
+    data.reqmgrurl = 'https://cmsweb-dev.cern.ch/couchdb'
 else:
     data.monurl = "http://localhost:5984"
     data.asomonurl = 'http://localhost:5984'
+    data.configcacheurl = 'https://%s/couchdb' % HOST
+    data.reqmgrurl = 'https://%s/couchdb' % HOST
 data.monname = 'analysis_wmstats'
 data.asomonname = 'user_monitoring_asynctransfer'
-data.configcacheurl = 'https://cmsweb-testbed.cern.ch/couchdb'
 data.configcachename = 'reqmgr_config_cache'
-data.reqmgrurl = 'https://cmsweb-testbed.cern.ch/couchdb'
 data.reqmgrname = 'reqmgr_workload_cache'
 data.phedexurl = 'https://cmsweb.cern.ch/phedex/datasvc/xml/prod/'
 
