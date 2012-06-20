@@ -47,10 +47,6 @@
 #   Add this option to also permit limited proxies in addition to the
 #   normal certificates and proxies allowed by 'cert'.
 #
-#  hnlogin
-#
-#   Allow access if the user has logged in using CMS hypernews login.
-#
 #  host
 #
 #   Allow certain hosts based on IP address exemption list. This is
@@ -138,8 +134,6 @@
 #                harvested from a worker node. Note that this value is
 #                possible only if 'limited-proxy' is active on service.
 #
-#     HNLogin    Client has logged in using CMS hypernews account.
-#
 #     HostIP     Client IP address was exempted from authentication
 #                and no stronger authentication method applied.
 #
@@ -152,16 +146,14 @@
 #  CMS-AuthN-DN
 #
 #   The value of this header is the DN of the client's X509 cert. It
-#   is always present when CMS-AuthN-Method is X509Cert/(Limited)Proxy,
-#   and if CMS-AuthN-Method is HNLogin and SiteDB has DN account
-#   association. This string is UTF-8.
+#   is always present when CMS-AuthN-Method is X509Cert/(Limited)Proxy.
+#   This string is UTF-8.
 #
 #  CMS-AuthN-Login
 #
 #   The value of this header is the CMS hypernew login of the client.
-#   It is always present always when CMS-AuthN-Method is HNLogin, and
-#   if CMS-AuthN-Method is X509Cert/(Limited)Proxy and SiteDB has DN
-#   account association. This string is ASCII.
+#   It is present if CMS-AuthN-Method is X509Cert/(Limited)Proxy and 
+#   SiteDB has DN account association. This string is ASCII.
 #
 #  CMS-AuthN-Name
 #
@@ -211,7 +203,6 @@
 #
 # The module may also request the client to set a "cms-auth" cookie.
 # For legacy reasons the cookie is set on X509 certificate accesses.
-# In future the cookie will only be set on CMS hypernews logins.
 #
 # Configuration parameters:
 #  AUTH_HMAC_KEYS     Directory containing secret keys for HMAC signatures.
@@ -261,34 +252,6 @@ my $server_name;
 my %vocms;
 my %revoked = (HOST => {}, LOGIN => {}, DN => {});
 
-my $hnlogindoc = <<'END_OF_DOC';
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
- <head>
- <title>CMSWEB HyperNews Login</title>
- <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
- <link rel="stylesheet" type="text/css" media="screen" href="/css/cmsweb.css" />
-</head>
-<body>
- <div id="main">
-  <div id="top">
-   <div class="boxTitle"><img src="/img/title.gif" alt="CMSWEB (title)" /></div>
-  </div>
-  <div id="middle">
-   <div class="boxLinkContainer">
-    <h2>Login with HyperNews account</h2>
-    {MESSAGE}
-   </div>
-  </div>
-  <div id="bottom">
-   <div class="boxFooter">&nbsp;</div>
-  </div>
- </div>
-</body>
-</html>
-END_OF_DOC
-
 my $troubledoc = <<'END_OF_DOC';
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -332,162 +295,6 @@ sub auth_logout_handler : method
   $r->headers_out->set("Location" => $server);
   $r->err_headers_out->add("Set-Cookie" => "cms-preauth=$NULL_COOKIE");
   $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-  return Apache2::Const::REDIRECT;
-}
-
-# Handler for authentication via HyperNews account. Presents user a
-# login form, including CSRF protection token and (for authentication
-# only) session id cookie.
-#
-# Each time the form is generated it will have a fresh new session id
-# and CSRF token, in part to prevent session fixation attacks. The
-# authentication session id is the SSL session id of the SSL request,
-# with HMAC to verify one of the servers in the cluster generated it.
-# The CSRF token is a HMAC hash of (remote ip address, user agent,
-# session-id). For each request we verify the session id and token;
-# if they do not match the method simply acts as if no login occurred
-# and presents the form again.
-#
-# The session id is stored as a cookie during the authentication, and
-# removed afterwards. The CSRF token and service to transfer to are
-# stored as hidden <input> parameters in the form.
-#
-# Note the code below relies on the fact that CGI's param() only
-# returns POST body parameters; URL parameters are not returned.
-sub auth_hnlogin_handler : method
-{
-  my ($class, $r) = @_;
-  $me = "[cookie-auth/$$]" if ! $me;
-
-  # Only permit access in HTTPS mode.  This ought to be caught
-  # earlier on in server configuration, make last resort check here.
-  return Apache2::Const::FORBIDDEN if ! $r->connection->is_https();
-
-  # Initialise on first request.
-  init($r) if ! $initialised;
-
-  # Reload authorisation information if necessary.
-  authz_maybe_reload($r);
-
-  # Get current server name.
-  my $server = request_server_name($r);
-
-  # Check the client address has not been revoked access to this server.
-  my $remote_addr = $r->connection->remote_addr->ip_get;
-  return Apache2::Const::FORBIDDEN if exists $revoked{HOST}{$remote_addr};
-
-  # Refuse to talk if the client fakes any sensitive headers.
-  return Apache2::Const::FORBIDDEN if grep /^cms-(auth|client)/io, keys %{$r->headers_in};
-
-  # If there is 'Origin' header, verify it is right.
-  my $origin = $r->headers_in->get("Origin");
-  return Apache2::Const::FORBIDDEN if $origin and $origin ne $server;
-
-  # Check the form represents valid submission.
-  my $form = new CGI;
-  my $form_account = $form->param('a') || '';
-  my $form_passwd = $form->param('p') || '';
-  my $form_token = $form->param('t') || '';
-  my $form_service = $form->param('c') || '/';
-  my $url_service = $form->url_param('c') || '/';
-  my $sid_token = cookie_from_header($r, "cms-preauth") || '';
-  my $user_agent = $r->headers_in->get('User-Agent') || '';
-  my @csrf = ($remote_addr, $user_agent, substr($sid_token, 0, 40));
-  my $csrf_value = sprintf("r%xu%xs%x#%s%s%s", (map { length $_ } @csrf), @csrf);
-  my $is_valid_submission
-    = ($r->method() eq 'POST'
-       && $form_service =~ m{^/([-a-z0-9_]+(/.*)?)?$}
-       && $url_service =~ m{^/([-a-z0-9_]+(/.*)?)?$}
-       && $form_account =~ m{^[a-z0-9_]+(?:\.nocern|\.notcms)?$}
-       && $form_passwd ne ''
-       && $form_token =~ m{^[0-9a-f]{40}$}
-       && $sid_token =~ /^([0-9a-f]{40})([0-9a-f]{40})$/
-       && secret_hmac_check("auth-sid", $1, $2)
-       && secret_hmac_check("auth-csrf", $csrf_value, $form_token));
-
-  # If it's valid submission, check if it's also valid login.
-  my $is_valid_login
-    = ($is_valid_submission
-       && exists $authz_by_login{$form_account}
-       && defined $authz_by_login{$form_account}{PASSWD}
-       && length $authz_by_login{$form_account}{PASSWD} >= 8
-       && (crypt($form_passwd, substr($authz_by_login{$form_account}{PASSWD}, 0, 2))
-	   eq $authz_by_login{$form_account}{PASSWD}));
-
-  # If it's valid submission but invalid login, log it and force back.
-  if ($is_valid_submission && ! $is_valid_login)
-  {
-    $r->log->error("$me login failed, user $form_account,"
-	    	   . " sid $sid_token, csrf [@csrf]");
-    $is_valid_submission = 0;
-  }
-
-  # If it wasn't a valid submission, generate the form afresh.
-  # If this is an initial GET, then copy $url_service to form.
-  if (! $is_valid_submission)
-  {
-    $form_service = $url_service if $r->method() eq 'GET';
-    $form_service = encode_entities($form_service);
-
-    my $ssl_sid = lc substr($r->subprocess_env->get("SSL_SESSION_ID"), 0, 40);
-    return Apache2::Const::FORBIDDEN if length $ssl_sid < 40;
-
-    my $sid = $ssl_sid . secret_hmac("auth-sid", $ssl_sid);
-    my $cookie = $sid . ";path=/;secure;httponly";
-    @csrf = ($remote_addr, $user_agent, $ssl_sid);
-    $csrf_value = sprintf("r%xu%xs%x#%s%s%s", (map { length $_ } @csrf), @csrf);
-    my $csrf_token = secret_hmac("auth-csrf", $csrf_value);
-
-    my $message = "<form action='" . encode_entities($r->uri) . "' method='POST'>"
-     . "<input type='hidden' name='t' value='$csrf_token' />"
-     . "<input type='hidden' name='c' value='$form_service' />"
-     . "<table cellspacing='3' cellpadding='5' border='0'>"
-     . "<tr><td nowrap='nowrap' align='right'>Username:</td>"
-     . "<td><input type='text' name='a' size='18' value='' /></td></tr>"
-     . "<tr><td nowrap='nowrap' align='right'>Password:</td>"
-     . "<td><input type='password' name='p' size='18' value='' /></td></tr>"
-     . "<tr><td nowrap='nowrap' align='right'>&nbsp;</td>"
-     . "<td><input type='submit' name='login' value='Sign In' /></td></tr>"
-     . "</table></form>";
-
-    my $body = $hnlogindoc;
-    $body =~ s/\{MESSAGE\}/$message/g;
-    $r->content_type('text/html');
-
-    # Set session cookie. Clear any existing auth cookie.
-    $r->err_headers_out->set("Set-Cookie" => "cms-preauth=$cookie");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-
-    # Log-in form cannot be displayed in a frame.
-    $r->headers_out->set("X-Frame-Options" => "DENY");
-
-    # FIXME: Enable HTTP Strict Transport Security
-    # $r->headers_out->set("Strict-Transport-Security" => "max-age=" . (365 * 86400));
-
-    $r->print($body);
-    return Apache2::Const::OK;
-  }
-
-  # It's a valid submission and login. Redirect to destination.
-  # Install cookie to confirm authentication. The cookie depends
-  # indirectly on the users's password, so user password change
-  # invalidates all outstanding authentication tokens. The token
-  # is tied to the browser user agent string, but not IP address.
-  # We set cookie validity to one month, which makes its validity
-  # actually defined by the update-keys secrets rotation schedule.
-  my $uinfo = $authz_by_login{$form_account};
-  $r->log->notice("$me accepted login for user $form_account,"
-	          . " dn @{[$$uinfo{DN} || '']}, auth session $csrf[2],"
-		  . " ua $user_agent");
-
-  my $passkey = secret_hmac("auth-pass", "$form_account $$uinfo{PASSWD}");
-  my $cookie = make_auth_cookie('L', 30 * 86400, [ qw(A D P S U) ],
-	  		        [ $form_account, $$uinfo{DN} || '',
-				  $passkey, $csrf[2], $user_agent ]);
-
-  $r->headers_out->set("Location" => $server . $form_service);
-  $r->err_headers_out->add("Set-Cookie" => "cms-preauth=$NULL_COOKIE");
-  $r->err_headers_out->add("Set-Cookie" => "cms-auth=$cookie");
   return Apache2::Const::REDIRECT;
 }
 
@@ -923,10 +730,6 @@ sub authn_step($$)
   {
     return authn_aucookie($r, $opts);
   }
-  elsif ($method eq 'hnlogin')
-  {
-    return authn_hnlogin($r, $opts);
-  }
   else
   {
     return authn_fail($r, "authentication method $$method not recognised");
@@ -1167,118 +970,9 @@ sub authn_aucookie($$)
   return authz_complete($ir, $r, $opts, METHOD => "AUCookie");
 }
 
-# Authentication routine for hypernews account login.
-sub authn_hnlogin($$)
-{
-  my ($r, $opts) = @_;
-  my $ir = initialreq($r);
-
-  # Check the user login cookie is valid.
-  my $cookie_text = cookie_from_header($r, "cms-auth");
-  return authn_step($r, $opts) if ! $cookie_text;
-
-  # Check it's structurally valid.
-  my $cookie = parse_auth_cookie($cookie_text);
-  if (! $cookie)
-  {
-    $r->log->warn("$me rejecting cookie for parse error '$cookie_text'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Check the HMAC matches what we'd expect.
-  my $s = secret_key("auth-hn", $$cookie{SECRET});
-  my $hmac = base64(hmac_sha1($$cookie{VFYTEXT}, $s));
-  if (! secret_exists("auth-hn", $$cookie{SECRET}))
-  {
-    $r->log->warn("$me rejecting cookie for invalid key '$$cookie{SECRET}'");
-    return authn_step($r, $opts);
-  }
-
-  if ($hmac ne $$cookie{HMAC})
-  {
-    $r->log->warn("$me rejecting cookie for hmac mismatch '$$cookie{HMAC}'"
-	          . " should be '$hmac'; cookie was '$cookie_text'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Check cookie type.
-  if ($$cookie{TYPE} ne 'L')
-  {
-    $r->log->warn("$me rejecting cookie for unknown type '$$cookie{TYPE}'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Check the cookie hasn't expired.
-  my $now = time();
-  if ($now > $$cookie{UNTIL})
-  {
-    $r->log->notice("$me rejecting cookie for expiration"
-	            . " '$$cookie{UNTIL}' vs. $now");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Check we can decode the cookie payload.
-  my $data = decode_auth_cookie($$cookie{DATA});
-  if (! $data)
-  {
-    $r->log->warn("$me rejecting cookie for decode error '$$cookie{DATA}'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Verify user agent hasn't changed.
-  my $user_agent = $r->headers_in->get('User-Agent') || '';
-  if ($user_agent ne $$data{U})
-  {
-    $r->log->warn("$me rejeting cookie for user agent"
-	          . " '$$data{U}' vs. '$user_agent'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Verify the account is valid.
-  my $account = $$data{A};
-  if ($account !~ m{^[a-z0-9_]+(?:\.nocern|\.notcms)?$}
-      || ! exists $authz_by_login{$account})
-  {
-    $r->log->warn("$me rejecting cookie for bad account '$account'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Reject revoked accounts.
-  if (exists $revoked{LOGIN}{$account})
-  {
-    $r->log->warn("$me rejecting revoked account '$account'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # Verify password hasn't changed.
-  my $passkey = "$account $authz_by_login{$account}{PASSWD}";
-  if (! secret_hmac_check("auth-pass", $passkey, $$data{P}))
-  {
-    $passkey = secret_hmac("auth-pass", $passkey);
-    $r->log->warn("$me rejecting cookie for password change"
-	          . " of '$account', got '$$data{P}' expected '$passkey'");
-    $r->err_headers_out->add("Set-Cookie" => "cms-auth=$NULL_COOKIE");
-    return authn_step($r, $opts);
-  }
-
-  # It is valid, accept it.
-  $r->subprocess_env->set("AUTH_DONE" => "OK");
-  $r->headers_in->set("CMS-Auth-Status" => "OK");
-  $r->headers_in->set("CMS-Auth-" => $account);
-  return authz_complete($ir, $r, $opts, METHOD => "HNLogin", LOGIN => $account);
-}
-
 # Create authentication cookie for Set-Cookie header. The arguments
 # are cookie type, validity time, and two lists for keys and values.
-# The type should be 'L' for login. The payload keys and values are
+# The payload keys and values are
 # added encoded to the cookie in base64-encoded compressed form.
 # A SHA1 HMAC is appeneded to the cookie to prevent tampering.
 sub make_auth_cookie($$$$)

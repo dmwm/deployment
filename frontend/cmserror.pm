@@ -63,8 +63,7 @@ sub handler($)
     $title = "Authorisation required";
     $message = "<p>The site you requested is protected and requires you"
              . " to authenticate</p><p><a href='/auth/trouble'>Diagnose"
-	     . " certificate problems</a></p><p><a href='/auth/hnlogin?c="
-	     . "$uri'>Login with your HN account</a></p>";
+             . " certificate problems</a></p>";
   }
   elsif ($err eq "/404")
   {

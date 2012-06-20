@@ -10,10 +10,6 @@ config = Config(nthreads = THREADS, authkey = KEY_FILE)
 
 if HOST.startswith("vocms161"):
   config.views.data.hnsync = True
-elif HOST.startswith("lat-dev"):
-  #config.views.data.hnsynctime = 30
-  config.views.data.hnsyncto = "dev"
-  config.views.data.hnsync = True # "/data/user"
 
 # config.main.tools.cms_auth.policy = 'dangerously_insecure'
 # config.main.server.environment = 'staging'
