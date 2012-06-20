@@ -1,6 +1,7 @@
 def shiftrpclayout(i, p, *rows): i["00 Shift/RPC/" + p] = DQMItem(layout=rows)
 
 ########### define varialbles for frequently used strings #############
+summary = "summary map for rpc, this is NOT an efficiency measurement"
 rpclink = "   >>> <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>"
 fed = "FED Fatal Errors";
 rpcevents = "Events processed by the RPC DQM"
@@ -8,6 +9,8 @@ quality = "Overview of system quality. Expressed in percentage of chambers."
 occupancy = "Occupancy per sector"
 
 ################### Links to Histograms #################################
+shiftrpclayout(dqmitems, "00-Summary_Map",
+               [{ 'path': "RPC/EventInfo/reportSummaryMap", 'description': summary + rpclink }])
 
 #FED Fatal
 shiftrpclayout(dqmitems, "01-Fatal_FED_Errors",

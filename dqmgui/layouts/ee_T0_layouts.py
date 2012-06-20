@@ -17,8 +17,8 @@ ecalendcaplayout(dqmitems, "02 Cluster Summary EcalEndcap",
    { 'path': "EcalEndcap/EEClusterTask/EECLT BC energy map EE +", 'description': "EcalEndcap (z>0): average energy of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/EcalDQM>EcalDQM</a>" }])
 
 # ALL shifters
-eeshifterlayout(dqmitems, "00 Event Type",
-  [{ 'path': "EcalEndcap/EcalInfo/EVTTYPE", 'description': "Frequency of the event types found in the DQM event-stream. If the calibration sequence is ON, histograms should show entries in COSMICS_GLOBAL, LASER_GAP, PEDESTAL_GAP, TESTPULSE_GAP. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+eeshifterlayout(dqmitems, "00 Report Summary",
+  [{ 'path': "EcalEndcap/EventInfo/reportSummaryMap", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
 eeshifterlayout(dqmitems, "01 Integrity Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EEIT EE - integrity quality summary", 'description': "Quality summary checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: each crystal is required to have integrity errors in less than 1% of events. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
@@ -68,14 +68,25 @@ eeshifterlayout(dqmitems, "07 Clusters Energy EE +",
   [{ 'path': "EcalEndcap/EEClusterTask/EECLT BC energy projection eta EE +", 'description': "Eta projection of 5x5 basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEClusterTask/EECLT BC energy projection phi EE +", 'description': "Phi projection of 5x5 basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } }])
 
-eeshifterlayout(dqmitems, "08 Blue Laser (L1) Quality",
+eeshifterlayout(dqmitems, "08 Blue Quantronix Laser (L1) Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L1", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L1", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L1", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
+eeshifterlayout(dqmitems, "08 Green Laser (L2) Quality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L2", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L2", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+
+eeshifterlayout(dqmitems, "08 Blue Photonics Laser (L3) Quality",
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L3", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+
 eeshifterlayout(dqmitems, "08 Infrared Laser (L4) Quality",
- [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of infrared laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
- [{ 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of infrared laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
+  { 'path': "EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+  [{ 'path': "EcalEndcap/EESummaryClient/EELT PN laser quality summary L4", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
 eeshifterlayout(dqmitems, "09 Lambda 1 Led Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT EE - led quality summary L1", 'description': "Quality summary of lambda_1 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
@@ -87,29 +98,23 @@ eeshifterlayout(dqmitems, "09 Lambda 2 Led Quality",
   { 'path': "EcalEndcap/EESummaryClient/EELDT EE + led quality summary L2", 'description': "Quality summary of lambda_2 led events. Expect green where the led sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 2 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT PN led quality summary L2", 'description': "Quality summary of lambda_2 led pulses on PN diodes. Expect green where the led sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-eeshifterlayout(dqmitems, "10 Pedestal Quality",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Pedestals are evaluated using all the 10 samples. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 175 < mean < 225 ADCs; RMS < 2.5 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Pedestals are evaluated using all the 10 samples. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 175 < mean < 225 ADCs; RMS < 2.5 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT PN pedestal quality G16 summary", 'description': "Quality summary of pedestal events for PN Gain 16. Pedestals are evaluated using all the 50 samples. Expect green where the pedestal sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 650 < mean < 850 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
-
-eeshifterlayout(dqmitems, "11 TestPulse Quality",
+eeshifterlayout(dqmitems, "10 TestPulse Quality",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of test pulse events for Gain 12. Expect green where the calibration sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 10 ADCs;  mean amplitude within 20% of the mean amplitude in the sector; RMS < 300 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of test pulse events for Gain 12. Expect green where the calibration sequence fired, yellow elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 10 ADCs;  mean amplitude within 20% of the mean amplitude in the sector; RMS < 300 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT PN test pulse quality G16 summary", 'description': "Quality summary of test pulse events for PN Gain 16. Expect green where the calibration sequence fired, yellow or white elsewhere. Red spots are failed channels. Sectors are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green sector by sector. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 200 ADCs; pedestal > 650 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-eeshifterlayout(dqmitems, "12 DCC Event Size and Synch Errors",
+eeshifterlayout(dqmitems, "11 DCC Event Size and Synch Errors",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT DCC event size", 'description': "Average event size per ecah ECAL endcap DCC calculated only on physics events. Expected about 2 kB/DCC. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } }],
     [{ 'path': "EcalEndcap/EERawDataTask/EERDT L1A FE errors", 'description': "Level 1 Accept mismatches between the ECAL DCC header and its front-end cards. It is filled once per front-end card in DCC with weight 1/n(front-end cards). It should be empty or with a flat pedestal with few errors of known problematic towers. ONE BIG SPIKE IN ONE FED MEANS THAT THE WHOLE FED IS OUT OF SYNCH AND THE RUN SHOULD BE STOPPED. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eeshifterlayout(dqmitems, "13 Selective Readout High Interest TTs",
+eeshifterlayout(dqmitems, "12 Selective Readout High Interest TTs",
   [{ 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT high interest TT Flags EE -", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout.  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
   { 'path': "EcalEndcap/EESelectiveReadoutTask/EESRT high interest TT Flags EE +", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
+eeshifterlayout(dqmitems, "13 Synchronization Error Trend",
+  [{'path': "EcalEndcap/EERawDataTask/EERDT accumulated FE synchronization errors", 'description': "Running total of front-end synchronization errors. Expect flat distribution with occasional steps."}])
 
 # ECAL shifters
-eeecalshifterlayout(dqmitems, "00 Event Type",
-  [{ 'path': "EcalEndcap/EcalInfo/EVTTYPE", 'description': "Frequency of the event types found in the DQM event-stream. If the calibration sequence is ON, histograms should show entries in COSMICS_GLOBAL, LASER_GAP, PEDESTAL_GAP, TESTPULSE_GAP. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eeecalshifterlayout(dqmitems, "01 Electronics/00 Integrity Summary",
   [{ 'path': "EcalEndcap/EESummaryClient/EEIT EE - integrity quality summary", 'description': "Quality summary checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries.  Quality criteria: each crystal is required to have integrity errors in less than 1% of events. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EEIT EE + integrity quality summary", 'description': "Quality summary checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries.  Quality criteria: each crystal is required to have integrity errors in less than 1% of events. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -206,10 +211,6 @@ eeecalshifterlayout(dqmitems, "03 Occupancy/07 LaserEvents",
 eeecalshifterlayout(dqmitems, "03 Occupancy/08 LedEvents",
   [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT led digi occupancy EE -", 'description': "Occupancy of led events only (if any in the calibration sequence). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EEOccupancyTask/EEOT led digi occupancy EE +", 'description': "Occupancy of led events only (if any in the calibration sequence). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eeecalshifterlayout(dqmitems, "03 Occupancy/09 PedestalEvents",
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT pedestal digi occupancy EE -", 'description': "Occupancy of pedestal events only (if any in the calibration sequence). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EEOccupancyTask/EEOT pedestal digi occupancy EE +", 'description': "Occupancy of pedestal events only (if any in the calibration sequence). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eeecalshifterlayout(dqmitems, "03 Occupancy/10 PN Digis",
   [{ 'path': "EcalEndcap/EESummaryClient/EEOT PN digi occupancy summary", 'description': "Occupancy of PN diodes (expect entries only for calibration events). Digis are expected only in EE+/-2,3,7,8 which have MEM box attached (by the readout point of view). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -518,13 +519,6 @@ eeecalshifterlayout(dqmitems, "08 Calibration/01 Led/04 L2 PNQuality",
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT PN led quality summary L2", 'description': "Quality summary of led L2 events on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. White for DCC without MEM boxes attached (EE+/-1,4,5,6,9). Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria for gain 1 and gain 16: 650 < mean < 850 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EESummaryClient/EELDT PN led quality errors summary L2", 'description': "Error occupancy for led L2 events on PN diodes for every sector. Expect 0 entries if no errors or no laser events in a given sector. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eeecalshifterlayout(dqmitems, "08 Calibration/02 Pedestal/00 Quality Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 in EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: gain 1: 175 < mean < 225 ADCs; RMS < 1.0 ADCs; gain 6: 175 < mean < 225 ADCs; RMS < 1.5 ADCs; gain 12: 175 < mean < 225 ADCs; RMS < 2.5 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 in EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: gain 1: 175 < mean < 225 ADCs; RMS < 1.0 ADCs; gain 6: 175 < mean < 225 ADCs; RMS < 1.5 ADCs; gain 12: 175 < mean < 225 ADCs; RMS < 2.5 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eeecalshifterlayout(dqmitems, "08 Calibration/02 Pedestal/01 PNQuality Gain16",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT PN pedestal quality G16 summary", 'description': "Quality summary of pedestal events on PN diodes for Gain 16. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed PNs. White for DCC without MEM boxes attached (EE+/-1,4,5,6,9). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria for gain 1 and gain 16: 650 < mean < 850 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eeecalshifterlayout(dqmitems, "08 Calibration/03 TestPulse/00 Quality Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of test pulse events for Gain 12 in EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 10 ADCs;  mean amplitude within 20% of the mean amplitude in the sector; RMS < 300 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of test pulse events for Gain 12 in EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries.  Quality criteria: mean amplitude > 10 ADCs;  mean amplitude within 20% of the mean amplitude in the sector; RMS < 300 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -654,25 +648,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-01/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-01 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -854,25 +829,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE-02/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-02 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-02 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -1052,25 +1008,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-03/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-03 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1252,25 +1189,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE-04/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-04 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-04 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -1450,25 +1368,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-05/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-05 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1650,25 +1549,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE-06/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-06 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-06 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -1848,25 +1728,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-07/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-07 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2048,25 +1909,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE-08/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -2246,25 +2088,6 @@ eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE-09/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE-09 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2446,25 +2269,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE+01/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+01 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+01 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -2644,25 +2448,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+02/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+02 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2844,25 +2629,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE+03/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+03 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+03 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -3042,25 +2808,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+04/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+04 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3242,25 +2989,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE+05/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+05 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+05 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -3440,25 +3168,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+06/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+06 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3640,25 +3349,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE+07/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+07 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+07 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -3839,25 +3529,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
 eelayout(dqmitems, "01 By Supermodule/EE+08/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
@@ -4037,25 +3708,6 @@ eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/00 Integrity/03 MemBox Chann
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemTTId/EEIT MemTTId EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEIntegrityTask/MemSize/EEIT MemSize EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G01 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G01 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G01 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G06 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G06 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G06 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G01 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "01 By Supermodule/EE+09/Experts/01 Pedestal/04 PNs Response",
   [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain01/EEPDT PNs pedestal EE+09 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4278,20 +3930,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-01/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE-01", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-01", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-01", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-01. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-01/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-01", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-01. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-01", 'description': "Pedestal mean for all the crystals of the sector EE-01 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-01", 'description': "Pedestal RMS for all the crystals of the sector EE-01 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-01/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-01", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-01 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-01 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-01 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-01 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -4612,20 +4250,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-02/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-02", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-02", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-02. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-02/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-02", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-02. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-02", 'description': "Pedestal mean for all the crystals of the sector EE-02 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-02", 'description': "Pedestal RMS for all the crystals of the sector EE-02 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-02/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-02", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-02 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-02 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-02 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-02 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -4944,20 +4568,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-03/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE-03", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-03", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-03", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-03. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-03/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-03", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-03. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-03", 'description': "Pedestal mean for all the crystals of the sector EE-03 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-03", 'description': "Pedestal RMS for all the crystals of the sector EE-03 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-03/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-03", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-03 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-03 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-03 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-03 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -5278,20 +4888,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-04/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-04", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-04", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-04. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-04/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-04", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-04. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-04", 'description': "Pedestal mean for all the crystals of the sector EE-04 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-04", 'description': "Pedestal RMS for all the crystals of the sector EE-04 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-04/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-04", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-04 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-04 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-04 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-04 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -5610,20 +5206,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-05/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE-05", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-05", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-05", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-05. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-05/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-05", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-05. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-05", 'description': "Pedestal mean for all the crystals of the sector EE-05 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-05", 'description': "Pedestal RMS for all the crystals of the sector EE-05 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-05/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-05", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-05 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-05 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-05 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-05 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -5944,20 +5526,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-06/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-06", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-06", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-06. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-06/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-06", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-06. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-06", 'description': "Pedestal mean for all the crystals of the sector EE-06 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-06", 'description': "Pedestal RMS for all the crystals of the sector EE-06 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-06/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-06", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-06 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-06 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-06 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-06 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6276,20 +5844,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-07/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE-07", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-07", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-07", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-07. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-07/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-07", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-07. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-07", 'description': "Pedestal mean for all the crystals of the sector EE-07 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-07", 'description': "Pedestal RMS for all the crystals of the sector EE-07 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-07/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-07", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-07 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-07 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-07 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-07 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -6610,20 +6164,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-08/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-08", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-08", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-08. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-08/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-08", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-08. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-08", 'description': "Pedestal mean for all the crystals of the sector EE-08 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-08", 'description': "Pedestal RMS for all the crystals of the sector EE-08 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-08/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-08", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-08 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-08 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-08 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-08 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6942,20 +6482,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE-09/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE-09", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE-09", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE-09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE-09", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE-09. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-09/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE-09", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE-09. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE-09", 'description': "Pedestal mean for all the crystals of the sector EE-09 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE-09", 'description': "Pedestal RMS for all the crystals of the sector EE-09 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE-09/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE-09", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE-09 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE-09 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE-09 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE-09 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -7276,20 +6802,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+01/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+01", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+01", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+01. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+01/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+01", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+01. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+01", 'description': "Pedestal mean for all the crystals of the sector EE+01 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+01", 'description': "Pedestal RMS for all the crystals of the sector EE+01 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+01/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+01", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+01 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+01 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+01 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+01 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7608,20 +7120,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+02/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE+02", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+02", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+02", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+02. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+02/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+02", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+02. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+02", 'description': "Pedestal mean for all the crystals of the sector EE+02 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+02", 'description': "Pedestal RMS for all the crystals of the sector EE+02 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+02/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+02", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+02 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+02 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+02 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+02 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -7942,20 +7440,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+03/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+03", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+03", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+03. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+03/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+03", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+03. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+03", 'description': "Pedestal mean for all the crystals of the sector EE+03 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+03", 'description': "Pedestal RMS for all the crystals of the sector EE+03 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+03/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+03", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+03 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+03 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+03 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+03 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8274,20 +7758,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+04/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE+04", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+04", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+04", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+04. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+04/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+04", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+04. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+04", 'description': "Pedestal mean for all the crystals of the sector EE+04 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+04", 'description': "Pedestal RMS for all the crystals of the sector EE+04 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+04/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+04", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+04 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+04 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+04 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+04 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -8608,20 +8078,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+05/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+05", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+05", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+05. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+05/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+05", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+05. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+05", 'description': "Pedestal mean for all the crystals of the sector EE+05 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+05", 'description': "Pedestal RMS for all the crystals of the sector EE+05 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+05/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+05", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+05 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+05 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+05 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+05 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8940,20 +8396,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+06/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE+06", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+06", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+06", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+06. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+06/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+06", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+06. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+06", 'description': "Pedestal mean for all the crystals of the sector EE+06 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+06", 'description': "Pedestal RMS for all the crystals of the sector EE+06 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+06/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+06", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+06 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+06 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+06 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+06 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -9274,20 +8716,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+07/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+07", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+07", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+07. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+07/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+07", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+07. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+07", 'description': "Pedestal mean for all the crystals of the sector EE+07 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+07", 'description': "Pedestal RMS for all the crystals of the sector EE+07 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+07/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+07", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+07 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+07 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+07 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+07 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9607,20 +9035,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+08/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+08", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+08", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+08. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+08/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+08", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+08. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+08", 'description': "Pedestal mean for all the crystals of the sector EE+08 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+08", 'description': "Pedestal RMS for all the crystals of the sector EE+08 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+08/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+08", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+08 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+08 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+08 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+08 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EESummaryClient/EETPT EE + test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9939,20 +9353,6 @@ eelayout(dqmitems, "00 By Task/02 PedestalOnline/EE+09/Gain12",
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal quality G12 EE+09", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal mean G12 EE+09", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EE+09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalEndcap/EEPedestalOnlineClient/EEPOT pedestal rms G12 EE+09", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EE+09. Expected < 2.5 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalEndcap/EESummaryClient/EEPT EE - pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EESummaryClient/EEPT EE + pedestal quality G12 summary", 'description': "Quality summary of pedestal events for gain 12 on EE +. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+09/00 Gain12",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality G12 EE+09", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on sector EE+09. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal mean G12 EE+09", 'description': "Pedestal mean for all the crystals of the sector EE+09 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal rms G12 EE+09", 'description': "Pedestal RMS for all the crystals of the sector EE+09 for Gain 12. Expected RMS is < 1.0, 1.5, 2.5 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eelayout(dqmitems, "00 By Task/03 Pedestal/EE+09/01 PNs Gain16",
-  [{ 'path': "EcalEndcap/EEPedestalClient/EEPT pedestal quality PNs G16 EE+09", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the sector, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEPedestalTask/PN/Gain16/EEPDT PNs pedestal EE+09 G16", 'description': "Pedestal mean for all the 10 PNs of the sector EE+09 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalEndcap/EEPedestalClient/EEPDT PNs pedestal rms EE+09 G16", 'description': "Pedestal rms for all the 10 PNs of the sector EE+09 for Gain 16. Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eelayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalEndcap/EESummaryClient/EETPT EE - test pulse quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12 on EE -. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
@@ -10357,10 +9757,6 @@ eelayout(dqmitems, "00 By Task/12 Occupancy/11 Occupancy",
 eelayout(dqmitems, "00 By Task/12 Occupancy/12 Occupancy",
   [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT led digi occupancy EE -", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
   { 'path': "EcalEndcap/EEOccupancyTask/EEOT led digi occupancy EE +", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eelayout(dqmitems, "00 By Task/12 Occupancy/13 Occupancy",
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT pedestal digi occupancy EE -", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EEOccupancyTask/EEOT pedestal digi occupancy EE +", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eelayout(dqmitems, "00 By Task/13 RawData/00 RawData",
   [{ 'path': "EcalEndcap/EERawDataTask/EERDT event type calibration BX", 'description': "Event type in ECAL DCC header in the calibration BX. It should contain only calibration events. It is filled once per DCC with weight 1/36. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],

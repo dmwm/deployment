@@ -29,16 +29,31 @@ trackinglayout(dqmitems, "03 - Tracks (Cosmic Tracking)",
     'description': "Phi distribution of Reconstructed Tracks -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
   { 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_CKFTk",
     'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
-trackinglayout(dqmitems, "04 - Fraction of Tracks vs LS",
+
+trackinglayout(dqmitems, "04 - Tracking vs LS",
   [ { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTracks/GoodTracksFractionVsLS_GenTk",
       'description': "Fraction of tracks versus Lumi Section",
-      'draw': { 'withref': "yes" }}])
-
-trackinglayout(dqmitems, "05 - Number of rec hits per track vs LS",
+      'draw': { 'withref': "yes" }}],
   [ { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTracks/GoodTracksNumberOfRecHitsPerTrackVsLS_GenTk",
       'description': "Number of rec hits per track vs LS",
       'draw': { 'withref': "yes" }}])
 
+trackinglayout(dqmitems, "05 - Number of Seeds (pp collisions)",
+ [{ 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_initialStepSeeds_iter0",
+    'description': "Number of Seed in tracking iteration 0 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+  { 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_lowPtTripletStepSeeds_iter1",
+    'description': "Number of Seed in tracking iteration 1 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+  { 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_pixelPairStepSeeds_iter2",
+    'description': "Number of Seed in tracking iteration 2 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+  { 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_detachedTripletStepSeeds_iter3",
+    'description': "Number of Seed in tracking iteration 3 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}],
+ [{ 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_mixedTripletStepSeeds_iter4",
+    'description': "Number of Seed in tracking iteration 4 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+    { 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_pixelLessStepSeeds_iter5",
+    'description': "Number of Seed in tracking iteration 5 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
+    { 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_tobTecStepSeeds_iter6",
+    'description': "Number of Seed in tracking iteration 6 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
+    
 trackinglayout(dqmitems, "06 - Offline PV",
   [{ 'path': "OfflinePV/offlinePrimaryVertices/tagDiffX",
      'description': "Difference between PV and beamspot in x-direction"},

@@ -276,16 +276,16 @@ private:
       if( o.name.find( "Summary_MeanNumberOfClusters" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        //obj->SetMaximum(10.0);
-	obj->SetMaximum(1.0);
+	//obj->SetMaximum(1.0);
+	obj->SetMaximum(4.0);
         obj->SetMinimum(-0.001);
         //return;
       }
       if( o.name.find( "Summary_MeanNumberOfClusters__TOB" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
-        //obj->SetMaximum(5.0);
-	obj->SetMaximum(1.0);
+	//obj->SetMaximum(1.0);
+	obj->SetMaximum(1.5);
         obj->SetMinimum(-0.001);
         return;
       }
@@ -482,8 +482,8 @@ private:
   if (obj->GetEntries() > 10.0) c->SetLogy(1);
       }
 
-      if ( name.find( "TrackPhi_" ) != std::string::npos or
-     name.find( "TrackEta_" ) != std::string::npos or
+      if ( name.find( "GoodTrackPhi_" ) != std::string::npos or
+	   name.find( "GoodTrackEta_" ) != std::string::npos or
      name.find( "SeedPhi_" )  != std::string::npos
      ) {
 
@@ -578,16 +578,6 @@ private:
 
     // FOR PP
     /*
-    float TIBLimit1 = 5000.0;
-    float TOBLimit1 = 5500.0;
-    float TIDLimit1 = 1000.0;
-    float TECLimit1 = 5000.0;
-
-    float TIBLimit2 = 1000.0;
-    float TOBLimit2 = 1000.0;
-    float TIDLimit2 = 300.0;
-    float TECLimit2 = 1200.0;
-    */
     float TIBLimit1 = 10000.0;
     float TOBLimit1 = 11000.0;
     float TIDLimit1 = 2000.0;
@@ -597,6 +587,16 @@ private:
     float TOBLimit2 = 2000.0;
     float TIDLimit2 = 600.0;
     float TECLimit2 = 2400.0;
+    */
+    float TIBLimit1 = 20000.0;
+    float TOBLimit1 = 20000.0;
+    float TIDLimit1 = 4000.0;
+    float TECLimit1 = 20000.0;
+
+    float TIBLimit2 = 4000.0;
+    float TOBLimit2 = 4000.0;
+    float TIDLimit2 = 1200.0;
+    float TECLimit2 = 4800.0;
     /*
     //FOR HI
     float TIBLimit1 = 70000.0;

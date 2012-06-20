@@ -71,7 +71,10 @@ sistriplayout(dqmitems, "06 - Detailed FED-Detected Errors",
   { 'path': "SiStrip/ReadoutView/FedSummary/FED/VsId/CorruptBuffers",
     'description': "FED IDs having corrupt FED buffers - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
   { 'path': "SiStrip/ReadoutView/FedSummary/FE/VsId/AnyFEProblems",
-    'description': "FED IDs having overflowed, missing or with bad majority address FE units - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}])
+    'description': "FED IDs having overflowed, missing or with bad majority address FE units - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}],
+ [{'path': "SiStrip/ReadoutView/FedSummary/FedIdVsApvId",
+   'description': "APV error: FED ID vs APV ID - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}])
+
 sistriplayout(dqmitems, "07 - OnTrackClusters(Total Number)",
   [{ 'path': "SiStrip/MechanicalView/TIB/Summary_TotalNumberOfClusters_OnTrack__TIB",
      'description': "Total Number of On-Track clusters in TIB  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
