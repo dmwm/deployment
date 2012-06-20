@@ -4,6 +4,7 @@ deploy_dbs_variants="default prod preprod dev"
 
 deploy_dbs_deps()
 {
+  deploy admin
   deploy backend
   deploy wmcore-auth
 }
@@ -11,6 +12,7 @@ deploy_dbs_deps()
 deploy_dbs_prep()
 {
   mkproj
+  mkproxy
 }
 
 deploy_dbs_sw()
