@@ -12,6 +12,12 @@ errorlayout(dqmitems, "02 - SiStrip FED errors",
 errorlayout(dqmitems, "03 - Hcal DQM Error",
  [{ 'path': "Hcal/DeadCellMonitor_Hcal/ProblemsInLastNLB_HBHEHF_alarm",
     'description': "This plot shows the total number of HCAL dead Cells in HB,HE,HF in last N LS. The plot is filled if there are more than 50 DeadCells present for more than 10 consequtive LumiSections. The shift leader must be immediately informed if this number is greater than 50.", 'draw': { 'withref': "no" }}])
-errorlayout(dqmitems, "04 - Hcal DQM BcN Mismatch",
+errorlayout(dqmitems, "04 - Hcal DQM Error in HO01",
+ [{ 'path': "Hcal/DeadCellMonitor_Hcal/ProblemsInLastNLB_HO01_alarm",
+    'description': "This plot shows the total number of HCAL dead Cells in HO rings 0 and 1 (|ieta|<=10) in last N LS. The plot is filled if there are more than 50 DeadCells present for more than 10 consequtive LumiSections. The shift leader must be immediately informed if this number is greater than 50.", 'draw': { 'withref': "no" }}])
+errorlayout(dqmitems, "05 - Hcal DQM BcN Mismatch",
  [{ 'path': "Hcal/DigiMonitor_Hcal/bad_digis/1D_digi_plots/ProblemDigisInLastNLB_HBHEHF_alarm",
     'description': "This plot shows the total number of HCAL problematic digis in HB,HE,HF in last N LS. The plot is filled if there are more than 50 BadDigis present for more than 5 consequtive LumiSections. The shift leader must be immediately informed if this number is greater than 50.", 'draw': { 'withref': "no" }}])
+errorlayout(dqmitems, "06 - BeamSpot missing from online",
+ [{ 'path': "BeamMonitor/BeamSpotProblemMonitor/FitFromScalars/BeamSpotError",
+    'description': "This plots shows if beamspot is running OK or have problems. If there is any filled entries then it will give alarm. This plot is filled when for more than 10 LSs continuously there is problem. The alarm is put off after 2 LSs. This alarm exclude no collision OR tracker OFF conditions.", 'draw': { 'withref': "no" }}])

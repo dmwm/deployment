@@ -13,6 +13,7 @@ from WMCore.Configuration import Configuration
 
 workqueueDBName = 'workqueue'
 workqueueInboxDbName = 'workqueue_inbox'
+wmstatDBName = 'wmstats'
 HOST = "cmsweb-dev.cern.ch"
 REQMGR = "https://cmsweb-dev.cern.ch/reqmgr/reqMgr"
 COUCH = "https://cmsweb-dev.cern.ch/couchdb"
@@ -36,8 +37,9 @@ config.WorkQueueManager.namespace = "WMComponent.WorkQueueManager.WorkQueueManag
 config.WorkQueueManager.couchurl = COUCH
 config.WorkQueueManager.dbname = workqueueDBName
 config.WorkQueueManager.inboxDatabase = workqueueInboxDbName
+config.WorkQueueManager.wmstatDBName = wmstatDBName
 config.WorkQueueManager.level = "GlobalQueue"
-config.WorkQueueManager.queueParams = {}
+config.WorkQueueManager.queueParams = {'WMStatsCouchUrl': "%s/%s" % (COUCH, wmstatDBName)}
 config.WorkQueueManager.queueParams['QueueURL'] = WEBURL
 config.WorkQueueManager.reqMgrConfig = {}
 config.WorkQueueManager.reqMgrConfig['endpoint'] = REQMGR

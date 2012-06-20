@@ -2,7 +2,7 @@ def rpclayout(i, p, *rows): i["RPC/Layouts/" + p] = DQMItem(layout=rows)
 
 ########### define varialbles for frequently used strings #############
 rpclink = "   >>> <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>Description</a>";
-
+summary = "summary map for rpc, this is NOT an efficiency measurement"
 rpcevents = "Events processed by the RPC DQM"
 fed = "FED Fatal Errors";
 top = "RPC TOP Summary Histogram <br><font color=green><b>GREEN</b> - Good Chamber </font><br> <font color=blue><b>BLUE</b> - Chamber OFF</font><br> <font color=yellow><b>YELLOW</b> - Noisy Strip </font><br> <font color=orange><b>ORANGE</b> - Noisy Chamber </font><br> <font color=pink><b>PINK</b> - Partly Dead Chamber </font><br> <font color=red><b>RED</b> - Fully Dead Chamber </font><br> <font color=aqua><b>LIGHT BLUE</b> - Bad Occupancy Shape </font> <br>";
@@ -15,6 +15,9 @@ bx = "RPC BX distribution "
 ################### Links to TOP Summary Histograms #################################
 
 #FED Fatal
+rpclayout(dqmitems, "00-Summary_Map",
+          [{ 'path': "RPC/EventInfo/reportSummaryMap", 'description': summary + rpclink }])
+
 rpclayout(dqmitems, "01-Fatal_FED_Errors",
           [{ 'path': "RPC/FEDIntegrity_EvF/FEDFatal", 'description': fed + rpclink }])
 ##-------------------
@@ -86,13 +89,8 @@ rpclayout(dqmitems, "10-Barrel_1DOccupancy",
           )
 
 rpclayout(dqmitems, "11-EndCap_1DOccupancy",
-          [{ 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Disk_3", 'description': occupancy + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Disk_2", 'description': occupancy + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Disk_1", 'description': occupancy + rpclink }],
-
-          [{ 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Disk_-3", 'description':occupancy  + rpclink},
-           { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Disk_-2", 'description':occupancy  + rpclink},
-           { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Disk_-1", 'description':occupancy  + rpclink}]
+          [{ 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Ring_2", 'description': occupancy + rpclink },
+           { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Ring_3", 'description': occupancy + rpclink }]
           )
 
 ##------------------------

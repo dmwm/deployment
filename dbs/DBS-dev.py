@@ -91,7 +91,7 @@ db_integration_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10
 active.DBSWriter.section_('security')
 security_instances = active.DBSWriter.security.section_('instances')
 security_production_global = security_instances.section_('prod/global')
-security_production_global.params = {'dbs' : 'operator', 'dataops' : 'production operator'}
+security_production_global.params = {}
 security_development_global = security_instances.section_('dev/global')
 security_development_global.params = {}
 security_integration_global = security_instances.section_('int/global')

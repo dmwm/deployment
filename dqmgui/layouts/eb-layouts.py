@@ -14,8 +14,8 @@ ecalbarrellayout(dqmitems, "02 Cluster Summary EcalBarrel",
   [{ 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy map", 'description': "EcalBarrel: average energy of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/EcalDQM>EcalDQM</a>" }])
 
 # ALL shifters
-ebshifterlayout(dqmitems, "00 Event Type",
-  [{ 'path': "EcalBarrel/EcalInfo/EVTTYPE", 'description': "Frequency of the event types found in the DQM event-stream. If the calibration sequence is ON, histograms should show entries in COSMICS_GLOBAL, LASER_GAP, PEDESTAL_GAP, TESTPULSE_GAP, LED_GAP. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+ebshifterlayout(dqmitems, "00 Report Summary",
+  [{ 'path': "EcalBarrel/EventInfo/reportSummaryMap", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
 ebshifterlayout(dqmitems, "01 Integrity Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBIT integrity quality summary", 'description': "Quality summary checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: each crystal is required to have integrity errors in less than 1% of events. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
@@ -45,33 +45,37 @@ ebshifterlayout(dqmitems, "07 Clusters Energy",
   [{ 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy projection eta", 'description': "Eta projection of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy projection phi", 'description': "Phi projection of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } }])
 
-ebshifterlayout(dqmitems, "08 Blue Laser (L1) Quality",
+ebshifterlayout(dqmitems, "08 Blue Quantronix Laser (L1) Quality",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of blue laser pulses on crystals. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L1", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
+ebshifterlayout(dqmitems, "08 Green Laser (L2) Quality",
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L2", 'description': "Quality summary of blue laser pulses on crystals. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L2", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+
+ebshifterlayout(dqmitems, "08 Blue Photonics Laser (L3) Quality",
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L3", 'description': "Quality summary of blue laser pulses on crystals. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L3", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+
 ebshifterlayout(dqmitems, "08 Infrared Laser (L4) Quality",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of infrared laser pulses on crystals. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L4", 'description': "Quality summary of infrared laser pulses on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L4", 'description': "Quality summary of blue laser pulses on crystals. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L4", 'description': "Quality summary of blue laser pulses on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green half-supermodule by half-supermodule (i.e. 1 light module). Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: mean amplitude > 100 ADCs; mean amplitude within 40% of the mean amplitude in the supermodule; RMS < 30% mean amplitude. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-ebshifterlayout(dqmitems, "10 Pedestal Quality",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Pedestals are evaluated using all the 10 samples. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green supermodule by supermodule. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 175 < mean < 225 ADCs; RMS < 2.0 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT PN pedestal quality G16 summary", 'description': "Quality summary of pedestal events for PN Gain 16. Pedestals are evaluated using all the 50 samples. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green supermodule by supermodule. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: 650 < mean < 850 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
-
-ebshifterlayout(dqmitems, "11 TestPulse Quality",
+ebshifterlayout(dqmitems, "09 TestPulse Quality",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of test pulse events for Gain 12. Expect green where the test pulse sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT PN test pulse quality G16 summary", 'description': "Quality summary of test pulse events for PN Gain 16. Expect green where the test pulse sequence fired, yellow elsewhere. Red spots are failed channels. Supermodules are filled as the calibration sequence reach them: expected all yellow at beginning of run, then becoming green. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-ebshifterlayout(dqmitems, "12 DCC Event Size and Synch Errors",
+ebshifterlayout(dqmitems, "10 DCC Event Size and Synch Errors",
   [{ 'path': "EcalBarrel/EBSelectiveReadoutTask/EBSRT DCC event size", 'description': "Average event size per ecah ECAL barrel DCC calculated only on physics events. Expected about 2 kB/DCC. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } }],
   [{ 'path': "EcalBarrel/EBRawDataTask/EBRDT L1A FE errors", 'description': "Level 1 Accept mismatches between the ECAL DCC header and its front-end cards. It is filled once per front-end card in DCC with weight 1/n(front-end cards). It should be empty or with a flat pedestal with few errors of known problematic towers. ONE BIG SPIKE IN ONE FED MEANS THAT THE WHOLE FED IS OUT OF SYNCH AND THE RUN SHOULD BE STOPPED. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-ebshifterlayout(dqmitems, "13 Selective Readout High Interest TTs",
+ebshifterlayout(dqmitems, "11 Selective Readout High Interest TTs",
   [{ 'path': "EcalBarrel/EBSelectiveReadoutTask/EBSRT high interest TT Flags", 'description': "Rate of high interest (E_T of Trigger Tower over threshold) flags of selective readout. Expected higher occupancy at lower |eta| (the threshold is on transverse energy). Calibration events are excluded. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }])
 
-# ECAL shifters
-ebecalshifterlayout(dqmitems, "00 Event Type",
-  [{ 'path': "EcalBarrel/EcalInfo/EVTTYPE", 'description': "Frequency of the event types found in the DQM event-stream. If the calibration sequence is ON, histograms should show entries in COSMICS_GLOBAL, LASER_GAP, PEDESTAL_GAP, TESTPULSE_GAP. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+ebshifterlayout(dqmitems, "12 Synchronization Error Trend",
+  [{'path': "EcalBarrel/EBRawDataTask/EBRDT accumulated FE synchronization errors", 'description': "Running total of front-end synchronization errors. Expect flat distribution with occasional steps."}])
 
+# ECAL shifters
 ebecalshifterlayout(dqmitems, "01 Electronics/00 Integrity Summary",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBIT integrity quality summary", 'description': "Quality summary checking that data for each crystal follows all the formatting rules and all the constraints which are dictated by the design of the electronics. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: each crystal is required to have integrity errors in less than 1% of events. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -134,10 +138,7 @@ ebecalshifterlayout(dqmitems, "03 Occupancy/06 TestPulseEvents",
 ebecalshifterlayout(dqmitems, "03 Occupancy/07 LaserEvents",
   [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT laser digi occupancy", 'description': "Occupancy of laser events only (if any in the calibration sequence). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-ebecalshifterlayout(dqmitems, "03 Occupancy/09 PedestalEvents",
-  [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT pedestal digi occupancy", 'description': "Occupancy of pedestal events only (if any in the calibration sequence). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ebecalshifterlayout(dqmitems, "03 Occupancy/10 PN Digis",
+ebecalshifterlayout(dqmitems, "03 Occupancy/08 PN Digis",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBOT PN digi occupancy summary", 'description': "Occupancy of PN diodes (expect entries only for calibration events). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 # to be put back in when we will remove cosmics summary
@@ -329,19 +330,13 @@ ebecalshifterlayout(dqmitems, "08 Calibration/00 Laser/04 IR Laser (L4) PNQualit
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L4", 'description': "Quality summary of IR laser events on PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: amplitude (G1 and G16) > 100 ADCs; 650 < PN pedestal < 850 ADCs;  PN RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality errors summary L4", 'description': "Error occupancy for laser L4 events on PN diodes for every supermodule. Expect 0 entries if no errors or no laser events in a given supermodule. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-ebecalshifterlayout(dqmitems, "08 Calibration/01 Pedestal/00 Quality Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events on crystals for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria: gain 1: 175 < mean < 225 ADCs; RMS < 1.0 ADCs; gain 6: 175 < mean < 225 ADCs; RMS < 1.2 ADCs; gain 12: 175 < mean < 225 ADCs; RMS < 2.0 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ebecalshifterlayout(dqmitems, "08 Calibration/01 Pedestal/01 PNQuality Gain16",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT PN pedestal quality G16 summary", 'description': "Quality summary of pedestal events on PN diodes for Gain 16. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries.  Quality criteria for gain 1 and gain 16: 650 < mean < 850 ADCs; RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ebecalshifterlayout(dqmitems, "08 Calibration/02 TestPulse/00 Quality Gain12",
+ebecalshifterlayout(dqmitems, "08 Calibration/01 TestPulse/00 Quality Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Crystals quality summary of test pulse events for Gain 12. Expect green where the test pulse sequence fired, yellow elsewhere. Red spots are failed channels. Legend: green = good;  red = bad;  yellow = no entries.  *Quality criteria*: mean amplitude > 100 !ADCs; mean amplitude within 20% of the mean amplitude in the supermodule; !RMS < 300 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-ebecalshifterlayout(dqmitems, "08 Calibration/02 TestPulse/01 Amplitude Gain12",
+ebecalshifterlayout(dqmitems, "08 Calibration/01 TestPulse/01 Amplitude Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse amplitude G12 summary", 'description': "Test pulse average amplitude in MGPA gain 12 for crystals for each EB superodule. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-ebecalshifterlayout(dqmitems, "08 Calibration/02 TestPulse/05 PNQuality Gain16",
+ebecalshifterlayout(dqmitems, "08 Calibration/01 TestPulse/05 PNQuality Gain16",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT PN test pulse quality G16 summary", 'description': "PN diodes quality summary of test pulse events for Gain 16. Expect green where the test pulse sequence fired, yellow elsewhere. Red spots are failed PNs. Legend: green = good;  red = bad;  yellow = no entries. Quality criteria for gain 1 (gain 16): amplitude > 12.5 (200) ADCs; 650 < pedestal mean < 850 ADCs; pedestal RMS < 10 ADCs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 ebecalshifterlayout(dqmitems, "09 Trend/00 Crystal Digis Number",
@@ -451,31 +446,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-01", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-01", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-01", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-01", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-01", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-01", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-01", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-01", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-01", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-01", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-01", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-01 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-01 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-01 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-01 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-01/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -625,31 +595,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-02/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-02", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-02", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-02/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-02", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-02", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-02", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-02/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-02", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-02", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-02", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-02/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-02", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-02", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-02", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-02/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-02/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-02 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-02 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-02 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-02 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-02/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -797,31 +742,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-03", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-03", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-03", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-03", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-03", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-03", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-03", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-03", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-03", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-03", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-03", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-03 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-03 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-03 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-03 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-03/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -971,31 +891,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-04/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-04", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-04", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-04/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-04", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-04", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-04", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-04/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-04", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-04", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-04", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-04/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-04", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-04", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-04", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-04/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-04/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-04 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-04 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-04 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-04 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-04/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1143,31 +1038,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-05", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-05", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-05", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-05", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-05", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-05", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-05", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-05", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-05", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-05", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-05", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-05 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-05 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-05 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-05 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-05/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -1317,31 +1187,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-06/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-06", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-06", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-06/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-06", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-06", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-06", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-06/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-06", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-06", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-06", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-06/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-06", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-06", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-06", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-06/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-06/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-06 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-06 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-06 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-06 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-06/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1489,31 +1334,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-07", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-07", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-07", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-07", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-07", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-07", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-07", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-07", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-07", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-07", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-07", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-07 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-07 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-07 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-07 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-07/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -1663,31 +1483,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-08/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-08", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-08", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-08/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-08", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-08", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-08", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-08/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-08", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-08", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-08", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-08/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-08", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-08", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-08", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-08/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-08/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-08 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-08 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-08/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -1835,31 +1630,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-09", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-09", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-09", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-09", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-09", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-09", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-09", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-09", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-09", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-09", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-09", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-09 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-09 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-09 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-09 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-09/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -2009,31 +1779,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-10/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-10", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-10", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-10/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-10", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-10", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-10", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-10/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-10", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-10", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-10", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-10/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-10", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-10", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-10", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-10/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-10/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-10 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-10 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-10 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-10 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-10/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2181,31 +1926,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-11", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-11", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-11", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-11", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-11", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-11", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-11", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-11", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-11", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-11", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-11", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-11", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-11", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-11 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-11 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-11 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-11 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-11/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-11", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -2355,31 +2075,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-12/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-12", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-12", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-12/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-12", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-12", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-12", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-12/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-12", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-12", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-12", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-12/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-12", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-12", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-12", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-12/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-12/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-12 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-12 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-12 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-12 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-12/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2527,31 +2222,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-13", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-13", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-13", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-13", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-13", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-13", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-13", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-13", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-13", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-13", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-13", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-13", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-13", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-13 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-13 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-13 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-13 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-13/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-13", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -2701,31 +2371,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-14/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-14", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-14", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-14/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-14", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-14", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-14", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-14/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-14", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-14", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-14", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-14/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-14", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-14", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-14", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-14/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-14/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-14 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-14 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-14 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-14 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-14/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -2873,31 +2518,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-15", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-15", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-15", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-15", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-15", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-15", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-15", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-15", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-15", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-15", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-15", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-15", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-15", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-15 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-15 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-15 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-15 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-15/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-15", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -3047,31 +2667,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-16/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-16", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-16", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-16/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-16", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-16", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-16", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-16/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-16", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-16", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-16", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-16/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-16", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-16", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-16", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-16/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-16/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-16 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-16 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-16 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-16 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-16/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3219,31 +2814,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-17", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-17", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-17", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-17", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-17", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-17", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-17", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-17", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-17", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-17", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-17", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-17", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-17", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-17 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-17 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-17 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-17 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB-17/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-17", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -3393,31 +2963,6 @@ eblayout(dqmitems, "01 By Supermodule/EB-18/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB-18", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB-18", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB-18/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB-18", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB-18", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB-18", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-18/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB-18", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB-18", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB-18", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-18/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-18", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-18", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB-18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-18", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB-18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-18/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB-18", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-18", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB-18/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB-18 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-18 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-18 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-18 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB-18/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB-18", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB-18", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3565,31 +3110,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+01", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+01", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+01", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+01", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+01", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+01", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+01", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+01", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+01", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+01", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+01", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+01 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+01 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+01 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+01 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+01/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -3739,31 +3259,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+02/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+02", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+02", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+02/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+02", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+02", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+02", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+02/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+02", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+02", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+02", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+02/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+02", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+02", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+02", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+02/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+02/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+02 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+02 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+02 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+02 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+02/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+02", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -3911,31 +3406,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+03", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+03", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+03", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+03", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+03", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+03", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+03", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+03", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+03", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+03", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+03", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+03 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+03 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+03 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+03 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+03/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+03", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -4085,31 +3555,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+04/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+04", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+04", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+04/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+04", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+04", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+04", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+04/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+04", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+04", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+04", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+04/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+04", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+04", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+04", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+04/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+04/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+04 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+04 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+04 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+04 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+04/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+04", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4257,31 +3702,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+05", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+05", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+05", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+05", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+05", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+05", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+05", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+05", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+05", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+05", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+05", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+05 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+05 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+05 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+05 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+05/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+05", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -4431,31 +3851,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+06/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+06", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+06", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+06/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+06", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+06", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+06", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+06/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+06", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+06", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+06", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+06/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+06", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+06", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+06", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+06/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+06/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+06 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+06 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+06 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+06 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+06/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+06", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4603,31 +3998,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+07", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+07", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+07", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+07", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+07", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+07", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+07", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+07", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+07", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+07", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+07", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+07 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+07 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+07 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+07 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+07/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+07", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -4777,31 +4147,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+08/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+08", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+08", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+08/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+08", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+08", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+08", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+08/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+08", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+08", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+08", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+08/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+08", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+08", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+08", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+08/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+08/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+08 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+08 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+08 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+08/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+08", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -4949,31 +4294,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+09", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+09", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+09", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+09", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+09", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+09", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+09", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+09", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+09", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+09", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+09", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+09 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+09 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+09 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+09 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+09/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+09", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -5123,31 +4443,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+10/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+10", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+10", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+10/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+10", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+10", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+10", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+10/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+10", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+10", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+10", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+10/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+10", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+10", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+10", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+10/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+10/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+10 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+10 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+10 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+10 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+10/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+10", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -5295,31 +4590,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+11", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+11", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+11", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+11", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+11", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+11", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+11", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+11", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+11", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+11", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+11", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+11", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+11", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+11 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+11 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+11 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+11 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+11/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+11", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -5469,31 +4739,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+12/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+12", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+12", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+12/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+12", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+12", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+12", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+12/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+12", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+12", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+12", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+12/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+12", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+12", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+12", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+12/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+12/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+12 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+12 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+12 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+12 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+12/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+12", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -5641,31 +4886,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+13", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+13", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+13", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+13", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+13", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+13", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+13", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+13", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+13", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+13", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+13", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+13", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+13", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+13 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+13 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+13 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+13 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+13/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+13", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -5815,31 +5035,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+14/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+14", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+14", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+14/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+14", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+14", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+14", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+14/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+14", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+14", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+14", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+14/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+14", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+14", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+14", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+14/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+14/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+14 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+14 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+14 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+14 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+14/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+14", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -5987,31 +5182,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+15", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+15", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+15", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+15", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+15", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+15", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+15", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+15", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+15", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+15", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+15", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+15", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+15", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+15 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+15 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+15 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+15 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+15/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+15", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -6161,31 +5331,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+16/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+16", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+16", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+16/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+16", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+16", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+16", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+16/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+16", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+16", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+16", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+16/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+16", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+16", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+16", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+16/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+16/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+16 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+16 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+16 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+16 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+16/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -6334,31 +5479,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+17/Experts/00 Integrity/04 MemBox TT In
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+17", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+17", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
-eblayout(dqmitems, "01 By Supermodule/EB+17/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+17", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+17", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+17", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+17/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+17", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+17", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+17", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+17/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+17", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+17", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+17", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+17/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+17", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+17", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+17/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+17 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+17 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+17 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+17 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "01 By Supermodule/EB+17/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+17", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse amplitude G01 EB+17", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
@@ -6506,31 +5626,6 @@ eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/00 Integrity/03 MemBox Chann
 eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/00 Integrity/04 MemBox TT Integrity",
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemTTId/EBIT MemTTId EB+18", 'description': "Occupancy of integrity errors for PNs of type: TRIGGER TOWER ID. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBIntegrityTask/MemSize/EBIT MemSize EB+18", 'description': "Occupancy of errors for PNs of type: MEM SIZE. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/01 Pedestal/00 Gain01",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G01 EB+18", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 1. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G01 EB+18", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G01 EB+18", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/01 Pedestal/01 Gain06",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G06 EB+18", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 6. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G06 EB+18", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G06 EB+18", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/01 Pedestal/02 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+18", 'description': "Quality histogram checking the quality of the pedestals from the 10 samples of the pulse shape for the pedestal events in Gain 12. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+18", 'description': "Mean of the pedestal value on the pedestal events for the crystals of supermodule EB+18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+18", 'description': "RMS of the pedestal value on the pedestal events for the crystals of supermodule EB+18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/01 Pedestal/03 PNs Quality",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G01 EB+18", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+18", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/01 Pedestal/04 PNs Response",
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain01/EBPDT PNs pedestal EB+18 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+18 G01", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+18 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+18 G16", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "01 By Supermodule/EB+18/Experts/02 TestPulse/00 Gain01",
   [{ 'path': "EcalBarrel/EBTestPulseClient/EBTPT test pulse quality G01 EB+18", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
@@ -6697,19 +5792,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-01/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-01", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-01", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-01", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-01/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-01", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-01. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-01", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-01 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-01", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-01 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-01/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-01", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-01 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-01 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-01 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-01 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -6941,19 +6023,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-02/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-02", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-02", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-02/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-02", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-02. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-02", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-02 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-02", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-02 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-02/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-02", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-02 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-02 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-02 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-02 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7183,19 +6252,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-03/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-03", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-03", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-03", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-03/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-03", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-03. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-03", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-03 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-03", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-03 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-03/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-03", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-03 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-03 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-03 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-03 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7427,19 +6483,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-04/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-04", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-04", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-04/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-04", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-04. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-04", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-04 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-04", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-04 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-04/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-04", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-04 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-04 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-04 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-04 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -7669,19 +6712,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-05/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-05", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-05", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-05", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-05/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-05", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-05. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-05", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-05 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-05", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-05 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-05/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-05", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-05 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-05 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-05 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-05 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -7913,19 +6943,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-06/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-06", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-06", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-06/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-06", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-06. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-06", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-06 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-06", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-06 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-06/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-06", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-06 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-06 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-06 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-06 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8155,19 +7172,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-07/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-07", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-07", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-07", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-07/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-07", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-07. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-07", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-07 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-07", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-07 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-07/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-07", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-07 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-07 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-07 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-07 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8399,19 +7403,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-08/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-08", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-08", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-08/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-08", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-08. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-08", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-08 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-08", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-08 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-08/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-08", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-08 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-08 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-08 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-08 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -8641,19 +7632,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-09/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-09", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-09", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-09", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-09/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-09", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-09. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-09", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-09 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-09", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-09 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-09/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-09", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-09 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-09 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-09 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-09 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -8885,19 +7863,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-10/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-10", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-10", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-10/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-10", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-10. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-10", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-10 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-10", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-10 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-10/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-10", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-10 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-10 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-10 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-10 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9127,19 +8092,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-11/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-11", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-11", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-11", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-11/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-11", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-11. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-11", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-11 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-11", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-11 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-11/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-11", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-11 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-11 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-11 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-11 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9371,19 +8323,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-12/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-12", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-12", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-12/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-12", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-12. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-12", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-12 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-12", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-12 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-12/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-12", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-12 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-12 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-12 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-12 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -9613,19 +8552,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-13/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-13", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-13", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-13", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-13/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-13", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-13. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-13", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-13 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-13", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-13 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-13/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-13", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-13 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-13 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-13 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-13 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -9857,19 +8783,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-14/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-14", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-14", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-14/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-14", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-14. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-14", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-14 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-14", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-14 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-14/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-14", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-14 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-14 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-14 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-14 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10099,19 +9012,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-15/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-15", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-15", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-15", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-15/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-15", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-15. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-15", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-15 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-15", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-15 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-15/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-15", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-15 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-15 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-15 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-15 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -10343,19 +9243,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-16/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-16", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-16", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-16/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-16", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-16", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-16 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-16", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-16 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-16/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-16", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-16 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-16 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-16 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-16 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -10585,19 +9472,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-17/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB-17", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-17", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-17", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-17/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-17", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-17. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-17", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-17 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-17", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-17 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-17/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-17", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-17 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-17 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-17 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-17 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -10829,19 +9703,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB-18/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB-18", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB-18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB-18", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB-18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-18/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB-18", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB-18. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB-18", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB-18 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB-18", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB-18 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB-18/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB-18", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB-18 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB-18 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB-18 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB-18 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11071,19 +9932,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+01/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+01", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+01", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+01. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+01", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+01. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+01/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+01", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+01. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+01", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+01 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+01", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+01 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+01/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+01", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+01 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+01 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+01 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+01 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11315,19 +10163,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+02/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+02", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+02. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+02", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+02. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+02/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+02", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+02. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+02", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+02 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+02", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+02 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+02/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+02", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+02 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+02 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+02 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+02 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -11557,19 +10392,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+03/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+03", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+03", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+03. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+03", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+03. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+03/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+03", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+03. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+03", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+03 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+03", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+03 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+03/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+03", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+03 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+03 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+03 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+03 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -11801,19 +10623,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+04/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+04", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+04. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+04", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+04. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+04/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+04", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+04. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+04", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+04 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+04", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+04 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+04/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+04", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+04 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+04 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+04 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+04 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12043,19 +10852,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+05/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+05", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+05", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+05. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+05", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+05. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+05/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+05", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+05. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+05", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+05 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+05", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+05 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+05/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+05", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+05 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+05 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+05 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+05 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -12287,19 +11083,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+06/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+06", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+06. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+06", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+06. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+06/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+06", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+06. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+06", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+06 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+06", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+06 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+06/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+06", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+06 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+06 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+06 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+06 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -12529,19 +11312,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+07/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+07", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+07", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+07. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+07", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+07. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+07/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+07", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+07. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+07", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+07 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+07", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+07 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+07/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+07", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+07 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+07 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+07 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+07 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -12773,19 +11543,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+08/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+08", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+08. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+08", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+08. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+08/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+08", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+08. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+08", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+08 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+08", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+08 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+08/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+08", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+08 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+08 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+08 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+08 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -13015,19 +11772,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+09/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+09", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+09", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+09. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+09", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+09. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+09/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+09", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+09. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+09", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+09 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+09", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+09 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+09/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+09", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+09 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+09 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+09 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+09 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -13259,19 +12003,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+10/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+10", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+10. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+10", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+10. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+10/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+10", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+10. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+10", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+10 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+10", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+10 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+10/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+10", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+10 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+10 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+10 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+10 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -13501,19 +12232,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+11/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+11", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+11", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+11. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+11", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+11. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+11/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+11", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+11. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+11", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+11 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+11", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+11 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+11/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+11", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+11 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+11 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+11 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+11 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -13745,19 +12463,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+12/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+12", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+12. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+12", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+12. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+12/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+12", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+12. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+12", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+12 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+12", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+12 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+12/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+12", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+12 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+12 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+12 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+12 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -13987,19 +12692,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+13/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+13", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+13", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+13. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+13", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+13. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+13/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+13", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+13. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+13", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+13 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+13", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+13 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+13/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+13", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+13 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+13 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+13 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+13 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -14231,19 +12923,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+14/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+14", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+14. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+14", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+14. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+14/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+14", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+14. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+14", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+14 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+14", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+14 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+14/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+14", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+14 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+14 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+14 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+14 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -14473,19 +13152,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+15/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+15", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+15", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+15. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+15", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+15. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+15/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+15", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+15. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+15", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+15 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+15", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+15 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+15/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+15", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+15 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+15 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+15 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+15 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -14717,19 +13383,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+16/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+16", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+16. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+16", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+16. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+16/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+16", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+16", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+16 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+16", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+16 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+16/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+16", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+16 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+16 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+16 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+16 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -14960,19 +13613,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+17/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+17", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+17. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+17", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+17. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+17/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+17", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+17. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+17", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+17 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+17", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+17 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+17/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+17", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+17 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+17 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+17 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+17 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
@@ -15202,19 +13842,6 @@ eblayout(dqmitems, "00 By Task/02 PedestalOnline/EB+18/Gain12",
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal quality G12 EB+18", 'description': "Quality histogram checking the quality of the pedestals from the first 3/10 samples of the pulse shape for all the events. Expected all green color. Legend: green = good;  red = bad;  yellow = no entries. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
   [{ 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal mean G12 EB+18", 'description': "Mean of the pedestal value on all the events for the crystals of supermodule EB+18. Expected within 175-225 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBPedestalOnlineClient/EBPOT pedestal rms G12 EB+18", 'description': "RMS of the pedestal value on all the events for the crystals of supermodule EB+18. Expected < 2.0 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/00 Pedestal Summary Gain12",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBPT pedestal quality G12 summary", 'description': "Quality summary of pedestal events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+18/00 Gain12",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality G12 EB+18", 'description': "Quality histogram of pedestal events on crystals for Gain 12 on supermodule EB+18. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal mean G12 EB+18", 'description': "Pedestal mean for all (1700) the crystals of the supermodule EB+18 for Gain 12. Expected mean is between 175-225 ADC counts for all the MGPA gains. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal rms G12 EB+18", 'description': "Pedestal RMS for all (1700) the crystals of the supermodule EB+18 for Gain 12. Expected RMS is < 1.0, 1.2, 2.0 ADC counts for MGPA gain 1, 6, 12, respectively. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
-
-eblayout(dqmitems, "00 By Task/03 Pedestal/EB+18/01 PNs Gain16",
-  [{ 'path': "EcalBarrel/EBPedestalClient/EBPT pedestal quality PNs G16 EB+18", 'description': "Quality histogram of pedestal events on PNs for Gain 16. Expect green if the pedestal sequence fired the supermodule, yellow elsewhere. Red spots are failed PNs. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalBarrel/EBPedestalTask/PN/Gain16/EBPDT PNs pedestal EB+18 G16", 'description': "Pedestal mean for all the 10 PNs of the supermodule EB+18 for Gain 16. Expected mean is around 750 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } },
-   { 'path': "EcalBarrel/EBPedestalClient/EBPDT PNs pedestal rms EB+18 G16", 'description': "Pedestal rms for all the 10 PNs of the supermodule EB+18 for Gain .PN Expected rms is around 1 ADC counts. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>", 'draw': { 'withref': "yes" } }])
 
 eblayout(dqmitems, "00 By Task/04 TestPulse/00 TestPulse Summary Gain12",
   [{ 'path': "EcalBarrel/EBSummaryClient/EBTPT test pulse quality G12 summary", 'description': "Quality summary of testpulse events for Gain 12. Expect green where the pedestal sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
@@ -15488,9 +14115,6 @@ eblayout(dqmitems, "00 By Task/12 Occupancy/05 Occupancy",
 
 eblayout(dqmitems, "00 By Task/12 Occupancy/06 Occupancy",
   [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT laser digi occupancy", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-eblayout(dqmitems, "00 By Task/12 Occupancy/07 Occupancy",
-  [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT pedestal digi occupancy", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
 
 eblayout(dqmitems, "00 By Task/13 RawData/00 RawData",
   [{ 'path': "EcalBarrel/EBRawDataTask/EBRDT event type calibration BX", 'description': "Event type in ECAL DCC header in the calibration BX. It should contain only calibration events. It is filled once per DCC with weight 1/36. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
