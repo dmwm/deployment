@@ -69,7 +69,7 @@ WORKLOAD_SUMMARY_URL=
 WORKLOAD_SUMMARY_HOSTNAME=
 WORKLOAD_SUMMARY_PORT=5984
 WORKLOAD_SUMMARY_DBNAME=workloadsummary
-
+WMSTATS_URL=
 #
 # Init checks
 #
@@ -158,23 +158,24 @@ load_secrets_file(){
     local MATCH_WORKLOAD_SUMMARY_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_HOSTNAME | sed s/WORKLOAD_SUMMARY_HOSTNAME=//`
     local MATCH_WORKLOAD_SUMMARY_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_PORT | sed s/WORKLOAD_SUMMARY_PORT=//`
     local MATCH_WORKLOAD_SUMMARY_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_DBNAME | sed s/WORKLOAD_SUMMARY_DBNAME=//`
+    local MATCH_WMSTATS_URL=`cat $WMAGENT_SECRETS_LOCATION | grep WMSTATS_URL | sed s/WMSTATS_URL=//`
 
     # database settings (mysql or oracle)
     if [ "x$MATCH_ORACLE_USER" == "x" ]; then
-	MYSQL_USER=${MATCH_MYSQL_USER:-wmagentmysql};
-	MYSQL_PASS=$MATCH_MYSQL_PASS;
-	if [ "x$MYSQL_PASS" == "x" ]; then
+        MYSQL_USER=${MATCH_MYSQL_USER:-wmagentmysql};
+        MYSQL_PASS=$MATCH_MYSQL_PASS;
+        if [ "x$MYSQL_PASS" == "x" ]; then
             echo "Secrets file does not contain MYSQL_PASS";
             exit 1
-	fi
+        fi
     else
-	ORACLE_USER=$MATCH_ORACLE_USER;
-	ORACLE_PASS=$MATCH_ORACLE_PASS;
-	ORACLE_TNS=$MATCH_ORACLE_TNS;
-	if [ "x$ORACLE_PASS" == "x" ] || [ "x$ORACLE_TNS" == "x" ]; then
+        ORACLE_USER=$MATCH_ORACLE_USER;
+        ORACLE_PASS=$MATCH_ORACLE_PASS;
+        ORACLE_TNS=$MATCH_ORACLE_TNS;
+        if [ "x$ORACLE_PASS" == "x" ] || [ "x$ORACLE_TNS" == "x" ]; then
             echo "Secrets file doesnt contain ORACLE_PASS or ORACLE_TNS";
             exit 1
-	fi
+        fi
     fi
 
     # basic couch settings
@@ -222,6 +223,9 @@ load_secrets_file(){
 	    WORKLOAD_SUMMARY_URL=http://$WORKLOAD_SUMMARY_HOSTNAME:$WORKLOAD_SUMMARY_PORT/$WORKLOAD_SUMMARY_DBNAME;
 	fi
     fi
+    if [ ! "x$MATCH_WMSTATS_URL" == "x" ]; then
+        WMSTATS_URL=$MATCH_WMSTATS_URL;
+    fi
 }
 
 print_settings(){
@@ -257,8 +261,10 @@ print_settings(){
     echo "LOCAL_WORKQUEUE_DBNAME=    $LOCAL_WORKQUEUE_DBNAME    "
     echo "WORKLOAD_SUMMARY_URL=      $WORKLOAD_SUMMARY_URL      "
     echo "WORKLOAD_SUMMARY_HOSTNAME= $WORKLOAD_SUMMARY_HOSTNAME "
-    echo "WORKLOAD_SUMMARY_PORT=     $WORKLOAD_SUMMARY_PORT     "
-    echo "WORKLOAD_SUMMARY_DBNAME=   $WORKLOAD_SUMMARY_DBNAME   "
+    echo "WORKLOAD_SUMMARY_PORT=     $WORKLOAD_SUMMARY_PORT      "
+    echo "WORKLOAD_SUMMARY_DBNAME=   $WORKLOAD_SUMMARY_DBNAME    "
+    echo "WMSTATS_URL=               $WMSTATS_URL                "
+
 }
 
 
@@ -270,6 +276,9 @@ print_settings(){
 
 export WMCORE_ROOT
 export YUI_ROOT
+export JQUERY_ROOT
+export JQUERY_UI_ROOT
+export JQUERY_DATATABLES_ROOT
 
 
 #export PATH=$PATH:$WMCORE_DIR/app/bin
@@ -609,7 +618,8 @@ init_wmagent(){
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
+                       --wmstats_url=$WMSTATS_URL
     elif [ "x$ORACLE_USER" != "x" ]; then
 	wmagent-mod-config --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
@@ -619,7 +629,8 @@ init_wmagent(){
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
+                       --wmstats_url=$WMSTATS_URL
     else
 	echo "No database configured, should never have reached this point..."
 	exit 1;
@@ -643,7 +654,8 @@ init_reqmgr(){
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
+                       --wmstats_url=$WMSTATS_URL
    elif [ "x$ORACLE_USER" != "x" ]; then
 	wmagent-mod-config --input=$CONFIG_RM/config-template.py \
                        --output=$CONFIG_RM/config.py \
@@ -652,7 +664,8 @@ init_reqmgr(){
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
+                       --wmstats_url=$WMSTATS_URL
     else
 	echo "No database configured, should never have reached this point..."
 	exit 1;
