@@ -276,9 +276,7 @@ print_settings(){
 
 export WMCORE_ROOT
 export YUI_ROOT
-export JQUERY_ROOT
-export JQUERY_UI_ROOT
-export JQUERY_DATATABLES_ROOT
+export COUCHSKEL_ROOT
 
 
 #export PATH=$PATH:$WMCORE_DIR/app/bin
