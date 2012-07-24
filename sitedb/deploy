@@ -75,13 +75,13 @@ deploy_sitedb_auth()
 
     */SiteDBAuth.py)
       cat <<- \EOF
-	import cx_Oracle as DB
-	import socket
+import cx_Oracle as DB
+import socket
 
-	fqdn = socket.getfqdn().lower()
-	dbparam = {
-	  'prod': { '.title': 'Production',
-                    '.order': 0,
+fqdn = socket.getfqdn().lower()
+dbparam = {
+     'prod': { '.title': 'Production',
+               '.order': 0,
 
 		    'GET': { 'type': DB,
 		             'trace': False,
@@ -89,35 +89,60 @@ deploy_sitedb_auth()
 		             'clientid': "sitedb-web@%s" % fqdn,
 		             'liveness': "select sysdate from dual",
 		             'user': "cms_sitedb_reader_fixme",
-			     'password': "FIXME",
-			     'dsn': "cms_sitedb",
-			     'timeout': 300 },
+                   'password': "FIXME",
+                   'dsn': "cms_sitedb_fixme",
+                   'timeout': 300 },
 
-		     '*': { 'type': DB,
-		            'trace': False,
-		            'schema': "cms_sitedb",
-		            'clientid': "sitedb-web@%s" % fqdn,
-		            'liveness': "select sysdate from dual",
-		            'user': "cms_sitedb_writer_fixme",
-			    'password': "FIXME",
-			    'dsn': "cms_sitedb",
-			    'timeout': 60 }
-                  },
+		    '*': { 'type': DB,
+		           'trace': False,
+		           'schema': "cms_sitedb",
+		           'clientid': "sitedb-web@%s" % fqdn,
+		           'liveness': "select sysdate from dual",
+                 'user': "cms_sitedb_writer_fixme",
+                 'password': "FIXME",
+                 'dsn': "cms_sitedb_fixme",
+                 'timeout': 60 }
+             },
 
-	  'dev':  { '.title': 'Dev',
-                    '.order': 1,
+     'dev':  { '.title': 'Dev',
+               '.order': 1,
 
-		     '*': { 'type': DB,
-		            'trace': False,
-		            'schema': "cms_sitedb",
-		            'clientid': "sitedb-web@%s" % fqdn,
-		            'liveness': "select sysdate from dual",
-		            'user': "cms_sitedb_dev_fixme",
-			    'password': "FIXME",
-			    'dsn': "cms_sitedb",
-			    'timeout': 60 }
-		   }
-	       }
+          'GET': { 'type': DB,
+                   'trace': True,
+                   'schema': "cms_sitedb",
+                   'clientid': "sitedb-web@%s" % fqdn,
+                   'liveness': "select sysdate from dual",
+                   'user': "cms_sitedb_reader_fixme",
+                   'password': "FIXME",
+                   'dsn': "devdb11_fixme",
+                   'timeout': 300 },
+
+		    '*': { 'type': DB,
+		           'trace': True,
+		           'schema': "cms_sitedb",
+		           'clientid': "sitedb-web@%s" % fqdn,
+		           'liveness': "select sysdate from dual",
+                 'user': "cms_sitedb_writer_fixme",
+                 'password': "FIXME",
+                 'dsn': "devdb11_fixme",
+                 'timeout': 60 }
+             },
+
+     'test': { '.title': 'My Test',
+               '.order': 2,
+
+          '*': { 'type': DB,
+                 'trace': True,
+                 'schema': "FIXME",
+                 'clientid': "sitedb-web@%s" % fqdn,
+                 'liveness': "select sysdate from dual",
+                 'user': "FIXME",
+                 'password': "FIXME",
+                 #'auth-role': ("sitedb_website_fixme", "FIXME"),
+                 'dsn': "devdb11_fixme",
+                 'timeout': 300 }
+             }
+}
 EOF
     ;;
   esac
