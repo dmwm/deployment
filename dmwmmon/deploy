@@ -1,0 +1,104 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dmwmmon_deps()
+{
+  deploy backend
+}
+
+deploy_dmwmmon_prep()
+{
+  mkproj sessions cache/dmwmmon-datasvc
+}
+
+deploy_dmwmmon_sw()
+{
+  deploy_pkg -a dmwmmon/DBParam comp cms+DMWMMON-datasvc
+
+  (set -e
+   for app in DMWMMON-datasvc; do
+     . $root/current/apps/$app/etc/profile.d/init.sh
+   done
+   perl -p -i -e "
+       s|\@ROOT\@|$root/|g; \
+       s|\@WEB_VERSION\@|$DMWMMON_WEB_VERSION|g; \
+       s|\@DATASVC_VERSION\@|$DMWMMON_DATASVC_VERSION|g;"\
+     $project_config/{app-*.conf,*.xml}
+  )
+  [ $? = 0 ]
+}
+
+deploy_dmwmmon_post()
+{
+  case $host in
+    vocms13[89] | vocms140 )
+      disable
+      opts="" ;;
+    * )
+      enable
+      opts="-DDMWMMON_DATASVC -DDMWMMON_WEB" ;;
+  esac
+
+  rm -fr $PWD/{htdocs,etc}
+  (set -e
+   for app in DMWMMON-datasvc; do
+     . $root/current/apps/$app/etc/profile.d/init.sh
+   done
+   export YUI_ROOT
+   mkserver                                                     \
+   -r $PWD                                                      \
+   -l $project_logs                                             \
+   -a $APACHE2_ROOT                                             \
+   -o "$opts"                                                   \
+   -p $project_config/httpd-mpm.conf                            \
+   -c $project_config/httpd-dmwmmon.conf                         \
+   -d $DMWMMON_WEB_ROOT/Documentation                            \
+   -d $DMWMMON_DATASVC_ROOT/PhEDExWeb                            \
+   -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"                       \
+   -e "$DMWMMON_WEB_ROOT/etc/env.d/*.sh"                         \
+   -e "$DMWMMON_DATASVC_ROOT/etc/env.d/*.sh"                     \
+   -x "$project_config/app-*.conf"                   \
+   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so           \
+   -m cache_module:$APACHE2_ROOT/modules/mod_cache.so           \
+   -m disk_cache_module:$APACHE2_ROOT/modules/mod_disk_cache.so)
+  [ $? = 0 ]
+
+  setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
+  setgroup ug+rw,o-w _dmwmmon $PWD/var
+
+  (mkcrontab; sysboot
+   cmd="$project_config/trim-cache $PWD/cache/dmwmmon-datasvc 1G"
+   $nogroups || cmd="sudo -H -u _dmwmmon bashs -c '$cmd'"
+   [ ! -f $root/enabled/$project ] || echo "0 * * * * $cmd") | crontab -
+
+  if $nogroups; then
+    rm -fr cache/dmwmmon-datasvc/*
+  else
+    sudo -H -u _dmwmmon bashs -lc "rm -fr cache/dmwmmon-datasvc/*"
+  fi
+}
+
+deploy_dmwmmon_auth()
+{
+  case $1 in
+    */DBParam )
+      cat <<-EOF
+	Section            Prod/Writer
+	Interface          Oracle
+	Database           cms_dmwm_mon__IN_DEV_VM__
+	AuthDBUsername     cms_dmwm_mon_w__IN_DEV_VM__
+	AuthDBPassword     __FILL_ME_IN__
+	ConnectionLife     86400
+	LogConnection      off
+	LogSQL             off
+
+	Section            Prod/Reader
+	Interface          Oracle
+	Database           cms_dmwm_mon__IN_DEV_VM__
+	AuthDBUsername     cms_dmwm_mon_r__IN_DEV_VM__
+	AuthDBPassword     __FILL_ME_IN__
+	ConnectionLife     86400
+	LogConnection      off
+	LogSQL             off
+EOF
+      ;;
+  esac
+}
