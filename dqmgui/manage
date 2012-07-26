@@ -166,8 +166,13 @@ killproc()
 
 startagent()
 {
-  local logstem=$1; shift
-  (set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  local edition=
+  case $1 in
+    -e ) edition=$2; shift;shift
+  esac
+  local logstem=${1}; shift
+  ([ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
+   set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Start service conditionally on crond restart.
@@ -190,6 +195,9 @@ start()
       [ ! -d $STATEDIR/$cfg/ix ] && \
         (echo Creating index $STATEDIR/$cfg/ix; visDQMIndex create $STATEDIR/$cfg/ix)
       monControl start all from $CFGDIR/server-conf-$cfg.py
+      if [ ! -d $STATEDIR/$cfg/ix128 ]; then
+	(echo Creating index128 $STATEDIR/$cfg/ix128; source $ROOT/apps/dqmgui/128/etc/profile.d/env.sh; visDQMIndex create $STATEDIR/$cfg/ix128 )
+      fi
     done ;;
   esac
 
@@ -294,12 +302,23 @@ start()
         D=${D}
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
-        startagent $D/agent-receive \
-          visDQMReceiveDaemon \
-          $DQM_DATA/uploads \
-          $DQM_DATA/data \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/agents/zip
+
+	if [ $HOST == "vocms139" ]; then
+	  startagent $D/agent-receive \
+            visDQMReceiveDaemon \
+            $DQM_DATA/uploads \
+            $DQM_DATA/data \
+            $DQM_DATA/agents/register \
+            $DQM_DATA/agents/register128 \
+            $DQM_DATA/agents/zip
+	else
+	  startagent $D/agent-receive \
+            visDQMReceiveDaemon \
+            $DQM_DATA/uploads \
+            $DQM_DATA/data \
+            $DQM_DATA/agents/register \
+            $DQM_DATA/agents/zip
+	fi
 
         startagent $D/agent-zip \
           visDQMZipDaemon \
@@ -349,6 +368,14 @@ start()
             $DQM_DATA/agents/ixmerge \
             $DQM_DATA/ix \
             $DQM_DATA/agents/register
+
+	if [ $HOST == "vocms139" ]; then
+	  startagent -e 128 $D/agent-import-128 \
+	    visDQMImportDaemon \
+	    $DQM_DATA/agents/register128 \
+	    $DQM_DATA/data \
+	    $DQM_DATA/ix128
+	fi
 
         if [ $D = offline ]; then
           startagent $D/agent-osync \
