@@ -31,9 +31,9 @@ shifteblayout(dqmitems, "07 Clusters Energy",
   [{ 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy projection eta", 'description': "Eta projection of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } },
    { 'path': "EcalBarrel/EBClusterTask/EBCLT BC energy projection phi", 'description': "Phi projection of hybrid basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>", 'draw': { 'withref': "yes" } }])
 
-shifteblayout(dqmitems, "08 Blue Laser (L1) Quality",
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L1", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
-  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L1", 'description': "Quality summary of blue laser events for PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
+shifteblayout(dqmitems, "08 Blue Laser (L3) Quality",
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT laser quality summary L3", 'description': "Quality summary of blue laser events. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" }],
+  [{ 'path': "EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L3", 'description': "Quality summary of blue laser events for PN diodes. Expect green where the laser sequence fired, yellow elsewhere. Red spots are failed channels. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcal>DQMShiftEcal</a>" },
    { 'path': "EcalCalibration/Laser/EcalLaser sequence validation summary", 'description': "Quality summary of the blue laser light source for the last sequence."}])
 
 shifteblayout(dqmitems, "09 TestPulse High Gain Quality",

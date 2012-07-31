@@ -19,14 +19,14 @@ pixellayout(dqmitems, "00c - Pixel_Error_Summary",
      'description': "Total number of errors per error type in a map of error type (y-axis) vs. FED (x-axis)",
      'draw': { 'withref': "no" }}]
   )
-pixellayout(dqmitems, "01a - Pixel_Noise_Summary",
-  [{ 'path': "Pixel/Barrel/SUMDIG_ndigisFREQ_Barrel",
-     'description': "Total number of events with at least one digi per event per barrel module - spikes show noisy modules or pixels!",
+pixellayout(dqmitems, "01a - Pixel_zeroOccupancy_BarrelROCs",
+  [{ 'path': "Pixel/noOccROCsBarrel",
+     'description': "Total number of zero occupancy barrel ROCs vs every 10 LS",
      'draw': { 'withref': "no" }}]
   )
-pixellayout(dqmitems, "01b - Pixel_Noise_Summary",
-  [{ 'path': "Pixel/Endcap/SUMDIG_ndigisFREQ_Endcap",
-     'description': "Total number of events with at least one digi per event per endcap module - spikes show noisy modules or pixels!",
+pixellayout(dqmitems, "01b - Pixel_zeroOccupancy_EndcapROCs",
+  [{ 'path': "Pixel/noOccROCsEndcap",
+     'description': "Total number of zero occupancy endcap ROCs vs every 10 LS",
      'draw': { 'withref': "no" }}]
   )
 pixellayout(dqmitems, "02 - Pixel_Charge_Summary",
@@ -114,6 +114,16 @@ pixellayout(dqmitems, "20f - Cluster occupancy Endcap +z Disk 1",
 pixellayout(dqmitems, "20g - Cluster occupancy Endcap +z Disk 2",
   [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_pz_Disk_2",
      'description': "Cluster occupancy of Endcap +z Disk 2",
+     'draw': { 'withref': "no" }}]
+  )
+pixellayout(dqmitems, "21a - Pixel_Noise_Summary",
+  [{ 'path': "Pixel/Barrel/SUMDIG_ndigisFREQ_Barrel",
+     'description': "Total number of events with at least one digi per event per barrel module - spikes show noisy modules or pixels!",
+     'draw': { 'withref': "no" }}]
+  )
+pixellayout(dqmitems, "21b - Pixel_Noise_Summary",
+  [{ 'path': "Pixel/Endcap/SUMDIG_ndigisFREQ_Endcap",
+     'description': "Total number of events with at least one digi per event per endcap module - spikes show noisy modules or pixels!",
      'draw': { 'withref': "no" }}]
   )
 pixellayout(dqmitems, "30a - Pixel event rates",

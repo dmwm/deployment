@@ -218,6 +218,7 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
       if( o.name.find( "endcapOccupancyMap" ) != std::string::npos ) obj->SetTitle("Endcap Digi Occupancy Map");
       if( o.name.find( "hitmap" ) != std::string::npos  ||
 	  o.name.find( "rocmap" ) != std::string::npos  ||
+	  o.name.find( "zeroOccROC_map" ) != std::string::npos  ||
           o.name.find( "Occupancy" ) != std::string::npos ||
 	  o.name.find( "position_siPixelClusters" ) != std::string::npos ||
 	  (o.name.find( "TRKMAP" ) != std::string::npos && o.name.find( "Layer" ) != std::string::npos) ||
@@ -291,6 +292,10 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
         gPad->SetGrid();
         if(obj->GetNbinsX()==7) gPad->SetLeftMargin(0.3);
         dqm::utils::reportSummaryMapPalette(obj2);
+	if(obj->GetNbinsX()>2){
+	  //Look at last filled bin (above -0.99) and use to zoom in on plot
+	  float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(-0.99))+1.;
+	  obj->GetXaxis()->SetRangeUser(0.,currentX);}
         return;
       }
     }
@@ -329,6 +334,10 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
       if( o.name.find( "barrelEventRate" ) != std::string::npos && obj->GetEntries() > 0. ) {gPad->SetLogx(1); gPad->SetLogy(1); gPad->SetTopMargin(0.15); gPad->SetRightMargin(0.15); }
       if( o.name.find( "endcapEventRate" ) != std::string::npos && obj->GetEntries() > 0. ) {gPad->SetLogx(1); gPad->SetLogy(1); gPad->SetTopMargin(0.15); gPad->SetRightMargin(0.15); }
       if( o.name.find( "ALLMODS_chargeCOMB" ) != std::string::npos ) obj->GetXaxis()->SetRange(1,51);
+      if( o.name.find( "noOccROCsBarrel" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);
+        obj->GetYaxis()->SetRangeUser(250,350);}
+      if( o.name.find( "noOccROCsEndcap" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);
+        obj->GetYaxis()->SetRangeUser(300,350);}
       if( o.name.find( "FEDEntries" ) != std::string::npos ) gStyle->SetOptStat(0);
 //       if( o.name.find( "size_siPixelClusters" ) != std::string::npos && obj->GetEntries() > 0. ) gPad->SetLogx(1);
       if( o.name.find( "OnTrack" ) != std::string::npos && o.name.find( "charge" ) != std::string::npos ) obj->SetTitle("ClusterCharge_OnTrack");
@@ -488,6 +497,14 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
         TLine tl; tl.SetLineColor(4); tl.DrawLine(-0.5,0.6,39.5,0.6);
         TLine t2; t2.SetLineColor(4); t2.DrawLine(-0.5,1.6,39.5,1.6);
       }
+      else if( o.name.find( "noOccROCsBarrel" ) != std::string::npos ){
+        float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.;
+        TLine tl; tl.SetLineColor(4); tl.SetLineStyle(2); tl.DrawLine(0.0,267.0,currentX,267.0);
+      }
+      else if( o.name.find( "noOccROCsEndcap" ) != std::string::npos ){
+        float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.;
+        TLine tl; tl.SetLineColor(4); tl.SetLineStyle(2); tl.DrawLine(0.0,314.0,currentX,314.0);
+      }
 //       else if( o.name.find( "OnTrack/size_siPixelClusters" ) != std::string::npos ||
 //                o.name.find( "OffTrack/size_siPixelClusters" ) != std::string::npos ){
 //         Int_t ibin = obj->GetMaximumBin();
@@ -553,9 +570,6 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
 	  TLine tl33; tl33.SetLineColor(4); tl33.DrawLine(27.,25.,29.,25.); //little boxes
 	  TLine tl34; tl34.SetLineColor(4); tl34.DrawLine(27.,27.,29.,27.); //little boxes
 	}
-        //Look at last filled bin (above -0.99) and use to zoom in on plot
-        float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(-0.99))+1.;
-        obj->GetXaxis()->SetRangeUser(0.,currentX);
       }
 
 }
