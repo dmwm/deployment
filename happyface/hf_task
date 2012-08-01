@@ -22,7 +22,6 @@ LOGDIR=$TOP/logs/$ME
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
 WEBDIR={WEBDIR}
-HF_VER={VER}
 
 # Main routine, perform action requested on command line.
 case ${1:-help} in
@@ -68,7 +67,7 @@ case ${1:-help} in
     ;;
 
   version )
-    echo "${HF_VER:-unknown}"
+    echo "${HAPPYFACE_VERSION:-unknown}"
     ;;
 
   * )

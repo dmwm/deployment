@@ -7,13 +7,11 @@ deploy_happyface_prep()
 
 deploy_happyface_sw()
 {
-  hfver=3.0
-  deploy_pkg comp cms+happyface $hfver
+  deploy_pkg comp cms+happyface
 
   webdir=/afs/cern.ch/cms/LCG/www/t1jobmon
 
-  perl -p -i -e "s,{WEBDIR},$webdir,g; \
-                 s,{VER},$hfver,g;     " $project_config/hf_task
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/hf_task
   perl -p -i -e "s,{OUTPUTDIR},$project_state/webpage,g; \
                  s,{DBPATH},$project_state/webpage,g" \
                 $root/current/apps/happyface/lib/python*/site-packages/HappyFace/run.cfg
