@@ -1,0 +1,33 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_sreadiness_prep()
+{
+  mkproj
+}
+
+deploy_sreadiness_sw()
+{
+  deploy_pkg comp cms+sreadiness
+
+  webdir=/afs/cern.ch/cms/LCG/www/sreadiness
+  weburl=http://cern.ch/cms-site-readiness
+
+  perl -p -i -e "s,{WEBDIR},$webdir,g;\
+                 s,{WEBURL},$weburl,g;" $project_config/sreadiness_task
+}
+
+deploy_sreadiness_post()
+{
+  (mkcrontab
+   echo "00 4 * * * $project_config/sreadiness_task run enabledlinks"
+   echo "10 4 * * * $project_config/sreadiness_task run insitedb"
+   echo "30 4 * * * $project_config/sreadiness_task run sreadiness"
+   echo "00 * * * * $project_config/sreadiness_task run usablesites"
+   echo "00 0 * * * $project_config/sreadiness_task logclean"
+  ) | crontab -
+
+  klist -s
+  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
+   echo "55 * * * * $host $project_config/sreadiness_task updateweb"
+  ) | acrontab
+}

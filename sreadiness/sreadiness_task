@@ -1,0 +1,75 @@
+#!/bin/sh
+
+##H Usage: sreadiness_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   version             get current version of the service
+##H   run [what]          call the sreadiness scripts to update the state
+##H   updateweb           update the web area
+##H   logclean            clean logs that were not touched in the last week
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/HappyFace
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+
+WEBDIR={WEBDIR}
+WEBURL={WEBURL}
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  run )
+    logfile=$(date +%Y-%m-%d_%H-%M-%S)
+    . $ROOT/apps/$ME/etc/profile.d/init.sh
+    cd $SREADINESS_ROOT/bin
+    case $2 in
+      enabledlinks )
+        ./EnabledLinksFromPhEDExDataSrv.py -p $STATEDIR/CommLinksReports/ \
+                       -u $WEBURL > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
+      insitedb )
+        ./IsSiteInSiteDB.py -p $STATEDIR/SitesInSiteDB/ \
+                                  > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
+      sreadiness )
+        ./SiteReadiness.py  -p $STATEDIR/SiteReadiness/ -u $WEBURL -x true \
+                                  > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
+      usablesites )
+        ./UsableSites.py    -p $STATEDIR/SiteReadinessAnalysis/ \
+                                  > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
+      * )
+        echo "$0 $1: unknown action '$2', please try '$0 help' or documentation." 1>&2
+        exit 1 ;;
+    esac
+    ;;
+
+  updateweb )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    rsync -q -au --exclude='INPUTxmls' --delete $STATEDIR/ $WEBDIR/
+    ;;
+
+  logclean )
+    # cleans logs that were not modified in the last week
+    FILES=$(find $LOGDIR -maxdepth 1 -type f -name '*-*-*-*_*-*-*' -mtime +6)
+    [ X"$FILES" = X ] || rm -f $FILES
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    . $ROOT/apps/$ME/etc/profile.d/init.sh
+    echo "${SREADINESS_VERSION:-unknown}"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
