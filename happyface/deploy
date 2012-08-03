@@ -5,11 +5,11 @@ deploy_happyface_prep()
   mkproj webpage
 }
 
+webdir=/afs/cern.ch/cms/LCG/www/t1jobmon
+
 deploy_happyface_sw()
 {
   deploy_pkg comp cms+happyface
-
-  webdir=/afs/cern.ch/cms/LCG/www/t1jobmon
 
   perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/hf_task
   perl -p -i -e "s,{OUTPUTDIR},$project_state/webpage,g; \
