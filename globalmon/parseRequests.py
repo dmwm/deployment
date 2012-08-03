@@ -140,10 +140,11 @@ for request in requests:
             localargs = shlex.split(commandline)
             output = subprocess.Popen(localargs, shell=False, stdout=subprocess.PIPE)
             lines = output.communicate()[0].split('\n')
-            if len(lines) < 1:
-                print 'something wrong with:',commandline
-            else:
+            try:
                 tmp["RequestNumEvents"] = int(lines[0].split()[2])
+            except:
+                print 'something wrong with:',commandline
+                continue
         # das_result = json.loads(get_data('https://cmsweb.cern.ch', 'dataset='+tmp["InputDataset"]+' | grep dataset.nevents',0,0,False))
         # print das_result
         # for item in das_result['data'][0]['dataset']:
