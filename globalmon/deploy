@@ -1,15 +1,21 @@
 # vim: set ft=sh sw=2 ts=8 et :
 
+deploy_globalmon_deps()
+{
+  deploy admin
+}
+
 deploy_globalmon_prep()
 {
   mkproj webpage
   mkproxy
 }
 
+webdir=/afs/cern.ch/cms/LCG/www/otherops
+
 deploy_globalmon_sw()
 {
   deploy_pkg
-  webdir=/afs/cern.ch/cms/LCG/www/otherops
   perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/globalmon_task
 }
 
