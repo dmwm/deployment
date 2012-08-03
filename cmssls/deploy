@@ -5,11 +5,13 @@ deploy_cmssls_prep()
   mkproj
 }
 
+webdir=/afs/cern.ch/cms/LCG/www/SLS
+
 deploy_cmssls_sw()
 {
   deploy_pkg
 
-  cmsslsver=43 webdir=/afs/cern.ch/cms/LCG/www/SLS
+  cmsslsver=82
   cd $root/current/apps
   svn co svn+ssh://svn.cern.ch/reps/cmsfomon/GridmapSLS/trunk@$cmsslsver cmssls
 
