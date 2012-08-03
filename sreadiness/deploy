@@ -5,11 +5,12 @@ deploy_sreadiness_prep()
   mkproj
 }
 
+webdir=/afs/cern.ch/cms/LCG/www/sreadiness
+
 deploy_sreadiness_sw()
 {
   deploy_pkg comp cms+sreadiness
 
-  webdir=/afs/cern.ch/cms/LCG/www/sreadiness
   weburl=http://cern.ch/cms-site-readiness
 
   perl -p -i -e "s,{WEBDIR},$webdir,g;\
@@ -18,16 +19,26 @@ deploy_sreadiness_sw()
 
 deploy_sreadiness_post()
 {
+  # Enable directory listing
+  echo 'Options +Indexes' > $project_state/.htaccess
+
+  # Check out the latest metrics corrections
+  klist -s
+  svn export -q svn+ssh://svn.cern.ch/reps/cmsfomon/SiteReadiness/trunk/DailyMetricsCorrections.txt@HEAD \
+     $project_state/DailyMetricsCorrections.txt
+
+  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
+   echo "0 */6 * * * $host $project_config/sreadiness_task metricscorrections"
+   echo "55 * * * * $host $project_config/sreadiness_task updateweb"
+  ) | acrontab
+
   (mkcrontab
    echo "00 4 * * * $project_config/sreadiness_task run enabledlinks"
    echo "10 4 * * * $project_config/sreadiness_task run insitedb"
    echo "30 4 * * * $project_config/sreadiness_task run sreadiness"
    echo "00 * * * * $project_config/sreadiness_task run usablesites"
-   echo "00 0 * * * $project_config/sreadiness_task logclean"
+   echo "00 0 * * * $project_config/sreadiness_task clean"
   ) | crontab -
 
-  klist -s
-  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
-   echo "55 * * * * $host $project_config/sreadiness_task updateweb"
-  ) | acrontab
+  note "NOTE: you must configure a CERN web area serving files from $webdir."  
 }
