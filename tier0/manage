@@ -344,7 +344,7 @@ start_tier0(){
     init_tier0;
     if [ $USING_TIER0 -eq 1 ]; then
         echo "Starting Tier0..."
-        wmcoreD --start --config=$CONFIG_TIER0/config.py
+	/afs/usr/local/bin/k5reauth -f -- "wmcoreD --start --config=$CONFIG_TIER0/config.py"
     fi
 }
 
