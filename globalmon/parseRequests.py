@@ -310,8 +310,12 @@ for team in sorted(team_summary.keys(), key = lambda x: team_summary[x]['cpuHour
 #     print 'site: %14s CPU Hours remaining: %12d Workflows assigned: %4d maximum slots: %5d' % (site, site_summary[site]['totalCPUHours'], site_summary[site]['workflows'], site_slots[site])
 
 ofInterest = {}
-ofInterest["13Jul"] = {"campaign":"13Jul2012","tier":["AOD"],"time_per_event":15.0}
-ofInterest["428_R2"] = {"campaign":"Upgrade MC","tier":["AOD","RECO"],"time_per_event":120.0}
+ofInterest["13Jul"] = {"campaign":"13Jul2012","tier":["AOD","RECO"],"time_per_event":15.0}
+ofInterest["DR428"] = {"campaign":"Upgrade MC","tier":["GEN-SIM-DIGI-RECO"],"time_per_event":120.0}
+ofInterest["Fall11_R1"] = {"campaign":"Fall11_R1","tier":["GEN-RAW"],"time_per_event":5.0}
+ofInterest["Fall11_R2"] = {"campaign":"Fall11_R2","tier":["AODSIM"],"time_per_event":10.0}
+ofInterest["Fall11_R4"] = {"campaign":"Fall11_R4","tier":["AODSIM"],"time_per_event":7.0}
+ofInterest["Summer12_DR52X"] = {"campaign":"Summer12_DR52X","tier":["AODSIM"],"time_per_event":20.0}
 ofInterest["Summer12_DR53X"] = {"campaign":"Summer12_DR53X","tier":["AODSIM"],"time_per_event":17.5}
 
 estimates = {}
@@ -338,8 +342,7 @@ for local_queue in sorted_local_queues:
                         else:
                             for tier in ofInterest[interest]['tier']:
                                 if tier in item['CompletionPercentage'].keys():
-                                    total_CPU += item["RequestNumEvents"] * ofInterest[interest]['time_per_event']  / 3600. * (1.0 - item['CompletionPercentage'][tier])
-                                    break
+                                    total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event']  / 3600. * (1.0 - item['CompletionPercentage'][tier])
                                 else:
                                     total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event'] / 3600.
                         if assignedT1 not in estimates[interest].keys(): estimates[interest][assignedT1] = 0.
