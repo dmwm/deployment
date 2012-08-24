@@ -310,7 +310,7 @@ for team in sorted(team_summary.keys(), key = lambda x: team_summary[x]['cpuHour
 #     print 'site: %14s CPU Hours remaining: %12d Workflows assigned: %4d maximum slots: %5d' % (site, site_summary[site]['totalCPUHours'], site_summary[site]['workflows'], site_slots[site])
 
 ofInterest = {}
-ofInterest["13Jul"] = {"campaign":"13Jul2012","tier":["AOD","RECO"],"time_per_event":15.0}
+ofInterest["ReReco24Aug"] = {"campaign":"24Aug2012","tier":["AOD","RECO"],"time_per_event":15.0}
 ofInterest["DR428"] = {"campaign":"Upgrade MC","tier":["GEN-SIM-DIGI-RECO"],"time_per_event":120.0}
 ofInterest["Fall11_R1"] = {"campaign":"Fall11_R1","tier":["GEN-RAW"],"time_per_event":5.0}
 ofInterest["Fall11_R2"] = {"campaign":"Fall11_R2","tier":["AODSIM"],"time_per_event":10.0}
