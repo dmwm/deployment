@@ -24,7 +24,7 @@ details_keys = []
 details2_keys = []
 results = {}
 slots_assign = {'t1' : 20000, 't1_highprio' : 12000, 'mc' : 20000, 'mc_highprio' : 12000, 'production' : 20000}
-site_slots = {'T1_US_FNAL': 5500, 'T1_TW_ASGC': 1400, 'T1_FR_CCIN2P3': 2000, 'T1_IT_CNAF': 1500, 'T1_ES_PIC': 900, 'T1_DE_KIT': 1456, 'T1_UK_RAL': 1000}
+site_slots = {'T1_US_FNAL': 5500, 'T1_TW_ASGC': 1400, 'T1_FR_CCIN2P3': 1000, 'T1_IT_CNAF': 1500, 'T1_ES_PIC': 900, 'T1_DE_KIT': 1456, 'T1_UK_RAL': 1000}
 
 for request in requests:
     status = request['status']
