@@ -28,7 +28,9 @@ deploy_admin_sw()
 
 deploy_admin_post()
 {
-  case $variant in bare ) disable; return ;; esac
+  case $variant in bare ) disable; return ;;
+                   devtools ) disable; return ;;
+  esac
 
   local pxlabel pxskip certs
   case $host in
