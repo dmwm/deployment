@@ -25,6 +25,9 @@ details2_keys = []
 results = {}
 slots_assign = {'t1' : 20000, 't1_highprio' : 12000, 'mc' : 20000, 'mc_highprio' : 12000, 'production' : 20000}
 site_slots = {'T1_US_FNAL': 5500, 'T1_TW_ASGC': 1400, 'T1_FR_CCIN2P3': 1000, 'T1_IT_CNAF': 1500, 'T1_ES_PIC': 900, 'T1_DE_KIT': 1456, 'T1_UK_RAL': 1000}
+total_t1_slots = 0
+for site in site_slots.keys():
+    total_t1_slots += site_slots[site]
 
 for request in requests:
     status = request['status']
@@ -318,9 +321,40 @@ ofInterest["Fall11_R4"] = {"campaign":"Fall11_R4","tier":["AODSIM"],"time_per_ev
 ofInterest["Summer12_DR52X"] = {"campaign":"Summer12_DR52X","tier":["AODSIM"],"time_per_event":20.0}
 ofInterest["Summer12_DR53X"] = {"campaign":"Summer12_DR53X","tier":["AODSIM"],"time_per_event":17.5}
 
-estimates = {}
+good_status = ['acquired','running', 'assignment-approved']
 
-good_status = ['acquired','running']
+mc_estimates = 0.
+mc_approved_estimates = 0.
+
+for local_queue in sorted_local_queues:
+    for status in good_status:
+        if status not in results[local_queue].keys(): continue
+        sorted_priority = results[local_queue][status].keys()
+        sorted_priority.sort(reverse=True)
+        for priority in sorted_priority:
+            for item in results[local_queue][status][priority]:
+                if item["RequestType"].count('MonteCarlo') <= 0: continue
+                # if approved, do something different
+                if status == 'assignment-approved':
+                    mc_approved_estimates += item["RequestNumEvents"] * item["TimePerEvent"] / 3600.
+                else :
+                    total_CPU = 0
+                    if len(item['CompletionPercentage']) == 0:
+                        total_CPU = item["RequestNumEvents"] * item["TimePerEvent"] / 3600.
+                    else:
+                            if "GEN-SIM" in item['CompletionPercentage'].keys():
+                                total_CPU = item["RequestNumEvents"] * item["TimePerEvent"]  / 3600. * (1.0 - item['CompletionPercentage']["GEN-SIM"])
+                            elif "GEN-SIM-RAW" in item['CompletionPercentage'].keys():
+                                total_CPU = item["RequestNumEvents"] * item["TimePerEvent"]  / 3600. * (1.0 - item['CompletionPercentage']["GEN-SIM-RAW"])
+                            elif "AODSIM" in item['CompletionPercentage'].keys():
+                                total_CPU = item["RequestNumEvents"] * item["TimePerEvent"]  / 3600. * (1.0 - item['CompletionPercentage']["AODSIM"])
+                            else:
+                                total_CPU = item["RequestNumEvents"] * item["TimePerEvent"]  / 3600.
+                    mc_estimates += total_CPU
+
+estimates = {}
+approved_estimates = {}
+
 for local_queue in sorted_local_queues:
     for status in good_status:
         if status not in results[local_queue].keys(): continue
@@ -330,33 +364,48 @@ for local_queue in sorted_local_queues:
             for item in results[local_queue][status][priority]:
                 for interest in ofInterest.keys():
                     if item['request_name'].count(interest) > 0:
-                        if interest not in estimates.keys(): estimates[interest] = {}
-                        # add up remaining CPU hours per T1 site
-                        if len(item["t1_sites"]) <= 0: 
-                            print 'no t1 site assigned for request',item['request_name'] / 3600.
-                            break
-                        assignedT1 = item["t1_sites"][0]
-                        total_CPU = 0
-                        if len(item['CompletionPercentage']) == 0:
+                        # if approved, do something different
+                        if status == 'assignment-approved':
+                            if interest not in approved_estimates.keys(): approved_estimates[interest] = 0.
                             total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event'] / 3600.
-                        else:
-                            for tier in ofInterest[interest]['tier']:
-                                if tier in item['CompletionPercentage'].keys():
-                                    total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event']  / 3600. * (1.0 - item['CompletionPercentage'][tier])
-                                else:
-                                    total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event'] / 3600.
-                        if assignedT1 not in estimates[interest].keys(): estimates[interest][assignedT1] = 0.
-                        estimates[interest][assignedT1] += total_CPU
+                            approved_estimates[interest] += total_CPU
+                        else :
+                            if interest not in estimates.keys(): estimates[interest] = {}
+                            # add up remaining CPU hours per T1 site
+                            if len(item["t1_sites"]) <= 0: 
+                                print 'no t1 site assigned for request',item['request_name'] / 3600.
+                                break
+                            assignedT1 = item["t1_sites"][0]
+                            total_CPU = 0
+                            if len(item['CompletionPercentage']) == 0:
+                                total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event'] / 3600.
+                            else:
+                                for tier in ofInterest[interest]['tier']:
+                                    if tier in item['CompletionPercentage'].keys():
+                                        total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event']  / 3600. * (1.0 - item['CompletionPercentage'][tier])
+                                    else:
+                                        total_CPU = item["RequestNumEvents"] * ofInterest[interest]['time_per_event'] / 3600.
+                            if assignedT1 not in estimates[interest].keys(): estimates[interest][assignedT1] = 0.
+                            estimates[interest][assignedT1] += total_CPU
                         
                         
 print ''
 print ''
-print 'Estimates for different campaigns:'
+print 'Estimates for Monte Carlo assuming 25k slots'
+print '================================================================================'
+print ''
+print "Approved Monte Carlo has still to run %12d CPUhours which corresponds to %6.2f days at 25k slots" %(mc_approved_estimates,mc_approved_estimates/25000./24.)
+print "Assigned Monte Carlo has still to run %12d CPUhours which corresponds to %6.2f days at 25k slots" %(mc_estimates,mc_estimates/25000./24.)
+
+print ''
+print ''
+print 'Estimates for different ReDigi and ReReco campaigns:'
 print '================================================================================'
 print ''
 
 print '--------------------------------------------------------------------------------'
 print 'Defaults per campaign for time per event if not specified in workflow:'
+
 for interest in ofInterest.keys():
     print "%20s : %6.2fs" % (ofInterest[interest]["campaign"],ofInterest[interest]["time_per_event"])
 print '--------------------------------------------------------------------------------'
@@ -365,6 +414,8 @@ print ''
 for interest in estimates.keys():
     print 'estimates for campaign ' + ofInterest[interest]['campaign'] + " querying for *" + interest + "*"
     print '--------------------------------------------------------------------------------'
+    if interest in approved_estimates.keys():
+        print "Approved for all T1 who have %5d slots and still to run %12d CPUhours which corresponds to %6.2f days" %(total_t1_slots,approved_estimates[interest],approved_estimates[interest]/float(total_t1_slots)/24.)
     for tier1 in estimates[interest].keys():
-        print "Tier1: %14s has %5d slots and still to run %12d CPUhours which corresponds to %6.2f days" % (tier1,site_slots[tier1],estimates[interest][tier1],estimates[interest][tier1]/site_slots[tier1]/24.)
+        print "Tier1: %17s has %5d slots and still to run %12d CPUhours which corresponds to %6.2f days" % (tier1,site_slots[tier1],estimates[interest][tier1],estimates[interest][tier1]/float(site_slots[tier1])/24.)
     print ''
