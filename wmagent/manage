@@ -88,21 +88,21 @@ if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; 
 #callbacks to activate or show initialisation has been done
 activate_agent(){
     touch $INSTALL_AG/.using
-    cp $ROOT_DIR/apps/wmcore/etc/WMAgentConfig.py $CONFIG_AG/config-template.py
+    cp $WMCORE_ROOT/etc/WMAgentConfig.py $CONFIG_AG/config-template.py
 }
 
 activate_crabserver(){
     touch $INSTALL_AG/.using
-    cp $ROOT_DIR/apps/wmcore/etc/CrabServerConfig.py $CONFIG_AG/config-template.py
+    cp $WMCORE_ROOT/etc/CrabServerConfig.py $CONFIG_AG/config-template.py
 }
 
 activate_workqueue(){
     touch $INSTALL_WQ/.using
-    cp $ROOT_DIR/apps/wmcore/etc/GlobalWorkQueueConfig.py $CONFIG_WQ/config-template.py
+    cp $WMCORE_ROOT/etc/GlobalWorkQueueConfig.py $CONFIG_WQ/config-template.py
 }
 activate_reqmgr(){
     touch $INSTALL_RM/.using
-    cp $ROOT_DIR/apps/wmcore/etc/ReqMgrConfig.py $CONFIG_RM/config-template.py
+    cp $WMCORE_ROOT/etc/ReqMgrConfig.py $CONFIG_RM/config-template.py
 }
 inited_agent(){
     touch $INSTALL_AG/.init
@@ -274,16 +274,12 @@ print_settings(){
 
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
 
-export WMCORE_ROOT
+export WMAGENT_ROOT
+# WMAGENT_ROOT == WMCORE_ROOT now but in old rpms WMCORE_ROOT was seperate,
+# if WMCORE_ROOT already set export it, else set to WMAGENT_ROOT
+export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
-
-
-#export PATH=$PATH:$WMCORE_DIR/app/bin
-#export PYTHONPATH=$WMCORE_DIR/app/src/python:$PYTHONPATH
-#export PYTHONPATH=$PYTHONPATH:$WMCORE_DIR/app/test/python
-#export PYTHONPATH=$PYTHONPATH:$WMAGENT_DIR/dls-client/Client/lib
-#export PYTHONPATH=$PYTHONPATH:$WMAGENT_DIR/dbs-client/lib
 
 
 #########################
