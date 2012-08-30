@@ -46,7 +46,7 @@ case ${1:-help} in
         cp style-css-reports.css $STATEDIR/SiteReadiness/HTML/
         ;;
       usablesites )
-        ./UsableSites.py    -p $STATEDIR/SiteReadinessAnalysis/ \
+        ./UsableSites.py    -p $STATEDIR/SiteReadinessAnalysis/ -u $WEBURL \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
       * )
         echo "$0 $1: unknown action '$2', please try '$0 help' or documentation." 1>&2
