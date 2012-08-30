@@ -21,6 +21,9 @@ deploy_globalmon_sw()
 
 deploy_globalmon_post()
 {
+  # Enable directory listing
+  echo 'Options +Indexes' > $project_state/webpage/.htaccess
+
   (mkcrontab
    echo "0 15 * * * $project_config/globalmon_task run"
   ) | crontab -
