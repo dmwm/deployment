@@ -29,7 +29,7 @@ deploy_sreadiness_post()
 
   (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
    echo "0 */6 * * * $host $project_config/sreadiness_task metricscorrections"
-   echo "55 * * * * $host $project_config/sreadiness_task updateweb"
+   echo "5 * * * * $host $project_config/sreadiness_task updateweb"
   ) | acrontab
 
   (mkcrontab
