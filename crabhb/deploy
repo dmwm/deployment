@@ -1,0 +1,55 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_crabhb_deps()
+{
+  deploy admin
+}
+
+deploy_crabhb_prep()
+{
+  mkproj wwwarea
+  mkproxy
+}
+
+webdir=/afs/cern.ch/cms/LCG/crab/HB
+
+deploy_crabhb_sw()
+{
+  deploy_pkg comp cms+crabhb
+
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/crabhb_task
+
+  cd $project_state
+  PATH=$PATH:/afs/cern.ch/cms/common
+  export SCRAM_ARCH=slc5_amd64_gcc434
+  . /afs/cern.ch/cms/LCG/LCG-2/UI/cms_ui_env.sh
+  scramv1 project CMSSW CMSSW_4_2_8
+  cp $project_config/doHeartBeat.py CMSSW_4_2_8/src/
+  mkdir -p CMSSW_4_2_8/src/{CRABdirs,Cache}
+
+  # Can't use crab from afs since it has a bunch of hardcoded configuration
+  cd $root/current/apps/crabhb
+  wget http://cmsdoc.cern.ch/cms/ccs/wm/www/Crab/Docs/CRAB_2_8_1.tgz
+  tar xvzf CRAB_2_8_1.tgz
+  cd CRAB_2_8_1
+  ./configure
+
+  # Ugly hack because crab gives us no option to tell it not to screw
+  # up with the proxy setup.
+  perl -p -i -e 's,myproxy-init -d,myproxy-init -c 24 -d,g' external/ProdCommon/Credential/Proxy.py
+  perl -p -i -e 's,checkRetrieverRenewer=True,checkRetrieverRenewer=False,g' python/SubmitterServer.py
+}
+
+deploy_crabhb_post()
+{
+  (mkcrontab
+   echo "*/20 * * * * $project_config/crabhb_task run"
+  ) | crontab -
+
+  klist -s
+  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
+   echo "15-55/20 * * * * $host $project_config/crabhb_task updateweb"
+  ) | acrontab
+
+  note "NOTE: you must configure a CERN web area serving files from $webdir."
+}

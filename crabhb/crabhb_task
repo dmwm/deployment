@@ -1,0 +1,89 @@
+#!/bin/sh
+
+##H Usage: sreadiness_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   version             get current version of the service
+##H   run                 process job status from sites
+##H   updateweb           update web area with the output of last run
+##H   logclean [minutes]  clean logs older than [minutes] (def. 2 weeks)
+##H   histclean [minutes] clean historical data older than [minutes] (def. 2 weeks)
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/HappyFace
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin:/afs/cern.ch/cms/common
+
+export SCRAM_ARCH=slc5_amd64_gcc434
+WEBDIR={WEBDIR}
+SERVERS=/afs/cern.ch/cms/LCG/crab/config/AvailableServerList
+
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$STATEDIR/proxy/proxy.cert
+export X509_USER_KEY=$STATEDIR/proxy/proxy.cert
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  run )
+    . $ROOT/apps/$ME/etc/profile.d/init.sh
+    . /afs/cern.ch/cms/LCG/LCG-2/UI/cms_ui_env.sh
+    . /afs/cern.ch/cms/sw/cmsset_default.sh
+    cd $STATEDIR/CMSSW_4_2_8/src/
+    eval `scramv1 runtime -sh`
+    . $TOP/current/apps/$ME/CRAB_2_8_1/crab.sh
+    export CMS_SITEDB_CACHE_DIR=$STATEDIR/CMSSW_4_2_8/src/Cache
+    for sn in $(grep "^[^#]" $SERVERS | awk '{ print $1 }'); do
+      mkdir -p $STATEDIR/wwwarea/$sn
+      exec &> $STATEDIR/wwwarea/$sn/output_$sn.txt
+      echo "outFile = $STATEDIR/wwwarea/$sn/output_$sn.txt"
+      echo "serverName = $sn"
+      echo "webdir = $STATEDIR/wwwarea"
+      if [ $(pgrep -f ".*doHeartBeat.py.*$sn" | wc -l) = 0 ]; then
+        $STATEDIR/CMSSW_4_2_8/src/doHeartBeat.py -s $sn -w $STATEDIR/wwwarea/ &
+      fi
+    done
+    wait
+    exec 2> /dev/stderr 1> /dev/stdout
+    # Deletes the junk older than 5h
+    find . -maxdepth 2 -mmin +300 -type d -name 'CRABserverHeartBeat*' -exec rm -rf {} \;i
+    find . -maxdepth 2 -mmin +300 -type f -name 'crabHeartBeat_*cfg' -exec rm -rf {} \;
+    ;;
+
+  updateweb )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    rsync -q -au --exclude='.svn' $STATEDIR/wwwarea/ $WEBDIR/
+    ;;
+
+  logclean )
+    case $(uname) in Darwin ) statfmt="-f %c";; * ) statfmt="-c %Z" ;; esac
+    MIN=$(($2)); [ $MIN -lt 1 ] && MIN=20160 # defaults to 2 weeks
+    AGE=$(($(date +%s)-$MIN*60));
+
+    LOG_FILES="$LOGDIR/*-*-*_*-*-*"
+    for FILE in $LOG_FILES; do
+       LAST_CHANGE=$(stat $statfmt $FILE 2> /dev/null || date +%s)
+       [ $LAST_CHANGE -lt $AGE ] && rm "$FILE"  &> /dev/null
+    done
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    . $ROOT/apps/$ME/etc/profile.d/init.sh
+    echo "${CRABHB_VERSION:-unknown}"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
