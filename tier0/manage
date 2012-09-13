@@ -179,7 +179,10 @@ print_settings(){
 #
 . $ROOT_DIR/apps/t0/etc/profile.d/init.sh
 
-export WMCORE_ROOT
+export WMAGENT_ROOT
+# WMAGENT_ROOT == WMCORE_ROOT now but in old rpms WMCORE_ROOT was seperate,
+# if WMCORE_ROOT already set export it, else set to WMAGENT_ROOT
+export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
 export YUI_ROOT
 
 #
@@ -344,7 +347,7 @@ start_tier0(){
     init_tier0;
     if [ $USING_TIER0 -eq 1 ]; then
         echo "Starting Tier0..."
-        wmcoreD --start --config=$CONFIG_TIER0/config.py
+	/afs/usr/local/bin/k5reauth -f -- "wmcoreD --start --config=$CONFIG_TIER0/config.py"
     fi
 }
 
