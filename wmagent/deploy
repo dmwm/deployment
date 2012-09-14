@@ -7,8 +7,9 @@ deploy_wmagent_prep()
 
 deploy_wmagent_sw()
 {
-  deploy_pkg comp cms+wmcore
   deploy_pkg comp cms+wmagent
+  # in old versions wmagent contains no code - get it from wmcore install
+  [ -e $root/current/apps/wmagent/lib ] || deploy_pkg comp cms+wmcore
 
   mkdir -p $root/current/install/wmagent
   mkdir -p $root/current/install/reqmgr
