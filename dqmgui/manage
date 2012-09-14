@@ -51,7 +51,14 @@ QUIET=false
 FLAVOR=dev
 ALTERNATIVE_USER=$(stat $TOP -c %U)
 
-. $ROOT/apps/dqmgui/etc/profile.d/env.sh
+case $HOST in
+  vocms139 )
+    # assume not to pollute the environments since this will
+    # only be executed on vocms139.
+    . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
+  * )
+    . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
+esac
 
 export QUIET_ASSERT=a
 export X509_CERT_DIR=/etc/grid-security/certificates
@@ -190,15 +197,22 @@ start()
   message "starting $ME/$FLAVOR ${1:-(default)}"
 
   # first start webserver
-  case ${1:-webserver} in *webserver* )
-    for cfg in $CONFIGS; do
-      [ ! -d $STATEDIR/$cfg/ix ] && \
-        (echo Creating index $STATEDIR/$cfg/ix; visDQMIndex create $STATEDIR/$cfg/ix)
-      monControl start all from $CFGDIR/server-conf-$cfg.py
-      if [ ! -d $STATEDIR/$cfg/ix128 ]; then
-	(echo Creating index128 $STATEDIR/$cfg/ix128; source $ROOT/apps/dqmgui/128/etc/profile.d/env.sh; visDQMIndex create $STATEDIR/$cfg/ix128 )
-      fi
-    done ;;
+  case $HOST:${1:-webserver} in
+    vocms139:*webserver* )
+      for cfg in $CONFIGS; do
+        [ ! -d $STATEDIR/$cfg/ix128 ] && \
+          (echo Creating index $STATEDIR/$cfg/ix128; visDQMIndex create $STATEDIR/$cfg/ix128)
+        monControl start all from $CFGDIR/server-conf-$cfg.py
+      done ;;
+    *:*webserver* )
+      for cfg in $CONFIGS; do
+        [ ! -d $STATEDIR/$cfg/ix ] && \
+          (echo Creating index $STATEDIR/$cfg/ix; visDQMIndex create $STATEDIR/$cfg/ix)
+        monControl start all from $CFGDIR/server-conf-$cfg.py
+        if [ ! -d $STATEDIR/$cfg/ix128 ]; then
+	  (echo Creating index128 $STATEDIR/$cfg/ix128; source $ROOT/apps/dqmgui/128/etc/profile.d/env.sh; visDQMIndex create $STATEDIR/$cfg/ix128 )
+        fi
+      done ;;
   esac
 
   # then start agents
@@ -231,8 +245,8 @@ start()
       startagent $D/agent-sound \
         visDQMSoundAlarmDaemon \
         http://localhost:8030/dqm/online \
-        scx5scr24mac.cms \
-        50505 600 2
+        cmsdaqweb.cms \
+        50555 600 2
       ;;
 
     dqm-c2d07-02:*agents* ) # dqm-prod-offsite
@@ -294,7 +308,7 @@ start()
         $CFGDIR/quota-dd-online.py
       ;;
 
-    vocms13[89]:*agents* ) # offline
+    vocms139:*agents* ) # relval server
       refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       # standard lot of agents
@@ -303,22 +317,12 @@ start()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
 
-	if [ $HOST == "vocms139" ]; then
-	  startagent $D/agent-receive \
-            visDQMReceiveDaemon \
-            $DQM_DATA/uploads \
-            $DQM_DATA/data \
-            $DQM_DATA/agents/register \
-            $DQM_DATA/agents/register128 \
-            $DQM_DATA/agents/zip
-	else
-	  startagent $D/agent-receive \
-            visDQMReceiveDaemon \
-            $DQM_DATA/uploads \
-            $DQM_DATA/data \
-            $DQM_DATA/agents/register \
-            $DQM_DATA/agents/zip
-	fi
+	startagent $D/agent-receive \
+	  visDQMReceiveDaemon \
+	  $DQM_DATA/uploads \
+	  $DQM_DATA/data \
+	  $DQM_DATA/agents/register \
+	  $DQM_DATA/agents/zip
 
         startagent $D/agent-zip \
           visDQMZipDaemon \
@@ -337,7 +341,74 @@ start()
         startagent $D/agent-zverifier \
           visDQMZipCastorVerifier \
           $DQM_DATA/agents/verify \
-          lilopera@cern.ch  \
+          marco.rovere@cern.ch,atanas.batinkov@cern.ch,edgar.eduardo.rosales.rosero@cern.ch  \
+          $DQM_DATA/zipped \
+          $CASTORDIR \
+          24 \
+          $DQM_DATA/agents/clean
+
+        startagent $D/agent-import-128 \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $DQM_DATA/ix128 \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-qcontrol \
+          visDQMRootFileQuotaControl \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $CFGDIR/quota-rfqc-${D}.py
+
+        startagent $D/agent-vcontrol \
+          visDQMVerControlDaemon \
+          $DQM_DATA/agents/vcontrol \
+          $DQM_DATA/data
+
+        startagent $D/agent-ixmerge \
+            visDQMIndexMergeDaemon \
+            $DQM_DATA/agents/ixmerge \
+            $DQM_DATA/ix128 \
+            $DQM_DATA/agents/register
+      done
+      ;;
+
+    vocms138:*agents* ) # offline
+      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
+
+      # standard lot of agents
+      for D in $CONFIGS; do
+        D=${D}
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        DQM_DATA=$STATEDIR/$D
+
+	startagent $D/agent-receive \
+	  visDQMReceiveDaemon \
+	  $DQM_DATA/uploads \
+	  $DQM_DATA/data \
+	  $DQM_DATA/agents/register \
+	  $DQM_DATA/agents/zip
+
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          7 \
+          $DQM_DATA/agents/stageout
+
+        startagent $D/agent-zverifier \
+          visDQMZipCastorVerifier \
+          $DQM_DATA/agents/verify \
+          marco.rovere@cern.ch,atanas.batinkov@cern.ch,edgar.eduardo.rosales.rosero@cern.ch  \
           $DQM_DATA/zipped \
           $CASTORDIR \
           24 \
@@ -369,14 +440,6 @@ start()
             $DQM_DATA/ix \
             $DQM_DATA/agents/register
 
-	if [ $HOST == "vocms139" ]; then
-	  startagent -e 128 $D/agent-import-128 \
-	    visDQMImportDaemon \
-	    $DQM_DATA/agents/register128 \
-	    $DQM_DATA/data \
-	    $DQM_DATA/ix128
-	fi
-
         if [ $D = offline ]; then
           startagent $D/agent-osync \
             visDQMOnlineSyncDaemon \
@@ -390,7 +453,6 @@ start()
             visDQMCreateInfoDaemon \
             $DQM_DATA/data/OnlineData \
             $DQM_DATA/agents/zip
-
         fi
       done
       ;;
