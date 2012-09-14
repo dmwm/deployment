@@ -227,7 +227,14 @@ private:
 	  obj->SetOption("colz");
 	return;
 	}
-      
+      if( o.name.find( "DataPresentInLS" )  != std::string::npos)
+	{
+	  obj->SetStats( kFALSE );
+	  dqm::utils::reportSummaryMapPalette(obj);
+	  obj->SetOption("colz");
+	return;
+	}
+
       return;
     }
 
@@ -456,69 +463,69 @@ private:
     }
 
   void postDrawTH1F( TCanvas *c, const VisDQMObject &o )
-    {
+  {
 
-      TH1F* obj = dynamic_cast<TH1F*>( o.object );
-      assert( obj );
+    TH1F* obj = dynamic_cast<TH1F*>( o.object );
+    assert( obj );
 
-      std::string name = o.name.substr(o.name.rfind("/")+1);
+    std::string name = o.name.substr(o.name.rfind("/")+1);
 
-      if( name.find( "NumberOfTracks_" ) != std::string::npos or
-          name.find( "Chi2oNDF_" ) != std::string::npos or
-          name.find( "TrackPt_" ) != std::string::npos or
-          name.find( "TrackP_" ) != std::string::npos or
-    name.find( "NumberOfSeeds_") != std::string::npos or
-    name.find( "SeedPt_") != std::string::npos
-    ) {
-          if (obj->GetEntries() > 10.0) c->SetLogy(1);
-	  c->SetGridy();
-        }
+    if( name.find( "NumberOfTracks_" ) != std::string::npos or
+	name.find( "Chi2oNDF_" ) != std::string::npos or
+	name.find( "TrackPt_" ) != std::string::npos or
+	name.find( "TrackP_" ) != std::string::npos or
+	name.find( "NumberOfSeeds_") != std::string::npos or
+	name.find( "SeedPt_") != std::string::npos
+	) {
+      if (obj->GetEntries() > 10.0) c->SetLogy(1);
+      c->SetGridy();
+    }
 
-      if ( name.find( "Summary_ClusterCharge_OffTrack__" )!= std::string::npos or
-     (name.find( "Track" )!= std::string::npos and
-      name.find( "Err" )!= std::string::npos) or
-     name.find( "NumberOfRecHitsLostPerTrack_") != std::string::npos
-     ) {
-  if (obj->GetEntries() > 10.0) c->SetLogy(1);
-      }
+    if ( name.find( "Summary_ClusterCharge_OffTrack__" )!= std::string::npos or
+	 (name.find( "Track" )!= std::string::npos and
+	  name.find( "Err" )!= std::string::npos) or
+	 name.find( "NumberOfRecHitsLostPerTrack_") != std::string::npos
+	 ) {
+      if (obj->GetEntries() > 10.0) c->SetLogy(1);
+    }
 
-      if ( name.find( "GoodTrackPhi_" ) != std::string::npos or
-	   name.find( "GoodTrackEta_" ) != std::string::npos or
-     name.find( "SeedPhi_" )  != std::string::npos
-     ) {
+    if ( name.find( "GoodTrackPhi_" ) != std::string::npos or
+	 name.find( "GoodTrackEta_" ) != std::string::npos or
+	 name.find( "SeedPhi_" )  != std::string::npos
+	 ) {
 
-  size_t nbins        = obj->GetNbinsX();
-  double entries      = obj->GetEntries();
-  double meanbinentry = entries/double(nbins);
-  double ymax = obj->GetMaximum();
+      size_t nbins        = obj->GetNbinsX();
+      double entries      = obj->GetEntries();
+      double meanbinentry = entries/double(nbins);
+      double ymax = obj->GetMaximum();
 
-  obj->SetMinimum(ymax-meanbinentry);
-
-      }
-
-      TText tt;
-      tt.SetTextSize(0.12);
-      if (o.flags == 0) return;
-      else
-      {
-        if (o.flags & DQMNet::DQM_PROP_REPORT_ERROR)
-        {
-          tt.SetTextColor(2);
-          tt.DrawTextNDC(0.5, 0.5, "Error");
-        }
-        else if (o.flags & DQMNet::DQM_PROP_REPORT_WARN)
-        {
-          tt.SetTextColor(5);
-          tt.DrawTextNDC(0.5, 0.5, "Warning");
-        }
-        else if (o.flags & DQMNet::DQM_PROP_REPORT_OTHER)
-        {
-          tt.SetTextColor(1);
-          tt.DrawTextNDC(0.5, 0.5, "Other ");
-        }
-      }
+      obj->SetMinimum(ymax-meanbinentry);
 
     }
+
+    TText tt;
+    tt.SetTextSize(0.12);
+    if (o.flags == 0) return;
+    else
+      {
+        if (o.flags & DQMNet::DQM_PROP_REPORT_ERROR)
+	  {
+	    tt.SetTextColor(2);
+	    tt.DrawTextNDC(0.5, 0.5, "Error");
+	  }
+        else if (o.flags & DQMNet::DQM_PROP_REPORT_WARN)
+	  {
+	    tt.SetTextColor(5);
+	    tt.DrawTextNDC(0.5, 0.5, "Warning");
+	  }
+        else if (o.flags & DQMNet::DQM_PROP_REPORT_OTHER)
+	  {
+	    tt.SetTextColor(1);
+	    tt.DrawTextNDC(0.5, 0.5, "Other ");
+	  }
+      }
+
+  }
 
   void postDrawTH2F( TCanvas *c, const VisDQMObject &o )
     {
@@ -526,6 +533,29 @@ private:
       assert( obj );
 
       std::string name = o.name.substr(o.name.rfind("/")+1);
+
+      TText tt;
+      tt.SetTextSize(0.12);
+      if (o.flags != 0)
+	{
+	  if (o.flags & DQMNet::DQM_PROP_REPORT_ERROR)
+	    {
+	      tt.SetTextColor(2);
+	      tt.DrawTextNDC(0.5, 0.5, "Error");
+	    }
+	  else
+	    if (o.flags & DQMNet::DQM_PROP_REPORT_WARN)
+	      {
+		tt.SetTextColor(5);
+		tt.DrawTextNDC(0.5, 0.5, "Warning");
+	      }
+	  else
+	    if (o.flags & DQMNet::DQM_PROP_REPORT_OTHER)
+	      {
+		tt.SetTextColor(1);
+		tt.DrawTextNDC(0.5, 0.5, "Other ");
+	      }
+	}
 
       if( name.find( "reportSummaryMap" ) != std::string::npos )
       {
@@ -551,12 +581,8 @@ private:
         c->SetGridy();
         return;
       }
-      if( o.name.find( "DataPresentInLastLS" )  != std::string::npos)
-      {
-        c->SetGridx();
-        return;
-      }
     }
+
   void postDrawTProfile( TCanvas *c, const VisDQMObject &o )
   {
     TProfile* obj = dynamic_cast<TProfile*>( o.object );
