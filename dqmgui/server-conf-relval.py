@@ -8,8 +8,10 @@ LOGDIR    = "%s/logs/dqmgui/relval" % BASEDIR
 LAYOUTS = glob("%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, "hlt"))
 LAYOUTS += glob("%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, "ecal"))
 LAYOUTS += glob("%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, "ecal"))
+LAYOUTS += glob("%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, "tk"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "hlt"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "ecal"))
+LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "tk"))
 
 modules = ("Monitoring.DQM.GUI",)
 
