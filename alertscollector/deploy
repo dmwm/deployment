@@ -1,0 +1,49 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_alertscollector_variants="default offsiteprod offsitepreprod offsitedev"
+# default - deploy on CMSWEB
+# offsitedev - offsite (local WMAgent) and replicate on cmsweb-dev.cern.ch
+# offsitepreprod - offsite (local WMAgent) and replicate to cmsweb-testbed.cern.ch
+# offsiteprod - offsite (local WMAgent) and replicate to (prod) cmsweb.cern.ch
+
+deploy_alertscollector_deps()
+{
+  case $variant in
+    offsite* )
+      # disabled temporarily as it won't work with current
+      # incompatible wmagent couch setup
+      #deploy couchdb offsite
+      ;;
+    * )
+      deploy couchdb default
+      ;;
+  esac
+}
+
+deploy_alertscollector_prep()
+{
+  mkproj -s -l
+}
+
+deploy_alertscollector_sw()
+{
+  deploy_pkg comp cms+alertscollector
+}
+
+deploy_alertscollector_post()
+{
+  # Tell couchdb to push the AlertsCollector couchapp on the next restart
+  echo "couchapp push " \
+       "$root/current/apps/alertscollector/data/couchapps/AlertsCollector" \
+       "http://localhost:5984/alertscollector" \
+       > $root/state/couchdb/stagingarea/alertscollector
+
+  # Set up database replication if deploying with local WMAgent CouchDB
+  case $variant in
+    offsite* )
+      case ${variant#offsite} in prod ) suff="";; preprod ) suff="-testbed";; * ) suff="-dev";; esac
+      (echo {,https://cmsweb$suff.cern.ch/couchdb/}alertscollector AlertsCollector/repfilter
+       echo {https://cmsweb$suff.cern.ch/couchdb/,}alertscollector AlertsCollector/repfilter
+      ) > $root/state/couchdb/replication/alertscollector
+      ;;
+  esac
+}
