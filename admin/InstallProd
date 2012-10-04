@@ -82,7 +82,7 @@ case $STAGE in
     case $VER in
       fe* ) EXTRA="-f -s_/srv-*/[sl]*/[b-eg-z]* -f -s_/srv-*/[sl]*/fi*" ;;
       be* ) EXTRA="-f -s_/srv-*/[sl]*/frontend" ;;
-      hg* ) EXTRA="" ;;
+      HG* ) EXTRA="" ;;
     esac ;;
   status | start | stop )
     WHAT="*" ;;
@@ -92,7 +92,7 @@ case $STAGE in
   image )
     [ X"$PKGS" = X ] && usage
     [ X"$VER" = X ] && usage
-    case $PXUSER:$VER in :be* | :hg* ) usage ;; esac
+    case $PXUSER:$VER in :be* | :HG* ) usage ;; esac
     ;;
   sysprep | dnswait )
     [ X"$HOSTS" = X ] && usage
@@ -136,7 +136,7 @@ case $STAGE in
     ln -s srv-$STEM srv
     mkdir -p srv-$STEM
     $PWD/cfg/Deploy $ARCH $RELEASE $ACFG -t $VER -a -s prep $PWD/srv $PKGS
-    case $VER in hg* | be* )
+    case $VER in HG* | be* )
       ssh -o PubkeyAuthentication=no -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed \
         -t prod -d cmsweb@$(hostname -f):$PWD/srv/$VER/auth/proxy ;;
     esac

@@ -21,7 +21,7 @@ rxmqueue = re.compile(r"^(/var/spool/(?:client)?mqueue/\./)([0-9A-Za-z]+)$")
 
 # Regexps for compacting apache disk cache file names.
 rxphedex = re.compile(r"^/data/srv[-a-z]*/state/phedex/cache/phedex-datasvc/")
-rxapache = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+rxapache = re.compile(r"^/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		      r"external/apache2/[-.a-z0-9]+/bin/httpd$")
 rxapcachedir = re.compile(r"^(?:/[A-Za-z0-9_@]+){0,2}$")
 rxapcachedirv = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header\.vary"
@@ -33,7 +33,7 @@ rxapcachehdrvd = re.compile(r"^(?:/[A-Za-z0-9_@]+){3}\.header\.vary"
                             r"(?:/[A-Za-z0-9_@]+){3}\.data$")
 
 # Python interpreter.
-rxpython = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+rxpython = re.compile(r"^/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		      r"external/python/[-.a-z0-9]+/bin/python$")
 
 # Python config and auth .pyc files (not writeable).
@@ -47,7 +47,7 @@ rxfmdirdl = re.compile(r"^(/data/srv/state/filemover/download/)"
                        r"[0-9a-f]+(/softlinks)$")
 rxfmdirst = re.compile(r"^(/data/srv/state/filemover/store/)"
                        r"(?:[-A-Za-z0-9_/]+)$")
-rxfmcmd = ((re.compile(r"^(/bin/sh) (/data/srv/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+rxfmcmd = ((re.compile(r"^(/bin/sh) (/data/srv/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
                        r"external/srmcp/[-.a-z0-9_]+/(?:sbin/srm|bin/srmcp))"
                        r"( -[a-z_]+(?:=[a-z0-9]+)?)*"
                        r" 'srm://[-.a-z0-9]+:\d+/srm/(?:v2/server|managerv2)\?SFN="
@@ -67,7 +67,7 @@ rxfmcmd = ((re.compile(r"^(/bin/sh) (/data/srv/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
             [r"\1", r"\2", r"\3", r"\4", r"\5", r"-OPTION=VAL...",
              r"srm://server:port/srm/managerv2?SFN=/A/B/C.root",
              r"\7A/B/C.root"]),
-           (re.compile(r"^(java) (-cp) (:?/data/srv/[a-z0-9]+/sw[.a-z]*/"
+           (re.compile(r"^(java) (-cp) (:?/data/srv/[a-zA-Z0-9]+/sw[.a-z]*/"
                        r"[_a-z0-9]+/external/srmcp/[-.a-z0-9_]+/lib/"
                        r"[-A-Za-z0-9/._]+\.jar)+( -D[A-Za-z._]+=[A-Za-z0-9.]+)*"
                        r" ([A-Za-z0-9.]+)"
@@ -92,7 +92,7 @@ rxwqcmd = ((re.compile(r"^(/bin/rm) (-f)(?: '?(/data/srv/state/workqueue/cache/"
 	    [r"\1", r"\2", r"\3/A/B/C+"]),)
 
 # CouchDB all_docs + compaction commands, database info queries.
-rxcurl = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+rxcurl = re.compile(r"^/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		    r"external/curl/[-.a-z0-9]+/bin/curl$")
 rxcouch = ((re.compile(r"^(curl) (-s) '(localhost:5984/)[0-9a-z_]+(/_all_docs"
                        r"\?startkey=%22_design%22&endkey=%22_design/z+%22)'$"),
@@ -116,7 +116,7 @@ rxcouch = ((re.compile(r"^(curl) (-s) '(localhost:5984/)[0-9a-z_]+(/_all_docs"
             [r"\1", r"\2", r"\3DB\4VIEW\5"]))
 
 # MongoDB external sorts.
-rxmongod = re.compile(r"^/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+rxmongod = re.compile(r"^/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		      r"external/mongo/[-.a-z0-9]+/bin/mongod$")
 rxmongo = re.compile(r"^(/data/srv/state/mongodb/db/_tmp/esort)(?:.\d+){2}/$")
 
@@ -138,7 +138,7 @@ rxcmdsuppress = ((re.compile(r"^/bin/cat$"), re.compile(r"^cat$")),
 rxlogrotate = re.compile(r"^(/var/log/)(?:[-a-z]+/)?(?:rpmpkgs|[-A-Za-z0-9_]+\.log)\.\d+(\.gz)?$")
 
 # Non-empty directories from rsync rmdir.
-rxrsyncrmd = re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/(?:config|auth|apps|bin|sw[.a-z]*))"
+rxrsyncrmd = re.compile(r"^(/data/srv[-a-z]*/[a-zA-Z0-9]+/(?:config|auth|apps|bin|sw[.a-z]*))"
                         r"(?:/(?!\./|\.\./)[-A-Za-z0-9@+._]+)*$")
 
 # Regexps for compacting DQM GUI commands and file names.
@@ -199,26 +199,26 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
 
          (re.compile(r"^sh -c \"(exec perl -e 'alarm\(\d+\); exec qw\(root -n -l -b -q)"
                      r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
-                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r" (/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
                      r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C\)' 2>&1 >/dev/null)\"$"),
           ["sh", "-c", r"\1 \2/NNNN/DQM.root \3"]),
 
          (re.compile(r"^perl -e '(alarm\(\d+\); exec qw\(root -n -l -b -q)"
                      r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
-                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r" (/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
                      r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C\))'$"),
           ["perl", "-e", r"\1 \2/NNNN/DQM.root \3"]),
 
          (re.compile(r"^(root) (-n) (-l) (-b) (-q)"
                      r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
-                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r" (/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
                      r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C)$"),
           [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6/NNNN/DQM.root", r"\7"]),
 
-         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/lcg/root/"
+         (re.compile(r"^(/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/lcg/root/"
                      r"[-.a-z0-9]+/bin/root\.exe) (-splash) (-n) (-l) (-b) (-q)"
                      r" (/data/srv/state/dqmgui/[a-z]+/uploads)/\d+/DQM[-_A-Za-z0-9]+\.root"
-                     r" (/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
+                     r" (/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/cms/dqmgui/"
                      r"[-.a-z0-9]+/data/root/visDQMVerify[A-Za-z]+\.C)$"),
           [r"\1", r"\2", r"\3", r"\4", r"\5", r"\6", r"\7/NNNN/DQM.root", r"\8"]),
 
@@ -269,7 +269,7 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
          (re.compile(r"^(c\+\+)(?: "
                      r"-(?:[UD][A-Z0-9_]+(?:=[A-Z0-9]+)?"
                      r"|[-A-Za-z0-9]+"
-                     r"|I(?:\.|/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"|I(?:\.|/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
                      r"[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+(?:/python[.\d]+)?)))*"
                      r" -c (/data/srv/current/config/dqmgui/style/)[A-Za-z0-9_]+\.cc"
                      r" -o (/data/srv/state/dqmgui/[a-z]+/render/)[A-Za-z0-9_]+\.o$"),
@@ -277,25 +277,25 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
 
          (re.compile(r"^(c\+\+)(?: "
                      r"-(?:[UD][A-Z0-9_]+(?:=[A-Z0-9]+)?"
-                     r"|I(?:\.|/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"|I(?:\.|/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
                      r"[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+(?:/python[.\d]+)?)"
                      r"|(?!shared|o)[-A-Za-z0-9]+))*"
                      r" (-shared) (-o) (/data/srv/state/dqmgui/[a-z]+/render/[0-9a-f]+\.ext)"
                      r"(?: /data/srv/state/dqmgui/[a-z]+/render/[A-Za-z0-9_]+\.o)*"
                      r"(?: -(?:[-A-Za-z0-9,]+"
-                     r"|L(?:\.|/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"|L(?:\.|/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
                      r"[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+)"
                      r"|l[A-Za-z0-9_]+))*$"),
           [r"\1", r"OPTION...", r"\2", r"\3", r"\4", r"FILE.o...", r"OPTION..."]),
 
-         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+         (re.compile(r"^(/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		     r"external/gcc/[-.a-z0-9]+/bin/\.\./libexec/gcc/[-a-z0-9_]+/"
                      r"\d+(?:\.\d+)*/cc1plus)(?: "
                      r"(?:/data/srv/current/config/dqmgui/style/[A-Za-z0-9_]+\.cc"
                      r"|/data/srv/state/dqmgui/[a-z]+/render/[A-Za-z0-9_]+\.o"
                      r"|-[UD] ?[A-Z0-9_]+(?:=[A-Z0-9]+)?"
                      r"|-dumpbase [A-Za-z0-9_]+\.cc"
-                     r"|-(?:I|iprefix) ?(?:\.|/data/srv[-a-z]*/[a-z0-9]+/"
+                     r"|-(?:I|iprefix) ?(?:\.|/data/srv[-a-z]*/[a-zA-Z0-9]+/"
                      r"sw[.a-z]*/[_a-z0-9]+/(?:[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+"
 		     r"(?:/python[.\d]+)?|external/gcc/[-.a-z0-9]+/bin/\.\./"
                      r"lib/gcc/[-a-z0-9_]+/\d+(?:\.\d+)*/))"
@@ -303,7 +303,7 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
                      r" -o /tmp/[A-Za-z0-9_]+\.s$"),
           [r"\1", r"args..."]),
 
-         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+         (re.compile(r"^(/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		     r"external/gcc/[-.a-z0-9]+/bin/\.\./lib(?:exec)?/gcc/[-a-z0-9_]+/"
                      r"\d+(?:\.\d+)*/(?:collect2|(?:\.\./){4}[-a-z0-9_]+/bin/ld))"
                      r"(?: (?:/data/srv/state/dqmgui/[a-z]+/render/[A-Za-z0-9_]+\.o"
@@ -311,18 +311,18 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
                      r"|-[mz] [-a-z0-9=_]+"
                      r"|-o (/data/srv/state/dqmgui/[a-z]+/render/[0-9a-f]+\.ext)"
                      r"|/usr/lib(?:/\.\./lib)?64/crt[A-Za-z0-9]*\.o"
-                     r"|/data/srv[[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"|/data/srv[[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
                      r"external/gcc/[-.a-z0-9]+/bin/\.\./lib/gcc/[-a-z0-9_]+/"
                      r"\d+(?:\.\d+)*/crt[A-Za-z0-9]*\.o"
                      r"|-L(?:\.|(?:/usr)?/lib(?:/\.\./lib)?64|"
-                     r"/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+                     r"/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
                      r"(?:[a-z]+/[a-z]+/[-.a-z0-9]+/[a-z]+|"
                      r"external/gcc/[-.a-z0-9]+/bin/\.\./lib/gcc"
                      r"(?:/[-a-z0-9_]+/\d+(?:\.\d+)*(?:(?:/\.\.){4}/lib64)?)?))"
                      r"|-[-A-Za-z0-9]+(?:=[-A-Za-z0-9_]+)?))*"),
           [r"\1", r"args..."]),
 
-         (re.compile(r"^(/data/srv[-a-z]*/[a-z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
+         (re.compile(r"^(/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		     r"external/gcc/[-.a-z0-9]+/bin/\.\./lib/gcc/[-a-z0-9_]+/"
                      r"\d+(?:\.\d+)*/(?:\.\./){4}[-a-z0-9_]+/bin/as)"
                      r" (--64) (-o) (/data/srv/state/dqmgui/[a-z]+/render/)[A-Za-z0-9_]+\.o"
@@ -334,7 +334,7 @@ rxdqm = ((re.compile(r"^(basename) (/data/srv/state/dqmgui/[a-z]+/data/OnlineDat
           [r"\1", r"\2", r"\3/A/B/C/DQM.zip"]))
 
 # Admin command path noise.
-rxadmin = ((re.compile(r"^(/data/srv[-a-z]+/[a-z0-9]+/auth/proxy/proxy-)"
+rxadmin = ((re.compile(r"^(/data/srv[-a-z]+/[a-zA-Z0-9]+/auth/proxy/proxy-)"
                        r"[a-z]+(\.cert\.)[a-z]+$"), r"\1ID\2XXX"),
            (re.compile(r"^(/tmp/(?:krb5(?:_-_|cc_)|tkt))\d+(_\*)?$"), r"\1NNN"),
            (re.compile(r"^(/tmp/tmp_x509up_u)\d+_\d+$"), r"\1NNN_NNN"))
