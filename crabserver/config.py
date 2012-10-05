@@ -47,8 +47,8 @@ else:
     data.reqmgrurl = 'https://%s/couchdb' % HOST
 data.monname = 'analysis_wmstats'
 data.asomonname = 'user_monitoring_asynctransfer'
-data.configcachename = 'reqmgr_config_cache'
-data.reqmgrname = 'reqmgr_workload_cache'
+data.configcachename = 'analysis_reqmgr_config_cache'
+data.reqmgrname = 'analysis_reqmgr_workload_cache'
 data.phedexurl = 'https://cmsweb.cern.ch/phedex/datasvc/xml/prod/'
 data.dbsurl = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
 data.defaultBlacklist = ['T0_CH_CERN']
