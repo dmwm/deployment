@@ -26,9 +26,6 @@ deploy_crabserver_sw()
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
-
-  perl -p -i -e 's/__fill_dbname_here__/analysis_wmstats/g' \
-    $root/current/apps/crabserver/couchapps/WMStats/_attachments/js/loader.js
 }
 
 deploy_crabserver_post()
@@ -44,10 +41,6 @@ deploy_crabserver_post()
     rm -f $couchdb_state/$area/crabserver
     touch $couchdb_state/$area/crabserver
   done
-
-  echo "couchapp push $crabsrvapp/couchapps/WMStats" \
-       "http://localhost:5984/analysis_wmstats" \
-    >> $couchdb_state/stagingarea/crabserver
 
   (mkcrontab; sysboot) | crontab -
 }
