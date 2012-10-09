@@ -13,7 +13,7 @@ main.authz_defaults = { 'role': None, 'group': None, 'site': None }
 main.section_('tools').section_('cms_auth').key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 
 app = conf.section_('crabserver')
-app.admin = 'marco.mascheroni@cern.ch'
+app.admin = 'cms-service-webtools@cern.ch'
 app.description = 'CRABServer RESTFull API'
 app.title = 'CRABRESTFull'
 
@@ -51,6 +51,7 @@ data.configcachename = 'reqmgr_config_cache'
 data.reqmgrname = 'reqmgr_workload_cache'
 data.phedexurl = 'https://cmsweb.cern.ch/phedex/datasvc/xml/prod/'
 data.dbsurl = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
+data.defaultBlacklist = ['T0_CH_CERN']
 
 data.connectUrl = connectUrl
 

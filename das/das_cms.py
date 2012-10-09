@@ -48,6 +48,7 @@ config.dasdb.dbname = 'das'
 config.dasdb.cachecollection = 'cache'
 config.dasdb.mergecollection = 'merge'
 config.dasdb.mrcollection = 'mapreduce'
+config.dasdb.logging = False
 
 # loggingdb configuration
 config.component_('loggingdb')

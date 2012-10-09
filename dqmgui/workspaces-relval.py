@@ -3,7 +3,20 @@ server.workspace('DQMSummary', 1, 'Summaries', 'Reports')
 server.workspace('DQMShift',   2, 'Summaries', 'Shift')
 server.workspace('DQMContent', 3, 'Summaries', 'Everything', '^', '^')
 
-server.workspace('DQMContent', 10, 'Data', 'Tk' , '^Tk/', '')
+server.workspace('DQMContent', 10, 'Data', 'Tk' , '^(Tk/|Pixel|SiStrip|Tracking)', 'DataLayouts/Tk',
+                 'DataLayouts/Tk/01 - TEC-',
+                 'DataLayouts/Tk/02 - TEC+',
+                 'DataLayouts/Tk/03 - TIB',
+                 'DataLayouts/Tk/04 - TID-',
+                 'DataLayouts/Tk/05 - TID+',
+                 'DataLayouts/Tk/06 - TOB',
+                 'DataLayouts/Tk/07 - Pixel RecHits Barrel',
+                 'DataLayouts/Tk/08 - Pixel RecHits Endcap',
+                 'DataLayouts/Tk/09 - Pixel Occupancy',
+                 'DataLayouts/Tk/10 - Pixel Clusters Barrel',
+                 'DataLayouts/Tk/11 - Pixel Clusters Endcap'
+                 )
+
 server.workspace('DQMContent', 11, 'Data', 'Ecal' , '^Ecal.*/', 'DataLayouts/Ecal',
         'EcalBarrel/EBOccupancyTask/EBOT rec hit spectrum',
         'EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE +',
@@ -30,7 +43,13 @@ server.workspace('DQMContent', 24, 'Data', 'MET' , '^MET/', '')
 server.workspace('DQMContent', 25, 'Data', 'BTag' , '^BTag/', '')
 server.workspace('DQMContent', 26, 'Data', 'Tau' , '^Tau/', '')
 
-server.workspace('DQMContent', 30, 'Monte Carlo', 'MC Tk' , '^Tk/', '')
+server.workspace('DQMContent', 30, 'Monte Carlo', 'MC Tk' , '^(Tk/|TrackerDigisV|TrackerHitsV|TrackerRecHitsV|Pixel|SiStrip|Tracking)', 'MCLayouts/Tk',
+                 'MCLayouts/Tk/01 - TrackerDigisV',
+                 'MCLayouts/Tk/02 - TrackerHitsV',
+                 'MCLayouts/Tk/03 - TrackerRecHitsV',
+                 'MCLayouts/Tk/04 - TrackingMCTruth',
+                 'MCLayouts/Tk/05 - TrackingRecHits'
+                 )
 server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Ecal' , '^Ecal.*/', 'MCLayouts/Ecal')
 server.workspace('DQMContent', 32, 'Monte Carlo', 'MC Hcal' , '^Hcal/', '')
 server.workspace('DQMContent', 33, 'Monte Carlo', 'MC DT' , '^DT/', '')

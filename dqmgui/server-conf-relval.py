@@ -8,8 +8,10 @@ LOGDIR    = "%s/logs/dqmgui/relval" % BASEDIR
 LAYOUTS = glob("%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, "hlt"))
 LAYOUTS += glob("%s/layouts/shift_%s_relval_layout.py" % (CONFIGDIR, "ecal"))
 LAYOUTS += glob("%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, "ecal"))
+LAYOUTS += glob("%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, "tk"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "hlt"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "ecal"))
+LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "tk"))
 
 modules = ("Monitoring.DQM.GUI",)
 
@@ -38,7 +40,15 @@ server.extend('DQMLayoutAccess', None, STATEDIR,
 server.source('DQMUnknown')
 server.source('DQMOverlay')
 server.source('DQMStripChart')
-server.source('DQMArchive', "%s/ix" % STATEDIR, '^/Global/')
+
+# Switch to use the new index schema only on vocms139. If users want
+# to test the relval server configuration on their local machine, they
+# are still able to do that using the old schema.
+
+if socket.gethostname().lower().split('.')[0] == 'vocms139':
+    server.source('DQMArchive', "%s/ix128" % STATEDIR, '^/Global/')
+else:
+    server.source('DQMArchive', "%s/ix" % STATEDIR, '^/Global/')
 server.source('DQMLayout')
 
 execfile(CONFIGDIR + "/dqm-services.py")
