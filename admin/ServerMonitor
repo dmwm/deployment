@@ -10,6 +10,11 @@ import cPickle as pickle
 from glob import glob
 from signal import *
 
+try:
+    import psutil
+except:
+    psutil = None
+
 def logmsg(*args):
   """Output a space separated log message prefixed with current time."""
   # Print full single line at a time, 'print' will write every
@@ -88,6 +93,78 @@ class Monitor(Thread):
           logmsg("ADMIN", "FAILURE", "TASK %s ERROR: %s" % (repr(task), str(e)))
 	  for line in trace.getvalue().rstrip().split("\n"):
             logmsg("ADMIN", "FAILURE", line)
+
+class SystemMonitor(Monitor):
+  """Monitor which provides process detailed information.
+
+  For each service this monitor accepts the process owner and
+  optionally a regex to match the process name and the list
+  of process details you need as per psutils format. If this
+  last argument is not specified, it will dump the cpu, mem,
+  threads information only.
+
+  It logs all the process information into a single line.
+  It will skip the fields it doesnt have permissions to grab
+  the information about."""
+  def __init__(self, task_queue):
+    Monitor.__init__(self, task_queue)
+
+  def _do(self, svc, can_talk, proc_name, activity):
+    """Perform system monitoring tasks.
+
+    @param svc -- service name
+    @param can_talk -- can talk about problems
+    @param proc_name -- regex pattern to match process name
+    @param activity -- list of activities to log.
+    The allowed activities are:
+    cpu, mem, user, system, rss, vms, threads, connections, io, files"""
+
+    def safemsg(field, f):
+      try:
+        msg = ', %s: %s' % (field.upper(), f())
+      except Exception, e:
+        msg = ''
+        if can_talk:
+          logmsg(svc, "SYSTEM", "IGNORE", "failed to get %s field information: %s" % (field, str(e).replace("\n", "; ")))
+        pass
+      return msg
+
+    if not psutil:
+      return
+    for pid in psutil.get_pid_list():
+      proc = psutil.Process(pid)
+      if proc.username != svc:
+        continue
+      cmd  = ' '.join(proc.cmdline)
+      name = cmd.split('/')[-1]
+      if proc_name and not re.search(proc_name, cmd):
+        continue
+      msg  = 'PID: %s, NAME: %s, STATUS: %s' % (pid, name, proc.status)
+      mem_info = proc.get_memory_info()
+      cpu_info = proc.get_cpu_times()
+      for field in activity:
+        field = field.strip()
+        if field == 'cpu':
+          msg += ', CPU: %3.1f%%' % proc.get_cpu_percent(interval=1.0)
+        elif field == 'mem':
+          msg += ', MEM: %3.1f%%' % proc.get_memory_percent()
+        elif field == 'user':
+          msg += ', USER: %s' % cpu_info.user
+        elif field == 'system':
+          msg += ', SYSTEM: %s' % cpu_info.system
+        elif field == 'rss':
+          msg += ', RSS: %s' % mem_info.rss
+        elif field == 'vms':
+          msg += ', VMS: %s' % mem_info.vms
+        elif field == 'threads':
+          msg += safemsg(field, proc.get_num_threads)
+        elif field == 'connections':
+          msg += safemsg(field, proc.get_connections)
+        elif field == 'io':
+          msg += safemsg(field, proc.get_io_counters)
+        elif field == 'files':
+          msg += safemsg(field, proc.get_open_files)
+      logmsg(svc, "SYSTEM", msg)
 
 class ProcessMonitor(Monitor):
   """Monitor which looks for process command lines matching a regexp.
@@ -584,6 +661,21 @@ class MonitorDaemon:
       m = re.match(r'^PING_HEADER="(.*?): (.*)"$', line)
       if m: s.ping_headers.append((m.group(1), m.group(2))); continue
 
+      m = re.match(r"^PROCESS_OWNER='(.*)'$", line)
+      if m: s.process_owner = m.group(1); continue
+      m = re.match(r'^PROCESS_OWNER="(.*)"$', line)
+      if m: s.process_owner = m.group(1); continue
+
+      m = re.match(r"^PROCESS_REGEX_NAME='(.*)'$", line)
+      if m: s.process_regex_name = m.group(1); continue
+      m = re.match(r'^PROCESS_REGEX_NAME="(.*)"$', line)
+      if m: s.process_regex_name = m.group(1); continue
+
+      m = re.match(r"^PROCESS_ACTIVITY='(.*)'$", line)
+      if m: s.process_activity = str(m.group(1)).split(','); continue
+      m = re.match(r'^PROCESS_ACTIVITY="(.*)"$', line)
+      if m: s.process_activity = str(m.group(1)).split(','); continue
+
       logmsg("ADMIN", "BADCONFIG", "%s:%d:" % (cfgfile, nline),
              "unrecognised line <%s>" % line)
 
@@ -594,11 +686,12 @@ class MonitorDaemon:
     cfgs = {}
     qexit = Queue()
     qptask = Queue()
+    qstask = Queue()
     qutask = Queue()
     qletask = Queue()
     qlvtask = Queue()
-    queues = [qptask, qletask, qlvtask, qutask]
-    mon = [[ProcessMonitor(qptask)],
+    queues = [qptask, qstask, qletask, qlvtask, qutask]
+    mon = [[ProcessMonitor(qptask)], [SystemMonitor(qstask)],
            [LogErrorMonitor(qletask, self.feeddir)],
            [LogValueMonitor(qlvtask, self.feeddir)],
            [URLMonitor(qutask) for i in xrange(0, 10)]]
@@ -671,6 +764,9 @@ class MonitorDaemon:
           s.ping_url = None
           s.ping_regex = None
           s.ping_headers = []
+          s.process_owner = None
+          s.process_activity = ['cpu', 'mem', 'threads']
+          s.process_regex_name = None
 	  s.enable_if = "app_is_enabled"
 	  s.can_talk = True
 
@@ -705,6 +801,8 @@ class MonitorDaemon:
           qptask.put((s.svcname, s.can_talk, s.ps_regex))
         if s.ping_url and s.ping_regex:
           qutask.put((s.svcname, s.can_talk, s.ping_url, s.ping_regex, s.ping_headers + authz))
+        if s.process_owner:
+          qstask.put((s.process_owner, s.can_talk, s.process_regex_name, s.process_activity))
 
       # Have a nap, but stop if signalled.
       try: qexit.get(timeout = 30); break
