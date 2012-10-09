@@ -12,6 +12,7 @@ deploy_reqmgr_deps()
     * )
       deploy couchdb ;;
   esac
+  deploy reqmon
 }
 
 deploy_reqmgr_prep()
