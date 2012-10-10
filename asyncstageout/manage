@@ -47,22 +47,25 @@ inited_couch(){
 # Passwords/Secrets handling
 #
 load_secrets_file(){
-    if [ "x$WMAGENT_SECRETS_LOCATION" == "x" ]; then
-        WMAGENT_SECRETS_LOCATION=$HOME/WMAgent.secrets;
+    if [ "x$ASYNC_SECRETS_LOCATION" == "x" ]; then
+        ASYNC_SECRETS_LOCATION=$HOME/Async.secrets;
     fi
-    if [ ! -e $WMAGENT_SECRETS_LOCATION ]; then
-        echo "Password file: $WMAGENT_SECRETS_LOCATION does not exist"
-        echo "Either set WMAGENT_SECRETS_LOCATION to a valid file or check that $HOME/WMagent.secrets exists"
+    if [ ! -e $ASYNC_SECRETS_LOCATION ]; then
+        echo "Password file: $ASYNC_SECRETS_LOCATION does not exist"
+        echo "Either set ASYNC_SECRETS_LOCATION to a valid file or check that $HOME/Async.secrets exists"
         exit 1;
     fi
 
-    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
-    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
-    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
-    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
-    local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
-    local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
-    local MATCH_HOST_DN=`cat $WMAGENT_SECRETS_LOCATION     | grep HOST_DN       | sed s/HOST_DN=//`
+    local MATCH_COUCH_USER=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_HOST=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_PORT=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_COUCH_CERT_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
+    local MATCH_COUCH_KEY_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
+    local MATCH_HOST_DN=`cat $ASYNC_SECRETS_LOCATION | grep HOST_DN       | sed s/HOST_DN=//`
+    local MATCH_WMSTATS_URL=`cat $ASYNC_SECRETS_LOCATION | grep WMSTATS_URL | sed s/WMSTATS_URL=//`
+    local MATCH_UFC_SERVICE_URL=`cat $ASYNC_SECRETS_LOCATION | grep UFC_SERVICE_URL | sed s/UFC_SERVICE_URL=//`
+    local MATCH_OPS_PROXY=`cat $ASYNC_SECRETS_LOCATION | grep OPS_PROXY | sed s/OPS_PROXY=//`
 
     if [ "x$MATCH_COUCH_USER" == "x" ]; then
         COUCH_USER=asynccouch;
@@ -96,7 +99,15 @@ load_secrets_file(){
     if [ ! "x$MATCH_HOST_DN" == "x" ]; then
         HOST_DN=$MATCH_HOST_DN;
     fi
-
+    if [ ! "x$MATCH_WMSTATS_URL" == "x" ]; then
+        WMSTATS_URL=$MATCH_WMSTATS_URL;
+    fi
+    if [ ! "x$MATCH_UFC_SERVICE_URL" == "x" ]; then
+        UFC_SERVICE_URL=$MATCH_UFC_SERVICE_URL;
+    fi
+    if [ ! "x$MATCH_OPS_PROXY" == "x" ]; then
+        OPS_PROXY=$MATCH_OPS_PROXY;
+    fi
 }
 
 print_settings(){
@@ -222,6 +233,9 @@ init_async(){
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --working_dir=$INSTALL_AS \
                        --host_dn=$HOST_DN \
+                       --wmstats_url=$WMSTATS_URL \
+                       --ufc_service_url=$UFC_SERVICE_URL \
+	               --ops_proxy=$OPS_PROXY \
 
     export WMAGENT_CONFIG=$CONFIG_AS/config.py
     export ASYNC_ROOT=$ROOT_DIR/apps/asyncstageout
