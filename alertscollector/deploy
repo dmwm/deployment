@@ -9,9 +9,7 @@ deploy_alertscollector_deps()
 {
   case $variant in
     offsite* )
-      # disabled temporarily as it won't work with current
-      # incompatible wmagent couch setup
-      #deploy couchdb offsite
+      deploy couchdb offsite
       ;;
     * )
       deploy couchdb default
