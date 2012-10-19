@@ -1,17 +1,5 @@
-def shiftecalvalidation(i, p, *rows): i["00 Shift/Ecal/" + p] = DQMItem(layout=rows)
+def ecallayout(i, p, *rows): i[p] = DQMItem(layout=rows)
 
-shiftecalvalidation(dqmitems,'01 Rec Hit Spectra',
-  [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT rec hit spectrum", 'description': "Energy of rec hits (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE +", 'description': "Energy of rec hits (EE+) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-  { 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE -", 'description': "Energy of rec hits (EE-) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-shiftecalvalidation(dqmitems,'02 Ecal Rech hit size ',
-  [{ 'path': "EcalBarrel/EcalInfo/EBMM hit number", 'description': "Number of rec hits (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EcalInfo/EEMM hit number", 'description': "Number of rec hits (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }]
-)
-
-shiftecalvalidation(dqmitems,'03 Ecal timing',
-  [{ 'path': 'EcalBarrel/EBSummaryClient/EBTMT timing mean 1D summary','description':""}],
-  [{ 'path': 'EcalEndcap/EESummaryClient/EETMT EE - timing mean 1D summary', 'description': ""},
-   { 'path': 'EcalEndcap/EESummaryClient/EETMT EE + timing mean 1D summary', 'description': ""}]
-)
+ecallayout(dqmitems, '00 Shift/Ecal/00 RecHit Spectra',[{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit spectrum', 'description': 'Rec hit energy distribution.'}],[{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE -', 'description': 'Rec hit energy distribution.'}, {'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE +', 'description': 'Rec hit energy distribution.'}])
+ecallayout(dqmitems, '00 Shift/Ecal/01 Number of RecHits',[{'path': 'EcalBarrel/EBOccupancyTask/EBOT number of filtered rec hits in event', 'description': 'Occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}],[{'path': 'EcalEndcap/EEOccupancyTask/EEOT number of filtered rec hits in event', 'description': 'Occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}])
+ecallayout(dqmitems, '00 Shift/Ecal/02 Mean Timing',[{'path': 'EcalBarrel/EBSummaryClient/EBTMT timing mean 1D summary', 'description': 'Distribution of per-channel timing mean. Channels with entries less than 5 are not considered.'}],[{'path': 'EcalEndcap/EESummaryClient/EETMT EE - timing mean 1D summary', 'description': 'Distribution of per-channel timing mean. Channels with entries less than 5 are not considered.'}, {'path': 'EcalEndcap/EESummaryClient/EETMT EE + timing mean 1D summary', 'description': 'Distribution of per-channel timing mean. Channels with entries less than 5 are not considered.'}])

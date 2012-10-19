@@ -18,15 +18,9 @@ server.workspace('DQMContent', 10, 'Data', 'Tk' , '^(Tk/|Pixel|SiStrip|Tracking)
                  )
 
 server.workspace('DQMContent', 11, 'Data', 'Ecal' , '^Ecal.*/', 'DataLayouts/Ecal',
-        'EcalBarrel/EBOccupancyTask/EBOT rec hit spectrum',
-        'EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE +',
-        'EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE -',
-        'EcalBarrel/EcalInfo/EBMM hit number',
-        'EcalEndcap/EcalInfo/EEMM hit number',
-        'EcalBarrel/EBSummaryClient/EBTMT timing mean 1D summary',
-        'EcalEndcap/EESummaryClient/EETMT EE - timing mean 1D summary',
-        'EcalEndcap/EESummaryClient/EETMT EE + timing mean 1D summary'
-)
+        'DataLayouts/Ecal/04 Ecal Spectrum',
+        'DataLayouts/Ecal/00 Number of Ecal RecHits',
+        'DataLayouts/Ecal/08 Ecal Timing')
 server.workspace('DQMContent', 12, 'Data', 'Hcal' , '^Hcal/', '')
 server.workspace('DQMContent', 13, 'Data', 'DT' , '^DT/', '')
 server.workspace('DQMContent', 14, 'Data', 'CSC' , '^CSC/', '')

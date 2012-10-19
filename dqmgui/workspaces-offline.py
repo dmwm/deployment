@@ -35,22 +35,16 @@ server.workspace('DQMContent', 12, 'Tracker/Muons', 'CSC', '^CSC/', '',
 server.workspace('DQMContent', 13, 'Tracker/Muons', 'DT', '^DT/', '')
 server.workspace('DQMContent', 14, 'Tracker/Muons', 'RPC', '^RPC/', '')
 
-server.workspace('DQMContent', 21, 'Calorimeter', 'EcalBarrel', '^EcalBarrel/', '',
-                 'EcalBarrel/Layouts/00 Global Summary EcalBarrel',
-                 'EcalBarrel/Layouts/01 Occupancy Summary EcalBarrel',
-                 'EcalBarrel/Layouts/02 Cluster Summary EcalBarrel')
+server.workspace('DQMContent', 21, 'Calorimeter', 'Ecal', '^Ecal(|Barrel|Endcap)/', 'Ecal/Layouts',
+                 'Ecal/Layouts/00 Summary',
+                 'Ecal/Layouts/01 Occupancy Summary')
 
-server.workspace('DQMContent', 22, 'Calorimeter', 'EcalEndcap', '^EcalEndcap/', '',
-                 'EcalEndcap/Layouts/00 Global Summary EcalEndcap',
-                 'EcalEndcap/Layouts/01 Occupancy Summary EcalEndcap',
-                 'EcalEndcap/Layouts/02 Cluster Summary EcalEndcap')
-
-server.workspace('DQMContent', 23, 'Calorimeter', 'EcalPreshower', '^EcalPreshower/', '',
+server.workspace('DQMContent', 22, 'Calorimeter', 'EcalPreshower', '^EcalPreshower/', '',
                 'EcalPreshower/Layouts/01-IntegritySummary-EcalPreshower',
                 'EcalPreshower/Layouts/02-OccupancySummary-EcalPreshower',
                 'EcalPreshower/Layouts/03-RechitEnergySummary-EcalPreshower')
 
-server.workspace('DQMContent', 24, 'Calorimeter', 'HCAL', '^Hcal/', '',
+server.workspace('DQMContent', 23, 'Calorimeter', 'HCAL', '^Hcal/', '',
                  'Hcal/Layouts/01 HCAL Summaries',
                  'Hcal/Layouts/02 HCAL Events Processed',
                  'Hcal/Layouts/03 HCAL Sufficient Events',
@@ -129,20 +123,20 @@ server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack'
                  'Collisions/TrackingFeedBack/06 - Z-Position Of Closest Approach',
                  'Collisions/TrackingFeedBack/07 - Cluster y width vs. cluster eta'
 )
-server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|EcalBarrel|EcalEndcap|EcalPreshower)/', 'Collisions/EcalFeedBack',
-                 "Collisions/EcalFeedBack/00 Single Event Timing EE",
-                 "Collisions/EcalFeedBack/01 Timing Mean EE",
-                 "Collisions/EcalFeedBack/02 Timing Map EE -",
-                 "Collisions/EcalFeedBack/02 Timing Map EE +",
-                 "Collisions/EcalFeedBack/03 Occupancy EE -",
-                 "Collisions/EcalFeedBack/03 Occupancy EE +",
-                 "Collisions/EcalFeedBack/04 Single Event Timing EB",
-                 "Collisions/EcalFeedBack/05 Timing Mean EB",
-                 "Collisions/EcalFeedBack/06 Timing Map EB",
-                 "Collisions/EcalFeedBack/07 Occupancy EB",
-                 "Collisions/EcalFeedBack/08 ES Occupancy",
-                 "Collisions/EcalFeedBack/09 ES Energy Map",
-                 "Collisions/EcalFeedBack/10 ES Timing Plot"
+server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|Ecal[^/]*)/', 'Collisions/EcalFeedBack',
+                 "Collisions/EcalFeedBack/00 Single Event Timing EB",
+                 "Collisions/EcalFeedBack/01 Single Event Timing EE",
+                 "Collisions/EcalFeedBack/02 Timing Map EB",
+                 "Collisions/EcalFeedBack/03 Timing Map EE -",
+                 "Collisions/EcalFeedBack/04 Timing Map EE +",
+                 "Collisions/EcalFeedBack/05 Timing ES",
+                 "Collisions/EcalFeedBack/06 Occupancy EB",
+                 "Collisions/EcalFeedBack/07 Occupancy EE -",
+                 "Collisions/EcalFeedBack/08 Occupancy EE +",
+                 "Collisions/EcalFeedBack/09 Occupancy ES",
+                 "Collisions/EcalFeedBack/10 RecHit Energy EB",
+                 "Collisions/EcalFeedBack/11 RecHit Energy EE",
+                 "Collisions/EcalFeedBack/12 RecHit Energy ES"
                  )
 server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', 'Collisions/HcalFeedBack',
                  "Collisions/HcalFeedBack/01 - HF+,HF- coincidences (with BPTX)",
