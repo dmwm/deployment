@@ -10,11 +10,11 @@
 # Test runs from the last month
 # By default things stay in the GUI for a year
 {'online_data':{'.*':[
-  [COLLISIONS_RUN,365*1.5,0],
+  [COLLISIONS_RUN,365*1,0],
   [COSMICS_RUN,6 * 30,50],
   [COSMICS_RUN,3 * 30,25],
   [COSMICS_RUN,30,0],
   [TEST_RUN,1,0],
-  [TEST_RUN,10,25],
+  [TEST_RUN,7,25],
   [TEST_RUN,20,100]
   ]}}

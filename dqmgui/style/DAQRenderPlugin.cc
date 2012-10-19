@@ -31,11 +31,12 @@ public:
 
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
     {
-      // determine whether core object is an DAQ object
-      if (o.name.find( "DAQ/" ) != std::string::npos
-          || o.name.find("DAQval/")!=std::string::npos
-          || o.name.find("DAQdev/")!=std::string::npos
-	 )
+      // determine whether core object is an DAQ object. DAQ objects start with "DAQ/", "DAQval/" or "DAQdev/"
+      const size_t beginning = 0;
+      if (o.name.find( "DAQ/" ) == beginning
+          || o.name.find("DAQval/") == beginning
+          || o.name.find("DAQdev/") == beginning
+      )
         return true;
 
       return false;

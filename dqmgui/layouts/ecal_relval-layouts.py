@@ -1,124 +1,27 @@
-def ecalvalidationlayout(i, p, *rows): i["DataLayouts/Ecal/" + p] = DQMItem(layout=rows)
+def ecallayout(i, p, *rows): i[p] = DQMItem(layout=rows)
 
-ecalvalidationlayout(dqmitems, "00 Ecal RecHit size",
-  [{ 'path': "EcalBarrel/EcalInfo/EBMM hit number", 'description': "Number of rec hits (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EcalInfo/EEMM hit number", 'description': "Number of rec hits (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "01 ES RecHit size (Z -1)",
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES Num of RecHits Z -1 P 1", 'description': "Number of rec hits (ES -1 P1) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES Num of RecHits Z -1 P 2", 'description': "Number of rec hits (ES -1 P2) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "02 ES RecHit size (Z +1)",
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES Num of RecHits Z 1 P 1", 'description': "Number of rec hits (ES +1 P1) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES Num of RecHits Z 1 P 2", 'description': "Number of rec hits (ES +1 P2) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "03 EB RecHit spectra",
-  [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT rec hit spectrum", 'description': "Energy of rec hits (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "04 EE RecHit spectra",
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE +", 'description': "Energy of rec hits (EE+) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE -", 'description': "Energy of rec hits (EE-) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "05 ES RecHit spectra (Z -1)",
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z -1 P 1", 'description': "Energy of rec hits (ES -1 P1) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z -1 P 2", 'description': "Energy of rec hits (ES -1 P2) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "06 ES RecHit spectra (Z +1)",
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 1", 'description': "Energy of rec hits (ES +1 P1) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 2", 'description': "Energy of rec hits (ES +1 P2) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "07 EB RecHit max energy",
-  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_energyMax", 'description': "Reconstructed hits max energy in the barrel. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "08 EE RecHit max energy",
-  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEP_energyMax", 'description': "Reconstructed hits max energy in the endcaps. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEM_energyMax", 'description': "Reconstructed hits max energy in the endcaps. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "09 Preshower max energy",
-  [{ 'path': "EcalPreshower/ESRecoSummary/recHits_ES_energyMax", 'description': "Preshower rechits max energy. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "10 EB RecHit eta",
-  [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy projection eta", 'description': "Rec hits eta(barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "11 EE RecHit eta",
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE - projection eta", 'description': "Rec hits eta(EE-) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE + projection eta", 'description': "Rec hits eta(EE+) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "12 EB RecHit phi",
-  [{ 'path': "EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy projection phi", 'description': "Rec hits phi(barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "13 EE RecHit phi",
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE - projection phi", 'description': "Rec hits phi(EE-) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE + projection phi", 'description': "Rec hits phi(EE+) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-#Timing : missing in the offline
-ecalvalidationlayout(dqmitems, "14 EB RecHit time",
-  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_time", 'description': "Rec hits time(barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "15 EE RecHit time",
-  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEP_time", 'description': "Rec hits time(EE-) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEM_time", 'description': "Rec hits time(EE+) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEc#alExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "16 Preshower timing",
-  [{ 'path': "EcalPreshower/ESRecoSummary/recHits_ES_time", 'description': "Preshower timing. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "17 EB RecHit chi2",
-  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_Chi2", 'description': "Reconstructed hits shape chi2. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "18 EE RecHit chi2",
-  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEP_Chi2", 'description': "Reconstructed hits shape chi2. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EEM_Chi2", 'description': "Reconstructed hits shape chi2. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "19 EB RecHit swiss cross",
-  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_E1oE4", 'description': "Reconstructed hits swiss cross. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "20 RecHitsFlags",
-  [{ 'path': "EcalBarrel/EBRecoSummary/recHits_EB_recoFlag", 'description': "Reconstructed hits flags. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/recHits_EE_recoFlag", 'description': "Reconstructed hits flags. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "21 reduced RecHitsFlags",
-  [{ 'path': "EcalBarrel/EBRecoSummary/redRecHits_EB_recoFlag", 'description': "Reconstructed hits flags (reduced collection). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/redRecHits_EE_recoFlag", 'description': "Reconstructed hits flags (reduced collection). <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "22 Basic Clusters Hits Flags",
-  [{ 'path': "EcalBarrel/EBRecoSummary/basicClusters_recHits_EB_recoFlag", 'description': "Flags of hits associated to basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/basicClusters_recHits_EE_recoFlag", 'description': "Flags of hits associated to basic clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "23 Number of basic clusters",
-  [{ 'path': "EcalBarrel/EBClusterTask/EBCLT BC number", 'description': "Number of Basic Clusters (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEClusterTask/EECLT BC number", 'description': "Number of Basic Clusters (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "24 Number of super clusters",
-  [{ 'path': "EcalBarrel/EBClusterTask/EBCLT SC number", 'description': "Number of Super Clusters (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEClusterTask/EECLT SC number", 'description': "Number of Super Clusters (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "25 Super Cluster energy",
-  [{ 'path': "EcalBarrel/EBClusterTask/EBCLT SC energy", 'description': "Energy of Super Clusters (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEClusterTask/EECLT SC energy", 'description': "Energy of Super Clusters (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "26 Super Clusters Eta",
-  [{ 'path': "EcalBarrel/EBRecoSummary/superClusters_eta", 'description': "Super Clusters eta (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/superClusters_eta", 'description': "Super Clusters eta (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "27 Super Clusters Phi",
-  [{ 'path': "EcalBarrel/EBRecoSummary/superClusters_EB_phi", 'description': "Super Clusters phi (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/superClusters_EE_phi", 'description': "Super Clusters phi (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "28 Number of crystals per super cluster",
-  [{ 'path': "EcalBarrel/EBClusterTask/EBCLT SC size (crystal)", 'description': "Number of crystals per SC (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EEClusterTask/EECLT SC size (crystal)", 'description': "Number of crystals per SC (endcaps) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "29 EB Super Clusters nBC",
-  [{ 'path': "EcalBarrel/EBRecoSummary/superClusters_EB_nBC", 'description': "Number of basic clusters in Super Clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "30 EE Super Clusters nBC",
-  [{ 'path': "EcalEndcap/EERecoSummary/superClusters_EEP_nBC", 'description': "Number of basic clusters in Super Clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-  [{ 'path': "EcalEndcap/EERecoSummary/superClusters_EEM_nBC", 'description': "Number of basic clusters in Super Clusters. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "31 Super cluster seed swiss cross",
-  [{ 'path': "EcalBarrel/EBRecoSummary/superClusters_EB_E1oE4", 'description': "SC seed swiss cross (barrel) <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
-
-ecalvalidationlayout(dqmitems, "32 Preshower planes energy",
-  [{ 'path': "EcalPreshower/ESRecoSummary/esClusters_energy_plane1", 'description': "Preshower rechits energy on plane 1. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" },
-   { 'path': "EcalPreshower/ESRecoSummary/esClusters_energy_plane2", 'description': "Preshower rechits energy on plane 2. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }],
-   [{ 'path': "EcalPreshower/ESRecoSummary/esClusters_energy_ratio", 'description': "Preshower rechits energy on plane1/plane2. <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftEcalExpert>DQMShiftEcalExpert</a>" }])
+ecallayout(dqmitems, 'DataLayouts/Ecal/00 Number of Ecal RecHits',[{'path': 'EcalBarrel/EBOccupancyTask/EBOT number of filtered rec hits in event', 'description': 'Occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}],[{'path': 'EcalEndcap/EEOccupancyTask/EEOT number of filtered rec hits in event', 'description': 'Occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/01 Number of ES RecHits',[{'path': 'EcalPreshower/ESOccupancyTask/ES Num of RecHits Z 1 P 1'}, {'path': 'EcalPreshower/ESOccupancyTask/ES Num of RecHits Z -1 P 1'}],[{'path': 'EcalPreshower/ESOccupancyTask/ES Num of RecHits Z 1 P 2'}, {'path': 'EcalPreshower/ESOccupancyTask/ES Num of RecHits Z -1 P 2'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/02 Ecal RecHit Occupancy EB',[{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy', 'description': 'Occupancy for rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}],[{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy projection eta', 'description': 'Projection of the occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}, {'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy projection phi', 'description': 'Projection of the occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/03 Ecal RecHit Occupancy EE -',[{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE -', 'description': 'Occupancy for rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}],[{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE - projection eta', 'description': 'Projection of the occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}, {'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE - projection phi', 'description': 'Projection of the occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/04 Ecal RecHit Occupancy EE +',[{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE +', 'description': 'Occupancy for rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}],[{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE + projection eta', 'description': 'Projection of the occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}, {'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE + projection phi', 'description': 'Projection of the occupancy of rec hits with GOOD reconstruction flag and E > 0.5 GeV.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/05 Ecal Spectrum',[{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit spectrum', 'description': 'Rec hit energy distribution.'}],[{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE -', 'description': 'Rec hit energy distribution.'}, {'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit spectrum EE +', 'description': 'Rec hit energy distribution.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/06 ES Spectrum',[{'path': 'EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 1'}, {'path': 'EcalPreshower/ESOccupancyTask/ES RecHit Energy Z -1 P 1'}],[{'path': 'EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 2'}, {'path': 'EcalPreshower/ESOccupancyTask/ES RecHit Energy Z -1 P 2'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/07 Ecal Max Energy',[{'path': 'EcalBarrel/EBRecoSummary/recHits_EB_energyMax'}],[{'path': 'EcalEndcap/EERecoSummary/recHits_EEP_energyMax'}, {'path': 'EcalEndcap/EERecoSummary/recHits_EEM_energyMax'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/08 ES Max Energy',[{'path': 'EcalPreshower/ESRecoSummary/recHits_ES_energyMax'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/09 Ecal Timing',[{'path': 'EcalBarrel/EBRecoSummary/recHits_EB_time'}],[{'path': 'EcalEndcap/EERecoSummary/recHits_EEP_time'}, {'path': 'EcalEndcap/EERecoSummary/recHits_EEM_time'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/10 ES Timing',[{'path': 'EcalPreshower/ESRecoSummary/recHits_ES_time'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/11 Ecal Chi2',[{'path': 'EcalBarrel/EBRecoSummary/recHits_EB_Chi2'}],[{'path': 'EcalEndcap/EERecoSummary/recHits_EEP_Chi2'}, {'path': 'EcalEndcap/EERecoSummary/recHits_EEM_Chi2'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/12 EB SwissCross',[{'path': 'EcalBarrel/EBRecoSummary/recHits_EB_E1oE4'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/13 RecHit Flags',[{'path': 'EcalBarrel/EBRecoSummary/recHits_EB_recoFlag'}],[{'path': 'EcalEndcap/EERecoSummary/recHits_EE_recoFlag'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/14 ReducedRecHit Flags',[{'path': 'EcalBarrel/EBRecoSummary/redRecHits_EB_recoFlag'}],[{'path': 'EcalEndcap/EERecoSummary/redRecHits_EE_recoFlag'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/15 Basic Cluster RecHit Flags',[{'path': 'EcalBarrel/EBRecoSummary/basicClusters_recHits_EB_recoFlag'}],[{'path': 'EcalEndcap/EERecoSummary/basicClusters_recHits_EE_recoFlag'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/16 Number of Basic Clusters',[{'path': 'EcalBarrel/EBClusterTask/EBCLT BC number', 'description': 'Distribution of the number of basic clusters per event.'}],[{'path': 'EcalEndcap/EEClusterTask/EECLT BC number', 'description': 'Distribution of the number of basic clusters per event.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/17 Number of Super Clusters',[{'path': 'EcalBarrel/EBClusterTask/EBCLT SC number', 'description': 'Distribution of the number of super clusters per event in EB/EE.'}],[{'path': 'EcalEndcap/EEClusterTask/EECLT SC number', 'description': 'Distribution of the number of super clusters per event in EB/EE.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/18 Super Cluster Energy',[{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy', 'description': 'Super cluster energy distribution.'}],[{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy', 'description': 'Super cluster energy distribution.'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/19 Super Cluster Occupancy Eta',[{'path': 'EcalBarrel/EBRecoSummary/superClusters_EB_eta'}],[{'path': 'EcalEndcap/EERecoSummary/superClusters_EE_eta'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/20 Super Cluster Occupancy Phi',[{'path': 'EcalBarrel/EBRecoSummary/superClusters_EB_phi'}],[{'path': 'EcalEndcap/EERecoSummary/superClusters_EE_phi'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/21 Super Cluster Size (Crystals)',[{'path': 'EcalBarrel/EBClusterTask/EBCLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}],[{'path': 'EcalEndcap/EEClusterTask/EECLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/22 Super Cluster Size (Basic Clusters)',[{'path': 'EcalBarrel/EBClusterTask/EBCLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'}],[{'path': 'EcalEndcap/EEClusterTask/EECLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/23 Super Cluster Seed SwissCross',[{'path': 'EcalBarrel/EBRecoSummary/superClusters_EB_E1oE4'}])
+ecallayout(dqmitems, 'DataLayouts/Ecal/24 Preshower Planes Energy',[{'path': 'EcalPreshower/ESRecoSummary/esClusters_energy_plane1'}, {'path': 'EcalPreshower/ESRecoSummary/esClusters_energy_plane2'}],[{'path': 'EcalPreshower/ESRecoSummary/esClusters_energy_ratio'}])
