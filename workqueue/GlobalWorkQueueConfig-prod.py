@@ -17,7 +17,6 @@ wmstatDBName = 'wmstats'
 HOST = "cmsweb.cern.ch"
 REQMGR = "https://cmsweb.cern.ch/reqmgr/reqMgr"
 COUCH = "https://cmsweb.cern.ch/couchdb"
-TEAMS = 'dataops,dmwm,integration,processing,production,relval,analysis,t1,t1_highprio,mc,mc_highprio'
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 
 
@@ -30,7 +29,6 @@ config = Configuration()
 
 config.section_("Agent")
 config.Agent.hostName = HOST
-config.Agent.teamName = TEAMS
 
 config.component_("WorkQueueManager")
 config.WorkQueueManager.namespace = "WMComponent.WorkQueueManager.WorkQueueManager"
