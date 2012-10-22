@@ -4,6 +4,13 @@ deploy_dqmgui_deps()
 {
   deploy backend
   [ $variant == online ] && deploy admin default || deploy admin $variant
+  case $variant in
+    bare | online )
+      ;;
+    * )
+      deploy wmcore-auth
+      ;;
+  esac
 }
 
 deploy_dqmgui_prep()
