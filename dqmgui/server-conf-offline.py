@@ -25,12 +25,12 @@ server.serviceName = 'Offline'
 server.plugin('render', "%s/style/*.cc" % CONFIGDIR)
 server.extend('DQMRenderLink', server.pathOfPlugin('render'))
 server.extend('DQMToJSON')
-server.extend('DQMFileAccess', None, "%s/uploads" % STATEDIR,
+server.extend('DQMFileAccess', "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0],
+              "%s/uploads" % STATEDIR,
               { "ROOT": "%s/data" % STATEDIR,
                 "ZIP": "%s/zipped" % STATEDIR })
 server.extend('DQMLayoutAccess', None, STATEDIR,
-              ['/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=lilopera/CN=692665/CN=Luis Ignacio Lopera Gonzalez',
-               '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere',
+              ['/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere',
                '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=erosales/CN=725205/CN=Edgar Eduardo Rosales Rosero',
                '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=batinkov/CN=739757/CN=Atanas Ivanov Batinkov' ])
 server.source('DQMUnknown')
