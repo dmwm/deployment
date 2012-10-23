@@ -17,7 +17,6 @@ wmstatDBName = 'wmstats'
 HOST = "cmsweb-testbed.cern.ch"
 REQMGR = "https://cmsweb-testbed.cern.ch/reqmgr/reqMgr"
 COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
-TEAMS = 'testbed-dataops,testbed-dmwm,testbed-integration,testbed-processing,testbed-production,testbed-relval,testbed-analysis,testbed-t1,testbed-t1_highprio,testbed-mc,testbed-mc_highprio'
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 PHEDEX = "https://cmsweb-testbed.cern.ch/phedex/datasvc/json/prod/"
 
@@ -30,7 +29,6 @@ config = Configuration()
 
 config.section_("Agent")
 config.Agent.hostName = HOST
-config.Agent.teamName = TEAMS
 
 config.component_("WorkQueueManager")
 config.WorkQueueManager.namespace = "WMComponent.WorkQueueManager.WorkQueueManager"

@@ -17,7 +17,6 @@ wmstatDBName = 'wmstats'
 HOST = socket.getfqdn().lower()
 REQMGR = "https://%s/reqmgr/reqMgr" % HOST
 COUCH = "https://%s/couchdb" % HOST
-TEAMS = 'TestTeam'
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 
 
@@ -30,7 +29,6 @@ config = Configuration()
 
 config.section_("Agent")
 config.Agent.hostName = HOST
-config.Agent.teamName = TEAMS
 
 config.component_("WorkQueueManager")
 config.WorkQueueManager.namespace = "WMComponent.WorkQueueManager.WorkQueueManager"
