@@ -19,6 +19,7 @@ REQMGR = "https://cmsweb-testbed.cern.ch/an_reqmgr/reqMgr"
 COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
 #TODO better understand how to handle teams for testbed in the analysis use case
 #TEAMS = 'testbed-dataops,testbed-dmwm,testbed-integration,testbed-processing,testbed-production,testbed-relval,testbed-analysis,testbed-t1,testbed-t1_highprio,testbed-mc,testbed-mc_highprio'
+TEAMS = 'Analysis'
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 PHEDEX = "https://cmsweb-testbed.cern.ch/phedex/datasvc/json/prod/"
 
