@@ -14,10 +14,10 @@
  *      New render plugin for report summary map
  *
  *
- * $Date: 2011/09/09 11:53:43 $
- * $Revision: 1.12 $
+ * $Date: 2012/06/13 11:06:06 $
+ * $Revision: 1.13 $
  *
-*/
+ */
 
 // system include files
 #include <cassert>
@@ -45,7 +45,7 @@ class L1TEMURenderPlugin: public DQMRenderPlugin {
 
 public:
 
-      // determine whether core object is an L1TEMU object
+    // determine whether core object is an L1TEMU object
     virtual bool applies(const VisDQMObject& dqmObj, const VisDQMImgInfo&) {
         if (dqmObj.name.find("L1TEMU/") != std::string::npos) {
 
@@ -53,11 +53,11 @@ public:
             if (dqmObj.name.find("L1TEMU/L1TdeRCT/") != std::string::npos) {
                 return false;
             } else {
-        return true;
+                return true;
             }
         }
 
-      return false;
+        return false;
     }
 
     // pre-draw, separated per histogram type
@@ -68,15 +68,15 @@ public:
 
         if (dynamic_cast<TH2F*> (dqmObj.object)) {
 
-      // object is TH2 histogram
+            // object is TH2 histogram
             preDrawTH2F(canvas, dqmObj);
 
         } else if (dynamic_cast<TH1F*> (dqmObj.object)) {
 
-      // object is TH1 histogram
+            // object is TH1 histogram
             preDrawTH1F(canvas, dqmObj);
 
-      }
+        }
 
     }
 
@@ -86,14 +86,14 @@ public:
 
         if (dynamic_cast<TH2F*> (dqmObj.object)) {
 
-      // object is TH2 histogram
+            // object is TH2 histogram
             postDrawTH2F(canvas, dqmObj);
 
         } else if (dynamic_cast<TH1F*> (dqmObj.object)) {
 
-      // object is TH1 histogram
+            // object is TH1 histogram
             postDrawTH1F(canvas, dqmObj);
-      }
+        }
     }
 
 private:
@@ -114,48 +114,44 @@ private:
         TH2F* obj = dynamic_cast<TH2F*> (dqmObj.object);
 
         // checks that object indeed exists
-      assert( obj );
+        assert(obj);
 
         // specific rendering of L1TEMU reportSummaryMap, using
         // dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(obj)
 
         if (dqmObj.name.find("reportSummaryMap") != std::string::npos) {
 
-        obj->SetStats( kFALSE );
+            obj->SetStats(kFALSE);
             dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(obj);
 
-            obj->GetXaxis()->SetBinLabel(1, "L1 systems");
-            obj->GetXaxis()->SetBinLabel(2, "L1 objects");
-	obj->GetXaxis()->SetLabelSize(0.1);
+            obj->GetXaxis()->SetLabelSize(0.1);
 
-            obj->SetTitle("L1 Emulator vs Data (L1TEMU) Report Summary Map");
+            obj->GetXaxis()->CenterLabels();
+            obj->GetYaxis()->CenterLabels();
 
-        obj->GetXaxis()->CenterLabels();
-        obj->GetYaxis()->CenterLabels();
-
-        return;
-      }
+            return;
+        }
 
         // pre-draw rendering of other L1TEMU TH2F histograms
 
-      gStyle->SetCanvasBorderMode( 0 );
-      gStyle->SetPadBorderMode( 0 );
-      gStyle->SetPadBorderSize( 0 );
+        gStyle->SetCanvasBorderMode(0);
+        gStyle->SetPadBorderMode(0);
+        gStyle->SetPadBorderSize(0);
 
-      //gStyle->SetOptStat( 0 );
-      //obj->SetStats( kFALSE );
+        //gStyle->SetOptStat( 0 );
+        //obj->SetStats( kFALSE );
 
         // label format
-      TAxis* xa = obj->GetXaxis();
-      TAxis* ya = obj->GetYaxis();
+        TAxis* xa = obj->GetXaxis();
+        TAxis* ya = obj->GetYaxis();
 
-      xa->SetTitleOffset(0.7);
-      xa->SetTitleSize(0.05);
-      xa->SetLabelSize(0.04);
+        xa->SetTitleOffset(0.7);
+        xa->SetTitleSize(0.05);
+        xa->SetLabelSize(0.04);
 
-      ya->SetTitleOffset(0.7);
-      ya->SetTitleSize(0.05);
-      ya->SetLabelSize(0.04);
+        ya->SetTitleOffset(0.7);
+        ya->SetTitleSize(0.05);
+        ya->SetLabelSize(0.04);
 
         // set 2D histogram drawing option to "colz"
         //  "COL"
@@ -166,8 +162,8 @@ private:
         //  "COLZ" = "COL" +
         //    The color palette is also drawn.
 
-      gStyle->SetPalette(1);
-      obj->SetOption("colz");
+        gStyle->SetPalette(1);
+        obj->SetOption("colz");
     }
 
     void postDrawTH1F(TCanvas*, const VisDQMObject &) {
@@ -181,12 +177,12 @@ private:
         TH2F* obj = dynamic_cast<TH2F*> (dqmObj.object);
 
         // checks that object indeed exists
-      assert( obj );
+        assert(obj);
 
         if (dqmObj.name.find("reportSummaryMap") != std::string::npos) {
 
-      TLine* l_line = new TLine();
-      TText* t_text = new TText();
+            TLine* l_line = new TLine();
+            TText* t_text = new TText();
 
             t_text->DrawText(2.25, 14.3, "Mu");
             t_text->DrawText(2.25, 13.3, "NoIsoEG");
@@ -227,19 +223,19 @@ private:
             l_line->DrawLine(1, 2, 3, 2);
             l_line->DrawLine(1, 3, 3, 3);
             l_line->DrawLine(1, 4, 3, 4);
-	l_line->DrawLine(1,5,3,5);
-	l_line->DrawLine(1,6,3,6);
-	l_line->DrawLine(1,7,3,7);
-	l_line->DrawLine(1,8,3,8);
-	l_line->DrawLine(1,9,3,9);
-	l_line->DrawLine(1,10,3,10);
-	l_line->DrawLine(1,11,3,11);
+            l_line->DrawLine(1, 5, 3, 5);
+            l_line->DrawLine(1, 6, 3, 6);
+            l_line->DrawLine(1, 7, 3, 7);
+            l_line->DrawLine(1, 8, 3, 8);
+            l_line->DrawLine(1, 9, 3, 9);
+            l_line->DrawLine(1, 10, 3, 10);
+            l_line->DrawLine(1, 11, 3, 11);
             l_line->DrawLine(1, 12, 3, 12);
             l_line->DrawLine(2, 13, 3, 13);
             l_line->DrawLine(2, 14, 3, 14);
 
-	return;
-      }
+            return;
+        }
 
         // post-draw rendering of other L1TEMU TH2F histograms
     }
