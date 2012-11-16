@@ -1,0 +1,65 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_t0wmadatasvc_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+}
+
+deploy_t0wmadatasvc_prep()
+{
+  mkproj
+}
+
+deploy_t0wmadatasvc_sw()
+{
+  deploy_pkg -a t0wmadatasvc/t0auth.py comp cms+t0wmadatasvc
+}
+
+deploy_t0wmadatasvc_post()
+{
+  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}
+
+deploy_t0wmadatasvc_auth()
+{
+  case $1 in
+    */t0auth*.py)
+      cat <<- \EOF
+import cx_Oracle as DB
+import socket
+
+fqdn = socket.getfqdn().lower()
+dbparam = {
+     'prod': { '.title': 'Production',
+               '.order': 0,
+
+		    '*': { 'type': DB,
+		             'trace': False,
+		             'schema': "cms_t0wmadatasvc",
+		             'clientid': "t0wmadatasvc-web@%s" % fqdn,
+		             'liveness': "select sysdate from dual",
+		             'user': "cms_t0wmadatasvc_reader_fixme",
+                   'password': "FIXME",
+                   'dsn': "cmsr_fixme",
+                   'timeout': 300 }
+             },
+
+     'replay':  { '.title': 'Dev',
+               '.order': 1,
+
+          '*': { 'type': DB,
+                   'trace': True,
+                   'schema': "cms_t0wmadatasvc",
+                   'clientid': "t0wmadatasvc-web@%s" % fqdn,
+                   'liveness': "select sysdate from dual",
+                   'user': "cms_t0wmadatasvc_reader_fixme",
+                   'password': "FIXME",
+                   'dsn': "devdb11_fixme",
+                   'timeout': 300 }
+             }
+}
+EOF
+    ;;
+  esac
+}

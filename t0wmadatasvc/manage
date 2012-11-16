@@ -1,0 +1,102 @@
+#!/bin/sh
+
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/T0WMADataSvc
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+CFGFILE=$CFGDIR/config.py
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
+
+# Start service conditionally on crond restart.
+sysboot()
+{
+  wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/t0wmadatasvc-%Y%m%d.log 86400" $CFGFILE
+}
+
+# Start the service.
+start()
+{
+  echo "starting $ME"
+  wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/t0wmadatasvc-%Y%m%d.log 86400" $CFGFILE
+}
+
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
+  wmc-httpd -k -d $STATEDIR $CFGFILE
+}
+
+# Check if the server is running.
+status()
+{
+  wmc-httpd -s -d $STATEDIR $CFGFILE
+}
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    sysboot
+    ;;
+
+  start | restart )
+    check "$2"
+    stop
+    start
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$2"
+    stop
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$T0WMADATASVC_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
