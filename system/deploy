@@ -107,7 +107,7 @@ system_groups_and_accounts()
             T:100034:_workqueue T:100035:_configcache T:100037:_t0datasvc  \
             T:100038:_reqmon    T:100039:_crabserver  T:100040:_crabcache  \
             T:100041:_dmwmmon   T:100042:_an_reqmgr   T:100043:_an_workqueue\
-            T:100044:_an_reqmon T:100045:_t0wmadatasvc; do
+            T:100044:_an_reqmon T:100045:_t0wmadatasvc T:100046:_dbsmigration; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -140,6 +140,7 @@ system_groups_and_accounts()
   add_local_user 100043 _an_workqueue ,_config "WorkQueue App for Analysis"
   add_local_user 100044 _an_reqmon    ,_config "ReqMon App for Analysis"
   add_local_user 100045 _t0wmadatasvc ,_config "T0 WMAgent Data Service App"
+  add_local_user 100046 _dbsmigration ,_config "DBS Migration Server"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
@@ -295,7 +296,7 @@ deploy_system_post()
                _dqmgui _filemover _overview _phedex _sitedb _t0mon \
                _mongodb _reqmgr _workqueue _configcache _t0datasvc _reqmon \
                _crabserver _crabcache _dmwmmon _an_reqmgr _an_workqueue \
-               _an_reqmon _t0wmadatasvc; do
+               _an_reqmon _t0wmadatasvc _dbsmigration; do
         case " $G " in *" $g "* ) ;; * ) note "ERROR: no $g group"; exit 1;; esac
       done
 
