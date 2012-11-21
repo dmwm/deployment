@@ -17,7 +17,7 @@ config = Configuration()
 config.component_('web')
 config.web.host = "127.0.0.1"
 config.web.port = 8251
-config.web.log_screen = False
+config.web.log_screen = True
 config.web.thread_pool = 10
 
 config.component_('dbsmigration')
