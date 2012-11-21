@@ -39,6 +39,11 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+#set-up x509 environment
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
+
 # Start service conditionally on crond restart.
 sysboot()
 {
