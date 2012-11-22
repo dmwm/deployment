@@ -1,0 +1,38 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_dbsmigration_variants="default prod preprod dev"
+
+deploy_dbsmigration_deps()
+{
+  deploy admin
+  deploy backend
+  deploy wmcore-auth
+}
+
+deploy_dbsmigration_prep()
+{
+  mkproj
+  mkproxy
+}
+
+deploy_dbsmigration_sw()
+{
+  deploy_pkg -a dbs/DBSSecrets.py -l dbsmigration comp cms+dbs3-migration
+  cp -p $project_config/Migration-${variant}.py $project_config/Migration.py
+}
+
+deploy_dbsmigration_post()
+{
+  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}
+
+deploy_dbsmigration_auth()
+{
+  echo "db = {'connectUrl' : {"
+  echo "      'reader' : 'oracle://reader:secret@instance',"
+  echo "      'writer' : 'oracle://writer:secret@instance'"
+  echo "       },"
+  echo "      'databaseOwner' : 'owner'"
+  echo "     }"
+}

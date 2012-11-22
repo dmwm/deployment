@@ -32,7 +32,7 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-CFGFILE=$CFGDIR/DBS.py
+CFGFILE=$CFGDIR/Migration.py
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
@@ -44,13 +44,10 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 
-# Necessary to evaluate the configuration
-export DBS3_VERSION
-
 # Start service conditionally on crond restart.
 sysboot()
 {
-  if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGFILE" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "Migration.py.*[=]$CFGFILE" | wc -l) = 0 ]; then
     start
   fi
 }
@@ -60,15 +57,15 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python -u $DBS3_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$CFGFILE \
-    </dev/null 2>&1 | rotatelogs $LOGDIR/dbs-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  python -u $DBS3_MIGRATION_ROOT/lib/python*/site-packages/dbs/components/migration/StartUp.py --config=$CFGFILE \
+    </dev/null 2>&1 | rotatelogs $LOGDIR/dbsmigration-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.
 stop()
 {
   echo "stopping $ME"
-  for PID in $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGFILE" | sort -rn); do
+  for PID in $(pgrep -u $(id -u) -f "StartUp.py.*[=]$CFGFILE" | sort -rn); do
     PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
              perl -n -e 'print join(" ", (split)[0..6])')
     echo "Stopping $PID ($PSLINE):"
@@ -79,7 +76,7 @@ stop()
 # Check if the server is running.
 status()
 {
-  pid=$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGFILE" | sort -n)
+  pid=$(pgrep -u $(id -u) -f "StartUp.py.*[=]$CFGFILE" | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
@@ -123,7 +120,7 @@ case ${1:-status} in
     ;;
 
   version )
-    echo "$DBS3_VERSION"
+    echo "$DBS3_MIGRATION_VERSION"
     ;;
 
   * )
