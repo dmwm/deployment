@@ -21,6 +21,6 @@ errorlayout(dqmitems, "05 - Hcal DQM BcN Mismatch",
 errorlayout(dqmitems, "06 - BeamSpot missing from online",
  [{ 'path': "BeamMonitor/BeamSpotProblemMonitor/FitFromScalars/BeamSpotError",
     'description': "This plots shows if beamspot is running OK or have problems. If there is any filled entries then it will give alarm. This plot is filled when for more than 10 LSs continuously there is problem. The alarm is put off after 2 LSs. This alarm exclude no collision OR tracker OFF conditions.", 'draw': { 'withref': "no" }}])
-errorlayout(dqmitems, "07 - DataPresentInLS",
+errorlayout(dqmitems, "07 - SiStrip DataPresentInLS",
  [{ 'path': "SiStrip/MechanicalView/DataPresentInLS",
-    'description': "Monitoring of SiStrip activity as a function of LS. Audio alarm is fired during stable beams if there are no digis in either SiStrip partition for some time (red box). In case of alarm, please verify with the shift leader that SiStrip HV is ON. If HV is ON during alarm, call Tracker DOC at 165503. For more details, please refer to <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "no" }}])
+    'description': "Monitoring of SiStrip activity in each LS. Audio alarm is fired during stable beams if there are no digis in either SiStrip partition for some time (red box). In case of alarm, please verify with the shift leader that SiStrip HV is ON. If HV is ON during alarm, call Tracker DOC at 165503. For more details, please refer to <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "no" }}])
