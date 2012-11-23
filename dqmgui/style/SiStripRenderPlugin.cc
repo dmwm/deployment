@@ -42,6 +42,9 @@ public:
       if( o.name.find( "/TrackParameters/" ) != std::string::npos )
         return true;
 
+      if( o.name.find( "/MessageLog/" ) != std::string::npos )
+        return true;
+
       if( o.name.find( "/BaselineValidator/" ) != std::string::npos )
         return true;
 
@@ -234,6 +237,20 @@ private:
 	  obj->SetOption("colz");
 	return;
 	}
+      if( o.name.find( "ErrorsVsModules" )  != std::string::npos)
+	{
+	  gStyle->SetPalette(1,0);
+	  gStyle->SetOptStat(10);
+	  obj->SetOption("colz");
+
+	  xa->SetTitleOffset(1.5);
+	  ya->SetTitleOffset(1.5);
+
+	  gPad->SetLeftMargin(0.2);
+	  gPad->SetBottomMargin( 0.2 );
+
+	  return;
+	}
 
       return;
     }
@@ -303,6 +320,20 @@ private:
         obj->SetMinimum(-1.0);
         return;
       }
+
+      if ( o.name.find( "GoodTrackPhi_" ) != std::string::npos or
+	   o.name.find( "GoodTrackEta_" ) != std::string::npos or
+	   o.name.find( "SeedPhi_" )  != std::string::npos
+	   ) {
+	
+	size_t nbins        = obj->GetNbinsX();
+	double entries      = obj->GetEntries();
+	double meanbinentry = entries/double(nbins);
+	double ymax = obj->GetMaximum();
+	obj->SetMinimum(ymax-meanbinentry);
+	
+      }
+      
     }
 
   void preDrawTProfile2D( TCanvas *, const VisDQMObject &o )
@@ -487,20 +518,6 @@ private:
 	 name.find( "NumberOfRecHitsLostPerTrack_") != std::string::npos
 	 ) {
       if (obj->GetEntries() > 10.0) c->SetLogy(1);
-    }
-
-    if ( name.find( "GoodTrackPhi_" ) != std::string::npos or
-	 name.find( "GoodTrackEta_" ) != std::string::npos or
-	 name.find( "SeedPhi_" )  != std::string::npos
-	 ) {
-
-      size_t nbins        = obj->GetNbinsX();
-      double entries      = obj->GetEntries();
-      double meanbinentry = entries/double(nbins);
-      double ymax = obj->GetMaximum();
-
-      obj->SetMinimum(ymax-meanbinentry);
-
     }
 
     TText tt;

@@ -13,11 +13,18 @@
 #include "DQM/DQMRenderPlugin.h"
 #include "utils.h"
 
-#include "TClass.h"
+#include <iostream>
+
 #include "TObjArray.h"
 #include "TString.h"
 #include "TPRegexp.h"
+#include "TH1F.h"
+#include "TH1D.h"
+#include "TH2F.h"
+#include "TH2D.h"
 #include "TH2C.h"
+#include "TProfile.h"
+#include "TProfile2D.h"
 #include "TStyle.h"
 #include "TCanvas.h"
 #include "TGaxis.h"
@@ -60,8 +67,6 @@ private :
   std::vector<int> accumPalette;
   std::vector<int> timingPalette;
   std::vector<int> pedestalPalette;
-
-  const TClass *th1, *th1f, *th1d, *th2, *th2f, *th2d, *tprofile, *tprofile2d;
 
   TGaxis* timingAxis;
   TGaxis* ebpSMPhiAxis[18];
@@ -141,14 +146,6 @@ EcalRenderPlugin::EcalRenderPlugin() :
   accumPalette(),
   timingPalette(),
   pedestalPalette(),
-  th1(TClass::GetClass("TH1")),
-  th1f(TClass::GetClass("TH1F")),
-  th1d(TClass::GetClass("TH1D")),
-  th2(TClass::GetClass("TH2")),
-  th2f(TClass::GetClass("TH2F")),
-  th2d(TClass::GetClass("TH2D")),
-  tprofile(TClass::GetClass("TProfile")),
-  tprofile2d(TClass::GetClass("TProfile2D")),
   timingAxis(0)
 {
   for(int i(0); i < 330; ++i)
@@ -642,7 +639,7 @@ inline
 void
 EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const VisDQMImgInfo& imgInfo, VisDQMRenderInfo& renderInfo)
 {
-  if(!dqmObject.object || !dqmObject.object->InheritsFrom(th1)) return;
+  if(!dqmObject.object || !dqmObject.object->InheritsFrom(TH1::Class())) return;
   TH1* obj(static_cast<TH1*>(dqmObject.object));
 
   canvas->cd();
@@ -673,7 +670,7 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
     obj->GetXaxis()->LabelsOption("v");
   }
 
-  bool isTH2Derived(obj->InheritsFrom(th2));
+  bool isTH2Derived(obj->InheritsFrom(TH2::Class()));
   if(isTH2Derived){
     gStyle->SetOptStat(0);
     gPad->SetLogy(false);
@@ -685,11 +682,11 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
     renderInfo.drawOptions = "colz";
   }
 
-  if(obj->IsA() == tprofile2d){
+  if(obj->IsA() == TProfile2D::Class()){
     obj->GetZaxis()->SetLimits(0., obj->GetMaximum());
     gStyle->SetPalette(1);
   }
-  else if(obj->IsA() == th2f || obj->IsA() == th2d){
+  else if(obj->IsA() == TH2F::Class() || obj->IsA() == TH2D::Class()){
     if(TString(obj->GetZaxis()->GetTitle()).Length() != 0){
       gStyle->SetPalette(1);
       obj->GetZaxis()->SetRangeUser(0., obj->GetMaximum());
@@ -708,13 +705,13 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
       gStyle->SetPalette(accumPalette.size(), &(accumPalette[0]));
     }
   }
-  else if(obj->IsA() == tprofile){
+  else if(obj->IsA() == TProfile::Class()){
     gStyle->SetOptStat("e");
     gPad->SetLogy(false);
     obj->SetMarkerStyle(8);
     renderInfo.drawOptions = "P";
   }
-  else if(obj->IsA() == th1f || obj->IsA() == th1d){
+  else if(obj->IsA() == TH1F::Class() || obj->IsA() == TH1D::Class()){
     gStyle->SetOptStat("ourme");
 
     bool isProjection(fullpath.Contains(" eta") || fullpath.Contains(" phi"));
@@ -836,7 +833,7 @@ inline
 void
 EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const VisDQMImgInfo& imgInfo)
 {
-  if(!dqmObject.object || !dqmObject.object->InheritsFrom(th1)) return;
+  if(!dqmObject.object || !dqmObject.object->InheritsFrom(TH1::Class())) return;
   TH1* obj(static_cast<TH1*>(dqmObject.object));
 
   canvas->cd();
@@ -856,7 +853,7 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
   bool isEB(fullpath.Contains("EcalBarrel"));
 
   bool isNewStyle(obj->TestBit(0x00f80000));
-  bool isTH2Derived(obj->InheritsFrom(th2));
+  bool isTH2Derived(obj->InheritsFrom(TH2::Class()));
   bool isMap(isNewStyle ? obj->TestBit(0x00080000) : isTH2Derived);
 
   if(isMap){
@@ -988,6 +985,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
   if(!fullpath.Contains("shape") &&
      !fullpath.Contains("Timing") &&
      !fullpath.Contains("Pedestal") &&
+     !fullpath.Contains("pedestal") &&
      !fullpath.Contains("event size") &&
      !fullpath.Contains("Trigger Primitives") &&
      !fullpath.Contains("Cluster")) return;
@@ -1010,9 +1008,12 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     applyDefaults = false;
   }
   else if(TPRegexp("E[BE]Pedestal(|Online)Task/Gain[0-9]+/E[BE]PO?T pedestal E[BE][+-][0-1][0-9] G[0-9]+").MatchB(fullpath)){
-    obj->SetMinimum(160.);
-    obj->SetMaximum(240.);
+    obj->GetZaxis()->SetRangeUser(160., 240.);
     gStyle->SetPalette(pedestalPalette.size(), &(pedestalPalette[0]));
+  }
+  else if(TPRegexp("E[BE]SummaryClient/E[BE]POT (|EE [+-] )pedestal G12 RMS map").MatchB(fullpath) ||
+          TPRegexp("E[BE]PedestalOnlineClient/E[BE]POT pedestal rms map G12 E[BE][+-][0-1][0-9]").MatchB(fullpath)){
+    obj->GetZaxis()->SetRangeUser(0., 5.);
   }
   else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT event size vs DCC").MatchB(fullpath)){
     gPad->SetLogy(true);
@@ -1027,14 +1028,10 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     gStyle->SetPalette(tpTimingPalette.size(), &(tpTimingPalette[0]));
   }
   else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing (map(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath)){
-    if(isNewStyle){
-      obj->SetMinimum(-5.);
-      obj->SetMaximum(5.);
-    }
-    else{
-      obj->SetMinimum(45.);
-      obj->SetMaximum(55.);
-    }
+    if(isNewStyle)
+      obj->GetZaxis()->SetRangeUser(-5., 5.);
+    else
+      obj->GetZaxis()->SetRangeUser(45., 55.);
     gStyle->SetPalette(timingPalette.size(), &(timingPalette[0]));
   }
   else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE]+ vs E[BE]-").MatchB(fullpath)){
@@ -1055,10 +1052,8 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
 
     applyDefaults = false;
   }
-  else if(TPRegexp("E[BE]TimingClient/E[BE]TMT timing projection (eta|phi)(| EE [+-])").MatchB(fullpath)){
-    obj->SetMinimum(-5.);
-    obj->SetMaximum(5.);
-  }
+  else if(TPRegexp("E[BE]TimingClient/E[BE]TMT timing projection (eta|phi)(| EE [+-])").MatchB(fullpath))
+    obj->GetYaxis()->SetRangeUser(-5., 5.);
   else if(TPRegexp("E[BE]ClusterTask/E[BE]CLT SC energy vs seed crystal energy").MatchB(fullpath)){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetGrid(false, false);
@@ -1218,7 +1213,7 @@ EcalRenderPlugin::getPlotType(TH1 const* obj, TString const& fullpath) const
     }
   }
   else{  // old style; need to guess from the name
-    if(obj->InheritsFrom(th2)){
+    if(obj->InheritsFrom(TH2::Class())){
       if(TPRegexp(" E[BE][+-][01][0-9]").MatchB(fullpath)){
         if(fullpath.Contains("MEM") || fullpath.Contains("Mem") || (fullpath.Contains("PN") && !fullpath.Contains("amplitude over PN"))){
           otype = kSMMEM;
@@ -1284,7 +1279,7 @@ EcalRenderPlugin::getPlotType(TH1 const* obj, TString const& fullpath) const
         btype = kCrystal;
       }
     }
-    else if(obj->InheritsFrom(th1)){
+    else if(obj->InheritsFrom(TH1::Class())){
       if(isEB && nbx == 68){
         otype = kEB;
         btype = kSuperCrystal;
