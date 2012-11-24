@@ -53,7 +53,7 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGFILE" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "WebTools.Root.*[=]$CFGFILE" | wc -l) = 0 ]; then
     start
   fi
 }
@@ -63,7 +63,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python -u $REQMGR_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$CFGFILE \
+  python -u -m WMCore.WebTools.Root --ini=$CFGFILE \
     </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
@@ -71,7 +71,7 @@ start()
 stop()
 {
   echo "stopping $ME"
-  for PID in $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGFILE" | sort -rn); do
+  for PID in $(pgrep -u $(id -u) -f "WebTools.Root.*[=]$CFGFILE" | sort -rn); do
     PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
              perl -n -e 'print join(" ", (split)[0..6])')
     echo "Stopping $PID ($PSLINE):"
@@ -82,7 +82,7 @@ stop()
 # Check if the server is running.
 status()
 {
-  pid=$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGFILE" | sort -n)
+  pid=$(pgrep -u $(id -u) -f "WebTools.Root.*[=]$CFGFILE" | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
