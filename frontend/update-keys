@@ -102,7 +102,7 @@ sub restart_servers()
   # make sure server is running before we restart it
   # this script is called from CRON, so it can be unexpected
   # for the frontend to start when you turned it off
-  if (system("sudo $srvdir/etc/httpd status") == 0)
+  if (system("sudo $srvdir/etc/httpd status &> /dev/null") == 0)
   {
     system("sudo $srvdir/etc/httpd graceful");
   }
