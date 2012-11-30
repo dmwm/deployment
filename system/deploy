@@ -202,18 +202,16 @@ system_install_hostcert()
 	 cd /tmp
 	 tmp=$(mktemp -d -t cert-$$-XXXXX)
 	 req=$(hostname -s).csr
-	 der=$(hostname -s).der
 	 cn=/CN=$(hostname -f)
 	 cd $tmp
          note "WARNING: requesting now a new host certificate via ca.cern.ch"
          note "WARNING: you will prompted for your login or grid certificate password"
          note "WARNING: by supplying your password you agree to CERN computing rules"
 	 openssl req -new -subj $cn -out $req -nodes -keyout hostkey.pem
-	 $project_config_src/careq-cern-ch $req $der 1>&11 2>&22
-	 openssl x509 -inform DER -in $der -outform PEM > hostcert.pem
-	 chmod 400 $req $der hostkey.pem
+	 $project_config_src/careq-cern-ch $req hostcert.pem 1>&11 2>&22
+	 chmod 400 $req hostkey.pem
 	 chmod 644 hostcert.pem
-	 mv -f $req $der host{key,cert}.pem $CMS_DEV_ROOT/certs
+	 mv -f $req host{key,cert}.pem $CMS_DEV_ROOT/certs
 	 rm -r $tmp)
 	[ $? = 0 ]
 	;;
