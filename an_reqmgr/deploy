@@ -46,9 +46,6 @@ deploy_an_reqmgr_post()
   echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache" \
        "http://localhost:5984/analysis_reqmgr_config_cache" \
     >> $couchdb_state/stagingarea/an_reqmgr
-  echo "couchapp push $reqmgrapp/data/couchapps/OpsClipboard" \
-       "http://localhost:5984/analysis_ops_clipboard" \
-    >> $couchdb_state/stagingarea/an_reqmgr
   echo "couchapp push $reqmgrapp/data/couchapps/WorkloadSummary" \
        "http://localhost:5984/analysis_workloadsummary" \
     >> $couchdb_state/stagingarea/an_reqmgr
