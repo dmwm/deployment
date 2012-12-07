@@ -96,3 +96,39 @@ security_development_global = security_instances.section_('dev/global')
 security_development_global.params = {}
 security_integration_global = security_instances.section_('int/global')
 security_integration_global.params = {}
+
+active.section_('DBSMigrate')
+active.DBSMigrate.object = 'WMCore.WebTools.RESTApi'
+active.DBSMigrate.section_('model')
+active.DBSMigrate.model.object = 'dbs.web.DBSMigrateModel'
+active.DBSMigrate.section_('formatter')
+active.DBSMigrate.formatter.object = 'WMCore.WebTools.RESTFormatter'
+active.DBSMigrate.section_('database')
+db_instances = active.DBSMigrate.database.section_('instances')
+
+db_production_global = db_instances.section_('prod/global')
+db_production_global.dbowner = dbs3_p1_i2['databaseOwner']
+db_production_global.version = DBSVERSION
+db_production_global.connectUrl = dbs3_p1_i2['connectUrl']['writer']
+db_production_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
+
+db_development_global = db_instances.section_('dev/global')
+db_development_global.dbowner = dbs3_l1_i2['databaseOwner']
+db_development_global.version = DBSVERSION
+db_development_global.connectUrl = dbs3_l1_i2['connectUrl']['writer']
+db_development_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
+
+db_integration_global = db_instances.section_('int/global')
+db_integration_global.dbowner = dbs3_l3_i2['databaseOwner']
+db_integration_global.version = DBSVERSION
+db_integration_global.connectUrl = dbs3_l3_i2['connectUrl']['writer']
+db_integration_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
+
+active.DBSMigrate.section_('security')
+security_instances = active.DBSMigrate.security.section_('instances')
+security_production_global = security_instances.section_('prod/global')
+security_production_global.params = {'dbs' : 'operator', 'dataops' : 'production operator'}
+security_development_global = security_instances.section_('dev/global')
+security_development_global.params = {}
+security_integration_global = security_instances.section_('int/global')
+security_integration_global.params = {}

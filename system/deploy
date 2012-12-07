@@ -107,7 +107,7 @@ system_groups_and_accounts()
             T:100034:_workqueue T:100035:_configcache T:100037:_t0datasvc  \
             T:100038:_reqmon    T:100039:_crabserver  T:100040:_crabcache  \
             T:100041:_dmwmmon   T:100042:_an_reqmgr   T:100043:_an_workqueue\
-            T:100044:_an_reqmon ; do
+            T:100044:_an_reqmon T:100045:_t0wmadatasvc T:100046:_dbsmigration; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -138,7 +138,9 @@ system_groups_and_accounts()
   add_local_user 100041 _dmwmmon     ,_config "DMWMMon App"
   add_local_user 100042 _an_reqmgr   ,_config "ReqMgr App for Analysis"
   add_local_user 100043 _an_workqueue ,_config "WorkQueue App for Analysis"
-  add_local_user 100044 _an_reqmon   ,_config "ReqMon App for Analysis"
+  add_local_user 100044 _an_reqmon    ,_config "ReqMon App for Analysis"
+  add_local_user 100045 _t0wmadatasvc ,_config "T0 WMAgent Data Service App"
+  add_local_user 100046 _dbsmigration ,_config "DBS Migration Server"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
@@ -200,18 +202,16 @@ system_install_hostcert()
 	 cd /tmp
 	 tmp=$(mktemp -d -t cert-$$-XXXXX)
 	 req=$(hostname -s).csr
-	 der=$(hostname -s).der
 	 cn=/CN=$(hostname -f)
 	 cd $tmp
          note "WARNING: requesting now a new host certificate via ca.cern.ch"
          note "WARNING: you will prompted for your login or grid certificate password"
          note "WARNING: by supplying your password you agree to CERN computing rules"
 	 openssl req -new -subj $cn -out $req -nodes -keyout hostkey.pem
-	 $project_config_src/careq-cern-ch $req $der 1>&11 2>&22
-	 openssl x509 -inform DER -in $der -outform PEM > hostcert.pem
-	 chmod 400 $req $der hostkey.pem
+	 $project_config_src/careq-cern-ch $req hostcert.pem 1>&11 2>&22
+	 chmod 400 $req hostkey.pem
 	 chmod 644 hostcert.pem
-	 mv -f $req $der host{key,cert}.pem $CMS_DEV_ROOT/certs
+	 mv -f $req host{key,cert}.pem $CMS_DEV_ROOT/certs
 	 rm -r $tmp)
 	[ $? = 0 ]
 	;;
@@ -294,7 +294,7 @@ deploy_system_post()
                _dqmgui _filemover _overview _phedex _sitedb _t0mon \
                _mongodb _reqmgr _workqueue _configcache _t0datasvc _reqmon \
                _crabserver _crabcache _dmwmmon _an_reqmgr _an_workqueue \
-               _an_reqmon; do
+               _an_reqmon _t0wmadatasvc _dbsmigration; do
         case " $G " in *" $g "* ) ;; * ) note "ERROR: no $g group"; exit 1;; esac
       done
 

@@ -126,31 +126,39 @@ if __name__ == "__main__":
     exit(1)
 
   # Authenticate to CERN SSO.
-  ca_url = "https://ca.cern.ch/ca/HostCertificates/ManageHostCertificates.aspx"
+  ca_url = "https://ca.cern.ch/ca/HostCertificates/RequestHostCertificate.aspx"
   url, form_data, initial_page = sso_auth(ca_url)
 
-  # Send the first request which sets the auth cookie and
-  # Get the host name from the request.
-  req, der = argv[1:]
+  # Unfortunately, ca.cern.ca returns /ca as initial page, so
+  # send a first request to RequestHostCertificate.aspx, for good."
+  url, form_data, initial_page = sso_request(ca_url, form_data)
+
+  # The previous re-sets the authentication cookie, and yields
+  # a form we are meant to re-submit to complete the re-authentication.
+  url, form_data, hostname_page = sso_request(ca_url, form_data)
+
+  # Prepare the cert request and get the host name from it.
+  req, pem = argv[1:]
   host = re.match(r"^subject=/CN=(.*)$",
 		  Popen(["openssl", "req", "-in", req, "-noout", "-subject"], stdout=PIPE)
 		  .communicate()[0]).group(1)
   reqdata = open(req).read()
 
-  # Submit the form with the machine name.
-  form_data['ctl00$ContentPlaceHolder1$txtRequestNonCern'] = host
-  url, form_data, host_req_page = sso_request(ca_url, form_data)
+  # Submit the form with the host name.
+  form_data['ctl00$ctl00$NICEMasterPageBodyContent$BodyContentPlaceHolder$TbHostName'] = host
+  url, form_data, hostreq_page = sso_request(ca_url, form_data)
 
   # Now submit the certificate request.
-  form_data['ctl00$ContentPlaceHolder1$txtCreateCertificateRequest'] = reqdata
-  url, form_data, result_page = sso_request(ca_url, form_data)
+  form_data['ctl00$ctl00$NICEMasterPageBodyContent$BodyContentPlaceHolder$TbCreateCertificateRequest'] = reqdata
+  form_data['ctl00$ctl00$NICEMasterPageBodyContent$BodyContentPlaceHolder$DdlReminders'] = 'Requester'
+  url, form_data, downloadcert_page = sso_request(ca_url, form_data)
 
-  # Find the link for downloading certificate DER file.
-  m = re.search(r'href="(.*?/newcert.aspx\?ReqID=.*?Enc=bin)"', result_page)
-  assert m, "No DER download link at <%s>" % url
-  der_url = urljoin(url, m.group(1).replace("&amp;", "&"))
+  # Find the link for downloading certificate PEM file.
+  m = re.search(r'href="(user.cert\?requestID=.*encoding=b64)"', downloadcert_page)
+  assert m, "No PEM download link at <%s>" % url
+  pem_url = urljoin(url, m.group(1).replace("&amp;", "&"))
 
-  # Download the DER file.
-  data = urlopen(der_url).read()
-  open(der, "w").write(data)
+  # Finally download the PEM file.
+  data = urlopen(pem_url).read()
+  open(pem, "w").write(data)
   exit(0)
