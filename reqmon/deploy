@@ -12,7 +12,6 @@ deploy_reqmon_prep()
 deploy_reqmon_sw()
 {
   deploy_pkg comp cms+reqmon
-  perl -p -i -e 's/__fill_dbname_here__/wmstats/g' $root/current/apps/reqmon/data/couchapps/WMStats/_attachments/js/loader.js
 }
 
 deploy_reqmon_post()
@@ -20,4 +19,6 @@ deploy_reqmon_post()
   # Tell couchdb to push the reqmon app on the next restart
   echo "couchapp push $root/current/apps/reqmon/data/couchapps/WMStats" \
        "http://localhost:5984/wmstats" > $root/state/couchdb/stagingarea/reqmon
+  echo "couchapp push $root/current/apps/reqmon/data/couchapps/WorkloadSummary" \
+       "http://localhost:5984/workloadsummary" > $root/state/couchdb/stagingarea/reqmon
 }
