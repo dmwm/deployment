@@ -84,9 +84,7 @@ deploy_reqmgr_post()
       echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache" \
            "http://localhost:5984/reqmgr_config_cache" \
         >> $couchdb_state/stagingarea/reqmgr
-      echo "couchapp push $reqmgrapp/data/couchapps/OpsClipboard" \
-           "http://localhost:5984/ops_clipboard" \
-        >> $couchdb_state/stagingarea/reqmgr
+      $MIGRATION rm -rf $couchdb_state/database/{\.,}ops_clipboard*
 
       # Setup ReqMgr cronjobs
       (mkcrontab
