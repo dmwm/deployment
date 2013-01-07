@@ -14,24 +14,26 @@ config.web_server.logfile = ''
 config.web_server.port = 8212
 config.web_server.pid = '%s/state/das/das_web_server.pid' % __file__.rsplit('/', 4)[0]
 config.web_server.status_update = 2500
-config.web_server.number_of_workers = 8
-config.web_server.queue_limit = 100
+config.web_server.web_workers = 50
+config.web_server.queue_limit = 1000
+config.web_server.qtype = 'Queue'
 config.web_server.adjust_input = True
 config.web_server.dbs_daemon = True
 config.web_server.dbs_daemon_interval = 600
 config.web_server.dbs_daemon_expire = 3600
 config.web_server.hot_threshold = 3000
 config.web_server.onhold_daemon = True
+config.web_server.services = ['dbs_phedex']
 
 # cache requests configuration
 config.component_('cacherequests')
-config.cacherequests.Admin = 5000
+config.cacherequests.Admin = 50
 config.cacherequests.Unlimited = 10000
 config.cacherequests.ProductionAccess = 5000
 
 # dbs configuration
 config.component_('dbs')
-config.dbs.dbs_instances = ['cms_dbs_prod_global', 'cms_dbs_caf_analysis_01', 'cms_dbs_ph_analysis_01', 'cms_dbs_ph_analysis_02', 'cms_dbs_prod_local_01', 'cms_dbs_prod_local_02', 'cms_dbs_prod_local_03', 'cms_dbs_prod_local_04', 'cms_dbs_prod_local_05', 'cms_dbs_prod_local_06', 'cms_dbs_prod_local_07', 'cms_dbs_prod_local_08', 'cms_dbs_prod_local_09', 'cms_dbs_prod_local_10']
+config.dbs.dbs_instances = ['cms_dbs_prod_global', 'cms_dbs_caf_analysis_01', 'cms_dbs_ph_analysis_01', 'cms_dbs_ph_analysis_02']
 config.dbs.dbs_global_instance = 'cms_dbs_prod_global'
 config.dbs.dbs_global_url = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
 
@@ -80,10 +82,10 @@ config.das.logformat = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 config.das.logfile = ''
 config.das.verbose = 0
 config.das.multitask = True
-config.das.core_workers = 5
-config.das.api_workers = 3
+config.das.core_workers = 50
+config.das.api_workers = 2
 config.das.error_expire = 300
 config.das.emptyset_expire = 5
-config.das.thread_weights = ['dbs:3', 'phedex:3']
+config.das.thread_weights = ['dbs:5', 'phedex:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
 config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','tier0','combined','conddb','reqmgr']

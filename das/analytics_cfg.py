@@ -30,10 +30,10 @@ db_size = 67108864 # 64MB
 #
 # Production tasks
 Task("DatasetHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="dataset.name")
-Task("BlockHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="block.name")
-Task("FileHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="file.name")
-Task("SiteHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="site.name")
-Task("RunHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="run.run_number")
+#Task("BlockHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="block.name")
+#Task("FileHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="file.name")
+#Task("SiteHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="site.name")
+#Task("RunHotspot", "ValueHotspot", interval=3600, period=3600, allowed_gap=60, key="run.run_number")
 
 # task to clean-up analytics DB, cutoff parameter defines the
 # threshold for old records, default is 1 month
