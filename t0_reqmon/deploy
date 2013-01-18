@@ -1,0 +1,25 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_t0_reqmon_deps()
+{
+  deploy couchdb
+}
+
+deploy_t0_reqmon_prep()
+{
+  mkproj
+}
+
+deploy_t0_reqmon_sw()
+{
+  deploy_pkg comp cms+t0_reqmon
+  perl -p -i -e 's/__fill_dbname_here__/tier0_wmstats/g' $root/current/apps/t0_reqmon/data/couchapps/WMStats/_attachments/js/loader.js
+}
+
+deploy_t0_reqmon_post()
+{
+  # Tell couchdb to push the t0_reqmon app on the next restart
+  echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WMStats" \
+       "http://localhost:5984/tier0_wmstats" > $root/state/couchdb/stagingarea/t0_reqmon
+  echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WorkloadSummary" \
+       "http://localhost:5984/t0_workloadsummary" >> $root/state/couchdb/stagingarea/t0_reqmon
+}
