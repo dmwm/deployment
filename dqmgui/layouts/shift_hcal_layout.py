@@ -97,12 +97,7 @@ shifthcallayout(dqmitems, "09 HCAL RecHit Energies",
                   'description':"Average energy/hit for each of the 2160 channels in HO.  (You may see fewer entries than 2160 because of ~30 known dead cells in HO.)"}]
                 )
 
-shifthcallayout(dqmitems, "10 ZDC Rechit Energies",
-                [{'path': "Hcal/ZDCMonitor/ZDCMonitor_Hcal/2D_RecHitEnergy",
-                  'description':"This shows the map of rechit mean energy depositions in ZDC. Should show a uniform distribution of energy in the EM sections of ZDC (bottom five rows), followed by a peak in the first 2 rows of HAD sections. No empty sections in the detector" }]
-                )
-
-shifthcallayout(dqmitems, "11 ZDC Rechit Timing",
-                [{'path': "Hcal/ZDCMonitor/ZDCMonitor_Hcal/2D_RecHitTime",
-                  'description':"This shows the map of  mean rechit time in ZDC. The scale on the histogram should be in the range between 19-24 nanoseconds (5 ns)" }]
-                )
+shifthcallayout(dqmitems, "11 ZDC Report Summary",
+           [{'path':"Hcal/ZDCMonitor_Hcal/ZDC_ReportSummary",
+             'description':"This shows the map of rechit mean energy depositions in ZDC. Should show a uniform distribution of energy in the EM sections of ZDC (bottom five rows), followed by a peak in the first 2 rows of HAD sections. No empty sections in the detector"}
+            ])
