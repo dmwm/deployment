@@ -90,8 +90,7 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^Hcal/', '',
                  'Hcal/Layouts/08 HCAL Lumi Problems',
                  'Hcal/Layouts/09 HCAL Calibration Type',
                  'Hcal/Layouts/10 HCAL Error Thresholds',
-                 'Hcal/Layouts/11 ZDC Rechit Energies',
-                 'Hcal/Layouts/12 ZDC Rechit Timing'
+                 'Hcal/Layouts/11 ZDC Report Summary'
                  )
 
 server.workspace('DQMContent',30,'Calorimeter','HCALcalib', '^HcalCalib/', '',
@@ -203,19 +202,20 @@ server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack'
                  'Collisions/TrackingFeedBack/07 - Cluster y width vs. cluster eta'
 )
 server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|Ecal[^/]*)/', 'Collisions/EcalFeedBack',
-                 "Collisions/EcalFeedBack/00 Single Event Timing EB",
-                 "Collisions/EcalFeedBack/01 Single Event Timing EE",
-                 "Collisions/EcalFeedBack/02 Timing Map EB",
-                 "Collisions/EcalFeedBack/03 Timing Map EE -",
-                 "Collisions/EcalFeedBack/04 Timing Map EE +",
-                 "Collisions/EcalFeedBack/05 Timing ES",
-                 "Collisions/EcalFeedBack/06 Occupancy EB",
-                 "Collisions/EcalFeedBack/07 Occupancy EE -",
-                 "Collisions/EcalFeedBack/08 Occupancy EE +",
-                 "Collisions/EcalFeedBack/09 Occupancy ES",
-                 "Collisions/EcalFeedBack/10 RecHit Energy EB",
-                 "Collisions/EcalFeedBack/11 RecHit Energy EE",
-                 "Collisions/EcalFeedBack/12 RecHit Energy ES"
+                 "Collisions/EcalFeedBack/00 Single Event Timing",
+                 "Collisions/EcalFeedBack/01 Forward-Backward EB",
+                 "Collisions/EcalFeedBack/02 Forward-Backward EE",
+                 "Collisions/EcalFeedBack/03 Timing Map EB",
+                 "Collisions/EcalFeedBack/04 Timing Map EE -",
+                 "Collisions/EcalFeedBack/05 Timing Map EE +",
+                 "Collisions/EcalFeedBack/06 Timing ES",
+                 "Collisions/EcalFeedBack/07 Occupancy EB",
+                 "Collisions/EcalFeedBack/08 Occupancy EE -",
+                 "Collisions/EcalFeedBack/09 Occupancy EE +",
+                 "Collisions/EcalFeedBack/10 Occupancy ES",
+                 "Collisions/EcalFeedBack/11 RecHit Energy EB",
+                 "Collisions/EcalFeedBack/12 RecHit Energy EE",
+                 "Collisions/EcalFeedBack/13 RecHit Energy ES"
                  )
 
 server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', 'Collisions/HcalFeedBack',

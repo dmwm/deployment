@@ -478,6 +478,122 @@ private:
 	obj->SetMinimum(-1.);
 	obj->SetMaximum(1.);
       }
+    else if (o.name.find("ZDCMonitor_Hcal/ZDC_ReportSummary")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setSummaryColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(3);
+	obj->SetOption("text90colz");
+	obj->SetMinimum(-1.);
+	obj->SetMaximum(1.);
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/ZDC_Channel_Summary")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setSummaryColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+	obj->SetMinimum(-1.);
+	obj->SetMaximum(1.);
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/ZDC_TotalChannelErrors")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/ColdChannel/ZDC_Cold_Channel_Fraction")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+	obj->SetMinimum(-1.);
+	obj->SetMaximum(1.);
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/ColdChannel/ZDC_Cold_Channel_Errors")!=std::string::npos)
+      {
+        obj->SetContour(100);
+        setRainbowColor(obj);
+        gStyle->SetPaintTextFormat("5.4g");
+        obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/DeadChannel/ZDC_Dead_Channel_Fraction")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+	obj->SetMinimum(-1.);
+	obj->SetMaximum(1.);
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/DeadChannel/ZDC_Dead_Channel_Errors")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/HotChannel/ZDC_Hot_Channel_Fraction")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+	obj->SetMinimum(-1.);
+	obj->SetMaximum(1.);
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/HotChannel/ZDC_Hot_Channel_Errors")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/Digis/ZDC_Digi_Error_Fraction")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+	obj->SetMinimum(-1.);
+	obj->SetMaximum(1.);
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/Digis/ZDC_Digi_Errors")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/Digis/DigiErrorCauses/ZDC_DigiErrors_CAPID")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+      }
+    else if (o.name.find("ZDCMonitor_Hcal/Errors/Digis/DigiErrorCauses/ZDC_DigiErrors_DVER")!=std::string::npos)
+      {
+	obj->SetContour(100);
+	setRainbowColor(obj);
+	gStyle->SetPaintTextFormat("5.4g");
+	obj->SetMarkerSize(2);
+	obj->SetOption("textcolz");
+      }
     else if (o.name.find("HcalInfo/CertificationMap")!=std::string::npos)
       {
 	c->SetLeftMargin(0.20);
