@@ -19,5 +19,5 @@ deploy_an_reqmon_post()
 {
   # Tell couchdb to push the reqmon app on the next restart
   echo "couchapp push $root/current/apps/an_reqmon/data/couchapps/WMStats" \
-       "http://localhost:5984/analysis_wmstats" > $root/state/couchdb/stagingarea/reqmon
+       "http://localhost:5984/analysis_wmstats" > $root/state/couchdb/stagingarea/an_reqmon
 }
