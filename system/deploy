@@ -441,9 +441,11 @@ deploy_system_post()
 	s/^$USER\s+ALL=\(ALL\)\s+ALL$/$USER ALL=(ALL) NOPASSWD: ALL/" \
         /etc/sudoers
 
-      # Install additional yum repositories (glite-VOBOX instead of glite-SCAS?)
-      sudo wget -q -O /etc/yum.repos.d/glite-lcg-ca.repo \
-        http://cern.ch/grid-deployment/glite/repos/3.2/lcg-CA.repo
+      # Install additional yum repositories
+      #  EGI-trustanchors provides the updated CAs
+      sudo wget -q -O /etc/yum.repos.d/egi-trustanchors.repo \
+        http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
+      #  (glite-VOBOX instead of glite-SCAS?)
       sudo wget -q -O /etc/yum.repos.d/glite-scas.repo \
         http://cern.ch/grid-deployment/glite/repos/3.2/glite-SCAS.repo
 
