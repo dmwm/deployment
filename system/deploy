@@ -147,8 +147,9 @@ system_groups_and_accounts()
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
   # cannot rely on fully propagated group ownership!
+  # Ignore if nscd is not running (as for SLC6 VMs).
   case $system_arch in Linux )
-    sudo /sbin/service nscd restart ;;
+    sudo /sbin/service nscd restart || true ;;
   esac
 }
 
@@ -439,7 +440,7 @@ deploy_system_post()
       sudo perl -p -i -e \
        "s/^(?=Defaults\s+requiretty)/\#/;
 	s/^$USER\s+ALL=\(ALL\)\s+ALL$/$USER ALL=(ALL) NOPASSWD: ALL/" \
-        /etc/sudoers
+        /etc/sudoers /etc/sudoers.d/cern-config-users 2> /dev/null
 
       # Install additional yum repositories
       #  EGI-trustanchors provides the updated CAs
@@ -452,9 +453,21 @@ deploy_system_post()
       # Install additional required packages.
       sudo yum -y install \
         tk compat-libstdc++-33 'ca_*' dummy-ca-certs lcg-CA \
-	fetch-crl edg-mkgridmap git-all stgit colordiff \
+	fetch-crl edg-mkgridmap git-all stgit colordiff libXpm-devel finger \
 	$(yum -q list compat-{readline5,libtermcap} perl-ExtUtils-Embed 2>/dev/null | \
 	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}')
+
+      # Install myproxy and voms tools as there is no slc6 build for it in AFS.
+      # Only gets the voms configuration from AFS.
+      sudo yum -y install myproxy
+      sudo rsync -cavu \
+        /afs/cern.ch/project/gd/LCG-share/current/glite/etc/vomses/ /etc/vomses/
+      sudo rsync -cavu \
+        /afs/cern.ch/project/gd/LCG-share/current/external/etc/grid-security/vomsdir/ \
+        /etc/grid-security/vomsdir/
+      sudo chown -R root:root /etc/vomses /etc/grid-security/vomsdir
+
+      # Should be ok to use bashs from slc5 on slc6. There is no build for slc6 yet.
       if rpm --quiet -q bashs; then :; else
         sudo rpm -ivh http://swrepsrv.cern.ch/swrep/x86_64_slc5/bashs-3.2-21.x86_64.rpm ||
 	  sudo ln /bin/bash{,s}
