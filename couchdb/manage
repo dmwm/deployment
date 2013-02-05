@@ -32,7 +32,7 @@ esac
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
-CFGDIR=$(dirname $0)
+CFGDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 KEYFILE=$ROOT/auth/$ME/hmackey.ini
