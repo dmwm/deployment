@@ -31,12 +31,6 @@ config.cacherequests.Admin = 50
 config.cacherequests.Unlimited = 10000
 config.cacherequests.ProductionAccess = 5000
 
-# dbs configuration
-config.component_('dbs')
-config.dbs.dbs_instances = ['cms_dbs_prod_global', 'cms_dbs_caf_analysis_01', 'cms_dbs_ph_analysis_01', 'cms_dbs_ph_analysis_02']
-config.dbs.dbs_global_instance = 'cms_dbs_prod_global'
-config.dbs.dbs_global_url = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
-
 # mongodb configuration
 config.component_('mongodb')
 config.mongodb.bulkupdate_size = 5000
@@ -86,6 +80,6 @@ config.das.core_workers = 50
 config.das.api_workers = 2
 config.das.error_expire = 300
 config.das.emptyset_expire = 5
-config.das.thread_weights = ['dbs:5', 'phedex:5']
+config.das.thread_weights = ['dbs:5', 'phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
 config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','tier0','combined','conddb','reqmgr']
