@@ -730,8 +730,6 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
 
   if(!applyDefaults) return;
 
-  obj->Dump();
-
   std::pair<unsigned, unsigned> types(getPlotType(obj, fullpath));
   unsigned& otype(types.first);
   unsigned& btype(types.second);

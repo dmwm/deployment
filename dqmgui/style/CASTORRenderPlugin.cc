@@ -24,38 +24,37 @@ class CASTORRenderPlugin : public DQMRenderPlugin
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &) {
 
      ////---- determine whether the object is a CASTOR object
-    if( (o.name.find( "Castor/EventInfo/reportSummaryMap" ) != std::string::npos) ||
-        (o.name.find( "CASTOR Digi ChannelSummaryMap" ) != std::string::npos) ||
-        (o.name.find( "CASTOR Digi SaturationSummaryMap" ) != std::string::npos) ||
-        (o.name.find( "RecHitEnergyBasedSummaryMap" ) != std::string::npos) ||
-        (o.name.find( "CASTOR Digi Occupancy Map" ) != std::string::npos) ||
-        (o.name.find( "CastorRecHit 2D Energy Map- above threshold" ) != std::string::npos) ||
-        (o.name.find( "Castor Pulse Shape for sector=1 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=2 (in all 14 modules)") != std::string::npos) ||
-	( o.name.find("Castor Pulse Shape for sector=3 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=4 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=5 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=6 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=7 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=8 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=9 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=10 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=11 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=12 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=13 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=14 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=15 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("Castor Pulse Shape for sector=16 (in all 14 modules)") != std::string::npos) ||
-        ( o.name.find("CastorRecHit Energy in modules- above threshold") != std::string::npos)      ||
-        ( o.name.find("CastorRecHit Energy in sectors- above threshold") != std::string::npos)      ||
-        ( o.name.find("CASTOR 3D hits- cumulative") != std::string::npos)                           ||
-        ( o.name.find("CASTOR 3D hits- event with the largest deposited E") != std::string::npos)   ||
-        ( o.name.find("Fraction of the total energy in CASTOR modules") != std::string::npos)       ||
-        ( o.name.find("Fraction of the total energy in CASTOR sectors") != std::string::npos)       ||
-        ( o.name.find("CastorRecHits Occupancy Map") != std::string::npos)                          ||
-        ( o.name.find("CASTOR spigot status") != std::string::npos)                                 ||
-        ( o.name.find("CASTOR FEDFatal errors") != std::string::npos)                                 ||
-        ( o.name.find("CastorEventProduct") != std::string::npos)
+    if( ( o.name.find("Castor/EventInfo/reportSummaryMap" ) != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/CASTOR Digi ChannelSummaryMap" ) != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/CASTOR Digi SaturationSummaryMap" ) != std::string::npos) ||
+        ( o.name.find("Castor/CastorChannelQuality/RecHitEnergyBasedSummaryMap" ) != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/CASTOR Digi Occupancy Map" ) != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=1 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=2 (in all 14 modules)") != std::string::npos) ||
+	( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=3 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=4 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=5 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=6 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=7 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=8 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=9 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=10 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=11 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=12 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=13 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=14 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=15 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorPSMonitor/Castor Pulse Shape for sector=16 (in all 14 modules)") != std::string::npos) ||
+        ( o.name.find("Castor/CastorRecHitMonitor/CastorRecHit Energy in modules- above threshold") != std::string::npos)      ||
+        ( o.name.find("Castor/CastorRecHitMonitor/CastorRecHit Energy in sectors- above threshold") != std::string::npos)      ||
+        ( o.name.find("Castor/CastorEventDisplay/CASTOR 3D hits- cumulative") != std::string::npos)                           ||
+        ( o.name.find("Castor/CastorEventDisplay/CASTOR 3D hits- event with the largest deposited E") != std::string::npos)   ||
+        ( o.name.find("Castor/CastorRecHitMonitor/EnergyFraction/Fraction of the total energy in CASTOR modules") != std::string::npos)       ||
+        ( o.name.find("Castor/CastorRecHitMonitor/EnergyFraction/Fraction of the total energy in CASTOR sectors") != std::string::npos)       ||
+        ( o.name.find("Castor/CastorRecHitMonitor/CastorRecHits Occupancy Map") != std::string::npos)                          ||
+        ( o.name.find("Castor/CastorDataIntegrityMonitor/CASTOR spigot status") != std::string::npos)                                 ||
+        ( o.name.find("Castor/CastorDataIntegrityMonitor/CASTOR FEDFatal errors") != std::string::npos)                                 ||
+        ( o.name.find("Castor/CastorEventProducts/CastorEventProduct") != std::string::npos)
         )
         return true;
 
@@ -183,7 +182,7 @@ private:
       obj->GetXaxis()->SetLabelSize(0.05);
       obj->GetYaxis()->SetLabelSize(0.05);
 
-     if(o.name.find("reportSummaryMap") != std::string::npos)
+     if(o.name.find("Castor/EventInfo/reportSummaryMap") != std::string::npos)
       {
         obj->GetXaxis()->SetNdivisions(15,true);
         obj->GetYaxis()->SetNdivisions(17,true);
