@@ -8,7 +8,7 @@ ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
 
 sys.path.append(os.path.join(ROOTDIR,'auth/dbs'))
 
-from DBSSecrets import dbs3_l3_i2
+from DBSSecrets import dbs3_ig_i2
 from DBSSecrets import dbs3_pg_r
 from DBSSecrets import dbs3_l1_i2
 
@@ -39,6 +39,6 @@ db_development_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10
 
 db_integration_global = db_instances.section_('int/global')
 db_integration_global.threads = 1
-db_integration_global.dbowner = dbs3_l3_i2['databaseOwner']
-db_integration_global.connectUrl = dbs3_l3_i2['connectUrl']['writer']
+db_integration_global.dbowner = dbs3_ig_i2['databaseOwner']
+db_integration_global.connectUrl = dbs3_ig_i2['connectUrl']['writer']
 db_integration_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }

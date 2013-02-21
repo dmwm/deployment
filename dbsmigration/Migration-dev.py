@@ -9,7 +9,7 @@ ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
 sys.path.append(os.path.join(ROOTDIR,'auth/dbs'))
 
 from DBSSecrets import dbs3_l3_i2
-from DBSSecrets import dbs3_pg_r
+from DBSSecrets import dbs3_p2_i2
 from DBSSecrets import dbs3_l1_i2
 
 config = Configuration()
@@ -27,8 +27,8 @@ db_instances = config.dbsmigration.database.section_('instances')
 
 db_production_global = db_instances.section_('prod/global')
 db_production_global.threads = 2
-db_production_global.dbowner = dbs3_pg_r['databaseOwner']
-db_production_global.connectUrl = dbs3_pg_r['connectUrl']['writer']
+db_production_global.dbowner = dbs3_p2_i2['databaseOwner']
+db_production_global.connectUrl = dbs3_p2_i2['connectUrl']['writer']
 db_production_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
 
 db_development_global = db_instances.section_('dev/global')
