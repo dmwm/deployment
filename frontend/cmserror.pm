@@ -41,7 +41,7 @@ sub handler($)
   my $message = "<p>An unspecified error occurred.</p>";
   my $ticket = "please be so kind as to report this problem to the"
              . " <a href='https://savannah.cern.ch/support/?func="
-             . "additem&group=cmscompinfrasup&category_id=108&privacy=1&"
+             . "additem&group=cmscompinfrasup&category_id=123&privacy=1&"
              . "assigned_to=5156&custom_sb2=102&custom_sb1=102&summary="
              . "cmsweb%20issue%3a%20unexpected%20401%20error%20code&"
              . "add_cc=cms-service-webtools\@cern.ch'>operators</a>";
