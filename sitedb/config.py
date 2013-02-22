@@ -13,6 +13,11 @@ if HOST.startswith("vocms127"):
   config.views.data.ldsyncto = "dev"
   config.views.data.ldsynctime = 300
 
+if HOST.startswith("vocms136"):
+  config.views.data.ldapsync = True
+  config.views.data.ldsyncto = "prod"
+  config.views.data.ldsynctime = 300
+
 # config.main.tools.cms_auth.policy = 'dangerously_insecure'
 # config.main.server.environment = 'staging'
 # config.main.server.socket_host = '127.0.0.1'
