@@ -33,9 +33,9 @@ deploy_sreadiness_post()
   ) | acrontab
 
   (mkcrontab
-   echo "00 4 * * * $project_config/sreadiness_task run enabledlinks"
-   echo "10 4 * * * $project_config/sreadiness_task run insitedb"
-   echo "30 4 * * * $project_config/sreadiness_task run sreadiness"
+   echo "05 */6 * * * $project_config/sreadiness_task run enabledlinks"
+   echo "15 */6 * * * $project_config/sreadiness_task run insitedb"
+   echo "35 */6 * * * $project_config/sreadiness_task run sreadiness"
    echo "00 * * * * $project_config/sreadiness_task run usablesites"
    echo "00 0 * * * $project_config/sreadiness_task clean"
   ) | crontab -
