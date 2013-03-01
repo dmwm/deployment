@@ -18,7 +18,7 @@ class X509Auth(AbstractHTTPHandler):
 def get_good_reqs(globalmon, cmsweb):
   doc = urlopen(globalmon+'monitorSvc/requestmonitor')
   reqs = loads(doc.read())
-  good_status = ['running', 'acquired', 'assignment-approved', 'new']
+  good_status = ['running', 'acquired', 'assignment-approved', 'new', 'running-open', 'running-closed']
   good_reqs = []
   for r in reqs:
     workflow = r['request_name']

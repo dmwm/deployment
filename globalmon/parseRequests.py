@@ -10,7 +10,7 @@ dbscmd='dbs search --production --noheader '
 
 requests = json.load(sys.stdin)
 
-good_status = ['new', 'assignment-approved', 'acquired','running']
+good_status = ['new', 'assignment-approved', 'acquired','running', 'running-open', 'running-closed']
 
 default_time_per_event = {}
 default_time_per_event['ReDigi'] = 30.0
@@ -199,7 +199,7 @@ for request in requests:
     tmp['OutputEvents'] = {}
     tmp['CompletionPercentage'] = {}
     for outputDataset in tmp['OutputDatasets']:
-        if tmp["status"] == "running":
+        if tmp["status"] in ("running", "running-closed", "running-open"):
             dataTier = str(outputDataset)[1:].split('/')[2]
             acqEra = str(outputDataset)[1:].split('/')[1]
             if acqEra != 'None-None':
@@ -269,7 +269,7 @@ for local_queue in sorted_local_queues:
 
                 if status == "acquired":
                     print "Priority: %10i Type: %20s InputEvents: %12i TimePerEvent: %5i CPUHours: %12i AssignedT1: %15s Request: %s" % (priority,item["RequestType"],item["RequestNumEvents"],item["TimePerEvent"],item["CPUHours"],assignedT1,item["request_name"])
-                elif status == "running":
+                elif status in ("running", "running-open", "running-closed"):
                     print "Priority: %10i Type: %20s InputEvents: %12i TimePerEvent: %5i CPUHours: %12i DataTiers: %30s CompletionPercentages: %20s AssignedT1: %15s Request: %s" % (priority,item["RequestType"],item["RequestNumEvents"],item["TimePerEvent"],item["CPUHours"],dataTiers,completionPercentage,assignedT1,item["request_name"])
                 else:
                     print "Priority: %10i Type: %20s InputEvents: %12i TimePerEvent: %5i CPUHours: %12i Request: %s" % (priority,item["RequestType"],item["RequestNumEvents"],item["TimePerEvent"],item["CPUHours"],item["request_name"])
@@ -321,7 +321,7 @@ ofInterest["Fall11_R4"] = {"campaign":"Fall11_R4","tier":["AODSIM"],"time_per_ev
 ofInterest["Summer12_DR52X"] = {"campaign":"Summer12_DR52X","tier":["AODSIM"],"time_per_event":20.0}
 ofInterest["Summer12_DR53X"] = {"campaign":"Summer12_DR53X","tier":["AODSIM"],"time_per_event":17.5}
 
-good_status = ['acquired','running', 'assignment-approved']
+good_status = ['acquired','running', 'running-open', 'running-closed', 'assignment-approved']
 
 mc_estimates = 0.
 mc_approved_estimates = 0.
