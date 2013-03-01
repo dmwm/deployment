@@ -373,7 +373,7 @@ for local_queue in sorted_local_queues:
                             if interest not in estimates.keys(): estimates[interest] = {}
                             # add up remaining CPU hours per T1 site
                             if len(item["t1_sites"]) <= 0: 
-                                print 'no t1 site assigned for request',item['request_name'] / 3600.
+                                print 'no t1 site assigned for request %s' % item['request_name']
                                 break
                             assignedT1 = item["t1_sites"][0]
                             total_CPU = 0
