@@ -30,8 +30,8 @@ deploy_crabhb_sw()
   # Can't use crab from afs since it has a bunch of hardcoded configuration
   cd $root/current/apps/crabhb
   wget http://cmsdoc.cern.ch/cms/ccs/wm/www/Crab/Docs/CRAB_current.tgz
-  tar xvzf CRAB_2_8_1.tgz
-  cd CRAB_2_8_1
+  tar xvzf CRAB_current.tgz
+  cd CRAB_*
   ./configure
 
   # Ugly hack because crab gives us no option to tell it not to screw
