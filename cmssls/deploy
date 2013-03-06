@@ -11,7 +11,7 @@ deploy_cmssls_sw()
 {
   deploy_pkg
 
-  cmsslsver=82
+  cmsslsver=144
   cd $root/current/apps
   svn co svn+ssh://svn.cern.ch/reps/cmsfomon/GridmapSLS/trunk@$cmsslsver cmssls
 
