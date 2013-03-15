@@ -44,7 +44,6 @@ server.source('CompTier0')
 
 server.workspace('CompWelcome',  10, 'Shift',     'Welcome')
 server.workspace('CompCore',     11, 'Shift',     'CERN/Core')
-server.workspace('CompTier0',    12, 'Shift',     'Tier-0')
 server.workspace('CompCAF',      13, 'Shift',     'CAF')
 server.workspace('CompDDT',      14, 'Shift',     'Transfers')
 server.workspace('CompGrid',     15, 'Shift',     'Grid Services')
