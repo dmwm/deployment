@@ -15,14 +15,14 @@
 ##H   compact         compact database ARG
 ##H   compactviews    compact database views for design doc ARG ARG
 ##H   cleanviews      clean view named ARG
+##H   backup          rsync databases to ARG (i.e. [user@]host:path)
+##H   archive         archive backups to ARG area in castor
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/CouchDB
 
-if [ $(id -un)  = cmsweb ]; then
-  echo "ERROR: please use another account" 1>&2
-  exit 1
-fi
+[ $(id -un) != cmsweb -o "$1" = "backup" -o "$1" = "archive" ] ||
+  { echo "ERROR: please use another account" 1>&2; exit 1; }
 
 case $(uname) in Darwin )
   md5sum() { md5 -r ${1+"$@"}; }
@@ -39,6 +39,9 @@ KEYFILE=$ROOT/auth/$ME/hmackey.ini
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+export STAGE_HOST=${STAGE_HOST:-castorcms}
+export RFIO_USE_CASTOR_V2=YES
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
@@ -216,6 +219,43 @@ compact_views()
     { echo "An error occured triggering view compaction. Please look in the CouchDB logs."; exit 7; }
 }
 
+# Rsync couchdb databases to elsewhere (can be used to restore a backup too)
+backup()
+{
+  local hostdir=$1
+  [ -n "$hostdir" ] ||
+    { echo "You must specify a destination [user@]host:path."; exit 9; }
+  rsync --delete -au -e 'ssh -c arcfour' $STATEDIR/database/ $hostdir/ ||
+    { echo "failed to synchronise databases to $hostdir: $?" 1>&2; exit 11; }
+}
+
+# Archive couchdb backups to castor
+archive()
+{
+  local archdir=$1
+  klist -s ||
+    { echo "You must have a valid kerberos token to run the archive." 1>&2; exit 20; }
+  rfstat $archdir >/dev/null ||
+    { echo "Could not stat $archdir in the castor archive" 1>&2; exit 19; }
+
+  echo "Checking for couchdb archives not yet staged out to tape:"
+  stager_qry -M $archdir | grep couchdb | grep -v STAGED || echo "All staged out."
+
+  echo "Starting to archive couchdb backups on $(date)"
+  for bkp in $STATEDIR/backup/*; do
+    [ -d $bkp ] || continue;
+    tarfile=couchdb_${bkp##*/}_$(date +%Y%m%d-%H%M).tar
+    echo "$archdir/$tarfile"
+    tar cf - -C $bkp . | rfcp - $archdir/$tarfile &
+  done
+  wait;
+  [ -n "$tarfile" ] && echo "Archive copy to castor completed on $(date)." ||
+    echo "No backups found on $STATEDIR/backup. Nothing to archive."
+
+  #FIXME: do some sanity checks on castor to make sure new archives are genuine
+  #FIXME: cleanup old archives from castor
+}
+
 # Verify the security string.
 check()
 {
@@ -271,6 +311,16 @@ case ${1:-status} in
   cleanviews )
     check "$3"
     clean_views $2
+    ;;
+
+  backup )
+    check "$3"
+    backup $2
+    ;;
+
+  archive )
+    check "$3"
+    archive $2
     ;;
 
   help )

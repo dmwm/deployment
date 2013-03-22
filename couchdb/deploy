@@ -9,7 +9,7 @@ deploy_couchdb_deps()
 
 deploy_couchdb_prep()
 {
-  mkproj database replication stagingarea
+  mkproj database replication stagingarea backup
   case $variant in default ) ;; * ) mkproxy ;; esac
 }
 
@@ -48,8 +48,25 @@ deploy_couchdb_post()
        sysboot
        local cmd="$project_config/manage compact all 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-       echo "12 0 * * * $cmd" ;;
+       echo "12 0 * * * $cmd"
+
+       # Daily backup the databases to other cluster machines
+       case $host in vocms140 ) tohost=vocms138 ;; vocms133 ) tohost=vocms132 ;; vocms127 ) tohost=vocms127 ;; * ) tohost= ;; esac
+       [ -z "$tohost" ] ||
+         echo "0 1 * * * $project_config/manage backup $tohost:$project_state/backup/$host 'I did read documentation'"
+       ;;
    esac) | crontab -
+
+  # Weekly archive backups to castor
+  case $host in
+    vocms138 | vocms132 | vocms127 )
+      klist -s # must have afs kerberos token
+      (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
+       echo "30 3 * * 0 $host $project_config/manage archive /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'") | acrontab
+      ;;
+    * )
+      ;;
+  esac
 }
 
 deploy_couchdb_auth()
