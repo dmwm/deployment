@@ -239,8 +239,9 @@ archive()
     { echo "Could not stat $archdir in the castor archive" 1>&2; exit 19; }
 
   echo "Checking for couchdb archives not yet staged out to tape:"
-  stager_qry -M $archdir | grep couchdb | grep -v STAGED || echo "All staged out."
+  stager_qry -M $archdir | grep couchdb | grep -v STAGED || echo "all staged out."
 
+  echo
   echo "Starting to archive couchdb backups on $(date)"
   for bkp in $STATEDIR/backup/*; do
     [ -d $bkp ] || continue;

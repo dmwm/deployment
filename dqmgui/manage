@@ -53,14 +53,19 @@ FLAVOR=dev
 ALTERNATIVE_USER=$(stat $TOP -c %U)
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
-case $HOST in
-  vocms139 )
-    # assume not to pollute the environments since this will
-    # only be executed on vocms139.
-    . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
-  * )
-    . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
-esac
+# this hack is needed while dqmgui is still using castor 2.1.9.8
+if [ $# -ge 1 -a "$1" = "backup" ]; then
+  : # do not source the env because we want to pick the system castor
+else
+  case $HOST in
+    vocms139 )
+      # assume not to pollute the environments since this will
+      # only be executed on vocms139.
+      . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
+    * )
+      . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
+  esac
+fi
 
 export QUIET_ASSERT=a
 export X509_CERT_DIR=/etc/grid-security/certificates
@@ -699,8 +704,9 @@ backup()
     { echo "Could not stat $archdir in the castor archive" 1>&2; exit 19; }
 
   echo "Checking for DQMGUI backups not yet staged out to tape:"
-  stager_qry -M $archdir | grep dqmgui_$HOST | grep -v STAGED || echo "All staged out."
+  stager_qry -M $archdir | grep dqmgui_$HOST | grep -v STAGED || echo "all staged out."
 
+  echo
   echo "Starting $HOST DQMGUI backup on $(date)"
   tarfile=dqmgui_${HOST}_$(date +%Y%m%d-%H%M).tar
   # FIXME: stop the agents vidDQMImportDaemon visDQMDeleteDaemon to make the index read only
