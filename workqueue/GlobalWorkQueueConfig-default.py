@@ -14,6 +14,7 @@ from WMCore.Configuration import Configuration
 workqueueDBName = 'workqueue'
 workqueueInboxDbName = 'workqueue_inbox'
 wmstatDBName = 'wmstats'
+reqmgrCouchDB = "reqmgr_workload_cache"
 HOST = socket.getfqdn().lower()
 REQMGR = "https://%s/reqmgr/reqMgr" % HOST
 COUCH = "https://%s/couchdb" % HOST
@@ -39,5 +40,6 @@ config.WorkQueueManager.wmstatDBName = wmstatDBName
 config.WorkQueueManager.level = "GlobalQueue"
 config.WorkQueueManager.queueParams = {'WMStatsCouchUrl': "%s/%s" % (COUCH, wmstatDBName)}
 config.WorkQueueManager.queueParams['QueueURL'] = WEBURL
+config.WorkQueueManager.queueParams['ReqMgrServiceURL'] = REQMGR
 config.WorkQueueManager.reqMgrConfig = {}
 config.WorkQueueManager.reqMgrConfig['endpoint'] = REQMGR
