@@ -49,7 +49,6 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export DAS_CONFIG=$CFGDIR/das_cms.py
-export DAS_ANALYTICS=$CFGDIR/analytics_cfg.py
 cd $STATEDIR
 
 # Start service conditionally on crond restart.
@@ -58,9 +57,6 @@ sysboot()
   dostart=false
   if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
       dostart=true
-  fi
-  if [ $(pgrep -u $(id -u) -f "[/]controller.py" | wc -l) = 0 ]; then
-    dostart=true
   fi
   $dostart && start
 }
@@ -71,9 +67,6 @@ start()
   echo "starting $ME"
   python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
        </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
-
-  python -u $DAS_PYTHONPATH/DAS/analytics/controller.py $DAS_ANALYTICS \
-    </dev/null 2>&1 | rotatelogs $LOGDIR/das-analytics-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.
@@ -83,27 +76,17 @@ stop()
   for pid in $(pgrep -u $(id -u) -f "[/]das_server.py"); do
       kill -9 $pid
   done
-
-  for pid in $(pgrep -u $(id -u) -f "[/]controller.py"); do
-    kill -9 $pid
-  done
 }
 
 # Check if the server is running.
 status()
 {
-  for pat in web analytics; do
-    if [ $pat == "web" ]; then
-      pid=$(pgrep -u $(id -u) -f "[/]das_server.py" | sort -n)
-    elif [ $pat == "analytics" ]; then
-      pid=$(pgrep -u $(id -u) -f "[/]controller.py" | sort -n)
-    fi
-    if [ X"$pid" = X ]; then
-      echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
-    else
-      echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
-    fi
-  done
+  pid=$(pgrep -u $(id -u) -f "[/]das_server.py" | sort -n)
+  if [ X"$pid" = X ]; then
+    echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+  else
+    echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+  fi
 }
 
 # Verify the security string.
