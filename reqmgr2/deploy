@@ -1,0 +1,142 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_reqmgr2_variants="default prod preprod dev"
+
+
+# this function overwrites line
+# COUCH_HOST = "COUCH_HOST_VALUE_PLACEHOLDER"
+# in the configuration file config.py
+set_couch_host_value()
+{
+	case $variant in
+		prod )
+			couch_host="https://cmsweb.cern.ch/couchdb"
+		;;
+		preprod )
+			couch_host="https://cmsweb-testbed.cern.ch/couchdb"
+		;;
+		dev )
+			couch_host="https://cmsweb-dev.cern.ch/couchdb"
+		;;
+		* )
+			# e.g. VM installation
+			couch_host="https://`hostname -f`/couchdb"
+		;;
+	esac
+	
+	config_file="$root/current/config/reqmgr2/config.py"
+	perl -p -i -e "s{COUCH_HOST_VALUE_PLACEHOLDER}{$couch_host}g" $config_file
+}
+
+
+deploy_reqmgr2_deps()
+{
+	set_couch_host_value
+	# backend is light stuff that sets up wmcore hmac key for authentication
+  	deploy backend
+  	deploy wmcore-auth
+	deploy couchdb
+	deploy reqmon
+	# Always deploy ReqMgr1 along with ReqMgr2. ReqMgr1 will take care of
+    # creating CouchDB databases and pushing couchapps. Have to make sure
+    # during deployment that ReqMgr1 and ReqMgr2 are using the same tag,
+    # otherwise the ReqMgr2 couchapps (which are also shared) would be pulled
+  	# from ReqMgr1 tag.
+  	# This means that couchapps installation is not present here and during
+  	# migration to ReqMgr2 only will be taken from ReqMgr1 deploy script.
+  	deploy reqmgr
+}
+
+deploy_reqmgr2_prep()
+{
+  	mkproj
+}
+
+deploy_reqmgr2_sw()
+{
+	case $variant in
+    	* )
+      		case $variant in 
+      			prod ) 
+      				secrets=
+      			;; 
+      			preprod )
+      				secrets=Preprod
+      			;;
+      			* )
+      			 	secrets=Dev
+      			;;
+      		esac
+      		deploy_pkg \
+        		-a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
+        		-a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+        	comp cms+reqmgr2
+
+      		if grep -rq "replace me" $project_auth; then
+        		note "WARNING: replace certificates in $project_auth with real ones"
+      		else :; fi
+    	;;
+  	esac
+}
+
+deploy_reqmgr2_post()
+{
+	case $host in
+   		vocms13[89] )
+   			disable
+   		;;
+   		* ) 
+   			enable 
+   		;;
+   	esac
+   		
+	# Start of the CouchDB deployment settings 
+    # Tell couchdb to pick up reqmgr on the next restart
+	# All below present in the ReqMgr1 deploy script
+	#local couchdb_config=$root/current/config/couchdb
+	#local couchdb_state=$root/state/couchdb
+	#local reqmgr2app=$root/current/apps/reqmgr2
+
+  	#for area in stagingarea replication; do
+    #  rm -f $couchdb_state/$area/reqmgr2
+    #  touch $couchdb_state/$area/reqmgr2
+	#done
+
+	#echo "couchapp push $reqmgr2app/data/couchapps/ReqMgr" \
+	#     "http://localhost:5984/reqmgr_workload_cache" \
+	#  >> $couchdb_state/stagingarea/reqmgr2
+	#echo "couchapp push $reqmgr2app/data/couchapps/ConfigCache" \
+	#     "http://localhost:5984/reqmgr_config_cache" \
+	#  >> $couchdb_state/stagingarea/reqmgr2
+	# End of the CouchDB deployment settings
+
+ 	# Setup reqmgr2 cronjobs
+  	(mkcrontab
+  		sysboot
+  		case $host in 
+  			vocms10[67] | vocms13[2689] | vocms16[13] )
+  			;;
+  			* )
+   				# TODO
+			   	# currently no cronjobs for ReqMgr2
+			   	# this is placeholder
+			   	# this command is from ReqMgr2
+			   	#local cmd="$project_config/manage updateversions 'I did read documentation'"
+			   	local cmd="ls -l /tmp"
+			   	$nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
+			   	echo "58 * * * * $cmd"
+			;;
+		esac) | crontab -
+}
+
+
+deploy_reqmgr2_auth()
+{
+	case $1 in
+		*/*-cert.pem )
+			echo "replace me with your dmwm service certificate"
+		;;
+    	*/*-key.pem )
+    		echo "replace me with your dmwm service key"
+    	;;
+  	esac
+}
