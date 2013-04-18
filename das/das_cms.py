@@ -82,4 +82,4 @@ config.das.error_expire = 300
 config.das.emptyset_expire = 5
 config.das.thread_weights = ['dbs:5', 'phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
-config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','tier0','combined','conddb','reqmgr']
+config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr']
