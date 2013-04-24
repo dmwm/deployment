@@ -66,6 +66,7 @@ load_secrets_file(){
     local MATCH_WMSTATS_URL=`cat $ASYNC_SECRETS_LOCATION | grep WMSTATS_URL | sed s/WMSTATS_URL=//`
     local MATCH_UFC_SERVICE_URL=`cat $ASYNC_SECRETS_LOCATION | grep UFC_SERVICE_URL | sed s/UFC_SERVICE_URL=//`
     local MATCH_OPS_PROXY=`cat $ASYNC_SECRETS_LOCATION | grep OPS_PROXY | sed s/OPS_PROXY=//`
+    local MATCH_AMQ_AUTH_FILE=`cat $ASYNC_SECRETS_LOCATION | grep AMQ_AUTH_FILE | sed s/AMQ_AUTH_FILE=//`
 
     if [ "x$MATCH_COUCH_USER" == "x" ]; then
         COUCH_USER=asynccouch;
@@ -236,6 +237,7 @@ init_async(){
                        --wmstats_url=$WMSTATS_URL \
                        --ufc_service_url=$UFC_SERVICE_URL \
 	               --ops_proxy=$OPS_PROXY \
+                       --amq_auth_file=$AMQ_AUTH_FILE \
 
     export WMAGENT_CONFIG=$CONFIG_AS/config.py
     export ASYNC_ROOT=$ROOT_DIR/apps/asyncstageout
@@ -356,3 +358,4 @@ case $1 in
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
     exit 1 ;;
 esac
+
