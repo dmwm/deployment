@@ -413,7 +413,7 @@ sub auth_trouble_handler : method
     $message .= "<p>Your certificate is a CMS VO member.</p>";
   }
   elsif ($dn
-	 && (($dn =~ m{(.*?)/CN=\d+$}o && exists $vocms{$1})
+	 && (($dn =~ m{(.*?)(?:/CN=\d+)+$}o && exists $vocms{$1})
 	     || ($dn =~ m{(.*?)(?:(?:/CN=proxy)+|(/CN=limited proxy))$}o
                  && exists $vocms{$1})))
   {
@@ -883,7 +883,7 @@ sub authn_cert($$)
   {
     $method = "X509Cert";
   }
-  elsif (($dn =~ m{(.*?)/CN=\d+$}o && exists $vocms{$1})
+  elsif (($dn =~ m{(.*?)(?:/CN=\d+)+$}o && exists $vocms{$1})
 	 || ($dn =~ m{(.*?)(?:/CN=proxy)+$}o && exists $vocms{$1}))
   {
     $dn = $1;
