@@ -1,0 +1,83 @@
+#!/bin/sh
+
+##H Usage: acdcserver_manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help                       show this help
+##H   version                    get current version of the service
+##H   cleanup_database           cleanup documents in the database that are older than n days
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+AUTHDIR=$TOP/current/auth/acdcserver
+CFGFILE=$CFGDIR/ACDCConfig.py
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+export ACDCSERVER_ROOT
+export WMCORE_ROOT=$ACDCSERVER_ROOT
+export YUI_ROOT
+export ACDC_CLI="${ACDCSERVER_ROOT}/bin/acdcserver-tools"
+export WMAGENT_CONFIG=${CFGFILE}
+logcmd="rotatelogs $LOGDIR/acdcserver-%Y%m%d.log 86400 2>&1"
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# check for a service certificate to use
+add_cert()
+{
+  if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
+    export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
+    export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
+  fi
+}
+
+run()
+{
+  if [ $(pgrep -u $(id -u) -f "${ACDC_CLI} $1" | wc -l) = 0 ]; then
+    cd $STATEDIR
+    ${ACDC_CLI} $@
+  else
+    echo "Another process of ${ACDC_CLI} is still running. Skipping."
+    exit 4
+  fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo ${ACDCSERVER_VERSION:-unknown}
+    ;;
+
+  cleanup_database)
+    cd $STATEDIR
+    check "$2"
+    add_cert
+    run --cleanup 2>&1 | $logcmd
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
