@@ -6,7 +6,6 @@ deploy_crabserver_deps()
   deploy backend
   deploy wmcore-auth
   deploy couchdb
-  deploy an_reqmon
 }
 
 deploy_crabserver_prep()
