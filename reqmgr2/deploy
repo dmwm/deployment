@@ -7,11 +7,11 @@ deploy_reqmgr2_deps()
   deploy wmcore-auth
   deploy couchdb
   deploy reqmon
-  deploy acdcserver
+  deploy acdcserver $variant
 
   # Use the couch databases from ReqMgr1. We must make sure ReqMgr1 is
   # on the same ReqMgr2 tag, otherwise the ReqMgr2's couchapps will be outdated.
-  deploy reqmgr
+  deploy reqmgr $variant
 }
 
 deploy_reqmgr2_prep()
