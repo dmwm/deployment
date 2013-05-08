@@ -2,6 +2,8 @@
  'offline_data':5 * 1024 ** 3,
  'relval_data':5 * 1024 ** 3,
  'relval_mc':5 * 1024 ** 3,
+ 'relval_rundepmc':5 * 1024 ** 3,
+ 'simulated_rundep':5 * 1024 ** 3,
  'simulated':5 * 1024 ** 3
 }
 

@@ -396,6 +396,7 @@ start()
 	  $DQM_DATA/uploads \
 	  $DQM_DATA/data \
 	  $DQM_DATA/agents/register \
+	  $DQM_DATA/agents/register128 \
 	  $DQM_DATA/agents/zip
 
         startagent $D/agent-zip \
@@ -428,6 +429,20 @@ start()
           $DQM_DATA/ix \
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/vcontrol
+
+        startagent -e 128 $D/agent-import-128 \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register128 \
+          $DQM_DATA/data \
+          $DQM_DATA/ix128
+
+	startagent $D/agent-export \
+	  visDQMExportDaemon \
+	  $DQM_DATA/ix \
+	  $DQM_DATA/agents/export \
+	  $DQM_DATA/data \
+	  "numObjects > 0 and runNumber >= 190389" \
+	  $DQM_DATA/agents/register128
 
         startagent $D/agent-qcontrol \
           visDQMRootFileQuotaControl \
@@ -521,7 +536,7 @@ start()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/vcontrol
 
-        startagent $D/agent-qcontrol \
+	startagent $D/agent-qcontrol \
           visDQMRootFileQuotaControl \
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
