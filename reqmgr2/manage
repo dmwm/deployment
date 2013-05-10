@@ -43,7 +43,7 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
-export WMCORE_ROOT=$REQMGR_ROOT/lib/python*/site-packages
+export WMCORE_ROOT=$REQMGR2_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
 export WMCORE_CACHE_DIR=$STATEDIR
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
@@ -138,7 +138,7 @@ case ${1:-status} in
     ;;
 
   version )
-    echo "$REQMGR_VERSION"
+    echo "$REQMGR2_VERSION"
     ;;
 
   * )

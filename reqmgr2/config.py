@@ -3,6 +3,7 @@ ReqMgr only configuration file.
 Everything configurable in ReqMgr is defined here.
 """
 from WMCore.Configuration import Configuration
+from os import path
 
 config = Configuration()
 
@@ -58,4 +59,4 @@ resthub.tag_collector_url = "https://cmstags.cern.ch/tc/ReleasesXML/?anytype=1"
 # web user interface
 ui = views.section_("ui")
 ui.object = "WMCore.ReqMgr.webgui.frontpage.FrontPage"
-ui.static_content_dir = "/data/current/apps/%s/data" % main.application
+ui.static_content_dir = path.join(path.abspath(__file__.rsplit('/', 3)[0]),"apps",main.application,"data")
