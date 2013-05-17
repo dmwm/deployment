@@ -3,13 +3,14 @@
 ##H Usage: manage ACTION [SECURITY-STRING]
 ##H
 ##H Available actions:
-##H   help        show this help
-##H   version     get current version of the service
-##H   status      show current service's status
-##H   sysboot     start server from crond if not running
-##H   restart     (re)start the service
-##H   start       (re)start the service
-##H   stop        stop the service
+##H   help              show this help
+##H   version           get current version of the service
+##H   status            show current service's status
+##H   sysboot           start server from crond if not running
+##H   restart           (re)start the service
+##H   updateversions    update database with ScramArchs/CMSSW releases
+##H   start             (re)start the service
+##H   stop              stop the service
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/ReqMgrSystemDesign
@@ -93,18 +94,11 @@ check()
 }
 
 
-# TODO
-# make sure the CMSSW_VERSIONS are up to date
-# just a placeholder now
-# this is how ReqMgr1 retrived CMSSW versions and ScramArchs from CMS tag
-# collector, Diego says asynchronous communication with tag collector should
-# be preserved and info retrieved into private DB (due TC instability)
-# was run as a cron job
-#updateversions()
-#{
-#  cd $STATEDIR
-#    requestDbAdmin add -c $CFGFILE -v all
-#}
+updateversions()
+{
+  cd $STATEDIR
+  reqmgr-sw-update $CFGFILE
+}
 
 
 # Main routine, perform action requested on command line.
@@ -128,10 +122,10 @@ case ${1:-status} in
     stop
     ;;
 
-  #updateversions )
-  #  check "$2"
-  #  updateversions
-  #  ;;
+  updateversions )
+    check "$2"
+    updateversions
+    ;;
 
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0

@@ -8,7 +8,10 @@ source ./setup.sh
 # repeated running restarts the server
 # state is work directory
 bin/wmc-httpd -r -d DIR -l DIR/reqmgr.log ../deployment/reqmgr2/config-localhost.py
+
 """
+
+
 import os
 
 # load main production ReqMgr2 configuration file
@@ -26,4 +29,4 @@ config.main.tools.cms_auth.policy = "dangerously_insecure"
 first_part = os.path.abspath(__file__.rsplit('/', 3)[0])
 config.views.ui.static_content_dir = os.path.join(first_part, "WMCore/src/data")
 
-config.views.resthub.couch_host = os.getenv("COUCHURL", None)
+config.views.restapihub.couch_host = os.getenv("COUCHURL", None)
