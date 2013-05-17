@@ -1,7 +1,10 @@
 """
 ReqMgr only configuration file.
 Everything configurable in ReqMgr is defined here.
+
 """
+
+
 from WMCore.Configuration import Configuration
 from os import path
 
@@ -12,7 +15,7 @@ srv = main.section_("server")
 srv.thread_pool = 30
 main.application = "reqmgr2"
 main.port = 8246 # main application port it listens on
-main.index = "resthub"
+main.index = "restapihub"
 # Defaults to allow any CMS authenticated user. Write APIs should require
 # additional roles in SiteDB (i.e. "Admin" role for the "ReqMgr" group)
 main.authz_defaults = {"role": None, "group": None, "site": None}
@@ -30,33 +33,37 @@ app.title = "CMS Request Manager (ReqMgr)"
 views = config.section_("views")
 
 # redirector for the REST API implemented handlers
-resthub = views.section_("resthub")
-resthub.object = "WMCore.ReqMgr.service.hub.Hub"
+restapihub = views.section_("restapihub")
+restapihub.object = "WMCore.reqmgr.service.restapihub.RestApiHub"
 # The couch host is defined during deployment time.
-resthub.couch_host = @@COUCH_HOST@@
+restapihub.couch_host = "@@COUCH_HOST@@"
 # practical to have this kind of configuration values not in
 # service related RPM (difficult/impossible to change in CMS web
 # deployment) but in the deployment configuration for the service
-resthub.sitedb_url = "https://cmsweb.cern.ch/sitedb/json/index/CEtoCMSName?name"
+restapihub.sitedb_url = "https://cmsweb.cern.ch/sitedb/json/index/CEtoCMSName?name"
 # main ReqMgr CouchDB database containing all requests with spec files attached
-resthub.couch_reqmgr_db = "reqmgr_workload_cache"
+restapihub.couch_reqmgr_db = "reqmgr_workload_cache"
+# ReqMgr database containing groups, teams, software, etc
+restapihub.couch_reqmgr_aux_db = "reqmgr_auxiliary"
 # ConfigCache - database with configuration documents
-resthub.couch_config_cache_db = "reqmgr_config_cache"
-resthub.couch_workload_summary_db = "workloadsummary"
-resthub.couch_wmstats_db = "wmstats"
+restapihub.couch_config_cache_db = "reqmgr_config_cache"
+restapihub.couch_workload_summary_db = "workloadsummary"
+restapihub.couch_wmstats_db = "wmstats"
 # number of past days since when to display requests in the default view
-resthub.default_view_requests_since_num_days = 30 # days
-"""
-TODO:
-- add info on meta-data database in couch (request states, teams, etc)
-- add url to fetch users, roles, groups from sitedb (if necessary)
-- add information about caching and page expiration
-- active.create.cmsswDefaultVersion = 'CMSSW_5_2_5' should be configurable this way?
-    (it's indeed used on the web GUI request create page)
-"""
-resthub.tag_collector_url = "https://cmstags.cern.ch/tc/ReleasesXML/?anytype=1"
+restapihub.default_view_requests_since_num_days = 30 # days
+# resource to fetch CMS software versions and scramarch info from
+restapihub.tag_collector_url = "https://cmstags.cern.ch/tc/ReleasesXML/?anytype=1"
+# another source at TC, returns directly JSON, but strangely formatted (e.g.
+# keys are not present at easy item but defined in a dedicated item ...)
+# https://cmstags.cern.ch/tc/getReleasesInformation?release_state=Announced
+
+# request related settings (e.g. default injection arguments)
+restapihub.default_sw_version = "CMSSW_5_2_5"
+restapihub.default_sw_scramarch = "slc5_amd64_gcc434"
+restapihub.dqm_url = "https://cmsweb.cern.ch/dqm/dev"
+restapihub.dbs_url = "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet"
 
 # web user interface
 ui = views.section_("ui")
-ui.object = "WMCore.ReqMgr.webgui.frontpage.FrontPage"
+ui.object = "WMCore.reqmgr.webgui.frontpage.FrontPage"
 ui.static_content_dir = path.join(path.abspath(__file__.rsplit('/', 3)[0]),"apps",main.application,"data")
