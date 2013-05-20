@@ -2,7 +2,7 @@
 ^/auth/complete/dqm/(?:offline|caf)(?:/|$) vocms138.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms139.cern.ch
 ^/auth/complete/dqm/dev(?:/|$) vocms133.cern.ch
-^/auth/complete/(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary)(?:/|$) vocms140.cern.ch :affinity
+^/auth/complete/(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms140.cern.ch :affinity
 ^/auth/complete/sitedb/data/[a-z]+/hnsync vocms161.cern.ch
 ^/auth/complete/(?:filemover|das)(?:/|$) vocms140.cern.ch
 ^/auth/complete/crabcache(?:/|$) vocms139.cern.ch
