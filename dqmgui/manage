@@ -725,7 +725,7 @@ backup()
   echo "Starting $HOST DQMGUI backup on $(date)"
   tarfile=dqmgui_${HOST}_$(date +%Y%m%d-%H%M).tar
   # FIXME: stop the agents vidDQMImportDaemon visDQMDeleteDaemon to make the index read only
-  tar cf - -C $STATEDIR . | rfcp - $archdir/$tarfile ||
+  tar cf - -C $STATEDIR/${FLAVOR%%-*}/ix128 . | rfcp - $archdir/$tarfile ||
     { echo "Could not rfcp to $archdir/$tarfile. Backup failed." 1>&2; exit 21; }
   echo "Completed copying backup to castor on $(date)."
   # FIXME: start the agents vidDQMImportDaemon visDQMDeleteDaemon if they were running before
