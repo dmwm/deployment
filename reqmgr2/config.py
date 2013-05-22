@@ -34,12 +34,13 @@ views = config.section_("views")
 
 # redirector for the REST API implemented handlers
 restapihub = views.section_("restapihub")
-restapihub.object = "WMCore.reqmgr.service.restapihub.RestApiHub"
+restapihub.object = "WMCore.ReqMgr.Service.RestApiHub.RestApiHub"
 # The couch host is defined during deployment time.
 restapihub.couch_host = "@@COUCH_HOST@@"
 # practical to have this kind of configuration values not in
 # service related RPM (difficult/impossible to change in CMS web
 # deployment) but in the deployment configuration for the service
+# this needs to be changed to SiteDB v2 API
 restapihub.sitedb_url = "https://cmsweb.cern.ch/sitedb/json/index/CEtoCMSName?name"
 # main ReqMgr CouchDB database containing all requests with spec files attached
 restapihub.couch_reqmgr_db = "reqmgr_workload_cache"
@@ -65,5 +66,8 @@ restapihub.dbs_url = "http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSS
 
 # web user interface
 ui = views.section_("ui")
-ui.object = "WMCore.reqmgr.webgui.frontpage.FrontPage"
-ui.static_content_dir = path.join(path.abspath(__file__.rsplit('/', 3)[0]),"apps",main.application,"data")
+ui.object = "WMCore.ReqMgr.WebGui.FrontPage.FrontPage"
+ui.static_content_dir = path.join(path.abspath(__file__.rsplit('/', 3)[0]),
+                                 "apps",
+                                 main.application,
+                                 "data")
