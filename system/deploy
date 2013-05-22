@@ -108,7 +108,8 @@ system_groups_and_accounts()
             T:100038:_reqmon    T:100039:_crabserver  T:100040:_crabcache  \
             T:100041:_dmwmmon   T:100042:_an_reqmgr   T:100043:_an_workqueue\
             T:100044:_an_reqmon T:100045:_t0wmadatasvc T:100046:_dbsmigration\
-            T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver; do
+            T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver \
+            T:100050:_gitweb; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -145,6 +146,7 @@ system_groups_and_accounts()
   add_local_user 100047 _t0_reqmon    ,_config "ReqMon App for T0"
   add_local_user 100048 _reqmgr2      ,_config "ReqMgr2 App"
   add_local_user 100049 _acdcserver   ,_config "ACDC Server App"
+  add_local_user 100050 _gitweb       ,_config "GitWeb App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
@@ -300,7 +302,7 @@ deploy_system_post()
                _mongodb _reqmgr _workqueue _configcache _t0datasvc _reqmon \
                _crabserver _crabcache _dmwmmon _an_reqmgr _an_workqueue \
                _an_reqmon _t0wmadatasvc _dbsmigration _t0_reqmon _reqmgr2 \
-               _acdcserver; do
+               _acdcserver _gitweb; do
         case " $G " in *" $g "* ) ;; * ) note "ERROR: no $g group"; exit 1;; esac
       done
 

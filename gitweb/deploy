@@ -1,0 +1,47 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_gitweb_deps()
+{
+  deploy backend
+}
+
+deploy_gitweb_prep()
+{
+  mkproj reps tmp
+}
+
+deploy_gitweb_sw()
+{
+  deploy_pkg comp external+gitweb
+  perl -p -i -e "s,\@STATEDIR\@,$project_state,g" $project_config/gitweb_config.perl
+}
+
+deploy_gitweb_post()
+{
+  case $host in vocms13[89] | vocms140 ) disable;; * ) enable;; esac
+
+  rm -fr $PWD/{htdocs,etc,var}
+  (set -e
+   . $root/current/apps/gitweb/etc/profile.d/init.sh
+   mkserver                                          \
+   -r $PWD                                           \
+   -l $project_logs                                  \
+   -a $APACHE2_ROOT                                  \
+   -d $GITWEB_ROOT/htdocs                            \
+   -p $project_config/httpd-mpm.conf                 \
+   -c $project_config/httpd-gitweb.conf              \
+   -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"            \
+   -e "$GITWEB_ROOT/etc/profile.d/*.sh"              \
+   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so)
+  [ $? = 0 ]
+
+  setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
+  setgroup ug+rw,o-w _gitweb $PWD/var
+
+  (mkcrontab; sysboot) | crontab -
+
+  klist -s # must have afs kerberos token
+  (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
+   echo "6 */3 * * * $host $project_config/manage get siteconf 'I did read documentation'"
+   echo "6 */3 * * * $host $project_config/manage get diegotest 'I did read documentation'"
+  ) | acrontab
+}
