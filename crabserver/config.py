@@ -1,5 +1,4 @@
 from WMCore.Configuration import Configuration
-from CRABServerAuth import connectUrl
 
 conf = Configuration()
 main = conf.section_('main')
@@ -21,45 +20,12 @@ views = conf.section_('views')
 
 data = views.section_('data')
 data.object = 'CRABInterface.RESTBaseAPI.RESTBaseAPI'
-
-#depending on deployment type using a different url for monitoring
-import re, socket
-HOST = socket.gethostname().lower()
-if re.match(r"^vocms(136|16[13])", HOST):
-    data.monurl = "https://cmsweb.cern.ch/couchdb/"
-    data.asomonurl = 'https://cmsweb.cern.ch/couchdb/'
-    data.configcacheurl = 'https://cmsweb.cern.ch/couchdb'
-    data.reqmgrurl = 'https://cmsweb.cern.ch/couchdb'
-elif re.match(r"^vocms13[23]", HOST):
-    data.monurl = "https://cmsweb-testbed.cern.ch/couchdb/"
-    data.asomonurl = 'https://cmsweb-testbed.cern.ch/couchdb/'
-    data.configcacheurl = 'https://cmsweb-testbed.cern.ch/couchdb'
-    data.reqmgrurl = 'https://cmsweb-testbed.cern.ch/couchdb'
-elif re.match(r"^vocms127", HOST):
-    data.monurl = "https://cmsweb-dev.cern.ch/couchdb/"
-    data.asomonurl = 'https://cmsweb-dev.cern.ch/couchdb/'
-    data.configcacheurl = 'https://cmsweb-dev.cern.ch/couchdb'
-    data.reqmgrurl = 'https://cmsweb-dev.cern.ch/couchdb'
-else:
-    data.monurl = "http://localhost:5984"
-    data.asomonurl = 'http://localhost:5984'
-    data.configcacheurl = 'https://%s/couchdb' % HOST
-    data.reqmgrurl = 'https://%s/couchdb' % HOST
-data.monname = 'analysis_wmstats'
-data.asomonname = 'user_monitoring_asynctransfer'
-data.configcachename = 'analysis_reqmgr_config_cache'
-data.reqmgrname = 'analysis_reqmgr_workload_cache'
-# these two below are currently needed for only to startup
-# if the value is not set, resubmission won't be possible
-data.acdcurl = 'http://host:5984'
-data.acdcdb = 'wmagent_acdc'
-
+data.transformation = 'http://common-analysis-framework.cern.ch/CMSRunAnaly.sh'
 data.phedexurl = 'https://cmsweb.cern.ch/phedex/datasvc/xml/prod/'
 data.dbsurl = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
 data.defaultBlacklist = ['T0_CH_CERN']
+data.serverhostcert = "%s/auth/crabserver/dmwm-service-cert.pem" % __file__.rsplit('/', 3)[0]
+data.serverhostkey = "%s/auth/crabserver/dmwm-service-key.pem" % __file__.rsplit('/', 3)[0]
 data.delegatedn = []
-
-data.connectUrl = connectUrl
-
-conf.section_("CoreDatabase")
-conf.CoreDatabase.connectUrl = connectUrl
+data.credpath = '%s/state/crabserver/proxy/' % __file__.rsplit('/', 4)[0]
+data.db = 'CRABServerAuth.dbconfig'
