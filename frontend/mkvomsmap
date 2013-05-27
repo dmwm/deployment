@@ -54,7 +54,7 @@ class GridMapData(sax_handler.ContentHandler):
 
   def endElement(self, name):
     if self.save:
-      self.users.add(str(self.name))
+      self.users.add(unicode(self.name).encode("utf-8"))
     self.save = False
 
   def characters(self, content):
