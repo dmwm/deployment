@@ -5,7 +5,6 @@ deploy_crabserver_deps()
 {
   deploy backend
   deploy wmcore-auth
-  deploy couchdb
 }
 
 deploy_crabserver_prep()
@@ -31,16 +30,6 @@ deploy_crabserver_sw()
 deploy_crabserver_post()
 {
   case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
-
-  # Tell couchdb to pick up crabserver on the next restart
-  local couchdb_config=$root/current/config/couchdb
-  local couchdb_state=$root/state/couchdb
-  local crabsrvapp=$root/current/apps/crabserver
-
-  for area in stagingarea replication; do
-    rm -f $couchdb_state/$area/crabserver
-    touch $couchdb_state/$area/crabserver
-  done
 
   (mkcrontab; sysboot) | crontab -
 }
