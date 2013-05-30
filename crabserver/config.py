@@ -21,6 +21,7 @@ views = conf.section_('views')
 data = views.section_('data')
 data.object = 'CRABInterface.RESTBaseAPI.RESTBaseAPI'
 data.transformation = 'http://common-analysis-framework.cern.ch/CMSRunAnaly.sh'
+data.workflowManager = 'PandaDataWorkflow'
 data.phedexurl = 'https://cmsweb.cern.ch/phedex/datasvc/xml/prod/'
 data.dbsurl = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
 data.defaultBlacklist = ['T0_CH_CERN']
