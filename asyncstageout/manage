@@ -109,6 +109,9 @@ load_secrets_file(){
     if [ ! "x$MATCH_OPS_PROXY" == "x" ]; then
         OPS_PROXY=$MATCH_OPS_PROXY;
     fi
+    if [ ! "x$MATCH_AMQ_AUTH_FILE" == "x" ]; then
+        AMQ_AUTH_FILE=$MATCH_AMQ_AUTH_FILE;
+    fi
 }
 
 print_settings(){
@@ -358,4 +361,3 @@ case $1 in
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
     exit 1 ;;
 esac
-
