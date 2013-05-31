@@ -19,7 +19,7 @@ deploy_frontend_sw()
     deploy_frontend_fakeauth $project_auth/users.db
   fi
 
-  local backends opts name
+  local backends opts name user
   case $variant in
     prod )
       opts="" name="-n cmsweb.cern.ch"
@@ -34,6 +34,7 @@ deploy_frontend_sw()
       opts="-DTEST" name=""
       backends=backends-dev.txt ;;
   esac
+  if $nogroups; then user=; else user="-u _frontend:_frontend"; fi
 
   (. $root/current/apps/frontend/etc/profile.d/init.sh
    export AUTH_JSON_MAP=$PWD/etc/authmap.json
@@ -44,7 +45,7 @@ deploy_frontend_sw()
    -r $PWD                                            \
    -l $project_logs                                   \
    -a $APACHE2_ROOT                                   \
-   -u _frontend:_frontend                             \
+   $user                                              \
    -o "$opts"                                         \
    -p $project_config/mpm.conf                        \
    -c $project_config/frontend.conf                   \
@@ -63,14 +64,28 @@ deploy_frontend_sw()
 deploy_frontend_post()
 {
   local certs
-  if [ -r $root/certs/hostcert.pem ]; then
+  if [ -r /etc/grid-security/hostkey.pem ]; then
+    certs=/etc/grid-security
+  elif [ -r $root/certs/hostkey.pem ]; then
     certs=$root/certs
-  elif [ -r /data/certs/hostcert.pem ]; then
+  elif [ -r /data/certs/hostkey.pem ]; then
     certs=/data/certs
   else
-    note "ERROR: cannot find hostcert to use"
+    note "ERROR: cannot find hostcert/key to use"
     exit 1
   fi
+
+  # Do not require root access when running on single-user mode
+  if $nogroups; then
+    perl -p -i \
+      -e 's,Listen 80,Listen 8080,g;'                                          \
+      -e 's,\*:80,\*:8080,g;'                                                  \
+      -e 's,Listen 443,Listen 8443,g;'                                         \
+      -e 's,\*:443,\*:8443,g;'                                                 \
+      -e "s,SSLCertificateFile.*,SSLCertificateFile $certs/hostcert.pem,g;"    \
+      -e "s,SSLCertificateKeyFile.*,SSLCertificateKeyFile $certs/hostkey.pem,g"\
+      $PWD/server.conf
+  else :; fi
 
   case $host in * ) enable ;; esac
   (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
@@ -91,14 +106,16 @@ deploy_frontend_post()
   (crontab -l | grep -e '^[A-Z0-9_]*=' -e $project_config/ |
    perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
 
-  sudo rm -f $PWD/etc/httpd.plist
+  $nogroups || sudo rm -f $PWD/etc/httpd.plist
   perl -p -i -e "s|\@STATEDIR\@|$PWD|g" \
     < $project_config/httpd.plist.in \
     > $PWD/etc/httpd.plist
   chmod 644 $PWD/etc/httpd.plist
-  sudo chown root:$(id -gn) $PWD/etc/httpd.plist
+  $nogroups || sudo chown root:$(id -gn) $PWD/etc/httpd.plist
 
-  if [ -d /etc/rc.d/init.d ]; then
+  if $nogroups; then
+    :
+  elif [ -d /etc/rc.d/init.d ]; then
     sudo rm -f /etc/rc.d/init.d/httpd
     sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
     sudo /sbin/chkconfig --add httpd

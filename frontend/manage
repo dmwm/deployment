@@ -14,26 +14,38 @@
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/ServiceApache
 
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+STATEDIR=$TOP/state/$ME
+
+# Detect if we're in single user mode
+case $(uname) in
+  Linux ) t="/etc/rc.d/init.d/httpd";;
+  Darwin) t="/Library/LaunchDaemons/ch.cern.cms.httpd.plist";;
+esac
+[ "$t" -ef "$STATEDIR/etc/httpd" ] && groups=true || groups=false
+
 case ${1:-status} in
   status | graceful | stop | configtest )
-    case $(uname) in
-      Linux )
-        sudo /sbin/service httpd $1 ;;
-      Darwin )
-        ME=$(basename $(dirname $0))
-        TOP=$(cd $(dirname $0)/../../.. && pwd)
-        sudo $TOP/state/$ME/etc/httpd $1 ;;
-    esac
+    if $groups; then
+      case $(uname) in
+        Linux  ) sudo /sbin/service httpd $1 ;;
+        Darwin ) sudo $STATEDIR/etc/httpd $1 ;;
+      esac
+    else
+      $STATEDIR/etc/httpd $1
+    fi
     ;;
 
   start | restart )
-    case $(uname) in
-      Linux )
-        sudo /sbin/service httpd restart ;;
-      Darwin )
-        sudo launchctl unload -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist
-        sudo launchctl load -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist ;;
-    esac
+    if $groups; then
+      case $(uname) in
+        Linux  ) sudo /sbin/service httpd restart ;;
+        Darwin ) for a in unload load; do sudo launchctl $a -w $t; done ;;
+      esac
+    else
+      $STATEDIR/etc/httpd restart
+    fi
     ;;
 
   help )
