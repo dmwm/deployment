@@ -14,26 +14,46 @@
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/ServiceApache
 
+# Detect if we're in single user mode
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+STATEDIR=$TOP/state/$ME
+
+nogroups=false
+case $(uname) in
+    Linux )
+        [ "X$(readlink -f /etc/rc.d/init.d/httpd)" = "X$(readlink -f $STATEDIR/etc/httpd)" ] || nogroups=true ;;
+    Darwin )
+        [ "X$(readlink -f /Library/LaunchDaemons/ch.cern.cms.httpd.plist)" = "X$(readlink -f $STATEDIR/etc/httpd.plist)" ] || nogroups=true ;;
+esac
+
 case ${1:-status} in
   status | graceful | stop | configtest )
-    case $(uname) in
-      Linux )
-        sudo /sbin/service httpd $1 ;;
-      Darwin )
-        ME=$(basename $(dirname $0))
-        TOP=$(cd $(dirname $0)/../../.. && pwd)
-        sudo $TOP/state/$ME/etc/httpd $1 ;;
-    esac
+    if [ $nogroups ]; then
+        $STATEDIR/etc/httpd $1
+    else
+        case $(uname) in
+          Linux )
+            sudo /sbin/service httpd $1 ;;
+          Darwin )
+            sudo $TOP/state/$ME/etc/httpd $1 ;;
+        esac
+    fi
     ;;
 
   start | restart )
-    case $(uname) in
-      Linux )
-        sudo /sbin/service httpd restart ;;
-      Darwin )
-        sudo launchctl unload -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist
-        sudo launchctl load -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist ;;
-    esac
+    if [ $nogroups ]; then
+        $STATEDIR/etc/httpd restart
+    else
+        case $(uname) in
+          Linux )
+            sudo /sbin/service httpd restart 
+            ;;
+          Darwin )
+            sudo launchctl unload -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist
+            sudo launchctl load -w /Library/LaunchDaemons/ch.cern.cms.httpd.plist ;;
+        esac
+    fi
     ;;
 
   help )
