@@ -64,7 +64,7 @@ deploy_dqmgui_post()
   case $host:$root in
     vocms13[389]:/data/srv | vocms127:/data/srv )
       klist -s # must have afs kerberos token
-      (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
+      (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
        # Enable the afs-sync only on vocms138
        [ "$host" != "vocms138" ] ||
           echo "6 */3 * * * $host $project_config/manage -q xstart afs-sync 'I did read documentation'"
@@ -72,12 +72,12 @@ deploy_dqmgui_post()
        # Set the backup to castor. For now, enable it only in dev, testbed
        # and the relval server.
        case $host in
-         vocms127 | vocms133 ) crontime="30 3 * * 0" ;;
-         vocms139 ) crontime="30 3 1-7 * 0" ;;
-         * ) crontime="" ;;
+         vocms127 | vocms133 ) cronentry="30 3 * * 0 $host" ;;
+         vocms139 ) cronentry="30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" ;;
+         * ) cronentry="" ;;
        esac
-       [ -z "$crontime" ] ||
-         echo "$crontime $host $project_config/manage backup /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'"
+       [ -z "$cronentry" ] ||
+         echo "$cronentry $project_config/manage backup /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'"
       ) | acrontab
       ;;
   esac

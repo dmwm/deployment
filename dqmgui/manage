@@ -760,14 +760,14 @@ getconfigs
 # run as non-$ALTERNATIVE_USER account, afs-sync and castor stageout must be under
 # $ALTERNATIVE_USER, refuse to run otherwise.
 case $FLAVOR:$(id -un):$1:$2 in
-  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:*:stageout )
+  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:*:stageout | *:$ALTERNATIVE_USER:backup:* )
     ;;
 
   offline-caf:$ALTERNATIVE_USER:* | offline-caf:*:afs-sync | offline-caf:*:stageout )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 
-  relval:$ALTERNATIVE_USER:* | relval:*:afs-sync | relval:*:stageout )
+  relval:$ALTERNATIVE_USER:* | relval:*:afs-sync | relval:*:stageout | relval:*:backup:* )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 esac
