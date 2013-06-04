@@ -5,7 +5,6 @@ deploy_crabserver_deps()
 {
   deploy backend
   deploy wmcore-auth
-  deploy couchdb
 }
 
 deploy_crabserver_prep()
@@ -17,11 +16,11 @@ deploy_crabserver_prep()
 deploy_crabserver_sw()
 {
   local secrets=
-  case $variant in prod ) secrets= ;; preprod ) secrets=Preprod ;; * ) secrets=Dev ;; esac
+  case $variant in prod | preprod ) secrets= ;; * ) secrets=-dev ;; esac
   deploy_pkg \
      -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
      -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-     -a CRABServerAuth.py:an_reqmgr/ReqMgrSecrets${secrets}.py \
+     -a CRABServerAuth.py:crabserver/CRABServerAuth${secrets}.py \
      comp cms+crabserver
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
@@ -31,16 +30,6 @@ deploy_crabserver_sw()
 deploy_crabserver_post()
 {
   case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
-
-  # Tell couchdb to pick up crabserver on the next restart
-  local couchdb_config=$root/current/config/couchdb
-  local couchdb_state=$root/state/couchdb
-  local crabsrvapp=$root/current/apps/crabserver
-
-  for area in stagingarea replication; do
-    rm -f $couchdb_state/$area/crabserver
-    touch $couchdb_state/$area/crabserver
-  done
 
   (mkcrontab; sysboot) | crontab -
 }
@@ -52,7 +41,43 @@ deploy_crabserver_auth()
       echo "replace me with your dmwm service certificate" ;;
     */*-key.pem )
       echo "replace me with your dmwm service key" ;;
-    */CRABServerAuth.py )
-      echo 'connectUrl = "oracle://FOO:BAR@ZOINKS"' ;;
+    */CRABServerAuth*.py )
+      cat <<- \EOF
+import cx_Oracle as DB
+import socket
+fqdn = socket.getfqdn().lower()
+dbconfig = {'preprod': {'.title': 'Pre-production',
+                        '.order': 1,
+                        '*': {'clientid': 'cmsweb-preprod@%s' %(fqdn),
+                              'dsn': 'devdb11_FIXME',
+                              'liveness': 'select sysdate from dual',
+                              'password': 'FIXME',
+                              'schema': 'cmsweb_analysis_preprod',
+                              'timeout': 300,
+                              'trace': True,
+                              'type': DB,
+                              'user': 'cmsweb_analysis_preprod_FIXME'}},
+            'prod': {'.title': 'Production',
+                     '.order': 0,
+                     'GET': {'clientid': 'cmsweb-prod-r@%s' %(fqdn),
+                             'dsn': 'cmsr_FIXME',
+                             'liveness': 'select sysdate from dual',
+                             'password': 'FIXME',
+                             'schema': 'cms_analysis_reqmgr_r',
+                             'timeout': 300,
+                             'trace': True,
+                             'type': DB,
+                             'user': 'cms_analysis_reqmgr_r_FIXME'},
+                     '*':  {'clientid': 'cmsweb-prod-w@%s' %(fqdn),
+                            'dsn': 'cmsr_FIXME',
+                            'liveness': 'select sysdate from dual',
+                            'password': 'FIXME',
+                            'schema': 'cms_analysis_reqmgr_w',
+                            'timeout': 300,
+                            'trace': True,
+                            'type': DB,
+                            'user': 'cms_analysis_reqmgr_w_FIXME'}}}
+EOF
+      ;;
   esac
 }
