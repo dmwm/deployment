@@ -97,7 +97,7 @@ check()
 updateversions()
 {
   cd $STATEDIR
-  reqmgr-sw-update $CFGFILE 2>&1 | grep ERROR
+  reqmgr-sw-update $CFGFILE
 }
 
 
