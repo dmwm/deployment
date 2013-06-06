@@ -29,4 +29,4 @@ config.main.tools.cms_auth.policy = "dangerously_insecure"
 first_part = os.path.abspath(__file__.rsplit('/', 3)[0])
 config.views.ui.static_content_dir = os.path.join(first_part, "WMCore/src/data")
 
-config.views.restapihub.couch_host = os.getenv("COUCHURL", None)
+config.views.data.couch_host = os.getenv("COUCHURL", None)
