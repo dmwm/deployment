@@ -24,7 +24,6 @@ views = conf.section_('views')
 
 data = views.section_('data')
 data.object = 'CRABInterface.RESTBaseAPI.RESTBaseAPI'
-data.transformation = 'http://common-analysis-framework.cern.ch/CMSRunAnaly.sh'
 data.phedexurl = 'https://cmsweb.cern.ch/phedex/datasvc/xml/prod/'
 data.dbsurl = 'http://cmsdbsprod.cern.ch/cms_dbs_prod_global/servlet/DBSServlet'
 data.defaultBlacklist = ['T0_CH_CERN']
@@ -34,11 +33,4 @@ data.credpath = '%s/state/crabserver/proxy/' % __file__.rsplit('/', 4)[0]
 data.db = 'CRABServerAuth.dbconfig'
 data.workflowManager = 'PandaDataWorkflow'
 
-extconfig = 'cmsweb-dev'
-if re.match(r"^vocms(?:10[67]|13[689]|140|16[13])\.cern\.ch$", myhost):
-  extconfig = "cmsweb-prod"
-elif re.match(r"^vocms(?:13[23])\.cern\.ch$", myhost):
-  extconfig = "cmsweb-preprod"
-elif re.match(r"^vocms127\.cern\.ch$", myhost):
-  extconfig = "cmsweb-dev"
-data.extconfigurl = 'http://git.cern.ch/pubweb/?p=CAFServicesConfig.git;a=blob_plain;f=%s/rest-config.json' %extconfig
+data.extconfigurl = 'http://git.cern.ch/pubweb/?p=CAFServicesConfig.git;a=blob_plain;f=cmsweb-rest-config.json'

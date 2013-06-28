@@ -25,6 +25,9 @@ deploy_crabserver_sw()
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
+
+  case $variant in prod | preprod | dev ) extconfig=$variant;; *) extconfig=dev;; esac
+  echo "data.mode = \"cmsweb-$extconfig\"" >> $project_config/config.py
 }
 
 deploy_crabserver_post()
