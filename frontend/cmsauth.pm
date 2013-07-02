@@ -414,7 +414,7 @@ sub auth_trouble_handler : method
   }
   elsif ($dn
 	 && (($dn =~ m{(.*?)(?:/CN=\d+)+$}o && exists $vocms{$1})
-	     || ($dn =~ m{(.*?)(?:(?:/CN=proxy)+|(/CN=limited proxy))$}o
+	     || ($dn =~ m{(.*?)(?:(?:/CN=proxy)|(/CN=limited proxy))+$}o
                  && exists $vocms{$1})))
   {
     $message .= "<p>Your certificate is a " . ($2 ? "limited ": "")
@@ -890,7 +890,7 @@ sub authn_cert($$)
     $method = "X509Proxy";
   }
   elsif ($$opts{ALLOW_LIMITED_PROXY}
-         && $dn =~ m{(.*?)(?:/CN=proxy)*/CN=limited proxy$}o
+         && $dn =~ m{(.*?)(?:/CN=proxy|/CN=limited proxy)+$}o
          && exists $vocms{$1})
   {
     $dn = $1;
