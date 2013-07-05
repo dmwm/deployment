@@ -94,7 +94,7 @@ get()
     { echo "You must have a valid kerberos token to fetch git repositories from CERN/GIT." 1>&2; exit 20; }
   cd $STATEDIR/reps
   if [ -d "$repo" ]; then
-    (cd $repo; git pull --ff -q)
+    (cd $repo; git pull --ff -q) 2> /dev/null
   else
     git clone https://:@git.cern.ch/kerberos/$repo
   fi
