@@ -49,6 +49,9 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export DAS_CONFIG=$CFGDIR/das_cms.py
+export DAS_KWS_IR_INDEX=$STATEDIR/das_kws_index
+# TODO: this is slightly hacky
+mkdir -p $DAS_KWS_IR_INDEX
 cd $STATEDIR
 
 # Start service conditionally on crond restart.
@@ -89,6 +92,17 @@ status()
   fi
 }
 
+# Bootstrap keyword search
+bootstrap()
+{
+    echo "starting keyword search bootstrap (values, fields)"
+    # TODO: would full path be better
+    das_bootstrap_kws
+    echo "bootstrap done"
+}
+
+
+
 # Verify the security string.
 check()
 {
@@ -123,6 +137,10 @@ case ${1:-status} in
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
     ;;
+    
+  bootstrap )
+    bootstrap
+    ;;    
 
   version )
     echo "$DAS_VERSION"
