@@ -70,7 +70,7 @@ case $STAGE in
     $PWD/cfg/Deploy $ARCH $RELEASE -H $WHAT $REPO -t $VER -a -s post $PWD $PKGS
     ;;
 
-  start | status | stop )
+  start | status | stop | bootstrap )
     set -e
     for f in enabled/$WHAT; do
       app=${f#*/}; case $app in frontend) u=root ;; * ) u=_$app ;; esac
