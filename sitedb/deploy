@@ -29,7 +29,7 @@ deploy_sitedb_post()
    sysboot
    # hack: set cronjob to restart sitedb due to bug on the ldap synchronization
    case $host in
-     vocms13[2389] | vocms140 | vocms16[13] ) ;;
+     vocms34 | vocms13[2389] | vocms140 | vocms16[13] ) ;;
      * )
        local cmd="$project_config/manage start 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _sitedb bashs -l -c \"${cmd}\""

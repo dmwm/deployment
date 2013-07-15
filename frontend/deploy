@@ -82,8 +82,8 @@ deploy_frontend_post()
         "PYTHONPATH=$project_auth:\$PYTHONPATH $project_config/mkauthmap" \
         "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
    case $host in
-     vocms105 | vocms135 | vocms162 ) ;;
-     vocms65 | vocms160 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms162" ;;
+     vocms135 | vocms162 ) ;;
+     vocms160 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms162" ;;
      vocms134 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms135" ;;
      *)        echo "23 */6 * * * $project_config/update-keys $PWD" ;;
    esac) | crontab -

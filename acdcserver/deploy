@@ -49,7 +49,7 @@ deploy_acdcserver_post()
   local cleanup="0 0 1 * * $cmd"
 
   (mkcrontab
-   case $host in vocms13[2689] | vocms16[13]) ;; * ) echo "${cleanup}" ;; esac
+   case $host in vocms34 | vocms13[2689] | vocms16[13]) ;; * ) echo "${cleanup}" ;; esac
   ) | crontab -
 }
 

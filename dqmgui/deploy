@@ -48,7 +48,7 @@ deploy_dqmgui_sw()
 
 deploy_dqmgui_post()
 {
-  case $host in vocms10[67] | vocms13[26] | vocms140 | vocms16[13] ) disable ;; * ) enable ;; esac
+  case $host in vocms34 | vocms13[26] | vocms140 | vocms16[13] ) disable ;; * ) enable ;; esac
   case $variant in bare ) return ;; esac
 
   (mkcrontab; sysboot

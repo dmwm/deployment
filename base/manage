@@ -41,7 +41,7 @@ COLOR_NORMAL="\\033[0;39m"
 export SEC_MOD_INI=$ROOT/auth/sitedb/security.ini
 export YUI_ROOT
 case $(hostname -s | tr '[:upper:]' '[:lower:]') in
-  vocms10[67] | vocms136 | vocms16[13] )
+  vocms34 | vocms136 | vocms16[13] )
     NODE=https://cmsweb.cern.ch ;;
   vocms13[23] )
     NODE=https://cmsweb-testbed.cern.ch ;;

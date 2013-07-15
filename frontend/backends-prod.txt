@@ -7,4 +7,4 @@
 ^/auth/complete/(?:filemover|das)(?:/|$) vocms140.cern.ch
 ^/auth/complete/crabcache(?:/|$) vocms139.cern.ch
 ^/overview(?:/|$) vocms163.cern.ch
-^ vocms161.cern.ch|vocms163.cern.ch|vocms136.cern.ch
+^ vocms34.cern.ch|vocms136.cern.ch|vocms161.cern.ch|vocms163.cern.ch

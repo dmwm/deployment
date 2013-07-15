@@ -68,7 +68,7 @@ deploy_workqueue_post()
 
   (mkcrontab;
    case $host in
-     vocms10[67] | vocms13[2689] | vocms16[13])
+     vocms34 | vocms13[2689] | vocms16[13])
        ;;
      * )
        echo "${req_sync}"
