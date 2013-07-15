@@ -10,6 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
+##H   bootstrap   fetch dtata from services: accepted input values and what fields available in services results
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
@@ -61,6 +62,8 @@ sysboot()
   if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
       dostart=true
   fi
+  # some of the values are useful to reload from time to time, e.g. release
+  bootstrap
   $dostart && start
 }
 
@@ -96,7 +99,6 @@ status()
 bootstrap()
 {
     echo "starting keyword search bootstrap (values, fields)"
-    # TODO: would full path be better
     das_bootstrap_kws
     echo "bootstrap done"
 }
