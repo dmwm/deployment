@@ -62,17 +62,18 @@ sysboot()
   if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
       dostart=true
   fi
-  # some of the values are useful to reload from time to time, e.g. release
-  bootstrap
   $dostart && start
 }
 
 # Start the service.
 start()
 {
-  das_bootstrap_kws --only-if-needed
   echo "starting $ME"
-  python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
+  # currently I want bootstrap to finish before DAS start. so KWS would work.
+  # but if we had a way to notify DAS that bootstrap is finished it could start concurently
+  # i.e. DAS available without KWS first and KWS gets enabled only after the bootsrap
+  (das_bootstrap_kws --only-if-needed && \
+  python -u $DAS_PYTHONPATH/DAS/web/das_server.py) \
        </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
