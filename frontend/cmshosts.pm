@@ -145,6 +145,13 @@ sub reload_conf($)
                  ATTRS => [split /\s+/, $4 || ""],
 		 HASHED => [] };
 
+    # Rotate hosts randomly to avoid inbalance problem due to frequent reloads
+    for (my $i = int(rand(scalar @{$$rule{HOSTS}})); $i > 0; $i--)
+    {
+      my $host = shift(@{$$rule{HOSTS}});
+      push(@{$$rule{HOSTS}}, $host);
+    }
+
     # If we have affinity, create reverse lookup hash table.
     # Position every host HASH_DUPS times in hash-sorted order.
     if (grep /:affinity/, @{$$rule{ATTRS}})
