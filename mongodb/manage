@@ -39,34 +39,15 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/mongo/etc/profile.d/init.sh
 cd $STATEDIR
 
-# Function to clean-up and update specific DB in Mongo.
-# Accepts a single parameter in a form <dbname>_<collection_name>,
-# e.g. mapping_db. First runs the cleanup script to clean database
-# content, then uses the update script to populate new content into
-# DB, e.g. clean_mapping_db.js and update_mapping_db.js. The update
-# script contains the JSON docs to be populated.
-clean_db()
+# Update DAS maps
+updatemaps()
 {
-    set -e
-    if [ -f $STATEDIR/db/${1%_db}.ns ]; then
-        echo "Clean $1"
-        mongo --port 8230 stagingarea/clean_$1.js
-    fi
-    set +e
-}
-update_db()
-{
-  stamp=$(cat stagingarea/update_$1.js | md5sum)
-  oldstamp=$(cat stagingarea/$1-schema-stamp 2>/dev/null)
-  if [ ! -f stagingarea/$1-schema-stamp ] || [ X"$oldstamp" != X"$stamp" ]; then
-    set -e
-    clean_db $1
-    echo "Update $1"
-    db=$(echo $1 | cut -f1 -d_) coll=$(echo $1 | cut -f2 -d_)
-    mongoimport --port 8230 --db $db --collection $coll --file stagingarea/update_$1.js
-    echo "$stamp" > stagingarea/$1-schema-stamp
-    set +e
-  fi
+    # todo, read DAS MAP file name from maps.conf
+    local fcmd="$CFGDIR/fetch_das_maps.sh"
+    local fmap=`cat $CFGDIR/maps.conf`
+    local fval="$CFGDIR/das_map_validator.py"
+    local cmd="source $fcmd $fmap $fval"
+    $cmd
 }
 
 # Start service conditionally on crond restart.
@@ -105,8 +86,6 @@ start()
 
   if $started; then
     echo "$ME is ready"
-    clean_db "das_db"
-    update_db "mapping_db"
   else
     echo "$ME did not start, not cleaning nor updating."
     exit 1
@@ -160,6 +139,7 @@ case ${1:-status} in
     check "$2"
     stop
     start
+    updatemaps
     ;;
 
   status )
@@ -169,6 +149,10 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  updatemaps )
+    updatemaps
     ;;
 
   help )
