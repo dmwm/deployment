@@ -42,12 +42,59 @@ cd $STATEDIR
 # Update DAS maps
 updatemaps()
 {
-    # todo, read DAS MAP file name from maps.conf
-    local fcmd="$CFGDIR/fetch_das_maps.sh"
-    local fmap=`cat $CFGDIR/maps.conf`
-    local fval="$CFGDIR/das_map_validator.py"
-    local cmd="source $fcmd $fmap $fval"
-    $cmd
+    # names
+    das_map_src="update_das_db.js"
+    das_clean_src="clean_das_db.js"
+    val_cmd_src="das_map_validator.py"
+    stagedir=$STATEDIR/stagingarea
+
+    # get map and validator script from configuration
+    das_map=`cat $CFGDIR/maps.conf | grep $das_map_src`
+    validator=`cat $CFGDIR/maps.conf | grep $val_cmd_src`
+
+    # Fetch DAS map JSON file from given URI
+    regex='(https|http)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+    if  [ -f $das_map ]; then
+        dasmaps=$das_map
+    elif [[ $das_map =~ $regex ]]; then
+        curl -s $das_map > $stagedir/$das_map_src
+        dasmaps=$stagedir/$das_map_src
+    else
+        echo "Invalid DAS map input, please provide either URL or full file name"
+    fi
+
+    # Calculate MD5 checksum, compare it to existing one
+    stamp=$(cat $dasmaps | md5sum)
+
+    # Validate DAS map JSON file
+    $validator $dasmaps
+    validator_status=$?
+    if  [ "$validator_status" -ne "0" ]; then
+        echo "Fail DAS map validation"
+        exit 1
+    fi
+
+    # Clean-up DAS databases and prepare for deployment
+    if [ ! -f $stagedir/$das_clean_src ]; then
+cat > $stagedir/$das_clean_src << EOF
+parser = db.getSisterDB("parser");
+parser.db.drop();
+das = db.getSisterDB("das");
+das.dropDatabase();
+mapping = db.getSisterDB("mapping");
+mapping.dropDatabase();
+EOF
+    fi
+
+    # Deploy DAS map JSON file into MongoDB
+    oldstamp=$(cat $stagedir/mapping_db-schema-stamp 2>/dev/null)
+    if [ ! -f $stagedir/mapping_db-schema-stamp ] || [ X"$oldstamp" != X"$stamp" ]; then
+        set -e
+        mongo --port 8230 $stagedir/$das_clean_src
+        mongoimport --port 8230 --db mapping --collection db --file $dasmaps
+        echo "$stamp" > $stagedir/mapping_db-schema-stamp
+        set +e
+    fi
 }
 
 # Start service conditionally on crond restart.
