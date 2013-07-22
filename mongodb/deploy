@@ -18,5 +18,10 @@ deploy_mongodb_post()
 {
   local cmd="sudo -H -u _mongodb bashs -l -c '$project_config/manage updatemaps'"
   case $host in vocms10[67] | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
-  (mkcrontab; sysboot; mkcrontab; echo "0 0-23 * * * $cmd") | crontab -
+  (
+   mkcrontab; sysboot;
+   if [ -f /data/enabled/mongodb ]; then
+   mkcrontab; echo "0 0-23 * * * $cmd"
+   fi
+  ) | crontab -
 }
