@@ -50,7 +50,7 @@ updatemaps()
 
     # get map and validator script from configuration
     das_map=`cat $CFGDIR/maps.conf | grep $das_map_src`
-    validator=`cat $CFGDIR/maps.conf | grep $val_cmd_src`
+    validator=`cat $CFGDIR/maps.conf | grep $val_cmd_src | sed "s,__ROOT__,$ROOT/config/mongodb,"`
 
     # Fetch DAS map JSON file from given URI
     regex='(https|http)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
