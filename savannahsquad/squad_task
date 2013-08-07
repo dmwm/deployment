@@ -1,0 +1,64 @@
+#!/bin/sh
+
+##H Usage: squad_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   version             get current version of the service
+##H   update              call the savannah squad scripts to update site squads
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMSPublic/CompOpsMonitoringTools
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+CFGFILE=$CFGDIR/config.ini
+STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
+AUTHDIR=$ROOT/auth/$ME
+PASSWD_FILE=$AUTHDIR/secret.txt
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+EXCEPTIONS=$CFGDIR/exceptions.ini
+BLACKLIST=$CFGDIR/blacklist.ini 
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export CFGFILE
+export PASSWD_FILE
+export EXCEPTIONS
+export BLACKLIST
+
+. $ROOT/apps/mechanize/etc/profile.d/init.sh
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  update )
+    (cd $STATEDIR
+
+     # create the squads for new sites
+     $CFGDIR/createsitessavannah.py
+
+     # generate a list of cms sites
+     FILE_LIST=my_list.txt
+     $CFGDIR/createcmslistnames.py --output=$FILE_LIST
+
+     # populate the squad of each site
+     for site in $(cat $FILE_LIST); do
+       $CFGDIR/populate_squad.py --cmsname=$site -d0 -a1
+     done) >> $LOGDIR/update.log
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    . $ROOT/apps/$ME/etc/profile.d/init.sh
+    echo "${MECHANIZE_VERSION:-unknown}"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

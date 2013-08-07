@@ -1,0 +1,24 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_savannahsquad_prep()
+{
+  mkproj
+  mkproxy
+}
+
+deploy_savannahsquad_sw()
+{
+  deploy_pkg -a savannahsquad/secret.txt comp external+mechanize
+}
+
+deploy_savannahsquad_post()
+{
+  (mkcrontab
+   echo "00 */12 * * * $project_config/squad_task update"
+  ) | crontab -
+}
+
+deploy_savannahsquad_auth()
+{
+  echo "__PUT_THE_SECRET_HERE__"
+}

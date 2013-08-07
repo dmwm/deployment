@@ -7,7 +7,7 @@ from mechanize import XHTMLCompatibleFormParser
 from mechanize._html import DefaultFactory,FormsFactory
 from mechanize import Browser,LinkNotFoundError
 import sys,optparse,re,logging
-import ConfigParser
+import ConfigParser, os
 from pprint import pprint
 from Robot  import init
 from SiteDB import getCMSNamesToAdmin
@@ -15,7 +15,7 @@ from SiteDB import getSiteDBSiteNames
 
 # added in 2011-02-11
 config = ConfigParser.SafeConfigParser()
-config.read('config.ini')
+config.read(os.environ['CFGFILE'])
 
 
 ######################################################################
@@ -310,7 +310,7 @@ def main():
 
     # load blacklist
     try:
-      fp = open('blacklist.ini','r')
+      fp = open(os.environ['BLACKLIST'],'r')
       blacklist = eval(fp.read())
       fp.close()
     except Exception,e:
@@ -319,7 +319,7 @@ def main():
 
     # load exception list
     try:
-      fp = open('exceptions.ini', 'r')
+      fp = open(os.environ['EXCEPTIONS'], 'r')
       exception_dict=eval(fp.read())
       fp.close()
     except Exception,e:

@@ -6,10 +6,10 @@
 from mechanize import XHTMLCompatibleFormParser
 from mechanize._html import DefaultFactory,FormsFactory
 from mechanize import Browser,LinkNotFoundError
-import ConfigParser
+import ConfigParser, os
 
 config = ConfigParser.SafeConfigParser()
-config.read('config.ini')
+config.read(os.environ['CFGFILE'])
 
 
 LINK_SECTION='SAVANNAH_URLS'
@@ -34,7 +34,7 @@ def init():
     br.select_form(nr=1)
     #br.form.set_all_readonly(False)
     #reading from my_secret.txt
-    f = open('my_secret.txt', 'r')
+    f = open(os.environ['PASSWD_FILE'], 'r')
     passwd=f.readline()
     f.close()
     br['form_loginname']='sitedbrobot'

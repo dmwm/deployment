@@ -3,6 +3,7 @@
 Old sitedb reports from sitedb v2
 """
 
+import os
 import urllib
 import json
 import unicodedata
@@ -12,7 +13,7 @@ SITE_ADMINS=''
 
 def myOpener(url):
   # build a custom opener to use a cert proxy to authenticate
-  opener = urllib.URLopener(key_file = './proxy.pem', cert_file = './proxy.pem')
+  opener = urllib.URLopener(key_file = os.environ['X509_USER_PROXY'], cert_file = os.environ['X509_USER_PROXY'])
   # change HTTP Accept header to fetch json instead XML
   opener.addheader('Accept', 'application/json')
   response = opener.open(url)

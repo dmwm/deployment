@@ -7,7 +7,7 @@ from mechanize import XHTMLCompatibleFormParser
 from mechanize._html import DefaultFactory,FormsFactory
 from mechanize import Browser
 import pprint
-import sys, re
+import sys, re, os
 
 from SiteDB import getSiteDBSiteNames
 
@@ -56,7 +56,7 @@ try:
   ## 'Search' form is form 0
   ## login form is form 1
   br.select_form(nr=1)
-  f = open('my_secret.txt', 'r')
+  f = open(os.environ['PASSWD_FILE'], 'r')
   passwd=f.readline()
   f.close()
 
