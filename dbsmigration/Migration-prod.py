@@ -1,16 +1,38 @@
 """
 DBS3 Migration Server Configuration
 """
+import os
+import sys
 from WMCore.Configuration import Configuration
-import os,sys
 
 ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
 
 sys.path.append(os.path.join(ROOTDIR,'auth/dbs'))
 
-from DBSSecrets import dbs3_ig_i2
+###global instance
 from DBSSecrets import dbs3_pl1_r
-from DBSSecrets import dbs3_l1_i2
+from DBSSecrets import dbs3_dg_i2
+from DBSSecrets import dbs3_ig_i2
+
+###phys03 instance
+from DBSSecrets import dbs3_pp3_r
+
+db_mapping = {'prod/global': dbs3_pl1_r,
+              'dev/global': dbs3_dg_i2,
+              'int/global': dbs3_ig_i2,
+              'prod/phys03': dbs3_pp3_r}
+
+thread_mapping = {'prod/global': 2,
+                  'dev/global': 1,
+                  'int/global': 1,
+                  'prod/phys03': 2}
+
+def create_instance_config(db_instances, instance_name):
+    db_config_section = db_instances.section_(instance_name)
+    db_config_section.threads = thread_mapping[instance_name]
+    db_config_section.dbowner = db_mapping[instance_name]['databaseOwner']
+    db_config_section.connectUrl = db_mapping[instance_name]['connectUrl']['writer']
+    db_config_section.engineParameters = {'pool_size': 15, 'max_overflow': 10, 'pool_timeout': 200}
 
 config = Configuration()
 
@@ -21,24 +43,10 @@ config.web.log_screen = True
 config.web.thread_pool = 10
 
 config.component_('dbsmigration')
-config.dbsmigration.instances = ['prod/global','dev/global','int/global']
+config.dbsmigration.instances = ['prod/global', 'dev/global', 'int/global',
+                                 'prod/phys03']
 config.dbsmigration.section_('database')
 db_instances = config.dbsmigration.database.section_('instances')
 
-db_production_global = db_instances.section_('prod/global')
-db_production_global.threads = 2
-db_production_global.dbowner = dbs3_pl1_r['databaseOwner']
-db_production_global.connectUrl = dbs3_pl1_r['connectUrl']['writer']
-db_production_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
-
-db_development_global = db_instances.section_('dev/global')
-db_development_global.threads = 1
-db_development_global.dbowner = dbs3_l1_i2['databaseOwner']
-db_development_global.connectUrl = dbs3_l1_i2['connectUrl']['writer']
-db_development_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
-
-db_integration_global = db_instances.section_('int/global')
-db_integration_global.threads = 1
-db_integration_global.dbowner = dbs3_ig_i2['databaseOwner']
-db_integration_global.connectUrl = dbs3_ig_i2['connectUrl']['writer']
-db_integration_global.engineParameters = { 'pool_size' : 15, 'max_overflow' : 10, 'pool_timeout' : 200 }
+for instance_name in config.dbsmigration.instances:
+    create_instance_config(db_instances, instance_name)
