@@ -127,7 +127,7 @@ CMS Facilities Operations
                     if(len(code_new_members)!=0):
                         squad_number=code_new_members[0]
                     else:
-                        squad_number='7381'
+                        squad_number='10181'
                 br.select_form(nr=1)
                 br['assigned_to']=[squad_number]
                 br['privacy']=['1']
@@ -164,7 +164,7 @@ CMS Facilities Operations
             if(len(code_new_members)!=0):
                 squad_number=code_new_members[-1]
             else:
-                squad_number='7381'
+                squad_number='10181'
         br.select_form(nr=1)
         br['assigned_to']=[squad_number]
         br['privacy']=['1']
