@@ -42,8 +42,8 @@ deploy_asyncstageout_post()
     default )
       # Tell couchdb to push the AlertsCollector couchapp on the next restart
       echo "couchapp push " \
-           "$root/current/apps/asyncstageout/couchapp/UserMonitoring" \
-           "http://localhost:5984/user_monitoring_asynctransfer" \
+           "$root/current/apps/asyncstageout/couchapp/asynctransfer" \
+           "http://localhost:5984/asynctransfer" \
            > $root/state/couchdb/stagingarea/asyncstageout
       ;;
   esac
