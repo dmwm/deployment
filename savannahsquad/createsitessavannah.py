@@ -33,6 +33,9 @@ sys.stdout.flush()
 siteNamesFromSiteDB = getSiteDBSiteNames()
 
 siteNamesFromSiteDB=[x[1] for x in siteNamesFromSiteDB]
+for site in siteNamesFromSiteDB:
+  if site.endswith('_Disk'):
+    siteNamesFromSiteDB.remove(site)
 
 totalNames = len(siteNamesFromSiteDB)
 
