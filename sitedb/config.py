@@ -12,11 +12,17 @@ if HOST.startswith("vocms127"):
   config.views.data.ldapsync = True
   config.views.data.ldsyncto = "dev"
   config.views.data.ldsynctime = 300
+  config.views.data.rebusfetch = True
+  config.views.data.rebusfetchto = "dev"
+  config.views.data.rebusfetchtime = 21600
 
 if HOST.startswith("vocms136"):
   config.views.data.ldapsync = True
   config.views.data.ldsyncto = "prod"
   config.views.data.ldsynctime = 300
+  config.views.data.rebusfetch = True
+  config.views.data.rebusfetchto = "prod"
+  config.views.data.rebusfetchtime = 21600
 
 # config.main.tools.cms_auth.policy = 'dangerously_insecure'
 # config.main.server.environment = 'staging'
