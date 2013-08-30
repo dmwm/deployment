@@ -28,6 +28,9 @@ deploy_crabserver_sw()
 
   case $variant in prod | preprod | dev ) extconfig=$variant;; *) extconfig=dev;; esac
   echo "data.mode = \"cmsweb-$extconfig\"" >> $project_config/config.py
+  case $variant in prod ) aso="" ;; preprod ) aso="-testbed" ;; * ) aso="-dev";; esac
+  echo "data.asourl = \"https://cmsweb$aso.cern.ch/couchdb/asynctransfer\"" >> $project_config/config.py
+
 }
 
 deploy_crabserver_post()
