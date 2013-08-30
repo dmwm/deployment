@@ -19,7 +19,10 @@ from DBSSecrets import dbs3_l_i2
 db_mapping = {'dev/global': dbs3_p1_i2,
               'dev/phys03': dbs3_l_i2}
 
-security_params = dict()
+security_params = {'dev/global': {'reader': {},
+                                  'writer': {}},
+                   'dev/phys03': {'reader': {},
+                                  'writer': {}}}
 
 
 def create_model_section(active, model):
@@ -31,25 +34,21 @@ def create_model_section(active, model):
     current_model.section_('formatter')
     current_model.formatter.object = 'WMCore.WebTools.RESTFormatter'
     current_model.section_('database')
+    current_model.section_('security')
 
-    if model in ('DBSWriter', 'DBSMigrate'):
-        current_model.section_('security')
-        return current_model.database.section_('instances'), current_model.security.section_('instances')
-    else:
-        return current_model.database.section_('instances')
+    return current_model.database.section_('instances'), current_model.security.section_('instances')
 
 
-def create_instance_db_config(db_instances, instance_name, access):
+def create_instance_config(db_instances, security_instances, instance_name, access):
     db_config_section = db_instances.section_(instance_name)
     db_config_section.dbowner = db_mapping[instance_name]['databaseOwner']
     db_config_section.version = DBSVERSION
     db_config_section.connectUrl = db_mapping[instance_name]['connectUrl'][access]
     db_config_section.engineParameters = {'pool_size': 15, 'max_overflow': 10, 'pool_timeout': 200}
 
-
-def create_instance_security_config(security_instances, instance_name, access):
     security_config_section = security_instances.section_(instance_name)
-    security_config_section.params = security_params.get(instance_name, {access: {}})[access]
+    security_config_section.params = security_params[instance_name][access]
+
 
 config = Configuration()
 config.component_('SecurityModule')
@@ -74,30 +73,22 @@ config.dbs.instances = ['dev/global',
 
 ###DBSReader section
 active = config.dbs.views.section_('active')
-db_instances = create_model_section(active, 'DBSReader')
+db_instances, security_instances = create_model_section(active, 'DBSReader')
 
-##DB config
+##instances configs
 for instance_name in config.dbs.instances:
-    create_instance_db_config(db_instances, instance_name, access='reader')
+    create_instance_config(db_instances, security_instances, instance_name, access='reader')
 
 ###DBSWriter section
 db_instances, security_instances = create_model_section(active, 'DBSWriter')
 
-##DB config
+##instances configs
 for instance_name in config.dbs.instances:
-    create_instance_db_config(db_instances, instance_name, access='writer')
-
-##Security config
-for instance_name in config.dbs.instances:
-    create_instance_security_config(security_instances, instance_name, access='writer')
+    create_instance_config(db_instances, security_instances, instance_name, access='writer')
 
 ###DBSMigrate section
 db_instances, security_instances = create_model_section(active, 'DBSMigrate')
 
-##DB config
+##instances configs
 for instance_name in config.dbs.instances:
-    create_instance_db_config(db_instances, instance_name, access='writer')
-
-##Security config
-for instance_name in config.dbs.instances:
-    create_instance_security_config(security_instances, instance_name, access='writer')
+    create_instance_config(db_instances, security_instances, instance_name, access='writer')
