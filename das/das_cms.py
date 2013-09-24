@@ -83,3 +83,19 @@ config.das.emptyset_expire = 5
 config.das.thread_weights = ['dbs:5', 'phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
 config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr']
+
+# keyword search configuration
+config.component_('keyword_search')
+config.keyword_search.kws_on = True # ajax client
+config.keyword_search.kws_service_on = True # ajax server
+config.keyword_search.timeout = 7 # timeout in seconds
+
+# load balancing configuration
+config.component_('load_balance')
+config.load_balance.kws_host = '' # for external server, format is: 'https://das-kws.cern.ch'
+
+# query rewriting configuration
+config.component_('query_rewrite')
+config.query_rewrite.pk_rewrite_on = True
+
+
