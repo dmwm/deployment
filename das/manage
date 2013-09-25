@@ -50,7 +50,7 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export DAS_CONFIG=$CFGDIR/das_cms.py
-export DAS_KWS_IR_INDEX=$STATEDIR/kws_index/
+export DAS_KWS_IR_INDEX=$STATEDIR/kws_index
 
 cd $STATEDIR
 
