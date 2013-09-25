@@ -45,10 +45,19 @@ deploy_das_post()
   # so we ship with metadata required for keyword search with DAS
   
   # initialize keylearning db
-  cp $das_root/kws_data/db_dumps/* $mongodb_stage/
+  rm -f $mongodb_stage/{clean,update}_keylearning_db.js  
+  (echo 'keylearning = db.getSisterDB("keylearning");'
+   echo 'keylearning.dropDatabase();'
+   echo 'inputvals = db.getSisterDB("inputvals");'
+   echo 'inputvals.dropDatabase();') > \
+   $mongodb_stage/clean_keylearning_db.js  
+   
+  cp $das_root/kws_data/db_dumps/*.js $mongodb_stage/
   
   # initialize whoosh IR index for keyword search
   rm -Rf $root/state/das/kws_index
   mkdir -p $root/state/das/kws_index
   cp $das_root/kws_data/kws_index/* $root/state/das/kws_index/
+  
+
 }
