@@ -50,9 +50,8 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export DAS_CONFIG=$CFGDIR/das_cms.py
-export DAS_KWS_IR_INDEX=$STATEDIR/das_kws_index
-# TODO: this is slightly hacky
-mkdir -p $DAS_KWS_IR_INDEX
+export DAS_KWS_IR_INDEX=$STATEDIR/kws_index/
+
 cd $STATEDIR
 
 # Start service conditionally on crond restart.
@@ -68,12 +67,8 @@ sysboot()
 # Start the service.
 start()
 {
-  echo "starting $ME"
-  # currently I want bootstrap to finish before DAS start. so KWS would work.
-  # but if we had a way to notify DAS that bootstrap is finished it could start concurently
-  # i.e. DAS available without KWS first and KWS gets enabled only after the bootsrap
-  (das_bootstrap_kws --only-if-needed && \
-  python -u $DAS_PYTHONPATH/DAS/web/das_server.py) \
+  echo "starting $ME"  
+  python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
        </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
