@@ -107,9 +107,17 @@ start()
     echo "$ME is ready"
     clean_db "das_db"
     update_db "mapping_db"
+    
     # keylearning is prerequisite for KWS to function
     clean_db "keylearning_db"
     update_db "keylearning_db"
+    
+    # inputvals is less important, but currently it's not updated live...
+    for col in  datatype_name group_name primary_dataset_name release_name site_name status_name tier_name
+    do
+      clean_db "inputvals_$col"
+      update_db "inputvals_$col" 
+    done
   else
     echo "$ME did not start, not cleaning nor updating."
     exit 1
