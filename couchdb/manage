@@ -225,7 +225,7 @@ backup()
   local hostdir=$1
   [ -n "$hostdir" ] ||
     { echo "You must specify a destination [user@]host:path."; exit 9; }
-  rsync --delete --delete-excluded --exclude "*.compact.*" -au -e 'ssh -c arcfour' $STATEDIR/database/ $hostdir/ ||
+  rsync --delete --delete-excluded --exclude "*.compact*" -au -e 'ssh -c arcfour' $STATEDIR/database/ $hostdir/ ||
     { echo "failed to synchronise databases to $hostdir: $?" 1>&2; exit 11; }
 }
 

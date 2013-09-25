@@ -35,10 +35,8 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms65 | vocms10[567] | vocms13[2345689] | \
-    vocms140 | vocms16[0123] | vocms127 )
+    vocms34 | vocms127 | vocms13[2345689] | vocms140 | vocms16[0123] )
       pxlabel=cmsweb_backends ;;
-
     * )
       pxlabel=devvm_$(echo $host | tr - _) ;;
   esac
@@ -66,7 +64,6 @@ deploy_admin_post()
    crontab -
 
   case $host:$root in
-    vocms65:/data/srv | vocms105:/data/srv | vocms108:/data/srv | \
     vocms127:/data/srv | vocms134:/data/srv | vocms135:/data/srv | \
     vocms160:/data/srv | vocms162:/data/srv )
       klist -s # must have afs kerberos token

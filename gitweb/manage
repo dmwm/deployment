@@ -12,8 +12,9 @@
 ##H   graceful    restart the service gracefully
 ##H   stop        stop the service
 ##H   get         fetch git repository ARG from CERN/GIT service
+##H   updateadmins run the script to update admins of the ARG repository
 
-[ $(id -un) != cmsweb -o "$1" = "get" ] ||
+[ $(id -un) != cmsweb -o "$1" = "get" -o "$1" = "updateadmins" ] ||
   { echo "ERROR: please use another account" 1>&2; exit 1; }
 
 echo_e=-e bsdstart=bsdstart
@@ -93,10 +94,32 @@ get()
     { echo "You must have a valid kerberos token to fetch git repositories from CERN/GIT." 1>&2; exit 20; }
   cd $STATEDIR/reps
   if [ -d "$repo" ]; then
-    (cd $repo; git pull -q)
+    (cd $repo; git pull --ff -q) 2> /dev/null
   else
     git clone https://:@git.cern.ch/kerberos/$repo
   fi
+}
+
+updateadmins()
+{
+  local repo=$1
+  set -e
+  klist -s ||
+    { echo "You must have a valid kerberos token to update admins of $repo." 1>&2; exit 20; }
+  cd $STATEDIR/tmp
+  rm -rf gitolite-admin
+  git clone -q https://:@git.cern.ch/kerberos/gitolite-admin
+  cd gitolite-admin/conf/subs
+  case $repo in siteconf )
+    . $ROOT/apps/python/etc/profile.d/init.sh
+    export TOP
+    $CFGDIR/updateadmins_siteconf > $PWD/$repo.conf
+    [ $(wc -l $repo.conf | awk '{ print $1; }') -ge 100 ] ||
+      { echo "Update admins of $repo failed the sanity check." 1>&2; exit 21; }
+    git commit -m "Updating admins allowed to access $repo." $repo.conf &> /dev/null
+    git push -q origin master
+    ;;
+  esac
 }
 
 # Verify the security string.
@@ -138,6 +161,11 @@ case ${1:-status} in
   get )
     check "$3"
     get "$2"
+    ;;
+
+  updateadmins )
+    check "$3"
+    updateadmins "$2"
     ;;
 
   help )

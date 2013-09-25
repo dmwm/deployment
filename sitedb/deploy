@@ -25,8 +25,16 @@ deploy_sitedb_sw()
 deploy_sitedb_post()
 {
   case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
-  (mkcrontab; sysboot) | crontab -
-  $MIGRATION rm -fr hn
+  (mkcrontab
+   sysboot
+   # hack: set cronjob to restart sitedb due to bug on the ldap synchronization
+   case $host in
+     vocms34 | vocms13[2389] | vocms140 | vocms16[13] ) ;;
+     * )
+       local cmd="$project_config/manage start 'I did read documentation'"
+       $nogroups || cmd="sudo -H -u _sitedb bashs -l -c \"${cmd}\""
+       echo "5 */6 * * * $cmd &> /dev/null" ;;
+   esac) | crontab -
 }
 
 deploy_sitedb_auth()

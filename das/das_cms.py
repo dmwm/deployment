@@ -22,7 +22,7 @@ config.web_server.dbs_daemon = True
 config.web_server.dbs_daemon_interval = 600
 config.web_server.dbs_daemon_expire = 3600
 config.web_server.hot_threshold = 3000
-config.web_server.onhold_daemon = True
+config.web_server.onhold_daemon = False
 config.web_server.services = ['dbs_phedex']
 
 # cache requests configuration
@@ -45,6 +45,7 @@ config.dasdb.cachecollection = 'cache'
 config.dasdb.mergecollection = 'merge'
 config.dasdb.mrcollection = 'mapreduce'
 config.dasdb.logging = False
+config.dasdb.record_ttl = 86400
 
 # loggingdb configuration
 config.component_('loggingdb')
@@ -62,6 +63,7 @@ config.analyticsdb.history = 5184000
 config.component_('mappingdb')
 config.mappingdb.collname = 'db'
 config.mappingdb.dbname = 'mapping'
+config.mappingdb.reload_time = 3600
 
 # parserdb configuration
 config.component_('parserdb')
@@ -82,7 +84,7 @@ config.das.error_expire = 300
 config.das.emptyset_expire = 5
 config.das.thread_weights = ['dbs:5', 'phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
-config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr']
+config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr','mcm']
 
 # keyword search configuration
 config.component_('keyword_search')

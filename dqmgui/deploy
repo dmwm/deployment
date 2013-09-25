@@ -48,7 +48,7 @@ deploy_dqmgui_sw()
 
 deploy_dqmgui_post()
 {
-  case $host in vocms10[67] | vocms13[26] | vocms140 | vocms16[13] ) disable ;; * ) enable ;; esac
+  case $host in vocms34 | vocms13[26] | vocms140 | vocms16[13] ) disable ;; * ) enable ;; esac
   case $variant in bare ) return ;; esac
 
   (mkcrontab; sysboot
@@ -69,15 +69,13 @@ deploy_dqmgui_post()
        [ "$host" != "vocms138" ] ||
           echo "6 */3 * * * $host $project_config/manage -q xstart afs-sync 'I did read documentation'"
 
-       # Set the backup to castor. For now, enable it only in dev, testbed
-       # and the relval server.
+       # Set the backup to castor.
        case $host in
-         vocms127 | vocms133 ) cronentry="30 3 * * 0 $host" ;;
-         vocms139 ) cronentry="30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" ;;
-         * ) cronentry="" ;;
+         vocms13[89] ) echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
+                            "$project_config/manage backup"                \
+                            "/castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'" ;;
+         * ) ;;
        esac
-       [ -z "$cronentry" ] ||
-         echo "$cronentry $project_config/manage backup /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'"
       ) | acrontab
       ;;
   esac

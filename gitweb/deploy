@@ -12,6 +12,7 @@ deploy_gitweb_prep()
 deploy_gitweb_sw()
 {
   deploy_pkg comp external+gitweb
+  deploy_pkg comp external+python
   perl -p -i -e "s,\@STATEDIR\@,$project_state,g" $project_config/gitweb_config.perl
 }
 
@@ -41,7 +42,9 @@ deploy_gitweb_post()
 
   klist -s # must have afs kerberos token
   (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
-   echo "6 */3 * * * $host $project_config/manage get siteconf 'I did read documentation'"
-   echo "6 */3 * * * $host $project_config/manage get diegotest 'I did read documentation'"
+   [ ! -f $root/enabled/$project ] || echo "6 * * * * $host $project_config/manage get siteconf 'I did read documentation'"
+   case $host in vocms136 )
+     echo "6 */3 * * * $host $project_config/manage updateadmins siteconf 'I did read documentation'" ;;
+   esac
   ) | acrontab
 }

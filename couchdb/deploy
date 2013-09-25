@@ -41,7 +41,7 @@ deploy_couchdb_post()
 {
   (mkcrontab
    case $host in
-     vocms10[67] | vocms13[2689] | vocms16[13] )
+     vocms34 | vocms13[2689] | vocms16[13] )
        disable ;;
      * )
        enable
@@ -53,7 +53,7 @@ deploy_couchdb_post()
        # Daily backup the databases to other cluster machines
        case $host in vocms140 ) tohost=vocms138 ;; vocms133 ) tohost=vocms132 ;; vocms127 ) tohost=vocms127 ;; * ) tohost= ;; esac
        [ -z "$tohost" ] ||
-         echo "0 1 * * * $project_config/manage backup $tohost:$project_state/backup/$host 'I did read documentation'"
+         echo "0 21 * * * $project_config/manage backup $tohost:$project_state/backup/$host 'I did read documentation'"
        ;;
    esac) | crontab -
 
@@ -62,7 +62,7 @@ deploy_couchdb_post()
     vocms138 | vocms132 | vocms127 )
       klist -s # must have afs kerberos token
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
-       echo "30 3 * * 0 $host $project_config/manage archive /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'") | acrontab
+       echo "30 4 * * 0 $host $project_config/manage archive /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'") | acrontab
       ;;
     * )
       ;;
