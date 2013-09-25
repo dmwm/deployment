@@ -107,6 +107,9 @@ start()
     echo "$ME is ready"
     clean_db "das_db"
     update_db "mapping_db"
+    # keylearning is prerequisite for KWS to function
+    clean_db "keylearning_db"
+    update_db "keylearning_db"
   else
     echo "$ME did not start, not cleaning nor updating."
     exit 1
