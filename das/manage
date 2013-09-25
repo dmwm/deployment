@@ -67,7 +67,7 @@ sysboot()
 # Start the service.
 start()
 {
-  echo "starting $ME"  
+  echo "starting $ME"
   python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
        </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
