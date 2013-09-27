@@ -58,9 +58,9 @@ if [ $# -ge 1 -a "$1" = "backup" ]; then
   : # do not source the env because we want to pick the system castor
 else
   case $HOST in
-    vocms139 )
-      # assume not to pollute the environments since this will
-      # only be executed on vocms139.
+    vocms139 | dqm-c2d07-[0,1][1,2] )
+      # assume not to pollute the global environments since this 
+      # will only be executed on 128-updated machines
       . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
     * )
       . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
@@ -237,17 +237,17 @@ start()
         $DQM_DATA/agents/import-offsite \
         $DQM_DATA/agents/import-test
 
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-local \
         $DQM_DATA/repository/original \
-        $STATEDIR/online/ix
+        $STATEDIR/online/ix128
 
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+      #startagent $D/agent-delete \
+      #  visDQMDeleteDaemon \
+      #  http://localhost:8030/dqm/online/ \
+      #  $STATEDIR/online/ix \
+      #  $CFGDIR/quota-dd-online.py
 
       startagent $D/agent-sound \
         visDQMSoundAlarmDaemon \
@@ -261,17 +261,17 @@ start()
 
       D=online
       DQM_DATA=/dqmdata/dqm
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-offsite \
         $DQM_DATA/repository/original \
-        $STATEDIR/online/ix
+        $STATEDIR/online/ix128
 
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+      #startagent $D/agent-delete \
+      #  visDQMDeleteDaemon \
+      #  http://localhost:8030/dqm/online/ \
+      #  $STATEDIR/online/ix \
+      #  $CFGDIR/quota-dd-online.py
       ;;
     dqm-c2d07-11:*agents* ) # dqm-integration
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
@@ -284,17 +284,17 @@ start()
         $DQM_DATA/data \
         $DQM_DATA/agents/register \
 
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/register \
         $DQM_DATA/data \
-        $STATEDIR/online/ix
+        $STATEDIR/online/ix128
 
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online-playback/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+      #startagent $D/agent-delete \
+      #  visDQMDeleteDaemon \
+      #  http://localhost:8030/dqm/online-playback/ \
+      #  $STATEDIR/online/ix \
+      #  $CFGDIR/quota-dd-online.py
       ;;
 
     dqm-c2d07-12:*agents* ) # dqm-test
@@ -302,17 +302,17 @@ start()
 
       D=online
       DQM_DATA=/dqmdata/dqm
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-test \
         $DQM_DATA/repository/original \
-        $STATEDIR/online/ix
+        $STATEDIR/online/ix128
 
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online-test/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+      #startagent $D/agent-delete \
+      #  visDQMDeleteDaemon \
+      #  http://localhost:8030/dqm/online-test/ \
+      #  $STATEDIR/online/ix \
+      #  $CFGDIR/quota-dd-online.py
       ;;
 
     vocms139:*agents* ) # relval server
