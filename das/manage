@@ -100,7 +100,16 @@ bootstrap()
     echo "bootstrap done"
 }
 
-
+# Exports kws_data, including keylearning
+kws_export_data()
+{
+    echo "starting exporting KWS data"
+    outdir=$STATEDIR/kws_data_exported
+    rm -f $outdir
+    mkdir -p $outdir
+    das_kws_export_data $outdir
+    echo "KWS data exported into: $outdir"
+}
 
 # Verify the security string.
 check()
@@ -140,6 +149,10 @@ case ${1:-status} in
   bootstrap )
     bootstrap
     ;;    
+    
+  kws_export_data )
+    kws_export_data
+    ;;     
 
   version )
     echo "$DAS_VERSION"
