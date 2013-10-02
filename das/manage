@@ -105,7 +105,7 @@ kws_export_data()
 {
     echo "starting exporting KWS data"
     outdir=$STATEDIR/kws_data_exported
-    rm -f $outdir
+    rm -rf $outdir
     mkdir -p $outdir
     das_kws_export_data $outdir
     echo "KWS data exported into: $outdir"
