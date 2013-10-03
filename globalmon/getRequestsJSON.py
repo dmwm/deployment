@@ -5,6 +5,7 @@ from sys import argv, exit, stderr, stdout
 from urllib2 import AbstractHTTPHandler, urlopen, \
                     build_opener, install_opener, HTTPError
 from httplib import HTTPSConnection
+from time import sleep
 
 class X509HTTPS(HTTPSConnection):
   def __init__(self, host, *args, **kwargs):
@@ -15,8 +16,20 @@ class X509Auth(AbstractHTTPHandler):
   def default_open(self, req):
     return self.do_open(X509HTTPS, req)
 
+def urlopenretry(url):
+  for retry in range(20):
+    try:
+      doc = urlopen(url, None, 240)
+      break
+    except:
+      if retry == 19:
+	raise
+      sleep(300)
+      pass
+  return doc
+
 def get_good_reqs(globalmon, cmsweb):
-  doc = urlopen(globalmon+'monitorSvc/requestmonitor')
+  doc = urlopenretry(globalmon+'monitorSvc/requestmonitor')
   reqs = loads(doc.read())
   good_status = ['running', 'acquired', 'assignment-approved', 'new', 'running-open', 'running-closed']
   good_reqs = []
@@ -34,7 +47,7 @@ def get_good_reqs(globalmon, cmsweb):
         doc = urlopen(cmsweb+'reqmgr/reqMgr/outputDatasetsByRequestName?requestName='+workflow)
         r['OutputDatasets'] = loads(doc.read())
         good_reqs.append(r)
-      except HTTPError:
+      except:
         # request not on the cache anymore
         print >>stderr, "Failed to fetch details for request "+workflow
         pass

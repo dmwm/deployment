@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.6
 
-import sys,os,json,subprocess,shlex
+import sys,os,traceback,json,subprocess,shlex
 from datetime import datetime
 current = datetime.utcnow()
 
@@ -30,6 +30,7 @@ for site in site_slots.keys():
     total_t1_slots += site_slots[site]
 
 for request in requests:
+  try:
     status = request['status']
     request_name = request['request_name']
     # print request_name,status
@@ -219,6 +220,10 @@ for request in requests:
             else :
                 tmp["CompletionPercentage"][dataTier] = float(tmp["OutputEvents"][dataTier])/float(tmp["RequestNumEvents"])
     results[local_queue][status][priority].append(tmp)
+  except:
+    print 'request',request_name,'had parsing errors. Ignoring.'
+    traceback.print_exc(file=sys.stderr)
+    pass
 
 print '--------------------------------------------------------------------------------'
 print 'Report generated on',current,'UTC'
