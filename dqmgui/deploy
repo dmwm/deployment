@@ -36,7 +36,7 @@ deploy_dqmgui_prep()
       done
       ;;
   esac
-  mkproj $extra
+  mkproj $extra backup
   [ ! $variant == online ] &&  mkproxy
   $nogroups || chmod g+ws */data */zipped */agents/*
 }
