@@ -38,4 +38,26 @@ deploy_das_post()
    $mongodb_stage/clean_das_db.js
   cp $root/current/apps/das/lib/python2.6/site-packages/DAS/services/cms_maps/das_maps.js \
     $mongodb_stage/update_mapping_db.js
+    
+  local das_root=$root/current/apps/das/lib/python2.6/site-packages/DAS
+    
+  # during deploy services might be unavailable to fetch data from them
+  # so we ship with metadata required for keyword search with DAS
+  
+  # initialize keylearning db
+  rm -f $mongodb_stage/{clean,update}_keylearning_db.js  
+  (echo 'keylearning = db.getSisterDB("keylearning");'
+   echo 'keylearning.dropDatabase();'
+   echo 'inputvals = db.getSisterDB("inputvals");'
+   echo 'inputvals.dropDatabase();') > \
+   $mongodb_stage/clean_keylearning_db.js  
+   
+  cp $das_root/kws_data/db_dumps/*.js $mongodb_stage/
+  
+  # initialize whoosh IR index for keyword search
+  rm -Rf $root/state/das/kws_index
+  mkdir -p $root/state/das/kws_index
+  cp $das_root/kws_data/kws_index/* $root/state/das/kws_index/
+  
+
 }

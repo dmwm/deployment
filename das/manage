@@ -10,6 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
+##H   bootstrap   fetch dtata from services: accepted input values and what fields available in services results
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
@@ -49,6 +50,8 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export DAS_CONFIG=$CFGDIR/das_cms.py
+export DAS_KWS_IR_INDEX=$STATEDIR/kws_index
+
 cd $STATEDIR
 
 # Start service conditionally on crond restart.
@@ -89,6 +92,25 @@ status()
   fi
 }
 
+# Bootstrap keyword search
+bootstrap()
+{
+    echo "starting keyword search bootstrap (values, fields)"
+    das_bootstrap_kws
+    echo "bootstrap done"
+}
+
+# Exports kws_data, including keylearning
+kws_export_data()
+{
+    echo "starting exporting KWS data"
+    outdir=$STATEDIR/kws_data_exported
+    rm -rf $outdir
+    mkdir -p $outdir
+    das_kws_export_data $outdir
+    echo "KWS data exported into: $outdir"
+}
+
 # Verify the security string.
 check()
 {
@@ -123,6 +145,14 @@ case ${1:-status} in
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
     ;;
+    
+  bootstrap )
+    bootstrap
+    ;;    
+    
+  kws_export_data )
+    kws_export_data
+    ;;     
 
   version )
     echo "$DAS_VERSION"
