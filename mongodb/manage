@@ -48,7 +48,9 @@ cd $STATEDIR
 clean_db()
 {
     set -e
-    if [ -f $STATEDIR/db/${1%_db}.ns ]; then
+    # db is the first item before underscore
+    db=$(echo $1 | cut -f1 -d_)
+    if [ -f $STATEDIR/db/${db}.ns ]; then
         echo "Clean $1"
         mongo --port 8230 stagingarea/clean_$1.js
     fi
