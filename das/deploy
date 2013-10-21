@@ -54,7 +54,14 @@ deploy_das_post()
   # it's better to clean DBs separately, datatype_name is the first col to be updated so it will clean...
   (echo 'inputvals = db.getSisterDB("inputvals");'
    echo 'inputvals.dropDatabase();') > \
-   $mongodb_stage/clean_inputvals_datatype_name.js     
+   $mongodb_stage/clean_inputvals_datatype_name.js
+  # clean each collection (currently update_db require clean to be present)
+  for col in group_name primary_dataset_name release_name site_name status_name tier_name
+  do
+  (echo 'inputvals = db.getSisterDB("inputvals");'
+   echo "inputvals.$col.drop();") > \
+   $mongodb_stage/clean_inputvals_$col.js
+  done 
    
   cp $das_root/kws_data/db_dumps/*.js $mongodb_stage/
   
