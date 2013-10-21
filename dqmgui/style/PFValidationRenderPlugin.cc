@@ -26,7 +26,7 @@ class PFValidationRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
     {
-      if( o.name.find( "ParticleFlow/" ) == std::string::npos ) 
+      if( o.name.find( "ParticleFlow/" ) == std::string::npos )
          return false;
 
       if( o.name.find( "/EventInfo/" ) != std::string::npos )
@@ -171,12 +171,21 @@ private:
       }
       if ( o.name.find("BRPt") != std::string::npos  or o.name.find("ERPt") != std::string::npos )
 	gStyle->SetOptStat(111110);
-      if ( o.name.find("average") != std::string::npos  or o.name.find("RMS") != std::string::npos ) {
+      if ( o.name.find("average_") != std::string::npos  or o.name.find("rms_") != std::string::npos ) {
 	obj->SetOption("CP*"); obj->SetMarkerStyle(21); obj->SetMarkerSize(0.5); obj->SetLineColor(kCyan); }
-      if ( o.name.find("mean") != std::string::npos  or o.name.find("sigma") != std::string::npos ) {
-	obj->SetOption("CP"); obj->SetLineColor(kBlue); obj->SetLineWidth(2); }
+      if ( o.name.find("mean_") != std::string::npos  or o.name.find("sigma_") != std::string::npos ) {
+	obj->SetOption("CP*"); obj->SetMarkerStyle(21); obj->SetMarkerSize(0.5); obj->SetLineColor(kBlue); }
+      if ( o.name.find("mean_") != std::string::npos  or o.name.find("average_") != std::string::npos ) {
+	obj->SetAxisRange(-10,700);
+	obj->SetMinimum(-0.25);
+	obj->SetMaximum(0.01);
+      }
+      if ( o.name.find("sigma_") != std::string::npos  or o.name.find("rms_") != std::string::npos ) {
+	obj->SetAxisRange(-10,700);
+	obj->SetMinimum(0.02);
+	obj->SetMaximum(0.17);
+      }
     }
-
 
   void preDrawTProfile2D( TCanvas *, const VisDQMObject &o )
     {
@@ -212,7 +221,7 @@ private:
 	  }
 	  return;
 	}
-      
+
       if( o.name.find( "NumberOfRecHitVsPhiVsEta" )  != std::string::npos)
 	{
 	  obj->SetStats( kFALSE );
@@ -220,7 +229,7 @@ private:
 	  obj->SetOption("colz");
 	  return;
 	}
-      
+
       if( o.name.find( "NumberOfLayersVsPhiVsEta" ) != std::string::npos )
 	{
 	  obj->SetStats( kFALSE );
@@ -228,35 +237,35 @@ private:
 	  obj->SetOption("colz");
 	  return;
 	}
-      
+
       return;
     }
   void preDrawTProfile( TCanvas *, const VisDQMObject &o )
   {
     TProfile* obj = dynamic_cast<TProfile*>( o.object );
     assert( obj );
-    
+
     // This applies to all
     gStyle->SetCanvasBorderMode( 0 );
     gStyle->SetPadBorderMode( 0 );
     gStyle->SetPadBorderSize( 0 );
     //    (data->pad)->SetLogy( 0 );;
     //  gStyle->SetOptStat( 0 );
-    
+
     TAxis* xa = obj->GetXaxis();
     TAxis* ya = obj->GetYaxis();
-    
+
     xa->SetTitleOffset(0.7);
     xa->SetTitleSize(0.05);
     xa->SetLabelSize(0.04);
-    
+
     ya->SetTitleOffset(0.7);
     ya->SetTitleSize(0.05);
     ya->SetLabelSize(0.04);
-    
+
     obj->SetStats( kFALSE );
     obj->SetOption("e");
-    
+
     if( o.name.find( "TkHMap" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );

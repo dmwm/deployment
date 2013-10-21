@@ -58,9 +58,9 @@ if [ $# -ge 1 -a "$1" = "backup" ]; then
   : # do not source the env because we want to pick the system castor
 else
   case $HOST in
-    vocms139 )
-      # assume not to pollute the environments since this will
-      # only be executed on vocms139.
+    vocms139 | dqm-c2d07-[0,1][1,2] )
+      # assume not to pollute the global environments since this
+      # will only be executed on 128-updated machines
       . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
     * )
       . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
@@ -237,17 +237,11 @@ start()
         $DQM_DATA/agents/import-offsite \
         $DQM_DATA/agents/import-test
 
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-local \
         $DQM_DATA/repository/original \
-        $STATEDIR/online/ix
-
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+        $STATEDIR/online/ix128
 
       startagent $D/agent-sound \
         visDQMSoundAlarmDaemon \
@@ -261,17 +255,11 @@ start()
 
       D=online
       DQM_DATA=/dqmdata/dqm
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-offsite \
         $DQM_DATA/repository/original \
-        $STATEDIR/online/ix
-
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+        $STATEDIR/online/ix128
       ;;
     dqm-c2d07-11:*agents* ) # dqm-integration
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
@@ -284,17 +272,11 @@ start()
         $DQM_DATA/data \
         $DQM_DATA/agents/register \
 
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/register \
         $DQM_DATA/data \
-        $STATEDIR/online/ix
-
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online-playback/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+        $STATEDIR/online/ix128
       ;;
 
     dqm-c2d07-12:*agents* ) # dqm-test
@@ -302,17 +284,11 @@ start()
 
       D=online
       DQM_DATA=/dqmdata/dqm
-      startagent $D/agent-import \
+      startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/import-test \
         $DQM_DATA/repository/original \
-        $STATEDIR/online/ix
-
-      startagent $D/agent-delete \
-        visDQMDeleteDaemon \
-        http://localhost:8030/dqm/online-test/ \
-        $STATEDIR/online/ix \
-        $CFGDIR/quota-dd-online.py
+        $STATEDIR/online/ix128
       ;;
 
     vocms139:*agents* ) # relval server
@@ -717,17 +693,77 @@ backup()
     { echo "You must have a valid kerberos token to run the backup." 1>&2; exit 20; }
   rfstat $archdir >/dev/null ||
     { echo "Could not stat $archdir in the castor archive" 1>&2; exit 19; }
+  test -d $STATEDIR/backup ||
+    { echo "Directory $STATEDIR/backup does not exist" 1>&2; exit 18; }
 
   echo "Checking for DQMGUI backups not yet staged out to tape:"
   stager_qry -M $archdir | grep dqmgui_$HOST | grep -v STAGED || echo "all staged out."
-
   echo
-  echo "Starting $HOST DQMGUI backup on $(date)"
+
   tarfile=dqmgui_${HOST}_$(date +%Y%m%d-%H%M).tar
-  # FIXME: stop the agents vidDQMImportDaemon visDQMDeleteDaemon to make the index read only
-  tar cf - -C $STATEDIR/${FLAVOR%%-*}/ix128 . | rfcp - $archdir/$tarfile ||
-    { echo "Could not rfcp to $archdir/$tarfile. Backup failed." 1>&2; exit 21; }
-  echo "Completed copying backup to castor on $(date)."
+  (tar --version
+   echo
+   echo "Starting $HOST DQMGUI backup on $(date)"
+   # FIXME: stop the agents vidDQMImportDaemon visDQMDeleteDaemon to make the index read only
+
+   # The default tar (version 1.15.1) coming with SLC5 does not provide the TAR_VOLUME
+   # env var when calling the script to change tapes. That's very unfortunate, so we
+   # have to workaround to find the next tape number to use in the dest file suffix.
+   # It also doesn't pass any argument to the script, so we use a file on disk to
+   # pass input to it and to keep the state for the next call.
+   echo "$archdir/$tarfile.0" > $STATEDIR/backup/copy-to-castor.next
+
+   # Use tape length of 250GB. The maximum allowed by the CERN/IT is 500GB,
+   # but be careful bumping high numbers as we need local disk space of
+   # equal size to store the volume file. Sometimes we run short on disk
+   # space so better not risk filling up the partition while running a backup.
+   tar -c -M --tape-length=250000000 --file $STATEDIR/backup/partial.tar \
+       -C $STATEDIR/${FLAVOR%%-*}/ix128 . -F $CFGDIR/copy-to-castor.sh ||
+     errors=true
+
+   # Stage out the last tape volume too, regardless of errors in previous command.
+   $CFGDIR/copy-to-castor.sh || errors=true
+   [ $errors ] && echo "*** WARNING *** There were errors during the backup." \
+     || echo "Completed backup to castor on $(date)."
+  ) 2>&1 | tee $STATEDIR/backup/log
+
+  # Generate inplace documentation to make sure people know how to restore it
+  echo
+  echo Copying README file with instruction on how to restore it.
+  (let n=$(cat $STATEDIR/backup/copy-to-castor.next|awk -F. '{ print $NF; }')
+   echo "This is a multi-volume tape archive composed by $n tape(s)."
+   echo
+   echo "To extract one specific file, get the volume tar file and use:"
+   echo "  tar xvf $tarfile.N <filename-to-extract>"
+   echo
+   echo "If a file is spawned in multiple volumes, you must take all the"
+   echo "volumes containing the file and use:"
+   echo "  tar xvMf $tarfile.first-containing-the-file <filename-to-extract>"
+   echo
+   echo "To extract all the files, use:"
+   echo "  tar xvM \$(for c in {0..$((n-1))}; do echo -n \"-f $tarfile.\$c \"; done)"
+   echo
+   echo "Note you cannot concatenate the tar files together to extract a"
+   echo "multi-volume tape archive. For more information on how to"
+   echo "manipulate multi-volume tape archives, see the tar documentation."
+   echo
+   echo "When this backup was generated, it produced the following log:"
+   echo "-------"
+   cat $STATEDIR/backup/log
+   echo "-------"
+   echo "Find below a list of files of $STATEDIR/${FLAVOR%%-*}/ix128"
+   echo "just after the multi-volume tar was created. It should match"
+   echo "what's in the tar, otherwise it means things changed while"
+   echo "the backup was running (tar sometimes may not give warnings about"
+   echo "files that changed during the creation of the archive)."
+   echo
+   (cd $STATEDIR/${FLAVOR%%-*}/ix128 && find . -exec ls -alFd {} \;)
+  ) | rfcp - $archdir/$tarfile.README
+
+  # Clean up
+  rm -f $STATEDIR/backup/{copy-to-castor.next,log}
+  echo
+  echo "Backup completed."
   # FIXME: start the agents vidDQMImportDaemon visDQMDeleteDaemon if they were running before
   # FIXME: cleanup from castor older backups
 }
