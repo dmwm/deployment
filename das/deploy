@@ -69,6 +69,4 @@ deploy_das_post()
   rm -Rf $root/state/das/kws_index
   mkdir -p $root/state/das/kws_index
   cp $das_root/kws_data/kws_index/* $root/state/das/kws_index/
-  
-
 }
