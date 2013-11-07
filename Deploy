@@ -14,6 +14,7 @@
 ##H  -p AUTH-DIR    Use private secrets from AUTH-DIR (default: use dummies).
 ##H  -s STAGES      Install only STAGES parts of recipes (prep sw post).
 ##H  -H HOST        Install as if for HOST (default: hostname).
+##H  -w HOST        Use the following host instead of cmsrep.cern.ch.
 ##H  -h             Display this help.
 ##H
 ##H Remaining parameters are installation root directory ROOT and list
@@ -32,6 +33,7 @@ MIGRATION=
 repoedit=n
 now=$(date +%Y%m%d%H%M%S)
 host=$(hostname -s)
+rpmhost="cmsrep.cern.ch"
 stages="prep sw"
 nogroups=true
 servicedir="$(cd $(dirname $0) && pwd)"
@@ -56,6 +58,7 @@ while [ $# -ge 1 ]; do
     -t ) cfgversion="$2"; shift; shift ;;
     -p ) privauthdir="$2"; shift; shift ;;
     -H ) host="$2"; shift; shift ;;
+    -w ) rpmhost="$2"; shift; shift ;;
     -h ) perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0 1>&2; exit 1 ;;
     -* ) echo "$0: unrecognised option $1, use -h for help" 1>&2; exit 1 ;;
     *  ) break ;;
@@ -228,9 +231,9 @@ inrepo()
      rm -fr $swarea
      mkdir -p $swarea
      cd $swarea
-     curl -sO http://cmsrep.cern.ch/cmssw/$repo/bootstrap.sh
+     curl -sO http://$rpmhost/cmssw/$repo/bootstrap.sh
      sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
-       setup > $PWD/bootstrap-$arch.log 2>&1
+       -server $rpmhost setup > $PWD/bootstrap-$arch.log 2>&1
      touch .bootstrapped)
     if [ $? = 0 ]; then
       note "INFO: bootstrap successful"
