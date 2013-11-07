@@ -23,37 +23,9 @@ deploy_das_post()
 {
   case $host in vocms34 | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
-    
-  local das_root=$root/current/apps/das/lib/python2.6/site-packages/DAS
-    
-  # during deploy services might be unavailable to fetch data from them
-  # so we ship with metadata required for keyword search with DAS
-  
-  # initialize keylearning db
-  rm -f $mongodb_stage/{clean,update}_keylearning_db.js  
-  rm -f $mongodb_stage/keylearning_db-schema-stamp
-  rm -f $mongodb_stage/inputvals_*-schema-stamp
-  (echo 'keylearning = db.getSisterDB("keylearning");'
-   echo 'keylearning.dropDatabase();') > \
-   $mongodb_stage/clean_keylearning_db.js
-  # it's better to clean DBs separately, datatype_name is the first col to be updated so it will clean...
-  (echo 'inputvals = db.getSisterDB("inputvals");'
-   echo 'inputvals.dropDatabase();') > \
-   $mongodb_stage/clean_inputvals_datatype_name.js
-  # clean each collection (currently update_db require clean to be present)
-  for col in group_name primary_dataset_name release_name site_name status_name tier_name
-  do
-  (echo 'inputvals = db.getSisterDB("inputvals");'
-   echo "inputvals.$col.drop();") > \
-   $mongodb_stage/clean_inputvals_$col.js
-  done 
-   
-  cp $das_root/kws_data/db_dumps/*.js $mongodb_stage/
-  
+
   # initialize whoosh IR index for keyword search
-  rm -Rf $root/state/das/kws_index
+  # TODO: this dir has to be writable by DAS if it will be initialized from DAS
   mkdir -p $root/state/das/kws_index
-  cp $das_root/kws_data/kws_index/* $root/state/das/kws_index/
-  
 
 }
