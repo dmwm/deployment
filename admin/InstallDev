@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ### Usage: InstallDev -h
-### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s image -v VER -p PKGS [-r A=B] [-a AUTH]
+### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s image -v VER -p PKGS [-r A=B] [-a AUTH] [-w RPMHOST]
 ### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s post[:HOST] -v VER -p PKGS
 ### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s status[:what]
 ### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s start[:what]
@@ -20,6 +20,7 @@ help()
 }
 
 STAGE= VER= REPO= ACFG= PKGS= ARCH= RELEASE=
+RPMHOST="cmsrep.cern.ch"
 for arg; do
   case $arg in
     -d) cd "$2" || exit $?; shift; shift ;;
@@ -30,6 +31,7 @@ for arg; do
     -r) REPO="-r $2"; shift; shift ;;
     -a) ACFG="-p $2"; rm -f $2/auth/wmcore/header-auth-key*; shift; shift ;;
     -p) PKGS="$2"; shift; shift ;;
+    -w) RPMHOST="$2" shift; shift ;;
     -h) help ;;
     --) shift; break ;;
     -*) usage ;;
@@ -59,15 +61,15 @@ esac
 case $STAGE in
   image )
     set -ex
-    $PWD/cfg/Deploy $ARCH $RELEASE $ACFG -t $VER -a -s prep $PWD $PKGS
+    $PWD/cfg/Deploy $ARCH $RELEASE $ACFG -t $VER -a -w $RPMHOST -s prep $PWD $PKGS
     $PWD/cfg/admin/ProxySeed -t dev -d $PWD/$VER/auth/proxy
-    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ARCH $RELEASE $ACFG $REPO -t $VER -a -s sw $PWD $PKGS"
-    $PWD/cfg/Deploy $ARCH $RELEASE $REPO -t $VER -a -s post $PWD $PKGS
+    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ARCH $RELEASE $ACFG $REPO -t $VER -a -w $RPMHOST -s sw $PWD $PKGS"
+    $PWD/cfg/Deploy $ARCH $RELEASE $REPO -t $VER -a -w $RPMHOST -s post $PWD $PKGS
     ;;
 
   post )
     set -ex
-    $PWD/cfg/Deploy $ARCH $RELEASE -H $WHAT $REPO -t $VER -a -s post $PWD $PKGS
+    $PWD/cfg/Deploy $ARCH $RELEASE -H $WHAT $REPO -t $VER -a -w $RPMHOST -s post $PWD $PKGS
     ;;
 
   start | status | stop )
