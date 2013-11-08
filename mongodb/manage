@@ -176,17 +176,6 @@ start()
 
   if $started; then
     echo "$ME is ready"
-    # keylearning is prerequisite for KWS to function
-    update_db "keylearning_db"
-    # inputvals is less important, but currently it's not updated live...
-    for col in  datatype_name group_name primary_dataset_name release_name site_name status_name tier_name
-    do
-      update_db "inputvals_$col" 
-    done
-    # das
-    # TODO: clean db shall NEVER be called in here, as it do not check for stamps!
-    # TODO: check if this also could potentially cause some strange behaviour in das?!
-    
   else
     echo "$ME did not start, not cleaning nor updating."
     exit 1
