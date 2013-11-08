@@ -398,8 +398,9 @@ execute_command_agent(){
     shift;
     local RUNTHIS=$1
     local WMCORE_BIN_DIR=$WMCORE_ROOT/bin
-    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
-        echo "$RUNTHIS is not a binary in WMCore/bin"
+    local T0_BIN_DIR=$T0_ROOT/bin
+    if [ ! -e $WMCORE_BIN_DIR/$1 -a ! -e $T0_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in WMCore/bin or T0/bin"
         exit 1
     fi
     shift;
