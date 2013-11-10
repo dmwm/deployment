@@ -26,6 +26,11 @@ def check_hash(rec):
     nrec = dict(rec)
     if  nrec.has_key('hash'):
         md5 = nrec.pop('hash')
+        # exclude timestamp since they are dynamic
+        if  'ts' in nrec:
+            del nrec['ts']
+        if  'timestamp' in nrec:
+            del nrec['timestamp']
         nrec = json.JSONEncoder(sort_keys=True).encode(nrec)
         keyhash = hashlib.md5()
         keyhash.update(nrec)
