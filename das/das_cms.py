@@ -17,7 +17,7 @@ config.web_server.status_update = 2500
 config.web_server.web_workers = 50
 config.web_server.queue_limit = 1000
 config.web_server.qtype = 'Queue'
-config.web_server.adjust_input = False # keyword search supersedes this
+config.web_server.adjust_input = True # keyword search supersedes this, but KWS disabled
 config.web_server.dbs_daemon = True
 config.web_server.dbs_daemon_interval = 600
 config.web_server.dbs_daemon_expire = 3600
@@ -88,8 +88,8 @@ config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sited
 
 # keyword search configuration
 config.component_('keyword_search')
-config.keyword_search.kws_on = True # ajax client
-config.keyword_search.kws_service_on = True # ajax server
+config.keyword_search.kws_on = False # ajax client
+config.keyword_search.kws_service_on = False # ajax server
 config.keyword_search.timeout = 7 # timeout in seconds
 
 # load balancing configuration
@@ -98,7 +98,6 @@ config.load_balance.kws_host = '' # for external server, format is: 'https://das
 
 # query rewriting configuration
 config.component_('query_rewrite')
-config.query_rewrite.pk_rewrite_on = True
+config.query_rewrite.pk_rewrite_on = False
 config.query_rewrite.dasclient_doc_url = 'https://cms-http-group.web.cern.ch/cms-http-group/apidoc/das/current/das_client.html'
-
 

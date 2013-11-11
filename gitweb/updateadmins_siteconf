@@ -64,16 +64,17 @@ print "# General repository permissions:"
 print "#   The http group can do anything, cms registered users and cmsweb can read anything,"
 print "#   cms registered users can only push to the master branch"
 print "\tRW+ = @cms-http-group"
-print "\tR = cmsweb @cms-authorized-users"
-print "\tRW master = @cms-authorized-users"
+print "\tRW = @cms-authorized-users"
+print "\tR = cmsweb"
 print
 print "# Additional per-path restrictions that are _additionally_ checked:"
 print "#   Site admins and executives can write to their site configuration directory only,"
 print "#   The site support team and the http group can write to any file/dir,"
 print "#   Other cms registered users and cmsweb cannot write anywhere,"
 print "#   but can read any files."
-print "\tRW NAME/ = @cms-http-group @cms-comp-ops-site-support-team"
-print "\tR NAME/ = cmsweb @cms-authorized-users"
+print "\tRW VREF/NAME/ = @cms-http-group @cms-comp-ops-site-support-team"
+print "\tR VREF/NAME/ = cmsweb @cms-authorized-users"
 for cmssite in sorted(rolemap.keys()):
   if len(rolemap[cmssite]) > 0:
-    print "\tRW NAME/%s =" % cmssite, ' '.join(rolemap[cmssite])
+    print "\tRW VREF/NAME/%s =" % cmssite, ' '.join(rolemap[cmssite])
+print "\t- VREF/NAME/ = @cms-authorized-users"
