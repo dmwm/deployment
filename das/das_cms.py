@@ -99,5 +99,6 @@ config.load_balance.kws_host = '' # for external server, format is: 'https://das
 # query rewriting configuration
 config.component_('query_rewrite')
 config.query_rewrite.pk_rewrite_on = True
+config.query_rewrite.dasclient_doc_url = 'https://cms-http-group.web.cern.ch/cms-http-group/apidoc/das/current/das_client.html'
 
 
