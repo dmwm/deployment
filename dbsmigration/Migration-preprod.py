@@ -22,7 +22,7 @@ db_mapping = {'prod/global': dbs3_pg_r,
               'int/global': dbs3_l3_i2,
               'int/phys03': dbs3_ip1_i2}
 
-thread_mapping = {'prod/global': 2,
+thread_mapping = {'prod/global': 1,
                   'dev/global': 1,
                   'int/global': 1,
                   'int/phys03': 1}

@@ -22,10 +22,10 @@ db_mapping = {'prod/global': dbs3_pl1_r,
               'int/global': dbs3_ig_i2,
               'prod/phys03': dbs3_pp3_r}
 
-thread_mapping = {'prod/global': 2,
+thread_mapping = {'prod/global': 1,
                   'dev/global': 1,
                   'int/global': 1,
-                  'prod/phys03': 2}
+                  'prod/phys03': 1}
 
 def create_instance_config(db_instances, instance_name):
     db_config_section = db_instances.section_(instance_name)
