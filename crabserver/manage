@@ -35,6 +35,7 @@ AUTHDIR=$ROOT/auth/$ME
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 PYTHONPATH=$AUTHDIR:$PYTHONPATH
+export CONDOR_CONFIG=$CFGDIR/condor_config
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
   export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
   export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
