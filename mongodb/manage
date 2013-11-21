@@ -29,12 +29,15 @@ esac
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
-CFGDIR=$(dirname $0)
+#CFGDIR=$(dirname $0)  this do not work with cd $STATEDIR - we need absolute path
+CFGDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
+# the files will be downloaded here, before verification, and only afterwards moved to stagedir
+tmpdir="/tmp/das_down"
 
 . $ROOT/apps/mongo/etc/profile.d/init.sh
 cd $STATEDIR
@@ -42,9 +45,9 @@ cd $STATEDIR
 # Update and clean a MongoDB database(s) and its collections
 # Parameters:
 # 1: object_name
-# 2: array of db_collection to be updated
+# 2: array of strings specifying db_collection  to be updated
 #
-# If the update scripts have changes this will:
+# If the update scripts have changes this will happen:
 # * call clean_${object_name}.js
 # * import update_{db_col,..}.js files into mongodb
 # TODO: what if we passed well-formed file-names?
@@ -52,70 +55,120 @@ update_db()
 {
   # TODO: do I need 'local' keyword here?
   stagedir=${STATEDIR}/stagingarea
-  obj=$1
-  updates=$2
+  obj="$1"
+  updates="$2"
 
   # calculate stamp over (possibly multiple) collection updates
-  stamp=$(printf "${stagedir}/update_%s.js " "${updates[@]}" | xargs md5sum)
-
+  echo "update_db($1)"
+  stamp=$(cd $stagedir && printf "%s\n" "${updates[@]}" | xargs -i md5sum "update_{}.js")
   oldstamp=$(cat ${stagedir}/${obj}-schema-stamp 2>/dev/null)
+  #echo "stamp: $stamp  oldstamp: $oldstamp"
   if [ ! -f ${stagedir}/${obj}-schema-stamp ] || [ X"$oldstamp" != X"$stamp" ]; then
     set -e
-    # this seem to exit with 0 even if DB being deleted do not exist
+    # this seem to exit with 0 even if DB being cleaned do not exist
     # still we have to check if clean script exists, in case of multiple collections...
     if [ -f ${stagedir}/clean_${obj}.js ]; then
         echo "Clean ${obj}"
         mongo --port 8230 ${stagedir}/clean_${obj}.js
     fi
 
-    echo "Update ${obj}. Collections: $updates[@]"
-    for obj in ${updates[@]}
+    for entry in ${updates[@]}
     do
         # TODO: should db name be part of filename? IMHO, that's more flexible.
-        db=$(echo ${obj} | cut -f1 -d_) coll=$(echo ${obj} | cut -f2- -d_)
-        mongoimport --port 8230 --db ${db} --collection ${coll} --file ${stagedir}/update_${obj}.js
+        db=$(echo ${entry} | cut -f1 -d_) coll=$(echo ${entry} | cut -f2- -d_)
+        echo "Updating db: ${db} col: ${coll}"
+        mongoimport --port 8230 --db ${db} --collection ${coll} --file ${stagedir}/update_${entry}.js
     done
     # TODO: what if some file is missing?!
-    echo "$stamp" > ${stagedir}/$1-schema-stamp
+    echo "$stamp" > ${stagedir}/${obj}-schema-stamp
     set +e
   fi
+}
+
+
+# download a file
+getfile()
+{
+    file=$1
+    fname=`basename $file`
+    # Fetch DAS map JSON file from given URI
+    regex='(https|http)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|].js'
+    if  [ -f $file ]; then
+        cp $file $tmpdir/$fname
+    elif [[ $file =~ $regex ]]; then
+        # download or fail silently
+        curl -s -f $file > $tmpdir/$fname
+        status=$?
+        if [ $status -ne 0 ]; then
+            echo "failure downloading"
+            exit -1
+        fi
+
+    else
+        echo "Invalid update file name: $file, please provide either URL or full file name"
+    fi
+}
+
+# Download the files listed in $1.conf and validate them
+download_and_verify(){
+    #VALIDATORDIR=$ROOT/config/mongodb
+    VALIDATORDIR=$CFGDIR
+    val_cmd_src='__ROOT__'    
+    CFG=$CFGDIR/$1.conf
+    
+    # download the files
+    while read -r file; do
+        if [[ $file =~ '.js' ]]; then
+            echo "Get $file"
+            getfile "$file"
+        fi
+        #TODO: filter out the name of the validator script 
+    done < "$CFG"
+    
+    # verify them
+    updates=$(cat $CFG | grep update | xargs -i basename '{}' '.js')
+    validator=`cat $CFG | grep $val_cmd_src | sed "s,__ROOT__,$VALIDATORDIR,"`
+    #update_list=$(printf "%s " "${updates[@]}" | tr -d '\n')
+    #echo "Verifying updates: ${updates[*]}"
+    for upd in ${updates[@]}
+    do
+        echo $validator "$tmpdir/$upd.js"
+        $validator "$tmpdir/$upd.js"
+        validator_status=$?
+        if  [ "$validator_status" -ne "0" ]; then
+            echo "Fail validation of $upd"
+            exit 1
+        fi        
+    done
+}
+
+doupdate(){
+    CFG=$CFGDIR/$1.conf
+    # list of items to update
+    updates=$(cat $CFG | grep update | xargs -i basename '{}' '.js' | sed "s,update_,,")
+    db=$1
+    update_db "$db" "${updates[@]}"
 }
 
 # Update DAS maps
 updatemaps()
 {
     # names
-    # TODO: change to "mapping_db" because filename identifies collection to use
-    das_map_src="update_mapping_db.js"
-    das_clean_src="clean_das_db.js"
-    val_cmd_src="das_map_validator.py"
     stagedir=$STATEDIR/stagingarea
+    
+    # TODO: clean scripts!!!??
 
-    # get map and validator script from configuration
-    das_map=`cat $CFGDIR/maps.conf | grep $das_map_src`
-    validator=`cat $CFGDIR/maps.conf | grep $val_cmd_src | sed "s,__ROOT__,$ROOT/config/mongodb,"`
+    # cleanup temporary directory where files will be downloaded
+    rm -rf "$tmpdir"
+    mkdir -p $tmpdir
 
-    # Fetch DAS map JSON file from given URI
-    regex='(https|http)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
-    if  [ -f $das_map ]; then
-        dasmaps=$das_map
-    elif [[ $das_map =~ $regex ]]; then
-        curl -s $das_map > $stagedir/$das_map_src
-        dasmaps=$stagedir/$das_map_src
-    else
-        echo "Invalid DAS map input, please provide either URL or full file name"
-    fi
-    # TODO: at the moment it's obligator to copy to stagedir...
+    # TODO: shall anything be updated if something fails to be validated?
+    download_and_verify "das"
+    download_and_verify "keylearning"
+    download_and_verify "inputvals"
 
-    # Validate DAS map JSON file
-    $validator $dasmaps
-    validator_status=$?
-    if  [ "$validator_status" -ne "0" ]; then
-        echo "Fail DAS map validation"
-        exit 1
-    fi
-
-    # Clean-up DAS databases and prepare for deployment
+    # TODO: are these needed? maybe just decide if we store clean in repo or not
+    das_clean_src=clean_das.js
     if [ ! -f $stagedir/$das_clean_src ]; then
 cat > $stagedir/$das_clean_src << EOF
 parser = db.getSisterDB("parser");
@@ -126,18 +179,15 @@ mapping = db.getSisterDB("mapping");
 mapping.dropDatabase();
 EOF
     fi
-
-    # Deploy DAS map JSON file into MongoDB
-    update_db "das_db" "mapping_db"
-    # TODO: download inputvals and keylearning files
-    # TODO: KWS js files may be validated storing another file with their md5sum
-
-    # Keylearning and input values
-    update_db "keylearning" "keylearning_db"
-    # TODO: take collection names from kws.conf?
-    cols=(datatype_name group_name primary_dataset_name release_name site_name status_name tier_name)
-    inputval_updates=(${cols[@]/#/inputvals_})
-    update_db "inputvals" inputval_updates[@]
+    
+    # by now, all the required files are validated and stay in $tmpdir
+    # copy them to stagedir
+    rm -f $stagedir/*.js # but leave stamps
+    cp -f $tmpdir/*.js $stagedir/
+    # update the database
+    doupdate "das"
+    doupdate "keylearning"
+    doupdate "inputvals"
 }
 
 # Start service conditionally on crond restart.
