@@ -18,10 +18,19 @@ from DBSSecrets import dbs3_ig_i2
 ###phys03 instance
 from DBSSecrets import dbs3_pp3_r
 
+###phys02 instance
+from DBSSecrets import dbs3_pp2_r
+
+###phys01 instance
+from DBSSecrets import dbs3_pp1_r
+
+
 db_mapping = {'prod/global': dbs3_pl1_r,
               'dev/global': dbs3_dg_i2,
               'int/global': dbs3_ig_i2,
-              'prod/phys03': dbs3_pp3_r}
+              'prod/phys03': dbs3_pp3_r,
+              'prod/phys02': dbs3_pp2_r,
+              'prod/phys01': dbs3_pp1_r}
 
 security_params = {'prod/global': {'reader': {},
                                    'writer': {'dbs': 'operator',
@@ -31,8 +40,11 @@ security_params = {'prod/global': {'reader': {},
                    'int/global': {'reader': {},
                                   'writer': {}},
                    'prod/phys03': {'reader': {},
+                                  'writer': {}},
+                   'prod/phys02': {'reader': {},
+                                  'writer': {}},
+                   'prod/phys01': {'reader': {},
                                   'writer': {}}}
-
 
 def create_model_section(active, model):
     active.section_(model)
@@ -78,7 +90,7 @@ config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 900
 config.dbs.instances = ['prod/global', 'dev/global', 'int/global',
-                        'prod/phys03']
+                        'prod/phys03', 'prod/phys02', 'prod/phys01']
 
 ###DBSReader section
 active = config.dbs.views.section_('active')
