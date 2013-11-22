@@ -24,6 +24,10 @@ config.web_server.dbs_daemon_expire = 3600
 config.web_server.hot_threshold = 3000
 config.web_server.onhold_daemon = False
 config.web_server.services = ['dbs_phedex']
+# keyword search runs on different port
+config.web_server.kws_port = 8214
+config.web_server.thread_pool_kws=10
+config.web_server.kws_host = '0.0.0.0'
 
 # cache requests configuration
 config.component_('cacherequests')
@@ -99,5 +103,5 @@ config.load_balance.kws_host = '' # for external server, format is: 'https://das
 # query rewriting configuration
 config.component_('query_rewrite')
 config.query_rewrite.pk_rewrite_on = True
-
+config.query_rewrite.dasclient_doc_url = 'https://cms-http-group.web.cern.ch/cms-http-group/apidoc/das/current/das_client.html'
 

@@ -27,5 +27,4 @@ deploy_das_post()
   # initialize whoosh IR index for keyword search
   # TODO: this dir has to be writable by DAS if it will be initialized from DAS
   mkdir -p $root/state/das/kws_index
-
 }
