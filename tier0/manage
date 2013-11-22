@@ -179,6 +179,7 @@ print_settings(){
 #
 . $ROOT_DIR/apps/t0/etc/profile.d/init.sh
 
+export T0_ROOT
 export WMAGENT_ROOT
 # WMAGENT_ROOT == WMCORE_ROOT now but in old rpms WMCORE_ROOT was seperate,
 # if WMCORE_ROOT already set export it, else set to WMAGENT_ROOT
@@ -409,6 +410,21 @@ execute_command_agent(){
     $RUNTHIS $@;
 }
 
+execute_command_tier0(){
+    shift;
+    local RUNTHIS=$1
+    local T0_BIN_DIR=$T0_ROOT/bin
+    if [ ! -e $T0_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in T0/bin"
+        exit 1
+    fi
+    shift;
+    load_secrets_file;
+    export WMAGENT_CONFIG=$CONFIG_TIER0/config.py
+    echo "Executing $RUNTHIS $@ ..."
+    $RUNTHIS $@;
+}
+
 help(){
     echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
 }
@@ -448,6 +464,8 @@ case $1 in
      clean_all;;
   execute-agent)
      execute_command_agent $@;;
+  execute-tier0)
+     execute_command_tier0 $@;;
   help)
     help ;;
   version)

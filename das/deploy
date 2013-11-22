@@ -24,7 +24,9 @@ deploy_das_post()
   case $host in vocms34 | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 
+  case $host in vocms132 ) tbed="_testbed";; * ) tbed="" ;; esac
+  cp $root/current/apps/das/lib/python2.6/site-packages/DAS/services/cms_maps/das${tbed}_maps.js \
   # initialize whoosh IR index for keyword search
-  # TODO: this dir has to be writable by DAS if it will be initialized from DAS
+  # this dir has to be writable by DAS if it will be initialized from DAS
   mkdir -p $root/state/das/kws_index
 }

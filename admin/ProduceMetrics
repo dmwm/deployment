@@ -3,11 +3,11 @@
 # The dashes are needed to skip services that were deleted
 # since we can't reshuffle the metric/exception ids.
 # We may try to reuse them if we run out of ids.
-services="- sitedb phedex_{web,webapp} filemover das_web - overview \
-   - frontend phedex_{graphs,datasvc} couchdb workqueue             \
-   configcache dbs - - - mongodb - reqmgr                           \
-   dqm_{caf,dev,offline,relval}_{agents,web} reqmon crabserver      \
-   crabcache dmwmmon - - t0wmadatasvc dbsmigration reqmgr2 gitweb"
+services="- sitedb phedex_{web,webapp} filemover das_web gitweb overview \
+   - frontend phedex_{graphs,datasvc} couchdb workqueue                  \
+   configcache dbs - - - mongodb reqmgr2 reqmgr                          \
+   dqm_{caf,dev,offline,relval}_{agents,web} reqmon crabserver           \
+   crabcache dmwmmon - - t0wmadatasvc dbsmigration"
 
 case $(uname) in Darwin ) echo_e= ;; * ) echo_e=-e ;; esac
 

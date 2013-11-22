@@ -1,4 +1,4 @@
-// $Id: EcalRenderPlugin.cc,v 1.2 2012/10/04 13:59:37 yiiyama Exp $
+// $Id: EcalRenderPlugin.cc,v 1.3 2012/11/16 10:01:00 yiiyama Exp $
 
 /*
   \file EcalRenderPlugin
@@ -6,8 +6,8 @@
   \author Y. Iiyama
   \author G. Della Ricca
   \author B. Gobbo
-  \version $Revision: 1.2 $
-  \date $Date: 2012/10/04 13:59:37 $
+  \version $Revision: 1.3 $
+  \date $Date: 2012/11/16 10:01:00 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -43,7 +43,8 @@ private :
 
   TH2C* eemTTLabels;
   TH2C* eepTTLabels;
-  TH2C* eeSCLabels;
+  TH2C* eemSCLabels;
+  TH2C* eepSCLabels;
   TH2C* eemSMLabels;
   TH2C* eepSMLabels;
   TH2C* eeSMLabels;
@@ -134,7 +135,8 @@ EcalRenderPlugin::EcalRenderPlugin() :
   ebSMShiftedLabels(0),
   eemTTLabels(0),
   eepTTLabels(0),
-  eeSCLabels(0),
+  eemSCLabels(0),
+  eepSCLabels(0),
   eemSMLabels(0),
   eepSMLabels(0),
   eeSMLabels(0),
@@ -176,7 +178,8 @@ EcalRenderPlugin::~EcalRenderPlugin()
   delete ebSMShiftedLabels;
   delete eemTTLabels;
   delete eepTTLabels;
-  delete eeSCLabels;
+  delete eemSCLabels;
+  delete eepSCLabels;
   delete eemSMLabels;
   delete eepSMLabels;
   delete eeSMLabels;
@@ -322,7 +325,8 @@ EcalRenderPlugin::initialise(int, char **)
 
   eemTTLabels = new TH2C("eemTTLabels", "eemTTLabels", 100, 0., 100., 100, 0., 100.);
   eepTTLabels = new TH2C("eepTTLabels", "eepTTLabels", 100, 0., 100., 100, 0., 100.);
-  eeSCLabels = new TH2C("eeSCLabels", "eeSCLabels", 22, -5., 105., 22, -5., 105.);
+  eemSCLabels = new TH2C("eemSCLabels", "eemSCLabels", 22, -5., 105., 22, -5., 105.);
+  eepSCLabels = new TH2C("eepSCLabels", "eepSCLabels", 22, -5., 105., 22, -5., 105.);
   eemSMLabels = new TH2C("eemSMLabels", "eemSMLabels", 10, 0., 100., 10, 0., 100.);
   eepSMLabels = new TH2C("eepSMLabels", "eepSMLabels", 10, 0., 100., 10, 0., 100.);
   eeSMLabels = new TH2C("eeSMLabels", "eeSMLabels", 20, 0., 200., 10, 0., 100.);
@@ -338,7 +342,8 @@ EcalRenderPlugin::initialise(int, char **)
 
   eemTTLabels->SetDirectory(gROOT);
   eepTTLabels->SetDirectory(gROOT);
-  eeSCLabels->SetDirectory(gROOT);
+  eemSCLabels->SetDirectory(gROOT);
+  eepSCLabels->SetDirectory(gROOT);
   eemSMLabels->SetDirectory(gROOT);
   eepSMLabels->SetDirectory(gROOT);
   eeSMLabels->SetDirectory(gROOT);
@@ -354,7 +359,8 @@ EcalRenderPlugin::initialise(int, char **)
 
   eemTTLabels->SetMinimum(0.1);
   eepTTLabels->SetMinimum(0.1);
-  eeSCLabels->SetMinimum(0.1);
+  eemSCLabels->SetMinimum(0.1);
+  eepSCLabels->SetMinimum(0.1);
   eemSMLabels->SetMinimum(-9.1);
   eepSMLabels->SetMinimum(0.1);
   eeSMLabels->SetMinimum(-9.1);
@@ -401,7 +407,32 @@ EcalRenderPlugin::initialise(int, char **)
   }
 
   // 484 entries
-  int iCCUToIP[] = {
+  int iCCUFromIPEEm[] = {
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0, 30,  5,  1,  1,  5, 30,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0, 30, 19, 18, 17,  6,  2,  2,  6, 17, 18, 19, 30,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  3, 23, 22, 21, 20,  7,  3,  3,  7, 20, 21, 22, 23,  3,  0,  0,  0,  0,
+    0,  0,  0,  3,  2,  1, 26, 25, 24,  8,  4,  4,  8, 24, 25, 26,  1,  2,  3,  0,  0,  0,
+    0,  0, 25,  6,  5,  4, 29, 28, 27, 13,  9,  9, 13, 27, 28, 29,  4,  5,  6, 25,  0,  0,
+    0,  0, 11, 10,  9,  8,  7, 32, 31, 14, 10, 10, 14, 31, 32,  7,  8,  9, 10, 11,  0,  0,
+    0,  0, 17, 16, 15, 14, 13, 12, 33, 15, 11, 11, 15, 33, 12, 13, 14, 15, 16, 17,  0,  0,
+    0, 25, 24, 23, 22, 21, 20, 19, 18, 16, 12, 12, 16, 18, 19, 20, 21, 22, 23, 24, 25,  0,
+    0,  2,  1, 31, 30, 29, 28, 27, 26, 25,  3, 25,  3, 26, 27, 28, 29, 30, 31,  1,  2,  0,
+    0,  9,  8,  7,  6,  5,  4,  3, 32,  0,  0,  0,  0, 32,  3,  4,  5,  6,  7,  8,  9,  0,
+    0, 17, 16, 15, 14, 13, 12, 11, 10,  0,  0,  0,  0, 10, 11, 12, 13, 14, 15, 16, 17,  0,
+    0, 24, 23, 22, 21, 20, 19, 18,  1, 21, 14, 21, 14,  1, 18, 19, 20, 21, 22, 23, 24,  0,
+    0, 34, 29, 28, 27, 26, 25,  3,  2, 32,  6, 30, 32,  2,  3, 25, 26, 27, 28, 29, 34,  0,
+    0,  0, 30, 32, 31,  7,  6,  5,  4, 33,  7, 31, 33,  4,  5,  6,  7, 31, 32, 30,  0,  0,
+    0,  0, 33, 13, 12, 11, 10,  9,  8,  4,  8, 32, 28,  8,  9, 10, 11, 12, 13, 33,  0,  0,
+    0,  0, 14, 20, 19, 18, 17, 16, 15,  5,  9, 33, 29, 15, 16, 17, 18, 19, 20, 14,  0,  0,
+    0,  0,  0, 14, 26, 25, 24, 23, 22, 10, 14, 38, 34, 22, 23, 24, 25, 26, 14,  0,  0,  0,
+    0,  0,  0,  0, 21, 27, 30, 28,  1, 11, 15, 39, 35, 25, 28, 30, 27, 21,  0,  0,  0,  0,
+    0,  0,  0,  0,  0, 21, 31, 29,  2, 12, 16, 40, 36, 26, 29, 31, 21,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  3, 13, 17, 41, 37, 27,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+  };
+
+  int iCCUToIPEEp[] = {
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0, 30,  5,  1,  1,  5, 30,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0, 30, 19, 18, 17,  6,  2,  2,  6, 17, 18, 19, 30,  0,  0,  0,  0,  0,
@@ -426,10 +457,14 @@ EcalRenderPlugin::initialise(int, char **)
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
   };
 
+  // CCU numbering is identical between EE+ and EE- when both are seen from the IP
+  // DQM consistently uses "From Jura (from positive)" point of view -> +-05 has flipped configuration
+
   for(unsigned i = 0; i < 484; i++){
     int ix(i % 22 + 1);
     int iy(22 - i / 22);
-    eeSCLabels->SetBinContent(ix, iy, iCCUToIP[i]);
+    eemSCLabels->SetBinContent(ix, iy, iCCUFromIPEEm[i]);
+    eepSCLabels->SetBinContent(ix, iy, iCCUToIPEEp[i]);
   }
 
   // 100 entries
@@ -487,7 +522,8 @@ EcalRenderPlugin::initialise(int, char **)
 
   eemTTLabels->SetMarkerSize(0.9);
   eepTTLabels->SetMarkerSize(0.9);
-  eeSCLabels->SetMarkerSize(2);
+  eemSCLabels->SetMarkerSize(2);
+  eepSCLabels->SetMarkerSize(2);
   eemSMLabels->SetMarkerSize(2);
   eepSMLabels->SetMarkerSize(2);
   eeSMLabels->SetMarkerSize(2);
@@ -923,7 +959,7 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
 	  if(btype == kTriggerTower)
 	    labels = iSM < 0 ? eemTTLabels : eepTTLabels;
 	  else
-	    labels = eeSCLabels;
+	    labels = iSM < 0 ? eemSCLabels : eepSCLabels;
 
 	  labels->GetXaxis()->SetRangeUser(obj->GetXaxis()->GetXmin(), obj->GetXaxis()->GetXmax() - 0.5);
 	  labels->GetYaxis()->SetRangeUser(obj->GetYaxis()->GetXmin(), obj->GetYaxis()->GetXmax() - 0.5);

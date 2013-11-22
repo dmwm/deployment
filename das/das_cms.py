@@ -17,7 +17,7 @@ config.web_server.status_update = 2500
 config.web_server.web_workers = 50
 config.web_server.queue_limit = 1000
 config.web_server.qtype = 'Queue'
-config.web_server.adjust_input = False # keyword search supersedes this
+config.web_server.adjust_input = False # keyword search supersedes this, use True when KWS disabled
 config.web_server.dbs_daemon = True
 config.web_server.dbs_daemon_interval = 600
 config.web_server.dbs_daemon_expire = 3600
@@ -88,7 +88,7 @@ config.das.error_expire = 300
 config.das.emptyset_expire = 5
 config.das.thread_weights = ['dbs:5', 'phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
-config.das.services = ['dbs','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr','mcm']
+config.das.services = ['dbs','dbs3','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr','mcm']
 
 # keyword search configuration
 config.component_('keyword_search')
