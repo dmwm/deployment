@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#-*- coding: ISO-8859-1 -*-
 # __author__ = 'Vidmantas Zemleris'
 """
 Provide validation of DAS Maps
@@ -12,7 +13,7 @@ import hashlib
 import json
 import sys
 
-from schema import Schema, And, Or, Optional, validate_file_verbose
+from schema_validator import Schema, And, Or, Optional, validate_file_verbose
 
 
 def check_hash(rec):
@@ -62,9 +63,15 @@ MAP_RECORD = And(
         'lookup': _str,
         'wild_card': _str,
         'params': {_str: Or(_str, bool, list)},
-        Optional('instances'): list, # TODO
-        # TODO: allow optional str:str, as in original validator
-        #Optional(_str): Optional(_str),
+        'type': 'service',
+        Optional('instances'): list,
+
+        #TODO: error message when an unexpected field is present is not clear
+        # see https://github.com/halst/schema/issues/3
+
+        # Currently we do not allow just arbitrary fields..
+        # to allow optional args of unknown names as in the original validator
+        # one may just use  _str: _str. however more strict is better?
     },
     check_hash)
 
@@ -73,7 +80,8 @@ PRESENTATION_RECORD = And(
     {
     'presentation': dict,
     'ts': float,
-    'hash': _str},
+    'hash': _str,
+    'type': 'presentation'},
     check_hash)
 
 # schema of notation_map record
@@ -84,6 +92,7 @@ NOTATION_RECORD = And(
      'system': _str,
      'ts': float,
      'hash': _str,
+     'type': 'notation'
      # TODO: allow optional str:str, as in original validator
      # Optional(_str): _str
      },

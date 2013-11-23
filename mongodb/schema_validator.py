@@ -54,19 +54,18 @@ def validate_verbose(rules, item, print_success=False):
                 'presentation_record': Schema(presentation_record),
                 'notation_record': Schema(notation_record)}
     """
-    passed = False
     errors = []
     for rule_name, rule in rules.items():
         try:
             rule.validate(item)
-            passed = True
             if print_success:
                 print 'OK:', item
-            continue
+            break
         except SchemaError as err:
             errors.append(('rule %s failed:' % rule_name, err))
-    if not passed:
-        print 'can not validate the record:', item
+    else:
+        print 'can not validate the record:'
+        pprint.pprint(item)
         pprint.pprint(errors)
         return False
     return True

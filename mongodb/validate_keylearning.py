@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # __author__ = 'Vidmantas Zemleris'
 import sys
-from schema import Schema, And, Or, Use, Optional, validate_mongodb_json
+from schema_validator import Schema, And, Or, Use, Optional, validate_mongodb_json
 
 
 schema = \
