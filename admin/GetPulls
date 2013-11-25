@@ -5,9 +5,9 @@
 ### For deployment repo (dmwm user), it's going to fetch everything.
 ### It creates a new stg patch for every pull request.
 ###
-### Usage: getPulls -h
-### Usage: getPulls -r <repository> <list of pull request numbers separated by space>
-### Usage: Example: getPulls -r cmsdist 263 266 267
+### Usage: GetPulls -h
+### Usage: GetPulls -r <repository> <list of pull request numbers separated by space>
+### Usage: Example: GetPulls -r cmsdist 263 266 267
 
 usage()
 {
