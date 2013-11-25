@@ -2,9 +2,9 @@
 
 # Script to report CMSWEB audit info in logwatch reports.
 #
-# Queries ausearch tool using time interval for 'yesterday', and produces a
+# Queries ausearch tool using time interval for 'since 7 days ago', and produces a
 # summary result of the findings to the standard output where logwatch will
-# grab it and include in daily e-mail reports.
+# grab it and include in weekly e-mail reports.
 
 import os, sys, subprocess, re
 from datetime import date, timedelta
@@ -885,9 +885,10 @@ def summarise(data):
 
 # Main program. Read ausearch output and digest it, generate summary.
 if __name__ == '__main__':
+  yesterday = date.today() - timedelta(1)
   cmd = ['/sbin/ausearch', '--input-logs', '-i',
-         '-ts', 'yesterday', '00:00:00',
-         '-te', 'yesterday', '23:59:59']
+         '-ts', date.strftime(yesterday-timedelta(6),"%m/%d/%Y"), '00:00:00',
+         '-te', date.strftime(yesterday,"%m/%d/%Y"), '23:59:59']
   try:
     (output, err) = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()
     if err:

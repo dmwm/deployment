@@ -359,6 +359,7 @@ deploy_system_post()
       sudo cp {/usr/share,/etc}/logwatch/scripts/services/sendmail
       sudo patch /etc/logwatch/scripts/services/sendmail \
         < $project_config_src/logwatch-sendmail.patch
+      sudo mv /etc/cron.daily/0logwatch /etc/cron.weekly/ || true
 
       # Make sure the permissions for /home/cmsweb are right.
       sudo /usr/sbin/ncm-ncd --configure dirperm
@@ -395,10 +396,6 @@ deploy_system_post()
           note "   sudo cfg/admin/ImageKey stop"
           ;;
       esac
-
-      # Generate post-install logwatch report.
-      export PATH=$PATH:/usr/sbin
-      sudo /usr/sbin/logwatch
       ;;
 
     devmac )
