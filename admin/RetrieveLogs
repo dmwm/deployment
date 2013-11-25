@@ -1,0 +1,137 @@
+#!/bin/bash
+
+### Utilitarian script to retrieve log files from the cmsweb machines and
+### copy it under your own work AFS public area, with the correct permissions.
+###
+### Usage: RetrieveLogs -h
+### Usage: RetrieveLogs -s <service> -f <file name> -n <"list of hosts space separated"> -d <dirName> -a <AFS user> [-p <pattern for frontend>] 
+### Usage: Example: RetrieveLogs -s phedex -f error_log_20131122.txt -n "vocms132 vocms133" -d forTony -a xblahx
+### Usage: Example: RetrieveLogs -s frontend -f access_log_20131124.txt -n "vocms134 vocms135" -d forAlan -a xblahblahx -p gitweb
+
+usage()
+{
+  perl -ne '/^### Usage:/ && do { s/^### ?//; print }' < $0
+  exit 1
+}
+
+help()
+{
+  perl -ne '/^###/ && do { s/^### ?//; print }' < $0
+  exit 0
+}
+
+### Create a directory under your AFS work public area and
+### setup permissions only for himself and the target user.
+setupDir()
+{
+  echo "Creating directory and setting up AFS permissions ..."
+  mkdir /afs/cern.ch/work/a/${USER}/public/$NEWDIR
+  if [ $? != "0" ]; then
+    exit 1
+  fi
+  fs sa /afs/cern.ch/work/a/${USER}/public/$NEWDIR $AFSUSER rl
+  fs sa /afs/cern.ch/work/a/${USER}/public/$NEWDIR system:anyuser none
+  fs sa /afs/cern.ch/work/a/${USER}/public/$NEWDIR system:administrators none
+  fs la /afs/cern.ch/work/a/${USER}/public/$NEWDIR
+}
+
+### Print some information to the user
+info()
+{
+  echo; echo "Hosts: $NODES"
+  echo "Files: $FILE"
+  echo "  from: /data/srv/logs/${SERVICE}/"
+  echo "  to:   /afs/cern.ch/work/a/${USER}/public/${NEWDIR}"; 
+  if [ "$SERVICE" == "frontend" ]; then
+    echo "Provided pattern for frontends: $PATTERN"
+  fi
+  echo
+}
+
+### Access the vocmsXXX machines and get the file size, if the user
+### accepts it to be transferred, then it copies the file to the dir
+### previously created and append the hostname to it
+getLogs()
+{
+  for f in $FILE; do
+    for n in $NODES; do
+      result=`ssh ${USER}@${n}.cern.ch "ls -lh /data/srv/logs/${SERVICE}/${f}"`
+      if [ $? != "0" ]; then
+        echo "$n -- $f : File not found!"
+        continue
+      fi
+  
+      fileSize=`echo $result | grep data | awk '{print $5}'`
+      echo "Checking size on $n : $fileSize bytes"
+      read -p "Continue (y/n)? " choice
+      case "$choice" in 
+        y|Y ) true;;
+        * ) echo "no"; continue;;
+      esac
+      scp ${USER}@${n}.cern.ch:/data/srv/logs/${SERVICE}/${f} /afs/cern.ch/work/a/${USER}/public/${NEWDIR}/${f}_$n
+    done
+  done
+}
+
+### Access the vocmsXXX machines, grep the file for pattern and write the
+### output to /tmp/. Then it gets the size of the new file in /tmp
+### and you can (or not) copy it to your afs area.
+getFrontendLogs()
+{
+  for f in $FILE; do
+    for n in $NODES; do
+      echo "Grepping $f for '$PATTERN', it may take some minutes ..." 
+      ssh ${USER}@${n}.cern.ch "grep -Isi '${PATTERN}' /data/srv/logs/${SERVICE}/${f} > /tmp/${f}_$n"
+      if [ $? != "0" ]; then
+        echo "$n -- $f : File not found!"
+        continue
+      fi
+
+      result=`ssh ${USER}@${n}.cern.ch "ls -lh /tmp/${f}_$n"`
+      if [ $? != "0" ]; then
+        echo "$n -- $f_$n : Your pattern did *not* match anything!"
+        continue
+      fi  
+
+      fileSize=`echo $result | grep tmp | awk '{print $5}'`
+      echo "Checking size on $n : $fileSize bytes"
+      read -p "Continue (y/n)? " choice
+      case "$choice" in 
+        y|Y ) true;;
+        * ) echo "no"; continue;;
+      esac
+      scp ${USER}@${n}.cern.ch:/tmp/${f}_$n /afs/cern.ch/work/a/${USER}/public/${NEWDIR}
+      echo
+    done
+  done
+}
+
+for arg; do
+  case $arg in
+    -h) help ;;
+    -s) SERVICE=$2; shift; shift ;;
+    -f) FILE=$2; shift; shift ;;
+    -n) NODES=$2; shift; shift ;;
+    -d) NEWDIR=$2; shift; shift ;;
+    -a) AFSUSER=$2; shift; shift ;;
+    -p) PATTERN=$2; shift; shift ;;
+    -*) usage ;;
+  esac
+done
+
+setupDir
+
+if [ "$SERVICE" == "frontend" ]; then
+  if [ -z "$PATTERN" ]; then
+    echo "You *must* provide an access pattern to the frontend logs!"
+    usage
+  else
+    info
+    getFrontendLogs
+  fi
+else
+  info
+  getLogs
+fi
+
+exit 0
