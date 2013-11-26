@@ -65,13 +65,6 @@ MAP_RECORD = And(
         'params': {_str: Or(_str, bool, list)},
         'type': 'service',
         Optional('instances'): list,
-
-        #TODO: error message when an unexpected field is present is not clear
-        # see https://github.com/halst/schema/issues/3
-
-        # Currently we do not allow just arbitrary fields..
-        # to allow optional args of unknown names as in the original validator
-        # one may just use  _str: _str. however more strict is better?
     },
     check_hash)
 
