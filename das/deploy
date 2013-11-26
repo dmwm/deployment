@@ -36,7 +36,7 @@ deploy_das_post()
    echo 'das = db.getSisterDB("das");'
    echo 'das.dropDatabase();') > \
    $mongodb_stage/clean_das_db.js
-  case $host in vocms132 ) tbed="_testbed";; * ) tbed="" ;; esac
+  case $host in vocms133 ) tbed="_testbed";; * ) tbed="" ;; esac
   cp $root/current/apps/das/lib/python2.6/site-packages/DAS/services/cms_maps/das${tbed}_maps.js \
     $mongodb_stage/update_mapping_db.js
     
