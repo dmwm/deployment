@@ -49,7 +49,14 @@ deploy_asyncstageout_post()
            "$root/current/apps/asyncstageout/couchapp/AsyncTransfer" \
            "http://localhost:5984/asynctransfer" \
            >> $root/state/couchdb/stagingarea/asyncstageout
-
+      echo "couchapp push " \
+           "$root/current/apps/asyncstageout/couchapp/DBSPublisher" \
+           "http://localhost:5984/asynctransfer" \
+           >> $root/state/couchdb/stagingarea/asyncstageout
+      echo "couchapp push " \
+           "$root/current/apps/asyncstageout/couchapp/monitor" \
+           "http://localhost:5984/asynctransfer" \
+           >> $root/state/couchdb/stagingarea/asyncstageout
       ;;
   esac
 }
