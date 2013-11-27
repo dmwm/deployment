@@ -7,7 +7,7 @@ services="- sitedb phedex_{web,webapp} filemover das_web gitweb overview \
    - frontend phedex_{graphs,datasvc} couchdb workqueue                  \
    configcache dbs - - - mongodb reqmgr2 reqmgr                          \
    dqm_{caf,dev,offline,relval}_{agents,web} reqmon crabserver           \
-   crabcache dmwmmon - - t0wmadatasvc dbsmigration"
+   crabcache dmwmmon das_kws - t0wmadatasvc dbsmigration"
 
 case $(uname) in Darwin ) echo_e= ;; * ) echo_e=-e ;; esac
 
