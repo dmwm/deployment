@@ -1,0 +1,54 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_ssb_deps()
+{
+  deploy admin
+}
+
+deploy_ssb_prep()
+{
+  mkproj toafs
+  mkproxy
+}
+
+outdir=/afs/cern.ch/cms/LCG/SiteComm
+ssbver=5492378cd6267b1b97f025bdbe00b4d0a775cf73 # FIX: should use a tag
+
+deploy_ssb_sw()
+{
+  deploy_pkg comp external+p5-json-xs
+
+  # Drop here only the needed scripts
+  klist -s
+  cd $root/current/apps
+  git clone -n https://:@git.cern.ch/kerberos/sitecomm --depth 1 $project
+  cd $project
+  git checkout $ssbver SSBScripts/{jr_successrate,site_avail_sum,cms-storage-info}.pl
+  mv SSBScripts/*pl ./ && rm -rf .git SSBScripts
+
+  # Fixes needed while we waiting for improvements on the scripts
+  perl -p -i -e "s,use JSON,use JSON::XS,g; \
+                 s,from_json\(,decode_json\(,g;" *.pl
+  perl -p -i -e "s,/afs/cern.ch/cms/LCG/SiteComm/,$project_state/toafs,g;" cms-storage-info.pl 
+
+  # Relocations
+  perl -p -i -e "s,{OUTDIR},$outdir,g; \
+                 s,{VER},$ssbver,g;" $project_config/ssb_task
+}
+
+deploy_ssb_post()
+{
+  klist -s
+  (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
+   echo "5 * * * * $host $project_config/ssb_task updateafs"
+  ) | acrontab
+
+  (mkcrontab
+   echo "55 0 * * * $project_config/ssb_task siteavail"
+   echo "55 0 * * * $project_config/ssb_task hctest 24"
+   echo "55 * * * * $project_config/ssb_task hctest 6"
+   echo "0 * * * * $project_config/ssb_task storage"
+  ) | crontab -
+
+  note "NOTE: you must have write access to $outdir."
+}

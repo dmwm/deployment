@@ -1,0 +1,62 @@
+#!/bin/sh
+
+##H Usage: ssb_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   version             get current version of the service
+##H   storage             provide cms storage information
+##H   siteavail           calculate site availability for the last 24 hours
+##H   hctest H            calculate the hammercloud job success rate for the past H hours
+##H   updateafs           update the afs output area
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMSPublic/CmsSsbScripts
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+OUTDIR={OUTDIR}
+SSB_VER={VER}
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+
+. $ROOT/apps/p5-json-xs/../../p5-common-sense/*/etc/profile.d/init.sh
+. $ROOT/apps/p5-json-xs/etc/profile.d/init.sh
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  storage )
+    $ROOT/apps/$ME/cms-storage-info.pl
+    ;;
+
+  siteavail )
+    $ROOT/apps/$ME/site_avail_sum.pl $STATEDIR/toafs/site_avail_sum.txt
+    ;;
+
+  hctest )
+    case $2 in 24 ) suff=;; * ) suff="_${2}h" ;; esac
+    $ROOT/apps/$ME/jr_successrate.pl hctest $STATEDIR/toafs/successrate_hctest$suff.txt $2
+    ;;
+
+  updateafs )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    rsync -au $STATEDIR/toafs/ $OUTDIR/
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "${SSB_VER:-unknown}"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
