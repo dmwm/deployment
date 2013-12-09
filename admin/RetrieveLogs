@@ -4,9 +4,13 @@
 ### copy it under your own work AFS public area, with the correct permissions.
 ###
 ### Usage: RetrieveLogs -h
-### Usage: RetrieveLogs -s <service> -f <file name> -n <"list of hosts space separated"> -d <dirName> -a <AFS user> [-p <pattern for frontend>] 
-### Usage: Example: RetrieveLogs -s phedex -f error_log_20131122.txt -n "vocms132 vocms133" -d forTony -a xblahx
+### Usage: RetrieveLogs -s <service> -f <file name> -n <"list of hosts space separated"> -d <dirName> -a <AFS user> [-p <pattern for frontend>] [-yAll]
+### Usage: Example: RetrieveLogs -s phedex -f error_log_20131122.txt -n "vocms132 vocms133" -d forTony -a amaltaro -yAll
 ### Usage: Example: RetrieveLogs -s frontend -f access_log_20131124.txt -n "vocms134 vocms135" -d forAlan -a xblahblahx -p gitweb
+### Usage: -yAll : use this parameter if you are 100% sure that you want to copy the logfiles, it won't ask for any confirmation
+###
+
+AFSWORKHOME=`echo $HOME | sed 's/user/work/g'`
 
 usage()
 {
@@ -20,90 +24,109 @@ help()
   exit 0
 }
 
-### Create a directory under your AFS work public area and
-### setup permissions only for himself and the target user.
+## Create a directory under your AFS work public area and
+## setup permissions only for himself and the target user.
 setupDir()
 {
   echo "Creating directory and setting up AFS permissions ..."
-  mkdir /afs/cern.ch/work/a/${USER}/public/$NEWDIR
+  mkdir ${AFSWORKHOME}/public/$NEWDIR
   if [ $? != "0" ]; then
     exit 1
   fi
-  fs sa /afs/cern.ch/work/a/${USER}/public/$NEWDIR $AFSUSER rl
-  fs sa /afs/cern.ch/work/a/${USER}/public/$NEWDIR system:anyuser none
-  fs sa /afs/cern.ch/work/a/${USER}/public/$NEWDIR system:administrators none
-  fs la /afs/cern.ch/work/a/${USER}/public/$NEWDIR
+  
+  if [ $AFSUSER != $USER ]; then
+    fs sa ${AFSWORKHOME}/public/$NEWDIR $AFSUSER rl
+  fi
+  fs sa ${AFSWORKHOME}/public/$NEWDIR system:anyuser none
+  fs sa ${AFSWORKHOME}/public/$NEWDIR system:administrators none
+  fs la ${AFSWORKHOME}/public/$NEWDIR
 }
 
-### Print some information to the user
+## Print some information to the user
 info()
 {
   echo; echo "Hosts: $NODES"
   echo "Files: $FILE"
   echo "  from: /data/srv/logs/${SERVICE}/"
-  echo "  to:   /afs/cern.ch/work/a/${USER}/public/${NEWDIR}"; 
+  echo "  to:   ${AFSWORKHOME}/public/${NEWDIR}"; 
   if [ "$SERVICE" == "frontend" ]; then
     echo "Provided pattern for frontends: $PATTERN"
   fi
   echo
 }
 
-### Access the vocmsXXX machines and get the file size, if the user
-### accepts it to be transferred, then it copies the file to the dir
-### previously created and append the hostname to it
+## Access the vocmsXXX machines and get the file size, if the user
+## accepts it to be transferred, then it copies the file to the dir
+## previously created
 getLogs()
 {
-  for f in $FILE; do
-    for n in $NODES; do
-      result=`ssh ${USER}@${n}.cern.ch "ls -lh /data/srv/logs/${SERVICE}/${f}"`
+  for n in $NODES; do
+    mkdir ${AFSWORKHOME}/public/${NEWDIR}/$n
+    for f in $FILE; do
+      fileList=`ssh ${USER}@${n}.cern.ch "ls /data/srv/logs/${SERVICE}/${f}"`
       if [ $? != "0" ]; then
         echo "$n -- $f : File not found!"
         continue
       fi
   
-      fileSize=`echo $result | grep data | awk '{print $5}'`
-      echo "Checking size on $n : $fileSize bytes"
-      read -p "Continue (y/n)? " choice
-      case "$choice" in 
-        y|Y ) true;;
-        * ) echo "no"; continue;;
-      esac
-      scp ${USER}@${n}.cern.ch:/data/srv/logs/${SERVICE}/${f} /afs/cern.ch/work/a/${USER}/public/${NEWDIR}/${f}_$n
+      fileList=`echo $fileList | xargs -n 1 basename`
+      for ff in $fileList; do
+        line=`ssh ${USER}@${n}.cern.ch "du /data/srv/logs/${SERVICE}/${ff}"`
+        fileSize=`echo $line | awk '{print $1}'`
+        if [ -z $BYPASS ]; then
+          echo "$n --> $ff : $fileSize Kbytes"
+          read -p "Continue (y/n)? " choice
+          case "$choice" in 
+            y|Y ) true;;
+            * ) echo "no"; continue;;
+          esac
+        fi
+        scp ${USER}@${n}.cern.ch:/data/srv/logs/${SERVICE}/${ff} ${AFSWORKHOME}/public/${NEWDIR}/$n/$ff
+      done
     done
+    echo
   done
 }
 
-### Access the vocmsXXX machines, grep the file for pattern and write the
-### output to /tmp/. Then it gets the size of the new file in /tmp
-### and you can (or not) copy it to your afs area.
+## Access the vocmsXXX machines, grep the file for pattern and write the
+## output to /tmp/. Then it gets the size of the new file in /tmp
+## and you can (or not) copy it to your afs area.
 getFrontendLogs()
 {
-  for f in $FILE; do
-    for n in $NODES; do
-      echo "Grepping $f for '$PATTERN', it may take some minutes ..." 
-      ssh ${USER}@${n}.cern.ch "grep -Isi '${PATTERN}' /data/srv/logs/${SERVICE}/${f} > /tmp/${f}_$n"
+  for n in $NODES; do
+    mkdir ${AFSWORKHOME}/public/${NEWDIR}/$n
+    for f in $FILE; do
+      fileList=`ssh ${USER}@${n}.cern.ch "ls /data/srv/logs/${SERVICE}/${f}"`
       if [ $? != "0" ]; then
         echo "$n -- $f : File not found!"
         continue
       fi
 
-      result=`ssh ${USER}@${n}.cern.ch "ls -lh /tmp/${f}_$n"`
-      if [ $? != "0" ]; then
-        echo "$n -- $f_$n : Your pattern did *not* match anything!"
-        continue
-      fi  
+      fileList=`echo $fileList | xargs -n 1 basename`
+      for ff in $fileList; do
+        echo "Grepping $ff for '$PATTERN', it may take some minutes ..." 
+        ssh ${USER}@${n}.cern.ch "grep -Isi '${PATTERN}' /data/srv/logs/${SERVICE}/${ff} > /tmp/$ff"
 
-      fileSize=`echo $result | grep tmp | awk '{print $5}'`
-      echo "Checking size on $n : $fileSize bytes"
-      read -p "Continue (y/n)? " choice
-      case "$choice" in 
-        y|Y ) true;;
-        * ) echo "no"; continue;;
-      esac
-      scp ${USER}@${n}.cern.ch:/tmp/${f}_$n /afs/cern.ch/work/a/${USER}/public/${NEWDIR}
-      echo
-    done
-  done
+        line=`ssh ${USER}@${n}.cern.ch "du /tmp/${ff}"`
+        if [ $? != "0" ]; then
+          echo "$n -- $ff : Your pattern did *not* match anything!"
+          continue
+        fi  
+
+        fileSize=`echo $line | awk '{print $1}'`
+        if [ -z $BYPASS ]; then
+          echo "$n --> $ff : $fileSize Kbytes"
+          read -p "Continue (y/n)? " choice
+          case "$choice" in 
+            y|Y ) true;;
+            * ) echo "no"; continue;;
+          esac
+        fi
+        scp ${USER}@${n}.cern.ch:/tmp/$ff ${AFSWORKHOME}/public/${NEWDIR}/$n/$ff
+      done # for ff
+    done # for f
+    echo
+  done # for n
 }
 
 for arg; do
@@ -115,6 +138,7 @@ for arg; do
     -d) NEWDIR=$2; shift; shift ;;
     -a) AFSUSER=$2; shift; shift ;;
     -p) PATTERN=$2; shift; shift ;;
+    -yAll) BYPASS=true; shift; shift ;;
     -*) usage ;;
   esac
 done
