@@ -30,7 +30,7 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 # Main routine, perform action requested on command line.
 case ${1:-help} in
   storage )
-    $ROOT/apps/$ME/cms-storage-info.pl
+    $ROOT/apps/$ME/cms-storage-info.pl $STATEDIR/toafs
     ;;
 
   siteavail )

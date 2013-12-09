@@ -12,7 +12,7 @@ deploy_ssb_prep()
 }
 
 outdir=/afs/cern.ch/cms/LCG/SiteComm
-ssbver=5492378cd6267b1b97f025bdbe00b4d0a775cf73 # FIX: should use a tag
+ssbver=5ab0e7063b44c47725e4b31c84bf9de9570a6c87 # FIX: should use a tag
 
 deploy_ssb_sw()
 {
@@ -25,11 +25,6 @@ deploy_ssb_sw()
   cd $project
   git checkout $ssbver SSBScripts/{jr_successrate,site_avail_sum,cms-storage-info}.pl
   mv SSBScripts/*pl ./ && rm -rf .git SSBScripts
-
-  # Fixes needed while we waiting for improvements on the scripts
-  perl -p -i -e "s,use JSON,use JSON::XS,g; \
-                 s,from_json\(,decode_json\(,g;" *.pl
-  perl -p -i -e "s,/afs/cern.ch/cms/LCG/SiteComm/,$project_state/toafs,g;" cms-storage-info.pl 
 
   # Relocations
   perl -p -i -e "s,{OUTDIR},$outdir,g; \
