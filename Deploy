@@ -168,11 +168,11 @@ mkcrontab()
 # Create application proxy
 mkproxy()
 {
-  local acct=_$project
   local path=$PWD/proxy/proxy.cert
   local link=$(echo $path | md5sum | awk '{print $1}' | cut -b 1-8)
   local pxfile=$root/current/auth/proxy/PX$link
   local pxdir=$root/current/auth/proxy
+  if $nogroups; then local acct=$USER; else local acct=_$project; fi
 
   mkdir -p $pxdir
   setgroup u+rwx,g+rx,o-rwx _config $pxdir
