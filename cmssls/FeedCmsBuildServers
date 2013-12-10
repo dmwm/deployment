@@ -1,0 +1,80 @@
+#!/usr/bin/env python2.6
+
+import os, sys, urllib2, time
+from subprocess import *
+from multiprocessing import Pool, TimeoutError
+
+def getHostList():
+
+    hostList = [] 
+    listURL = "http://cmsdoc.cern.ch/cms/FacOps/sls/build.txt"
+    page = urllib2.urlopen(listURL).readlines()
+
+    ignoreList = []
+    for line in page:
+        if line.strip().startswith('#') : continue
+        if line.strip() in ignoreList: continue
+        hostList.append(line.strip())
+    
+    return hostList
+    
+def checkOne(node):
+
+    remCmd = 'w | head -1'
+    cmd = 'ssh -x -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no '+node+' '+remCmd
+    p = Popen(cmd, shell=True, bufsize=1024, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+    (child_stdin, child_stdout, child_stderr) = (p.stdin, p.stdout, p.stderr)
+
+    if not child_stderr.readlines() : return node, True
+    # print "checking : ", node
+    # print '     got : ', child_stdout.readlines() 
+    return node, False
+    
+    
+def checkAll():
+    maxProcs = 50
+    nodes = getHostList()
+    # print "checking ", len(nodes), 'hosts using', maxProcs, 'processes.'
+    pool = Pool(processes=maxProcs)
+    
+    it = pool.imap_unordered(checkOne, nodes)
+    nodesOK = []
+    while 1:
+        sys.stdout.flush()
+        try:
+            nodesOK.append( it.next(10) )
+        except StopIteration:
+            break
+        except TimeoutError:
+            break # sys.stdout.write('.')
+    
+    return float(len(nodesOK))/float(len(nodes))
+    
+def writeStatus(avail):
+
+    msgHeader = """<?xml version="1.0" encoding="utf-8" ?>
+  <serviceupdate xmlns="http://sls.cern.ch/SLS/XML/update">
+
+    <id>cmsbuildservers</id> """
+
+    msgTrailer = """
+  </serviceupdate>
+    """
+
+    print msgHeader
+    print "    <availability>"+str(avail)+"</availability>"
+    now = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
+    print "    <timestamp>"+now+"</timestamp>"
+    print msgTrailer
+
+    return
+
+def main():
+    avail = checkAll()
+    writeStatus(int(avail*100))
+    return
+
+if __name__ == "__main__":
+
+    main()
+

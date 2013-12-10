@@ -10,13 +10,7 @@ webdir=/afs/cern.ch/cms/LCG/www/SLS
 deploy_cmssls_sw()
 {
   deploy_pkg
-
-  cmsslsver=144
-  cd $root/current/apps
-  svn co svn+ssh://svn.cern.ch/reps/cmsfomon/GridmapSLS/trunk@$cmsslsver cmssls
-
-  perl -p -i -e "s,{WEBDIR},$webdir,g; \
-                 s,{VER},$cmsslsver,g;     " $project_config/cmssls_task
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/cmssls_task
 }
 
 deploy_cmssls_post()

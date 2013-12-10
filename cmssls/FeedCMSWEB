@@ -1,0 +1,152 @@
+#!/usr/bin/env python2.6
+
+from os import path
+import sys
+import time
+import re
+import urllib2
+import subprocess
+from xml.sax.saxutils import escape
+
+TPL_URL = "http://tpl-viewer.cern.ch/cdb-tpl-view/tpl_view.php?profile="
+PROD    = ["vocms136","vocms138","vocms139","vocms140","vocms161","vocms163"]
+NONPROD = ["vocms132","vocms133","vocms127","vocms204"] #pre-prod,dev and reqmon
+LEMONCMD = 'lemon-cli --script-mode -s -n "%s" -m "%s"'
+LEMON_EXPIRED = 86400 # time in seconds to consider lemon feeds as expired
+ID_SMS_STATE = "22002"
+
+XML_TEMPLATE = """\
+<?xml version="1.0" encoding="utf-8" ?>
+  <serviceupdate xmlns="http://sls.cern.ch/SLS/XML/update">
+
+    <id>%(slsid)s</id>
+    <availability>%(avail)i</availability>
+    <timestamp>%(tstamp)s</timestamp>
+    <availabilitydesc>
+       Availability is 0%% if there exist a lemon alarm in any of
+       the CMSWEB machines running this service, 100%% otherwise.
+    </availabilitydesc>
+    <availabilityinfo>Found %(availinfo)i exception(s).</availabilityinfo>
+    <lemon>
+      %(hostlist)s
+    </lemon>
+    <notes>
+This SLS is a mapping from the following lemon metrics/exceptions:
+%(mnames)s
+    </notes>
+    <data>
+      <textvalue>Production hosts: %(prodhosts)s</textvalue>
+      <textvalue>Pre-production and Dev hosts: %(nonprodhosts)s</textvalue>
+      <textvalue>Detected alarms:</textvalue>
+      %(lemonfeeds)s%(numericvalue)s
+    </data>
+  </serviceupdate>
+"""
+
+def spit_xml(feedname, lemonfeeds, name_id, isexcept, inproduction, xml_out_dir):
+  avail = 100
+  availinfo = 0
+  hostlist = set()
+  mnames = set()
+  numericvalue="\n      "
+
+  failed=""
+  for f in lemonfeeds.values():
+    host,id,tstamp,v = f.split(" ",3)
+
+    if not inproduction[host]:
+      continue # ignore the feed if the machine is in maintenance or standby
+
+    hostlist.add(host)
+    mnames.add('cmsweb_'+name_id[id])
+    if isexcept[id]:
+      state, code, msg = v.split(" ",2)
+      if int(state) == 1 and code in ['000', '135']:
+        avail = 0
+        availinfo += 1
+        failed += "<textvalue>" + escape(f.strip()) + "</textvalue>\n"
+    else:
+      numericvalue += "<numericvalue name=\"%s %s\">%s</numericvalue>\n      " \
+          % (host, name_id[id].replace(feedname+'_','',1), v.split(" ")[0])
+
+ 
+  if not failed:
+    failed = "<textvalue>none</textvalue>"
+
+  hl = ""
+  for host in hostlist:
+    hl += "<host>"+host+"</host>\n      "
+  phosts  = [h for h in hostlist & set(PROD)]
+  nphosts = [h for h in hostlist & set(NONPROD)]
+
+  mn = ""
+  for mname in mnames:
+    mn += mname+"\n"
+
+  f=open(path.join(xml_out_dir,"sls_cmsweb_"+feedname+".xml"),"wt")
+  f.write(XML_TEMPLATE % {
+    'slsid': "cmsweb_"+feedname,
+    'avail': avail,
+    'availinfo': availinfo,
+    'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
+    'hostlist': hl.strip(" \n"),
+    'mnames': mn.strip(),
+    'lemonfeeds': failed.strip(" \n"),
+    'numericvalue': numericvalue.rstrip(" \n"),
+    'prodhosts': str(" ").join(phosts),
+    'nonprodhosts': str(" ").join(nphosts)
+  })
+  f.close()
+
+def build_metric_ids():
+  name_ids = {}
+  idlist = ""
+  isexcept = {}
+  metrics_page = urllib2.urlopen(TPL_URL+"prod/customization/cms/webtools/backend/lemon").read()
+  
+  # Exceptions and DQM special metrics
+  x = re.findall('monitoring/exception/_([0-9]+).*?cmsweb_(.*?)"',metrics_page,re.DOTALL)
+  y = re.findall('monitoring/metric/_([0-9]+)[^)]*?cmsweb_(dqm_[^_]*?_agents_import_queue)"',metrics_page,re.DOTALL)
+  for (id,name) in x+y:
+    name_ids[id] = name
+    name_ids[name] = id
+    idlist += id + " "
+    isexcept[id] = (id,name) in x
+  
+  return (name_ids,idlist.strip(),isexcept)
+
+if __name__ == "__main__":
+  if len(sys.argv) != 2:
+    print "Syntax: %s <xml_output_dir>" % sys.argv[0]
+    sys.exit(1)
+  xml_out_dir = sys.argv[1]
+
+  (name_id, idlist, isexcept) = build_metric_ids()
+  feeds={}
+  inproduction={}
+
+  cmd = LEMONCMD % (str(" ").join(PROD+NONPROD), idlist+" "+ID_SMS_STATE)
+  p=subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
+  for line in p.stdout:
+    host,id,tstamp,v = line.split(" ",3)
+
+    if id == ID_SMS_STATE:
+       inproduction[host] = v.startswith("production")
+       continue
+
+    # lemonfeeds older then LEMON_EXPIRED seconds are considered
+    # feeds from deactivated exceptions, so ignore
+    if int(tstamp) + LEMON_EXPIRED > int(time.time()):
+       feedname = re.search('(.*?)_',name_id[id]).group(1)
+       f = feeds.get(feedname,{})
+       f[host+':'+id]=line
+       feeds[feedname] = f
+
+  err = p.stderr.read()
+  if err:
+    print err
+
+  for (k,v) in feeds.items():
+    spit_xml(k,v,name_id,isexcept,inproduction,xml_out_dir)
+
+  sys.exit(0)

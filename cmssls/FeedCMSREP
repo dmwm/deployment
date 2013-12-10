@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+
+import os, sys, urllib2, time
+
+def check():
+
+    url = "http://cmsrep.cern.ch/cms"
+    start = time.time()
+    try:
+        page = urllib2.urlopen(url)
+    except:
+        return False
+    stop = time.time()
+
+    dTime1 = stop-start
+
+    url = "http://cmsrep.cern.ch/cms"
+    start = time.time()
+    try:
+        page = urllib2.urlopen(url)
+    except:
+        return False
+    stop = time.time()
+
+    dTime2 = stop-start
+
+    # logFileName = "/afs/cern.ch/user/p/pfeiffer/www/sls/log-hn"
+    # logFile = file(logFileName, 'a')
+    # logFile.write(time.asctime(time.localtime())+ " : " + str(dTime1) + " " + str(dTime2) + "\n")
+    # logFile.close()
+    
+    return True
+
+def writeStatus(avail):
+
+    msgHeader = """<?xml version="1.0" encoding="utf-8" ?>
+  <serviceupdate xmlns="http://sls.cern.ch/SLS/XML/update">
+
+    <id>cmsrep</id> """
+
+    msgTrailer = """
+  </serviceupdate>
+    """
+
+#     print "Cache-Control: no-cache, must-revalidate"  #  HTTP/1.1
+#     print "Expires: Sun, 1 Jan 2006 00:00:00 GMT" 
+#     print "Content-Type: text/xml; charset=utf-8"
+#     print ""
+    print msgHeader
+    print "    <availability>"+str(avail)+"</availability>"
+    now = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
+    print "    <timestamp>"+now+"</timestamp>"
+    print msgTrailer
+
+    return
+
+def main():
+    if check():
+        writeStatus(100)
+    else:
+        writeStatus(0)
+    return
+
+if __name__ == "__main__":
+
+    main()
+    
+          
