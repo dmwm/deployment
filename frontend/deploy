@@ -56,8 +56,27 @@ deploy_frontend_sw()
 
   rm -f $PWD/etc/keys/authz-headers
   ln $root/current/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
-  setgroup ugo+r,go-w _config $PWD/{*.conf,etc/{httpd,options.txt}}
-  setgroup -R ugo+r,go-w _config $PWD/{etc/env.d,htdocs}
+  $nogroups || setgroup ugo+r,go-w _config $PWD/{*.conf,etc/{httpd,options.txt}}
+  $nogroups || setgroup -R ugo+r,go-w _config $PWD/{etc/env.d,htdocs}
+  # Further munge the server config for single-user mode
+  if [ $nogroups ]; then
+    perl -p -i -e 's/^User/#User/' $PWD/server.conf
+    perl -p -i -e 's/^Group/#Group/' $PWD/server.conf
+        
+    # non-privileged port
+    perl -p -i -e 's/Listen 80/Listen 8080/' $PWD/server.conf
+    perl -p -i -e 's/\*:80/\*:8080/' $PWD/server.conf
+        
+    perl -p -i -e 's/Listen 443/Listen 8443/' $PWD/server.conf
+    perl -p -i -e 's/\*:443/\*:8443/' $PWD/server.conf
+    
+    # non-rootowned key if we can't read it in /etc
+    if [ ! -r /etc/grid-security/hostkey.pem ]; then
+      perl -p -i -e "s#SSLCertificateFile.*#SSLCertificateFile $root/certs/hostcert.pem#" $PWD/server.conf
+      perl -p -i -e "s#SSLCertificateKeyFile.*#SSLCertificateKeyFile $root/certs/hostkey.pem#" $PWD/server.conf
+    fi
+  fi
+
 }
 
 deploy_frontend_post()
@@ -71,8 +90,8 @@ deploy_frontend_post()
     note "ERROR: cannot find hostcert to use"
     exit 1
   fi
-
-  case $host in * ) enable ;; esac
+  
+   case $host in * ) enable ;; esac
   (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
    echo "13 */6 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
         "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
@@ -91,21 +110,21 @@ deploy_frontend_post()
   (crontab -l | grep -e '^[A-Z0-9_]*=' -e $project_config/ |
    perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
 
-  sudo rm -f $PWD/etc/httpd.plist
+  $nogroups || sudo rm -f $PWD/etc/httpd.plist
   perl -p -i -e "s|\@STATEDIR\@|$PWD|g" \
     < $project_config/httpd.plist.in \
     > $PWD/etc/httpd.plist
   chmod 644 $PWD/etc/httpd.plist
-  sudo chown root:$(id -gn) $PWD/etc/httpd.plist
+  $nogroups || sudo chown root:$(id -gn) $PWD/etc/httpd.plist
 
   if [ -d /etc/rc.d/init.d ]; then
-    sudo rm -f /etc/rc.d/init.d/httpd
-    sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
-    sudo /sbin/chkconfig --add httpd
-    sudo /sbin/chkconfig --levels 2345 httpd on
+    $nogroups || sudo rm -f /etc/rc.d/init.d/httpd
+    $nogroups || sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
+    $nogroups || sudo /sbin/chkconfig --add httpd
+    $nogroups || sudo /sbin/chkconfig --levels 2345 httpd on
   elif [ -d /Library/LaunchDaemons ]; then
-    sudo rm -f /Library/LaunchDaemons/ch.cern.cms.httpd.plist
-    sudo ln -s $PWD/etc/httpd.plist /Library/LaunchDaemons/ch.cern.cms.httpd.plist
+    $nogroups || sudo rm -f /Library/LaunchDaemons/ch.cern.cms.httpd.plist
+    $nogroups || sudo ln -s $PWD/etc/httpd.plist /Library/LaunchDaemons/ch.cern.cms.httpd.plist
   else
     note "ERROR: how do you install a httpd service on this system?"
     exit 1
@@ -179,5 +198,5 @@ deploy_frontend_fakeauth()
    echo "insert into role values (1, 'bar');"
    echo "insert into site_responsibility values (1, 1, 1);"
    echo "insert into group_responsibility values (1, 1, 1);") | sqlite3 $1
-  setgroup ugo+r,go-wx _config $project_auth/users.db
+  $nogroups || setgroup ugo+r,go-wx _config $project_auth/users.db
 }
