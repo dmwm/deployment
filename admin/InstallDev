@@ -1,11 +1,12 @@
 #!/bin/sh
 
 ### Usage: InstallDev -h
-### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s image -v VER -p PKGS [-r A=B] [-a AUTH] [-w RPMHOST]
-### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s post[:HOST] -v VER -p PKGS
-### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s status[:what]
-### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s start[:what]
-### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] -s stop[:what]
+### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] [-S] -s image -v VER -p PKGS [-r A=B] [-a AUTH] [-w RPMHOST] [-u PXUSER]
+### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] [-S] -s post[:HOST] -v VER -p PKGS
+### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] [-S] -s status[:what]
+### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] [-S] -s start[:what]
+### Usage: InstallDev [-A arch] [-R RELEASE] [-d DIR] [-S] -s stop[:what]
+### Use -S if running on the single account setup (for dev/test only)
 
 usage()
 {
@@ -19,19 +20,22 @@ help()
   exit 0
 }
 
-STAGE= VER= REPO= ACFG= PKGS= ARCH= RELEASE=
+STAGE= VER= REPO= ACFG= PKGS= ARCH= RELEASE= ROOT=$PWD/srv PXUSER=$USER
 RPMHOST="cmsrep.cern.ch"
+MULTIACC="-a"
 for arg; do
   case $arg in
-    -d) cd "$2" || exit $?; shift; shift ;;
+    -d) ROOT="$2"; shift; shift ;;
     -A) ARCH="-A $2"; shift; shift ;;
     -R) RELEASE="-R $2"; shift; shift ;;
     -s) STAGE="$2"; shift; shift ;;
     -v) VER="$2"; shift; shift ;;
     -r) REPO="-r $2"; shift; shift ;;
+    -u) PXUSER="$2"; shift; shift ;;
     -a) ACFG="-p $2"; rm -f $2/auth/wmcore/header-auth-key*; shift; shift ;;
     -p) PKGS="$2"; shift; shift ;;
     -w) RPMHOST="$2" shift; shift ;;
+    -S) MULTIACC=; shift ;;
     -h) help ;;
     --) shift; break ;;
     -*) usage ;;
@@ -61,23 +65,28 @@ esac
 case $STAGE in
   image )
     set -ex
-    $PWD/cfg/Deploy $ARCH $RELEASE $ACFG -t $VER -a -w $RPMHOST -s prep $PWD $PKGS
-    $PWD/cfg/admin/ProxySeed -t dev -d $PWD/$VER/auth/proxy
-    sudo -H -u _sw bashs -lc "$PWD/cfg/Deploy $ARCH $RELEASE $ACFG $REPO -t $VER -a -w $RPMHOST -s sw $PWD $PKGS"
-    $PWD/cfg/Deploy $ARCH $RELEASE $REPO -t $VER -a -w $RPMHOST -s post $PWD $PKGS
+    mkdir -p $ROOT
+    $PWD/cfg/Deploy $ARCH $RELEASE $ACFG -t $VER $MULTIACC -w $RPMHOST -s prep $ROOT $PKGS
+    [ ! -d $ROOT/$VER/auth/proxy ] ||
+      ssh -o PubkeyAuthentication=no -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed -t dev -d $USER@$(hostname -f):$ROOT/$VER/auth/proxy
+    cmd="$PWD/cfg/Deploy $ARCH $RELEASE $ACFG $REPO -t $VER $MULTIACC -w $RPMHOST -s sw $ROOT $PKGS"
+    case $MULTIACC in -a) sudo -H -u _sw bashs -lc "$cmd";; *) eval $cmd;; esac
+    $PWD/cfg/Deploy $ARCH $RELEASE $REPO -t $VER $MULTIACC -w $RPMHOST -s post $ROOT $PKGS
     ;;
 
   post )
     set -ex
-    $PWD/cfg/Deploy $ARCH $RELEASE -H $WHAT $REPO -t $VER -a -w $RPMHOST -s post $PWD $PKGS
+    $PWD/cfg/Deploy $ARCH $RELEASE -H $WHAT $REPO -t $VER $MULTIACC -w $RPMHOST -s post $ROOT $PKGS
     ;;
 
   start | status | stop )
     set -e
-    for f in enabled/$WHAT; do
-      app=${f#*/}; case $app in frontend) u=root ;; * ) u=_$app ;; esac
-      (set -ex; sudo -H -u $u bashs -lc \
-       "$PWD/current/config/$app/manage $STAGE 'I did read documentation'")
+    for f in $ROOT/enabled/$WHAT; do
+      [ -f "$f" ] || continue
+      app=${f##*/}; case $app in frontend) u=root ;; * ) u=_$app ;; esac
+      (set -ex;
+       cmd="$ROOT/current/config/$app/manage $STAGE 'I did read documentation'"
+       case $MULTIACC in -a) sudo -H -u $u bashs -lc "$cmd";; *) eval $cmd;; esac)
     done
     ;;
 
