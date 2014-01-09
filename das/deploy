@@ -65,9 +65,4 @@ deploy_das_post()
   done 
    
   cp $das_root/kws_data/db_dumps/*.js $mongodb_stage/
-  
-  # initialize whoosh IR index for keyword search
-  rm -Rf $root/state/das/kws_index
-  mkdir -p $root/state/das/kws_index
-  cp $das_root/kws_data/kws_index/* $root/state/das/kws_index/
 }
