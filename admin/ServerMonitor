@@ -20,8 +20,9 @@ def logmsg(*args):
   # Print full single line at a time, 'print' will write every
   # argument separate which in unbuffered mode with threads can
   # result in jumbled output.
-  sys.stdout.write(strftime("%b %d %H:%M:%S ", localtime(time()))
-		   + " ".join(args) + "\n")
+  # Now it's limited to no more than 320 chars
+  line = strftime("%b %d %H:%M:%S ", localtime(time())) + " ".join(args)
+  sys.stdout.write(line[:320] + "\n")
 
 def authz_headers(hmac_key):
   """Create fake authentication and authorisation headers compatible
