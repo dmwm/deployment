@@ -55,7 +55,7 @@ for applogs in $(find $BASEDIR/logs -depth -type d); do
                 \( -name '*log*' -o -name '*.txt' -o \
 	           -name '*.stdout' -o -name '*.stderr' \) \
 	        \! -name '*.zip' \
-	        -mtime +0 | sort)
+	        -mtime +1 | sort)
       [ X"$FILES" = X ] || zip -9Tmojq $zip $FILES
       set +e
       ;;
