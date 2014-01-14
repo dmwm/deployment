@@ -31,6 +31,7 @@ data.serverhostcert = "%s/auth/crabserver/dmwm-service-cert.pem" % __file__.rspl
 data.serverhostkey = "%s/auth/crabserver/dmwm-service-key.pem" % __file__.rsplit('/', 3)[0]
 data.credpath = '%s/state/crabserver/proxy/' % __file__.rsplit('/', 4)[0]
 data.db = 'CRABServerAuth.dbconfig'
+data.backend = 'oracle'
 data.workflowManager = 'HTCondorDataWorkflow'
 
 data.extconfigurl = 'http://git.cern.ch/pubweb/?p=CAFServicesConfig.git;a=blob_plain;f=cmsweb-rest-config.json'
