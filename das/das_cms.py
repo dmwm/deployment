@@ -5,7 +5,7 @@ config = Configuration()
 # web_server configuration
 config.component_('web_server')
 config.web_server.thread_pool = 30
-config.web_server.socket_queue_size = 15
+config.web_server.socket_queue_size = 100
 config.web_server.loglevel = 0
 config.web_server.host = '0.0.0.0'
 config.web_server.log_screen = True
@@ -17,13 +17,13 @@ config.web_server.status_update = 2500
 config.web_server.web_workers = 50
 config.web_server.queue_limit = 1000
 config.web_server.qtype = 'Queue'
-config.web_server.adjust_input = False # keyword search supersedes this, use True to disable KWS
+config.web_server.adjust_input = True
 config.web_server.dbs_daemon = True
 config.web_server.dbs_daemon_interval = 600
 config.web_server.dbs_daemon_expire = 3600
 config.web_server.hot_threshold = 3000
-config.web_server.onhold_daemon = False
 config.web_server.services = ['dbs_phedex']
+config.web_server.check_clients = False # set True when DAS ready
 # keyword search runs on different port
 config.web_server.kws_port = 8214
 config.web_server.thread_pool_kws=10
@@ -39,7 +39,7 @@ config.cacherequests.ProductionAccess = 5000
 config.component_('mongodb')
 config.mongodb.bulkupdate_size = 5000
 config.mongodb.dburi = ['mongodb://localhost:8230']
-config.mongodb.lifetime = 600
+config.mongodb.lifetime = 300
 config.mongodb.dbname = 'das'
 
 # dasdb configuration
@@ -50,6 +50,9 @@ config.dasdb.mergecollection = 'merge'
 config.dasdb.mrcollection = 'mapreduce'
 config.dasdb.logging = False
 config.dasdb.record_ttl = 86400
+config.dasdb.delta_ttl = 60
+config.dasdb.cleanup_worker = True
+config.dasdb.cleanup_interval = 600
 
 # loggingdb configuration
 config.component_('loggingdb')
