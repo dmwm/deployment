@@ -18,21 +18,38 @@ deploy_dbs_prep()
 deploy_dbs_sw()
 {
   deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3
-  cp -p $project_config/DBS-${variant}.py $project_config/DBS.py
+  perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/geneguvo/DBS/raw/master/view_instances.json,g" $project_config/manage
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $project_config/DBS.py
 }
 
 deploy_dbs_post()
 {
   case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
-  (mkcrontab; sysboot) | crontab -
+
+  (mkcrontab
+   sysboot
+   case $host in
+     vocms13[89] | vocms140 )
+       ;;
+     * )
+       local cmd="$project_config/manage setinstances 'I did read documentation'"
+       $nogroups || cmd="sudo -H -u _dbs bashs -l -c \"${cmd}\""
+       echo "*/30 * * * * $cmd"
+       [ -f $project_state/view_instances.json ] ||
+         { cp {$root/current/apps/dbs,$project_state}/view_instances.json;
+           $nogroups || chown _dbs:_dbs $project_state/view_instances.json; }
+       ;;
+   esac) | crontab -
 }
 
 deploy_dbs_auth()
 {
-  echo "db = {'connectUrl' : {"
-  echo "      'reader' : 'oracle://reader:secret@instance',"
-  echo "      'writer' : 'oracle://writer:secret@instance'"
-  echo "       },"
-  echo "      'databaseOwner' : 'owner'"
-  echo "     }"
+  for i in dbs3_p1_i2 dbs3_l_i2; do
+    echo "$i = {'connectUrl' : {"
+    echo "      'reader' : 'oracle://reader:secret@instance',"
+    echo "      'writer' : 'oracle://writer:secret@instance'"
+    echo "       },"
+    echo "      'databaseOwner' : 'owner'"
+    echo "     }"
+  done
 }

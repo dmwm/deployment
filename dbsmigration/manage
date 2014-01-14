@@ -10,6 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
+##H   setinstances fetch instances configuration
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DBS3Operations
@@ -33,6 +34,7 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 CFGFILE=$CFGDIR/Migration.py
+JSONURL="@@JSONURL@@"
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
@@ -84,6 +86,18 @@ status()
   fi
 }
 
+setinstances()
+{
+  f=$(curl -ksL $JSONURL)
+  if echo "$f" | python $CFGDIR/validate.py; then
+    [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] ||
+      { echo $f > $STATEDIR/view_instances.json; stop; start; }
+  else
+    echo "$0: WARNING: view_instances.json failed validation. Refusing to use it." 1>&2
+    exit 3
+  fi
+}
+
 # Verify the security string.
 check()
 {
@@ -113,6 +127,11 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  setinstances )
+    check "$2"
+    setinstances
     ;;
 
   help )
