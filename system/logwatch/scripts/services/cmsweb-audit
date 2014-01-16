@@ -6,7 +6,7 @@
 # summary result of the findings to the standard output where logwatch will
 # grab it and include in weekly e-mail reports.
 
-import os, sys, subprocess, re
+import os, sys, subprocess, re, locale
 from datetime import date, timedelta
 
 # Regular expression for system libraries which are common to be missing,
@@ -885,10 +885,12 @@ def summarise(data):
 
 # Main program. Read ausearch output and digest it, generate summary.
 if __name__ == '__main__':
+  os.environ["LC_ALL"] = "en_US.UTF-8"           # satisfies ausearch
+  locale.setlocale(locale.LC_ALL, "en_US.UTF-8") # satisfies strftime
   yesterday = date.today() - timedelta(1)
   cmd = ['/sbin/ausearch', '--input-logs', '-i',
-         '-ts', date.strftime(yesterday-timedelta(6),"%m/%d/%Y"), '00:00:00',
-         '-te', date.strftime(yesterday,"%m/%d/%Y"), '23:59:59']
+         '-ts', date.strftime(yesterday-timedelta(6),"%x"), '00:00:00',
+         '-te', date.strftime(yesterday,"%x"), '23:59:59']
   try:
     (output, err) = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()
     if err:
