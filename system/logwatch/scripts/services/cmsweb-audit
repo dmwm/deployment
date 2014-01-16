@@ -83,8 +83,8 @@ rxfmcmd = ((re.compile(r"^(/bin/sh) (/data/srv/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+
              r"\7A/B/C.root"]))
 
 # Workqueue cache files.
-rxwq = re.compile(r"^(/data/srv/state/workqueue/cache/\.wmcore_cache_\d+"
-                  r"/requests/cmsweb[-a-z]*\.cern\.ch/)[-0-9]+(_[A-Z]+_[A-Za-z]+)$")
+rxwq = re.compile(r"^(/data/srv/state/workqueue/cache/\.wmcore_cache_)\d+"
+                  r"(/requests/cmsweb[-a-z]*\.cern\.ch/)[-0-9]+(_[A-Z]+_[A-Za-z]+)[-a-zA-Z0-9_]*$")
 rxwqcmd = ((re.compile(r"^(/bin/rm) (-f)(?: '?(/data/srv/state/workqueue/cache/"
                        r"\.wmcore_cache_\d+/requests/cmsweb[-a-z]*\.cern\.ch/"
                        r"\.cache/cmsweb[-a-z]*\.cern\.ch)(,[-A-Za-z0-9_]+)+"
@@ -627,8 +627,8 @@ def filter_path(info):
         and info.get('paths', None)):
      m = rxwq.match(info['paths'][0])
      if m:
-       prefix, req = m.groups()
-       info['paths'][0] = prefix + "NNNN" + req
+       prefix, middle, req = m.groups()
+       info['paths'][0] = prefix + "NNNN" + middle + "xxxx" + req + "[_REQNAME]"
        return False
 
     if info['syscall'] == 'execve' and info['success'] == 'yes':
@@ -737,7 +737,7 @@ def summarise(data):
       (pad, len(exec_failure), sum([v for v in exec_failure.values()]))
     prev_error = None
     prev_user  = None
-    for key in sorted(exec_failure.keys()):
+    for key in sorted(exec_failure.keys(),key=lambda k: (k[0],k[1],exec_failure[k]),reverse=True):
       err, user, exe, cmd = key
       if prev_error != err:
         print "\n  %s (%d): %d unique, %d total" % \
@@ -760,7 +760,7 @@ def summarise(data):
       (pad, len(path_failure), sum([v for v in path_failure.values()]))
     prev_error = None
     prev_user  = None
-    for key in sorted(path_failure.keys()):
+    for key in sorted(path_failure.keys(),key=lambda k: (k[0],k[1],path_failure[k]),reverse=True):
       err, user, path, syscall, exe = key
       if prev_error != err:
         print "\n  %s (%d): %d unique, %d total" % \
@@ -783,7 +783,7 @@ def summarise(data):
       (pad, len(call_failure), sum([v for v in call_failure.values()]))
     prev_error = None
     prev_user  = None
-    for key in sorted(call_failure.keys()):
+    for key in sorted(call_failure.keys(),key=lambda k: (k[0],k[1],call_failure[k]),reverse=True):
       err, user, call, exe = key
       if prev_error != err:
         print "\n  %s (%d): %d unique, %d total" % \
@@ -806,7 +806,7 @@ def summarise(data):
       (pad, len(exit_failure), sum([v for v in exit_failure.values()]))
     prev_error = None
     prev_user  = None
-    for key in sorted(exit_failure.keys()):
+    for key in sorted(exit_failure.keys(),key=lambda k: (k[0],k[1],exit_failure[k]),reverse=True):
       err, user, exe = key
       if prev_error != err:
         print "\n  %d: %d unique, %d total" % \
@@ -828,7 +828,7 @@ def summarise(data):
     print "%sSuccessfully executed commands: %d unique, %d total" % \
       (pad, len(exec_success), sum([v for v in exec_success.values()]))
     prev_user = None
-    for key in sorted(exec_success.keys()):
+    for key in sorted(exec_success.keys(),key=lambda k: (k[0],exec_success[k]),reverse=True):
       user, exe, cmd = key
       if prev_user != user:
         print "\n  %s: %d unique, %d total" % \
@@ -843,7 +843,7 @@ def summarise(data):
     print "%sSuccessfully accessed paths: %d unique, %d total" % \
       (pad, len(path_success), sum([v for v in exec_success.values()]))
     prev_user = None
-    for key in sorted(path_success.keys()):
+    for key in sorted(path_success.keys(),key=lambda k: (k[0],path_success[k]),reverse=True):
       user, path, syscall, exe = key
       if prev_user != user:
         print "\n  %s: %d unique, %d total" % \
@@ -858,7 +858,7 @@ def summarise(data):
     print "%sSuccessfully executed system calls: %d unique, %d total" % \
       (pad, len(call_success), sum([v for v in call_success.values()]))
     prev_user = None
-    for key in sorted(call_success.keys()):
+    for key in sorted(call_success.keys(),key=lambda k: (k[0],call_success[k]),reverse=True):
       user, call, exe = key
       if prev_user != user:
         print "\n  %s: %d unique, %d total" % \
@@ -873,7 +873,7 @@ def summarise(data):
     print "%sSuccessful application exits: %d unique, %d total" % \
       (pad, len(exit_success), sum([v for v in exit_success.values()]))
     prev_user = None
-    for key in sorted(exit_success.keys()):
+    for key in sorted(exit_success.keys(),key=lambda k: (k[0],exit_success[k]),reverse=True):
       user, exe = key
       if prev_user != user:
         print "\n  %s: %d unique, %d total" % \
