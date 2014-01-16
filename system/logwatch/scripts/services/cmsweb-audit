@@ -688,7 +688,8 @@ def summarise(data):
   call_success = {} # (user, exe, syscall)
 
   # Decode the audit info object and tick various events.
-  for type, info in data:
+  for block in data.split('----'):
+    type, info = parse(block)
     if type == None:
       pass
     elif type == 'syscall':
@@ -903,5 +904,5 @@ if __name__ == '__main__':
     print "ERROR: problem while reading audit logs. Please check if auditd installed and running."
     sys.exit(-1)
 
-  summarise([parse(block) for block in output.split('----') if block])
+  summarise(output)
   sys.exit(0)
