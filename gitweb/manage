@@ -38,6 +38,7 @@ COLOR_NORMAL="\\033[0;39m"
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 . $ROOT/apps/gitweb/etc/profile.d/init.sh
 export GITWEB_CONFIG=$CFGDIR/gitweb_config.perl
+export SERVER_GIT=/usr/bin/git
 
 # Start service conditionally on crond restart.
 sysboot()
