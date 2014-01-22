@@ -22,7 +22,7 @@ for applogs in $(find $BASEDIR/logs -depth -type d); do
   case $applogs in
     */frontend )
       # Compress old logs.
-      find $applogs -name '*_log_*' -mtime +0 -print |
+      find $applogs -name '*_log_*' -mtime +1 -print |
         while read f; do
           case $f in *.zip ) continue ;; esac
           kind=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
