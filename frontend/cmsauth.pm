@@ -412,10 +412,8 @@ sub auth_trouble_handler : method
   {
     $message .= "<p>Your certificate is a CMS VO member.</p>";
   }
-  elsif ($dn
-	 && (($dn =~ m{(.*?)(?:/CN=\d+)+$}o && exists $vocms{$1})
-	     || ($dn =~ m{(.*?)(?:(?:/CN=proxy)|(/CN=limited proxy))+$}o
-                 && exists $vocms{$1})))
+  elsif ($dn && ($dn =~ m{(.*?)(?:(?:/CN=\d+|/CN=proxy)|(/CN=limited proxy))+$}o
+                 && exists $vocms{$1}))
   {
     $message .= "<p>Your certificate is a " . ($2 ? "limited ": "")
                 . "proxy of a CMS VO member.</p>";
@@ -883,14 +881,13 @@ sub authn_cert($$)
   {
     $method = "X509Cert";
   }
-  elsif (($dn =~ m{(.*?)(?:/CN=\d+)+$}o && exists $vocms{$1})
-	 || ($dn =~ m{(.*?)(?:/CN=proxy)+$}o && exists $vocms{$1}))
+  elsif ($dn =~ m{(.*?)(?:/CN=\d+|/CN=proxy)+$}o && exists $vocms{$1})
   {
     $dn = $1;
     $method = "X509Proxy";
   }
   elsif ($$opts{ALLOW_LIMITED_PROXY}
-         && $dn =~ m{(.*?)(?:/CN=proxy|/CN=limited proxy)+$}o
+         && $dn =~ m{(.*?)(?:/CN=\d+|/CN=proxy|/CN=limited proxy)+$}o
          && exists $vocms{$1})
   {
     $dn = $1;
