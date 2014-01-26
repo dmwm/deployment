@@ -18,7 +18,7 @@ deploy_dbs_prep()
 deploy_dbs_sw()
 {
   deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3
-  perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/geneguvo/DBS/raw/master/view_instances.json,g" $project_config/manage
+  perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/dmwm/DBS/raw/master/view_instances.json,g" $project_config/manage
   perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $project_config/DBS.py
 }
 
