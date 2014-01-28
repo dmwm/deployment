@@ -55,17 +55,19 @@ deploy_bigcouch_sw()
 
 deploy_bigcouch_post()
 {
-  (mkcrontab
-   case $host in
-     vocms10[67] | vocms13[2689] | vocms16[13] )
-       disable ;;
-     * )
-       enable
-       sysboot
-       local cmd="$project_config/manage compact all 'I did read documentation'"
-       $nogroups || cmd="sudo -H -u _bigcouch bashs -l -c \"${cmd}\""
-       echo "12 0 * * * $cmd" ;;
-   esac) | crontab -
+# NOTE: this need to be enabled once we verify BigCouch compactification
+#       procedure
+#  (mkcrontab
+#   case $host in
+#     vocms10[67] | vocms13[2689] | vocms16[13] )
+#       disable ;;
+#     * )
+#       enable
+#       sysboot
+#       local cmd="$project_config/manage compact all 'I did read documentation'"
+#       $nogroups || cmd="sudo -H -u _bigcouch bashs -l -c \"${cmd}\""
+#       echo "12 0 * * * $cmd" ;;
+#   esac) | crontab -
 }
 
 deploy_bigcouch_auth()
