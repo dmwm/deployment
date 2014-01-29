@@ -52,10 +52,10 @@ deploy_bigcouch_sw()
   esac
 }
 
-deploy_bigcouch_post()
-{
 # NOTE: this need to be enabled once we verify BigCouch compactification
 #       procedure
+#deploy_bigcouch_post()
+#{
 #  (mkcrontab
 #   case $host in
 #     vocms10[67] | vocms13[2689] | vocms16[13] )
@@ -67,7 +67,7 @@ deploy_bigcouch_post()
 #       $nogroups || cmd="sudo -H -u _bigcouch bashs -l -c \"${cmd}\""
 #       echo "12 0 * * * $cmd" ;;
 #   esac) | crontab -
-}
+#}
 
 deploy_bigcouch_auth()
 {
