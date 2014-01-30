@@ -1,0 +1,58 @@
+#!/bin/bash
+# fetch (download or copy) the update files and store them in $TMPDIR
+# the list of files to be fetched (downloaded or copied) is stored in
+# $CFGDIR/*.conf, where * is a param to download()
+
+TMPDIR="$1"  #${TMPDIR:-"/tmp/das_tmp_down"}
+
+CFGDIR=./
+RE_URL='(https|http)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|].js'
+
+# get or download a file
+getfile()
+{
+    local file=$1
+    local fname=`basename $file`
+    # Fetch DAS map JSON file from given URI
+    if  [ -f "$file" ]; then
+        cp "$file" "$TMPDIR/$fname"
+    elif [[ "$file" =~ $RE_URL ]]; then
+        # download or fail silently
+        curl -s -f "$file" > "$TMPDIR/$fname"
+        status=$?
+        if [ $status -ne 0 ]; then
+            echo "failure downloading"
+            exit -1
+        fi
+
+    else
+        echo "Invalid update file name: $file"
+        echo "please provide either a URL or full file name"
+    fi
+}
+
+# download
+download(){
+    CFG=$CFGDIR/$1.conf
+
+    # download the files
+    while read -r file; do
+        if [[ "$file" =~ '.js' ]]; then
+            echo "Get $file"
+            getfile "$file"
+        fi
+    done < "$CFG"
+}
+
+#TODO: message on usage?
+
+echo "Downloading into tmp dir: $TMPDIR"
+
+# cleanup the temporary dir used for downloading
+rm -rf "$TMPDIR"
+mkdir -p "$TMPDIR"
+
+# download the files
+download "dasmaps"
+download "keylearning"
+download "inputvals"
