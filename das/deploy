@@ -22,47 +22,18 @@ deploy_das_sw()
 deploy_das_post()
 {
   case $host in vocms34 | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
-  (mkcrontab; sysboot) | crontab -
 
-  # put DAS JSON maps into mongodb stagingarea
-  local mongodb_stage=$root/state/mongodb/stagingarea
-  rm -f $mongodb_stage/{clean,update}_mapping_db.js
-  rm -f $mongodb_stage/mapping_db-schema-stamp
-  (echo 'mapping = db.getSisterDB("mapping");'
-   echo 'mapping.dropDatabase();') > \
-   $mongodb_stage/clean_mapping_db.js
-  (echo 'parser = db.getSisterDB("parser");'
-   echo 'parser.db.drop();'
-   echo 'das = db.getSisterDB("das");'
-   echo 'das.dropDatabase();') > \
-   $mongodb_stage/clean_das_db.js
-  case $host in vocms133 ) tbed="_testbed";; * ) tbed="" ;; esac
-  cp $root/current/apps/das/lib/python2.6/site-packages/DAS/services/cms_maps/das${tbed}_maps.js \
-    $mongodb_stage/update_mapping_db.js
-    
-  local das_root=$root/current/apps/das/lib/python2.6/site-packages/DAS
-    
-  # during deploy services might be unavailable to fetch data from them
-  # so we ship with metadata required for keyword search with DAS
+  local cmd_fetch="sudo -H -u _das bashs -l -c '$project_config/manage fetchdata'"
+  local cmd_update="sudo -H -u _das bashs -l -c '$project_config/manage updatedata'"
+  #local cmd_reset=""
   
-  # initialize keylearning db
-  rm -f $mongodb_stage/{clean,update}_keylearning_db.js  
-  rm -f $mongodb_stage/keylearning_db-schema-stamp
-  rm -f $mongodb_stage/inputvals_*-schema-stamp
-  (echo 'keylearning = db.getSisterDB("keylearning");'
-   echo 'keylearning.dropDatabase();') > \
-   $mongodb_stage/clean_keylearning_db.js
-  # it's better to clean DBs separately, datatype_name is the first col to be updated so it will clean...
-  (echo 'inputvals = db.getSisterDB("inputvals");'
-   echo 'inputvals.dropDatabase();') > \
-   $mongodb_stage/clean_inputvals_datatype_name.js
-  # clean each collection (currently update_db require clean to be present)
-  for col in group_name primary_dataset_name release_name site_name status_name tier_name
-  do
-  (echo 'inputvals = db.getSisterDB("inputvals");'
-   echo "inputvals.$col.drop();") > \
-   $mongodb_stage/clean_inputvals_$col.js
-  done 
-   
-  cp $das_root/kws_data/db_dumps/*.js $mongodb_stage/
+  (
+   mkcrontab; sysboot;
+   if [ -f /data/enabled/das ]; then
+     echo "*/2 0-23 * * * ${cmd_update}"   # try to connect to mongodb and push any waiting updates
+     echo "0 0-23 * * * ${cmd_fetch}"      # check if new update exists
+   fi
+  ) | crontab -
+  
+  sudo -H -u _das bashs -l -c "$project_config/manage resetdata"  # this will stage the update
 }

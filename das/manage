@@ -51,6 +51,8 @@ export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export DAS_CONFIG=$CFGDIR/das_cms.py
 export DAS_KWS_IR_INDEX=$STATEDIR/kws_index
+export STAGEDIR=$STATEDIR/mongodb_staging
+export METADATA_DOWN_DIR=$STATEDIR/metadata_down  # directory where temporary files are stored
 
 cd $STATEDIR
 
@@ -90,6 +92,53 @@ status()
   else
     echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
+}
+
+
+_is_db_import_not_running(){
+    [ $(pgrep -u $(id -u) -f "[/]das_db_import" | wc -l) = 0 ]
+}
+
+# download metadata and stage it for update
+# change is applied on next updatedata() call
+fetchdata(){
+   # TODO: save the log
+   local updater="$CFGDIR/metadata_updater"
+   # check if fetching is enabled
+   if grep -q '1' "$updater"; then
+     # fetch datafiles
+     "$updater/fetch_metadata" "${METADATA_DOWN_DIR}"
+     
+     echo "Validating and Staging the downloaded files to be imported into MongoDB"
+     mapsfile="${METADATA_DOWN_DIR}/update_mapping_db.js"  # TODO: if needed we may choose specific dasmap file, as in resetdata
+     if _is_db_import_not_running; then
+         das_db_import "stage_update" "$mapsfile" "${METADATA_DOWN_DIR}"
+     fi
+   fi
+}
+
+# update metadata from staging area only if needed (to be run from cronjob)
+updatedata(){
+    # TODO: save the log
+    # check if not running already
+    if _is_db_import_not_running; then
+        das_db_import "update_if_changed"
+    fi
+}
+
+#reset data (dasmaps, etc) to the default coming from installation
+# change is applied on next updatedata() call
+resetdata(){
+    # TODO: save log?
+    rm -f $STAGEDIR/*-schema-stamp
+
+    # which dasmaps to use?
+    local host=`hostname`
+    case $host in vocms133 ) tbed="_testbed";; * ) tbed="" ;; esac
+    dasmaps=$DAS_PYTHONPATH/DAS/services/cms_maps/das${tbed}_maps.js
+    
+    # stage the default metadata (dasmaps, inputvals, keylearning)
+    das_db_import "stage_update" $dasmaps
 }
 
 # Bootstrap keyword search
@@ -144,6 +193,18 @@ case ${1:-status} in
 
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+    
+  updatedata )
+    updatedata
+    ;;
+    
+  fetchdata )
+    fetchdata
+    ;;
+    
+  resetdata )
+    resetdata
     ;;
     
   bootstrap )
