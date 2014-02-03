@@ -1,11 +1,10 @@
 #!/bin/bash
 # fetch (download or copy) the update files and store them in $TMPDIR
-# the list of files to be fetched (downloaded or copied) is stored in
-# $CFGDIR/*.conf, where * is a param to download()
+# the list of files to be fetched (downloaded or copied) is currently stored in
+# ./*.conf, where * is a param to download()
 
-TMPDIR="$1"  #${TMPDIR:-"/tmp/das_tmp_down"}
-
-CFGDIR=./
+TMPDIR="$1"
+CFGDIR=$(dirname "$0") # config files are stored in same dir
 RE_URL='(https|http)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|].js'
 
 # get or download a file

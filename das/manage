@@ -52,7 +52,7 @@ export X509_USER_KEY=$X509_USER_PROXY
 export DAS_CONFIG=$CFGDIR/das_cms.py
 export DAS_KWS_IR_INDEX=$STATEDIR/kws_index
 export STAGEDIR=$STATEDIR/mongodb_staging
-export METADATA_DOWN_DIR=$STATEDIR/metadata_down  # directory where temporary files are stored
+export METADATA_TMP_DIR=$STATEDIR/metadata_tmp  # directory where temporary files are stored
 
 cd $STATEDIR
 
@@ -94,9 +94,19 @@ status()
   fi
 }
 
-
-_is_db_import_not_running(){
+# ensure db_import is not running as the script is changing state in shared dir
+check_db_import_not_running(){
     [ $(pgrep -u $(id -u) -f "[/]das_db_import" | wc -l) = 0 ]
+}
+
+dasmap_filename(){
+    # which dasmaps to use?
+    local host=`hostname`
+    local tbed
+    case $host in vocms133 ) tbed="_testbed";; * ) tbed="" ;; esac
+    # TODO: do we need to select particular dbs replica (prod, dev, int)?
+    local mapsfile="das${tbed}_maps_dbs_prod.js"
+    echo "$mapsfile"
 }
 
 # download metadata and stage it for update
@@ -105,15 +115,18 @@ fetchdata(){
    # TODO: save the log
    local updater="$CFGDIR/metadata_updater"
    # check if fetching is enabled
-   if grep -q '1' "$updater"; then
-     # fetch datafiles
-     "$updater/fetch_metadata" "${METADATA_DOWN_DIR}"
-     
-     echo "Validating and Staging the downloaded files to be imported into MongoDB"
-     mapsfile="${METADATA_DOWN_DIR}/update_mapping_db.js"  # TODO: if needed we may choose specific dasmap file, as in resetdata
-     if _is_db_import_not_running; then
-         das_db_import "stage_update" "$mapsfile" "${METADATA_DOWN_DIR}"
-     fi
+   if grep -q '1' "$updater/enabled"; then
+        # fetch datafiles
+        "$updater/fetch_metadata" "${METADATA_TMP_DIR}"
+
+        echo "Validating and Staging the downloaded files to be imported into MongoDB"
+        # TODO: dasmap filename changed, update DASMaps repo!
+        local mapsfile="${METADATA_TMP_DIR}/$(dasmap_filename)"
+        if check_db_import_not_running; then
+         das_db_import "stage_update" "$mapsfile" "${METADATA_TMP_DIR}"
+        fi
+   else
+        echo "Metadata fetching is disabled"
    fi
 }
 
@@ -121,7 +134,7 @@ fetchdata(){
 updatedata(){
     # TODO: save the log
     # check if not running already
-    if _is_db_import_not_running; then
+    if check_db_import_not_running; then
         das_db_import "update_if_changed"
     fi
 }
@@ -129,15 +142,10 @@ updatedata(){
 #reset data (dasmaps, etc) to the default coming from installation
 # change is applied on next updatedata() call
 resetdata(){
-    # TODO: save log?
     rm -f $STAGEDIR/*-schema-stamp
 
-    # which dasmaps to use?
-    local host=`hostname`
-    case $host in vocms133 ) tbed="_testbed";; * ) tbed="" ;; esac
-    dasmaps=$DAS_PYTHONPATH/DAS/services/cms_maps/das${tbed}_maps.js
-    
     # stage the default metadata (dasmaps, inputvals, keylearning)
+    local dasmaps="$DAS_PYTHONPATH/DAS/services/cms_maps/$(dasmap_filename)"
     das_db_import "stage_update" $dasmaps
 }
 
@@ -198,13 +206,25 @@ case ${1:-status} in
   updatedata )
     updatedata
     ;;
+
+  updatedata_silent )
+    updatedata </dev/null 2>&1 | rotatelogs $LOGDIR/das-mongoupdates-%Y%m%d.log 86400 >/dev/null 2>&1
+    ;;
     
   fetchdata )
     fetchdata
     ;;
     
+  fetchdata_silent )
+    fetchdata </dev/null 2>&1 | rotatelogs $LOGDIR/das-fetchmetadata-%Y%m%d.log 86400 >/dev/null 2>&1
+    ;;
+    
   resetdata )
     resetdata
+    ;;
+
+  resetdata_silent )
+    resetdata </dev/null 2>&1 | rotatelogs $LOGDIR/das-fetchmetadata-%Y%m%d.log 86400 >/dev/null 2>&1
     ;;
     
   bootstrap )
