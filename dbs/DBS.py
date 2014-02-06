@@ -19,22 +19,22 @@ with open(os.path.join(TOPDIR, 'state/dbs/view_instances.json'), 'r') as f:
 
 # instance name : connecturls, {reader needed roles, writer needed roles}
 if VARIANT == 'prod':
-  db_mapping = {'prod/global': [dbs3_pl1_r, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
+  db_mapping = {'prod/global': [dbs3_pg_r, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
                 'prod/phys01': [dbs3_pp1_r, {'reader':{},'writer':{}}],
                 'prod/phys02': [dbs3_pp2_r, {'reader':{},'writer':{}}],
                 'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}],
-                'prod/test': [dbs3_pg_r, {'reader':{},'writer':{}}]}
+                'prod/test': [dbs3_pt_i2, {'reader':{},'writer':{}}]}
 
 elif VARIANT == 'preprod':
   db_mapping = {'int/global': [dbs3_ig_i2,  {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
                 'int/phys01': [dbs3_ip1_i2, {'reader':{},'writer':{}}],
                 'int/phys02': [dbs3_ip2_i2, {'reader':{},'writer':{}}],
-                'int/phys03': [dbs3_l1_i2,{'reader':{},'writer':{}}]}
+                'int/phys03': [dbs3_ip3_i2,{'reader':{},'writer':{}}]}
 elif VARIANT == 'dev':
   db_mapping = {'dev/global': [dbs3_dg_i2, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
                 'dev/phys01': [dbs3_dp1_i2, {'reader':{},'writer':{}}],
                 'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}],
-                'dev/phys03': [dbs3_l3_i2, {'reader':{},'writer':{}}]}
+                'dev/phys03': [dbs3_dp3_i2, {'reader':{},'writer':{}}]}
 else:
   db_mapping = {'dev/global': [dbs3_p1_i2,{'reader':{},'writer':{}}],
                 'dev/phys03': [dbs3_l_i2, {'reader':{},'writer':{}}]}
