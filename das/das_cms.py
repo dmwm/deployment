@@ -70,7 +70,8 @@ config.analyticsdb.history = 5184000
 config.component_('mappingdb')
 config.mappingdb.collname = 'db'
 config.mappingdb.dbname = 'mapping'
-config.mappingdb.reload_time = 3600
+config.mappingdb.reload_time = 2*3600
+config.mappingdb.reload_time_bad_maps = 3600
 
 # parserdb configuration
 config.component_('parserdb')
