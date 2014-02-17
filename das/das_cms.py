@@ -92,6 +92,8 @@ config.das.emptyset_expire = 5
 config.das.thread_weights = ['dbs:5', 'phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
 config.das.services = ['dbs','dbs3','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr','mcm']
+config.das.main_dbs = 'dbs3'
+config.das.dbs_instances = ['prod/global', 'prod/phys01', 'prod/phys02', 'prod/phys03']
 
 # keyword search configuration
 config.component_('keyword_search')
