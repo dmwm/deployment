@@ -1072,6 +1072,8 @@ case $1 in
      stop_bigcouch;;
   clean-bigcouch)
      clean_bigcouch;;
+  status-bigcouch)
+     status_of_bigcouch;;
   init-agent)
      init_agent;;
   init-reqmgr)
