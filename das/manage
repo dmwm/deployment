@@ -100,53 +100,49 @@ check_db_import_not_running(){
 }
 
 dasmap_filename(){
-    # which dasmaps to use?
+    # choose which dasmaps file to use
     local host=`hostname`
     local tbed
-    case $host in vocms133 ) tbed="_testbed";; * ) tbed="" ;; esac
-    # TODO: do we need to select particular dbs replica (prod, dev, int)?
-    local mapsfile="das${tbed}_maps_dbs_prod.js"
+    local dbspace  # dbs replica / namespace
+    # select a particular dbs replica (prod, dev, int) and version of dasmaps
+    case "$host" in vocms133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
+    local mapsfile="das${tbed}_maps_dbs${dbspace}.js"
     echo "$mapsfile"
 }
 
 # download metadata and stage it for update
 # change is applied on next updatedata() call
 fetchdata(){
-   # TODO: save the log
-   local updater="$CFGDIR/metadata_updater"
-   # check if fetching is enabled
-   if grep -q '1' "$updater/enabled"; then
-        # fetch datafiles
-        "$updater/fetch_metadata" "${METADATA_TMP_DIR}"
+    local updater_dir="$CFGDIR/metadata_updater"
+    local stage_now="$1"
 
-        echo "Validating and Staging the downloaded files to be imported into MongoDB"
-        # TODO: dasmap filename changed, update DASMaps repo!
-        local mapsfile="${METADATA_TMP_DIR}/$(dasmap_filename)"
-        if check_db_import_not_running; then
-         das_db_import "stage_update" "$mapsfile" "${METADATA_TMP_DIR}"
-        fi
-   else
-        echo "Metadata fetching is disabled"
-   fi
+    # fetch datafiles
+    # TODO: we could instead just simply use: git pull repo !?
+    "$updater_dir/fetch_metadata" "${METADATA_TMP_DIR}"
+
+    # TODO: do we need an option to download files but not stage them?
+    echo "Validating and Staging the downloaded files to be imported into MongoDB"
+    local mapsfile="${METADATA_TMP_DIR}/$(dasmap_filename)"
+    if check_db_import_not_running; then
+        das_db_import "stage_update" "${mapsfile}" "${METADATA_TMP_DIR}"
+    fi
 }
 
 # update metadata from staging area only if needed (to be run from cronjob)
 updatedata(){
-    # TODO: save the log
-    # check if not running already
+    # make sure import is not running currently
     if check_db_import_not_running; then
         das_db_import "update_if_changed"
     fi
 }
 
-#reset data (dasmaps, etc) to the default coming from installation
+# reset data (dasmaps, etc) to the default coming from installation
 # change is applied on next updatedata() call
 resetdata(){
-    rm -f $STAGEDIR/*-schema-stamp
-
+    rm -f "${STAGEDIR}/*-schema-stamp"
     # stage the default metadata (dasmaps, inputvals, keylearning)
     local dasmaps="$DAS_PYTHONPATH/DAS/services/cms_maps/$(dasmap_filename)"
-    das_db_import "stage_update" $dasmaps
+    das_db_import "stage_update" "$dasmaps"
 }
 
 # Bootstrap keyword search
@@ -208,23 +204,35 @@ case ${1:-status} in
     ;;
 
   updatedata_silent )
-    updatedata </dev/null 2>&1 | rotatelogs $LOGDIR/das-mongoupdates-%Y%m%d.log 86400 >/dev/null 2>&1
+    # apply updates from staging dir and save the log
+    updatedata </dev/null 2>&1 | rotatelogs "$LOGDIR/das-mongoupdates-%Y%m%d.log" 86400 >/dev/null 2>&1
     ;;
     
   fetchdata )
     fetchdata
     ;;
-    
-  fetchdata_silent )
-    fetchdata </dev/null 2>&1 | rotatelogs $LOGDIR/das-fetchmetadata-%Y%m%d.log 86400 >/dev/null 2>&1
-    ;;
+
+  # shall not be used now!
+  #  fetchdata_silent )
+  #    # check if fetching is enabled
+  #    if grep -q '1' "$updater_dir/enabled"; then
+  #        fetchdata </dev/null 2>&1 | rotatelogs "$LOGDIR/das-fetchmetadata-%Y%m%d.log" 86400 >/dev/null 2>&1
+  #    else
+  #        echo "Automatic metadata fetching is disabled"
+  #    fi
+  #    ;;
     
   resetdata )
     resetdata
     ;;
 
   resetdata_silent )
-    resetdata </dev/null 2>&1 | rotatelogs $LOGDIR/das-fetchmetadata-%Y%m%d.log 86400 >/dev/null 2>&1
+    log="$LOGDIR/das-mongoupdates-%Y%m%d.log"
+    echo "reset data: writing output to the log: $log"
+    resetdata </dev/null 2>&1 | rotatelogs "$log" 86400 >/dev/null 2>&1
+    # for some reason rotatelogs return exit 3 (though works fine)
+    # we want to return zero as result of this script, so we have final command
+    echo "done"
     ;;
     
   bootstrap )
