@@ -78,6 +78,12 @@ WORKLOAD_SUMMARY_HOSTNAME=
 WORKLOAD_SUMMARY_PORT=5984
 WORKLOAD_SUMMARY_DBNAME=workloadsummary
 WMSTATS_URL=
+REQMGR_URL=
+ACDC_URL=
+DBS3_URL=
+PHEDEX_URL=
+DQM_URL=
+
 #
 # Init checks
 #
@@ -155,6 +161,7 @@ load_secrets_file(){
     local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
     local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
     local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_HOST_NAME=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST_NAME | sed s/COUCH_HOST_NAME=//`
     local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
     local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
     local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
@@ -162,6 +169,7 @@ load_secrets_file(){
     local MATCH_BIGCOUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_USER | sed s/BIGCOUCH_USER=//`
     local MATCH_BIGCOUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_PASS | sed s/BIGCOUCH_PASS=//`
     local MATCH_BIGCOUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_HOST | sed s/BIGCOUCH_HOST=//`
+    local MATCH_BIGCOUCH_HOST_NAME=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_HOST_NAME | sed s/BIGCOUCH_HOST_NAME=//`
     local MATCH_BIGCOUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_PORT | sed s/BIGCOUCH_PORT=//`
     local MATCH_BIGCOUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_CERT_FILE | sed s/BIGCOUCH_CERT_FILE=//`
     local MATCH_BIGCOUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_KEY_FILE | sed s/BIGCOUCH_KEY_FILE=//`
@@ -180,6 +188,11 @@ load_secrets_file(){
     local MATCH_WORKLOAD_SUMMARY_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_PORT | sed s/WORKLOAD_SUMMARY_PORT=//`
     local MATCH_WORKLOAD_SUMMARY_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_DBNAME | sed s/WORKLOAD_SUMMARY_DBNAME=//`
     local MATCH_WMSTATS_URL=`cat $WMAGENT_SECRETS_LOCATION | grep WMSTATS_URL | sed s/WMSTATS_URL=//`
+    local MATCH_REQMGR_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_URL | sed s/REQMGR_URL=//`
+    local MATCH_ACDC_URL=`cat $WMAGENT_SECRETS_LOCATION | grep ACDC_URL | sed s/ACDC_URL=//`
+    local MATCH_DBS3_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DBS3_URL | sed s/DBS3_URL=//`
+    local MATCH_PHEDEX_URL=`cat $WMAGENT_SECRETS_LOCATION | grep PHEDEX_URL | sed s/PHEDEX_URL=//`
+    local MATCH_DQM_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DQM_URL | sed s/DQM_URL=//`
 
     # database settings (mysql or oracle)
     if [ "x$MATCH_ORACLE_USER" == "x" ]; then
@@ -208,6 +221,7 @@ load_secrets_file(){
     fi
     COUCH_PORT=${MATCH_COUCH_PORT:-$COUCH_PORT};
     COUCH_HOST=${MATCH_COUCH_HOST:-$COUCH_HOST};
+    COUCH_HOST_NAME=${MATCH_COUCH_HOST_NAME:-$COUCH_HOST_NAME}
 
     # if couch ssl certificate not specified check X509_USER_CERT and X509_USER_PROXY
     COUCH_CERT_FILE=${MATCH_COUCH_CERT_FILE:-${X509_USER_CERT:-$X509_USER_PROXY}};
@@ -224,6 +238,7 @@ load_secrets_file(){
     fi
     BIGCOUCH_PORT=${MATCH_BIGCOUCH_PORT:-$BIGCOUCH_PORT};
     BIGCOUCH_HOST=${MATCH_BIGCOUCH_HOST:-$BIGCOUCH_HOST};
+    BIGCOUCH_HOST_NAME=${MATCH_BIGCOUCH_HOST_NAME:-$BIGCOUCH_HOST_NAME}
 
     # if couch ssl certificate not specified check X509_USER_CERT and X509_USER_PROXY
     BIGCOUCH_CERT_FILE=${MATCH_BIGCOUCH_CERT_FILE:-${X509_USER_CERT:-$X509_USER_PROXY}};
@@ -255,6 +270,18 @@ load_secrets_file(){
 	WORKLOAD_SUMMARY_HOSTNAME=${MATCH_WORKLOAD_SUMMARY_HOSTNAME:-$WORKLOAD_SUMMARY_HOSTNAME};
 	WORKLOAD_SUMMARY_PORT=${MATCH_WORKLOAD_SUMMARY_PORT:-$WORKLOAD_SUMMARY_PORT};
 	WORKLOAD_SUMMARY_DBNAME=${MATCH_WORKLOAD_SUMMARY_DBNAME:-$WORKLOAD_SUMMARY_DBNAME};
+
+    WMSTATS_URL=${MATCH_WMSTATS_URL:-$WMSTATS_URL}
+
+    REQMGR_URL=${MATCH_REQMGR_URL:-$REQMGR_URL}
+
+    ACDC_URL=${MATCH_ACDC_URL:-$ACDC_URL}
+
+    DBS3_URL=${MATCH_DBS3_URL:-$DBS3_URL}
+
+    PHEDEX_URL=${MATCH_PHEDEX_URL:-$PHEDEX_URL}
+
+    DQM_URL=${MATCH_DQM_URL:-$DQM_URL}
 	#if WORKLOAD_SUMMARY_HOSTNAME is specified assume port and db name is specified too
 	if [ "x$WORKLOAD_SUMMARY_HOSTNAME" != "x" ]; then
 	    WORKLOAD_SUMMARY_URL=http://$WORKLOAD_SUMMARY_HOSTNAME:$WORKLOAD_SUMMARY_PORT/$WORKLOAD_SUMMARY_DBNAME;
@@ -286,12 +313,14 @@ print_settings(){
     echo "COUCH_USER=                $COUCH_USER                "
     echo "COUCH_PASS=                $COUCH_PASS                "
     echo "COUCH_HOST=                $COUCH_HOST                "
+    echo "COUCH_HOST_NAME=           $COUCH_HOST_NAME           "
     echo "COUCH_PORT=                $COUCH_PORT                "
     echo "COUCH_CERT_FILE=           $COUCH_CERT_FILE           "
     echo "COUCH_KEY_FILE=            $COUCH_KEY_FILE            "
     echo "BIGCOUCH_USER=             $BIGCOUCH_USER             "
     echo "BIGCOUCH_PASS=             $BIGCOUCH_PASS             "
     echo "BIGCOUCH_HOST=             $BIGCOUCH_HOST             "
+    echo "BIGCOUCH_HOST_NAME=        $BIGCOUCH_HOST_NAME        "
     echo "BIGCOUCH_PORT=             $BIGCOUCH_PORT             "
     echo "BIGCOUCH_CERT_FILE=        $BIGCOUCH_CERT_FILE        "
     echo "BIGCOUCH_KEY_FILE=         $BIGCOUCH_KEY_FILE         "
@@ -305,9 +334,14 @@ print_settings(){
     echo "LOCAL_WORKQUEUE_DBNAME=    $LOCAL_WORKQUEUE_DBNAME    "
     echo "WORKLOAD_SUMMARY_URL=      $WORKLOAD_SUMMARY_URL      "
     echo "WORKLOAD_SUMMARY_HOSTNAME= $WORKLOAD_SUMMARY_HOSTNAME "
-    echo "WORKLOAD_SUMMARY_PORT=     $WORKLOAD_SUMMARY_PORT      "
-    echo "WORKLOAD_SUMMARY_DBNAME=   $WORKLOAD_SUMMARY_DBNAME    "
-    echo "WMSTATS_URL=               $WMSTATS_URL                "
+    echo "WORKLOAD_SUMMARY_PORT=     $WORKLOAD_SUMMARY_PORT     "
+    echo "WORKLOAD_SUMMARY_DBNAME=   $WORKLOAD_SUMMARY_DBNAME   "
+    echo "WMSTATS_URL=               $WMSTATS_URL               "
+    echo "REQMGR_URL=                $REQMGR_URL                "
+    echo "ACDC_URL=                  $ACDC_URL                  "
+    echo "DBS3_URL=                  $DBS3_URL                  "
+    echo "PHEDEX_URL=                $PHEDEX_URL                "
+    echo "DQM_URL=                   $DQM_URL                   "
 
 }
 
@@ -747,7 +781,13 @@ init_wmagent(){
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --wmstats_url=$WMSTATS_URL
+                       --wmstats_url=$WMSTATS_URL \
+                       --reqmgr_url=$REQMGR_URL \
+	                   --acdc_url=$ACDC_URL \
+	                   --dbs3_url=$DBS3_URL \
+	                   --phedex_url=$PHEDEX_URL \
+	                   --dqm_url=$DQM_URL
+
     elif [ "x$ORACLE_USER" != "x" ]; then
 	wmagent-mod-config --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
@@ -758,7 +798,13 @@ init_wmagent(){
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --wmstats_url=$WMSTATS_URL
+                       --wmstats_url=$WMSTATS_URL \
+                       --reqmgr_url=$REQMGR_URL \
+	                   --acdc_url=$ACDC_URL \
+	                   --dbs3_url=$DBS3_URL \
+	                   --phedex_url=$PHEDEX_URL \
+	                   --dqm_url=$DQM_URL
+
     else
 	echo "No database configured, should never have reached this point..."
 	exit 1;
