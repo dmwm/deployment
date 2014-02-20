@@ -585,10 +585,10 @@ init_couch_pre(){
         perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
         perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
         perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
-        if [ ! -f $COUCH_CERT_FILE ]; then
+        if [ ! -f "$INSTALL_COUCH/certs/cert.pem" ]; then
             ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
         fi
-        if [ ! -f $COUCH_KEY_FILE ]; then
+        if [ ! -f "$INSTALL_COUCH/certs/key.pem" ]; then
             ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
         fi
     fi
@@ -672,10 +672,10 @@ init_bigcouch_pre(){
         perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_BIGCOUCH/certs/cert.pem}g" $CONFIG_BIGCOUCH/local.ini
         perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_BIGCOUCH/certs/key.pem}g" $CONFIG_BIGCOUCH/local.ini
         perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_BIGCOUCH/certs/cert.pem}g" $CONFIG_BIGCOUCH/local.ini
-        if [ ! -f $BIGCOUCH_CERT_FILE ]; then
+        if [ ! -f "$INSTALL_BIGCOUCH/certs/cert.pem" ]; then
             ln -s $BIGCOUCH_CERT_FILE $INSTALL_BIGCOUCH/certs/cert.pem
         fi
-        if [ ! -f $BIGCOUCH_KEY_FILE ]; then
+        if [ ! -f "$INSTALL_BIGCOUCH/certs/key.pem" ]; then
             ln -s $BIGCOUCH_KEY_FILE $INSTALL_BIGCOUCH/certs/key.pem
         fi
     fi
