@@ -1,20 +1,7 @@
 #!/bin/bash
-
-
 #
 # Global variables etc
 #
-echo_e=-e
-case $(uname) in Darwin )
-  md5sum() { md5 -r ${1+"$@"}; }
-  echo_e=
-  ;;
-esac
-
-COLOR_OK="\\033[0;32m"
-COLOR_WARN="\\033[0;31m"
-COLOR_NORMAL="\\033[0;39m"
-
 THIS_SCRIPT=$(readlink -f $0)
 PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
 ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
@@ -668,9 +655,9 @@ status_of_bigcouch(){
     echo "+ BigCouch Status:"
     pid=$(pgrep -u $(id -u) -f " bigcouch" | sort -n)
     if [ X"$pid" = X ]; then
-        echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+        echo "++ BigCouch is NOT RUNNING"
     else
-        echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+        echo "++ BigCouch running with process:" $pid
     fi
 }
 
@@ -686,7 +673,7 @@ start_bigcouch(){
     fi
     cd $BIGCOUCH_ROOT/etc
 #    nohup $BIGCOUCH_ROOT/bin/bigcouch 2>&1 1>& /dev/null < /dev/null &
-    nohup $BIGCOUCH_ROOT/bin/bigcouch 2>&1 1>& $BIGCOUCH_ROOT/var/log/start.log < /dev/null &
+    nohup $BIGCOUCH_ROOT/bin/bigcouch 2>&1 1>& $BIGCOUCH_ROOT/var/log/bc.log < /dev/null &
     if [ $BIGCOUCH_INIT_DONE -eq 0 ]; then
         echo "BigCouch has not been initialised... running post initialisation"
         init_bigcouch_post;
@@ -723,6 +710,7 @@ start_services(){
     echo "Starting Services..."
     #start up the services required by the agent
     start_couch;
+    start_bigcouch;
     if [ "x$MYSQL_USER" != "x" ]; then
 	start_mysql;
     fi
@@ -733,6 +721,7 @@ stop_services(){
     #shut down all services
     echo "Shutting down services..."
     stop_couch;
+    stop_bigcouch;
     if [ "x$MYSQL_USER" != "x" ]; then
 	stop_mysql;
     fi
@@ -972,6 +961,7 @@ clean_agent(){
 status(){
     load_secrets_file;
     status_of_couch;
+    status_of_bigcouch;
     if [ "x$MYSQL_USER" != "x" ]; then
 	status_of_mysql;
     fi
@@ -984,6 +974,7 @@ clean_all(){
 	clean_mysql;
     fi
     clean_couch;
+    clean_bigcouch;
     clean_agent;
 }
 
@@ -1057,6 +1048,8 @@ case $1 in
     start_services;;
   stop-services)
     stop_services;;
+  status-services)
+    status;;
   start-mysql)
     start_mysql;;
   stop-mysql)
