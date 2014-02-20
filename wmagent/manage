@@ -689,6 +689,7 @@ status_of_bigcouch(){
     else
         echo "++ BigCouch running with process:" $pid
     fi
+    echo "++" `curl -s $BIGCOUCH_HOST:$BIGCOUCH_PORT`
 }
 
 #
