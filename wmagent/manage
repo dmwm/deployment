@@ -573,8 +573,7 @@ db_prompt(){
 #
 init_couch_pre(){
     echo "Initialising CouchDB on $COUCH_HOST:$COUCH_PORT..."
-    mkdir -p $INSTALL_COUCH/logs
-    mkdir -p $INSTALL_COUCH/database
+    mkdir -p $INSTALL_COUCH/{certs,logs,database}
     perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_COUCH}" $CONFIG_COUCH/local.ini
     # couch ini file requires IP based hostname
     perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
@@ -660,8 +659,7 @@ clean_couch(){
 #
 init_bigcouch_pre(){
     echo "Initialising BigCouch on $BIGCOUCH_HOST:$BIGCOUCH_PORT..."
-    mkdir -p $INSTALL_BIGCOUCH/logs
-    mkdir -p $INSTALL_BIGCOUCH/database
+    mkdir -p $INSTALL_BIGCOUCH/{certs,logs,database}
     perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_BIGCOUCH}" $CONFIG_BIGCOUCH/local.ini
     # couch ini file requires IP based hostname
     perl -p -i -e "s{bind_address = 127.0.0.1}{bind_address = $BIGCOUCH_HOST}g" $CONFIG_BIGCOUCH/local.ini
