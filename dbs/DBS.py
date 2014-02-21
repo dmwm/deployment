@@ -23,7 +23,8 @@ if VARIANT == 'prod':
                 'prod/phys01': [dbs3_pp1_r, {'reader':{},'writer':{}}],
                 'prod/phys02': [dbs3_pp2_r, {'reader':{},'writer':{}}],
                 'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}],
-                'prod/test': [dbs3_pt_i2, {'reader':{},'writer':{}}]}
+                'prod/caf':    [dbs3_pc_r, {'reader':{},'writer':{}}],
+                'prod/test':   [dbs3_pt_i2, {'reader':{},'writer':{}}]}
 
 elif VARIANT == 'preprod':
   db_mapping = {'int/global': [dbs3_ig_i2,  {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
