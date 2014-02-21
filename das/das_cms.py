@@ -31,7 +31,7 @@ config.web_server.kws_host = '0.0.0.0'
 
 # web_plugins
 config.component_('web_plugins')
-config.web_plugins.show_hints = True
+config.web_plugins.show_hints = False # enable it once it is ready
 
 # cache requests configuration
 config.component_('cacherequests')
