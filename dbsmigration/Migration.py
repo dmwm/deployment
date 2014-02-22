@@ -35,8 +35,8 @@ elif VARIANT == 'dev':
                 'dev/phys02': dbs3_dp2_i2,
                 'dev/phys03': dbs3_dp3_i2}
 else:
-  db_mapping = {'dev/global': dbs3_p1_i2,
-                'dev/phys03': dbs3_l_i2}
+  db_mapping = {'dev/global': dbs3_none_i2,
+                'dev/phys03': dbs3_none_i2}
 
 thread_mapping = {'prod/global': 1,
                   'prod/phys01': 1,
