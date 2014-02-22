@@ -37,8 +37,8 @@ elif VARIANT == 'dev':
                 'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}],
                 'dev/phys03': [dbs3_dp3_i2, {'reader':{},'writer':{}}]}
 else:
-  db_mapping = {'dev/global': [dbs3_p1_i2,{'reader':{},'writer':{}}],
-                'dev/phys03': [dbs3_l_i2, {'reader':{},'writer':{}}]}
+  db_mapping = {'dev/global': [dbs3_none_i2,{'reader':{},'writer':{}}],
+                'dev/phys03': [dbs3_none_i2, {'reader':{},'writer':{}}]}
 
 config = Configuration()
 config.component_('SecurityModule')
