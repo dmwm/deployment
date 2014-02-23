@@ -29,6 +29,10 @@ config.web_server.kws_port = 8214
 config.web_server.thread_pool_kws=10
 config.web_server.kws_host = '0.0.0.0'
 
+# web_plugins
+config.component_('web_plugins')
+config.web_plugins.show_hints = True
+
 # cache requests configuration
 config.component_('cacherequests')
 config.cacherequests.Admin = 50
@@ -53,6 +57,7 @@ config.dasdb.record_ttl = 86400
 config.dasdb.delta_ttl = 60
 config.dasdb.cleanup_worker = True
 config.dasdb.cleanup_interval = 600
+config.dasdb.cleanup_delta_ttl = 3600
 
 # loggingdb configuration
 config.component_('loggingdb')
@@ -89,9 +94,11 @@ config.das.core_workers = 50
 config.das.api_workers = 2
 config.das.error_expire = 300
 config.das.emptyset_expire = 5
-config.das.thread_weights = ['dbs:5', 'phedex:5', 'dbs3:5']
+config.das.thread_weights = ['phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
 config.das.services = ['dbs','dbs3','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr','mcm']
+config.das.main_dbs = 'dbs3'
+config.das.dbs_instances = ['prod/global', 'prod/phys01', 'prod/phys02', 'prod/phys03', 'prod/caf']
 
 # keyword search configuration
 config.component_('keyword_search')
