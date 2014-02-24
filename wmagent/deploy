@@ -57,6 +57,7 @@ deploy_wmagent_sw()
       do
           cp -f $root/current/config/wmagent/bigcouch/$fname $project_config
           perl -p -i -e "s|deploy_project_root|$root/current/install|g" $project_config/$fname
+          perl -p -i -e "s|project_root|$project_root|g" $project_config/$fname
           perl -p -i -e "s|HOSTNAME|$HOSTNAME|g" $project_config/$fname
           perl -p -i -e "s|HOSTIP|$hostip|g" $project_config/$fname
           [ -f $project_root/etc/$fname ] && rm $project_root/etc/$fname
