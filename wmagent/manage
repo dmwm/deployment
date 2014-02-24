@@ -681,6 +681,17 @@ init_bigcouch_post(){
     inited_bigcouch;
 }
 
+create_bigcouch_dbs(){
+    # create required databases
+    local bcadmin=""
+    for dbname in wmstats reqmgr; do
+        if  [ -n "$BIGCOUCH_USER" ]; then
+            bcadmin="$BIGCOUCH_USER:$BIGCOUCH_PASS@"
+        fi
+        curl -X PUT "http://$bcadmin$BIGCOUCH_HOST:$BIGCOUCH_PORT/$dbname?n=3&q=32"
+    done
+}
+
 status_of_bigcouch(){
     echo "+ BigCouch Status:"
     pid=$(pgrep -u $(id -u) -f " bigcouch" | sort -n)
@@ -1117,6 +1128,8 @@ case $1 in
      clean_bigcouch;;
   status-bigcouch)
      status_of_bigcouch;;
+  create-bigcouch-dbs)
+     create_bigcouch_dbs;;
   init-agent)
      init_agent;;
   init-reqmgr)
