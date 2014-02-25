@@ -358,8 +358,10 @@ export WMAGENT_ROOT
 export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
-export BIGCOUCH_ROOT
 
+# source bigcouch environment
+. $ROOT_DIR/apps/bigcouch/etc/profile.d/init.sh
+export BIGCOUCH_ROOT
 
 #########################
 #  MySQL                #
