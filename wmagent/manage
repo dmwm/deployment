@@ -657,6 +657,7 @@ clean_couch(){
 # first time startup for couch: disable admin party and create user based on secrets file
 #
 init_bigcouch_pre(){
+    load_secrets_file;
     echo "Initialising BigCouch on $BIGCOUCH_HOST:$BIGCOUCH_PORT..."
     mkdir -p $INSTALL_BIGCOUCH/{certs,logs,database}
     perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_BIGCOUCH}" $CONFIG_BIGCOUCH/local.ini
@@ -682,6 +683,7 @@ init_bigcouch_post(){
 }
 
 create_bigcouch_dbs(){
+    load_secrets_file;
     # create required databases
     local bcadmin=""
     for dbname in wmstats reqmgr; do
