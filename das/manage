@@ -56,29 +56,57 @@ export METADATA_TMP_DIR=$STATEDIR/metadata_tmp  # directory where temporary file
 
 cd $STATEDIR
 
+# get list of das pids including the process which updates db on restart
+get_das_pids(){
+  pgrep -u $(id -u) -f "start_das_with_update"
+  pgrep -u $(id -u) -f "[/]das_server.py"
+}
+
 # Start service conditionally on crond restart.
 sysboot()
 {
+  # TODO: update this
   dostart=false
-  if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
+  if [ $(get_das_pids | wc -l) = 0 ]; then
       dostart=true
   fi
   $dostart && start
+}
+
+# on service start, update db if needed
+start_das_with_update(){
+  # wait for MongoDB to be available
+  # TODO: configurable mongodb port?
+  echo "waiting for MongoDB to start up. $(date)"
+  until nc -z localhost 8230
+  do
+    sleep 2
+  done
+  
+  # once available, update DB
+  echo 'updating database...'
+  # TODO: if we want this available both on main log and updates logs, we shall use 'tee'
+  updatedata
+  
+  # start das
+  echo 'starting DAS web service...'
+  python -u $DAS_PYTHONPATH/DAS/web/das_server.py
 }
 
 # Start the service.
 start()
 {
   echo "starting $ME"
-  python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
+  # start another process so it's easier to identify it
+  $ROOT/config/$ME/manage "start_das_with_update" \
        </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.
 stop()
-{
+{ 
   echo "stopping $ME"
-  for pid in $(pgrep -u $(id -u) -f "[/]das_server.py"); do
+  for pid in $(get_das_pids); do
       kill -9 $pid
   done
 }
@@ -86,7 +114,7 @@ stop()
 # Check if the server is running.
 status()
 {
-  pid=$(pgrep -u $(id -u) -f "[/]das_server.py" | sort -n)
+  pid=$(get_das_pids | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
@@ -96,7 +124,7 @@ status()
 
 # ensure db_import is not running as the script is changing state in shared dir
 check_db_import_not_running(){
-    [ $(pgrep -u $(id -u) -f "[/]das_db_import" | wc -l) = 0 ]
+    [ $(pgrep -u $(id -u) -f "das_db_import" | wc -l) = 0 ]
 }
 
 dasmap_filename(){
@@ -149,7 +177,7 @@ resetdata(){
 bootstrap()
 {
     echo "starting keyword search bootstrap (values, fields)"
-    das_bootstrap_kws
+    das_bootstrap_kws "$@"
     echo "bootstrap done"
 }
 
@@ -185,6 +213,10 @@ case ${1:-status} in
     stop
     start
     ;;
+    
+  start_das_with_update )
+    start_das_with_update
+    ;;
 
   status )
     status
@@ -209,7 +241,7 @@ case ${1:-status} in
     ;;
     
   fetchdata )
-    fetchdata
+    fetchdata "$@"
     ;;
 
   # shall not be used now!

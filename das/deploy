@@ -23,9 +23,6 @@ deploy_das_post()
 {
   case $host in vocms34 | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
 
-  #local cmd_fetch="sudo -H -u _das bashs -l -c '$project_config/manage fetchdata_silent'"
-  local cmd_update="sudo -H -u _das bashs -l -c '$project_config/manage updatedata_silent'"
-
   # make sure  staging dir exists with right permissions
   local mongodb_stage="$root/state/das/mongodb_staging"
   mkdir -p "$mongodb_stage"
@@ -34,14 +31,5 @@ deploy_das_post()
   # stage the database updates
   sudo -H -u _das bashs -l -c "${project_config}/manage resetdata_silent"
 
-  # create a cron to read staged files and put them into MongoDB
-  (
-   mkcrontab; sysboot;
-   if [ -f /data/enabled/das ]; then
-     echo "*/5 0-23 * * * ${cmd_update}"    # try to connect to mongodb and push any waiting updates
-     # updates could be fetched and staged automatically, but this is disabled
-     # echo "0 0-23 * * * ${cmd_fetch}"       # check if new update exists
-   fi
-  ) | crontab -
-
+  ( mkcrontab; sysboot; ) | crontab -
 }
