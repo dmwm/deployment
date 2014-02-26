@@ -29,7 +29,7 @@ deploy_das_post()
   sudo chown -Rf _das:_das "$mongodb_stage"
 
   # stage the database updates
-  sudo -H -u _das bashs -l -c "${project_config}/manage resetdata_silent"
+  sudo -H -u _das bashs -l -c "${project_config}/manage resetdata"  # output goes to stdin/deploy log
 
   ( mkcrontab; sysboot; ) | crontab -
 }

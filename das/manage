@@ -11,6 +11,10 @@
 ##H   start       (re)start the service
 ##H   stop        stop the service
 ##H   bootstrap   fetch dtata from services: accepted input values and what fields available in services results
+##H   syncdata    synchronize the metadata in staging dir to be uploaded to MongoDB
+##H   resetdata   reset metadata to the default state as comming with the RPM
+
+
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
@@ -36,6 +40,8 @@ STATEDIR=$TOP/state/$ME
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
+PID_DAS_SERVER="$STATEDIR/das_web_server.pid"
+
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
@@ -57,9 +63,22 @@ export METADATA_TMP_DIR=$STATEDIR/metadata_tmp  # directory where temporary file
 cd $STATEDIR
 
 # get list of das pids including the process which updates db on restart
+# (and its subprocessess)
 get_das_pids(){
-  pgrep -u $(id -u) -f "start_das_with_update"
+  local pid
   pgrep -u $(id -u) -f "[/]das_server.py"
+
+  # get the pid of process that updates mongodb and later runs DAS
+  if [ -e "${PID_DAS_SERVER}" ]; then
+      pid=$(cat "${PID_DAS_SERVER}")
+      # at least make sure the proc still exists and it has same uid
+      if pgrep -u $(id -u) -f | grep -q "${pid}"; then
+        echo "${pid}"
+        # list all the subprocessess
+        # TODO: a little race condition is still possible, if the process starts a new subprocess between listing them and killing them
+        pgrep -u $(id -u) -P "${pid}"
+      fi
+  fi
 }
 
 # Start service conditionally on crond restart.
@@ -73,41 +92,48 @@ sysboot()
   $dostart && start
 }
 
-# on service start, update db if needed
-start_das_with_update(){
-  # wait for MongoDB to be available
+wait4mongodb(){
   # TODO: configurable mongodb port?
   echo "waiting for MongoDB to start up. $(date)"
   until nc -z localhost 8230
   do
-    sleep 2
+    sleep 5
   done
-  
-  # once available, update DB
-  echo 'updating database...'
-  # TODO: if we want this available both on main log and updates logs, we shall use 'tee'
-  updatedata
-  
-  # start das
-  echo 'starting DAS web service...'
-  python -u $DAS_PYTHONPATH/DAS/web/das_server.py
+}
+
+_sync_mongodb_and_start_das(){
+    wait4mongodb \
+       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1
+    syncdata  \
+       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1
+    python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
+       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1
+}
+
+# on service start, update db if needed
+sync_mongodb_and_start_das(){
+  # like this we can get a PID of subshell, but then killing
+  # it it will be important to kill all of its subprocesses
+  _sync_mongodb_and_start_das &
+  echo $! > "$PID_DAS_SERVER"
+  # TO THINK: the redirection of stdin/stdout could also be done here with additional subshell, e.g.:
+  # (_sync_mongodb_and_start_das | rotatelogs ...) &
 }
 
 # Start the service.
 start()
 {
   echo "starting $ME"
-  # start another process so it's easier to identify it
-  $ROOT/config/$ME/manage "start_das_with_update" \
-       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  sync_mongodb_and_start_das
 }
 
 # Stop the service.
 stop()
 { 
   echo "stopping $ME"
+  # TODO: in unlikely case of a race condition (see get_das_pids()), it might be needed to repeat killing loop until no process is killed
   for pid in $(get_das_pids); do
-      kill -9 $pid
+      kill -9 "$pid"
   done
 }
 
@@ -148,7 +174,6 @@ fetchdata(){
     # TODO: we could instead just simply use: git pull repo !?
     "$updater_dir/fetch_metadata" "${METADATA_TMP_DIR}"
 
-    # TODO: do we need an option to download files but not stage them?
     echo "Validating and Staging the downloaded files to be imported into MongoDB"
     local mapsfile="${METADATA_TMP_DIR}/$(dasmap_filename)"
     if check_db_import_not_running; then
@@ -157,20 +182,22 @@ fetchdata(){
 }
 
 # update metadata from staging area only if needed (to be run from cronjob)
-updatedata(){
+syncdata(){
+    echo 'updating database...'
     # make sure import is not running currently
     if check_db_import_not_running; then
         das_db_import "update_if_changed"
     fi
 }
 
-# reset data (dasmaps, etc) to the default coming from installation
-# change is applied on next updatedata() call
+# reset data to the default coming from installation.
+# this stages the default metadata (dasmaps, inputvals, keylearning), and the
+# change is applied on next syncdata() call
 resetdata(){
-    rm -f "${STAGEDIR}/*-schema-stamp"
-    # stage the default metadata (dasmaps, inputvals, keylearning)
     local dasmaps="$DAS_PYTHONPATH/DAS/services/cms_maps/$(dasmap_filename)"
     das_db_import "stage_update" "$dasmaps"
+    # force the full update
+    rm -f ${STAGEDIR}/*-schema-stamp
 }
 
 # Bootstrap keyword search
@@ -213,10 +240,6 @@ case ${1:-status} in
     stop
     start
     ;;
-    
-  start_das_with_update )
-    start_das_with_update
-    ;;
 
   status )
     status
@@ -231,49 +254,25 @@ case ${1:-status} in
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
     ;;
     
-  updatedata )
-    updatedata
+  syncdata )
+    syncdata
     ;;
 
-  updatedata_silent )
-    # apply updates from staging dir and save the log
-    updatedata </dev/null 2>&1 | rotatelogs "$LOGDIR/das-mongoupdates-%Y%m%d.log" 86400 >/dev/null 2>&1
-    ;;
-    
   fetchdata )
     fetchdata "$@"
     ;;
-
-  # shall not be used now!
-  #  fetchdata_silent )
-  #    # check if fetching is enabled
-  #    if grep -q '1' "$updater_dir/enabled"; then
-  #        fetchdata </dev/null 2>&1 | rotatelogs "$LOGDIR/das-fetchmetadata-%Y%m%d.log" 86400 >/dev/null 2>&1
-  #    else
-  #        echo "Automatic metadata fetching is disabled"
-  #    fi
-  #    ;;
     
   resetdata )
     resetdata
     ;;
 
-  resetdata_silent )
-    log="$LOGDIR/das-mongoupdates-%Y%m%d.log"
-    echo "reset data: writing output to the log: $log"
-    resetdata </dev/null 2>&1 | rotatelogs "$log" 86400 >/dev/null 2>&1
-    # for some reason rotatelogs return exit 3 (though works fine)
-    # we want to return zero as result of this script, so we have final command
-    echo "done"
-    ;;
-    
   bootstrap )
     bootstrap
-    ;;    
+    ;;
     
   kws_export_data )
     kws_export_data
-    ;;     
+    ;;
 
   version )
     echo "$DAS_VERSION"
