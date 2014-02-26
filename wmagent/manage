@@ -723,7 +723,7 @@ status_of_bigcouch(){
 #
 start_bigcouch(){
     load_secrets_file;
-    if [ -n "$BIGCOUCH_PORT" ]; then
+    if [ -z "$BIGCOUCH_PORT" ]; then
         echo "BIGCOUCH_PORT is not set, skip BigCouch start"
         return
     fi
