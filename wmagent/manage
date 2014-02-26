@@ -250,6 +250,10 @@ load_secrets_file(){
         COUCH_HOST=$BIGCOUCH_HOST
         COUCH_HOST_NAME=$BIGCOUCH_HOST_NAME
         COUCH_PORT=$BIGCOUCH_PORT
+    else
+        BIGCOUCH_PORT="" # use this as indicator of BigCouch existance
+        BIGCOUCH_HOST=""
+        BIGCOUCH_HOST_NAME=""
     fi
 
     REQMGR_HOSTNAME=${MATCH_REQMGR_HOSTNAME:-$REQMGR_HOSTNAME};
@@ -719,6 +723,10 @@ status_of_bigcouch(){
 #
 start_bigcouch(){
     load_secrets_file;
+    if [ -n "$BIGCOUCH_PORT" ]; then
+        echo "Not BigCouch port is provided, BigCouch will not start"
+        return
+    fi
     echo "starting bigcouch from $BIGCOUCH_ROOT"
     if [ $BIGCOUCH_INIT_DONE -eq 0 ]; then
         echo "BigCouch has not been initialised... running pre initialisation";
@@ -754,6 +762,25 @@ clean_bigcouch(){
     rm -rf $INSTALL_BIGCOUCH/database/*
 }
 
+#
+# couch wrappers to chooce either couch or bigcouch backend
+#
+start_couch_mgr(){
+    load_secrets_file;
+    if [ "$COUCH_PORT" != "$BIGCOUCH_PORT" ]; then
+        start_couch;
+    else
+        start_bigcouch;
+    fi
+}
+start_couch_mgr(){
+    load_secrets_file;
+    if [ "$COUCH_PORT" != "$BIGCOUCH_PORT" ]; then
+        stop_couch;
+    else
+        stop_bigcouch;
+    fi
+}
 
 #
 # combined startup of all required services
@@ -762,8 +789,7 @@ start_services(){
     load_secrets_file;
     echo "Starting Services..."
     #start up the services required by the agent
-    start_couch;
-    start_bigcouch;
+    start_couch_mgr;
     if [ "x$MYSQL_USER" != "x" ]; then
 	start_mysql;
     fi
@@ -773,8 +799,7 @@ stop_services(){
     load_secrets_file;
     #shut down all services
     echo "Shutting down services..."
-    stop_couch;
-    stop_bigcouch;
+    stop_couch_mgr;
     if [ "x$MYSQL_USER" != "x" ]; then
 	stop_mysql;
     fi
@@ -1025,8 +1050,11 @@ clean_agent(){
 
 status(){
     load_secrets_file;
-    status_of_couch;
-    status_of_bigcouch;
+    if [ "$COUCH_PORT" != "$BIGCOUCH_PORT" ]; then
+        status_of_couch;
+    else
+        status_of_bigcouch;
+    fi
     if [ "x$MYSQL_USER" != "x" ]; then
 	status_of_mysql;
     fi
@@ -1038,8 +1066,11 @@ clean_all(){
     if [ "x$MYSQL_USER" != "x" ]; then
 	clean_mysql;
     fi
-    clean_couch;
-    clean_bigcouch;
+    if [ "$COUCH_PORT" != "$BIGCOUCH_PORT" ]; then
+        clean_couch;
+    else
+        clean_bigcouch;
+    fi
     clean_agent;
 }
 
