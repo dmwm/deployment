@@ -724,7 +724,7 @@ status_of_bigcouch(){
 start_bigcouch(){
     load_secrets_file;
     if [ -n "$BIGCOUCH_PORT" ]; then
-        echo "Not BigCouch port is provided, BigCouch will not start"
+        echo "BIGCOUCH_PORT is not set, skip BigCouch start"
         return
     fi
     echo "starting bigcouch from $BIGCOUCH_ROOT"
@@ -773,7 +773,7 @@ start_couch_mgr(){
         start_bigcouch;
     fi
 }
-start_couch_mgr(){
+stop_couch_mgr(){
     load_secrets_file;
     if [ "$COUCH_PORT" != "$BIGCOUCH_PORT" ]; then
         stop_couch;
