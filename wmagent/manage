@@ -229,22 +229,28 @@ load_secrets_file(){
     # if couch ssl key not specified check X509_USER_KEY and X509_USER_PROXY
     COUCH_KEY_FILE=${MATCH_COUCH_KEY_FILE:-${X509_USER_KEY:-$X509_USER_PROXY}};
 
-    # basic bigcouch settings
-    BIGCOUCH_USER=${MATCH_BIGCOUCH_USER:-wmagentcouch};
-    BIGCOUCH_PASS=${MATCH_BIGCOUCH_PASS:-$BIGCOUCH_PASS};
-    if [ "x$BIGCOUCH_PASS" == "x" ]; then
-        echo "Secrets file doesnt contain BIGCOUCH_PASS";
-        exit 1
+    # Check BigCouch settings and if foudn swap COUCH attributes with BIGCOUCH ones
+    if [ -n "$MATCH_BIGCOUCH_HOST" ]; then
+        # basic bigcouch settings
+        BIGCOUCH_USER=${MATCH_BIGCOUCH_USER:-wmagentcouch};
+        BIGCOUCH_PASS=${MATCH_BIGCOUCH_PASS:-$BIGCOUCH_PASS};
+        if [ "x$BIGCOUCH_PASS" == "x" ]; then
+            echo "Secrets file doesnt contain BIGCOUCH_PASS";
+            exit 1
+        fi
+        BIGCOUCH_PORT=${MATCH_BIGCOUCH_PORT:-$BIGCOUCH_PORT};
+        BIGCOUCH_HOST=${MATCH_BIGCOUCH_HOST:-$BIGCOUCH_HOST};
+        BIGCOUCH_HOST_NAME=${MATCH_BIGCOUCH_HOST_NAME:-$BIGCOUCH_HOST_NAME}
+        BIGCOUCH_CERT_FILE=${MATCH_BIGCOUCH_CERT_FILE:-${X509_USER_CERT:-$X509_USER_PROXY}};
+        BIGCOUCH_KEY_FILE=${MATCH_BIGCOUCH_KEY_FILE:-${X509_USER_KEY:-$X509_USER_PROXY}};
+
+        # assign Couch attributes to be BigCouch one, since Couch attrigues used in Agent
+        COUCH_USER=$BIGCOUCH_USER
+        COUCH_PASS=$BIGCOUCH_PASS
+        COUCH_HOST=$BIGCOUCH_HOST
+        COUCH_HOST_NAME=$BIGCOUCH_HOST_NAME
+        COUCH_PORT=$BIGCOUCH_PORT
     fi
-    BIGCOUCH_PORT=${MATCH_BIGCOUCH_PORT:-$BIGCOUCH_PORT};
-    BIGCOUCH_HOST=${MATCH_BIGCOUCH_HOST:-$BIGCOUCH_HOST};
-    BIGCOUCH_HOST_NAME=${MATCH_BIGCOUCH_HOST_NAME:-$BIGCOUCH_HOST_NAME}
-
-    # if couch ssl certificate not specified check X509_USER_CERT and X509_USER_PROXY
-    BIGCOUCH_CERT_FILE=${MATCH_BIGCOUCH_CERT_FILE:-${X509_USER_CERT:-$X509_USER_PROXY}};
-
-    # if couch ssl key not specified check X509_USER_KEY and X509_USER_PROXY
-    BIGCOUCH_KEY_FILE=${MATCH_BIGCOUCH_KEY_FILE:-${X509_USER_KEY:-$X509_USER_PROXY}};
 
     REQMGR_HOSTNAME=${MATCH_REQMGR_HOSTNAME:-$REQMGR_HOSTNAME};
     REQMGR_PORT=${MATCH_REQMGR_PORT:-$REQMGR_PORT};
