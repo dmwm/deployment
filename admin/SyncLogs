@@ -2,7 +2,7 @@
 
 # Rsync append only .txt and .log files
 for h in vocms{34,127,13{2,3,4,5,6,8,9},140,16{0,1,2,3}}; do
-  rsync -rm -e "ssh -c arcfour256" --append -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 2>/dev/null
+  rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 2>/dev/null
 done
 
 # Delete files not modified in the last 7 days
