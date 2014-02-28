@@ -145,7 +145,13 @@ status()
     echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
     echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+
+    # print the status of web-server
+    if ! pgrep -u $(id -u) -f "[/]das_server.py" > /dev/null; then
+        echo $echo_e "P.S. $ME WEBSERVER is ${COLOR_WARN}NOT RUNNING YET${COLOR_NORMAL}."
+    fi
   fi
+
 }
 
 # ensure db_import is not running as the script is changing state in shared dir
