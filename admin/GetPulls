@@ -36,13 +36,6 @@ cmsdist()
 
   for PULL in $PULLS; do
     echo "Pull: $URL/$PULL"
-    BRANCH=`curl -ks GET ${URL}/${PULL} | grep "cms-sw/cmsdist:branch:comp" | awk -F' ' '{print $3}' | sed 's/"//g'`
-    if [ -n "$BRANCH" ]; then
-      echo "$PULL against comp branch? YES"
-    else
-      echo "$PULL against comp branch? NO! Skipping it ..."
-      continue
-    fi
     authdate=`curl -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'Date:.*' | cut -d: -f 2- | sed 's/^ *//g'` 
     author=`curl -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'From:.*' | cut -d: -f 2-| sed 's/^ *//g'` 
     title=`curl -ks ${URL}/${PULL}.patch | head -n4 | grep 'PATCH' | cut -d"]" -f 2- | sed 's/^ *//g'`
