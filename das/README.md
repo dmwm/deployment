@@ -27,9 +27,9 @@ maps. To do so we need to perform the following actions:
   a *das_maps_status* file will be updated with appropriate message and
   timstamp; DAS service will not be affected by this action (if it is running
   it will continue); DAS service it will not reload maps, this should done
-  explicitly via updatemaps action
+  explicitly via uploadmaps action
 - upload new DAS maps into MongoDB
-  ```managa udatemaps "I did read documentation"```
+  ```managa uploadmaps "I did read documentation"```
   a *das_maps_status* file will be updated with appropriate message and
   timstamp; DAS service will be stopped during this action and will need to be
   restarted afterwards
