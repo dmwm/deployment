@@ -144,8 +144,8 @@ upload_das_maps(){
   $DAS_ROOT/bin/das_update_database $dasmaps $STAGEDIR
 }
 
-# update metadata
-update_metadata(){
+# upload metadata to MongoDB
+upload_metadata(){
   # check if MongoDB is present
   check_mongodb
 
@@ -215,10 +215,10 @@ case ${1:-status} in
     reset_metadata
     ;;
 
-  updatemaps )
+  uploadmaps )
     check "$2"
     stop
-    update_metadata
+    upload_metadata
     ;;
 
   stop )
