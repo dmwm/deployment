@@ -75,6 +75,7 @@ deploy_das_maps(){
   if [ ! -f $STAGEDIR/das_maps_status ]; then
       # fresh release, need to copy maps from release area
       cp $DAS_PYTHONPATH/DAS/services/cms_maps/*.js $STAGEDIR
+      cp $DAS_PYTHONPATH/DAS/kws_data/db_dumps/*.js $STAGEDIR
       # mark that we updated MongoDB with DAS maps
       echo "Release maps: `date`" > $STAGEDIR/das_maps_status
   fi
@@ -96,7 +97,7 @@ start()
   case $host in vocms133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
   deploy_das_maps
   local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
-  local kwsmaps=$DAS_KWS_IR_INDEX
+  local kwsmaps=$STAGEDIR
   DAS_MAP_FILE=$mapfile DAS_KWS_MAPS=$kwsmaps $DAS_ROOT/bin/das_server start \
       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
