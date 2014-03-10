@@ -125,6 +125,7 @@ status()
 # download metadata and stage it for update
 # change is applied on next updatedata() call
 fetch_metadata(){
+  set -e
   # clean-up STEGEDIR area
   rm -f $STAGEDIR/*.js $STAGEDIR/*-schema-stamp
 
@@ -133,10 +134,12 @@ fetch_metadata(){
 
   # mark that we updated MongoDB with DAS maps
   echo "Fetched maps: `date`" > $STAGEDIR/das_maps_status
+  set +e
 }
 
 # upload DAS & KWS maps into MognoDB
 upload_das_maps(){
+  set -e
   # choose appropriate dasmaps to use
   case $host in vocms133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
   local dasmaps=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
@@ -144,15 +147,12 @@ upload_das_maps(){
   # upload DAS and KWS maps into MongoDB
   $DAS_ROOT/bin/das_update_database $dasmaps $STAGEDIR
 
-  # check status of last command
-  if [ "$?" != "0" ]; then
-      echo "ERROR: das_update_database exit with non-zero status"
-      exit 1
-  fi
+  set +e
 }
 
 # upload metadata to MongoDB
 upload_metadata(){
+  set -e
   # check if MongoDB is present
   check_mongodb
 
@@ -161,10 +161,12 @@ upload_metadata(){
 
   # mark that we updated MongoDB with DAS maps
   echo "Updated maps: `date`" > $STAGEDIR/das_maps_status
+  set +e
 }
 
 # reset DAS metadata (dasmaps, etc) to the default coming from installation
 reset_metadata(){
+  set -e
   # clean timestamps
   rm -f $STAGEDIR/*-schema-stamp
 
@@ -176,14 +178,17 @@ reset_metadata(){
 
   # mark that we updated MongoDB with DAS maps
   echo "Release maps: `date`" > $STAGEDIR/das_maps_status
+  set +e
 }
 
 # Bootstrap keyword search
 bootstrap()
 {
+  set -e
   echo "starting keyword search bootstrap (values, fields)"
   das_bootstrap_kws
   echo "bootstrap done"
+  set +e
 }
 
 # Verify the security string.
