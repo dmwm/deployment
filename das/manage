@@ -143,6 +143,12 @@ upload_das_maps(){
 
   # upload DAS and KWS maps into MongoDB
   $DAS_ROOT/bin/das_update_database $dasmaps $STAGEDIR
+
+  # check status of last command
+  if [ "$?" != "0" ]; then
+      echo "ERROR: das_update_database exit with non-zero status"
+      exit 1
+  fi
 }
 
 # upload metadata to MongoDB
