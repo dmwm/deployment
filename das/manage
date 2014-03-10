@@ -206,20 +206,20 @@ case ${1:-status} in
     status
     ;;
 
-  fetchmaps )
-    check "$2"
-    fetch_metadata
-    ;;
-
   resetmaps )
     check "$2"
+    stop
     reset_metadata
+    upload_metadata
+    start
     ;;
 
-  uploadmaps )
+  updatemaps )
     check "$2"
     stop
+    fetch_metadata
     upload_metadata
+    start
     ;;
 
   stop )
