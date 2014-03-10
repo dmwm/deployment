@@ -217,6 +217,11 @@ case ${1:-status} in
     status
     ;;
 
+  fetchmaps )
+    check "$2"
+    fetch_metadata
+    ;;
+
   resetmaps )
     check "$2"
     stop
