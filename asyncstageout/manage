@@ -25,6 +25,8 @@ COUCH_HOST=127.0.0.1
 COUCH_PORT=5984
 COUCH_HOST_NAME=`hostname`
 
+COUCH_CERT_FILE=
+COUCH_KEY_FILE=
 
 # Flags to show which tools have been initialised
 if [ -e $INSTALL_AS/.init ]; then AS_INIT_DONE=1; else AS_INIT_DONE=0; fi;
@@ -95,7 +97,7 @@ load_secrets_file(){
         COUCH_HOST=$MATCH_COUCH_HOST;
     fi
     # look for couch ssl certificate if not found check X509_USER_CERT and X509_USER_PROXY
-    if [ ! "x${X509_USER_CERT:-$X509_USER_PROXY}" == "x" ]; then
+    if [ ! "x$MATCH_COUCH_CERT_FILE" == "x" ]; then
         COUCH_CERT_FILE=$MATCH_COUCH_CERT_FILE;
     elif [ ! "x$X509_USER_CERT" == "x" ]; then
         COUCH_CERT_FILE=${X509_USER_CERT:-$X509_USER_PROXY};
@@ -131,6 +133,8 @@ print_settings(){
     echo "COUCH_PASS=               $COUCH_PASS                 "
     echo "COUCH_HOST=               $COUCH_HOST                 "
     echo "COUCH_PORT=               $COUCH_PORT                 "
+    echo "COUCH_CERT_FILE=          $COUCH_CERT_FILE            "
+    echo "COUCH_KEY_FILE=           $COUCH_KEY_FILE             "
 
 }
 
@@ -151,7 +155,6 @@ print_settings(){
 # first time startup for couch: disable admin party and create user based on secrets file
 #
 init_couch_pre(){
-
     echo "Initialising CouchDB on $COUCH_HOST:$COUCH_PORT..."
     mkdir -p $INSTALL_COUCH/logs
     mkdir -p $INSTALL_COUCH/database
@@ -160,6 +163,11 @@ init_couch_pre(){
     perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
+    if [ "x$COUCH_CERT_FILE" != "x" ] && [ "x$COUCH_KEY_FILE" != "x" ]; then
+        perl -p -i -e "s{;cert_file =.*}{cert_file = $COUCH_CERT_FILE}g" $CONFIG_COUCH/local.ini
+        perl -p -i -e "s{;key_file =.*}{key_file = $COUCH_KEY_FILE}g" $CONFIG_COUCH/local.ini
+        perl -p -i -e "s{;cacert_file =.*}{cacert_file = $COUCH_CERT_FILE}g" $CONFIG_COUCH/local.ini
+    fi
 }
 
 init_couch_post(){
