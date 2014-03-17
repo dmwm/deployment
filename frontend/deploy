@@ -34,7 +34,7 @@ deploy_frontend_sw()
       opts="-DTEST" name=""
       backends=backends-dev.txt ;;
   esac
-  if $nogroups; then user=; else user="-u _frontend:_frontend"; fi
+  if $nogroups; then user="-u $(id -un):$(id -gn)"; else user="-u _frontend:_frontend"; fi
 
   (. $root/current/apps/frontend/etc/profile.d/init.sh
    export AUTH_JSON_MAP=$PWD/etc/authmap.json
