@@ -32,7 +32,6 @@ esac
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
-CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 COLOR_OK="\\033[0;32m"
@@ -51,34 +50,34 @@ export DAS_IMAGESPATH=$DAS_ROOT/lib/python2.6/site-packages/src/images
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
-export DAS_CONFIG=$CFGDIR/das_cms.py
-export DAS_KWS_IR_INDEX=$STATEDIR/kws_index
 export STAGEDIR=$STATEDIR/stagingarea
+export DAS_CONFIG=$ROOT/config/$ME/das_cms.py
 mkdir -p $STAGEDIR
 
 cd $STATEDIR
 host=`hostname`
 
-# helper function to check MongoDB
-check_mongodb() {
-  mongo_pid=`pgrep -f "bin/mongod"`
-  if [ -n "$mongo_pid" ]; then
-      echo "MongoDB pid=$mongo_pid"
-  else
-      echo "MongoDB is not ready, unable to start DAS"
-      exit 1
-  fi
-}
+# download metadata and stage it for update
+# change is applied on next updatedata() call
+fetch_metadata(){
+  set -e
+  # clean-up STEGEDIR area
+  rm -f $STAGEDIR/*.js $STAGEDIR/*-schema-stamp
 
-# deploy DAS and DAS KWS maps into stagedir area
-deploy_das_maps(){
-  if [ ! -f $STAGEDIR/das_maps_status ]; then
-      # fresh release, need to copy maps from release area
-      cp $DAS_PYTHONPATH/DAS/services/cms_maps/*.js $STAGEDIR
-      cp $DAS_PYTHONPATH/DAS/kws_data/db_dumps/*.js $STAGEDIR
-      # mark that we updated MongoDB with DAS maps
-      echo "Release maps: `date`" > $STAGEDIR/das_maps_status
-  fi
+  # fetch DAS maps
+  DASMAPS_URL="https://raw.github.com/dmwm/DASMaps/master/js"
+  DASMAPS_DIR=/tmp/DASMaps
+  $DAS_ROOT/bin/das_js_fetch $DASMAPS_URL $DASMAPS_DIR
+
+  # validate DAS maps
+  $DAS_ROOT/bin/das_js_validate $DASMAPS_DIR
+
+  # copy DAS maps into STAGEDIR
+  cp -r $DASMAPS_DIR/* $STAGEDIR
+
+  # mark that we updated MongoDB with DAS maps
+  echo "Fetched maps: `date`" > $STAGEDIR/das_maps_status
+  set +e
 }
 
 # Start service conditionally on crond restart.
@@ -94,11 +93,12 @@ sysboot()
 start()
 {
   echo "starting $ME"
+  # choose correct DAS map file
   case $host in vocms133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
-  deploy_das_maps
   local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
-  local kwsmaps=$STAGEDIR
-  DAS_MAP_FILE=$mapfile DAS_KWS_MAPS=$kwsmaps $DAS_ROOT/bin/das_server start \
+  cp -f $mapfile $STAGEDIR/update_mapping_db.js
+  # start DAS service (it will load DAS maps into MongoDB and start DAS server)
+  DASMAPS_DIR=$STAGEDIR $DAS_ROOT/bin/das_server start \
       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
@@ -120,75 +120,6 @@ status()
   else
     echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
-}
-
-# download metadata and stage it for update
-# change is applied on next updatedata() call
-fetch_metadata(){
-  set -e
-  # clean-up STEGEDIR area
-  rm -f $STAGEDIR/*.js $STAGEDIR/*-schema-stamp
-
-  # fetch DAS maps
-  $CFGDIR/metadata_updater/fetch_metadata $STAGEDIR
-
-  # mark that we updated MongoDB with DAS maps
-  echo "Fetched maps: `date`" > $STAGEDIR/das_maps_status
-  set +e
-}
-
-# upload DAS & KWS maps into MognoDB
-upload_das_maps(){
-  set -e
-  # choose appropriate dasmaps to use
-  case $host in vocms133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
-  local dasmaps=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
-
-  # upload DAS and KWS maps into MongoDB
-  $DAS_ROOT/bin/das_update_database $dasmaps $STAGEDIR
-
-  set +e
-}
-
-# upload metadata to MongoDB
-upload_metadata(){
-  set -e
-  # check if MongoDB is present
-  check_mongodb
-
-  # upload DAS maps
-  upload_das_maps
-
-  # mark that we updated MongoDB with DAS maps
-  echo "Updated maps: `date`" > $STAGEDIR/das_maps_status
-  set +e
-}
-
-# reset DAS metadata (dasmaps, etc) to the default coming from installation
-reset_metadata(){
-  set -e
-  # clean timestamps
-  rm -f $STAGEDIR/*-schema-stamp
-
-  # copy DAS maps from release to staging area
-  cp -f $DAS_PYTHONPATH/DAS/services/cms_maps/*.js $STAGEDIR
-
-  # upload DAS maps
-  upload_das_maps
-
-  # mark that we updated MongoDB with DAS maps
-  echo "Release maps: `date`" > $STAGEDIR/das_maps_status
-  set +e
-}
-
-# Bootstrap keyword search
-bootstrap()
-{
-  set -e
-  echo "starting keyword search bootstrap (values, fields)"
-  das_bootstrap_kws
-  echo "bootstrap done"
-  set +e
 }
 
 # Verify the security string.
@@ -218,24 +149,7 @@ case ${1:-status} in
     ;;
 
   fetchmaps )
-    check "$2"
     fetch_metadata
-    ;;
-
-  resetmaps )
-    check "$2"
-    stop
-    reset_metadata
-    upload_metadata
-    start
-    ;;
-
-  updatemaps )
-    check "$2"
-    stop
-    fetch_metadata
-    upload_metadata
-    start
     ;;
 
   stop )
@@ -245,10 +159,6 @@ case ${1:-status} in
 
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
-    ;;
-
-  bootstrap )
-    bootstrap
     ;;
 
   version )
