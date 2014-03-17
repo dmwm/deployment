@@ -27,4 +27,7 @@ deploy_das_post()
   local das_stage=$root/state/das/stagingarea
   rm -f $das_stage/{clean,update}_mapping_db.js
   rm -f $das_stage/*-schema-stamp
+  # run fetchmaps action from DAS manage script
+  # it will fetch DASMaps, perform validation and stage them into stagearea
+  $root/current/config/das/manage fetchmaps
 }
