@@ -97,7 +97,7 @@ load_secrets_file(){
         COUCH_HOST=$MATCH_COUCH_HOST;
     fi
     # look for couch ssl certificate if not found check X509_USER_CERT and X509_USER_PROXY
-    if [ ! "x${X509_USER_CERT:-$X509_USER_PROXY}" == "x" ]; then
+    if [ ! "x$MATCH_COUCH_CERT_FILE" == "x" ]; then
         COUCH_CERT_FILE=$MATCH_COUCH_CERT_FILE;
     elif [ ! "x$X509_USER_CERT" == "x" ]; then
         COUCH_CERT_FILE=${X509_USER_CERT:-$X509_USER_PROXY};
