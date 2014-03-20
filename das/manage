@@ -59,9 +59,6 @@ host=`hostname`
 # change is applied on next updatedata() call
 fetchmaps(){
   set -e
-  # clean-up STEGEDIR area
-  rm -f $STAGEDIR/*.js $STAGEDIR/*-schema-stamp
-
   # fetch DAS maps
   DASMAPS_URL="https://raw.github.com/dmwm/DASMaps/master/js"
   DASMAPS_DIR=/tmp/DASMaps
@@ -69,6 +66,9 @@ fetchmaps(){
 
   # validate DAS maps
   $DAS_ROOT/bin/das_js_validate $DASMAPS_DIR
+
+  # clean-up STEGEDIR area
+  rm -f $STAGEDIR/*.js $STAGEDIR/*-schema-stamp
 
   # copy DAS maps into STAGEDIR
   cp -r $DASMAPS_DIR/* $STAGEDIR
