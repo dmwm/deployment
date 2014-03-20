@@ -15,18 +15,13 @@
 ##H   compactviews    compact database views for design doc ARG ARG
 ##H   cleanviews      clean view named ARG
 ##H
-##H For more details please refer to operations page:
-##H   https://twiki.cern.ch/twiki/bin/view/CMS/CouchDB
+##H For more details please refer to the alarming procedures page:
+##H   https://cern.ch/cms-http-group/ops-alarms.html
 
 if [ $(id -un)  = cmsweb ]; then
   echo "ERROR: please use another account" 1>&2
   exit 1
 fi
-
-case $(uname) in Darwin )
-  md5sum() { md5 -r ${1+"$@"}; }
-  ;;
-esac
 
 echo_e=-e
 case $(uname) in Darwin )
@@ -138,7 +133,17 @@ push_apps()
   fi
 }
 
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
 
+# Main routine, perform action requested on command line.
 case ${1:-status} in
     sysboot )
         sysboot
@@ -149,20 +154,24 @@ case ${1:-status} in
         ;;
 
     start | restart )
+        check "$2"
         stop
         sleep 1
         start
         ;;
 
     stop)
+        check "$2"
         stop
         ;;
 
     cleanviews )
+        check "$3"
         clean_views $2
         ;;
 
     pushapps )
+        check "$2"
         push_apps
         ;;
 
