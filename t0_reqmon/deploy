@@ -2,6 +2,7 @@
 deploy_t0_reqmon_deps()
 {
   deploy couchdb
+  deploy bigcouch
 }
 
 deploy_t0_reqmon_prep()
@@ -17,9 +18,11 @@ deploy_t0_reqmon_sw()
 
 deploy_t0_reqmon_post()
 {
-  # Tell couchdb to push the t0_reqmon app on the next restart
-  echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WMStats" \
-       "http://localhost:5984/tier0_wmstats" > $root/state/couchdb/stagingarea/t0_reqmon
-  echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WorkloadSummary" \
-       "http://localhost:5984/t0_workloadsummary" >> $root/state/couchdb/stagingarea/t0_reqmon
+  # Tell couch to push the t0_reqmon app on the next restart
+  for couch in couchdb:5984 bigcouch:5985; do
+    echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WMStats" \
+         "http://localhost:${couch##*:}/tier0_wmstats" > $root/state/${couch%%:*}/stagingarea/t0_reqmon
+    echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WorkloadSummary" \
+         "http://localhost:${couch##*:}/t0_workloadsummary" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
+  done
 }

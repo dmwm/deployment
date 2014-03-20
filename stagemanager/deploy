@@ -3,7 +3,12 @@ deploy_stagemanager_variants="default t1_uk_ral t1_us_fnal t1_tw_asgc t1_it_cnaf
 
 deploy_stagemanager_deps()
 {
-  case $variant in default ) deploy couchdb ;; * ) deploy couchdb offsite ;; esac
+  case $variant in
+    default )
+      deploy couchdb 
+      deploy bigcouch ;;
+    * ) deploy couchdb offsite ;;
+  esac
 }
 
 deploy_stagemanager_prep()
@@ -32,8 +37,10 @@ deploy_stagemanager_post()
   local couchdb_state=$root/state/couchdb
 
   for area in stagingarea replication; do
-    rm -f $couchdb_state/$area/stagemanager
-    touch $couchdb_state/$area/stagemanager
+    for couch in couchdb:5984 bigcouch:5985; do
+      rm -f $root/state/${couch%%:*}/$area/stagemanager
+      touch $root/state/${couch%%:*}/$area/stagemanager
+    done
   done
 
   local dbs=""
@@ -49,7 +56,9 @@ deploy_stagemanager_post()
 
   for db in $dbs; do
     # Push the database
-    echo "couchapp push $root/current/apps/stagemanager/${db##*_} http://localhost:5984/$db" >> $couchdb_state/stagingarea/stagemanager
+    for couch in couchdb:5984 bigcouch:5985; do
+      echo "couchapp push $root/current/apps/stagemanager/${db##*_} http://localhost:${couch##*:}/$db" >> $root/state/${couch%%:*}/stagingarea/stagemanager
+    done
   done
 
   case $variant in

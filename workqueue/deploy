@@ -4,6 +4,7 @@ deploy_workqueue_variants="default prod preprod dev"
 deploy_workqueue_deps()
 {
   deploy couchdb
+  deploy bigcouch
 }
 
 deploy_workqueue_prep()
@@ -32,28 +33,15 @@ deploy_workqueue_post()
   $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
   eval $cmd
 
-  # Tell couchdb to push workqueue apps on the next restart
-  local manage=$root/current/config/workqueue/workqueue_task
-  local couchdb_config=$root/current/config/couchdb
-  local couchdb_state=$root/state/couchdb
-  local couch_url="http://localhost:5984"
-
-  for area in stagingarea replication; do
-    rm -f $couchdb_state/$area/workqueue
-    touch $couchdb_state/$area/workqueue
-  done
-
-  # push app
-  echo "$project_config/workqueue_task pushcouchapp $couch_url" \
-      >> $couchdb_state/stagingarea/workqueue
-
-  for db in workqueue workqueue_inbox; do
-    # clean views on startup
-    echo "$couchdb_config/manage cleanviews $db 'I did read documentation'" \
-      >> $couchdb_state/stagingarea/workqueue
+  # Tell couch to push workqueue apps on the next restart
+  for couch in couchdb:5984 bigcouch:5985; do
+    echo "$project_config/workqueue_task pushcouchapp http://localhost:${couch##*:}" \
+      > $root/state/${couch%%:*}/stagingarea/workqueue
   done
 
   # Setup workqueue cronjobs
+  local manage=$root/current/config/workqueue/workqueue_task
+
   local cmd="$manage reqmgr_sync"
   $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
   local req_sync="5-45/20 * * * * $cmd"

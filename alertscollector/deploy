@@ -13,6 +13,7 @@ deploy_alertscollector_deps()
       ;;
     * )
       deploy couchdb default
+      deploy bigcouch default
       ;;
   esac
 }
@@ -29,11 +30,13 @@ deploy_alertscollector_sw()
 
 deploy_alertscollector_post()
 {
-  # Tell couchdb to push the AlertsCollector couchapp on the next restart
-  echo "couchapp push " \
-       "$root/current/apps/alertscollector/data/couchapps/AlertsCollector" \
-       "http://localhost:5984/alertscollector" \
-       > $root/state/couchdb/stagingarea/alertscollector
+  # Tell couch to push the AlertsCollector couchapp on the next restart
+  for couch in couchdb:5984 bigcouch:5985; do
+    echo "couchapp push " \
+         "$root/current/apps/alertscollector/data/couchapps/AlertsCollector" \
+         "http://localhost:${couch##*:}/alertscollector" \
+         > $root/state/${couch%%:*}/stagingarea/alertscollector
+  done
 
   # Set up database replication if deploying with local WMAgent CouchDB
   case $variant in

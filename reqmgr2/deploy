@@ -6,6 +6,7 @@ deploy_reqmgr2_deps()
   deploy backend
   deploy wmcore-auth
   deploy couchdb
+  deploy bigcouch
   deploy reqmon
   deploy acdcserver $variant
 
@@ -44,22 +45,16 @@ deploy_reqmgr2_post()
   case $host in vocms13[89] ) disable;;  * ) enable;; esac
 
   # ReqMgr2 specific couchdb stuff
-  # Tell couchdb to pick up reqmgr on the next restart
-  local couchdb_state=$root/state/couchdb
+  # Tell couch to pick up reqmgr on the next restart
   local reqmgrapp=$root/current/apps/reqmgr2
-
-  for area in stagingarea replication; do
-    rm -f $couchdb_state/$area/reqmgr2
-    touch $couchdb_state/$area/reqmgr2
+  for couch in couchdb:5984 bigcouch:5985; do
+    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux" \
+         "http://localhost:${couch##*:}/reqmgr_auxiliary" \
+         > $root/state/${couch%%:*}/stagingarea/reqmgr2
   done
-
-  echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux" \
-       "http://localhost:5984/reqmgr_auxiliary" \
-    >> $couchdb_state/stagingarea/reqmgr2
 
   # Once we have retired ReqMgr1, we should configure couch
   # here to push the ReqMgr2 needed databases/couchapps.
-
 
   # Setup reqmgr2 cronjobs
   (mkcrontab

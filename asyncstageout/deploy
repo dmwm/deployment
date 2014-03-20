@@ -3,6 +3,7 @@ deploy_asyncstageout_variants="default offsite"
 deploy_asyncstageout_deps()
 {
   deploy couchdb
+  case $variant in offsite ) ;; * ) deploy bigcouch ;; esac
 }
 
 deploy_asyncstageout_prep()
@@ -40,23 +41,25 @@ deploy_asyncstageout_post()
       done
       ;;
     default )
-      # Tell couchdb to push the AlertsCollector couchapp on the next restart
-      echo "couchapp push " \
-           "$root/current/apps/asyncstageout/couchapp/UserMonitoring" \
-           "http://localhost:5984/user_monitoring_asynctransfer" \
-           > $root/state/couchdb/stagingarea/asyncstageout
-      echo "couchapp push " \
-           "$root/current/apps/asyncstageout/couchapp/AsyncTransfer" \
-           "http://localhost:5984/asynctransfer" \
-           >> $root/state/couchdb/stagingarea/asyncstageout
-      echo "couchapp push " \
-           "$root/current/apps/asyncstageout/couchapp/DBSPublisher" \
-           "http://localhost:5984/asynctransfer" \
-           >> $root/state/couchdb/stagingarea/asyncstageout
-      echo "couchapp push " \
-           "$root/current/apps/asyncstageout/couchapp/monitor" \
-           "http://localhost:5984/asynctransfer" \
-           >> $root/state/couchdb/stagingarea/asyncstageout
+      # Tell couch to push the AlertsCollector couchapp on the next restart
+      for couch in couchdb:5984 bigcouch:5985; do
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/UserMonitoring" \
+             "http://localhost:${couch##*:}/user_monitoring_asynctransfer" \
+             > $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/AsyncTransfer" \
+             "http://localhost:${couch##*:}/asynctransfer" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/DBSPublisher" \
+             "http://localhost:${couch##*:}/asynctransfer" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/monitor" \
+             "http://localhost:${couch##*:}/asynctransfer" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+      done
       ;;
   esac
 }
