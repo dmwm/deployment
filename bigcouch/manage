@@ -46,6 +46,8 @@ COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
 
+PORT=5985
+ADMPORT=5986
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 export BIGCOUCH_ROOT
 export COOKIEFILE
@@ -73,6 +75,8 @@ start() {
     cd $CFGDIR # otherwise bigcouch cannot find vm.args
     # it should eventually pipe to rotatelogs, when couch supports it
     $BIGCOUCH_ROOT/bin/bigcouch 2>&1 1>& /dev/null < /dev/null &
+
+    push_apps
 }
 
 stop() {
@@ -94,6 +98,47 @@ status() {
     fi
 }
 
+# When a view is changed, such as a new app version is deployed,
+# invoke this to clean up the views in that database.
+clean_views()
+{
+  local database=$1
+  [ -n "$database" ] ||
+    { echo "You must specify the database you wish to clean the views "; exit 1; }
+
+  curl -s -H "Content-Type: application/json" -X POST http://localhost:$PORT/$database/_view_cleanup | \
+       grep -q '{"ok":true}' ||
+    { echo "An error occured while cleaning the views. Please look in the BigCouch logs."; exit 3; }
+}
+
+# Push applications from staging area into bigcouch.
+push_apps()
+{
+  n=0 started=false
+  while [ $n -le 100 ]; do
+    test -n "$(pgrep -u $(id -u) -f ' bigcouch' | sort -n)" &&
+      curl -s localhost:$PORT | grep -q '{"couchdb":"Welcome","version":"BigCouchTarball","bigcouch":"[0-9.]*"}' &&
+      started=true && break
+    echo "waiting for bigcouch..."
+    sleep 1
+    n=$(expr $n + 1)
+  done
+
+  if $started; then
+    for APP in $STATEDIR/stagingarea/*; do
+      [ -f $APP ] || continue
+      . $APP
+      for DB in $(egrep -o 'PORT/.*$' $APP | cut -d/ -f2); do
+        clean_views $DB
+      done
+    done
+  else
+    echo "bigcouch did not start, not pushing application"
+    exit 1
+  fi
+}
+
+
 case ${1:-status} in
     sysboot )
         sysboot
@@ -111,6 +156,14 @@ case ${1:-status} in
 
     stop)
         stop
+        ;;
+
+    cleanviews )
+        clean_views $2
+        ;;
+
+    pushapps )
+        push_apps
         ;;
 
     help )
