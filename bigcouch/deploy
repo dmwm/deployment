@@ -15,64 +15,56 @@ deploy_bigcouch_prep()
 
 deploy_bigcouch_sw()
 {
-  rm -f $project_auth/hmackey.ini
-  local host=`hostname -i`
-  deploy_pkg -a bigcouch/hmackey.ini comp external+bigcouch
-  perl -p -i -e "s|{ROOT}|$root|g" $project_config/local.ini
-  perl -p -i -e "s|{ROOT}|$root|g" $project_config/default.ini
-  perl -p -i -e "s|{HOST}|$host|g" $project_config/default.ini
-  perl -p -i -e "s|{HOST}|$host|g" $project_config/vm.args
-  # replace supplied ini files from RPM with project ones
-  local project_root=$root/current/apps/$project
-  [ -f $project_root/etc/local.ini ] && rm $project_root/etc/local.ini
-  [ -f $project_root/etc/default.ini ] && rm $project_root/etc/default.ini
-  [ -f $project_root/etc/vm.args ] && rm $project_root/etc/vm.args
-  [ -f $project_root/etc/ports.config ] && rm $project_root/etc/ports.config
-  ln -s $project_config/default.ini $project_root/etc/default.ini
-  ln -s $project_config/local.ini $project_root/etc/local.ini
-  ln -s $project_config/vm.args $project_root/etc/vm.args
-  ln -s $project_config/ports.config $project_root/etc/ports.config
-  grep hmac_secret $project_auth/hmackey.ini >> $project_config/local.ini
+  deploy_pkg -a bigcouch/hmackey.ini -a bigcouch/erlang.cookie comp external+bigcouch
+
+  # path relocations
+  perl -p -i -e "s|{ROOT}|$root|g" $project_config/{local.ini,vm.args}
 
   case $variant in
     default )
       ;;
     * )
-      perl -p -i -e "s|bind_address = 0.0.0.0|bind_address = 127.0.0.1|g" $project_config/local.ini
-      (echo
-       echo "[ssl]"
-       echo "cert_file = $project_state/proxy/proxy.cert"
-       echo "key_file = $project_state/proxy/proxy.cert"
-       echo "cacert_file = $project_state/proxy/proxy.cert"
-       echo
-       echo "[replicator]"
-       echo "max_replication_retry_count = infinity"
-      ) >> $project_config/local.ini
+      # Offsite instances only allow connections through localhost because
+      # they are not protected by the front-ends. Additionally, enable ssl
+      # configuration so it can use a proxy certificate to authenticate
+      # with the central couch.
+      perl -p -i -e 's,bind_address = 0.0.0.0,bind_address = 127.0.0.1,g;' \
+                 -e 's,^;(\[ssl\]|(cert|key|cacert)_file),\1,g' $project_config/local.ini
       ;;
   esac
 }
 
-# NOTE: this need to be enabled once we verify BigCouch compactification
-#       procedure
-#deploy_bigcouch_post()
-#{
-#  (mkcrontab
-#   case $host in
-#     vocms10[67] | vocms13[2689] | vocms16[13] )
-#       disable ;;
-#     * )
-#       enable
-#       sysboot
-#       local cmd="$project_config/manage compact all 'I did read documentation'"
-#       $nogroups || cmd="sudo -H -u _bigcouch bashs -l -c \"${cmd}\""
-#       echo "12 0 * * * $cmd" ;;
-#   esac) | crontab -
-#}
+deploy_bigcouch_post()
+{
+  # set the machine identification for the distributed erlang
+  perl -p -i -e "s|{HOST}|$host|g" $project_config/vm.args
+
+  (mkcrontab
+   case $host in
+     vocms34 | vocms13[23689] | vocms16[13] | vocms140 )
+       disable ;;
+     * )
+       enable
+       sysboot
+       #local cmd="$project_config/manage compact all 'I did read documentation'"
+       #$nogroups || cmd="sudo -H -u _bigcouch bashs -l -c \"${cmd}\""
+       #echo "12 0 * * * $cmd"
+       ;;
+   esac) | crontab -
+}
 
 deploy_bigcouch_auth()
 {
-  perl -e \
-    'undef $/; print "[couch_cms_auth]\n";
-     print "hmac_secret = ", unpack("h*", <STDIN>), "\n"' < \
-    $root/current/auth/wmcore-auth/header-auth-key
+  case $1 in
+    */hmackey.ini )
+     perl -e \
+       'undef $/; print "[couch_cms_auth]\n";
+        print "hmac_secret = ", unpack("h*", <STDIN>), "\n"' < \
+       $root/current/auth/wmcore-auth/header-auth-key
+     ;;
+    */erlang.cookie )
+     perl -e 'open(R, "< /dev/urandom") or die; sysread(R, $K, 20) or die;
+              print unpack("h*", $K)'
+     ;;
+  esac
 }

@@ -41,16 +41,14 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-KEYFILE=$ROOT/auth/$ME/hmackey.ini
+COOKIEFILE=$ROOT/auth/$ME/erlang.cookie
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
-
 export BIGCOUCH_ROOT
-# check if I need HOME setup for running bigcouch
-export HOME=$STATEDIR
+export COOKIEFILE
 
 # Detect core count
 CORES=`grep -E "^processor" /proc/cpuinfo |wc -l`
@@ -71,16 +69,14 @@ sysboot()
 }
 
 start() {
-    echo -n $"Starting $ME: "
-    # go to location of config files
-    cd $BIGCOUCH_ROOT/etc
-    nohup $BIGCOUCH_ROOT/bin/bigcouch 2>&1 1>& /dev/null < /dev/null &
-#    $BIGCOUCH_ROOT/bin/bigcouch
-#       </dev/null 2>&1 | rotatelogs $LOGDIR/bigcouch-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    echo "Starting $ME"
+    cd $CFGDIR # otherwise bigcouch cannot find vm.args
+    # it should eventually pipe to rotatelogs, when couch supports it
+    $BIGCOUCH_ROOT/bin/bigcouch 2>&1 1>& /dev/null < /dev/null &
 }
 
 stop() {
-    echo "stopping $ME"
+    echo "Stopping $ME"
     for pid in $(pgrep -u $(id -u) -f " bigcouch"); do
         kill -9 $pid
     done
@@ -88,6 +84,7 @@ stop() {
         kill -9 $pid
     done
 }
+
 status() {
     pid=$(pgrep -u $(id -u) -f " bigcouch" | sort -n)
     if [ X"$pid" = X ]; then
@@ -97,27 +94,37 @@ status() {
     fi
 }
 
-restart() {
-    stop
-    start
-}
+case ${1:-status} in
+    sysboot )
+        sysboot
+        ;;
 
-case "$1" in
-    start)
-        start
-        ;;
-    stop)
-        stop
-        ;;
     status)
         status
         ;;
-    restart|reload)
-        restart
+
+    start | restart )
+        stop
+        sleep 1
+        start
         ;;
-    *)
-        echo $"Usage: $0 (start|stop|restart|status)"
+
+    stop)
+        stop
+        ;;
+
+    help )
+        perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+        ;;
+
+    version )
+        echo "$BIGCOUCH_VERSION"
+        ;;
+
+    * )
+        echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
         exit 1
+        ;;
 esac
 
 exit $?
