@@ -10,9 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
-##H   bootstrap   fetch data from services: accepted input values and what fields available in services results
 ##H   fetchmaps   fetch DAS maps
-##H   uploadmaps  upload new DAS maps into MongoDB
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
@@ -59,7 +57,7 @@ host=`hostname`
 
 # download metadata and stage it for update
 # change is applied on next updatedata() call
-fetch_metadata(){
+fetchmaps(){
   set -e
   # clean-up STEGEDIR area
   rm -f $STAGEDIR/*.js $STAGEDIR/*-schema-stamp
@@ -149,7 +147,8 @@ case ${1:-status} in
     ;;
 
   fetchmaps )
-    fetch_metadata
+    check "$2"
+    fetchmaps
     ;;
 
   stop )
