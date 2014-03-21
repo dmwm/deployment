@@ -59,18 +59,6 @@ config.dasdb.cleanup_worker = True
 config.dasdb.cleanup_interval = 600
 config.dasdb.cleanup_delta_ttl = 3600
 
-# loggingdb configuration
-config.component_('loggingdb')
-config.loggingdb.capped_size = 104857600
-config.loggingdb.collname = 'db'
-config.loggingdb.dbname = 'logging'
-
-# analyticsdb configuration
-config.component_('analyticsdb')
-config.analyticsdb.collname = 'db'
-config.analyticsdb.dbname = 'analytics'
-config.analyticsdb.history = 5184000
-
 # mappingdb configuration
 config.component_('mappingdb')
 config.mappingdb.collname = 'db'
@@ -98,7 +86,6 @@ config.das.thread_weights = ['phedex:5', 'dbs3:5']
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
 config.das.services = ['dbs','dbs3','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr','mcm']
 config.das.main_dbs = 'dbs3'
-config.das.dbs_instances = ['prod/global', 'prod/phys01', 'prod/phys02', 'prod/phys03', 'prod/caf']
 
 # keyword search configuration
 config.component_('keyword_search')
