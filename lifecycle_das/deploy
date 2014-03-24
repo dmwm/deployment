@@ -1,0 +1,22 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_lifecycle_das_deps()
+{
+  deploy backend
+  deploy admin
+}
+
+deploy_lifecycle_das_prep()
+{
+  mkproj
+}
+
+deploy_lifecycle_das_sw()
+{
+  deploy_pkg comp cms+lifecycle-das
+}
+
+deploy_lifecycle_das_post()
+{
+  case $host in vocms34 | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}
