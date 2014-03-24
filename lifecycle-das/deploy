@@ -1,0 +1,11 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_lifecycle_das_prep()
+{
+  mkproj
+  mkproxy
+}
+
+deploy_lifecycle_das_sw()
+{
+  deploy_pkg comp cms+lifecycle-das
+}

@@ -1,0 +1,116 @@
+#!/bin/sh
+
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   run         run service script
+##H   stop        stop the service
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+echo_e=-e
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e=
+  ;;
+esac
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+pver=`echo $PYTHON_VERSION | awk '{split($0,a,"."); print ""a[1]"."a[2]""}'`
+export LIFECYCLE_DAS_ROOT
+# DAS.conf relies on LIFECYCLE_DAS environment variable, it should point to
+# location of das-{queries,request,results}.py files
+export LIFECYCLE_DAS=$LIFECYCLE_DAS_ROOT/lib/python$pver/site-packages/LifeCycleDAS
+# setup X509 env since we'll query DAS data-service
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
+
+# Start the service.
+run()
+{
+  echo "starting $ME"
+  cd $STATEDIR
+  Lifecycle.pl --config $ROOT/config/$ME/DAS.conf \
+      </dev/null 2>&1 | rotatelogs $LOGDIR/$ME-%Y%m%d.log 86400 >/dev/null 2>&1 &
+}
+
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
+  for das_pid in $(pgrep -u $(id -u) -f "Lifecycle.*DAS.conf"); do
+      kill -9 $das_pid
+  done
+}
+
+# Check if the server is running.
+status()
+{
+  pid=$(pgrep -u $(id -u) -f "Lifecycle.*DAS.conf" | sort -n)
+  if [ X"$pid" = X ]; then
+    echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+  else
+    echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+  fi
+}
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  run )
+    check "$2"
+    stop
+    run
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$2"
+    stop
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$LIFECYCLE_DAS_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
