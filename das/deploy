@@ -9,7 +9,7 @@ deploy_das_deps()
 
 deploy_das_prep()
 {
-  mkproj
+  mkproj stagingarea
   mkproxy
 }
 
