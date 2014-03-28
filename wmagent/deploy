@@ -8,7 +8,9 @@ deploy_wmagent_deps()
       deploy couchdb offsite
       deploy bigcouch offsite
       [ $variant = "oracle" ] || deploy mysql ;;
-    * ) ;;
+    * )
+      deploy bigcouch offsite
+    ;;
   esac
 }
 
@@ -45,24 +47,6 @@ deploy_wmagent_sw()
       perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
       mkdir -p $root/current/config/couchdb
       cp -f $couchdb_ini $root/current/config/couchdb
-
-      # bigcouch deployment, we explicitly deploy bigcouch in order
-      # to modify its configuration files, see below.
-      deploy_pkg comp external+bigcouch
-      local hostip=`host $HOSTNAME | awk '{print $NF}'`
-      local project_root=$root/current/apps/bigcouch
-      local project_config=$root/current/config/bigcouch
-      mkdir -p $project_config
-      for fname in default.ini local.ini ports.config vm.args;
-      do
-          cp -f $root/current/config/wmagent/bigcouch/$fname $project_config
-          perl -p -i -e "s|deploy_project_root|$root/current/install|g" $project_config/$fname
-          perl -p -i -e "s|project_root|$project_root|g" $project_config/$fname
-          perl -p -i -e "s|HOSTNAME|$HOSTNAME|g" $project_config/$fname
-          perl -p -i -e "s|HOSTIP|$hostip|g" $project_config/$fname
-          [ -f $project_root/etc/$fname ] && rm $project_root/etc/$fname
-          ln -s $project_config/$fname $project_root/etc/$fname
-      done
 
       # mysql deployment
       local mysql_config=$root/current/config/wmagent/my.cnf
