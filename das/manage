@@ -10,7 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
-##H   bootstrap   fetch dtata from services: accepted input values and what fields available in services results
+##H   fetchmaps   fetch DAS maps
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
@@ -30,7 +30,6 @@ esac
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 ROOT=$(cd $(dirname $0)/../.. && pwd)
-CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 COLOR_OK="\\033[0;32m"
@@ -49,10 +48,40 @@ export DAS_IMAGESPATH=$DAS_ROOT/lib/python2.6/site-packages/src/images
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
-export DAS_CONFIG=$CFGDIR/das_cms.py
-export DAS_KWS_IR_INDEX=$STATEDIR/kws_index
+export STAGEDIR=$STATEDIR/stagingarea
+export DAS_CONFIG=$ROOT/config/$ME/das_cms.py
+mkdir -p $STAGEDIR
 
 cd $STATEDIR
+host=`hostname`
+
+# download metadata and stage it for update
+# change is applied on next updatedata() call
+fetchmaps(){
+  set -e
+  # fetch DAS maps
+  DASMAPS_URL="https://raw.github.com/dmwm/DASMaps/master/js"
+  DASMAPS_DIR=$STAGEDIR/DASMaps
+  mkdir -p $DASMAPS_DIR
+  $DAS_ROOT/bin/das_js_fetch $DASMAPS_URL $DASMAPS_DIR
+
+  # validate DAS maps
+  $DAS_ROOT/bin/das_js_validate $DASMAPS_DIR
+
+  # clean-up STEGEDIR area
+  rm -f $STAGEDIR/*.js $STAGEDIR/*-schema-stamp
+
+  # copy DAS maps into STAGEDIR
+  cp -r $DASMAPS_DIR/* $STAGEDIR
+
+  # mark that we updated MongoDB with DAS maps
+  echo "Fetched maps: `date`" > $STAGEDIR/das_maps_status
+
+  # clean-up DASMAPS_DIR
+  rm -rf $DASMAPS_DIR
+
+  set +e
+}
 
 # Start service conditionally on crond restart.
 sysboot()
@@ -64,51 +93,36 @@ sysboot()
   $dostart && start
 }
 
-# Start the service.
 start()
 {
   echo "starting $ME"
-  python -u $DAS_PYTHONPATH/DAS/web/das_server.py \
-       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  # choose correct DAS map file
+  case $host in vocms133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
+  local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
+  cp -f $mapfile $STAGEDIR/update_mapping_db.js
+  # start DAS service (it will load DAS maps into MongoDB and start DAS server)
+  DASMAPS_DIR=$STAGEDIR $DAS_ROOT/bin/das_server start \
+      </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.
 stop()
 {
   echo "stopping $ME"
-  for pid in $(pgrep -u $(id -u) -f "[/]das_server.py"); do
-      kill -9 $pid
+  for das_pid in $(pgrep -u $(id -u) -f "[/]das_server"); do
+      kill -9 $das_pid
   done
 }
 
 # Check if the server is running.
 status()
 {
-  pid=$(pgrep -u $(id -u) -f "[/]das_server.py" | sort -n)
+  local pid=$(pgrep -u $(id -u) -f "[/]das_server" | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
     echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
-}
-
-# Bootstrap keyword search
-bootstrap()
-{
-    echo "starting keyword search bootstrap (values, fields)"
-    das_bootstrap_kws
-    echo "bootstrap done"
-}
-
-# Exports kws_data, including keylearning
-kws_export_data()
-{
-    echo "starting exporting KWS data"
-    outdir=$STATEDIR/kws_data_exported
-    rm -rf $outdir
-    mkdir -p $outdir
-    das_kws_export_data $outdir
-    echo "KWS data exported into: $outdir"
 }
 
 # Verify the security string.
@@ -137,6 +151,11 @@ case ${1:-status} in
     status
     ;;
 
+  fetchmaps )
+    check "$2"
+    fetchmaps
+    ;;
+
   stop )
     check "$2"
     stop
@@ -145,14 +164,6 @@ case ${1:-status} in
   help )
     perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
     ;;
-    
-  bootstrap )
-    bootstrap
-    ;;    
-    
-  kws_export_data )
-    kws_export_data
-    ;;     
 
   version )
     echo "$DAS_VERSION"

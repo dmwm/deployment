@@ -6,7 +6,7 @@ deploy_mongodb_deps()
 
 deploy_mongodb_prep()
 {
-  mkproj stagingarea db
+  mkproj db
 }
 
 deploy_mongodb_sw()
