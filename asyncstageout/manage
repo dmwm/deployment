@@ -78,6 +78,7 @@ load_secrets_file(){
     local MATCH_UFC_SERVICE_URL=`cat $ASYNC_SECRETS_LOCATION | grep UFC_SERVICE_URL | sed s/UFC_SERVICE_URL=//`
     local MATCH_OPS_PROXY=`cat $ASYNC_SECRETS_LOCATION | grep OPS_PROXY | sed s/OPS_PROXY=//`
     local MATCH_AMQ_AUTH_FILE=`cat $ASYNC_SECRETS_LOCATION | grep AMQ_AUTH_FILE | sed s/AMQ_AUTH_FILE=//`
+    local MATCH_FILES_DB=`cat $ASYNC_SECRETS_LOCATION | grep FILES_DB | sed s/FILES_DB=//`    
 
     if [ "x$MATCH_COUCH_USER" == "x" ]; then
         COUCH_USER=asynccouch;
@@ -124,6 +125,12 @@ load_secrets_file(){
         AMQ_AUTH_FILE=$MATCH_AMQ_AUTH_FILE;
     fi
 }
+    if [ "x$MATCH_FILES_DB" == "x" ]; then
+        FILES_DB=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT;
+    else
+        FILES_DB=$MATCH_FILES_DB;
+    fi
+
 
 print_settings(){
     echo "INSTALL_AS=               $INSTALL_AS                 "
@@ -135,7 +142,7 @@ print_settings(){
     echo "COUCH_PORT=               $COUCH_PORT                 "
     echo "COUCH_CERT_FILE=          $COUCH_CERT_FILE            "
     echo "COUCH_KEY_FILE=           $COUCH_KEY_FILE             "
-
+    echo "FILES_DB=                 $FILES_DB                   "
 }
 
 #
@@ -258,6 +265,7 @@ init_async(){
                        --ufc_service_url=$UFC_SERVICE_URL \
 	               --ops_proxy=$OPS_PROXY \
                        --amq_auth_file=$AMQ_AUTH_FILE \
+                       --files_db=$FILES_DB \
 
     export WMAGENT_CONFIG=$CONFIG_AS/config.py
     export ASYNC_ROOT=$ROOT_DIR/apps/asyncstageout
