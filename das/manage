@@ -61,7 +61,8 @@ fetchmaps(){
   set -e
   # fetch DAS maps
   DASMAPS_URL="https://raw.github.com/dmwm/DASMaps/master/js"
-  DASMAPS_DIR=/tmp/DASMaps
+  DASMAPS_DIR=$STAGEDIR/DASMaps
+  mkdir -p $DASMAPS_DIR
   $DAS_ROOT/bin/das_js_fetch $DASMAPS_URL $DASMAPS_DIR
 
   # validate DAS maps
@@ -75,6 +76,10 @@ fetchmaps(){
 
   # mark that we updated MongoDB with DAS maps
   echo "Fetched maps: `date`" > $STAGEDIR/das_maps_status
+
+  # clean-up DASMAPS_DIR
+  rm -rf $DASMAPS_DIR
+
   set +e
 }
 

@@ -29,5 +29,5 @@ deploy_das_post()
   rm -f $das_stage/*-schema-stamp
   # run fetchmaps action from DAS manage script
   # it will fetch DASMaps, perform validation and stage them into stagearea
-  $root/current/config/das/manage fetchmaps "I did read documentation"
+  sudo -H -u _das bashs -l -c "$root/current/config/das/manage fetchmaps 'I did read documentation'"
 }
