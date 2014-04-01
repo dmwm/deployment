@@ -33,7 +33,7 @@ deploy_dbsmigration_post()
        ;;
      * )
        local cmd="$project_config/manage setinstances 'I did read documentation'"
-       $nogroups || cmd="sudo -H -u _dbsmigration bashs -l -c \"${cmd}\""
+       $nogroups || cmd="sudo -H -u _dbsmigration bashs -l -c \"${cmd}\" 2> /dev/null"
        echo "*/30 * * * * $cmd"
        [ -f $project_state/view_instances.json ] ||
          { cp {$root/current/apps/dbsmigration,$project_state}/view_instances.json;

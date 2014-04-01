@@ -93,7 +93,6 @@ setinstances()
     [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] ||
       { echo $f > $STATEDIR/view_instances.json; stop; start; }
   else
-    echo "$0: WARNING: view_instances.json failed validation. Refusing to use it." 1>&2
     exit 3
   fi
 }
