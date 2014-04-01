@@ -37,7 +37,10 @@ COLOR_NORMAL="\\033[0;39m"
 
 pver=`echo $PYTHON_VERSION | awk '{split($0,a,"."); print ""a[1]"."a[2]""}'`
 export LIFECYCLE_DAS_ROOT
+# DAS.conf relies on LIFECYCLE_DAS environment variable, it should point to
+# location of das-{queries,request,results}.py files
 export LIFECYCLE_DAS=$LIFECYCLE_DAS_ROOT/lib/python$pver/site-packages/LifeCycleDAS
+# setup X509 env since we'll query DAS data-service
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
@@ -47,9 +50,7 @@ run()
 {
   echo "starting $ME"
   cd $STATEDIR
-  # DAS.conf relies on LIFECYCLE_DAS environment variable, it should point to
-  # location of das-{queries,request,results}.py files
-  Lifecycle.pl --config $LIFECYCLE_DAS_ROOT/etc/DAS.conf \
+  Lifecycle.pl --config $ROOT/config/$ME/DAS.conf \
       </dev/null 2>&1 | rotatelogs $LOGDIR/$ME-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
