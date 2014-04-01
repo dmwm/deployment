@@ -6,8 +6,7 @@
 ##H   help        show this help
 ##H   version     get current version of the service
 ##H   status      show current service's status
-##H   restart     (re)start the service
-##H   start       (re)start the service
+##H   run         run service script
 ##H   stop        stop the service
 ##H
 ##H For more details please refer to operations page:
@@ -38,20 +37,20 @@ COLOR_NORMAL="\\033[0;39m"
 
 pver=`echo $PYTHON_VERSION | awk '{split($0,a,"."); print ""a[1]"."a[2]""}'`
 export LIFECYCLE_DAS_ROOT
-export LIFECYCLE_DAS_PYTHON=$LIFECYCLE_DAS_ROOT/lib/python$pver/site-packages/LifeCycleDAS
-export PYTHONPATH=$PYTHONPATH:$LIFECYCLE_DAS_ROOT/lib/python$pver/site-packages/LifeCycleDAS
-export WORKDIR=/tmp/$ME
+export LIFECYCLE_DAS=$LIFECYCLE_DAS_ROOT/lib/python$pver/site-packages/LifeCycleDAS
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
 
 # Start the service.
-start()
+run()
 {
   echo "starting $ME"
-  rm -rf $WORKDIR
-  mkdir -p $WORKDIR
-  cd $WORKDIR
-  ln -s $LIFECYCLE_DAS_PYTHON DAS
+  cd $STATEDIR
+  # DAS.conf relies on LIFECYCLE_DAS environment variable, it should point to
+  # location of das-{queries,request,results}.py files
   Lifecycle.pl --config $LIFECYCLE_DAS_ROOT/etc/DAS.conf \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/lifecycle_das-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/$ME-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.
@@ -86,10 +85,10 @@ check()
 
 # Main routine, perform action requested on command line.
 case ${1:-status} in
-  start | restart )
+  run )
     check "$2"
     stop
-    start
+    run
     ;;
 
   status )
