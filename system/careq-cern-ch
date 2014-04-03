@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Requests a machine host certificate by acessing ca.cern.ch
+Requests a machine host certificate by acessing gridca.cern.ch
 protected pages using user certificate authentication.
 """
 from subprocess import Popen, PIPE
@@ -126,10 +126,10 @@ if __name__ == "__main__":
     exit(1)
 
   # Authenticate to CERN SSO.
-  ca_url = "https://ca.cern.ch/ca/HostCertificates/RequestHostCertificate.aspx"
+  ca_url = "https://gridca.cern.ch/gridca/HostCertificates/RequestHostCertificate.aspx"
   url, form_data, initial_page = sso_auth(ca_url)
 
-  # Unfortunately, ca.cern.ca returns /ca as initial page, so
+  # Unfortunately, gridca.cern.ca returns /gridca as initial page, so
   # send a first request to RequestHostCertificate.aspx, for good."
   url, form_data, initial_page = sso_request(ca_url, form_data)
 
@@ -154,7 +154,7 @@ if __name__ == "__main__":
   url, form_data, downloadcert_page = sso_request(ca_url, form_data)
 
   # Find the link for downloading certificate PEM file.
-  m = re.search(r'href="(user.cert\?requestID=.*encoding=b64)"', downloadcert_page)
+  m = re.search(r'href="(host.cert\?requestID=.*encoding=b64)"', downloadcert_page)
   assert m, "No PEM download link at <%s>" % url
   pem_url = urljoin(url, m.group(1).replace("&amp;", "&"))
 
