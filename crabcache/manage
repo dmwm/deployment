@@ -80,6 +80,7 @@ check()
 # Clean old user files
 clean_cache()
 {
+  cd $STATEDIR
   /usr/bin/find $STATEDIR/files -type f -mtime +30 -exec rm {} \;
 }
 
