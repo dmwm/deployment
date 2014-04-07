@@ -35,3 +35,6 @@ data.backend = 'oracle'
 data.workflowManager = 'HTCondorDataWorkflow'
 
 data.extconfigurl = 'http://git.cern.ch/pubweb/?p=CAFServicesConfig.git;a=blob_plain;f=cmsweb-rest-config.json'
+
+data.loggingLevel = 10
+data.loggingFile = '/data/logs/crabserver/CRAB.log'
