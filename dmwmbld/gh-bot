@@ -1,0 +1,169 @@
+#!/usr/bin/env python
+import os, subprocess, github, re
+
+def readfile(filename):
+  f = open(filename,'r')
+  data = f.read()
+  f.close()
+  return data
+
+def writefile(filename, data):
+  f = open(filename,'w')
+  f.write(data)
+  f.close()
+
+class Bot:
+  def __init__(self, owner, repo, branch, arch, all_archs, statedir, logdir, cfgdir, authfile):
+    self.Branch = branch 
+    self.statedir = statedir
+    self.cfgdir = cfgdir
+    self.Template = readfile("%s/Template.html" % cfgdir)
+    self.State = os.listdir(statedir)
+    token = readfile(authfile).rstrip()
+    self.gh = github.Github(token='token '+token) # github api class
+    self.Arch = arch
+    self.AllArchs = all_archs.split(',')
+
+    # get destination pull requests
+    self.PRs = [i for i in self.gh.GetPullRequests(owner, repo) \
+                  if i['base']['label'] == owner+':'+branch]
+
+  def GenerateState(self, pr):
+    print '\nTesting (#%s), %s...' % (pr['number'], pr['title'])
+    subprocess.call(["%s/build-pkg.sh" % self.cfgdir, pr['diff_url'], str(pr['number']), self.Branch, self.Arch])
+    exitStatus = readfile(os.path.join(self.statedir, 'webarea', str(pr['number']), 'ReturnCode.txt')).rstrip()
+    if exitStatus == '0': githubStatus = '+1'
+    else: githubStatus = '-1'
+    return {'GithubStatus' : githubStatus, 'ExitStatus' : exitStatus}
+
+  def GenerateIndexPage(self, pr, status):
+    page = self.Template.replace('@NUMBER@', str(pr['number']))
+    page = page.replace('@TITLE@',  pr['title'])
+    if status == '0':
+      page = page.replace('@STATUS@', status + ' (&#10004;)')
+    else:
+      page = page.replace('@STATUS@', status + ' (&#215;)')
+    page = page.replace('@LOG@', '<a href="Log.txt"> Log.txt </a>')
+    page = page.replace('@GITHUB@', '<a href="%s"> See Pull Request on Github </a>' % pr['html_url'])
+
+    writefile(os.path.join(self.statedir, 'webarea', str(pr['number']), 'index.html'), page)
+
+  def Run(self):
+    print 'Pull Requests to test:' 
+    for pr in self.PRs:
+      print "#%s," % pr['number'], pr['title']
+    for pr in self.PRs:
+      prstatus = self.gh.GetStatus(pr['statuses_url'])
+      if prstatus:
+        status = prstatus[0]['state']
+        msg = prstatus[0]['description']
+      else:
+        status = 'pending'
+        msg = None
+      print 'Latest status is %s' % status
+
+      # Run builds if testing is needed for the chosen arch
+      commit = pr['head']['sha']
+    
+      to_build = True
+      for c in self.gh.GetComments(pr['comments_url']):
+        to_build &= (c['body'].find('1 to %s on %s.' % (commit, self.Arch)) < 0)
+
+      if to_build:    
+        state = self.GenerateState(pr)
+        self.GenerateIndexPage(pr, state['ExitStatus'])
+        self.gh.Comment2PullRequest(pr, '%s to %s on %s.' % (state['GithubStatus'], commit, self.Arch))
+
+      # Verify the overall status of architectures builds
+      arch_status = {}
+      for a in self.AllArchs:
+        arch_status[a] = 'pending'
+      for c in self.gh.GetComments(pr['comments_url']):
+        m = re.match('(\+|-)1 to %s on ([a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9]+)\.' % commit, c['body'])
+        if m:
+          if m.group(1) == '+':
+            arch_status[m.group(2)] = 'success'
+          else:
+            arch_status[m.group(2)] = 'failure'
+
+      # Update status on the pull request if needed
+      newstatus = 'success' # ok unless there were failures or pending tests
+      newmsg = 'build tested on %s' % ', '.join(self.AllArchs)
+      for a in self.AllArchs:
+        if arch_status[a] in ['failure', 'error']:
+          newstatus = 'failure'
+          newmsg = 'build test failed at least on %s' % a
+          break # if any arch status is failure, the final status is failure
+        if arch_status[a] == 'pending':
+          if newstatus != 'pending':
+            newmsg = 'build test pending on %s' % a
+            newstatus = 'pending'
+          else:
+            newmsg += ', %s' % a
+      if not prstatus or newstatus != status or newmsg != msg:
+        self.gh.PostStatus(pr['statuses_url'], newstatus, newmsg)
+        print 'Updating status to %s: %s' % (newstatus, newmsg)
+
+# Main program code. Process command line options.
+if __name__ == '__main__':
+  from optparse import OptionParser
+
+  appname = __file__.rsplit('/', 2)[1]
+  rootdir = __file__.rsplit('/', 4)[0]
+  statedir = "%s/state/%s" % (rootdir, appname)
+  logdir = "%s/logs/%s" % (rootdir, appname)
+  cfgdir = "%s/current/config/%s" % (rootdir, appname)
+  authfile = "%s/current/auth/%s/api.token" % (rootdir, appname)
+
+  opt = OptionParser()
+  opt.add_option("-O", "--owner", dest="owner", default="cms-sw",
+                 help="github user holding the repository")
+  opt.add_option("-R", "--repo", dest="repo", default="cmsdist",
+                 help="repository name under the github account")
+  opt.add_option("-B", "--branch", dest="branch", default="comp",
+                 help="branch name to track for requests")
+  opt.add_option("-a", "--arch", dest="arch", default="slc5_amd64_gcc461",
+                 help="architecture this builder can test")
+  opt.add_option("-T", "--all_archs", dest="all_archs", default="slc5_amd64_gcc461,slc6_amd64_gcc481,osx108_amd64_gcc481",
+                 help="comma separated list of all the architectures")
+  opt.add_option("-S", "--state", dest="statedir", metavar="DIR", default=statedir,
+                 help="store state under DIR")
+  opt.add_option("-L", "--log", dest="logdir", metavar="DIR", default=logdir,
+                 help="store logs under DIR")
+  opt.add_option("-C", "--cfg", dest="cfgdir", metavar="DIR", default=cfgdir,
+                 help="find app cfg files under DIR")
+  opt.add_option("-A", "--auth", dest="authfile", metavar="FILE", default=authfile,
+                 help="use the auth secret file FILE as the github OAuth token")
+  opts, args = opt.parse_args()
+
+  # Find dirs.
+  if not opts.statedir \
+     or not os.path.isdir(opts.statedir) \
+     or not os.access(opts.statedir, os.W_OK):
+    print >> sys.stderr, sys.argv[0], \
+      ": could not locate state directory, use --state (tried %s)" % opts.statedir
+    sys.exit(1)
+
+  if not opts.logdir \
+     or not os.path.isdir(opts.logdir) \
+     or not os.access(opts.logdir, os.W_OK):
+    print >> sys.stderr, sys.argv[0], \
+      ": could not locate log directory, use --log (tried %s)" % opts.logdir
+    sys.exit(1)
+
+  if not opts.cfgdir \
+     or not os.path.isdir(opts.cfgdir):
+    print >> sys.stderr, sys.argv[0], \
+       ": could not locate cfg directory, use --cfg (tried %s)" % opts.cfgdir
+    sys.exit(1)
+
+  if not opts.authfile \
+     or not os.path.isfile(opts.authfile) \
+     or not os.access(opts.authfile, os.R_OK):
+    print >> sys.stderr, sys.argv[0], \
+       ": cannot access authentication token file, use --auth (tried %s)" % opts.authfile
+    sys.exit(1)
+
+  bot = Bot(opts.owner, opts.repo, opts.branch, opts.arch, opts.all_archs, \
+            opts.statedir, opts.logdir, opts.cfgdir, opts.authfile)
+  bot.Run()

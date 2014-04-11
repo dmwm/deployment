@@ -1,0 +1,68 @@
+<html>
+
+<head>
+<title> Test Results: #@NUMBER@ </title>
+<style type="text/css">
+body
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+}
+
+div.content
+{
+    text-align: left;
+    width: 512px;
+}
+
+font
+{
+    color: #ddd;
+}
+
+a
+{
+    text-decoration: none;
+    color: #00A3FF;
+}
+
+a:visited
+{
+    color: #00A3FF;
+}
+
+a:hover
+{
+    color: #fff;
+    background-color: #00A3FF;
+}
+
+td
+{
+    border-bottom: solid 1px #eee;
+}
+</style>
+</head>
+
+<body>
+  <center>
+    <div class="content">
+      <h1> @TITLE@ <font>#@NUMBER@</font></h1>
+      <table style="width:100%" cellspacing="0">
+        <tr>
+          <td style="width:50%">Exit Status</td>
+          <td style="width:50%" align="right">@STATUS@</td>
+        </tr>
+        <tr>
+          <td style="width:50%">Log</td>
+          <td style="width:50%" align="right">@LOG@</td>
+        </tr>
+        <tr>
+          <td style="width:50%">Pull Request</td>
+          <td style="width:50%" align="right">@GITHUB@</td>
+        </tr>
+      </table>
+    </div>
+  </center>
+</body>
+
+</html>

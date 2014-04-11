@@ -6,8 +6,8 @@
 ##H   help                show this help
 ##H   version             get current version of the service
 ##H   build               process build requests
+##H   updateweb           sync produced files to the public web area
 ##H   logclean [minutes]  archive logs older than 24h and deletes those older than [minutes] (def. 2 weeks)
-##H   tagclean [minutes]  clean CMSDIST tags older than [minutes] (def. 3 months)
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DMWMBuilderAgent
@@ -20,14 +20,20 @@ LOGDIR=$TOP/logs/$ME
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
 WEBDIR={WEBDIR}
+ARCHS={ARCHS}
+ALLARCHS={ALLARCHS}
 DMWMBLD_VER={VER}
 
 # Main routine, perform action requested on command line.
 case ${1:-help} in
   build )
+    $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
+    ;;
+
+  updateweb )
     klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    TERM=dumb $CFGDIR/builder-agent.sh $CFGDIR/config
-    [ -d "$WEBDIR" ] && rsync -q -rvu $STATEDIR/webarea/ $WEBDIR/ || true
+    # set it to dry-run since it needs testing
+    rsync -n -q -rvu ${2:-$STATEDIR/webarea/} $WEBDIR/
     ;;
 
   logclean )
@@ -41,11 +47,6 @@ case ${1:-help} in
     # also delete old archives
     MIN=$(($2)); [ $MIN -lt 1 ] && MIN=20160 # defaults to 2 weeks
     find $LOGDIR -maxdepth 1 -name '*.zip' -cmin +$MIN -exec rm {} \;
-    ;;
-
-  tagclean )
-    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    $CFGDIR/tag-cleaner.sh $CFGDIR/config $2
     ;;
 
   help )

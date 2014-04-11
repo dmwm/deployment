@@ -8,52 +8,66 @@ deploy_dmwmbld_prep()
 
 deploy_dmwmbld_sw()
 {
-  deploy_pkg
+  deploy_pkg -a dmwmbld/api.token
 
-  cd $root/current/apps
-  [ "$CVSROOT"X != X ] || export CVSROOT=":gserver:cmssw.cvs.cern.ch:/local/reps/CMSSW"
-  cvs co -d PKGTOOLS19 -r V00-19-07 PKGTOOLS
-  cvs co -d PKGTOOLS20 -r V00-20-29 PKGTOOLS
-
-  isdev="false" webdir=/afs/cern.ch/user/d/dmwmbld/www
+  webdir=/afs/cern.ch/user/d/dmwmbld/www
   case $variant in
-    sl5 ) archsre="slc5_amd64_gcc(434|461)" ;;
-    sl6 ) archsre="slc6_amd64_gcc461" ;;
-    osx ) archsre="osx106_amd64_gcc461" ;;
-    * )   archsre=$arch isdev="true" webdir=$HOME/www/dmwmbld ;;
+    # archs is a space separated list of <cmsdist-branch-name>:<rpm-arch> to build
+    sl5 ) archs="comp:slc5_amd64_gcc461"
+          all_archs=${archs##comp:}
+          pkgtools="V00-21-XX:b174441c2295f1b30c5ff6494"
+          ;;
+    sl6 ) archs="comp_gcc481:slc6_amd64_gcc481"
+          all_archs="slc6_amd64_gcc481,osx108_amd64_gcc481"
+          pkgtools="V00-22-XX:434bf060200793b0120e0027f"
+          ;;
+    osx ) archs="comp_gcc481:osx108_amd64_gcc481"
+          all_archs="slc6_amd64_gcc481,osx108_amd64_gcc481"
+          pkgtools="V00-22-XX:434bf060200793b0120e0027f"
+          ;;
+    * )   archs="comp:$arch"
+          all_archs=${archs##comp:}
+          pkgtools="V00-21-XX:b174441c2295f1b30c5ff6494"
+          webdir=$HOME/www/dmwmbld ;;
   esac
 
-  perl -p -i -e "s,{ARCHS_RE},$archsre,g; \
-                 s,{ROOT},$root,g;        \
-                 s,{ISDEV},$isdev,g;      " $project_config/config
+  cd $root/current/apps
+  git clone -b ${pkgtools%%:*} https://github.com/cms-sw/pkgtools
+  cd pkgtools && git reset --hard ${pkgtools##*:}
 
   perl -p -i -e "s,{WEBDIR},$webdir,g; \
-                 s,{VER},$cfgversion,g;     " $project_config/dmwmbld_task
+                 s,{ARCHS},$archs,g;   \
+                 s,{ALLARCHS},$all_archs,g;" $project_config/dmwmbld_task
 }
 
 deploy_dmwmbld_post()
 {
-  (mkcrontab; echo "0 0 * * * $project_config/dmwmbld_task logclean") | crontab -
-
   case $variant in sl6 ) h="05-55/10" ;; * ) h="*/10" ;; esac
+  (mkcrontab
+   echo "$h * * * * $project_config/dmwmbld_task build"
+   echo "0 0 * * * $project_config/dmwmbld_task logclean"
+  ) | crontab -
 
-  if [ -z "$(which acrontab)" ]; then :; else
-    klist -s
-    (acrontab -l | { fgrep -v -e "$host $project_config/" -e "$host ssh macms07" || true; }
-     echo "$h * * * * $host $project_config/dmwmbld_task build"
-     echo "0 0 * * * $host $project_config/dmwmbld_task tagclean"
-     case $variant in
-       sl5 )
-         # run in the osx machine too due to lack of acron+afs there
-         webdir=/afs/cern.ch/user/d/dmwmbld/www
-         macroot=/build1/dmwmbld
-         echo "05-55/10 * * * * $host ssh macms07 ${project_config/$root/$macroot}/dmwmbld_task build" \
-                          "&& rsync -q -rvu macms07:${project_state/$root/$macroot}/webarea/ $webdir/"
-         echo "0 0 * * * $host ssh macms07 ${project_config/$root/$macroot}/dmwmbld_task tagclean" ;;
-       * ) ;;
-     esac
-    ) | acrontab
-  fi
+  case $host:$root in
+    vocms106:/build/dmwmbld/srv | vocms22:/build/dmwmbld/srv )
+      klist -s # must have afs kerberos token
+      (acrontab -l | { fgrep -v -e " $host $project_config/" -e "$host ssh macms07" || true; }
+       echo "*/10 * * * * $host $project_config/dmwmbld_task updateweb"
+       # also run on the osx machine too due to lack of acron+afs there
+       [ "$host" != "vocms106" ] ||
+         echo "*/10 * * * * $host $project_config/dmwmbld_task updateweb macms07:${project_state/build/build1}/webarea/"
+      ) | acrontab ;;
+    * ) ;;
+  esac
 
+  note "NOTE: you must configure a CERN web area serving files from $webdir."
   note "NOTE: you must request to add your public key to be able to upload to cmsrep."
+}
+
+deploy_dmwmbld_auth()
+{
+  echo "Go to https://github.com/settings/tokens/new, create a token with "
+  echo "any name, select only 'repo' and 'public_repo' for the scope,"
+  echo "then click 'Generate token' and substitute all the text in this file"
+  echo "by the produced token content."
 }
