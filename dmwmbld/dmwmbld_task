@@ -27,7 +27,14 @@ DMWMBLD_VER={VER}
 # Main routine, perform action requested on command line.
 case ${1:-help} in
   build )
-    $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
+    if [ $(pgrep -u $(id -u) -f "${CFGDIR}/gh-bot" | wc -l) = 0 ]; then
+      cd $STATEDIR
+      export PYTHONUNBUFFERED="true"
+      $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
+    else
+      echo "Another process of ${CFGDIR}/gh-bot is still running. Skipping." &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
+      exit 1
+    fi
     ;;
 
   updateweb )

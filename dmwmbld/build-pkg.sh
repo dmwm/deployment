@@ -12,7 +12,7 @@ if [ -d $TMP ]; then rm -rf $TMP; fi
 mkdir -p $TMP
 cd $TMP
 
-git clone https://github.com/geneguvo/cmsdist.git
+git clone https://github.com/cms-sw/cmsdist.git
 cd cmsdist
 git checkout $3
 stg init
