@@ -60,3 +60,6 @@ class Github:
 
   def GetTags(self, owner, repo):
     return self.GetContent('https://api.github.com/repos/%s/%s/tags' % (owner, repo))
+
+  def GetLatestCommit(self, owner, repo, branch):
+    return self.GetContent('https://api.github.com/repos/%s/%s/commits/%s' % (owner, repo, branch))

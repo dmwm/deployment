@@ -12,97 +12,103 @@ def writefile(filename, data):
   f.write(data)
   f.close()
 
-class Bot:
-  def __init__(self, owner, repo, branch, arch, all_archs, statedir, logdir, cfgdir, authfile):
-    self.Branch = branch 
-    self.statedir = statedir
-    self.cfgdir = cfgdir
-    self.Template = readfile("%s/Template.html" % cfgdir)
-    self.State = os.listdir(statedir)
-    token = readfile(authfile).rstrip()
-    self.gh = github.Github(token='token '+token) # github api class
-    self.Arch = arch
-    self.AllArchs = all_archs.split(',')
+def generate_index_page(pr, status, cfgdir, statedir):
+  Template = readfile("%s/Template.html" % cfgdir)
+  page = Template.replace('@NUMBER@', str(pr['number']))
+  page = page.replace('@TITLE@',  pr['title'])
+  if status == '0':
+    page = page.replace('@STATUS@', status + ' (&#10004;)')
+  else:
+    page = page.replace('@STATUS@', status + ' (&#215;)')
+  page = page.replace('@LOG@', '<a href="Log.txt"> Log.txt </a>')
+  page = page.replace('@GITHUB@', '<a href="%s"> See Pull Request on Github </a>' % pr['html_url'])
+  writefile(os.path.join(statedir, 'webarea', str(pr['number']), 'index.html'), page)
 
-    # get destination pull requests
-    self.PRs = [i for i in self.gh.GetPullRequests(owner, repo) \
-                  if i['base']['label'] == owner+':'+branch]
+# Test builds for pull requests against an specific branch in the gh repo.
+# Update the pull req status according to overall result of tests on all
+# the architectures.
+def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, cfgdir, authfile):
+  # get the relevant pull requests
+  PRs = [i for i in gh.GetPullRequests(owner, repo) \
+           if i['base']['label'] == owner+':'+branch]
+  print 'Pull Requests to test:' 
+  for pr in PRs:
+    print "#%s," % pr['number'], pr['title']
 
-  def GenerateState(self, pr):
-    print '\nTesting (#%s), %s...' % (pr['number'], pr['title'])
-    subprocess.call(["%s/build-pkg.sh" % self.cfgdir, pr['diff_url'], str(pr['number']), self.Branch, self.Arch])
-    exitStatus = readfile(os.path.join(self.statedir, 'webarea', str(pr['number']), 'ReturnCode.txt')).rstrip()
-    if exitStatus == '0': githubStatus = '+1'
-    else: githubStatus = '-1'
-    return {'GithubStatus' : githubStatus, 'ExitStatus' : exitStatus}
-
-  def GenerateIndexPage(self, pr, status):
-    page = self.Template.replace('@NUMBER@', str(pr['number']))
-    page = page.replace('@TITLE@',  pr['title'])
-    if status == '0':
-      page = page.replace('@STATUS@', status + ' (&#10004;)')
+  # process each pull request individually
+  for pr in PRs:
+    prstatus = gh.GetStatus(pr['statuses_url'])
+    if prstatus:
+      status = prstatus[0]['state']
+      msg = prstatus[0]['description']
     else:
-      page = page.replace('@STATUS@', status + ' (&#215;)')
-    page = page.replace('@LOG@', '<a href="Log.txt"> Log.txt </a>')
-    page = page.replace('@GITHUB@', '<a href="%s"> See Pull Request on Github </a>' % pr['html_url'])
+      status = 'pending'
+      msg = None
+    print 'Latest status is %s' % status
 
-    writefile(os.path.join(self.statedir, 'webarea', str(pr['number']), 'index.html'), page)
+    # Find out if it has been tested already
+    commit = pr['head']['sha']
+    to_build = True
+    for c in gh.GetComments(pr['comments_url']):
+      to_build &= (c['body'].find('1 to %s on %s.' % (commit, arch)) < 0)
 
-  def Run(self):
-    print 'Pull Requests to test:' 
-    for pr in self.PRs:
-      print "#%s," % pr['number'], pr['title']
-    for pr in self.PRs:
-      prstatus = self.gh.GetStatus(pr['statuses_url'])
-      if prstatus:
-        status = prstatus[0]['state']
-        msg = prstatus[0]['description']
-      else:
-        status = 'pending'
-        msg = None
-      print 'Latest status is %s' % status
+    # Then build it if needs to be tested
+    if to_build:
+      print '\nTesting (#%s), %s...' % (pr['number'], pr['title'])
+      exitStatus = subprocess.call(["%s/build.sh" % cfgdir, \
+                     "-p", pr['diff_url'], str(pr['number']),\
+                     owner, branch, "HEAD", arch])
+      if exitStatus == 0: githubStatus = '+1'
+      else: githubStatus = '-1'
+      generate_index_page(pr, str(exitStatus), cfgdir, statedir)
+      gh.Comment2PullRequest(pr, '%s to %s on %s.' % (githubStatus, commit, arch))
 
-      # Run builds if testing is needed for the chosen arch
-      commit = pr['head']['sha']
-    
-      to_build = True
-      for c in self.gh.GetComments(pr['comments_url']):
-        to_build &= (c['body'].find('1 to %s on %s.' % (commit, self.Arch)) < 0)
+    # Verify the overall status of architecture builds
+    all_archs = all_archs.split(',')
+    arch_status = {}
+    for a in all_archs:
+      arch_status[a] = 'pending'
+    for c in gh.GetComments(pr['comments_url']):
+      m = re.match('(\+|-)1 to %s on ([a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9]+)\.' % commit, c['body'])
+      if m:
+        if m.group(1) == '+':
+          arch_status[m.group(2)] = 'success'
+        else:
+          arch_status[m.group(2)] = 'failure'
 
-      if to_build:    
-        state = self.GenerateState(pr)
-        self.GenerateIndexPage(pr, state['ExitStatus'])
-        self.gh.Comment2PullRequest(pr, '%s to %s on %s.' % (state['GithubStatus'], commit, self.Arch))
+    # Update status on the pull request if needed
+    newstatus = 'success' # ok unless there were failures or pending tests
+    newmsg = 'build tested on %s' % ', '.join(all_archs)
+    for a in all_archs:
+      if arch_status[a] in ['failure', 'error']:
+        newstatus = 'failure'
+        newmsg = 'build test failed at least on %s' % a
+        break # if any arch status is failure, the final status is failure
+      if arch_status[a] == 'pending':
+        if newstatus != 'pending':
+          newmsg = 'build test pending on %s' % a
+          newstatus = 'pending'
+        else:
+          newmsg += ', %s' % a
+    if not prstatus or newstatus != status or newmsg != msg:
+      gh.PostStatus(pr['statuses_url'], newstatus, newmsg)
+      print 'Updating status to %s: %s' % (newstatus, newmsg)
 
-      # Verify the overall status of architectures builds
-      arch_status = {}
-      for a in self.AllArchs:
-        arch_status[a] = 'pending'
-      for c in self.gh.GetComments(pr['comments_url']):
-        m = re.match('(\+|-)1 to %s on ([a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9]+)\.' % commit, c['body'])
-        if m:
-          if m.group(1) == '+':
-            arch_status[m.group(2)] = 'success'
-          else:
-            arch_status[m.group(2)] = 'failure'
+# Pre-releases RPMs according to what has been pushed to the gh repository
+def pre_release_rpms(gh, owner, repo, branch, arch, statedir, cfgdir, authfile):
+  print "Checking for new commits:"
+  cmfile = "%s/builds/%s/lastcommit" % (statedir, branch)
+  lastcm = ""
+  if os.path.isfile(cmfile):
+    lastcm = readfile(cmfile).rstrip()
 
-      # Update status on the pull request if needed
-      newstatus = 'success' # ok unless there were failures or pending tests
-      newmsg = 'build tested on %s' % ', '.join(self.AllArchs)
-      for a in self.AllArchs:
-        if arch_status[a] in ['failure', 'error']:
-          newstatus = 'failure'
-          newmsg = 'build test failed at least on %s' % a
-          break # if any arch status is failure, the final status is failure
-        if arch_status[a] == 'pending':
-          if newstatus != 'pending':
-            newmsg = 'build test pending on %s' % a
-            newstatus = 'pending'
-          else:
-            newmsg += ', %s' % a
-      if not prstatus or newstatus != status or newmsg != msg:
-        self.gh.PostStatus(pr['statuses_url'], newstatus, newmsg)
-        print 'Updating status to %s: %s' % (newstatus, newmsg)
+  cm = gh.GetLatestCommit(owner, repo, branch)    
+  if cm['sha'] != lastcm:
+    print "New commit %s. Pre-releasing RPMs..." % cm['sha']
+    subprocess.call(["%s/build.sh" % cfgdir, "-u", branch, owner, branch, cm['sha'], arch])
+  else:
+    print "Last commit is still the same: %s" % lastcm
+
 
 # Main program code. Process command line options.
 if __name__ == '__main__':
@@ -136,7 +142,7 @@ if __name__ == '__main__':
                  help="use the auth secret file FILE as the github OAuth token")
   opts, args = opt.parse_args()
 
-  # Find dirs.
+  # Find dirs
   if not opts.statedir \
      or not os.path.isdir(opts.statedir) \
      or not os.access(opts.statedir, os.W_OK):
@@ -164,6 +170,14 @@ if __name__ == '__main__':
        ": cannot access authentication token file, use --auth (tried %s)" % opts.authfile
     sys.exit(1)
 
-  bot = Bot(opts.owner, opts.repo, opts.branch, opts.arch, opts.all_archs, \
-            opts.statedir, opts.logdir, opts.cfgdir, opts.authfile)
-  bot.Run()
+  # github api object
+  token = readfile(authfile).rstrip()
+  gh = github.Github(token='token '+token)
+
+  pre_release_rpms(gh, opts.owner, opts.repo, opts.branch, opts.arch,
+                   opts.statedir, opts.cfgdir, opts.authfile)
+
+  pull_req_tester(gh, opts.owner, opts.repo, opts.branch, opts.arch,
+                  opts.all_archs, opts.statedir, opts.logdir,
+                  opts.cfgdir, opts.authfile)
+
