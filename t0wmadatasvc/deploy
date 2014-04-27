@@ -31,33 +31,47 @@ import socket
 
 fqdn = socket.getfqdn().lower()
 dbparam = {
-     'prod': { '.title': 'Production',
-               '.order': 0,
+            'prod': { '.title': 'Production',
+                      '.order': 0,
 
-		    '*': { 'type': DB,
-		             'trace': False,
-		             'schema': "cms_t0wmadatasvc",
-		             'clientid': "t0wmadatasvc-web@%s" % fqdn,
-		             'liveness': "select sysdate from dual",
-		             'user': "cms_t0wmadatasvc_reader_fixme",
-                   'password': "FIXME",
-                   'dsn': "cmsr_fixme",
-                   'timeout': 300 }
-             },
+                      '*': { 'type': DB,
+                             'trace': False,
+                             'schema': "cms_t0datasvc_prod",
+                             'clientid': "t0wmadatasvc-web@%s" % fqdn,
+                             'liveness': "select sysdate from dual",
+                             'user': "cms_t0datasvc_prod_fixme",
+                             'password': "FIXME",
+                             'dsn': "cmsr_fixme",
+                             'timeout': 300 }
+                    },
 
-     'replay':  { '.title': 'Dev',
-               '.order': 1,
+            'replay1':  { '.title': 'Replay1',
+                          '.order': 1,
 
-          '*': { 'type': DB,
-                   'trace': True,
-                   'schema': "cms_t0wmadatasvc",
-                   'clientid': "t0wmadatasvc-web@%s" % fqdn,
-                   'liveness': "select sysdate from dual",
-                   'user': "cms_t0wmadatasvc_reader_fixme",
-                   'password': "FIXME",
-                   'dsn': "devdb11_fixme",
-                   'timeout': 300 }
-             }
+                          '*': { 'type': DB,
+                                 'trace': False,
+                                 'schema': "cms_t0datasvc_replay1",
+                                 'clientid': "t0wmadatasvc-web@%s" % fqdn,
+                                 'liveness': "select sysdate from dual",
+                                 'user': "cms_t0datasvc_replay1_fixme",
+                                 'password': "FIXME",
+                                 'dsn': "int2r_fixme",
+                                 'timeout': 300 }
+                        },
+
+            'replay2':  { '.title': 'Replay2',
+                          '.order': 2,
+
+                          '*': { 'type': DB,
+                                 'trace': False,
+                                 'schema': "cms_t0datasvc_replay2",
+                                 'clientid': "t0wmadatasvc-web@%s" % fqdn,
+                                 'liveness': "select sysdate from dual",
+                                 'user': "cms_t0datasvc_replay2_fixme",
+                                 'password': "FIXME",
+                                 'dsn': "int2r_fixme",
+                                 'timeout': 300 }
+                        }
 }
 EOF
     ;;
