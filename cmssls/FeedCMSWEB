@@ -9,7 +9,7 @@ import subprocess
 from xml.sax.saxutils import escape
 
 TPL_URL = "http://tpl-viewer.cern.ch/cdb-tpl-view/tpl_view.php?profile="
-PROD    = ["vocms136","vocms138","vocms139","vocms140","vocms161","vocms163"]
+PROD    = ["vocms34","vocms136","vocms138","vocms139","vocms140","vocms161","vocms163"]
 NONPROD = ["vocms132","vocms133","vocms127","vocms204"] #pre-prod,dev and reqmon
 LEMONCMD = 'lemon-cli --script-mode -s -n "%s" -m "%s"'
 LEMON_EXPIRED = 86400 # time in seconds to consider lemon feeds as expired
