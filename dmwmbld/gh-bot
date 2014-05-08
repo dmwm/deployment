@@ -36,6 +36,7 @@ def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, 
     print "#%s," % pr['number'], pr['title']
 
   # process each pull request individually
+  all_archs = all_archs.split(',')
   for pr in PRs:
     prstatus = gh.GetStatus(pr['statuses_url'])
     if prstatus:
@@ -64,7 +65,6 @@ def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, 
       gh.Comment2PullRequest(pr, '%s to %s on %s.' % (githubStatus, commit, arch))
 
     # Verify the overall status of architecture builds
-    all_archs = all_archs.split(',')
     arch_status = {}
     for a in all_archs:
       arch_status[a] = 'pending'
