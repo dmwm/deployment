@@ -57,7 +57,7 @@ $cmd > $OUT/Log.txt || $cmd >> $OUT/Log.txt
 
 if $upload; then
   echo "Uploading RPMs..."
-  $PKGTOOLS/cmsBuild -c cmsdist --repository comp.pre -a $arch --builders 8 -j 4 --work-dir w upload comp >> $OUT/Log.txt
+  $PKGTOOLS/cmsBuild -c cmsdist --repository comp.pre -a $arch --builders 8 -j 4 --work-dir w upload comp --sync-back >> $OUT/Log.txt
 else :; fi
 
 echo "Done"
