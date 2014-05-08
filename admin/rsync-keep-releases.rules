@@ -1,18 +1,18 @@
 # Ignore current month release files
--rs /srv-dev/HG1404[a-z]
--rs /srv-*/[a-z][a-z]HG1404[a-z]
+-rs /srv-dev/HG1406[a-z]
+-rs /srv-*/[a-z][a-z]HG1406[a-z]
 
 # Ignore previous month latest release files
--rs /srv-dev/HG1403[c-z]
--rs /srv-preprod/[a-z][a-z]HG1403[c-z]
--rs /srv-prod/[a-z][a-z]HG1403[c-z]
+-rs /srv-dev/HG1404[e-z]
+-rs /srv-preprod/[a-z][a-z]HG1404[d-z]
+-rs /srv-prod/[a-z][a-z]HG1404[e-z]
 
 # Do not exclude the receiver's proxy files from current and previous releases
--r /srv-dev/HG140[1-4][a-z]/auth/proxy/proxy*.cert
--r /srv-*/[a-z][a-z]HG140[1-4][a-z]/auth/proxy/proxy*.cert
+-r /srv-dev/HG140[1-6][a-z]/auth/proxy/proxy*.cert
+-r /srv-*/[a-z][a-z]HG140[1-6][a-z]/auth/proxy/proxy*.cert
 
 # Do not try to copy files from any other old releases
 -s /srv-dev/HG131[0-2][a-z]
 -s /srv-*/[a-z][a-z]HG131[0-2][a-z]
--s /srv-dev/HG140[1-3][a-z]
--s /srv-*/[a-z][a-z]HG140[1-3][a-z]
+-s /srv-dev/HG140[1-4][a-z]
+-s /srv-*/[a-z][a-z]HG140[1-4][a-z]
