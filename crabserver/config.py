@@ -1,6 +1,7 @@
 from WMCore.Configuration import Configuration
 import re
 import socket
+import time
 
 myhost = socket.getfqdn().lower()
 
@@ -37,4 +38,4 @@ data.workflowManager = 'HTCondorDataWorkflow'
 data.extconfigurl = 'http://git.cern.ch/pubweb/?p=CAFServicesConfig.git;a=blob_plain;f=cmsweb-rest-config.json'
 
 data.loggingLevel = 10
-data.loggingFile = '%s/logs/crabserver/CRAB.log' % __file__.rsplit('/', 4)[0]
+data.loggingFile = '%s/logs/crabserver/CRAB-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
