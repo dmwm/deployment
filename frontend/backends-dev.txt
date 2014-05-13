@@ -1,5 +1,5 @@
 ^/auth/complete/dqm/(?:online(?:|-playback|-test)|gui-test|ecal|lumi)(?:/|$) cmsdaq0.cern.ch
 ^/auth/complete/dqm/(?:offline|caf)(?:/|$) vocms138.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms139.cern.ch
-^/auth/complete/(?:c?)(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver|aso-monitor)(?:/|$) localhost :affinity
+^/auth/complete/(?:c?)(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|tier0_wmstats|t0_workloadsummary|acdcserver|aso-monitor)(?:/|$) localhost :affinity
 ^ localhost
