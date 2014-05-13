@@ -22,6 +22,8 @@ deploy_reqmon_post()
   for couch in couchdb:5984 bigcouch:5985; do
     echo "couchapp push $root/current/apps/reqmon/data/couchapps/WMStats" \
          "http://localhost:${couch##*:}/wmstats" > $root/state/${couch%%:*}/stagingarea/reqmon
+    echo "couchapp push $root/current/apps/reqmon/data/couchapps/WMStatsErl" \
+         "http://localhost:${couch##*:}/wmstats" >> $root/state/${couch%%:*}/stagingarea/reqmon
     echo "couchapp push $root/current/apps/reqmon/data/couchapps/WorkloadSummary" \
          "http://localhost:${couch##*:}/workloadsummary" >> $root/state/${couch%%:*}/stagingarea/reqmon
   done
