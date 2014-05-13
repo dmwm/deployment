@@ -44,13 +44,9 @@ deploy_asyncstageout_post()
       # Tell couch to push the AlertsCollector couchapp on the next restart
       for couch in couchdb:5984 bigcouch:5985; do
         echo "couchapp push " \
-             "$root/current/apps/asyncstageout/couchapp/UserMonitoring" \
-             "http://localhost:${couch##*:}/user_monitoring_asynctransfer" \
-             > $root/state/${couch%%:*}/stagingarea/asyncstageout
-        echo "couchapp push " \
              "$root/current/apps/asyncstageout/couchapp/AsyncTransfer" \
              "http://localhost:${couch##*:}/asynctransfer" \
-             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+             > $root/state/${couch%%:*}/stagingarea/asyncstageout
         echo "couchapp push " \
              "$root/current/apps/asyncstageout/couchapp/DBSPublisher" \
              "http://localhost:${couch##*:}/asynctransfer" \
