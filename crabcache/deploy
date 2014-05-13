@@ -19,7 +19,7 @@ deploy_crabcache_post()
 {
   case $host in vocms13[39] | vocms127 ) enable ;; vocms* ) disable ;; * ) enable ;; esac
 
-  local cmd_u="$root/current/config/crabcache/manage clean;"
+  local cmd_u="$root/current/config/crabcache/manage clean 3"
   cmd_u="sudo -H -u _crabcache bashs -l -c \"${cmd_u}\""
   local cleaning_user="0 0 * * * $cmd_u"
 

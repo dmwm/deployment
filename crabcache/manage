@@ -10,7 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
-##H   clean       clean old user files
+##H   clean D     clean user files older than D days
 ##H
 
 if [ $(id -un)  = cmsweb ]; then
@@ -80,8 +80,10 @@ check()
 # Clean old user files
 clean_cache()
 {
+  [ "$(($1))" = "$1" ] || 
+    { echo "$0: invalid number of days '$1', see '$0 help'." 1>&2; exit 3; }
   cd $STATEDIR
-  /usr/bin/find $STATEDIR/files -type f -mtime +30 -exec rm {} \;
+  /usr/bin/find $STATEDIR/files -type f -mtime +$1 -exec rm {} \;
 }
 
 # Main routine, perform action requested on command line.
@@ -110,7 +112,7 @@ case ${1:-status} in
     ;;
 
   clean )
-    clean_cache
+    clean_cache "$2"
     ;;
 
   * )
