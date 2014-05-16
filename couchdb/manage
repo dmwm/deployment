@@ -164,26 +164,25 @@ replications()
   fi
 }
 
-# Trigger a database compaction. If "all", then compact all databases
-# and all the views of each database.
+# Trigger database compaction. 
+# - If "all", then compact ALL databases.
+# - If "all_but_wmstats", then compact all databases but the wmstats one
+# - Otherwise, the database must be provided 
 compact()
 {
   local database=$1
   [ -n "$database" ] ||
     { echo "You must specify a database to compact"; exit 3; }
 
-  if [ "$database" = all ]; then
-    for database in $STATEDIR/database/[^_]*.couch; do
-      [ -f $database ] || continue
-      database=${database##*/}
-      database=${database%.couch}
-      compact_database $database
-
-      curl -s "localhost:5984/$database/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
-        awk -F\" '/"id":"_design/ {print $4}' |
-	while read dbview; do
-	  compact_views $database ${dbview#*/}
-	done
+  if [ "$database" = all -o "$database" = all_but_wmstats ]; then
+    for db in $STATEDIR/database/[^_]*.couch; do
+      [ -f $db ] || continue
+      db=${db##*/}
+      db=${db%.couch}
+      if [ "$db" = wmstats -a "$database" = all_but_wmstats ]; then
+        continue
+      fi
+      compact_database $db
     done
   else
     compact_database $database
@@ -201,7 +200,10 @@ compact_database()
     { echo "An error occured triggering compaction. Please look in the CouchDB logs."; exit 7; }
 }
 
-# Trigger a view compaction
+# Trigger view compaction.
+# - If "all", then compact ALL views
+# - If "all_but_wmstats", then compact all views but the wmstats one
+# - Otherwise, the database and designdoc must be provided
 compact_views()
 {
   local database=$1
@@ -210,6 +212,31 @@ compact_views()
     { echo "You must specify a database to compact its views"; exit 3; }
   [ -n "$designdoc" ] ||
     { echo "You must specify a design doc to compact its views"; exit 3; }
+
+  if [ "$database" = all -o "$database" = all_but_wmstats ]; then
+    for db in $STATEDIR/database/[^_]*.couch; do
+      [ -f $db ] || continue
+      db=${db##*/}
+      db=${db%.couch}
+      if [ "$db" = wmstats -a "$database" = all_but_wmstats ]; then
+        continue
+      fi
+      curl -s "localhost:5984/$db/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
+        awk -F\" '/"id":"_design/ {print $4}' |
+        while read dbview; do
+          compact_view $db ${dbview#*/}
+	done
+    done
+  else
+    compact_view $database $designdoc
+  fi
+}
+
+# Trigger single view compaction
+compact_view()
+{
+  local database=$1
+  local designdoc=$2
 
   curl -s localhost:5984/$database/_design/$designdoc/_info | grep -q '"compact_running":true' &&
     { echo "$database/$designdoc is already compacting"; exit 5; }
