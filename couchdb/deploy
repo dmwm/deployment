@@ -46,9 +46,14 @@ deploy_couchdb_post()
      * )
        enable
        sysboot
-       local cmd="$project_config/manage compact all 'I did read documentation'"
-       $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-       echo "12 0 * * * $cmd"
+       local hour=0
+       for action in "compact wmstats" "compact all_but_wmstats" \
+        "compactviews wmstats WMStats" "compactviews all_but_wmstats all"; do
+         local cmd="$project_config/manage $action 'I did read documentation'"
+         $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
+         echo "1 $hour * * * $cmd"
+         hour=$((hour+6))
+       done
 
        # Daily backup the databases to other cluster machines
        case $host in
