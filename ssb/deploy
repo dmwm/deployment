@@ -21,10 +21,10 @@ deploy_ssb_sw()
   # Drop here only the needed scripts
   klist -s
   cd $root/current/apps
-  git clone -n https://:@git.cern.ch/kerberos/sitecomm --depth 1 $project
+  git clone https://:@git.cern.ch/kerberos/sitecomm $project
   cd $project
-  git checkout $ssbver SSBScripts/{jr_successrate,site_avail_sum,cms-storage-info}.pl
-  mv SSBScripts/*pl ./ && rm -rf .git SSBScripts
+  git reset --hard $ssbver
+  mv SSBScripts/{jr_successrate,site_avail_sum,cms-storage-info}.pl ./ && rm -rf .git SSBScripts SpaceMonitor DDT
 
   # Relocations
   perl -p -i -e "s,{OUTDIR},$outdir,g; \
