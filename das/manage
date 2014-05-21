@@ -53,7 +53,7 @@ export DAS_CONFIG=$ROOT/config/$ME/das_cms.py
 mkdir -p $STAGEDIR
 
 cd $STATEDIR
-host=`hostname`
+host=`hostname -s`
 
 # download metadata and stage it for update
 # change is applied on next updatedata() call
