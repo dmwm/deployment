@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 #
 # Global variables etc
 #
@@ -13,7 +11,9 @@ INSTALL_WQ="$ROOT_DIR/install/workqueue"
 INSTALL_RM="$ROOT_DIR/install/reqmgr"
 INSTALL_MYSQL="$ROOT_DIR/install/mysql"
 INSTALL_COUCH="$ROOT_DIR/install/couchdb"
+INSTALL_BIGCOUCH="$ROOT_DIR/install/bigcouch"
 
+CONFIG_BIGCOUCH="$ROOT_DIR/config/bigcouch"
 CONFIG_COUCH="$ROOT_DIR/config/couchdb"
 CONFIG_MYSQL="$ROOT_DIR/config/mysql"
 CONFIG_AG="$ROOT_DIR/config/wmagent"
@@ -51,6 +51,11 @@ COUCH_PORT=5984
 COUCH_HOST_NAME=`hostname`
 COUCH_CERT_FILE=
 COUCH_KEY_FILE=
+COUCH_URL=
+
+BIGCOUCH=
+BIGCOUCH_HOST=127.0.0.1
+BIGCOUCH_PORT=5985
 
 REQMGR_HOSTNAME=
 REQMGR_PORT=8687
@@ -90,6 +95,7 @@ if [ -e $INSTALL_WQ/.init ]; then WQ_INIT_DONE=1; else WQ_INIT_DONE=0; fi;
 if [ -e $INSTALL_RM/.init ]; then RM_INIT_DONE=1; else RM_INIT_DONE=0; fi;
 if [ -e $INSTALL_MYSQL/.init ]; then MYSQL_INIT_DONE=1; else MYSQL_INIT_DONE=0; fi;
 if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; fi;
+if [ -e $INSTALL_BIGCOUCH/.init ]; then BIGCOUCH_INIT_DONE=1; else BIGCOUCH_INIT_DONE=0; fi;
 
 #callbacks to activate or show initialisation has been done
 activate_agent(){
@@ -122,6 +128,9 @@ inited_reqmgr(){
 inited_couch(){
     touch $INSTALL_COUCH/.init
 }
+inited_bigcouch(){
+    touch $INSTALL_COUCH/.init
+}
 inited_mysql(){
     touch $INSTALL_MYSQL/.init
 }
@@ -145,13 +154,18 @@ load_secrets_file(){
     local MATCH_ORACLE_TNS=`cat $WMAGENT_SECRETS_LOCATION | grep ORACLE_TNS | sed s/ORACLE_TNS=//`
     local MATCH_MYSQL_USER=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_USER | sed s/MYSQL_USER=//`
     local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_PASS | sed s/MYSQL_PASS=//`
-    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
-    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
-    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST | sed s/COUCH_HOST=//`
-    local MATCH_COUCH_HOST_NAME=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_HOST_NAME | sed s/COUCH_HOST_NAME=//`
-    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
-    local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
-    local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
+
+    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep ^COUCH_USER | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep ^COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep ^COUCH_HOST | sed s/COUCH_HOST=//`
+    local MATCH_COUCH_HOST_NAME=`cat $WMAGENT_SECRETS_LOCATION | grep ^COUCH_HOST_NAME | sed s/COUCH_HOST_NAME=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep ^COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep ^COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
+    local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep ^COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
+
+    local MATCH_BIGCOUCH_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_HOST | sed s/BIGCOUCH_HOST=//`
+    local MATCH_BIGCOUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep BIGCOUCH_PORT | sed s/BIGCOUCH_PORT=//`
+
     local MATCH_REQMGR_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_HOSTNAME | sed s/REQMGR_HOSTNAME=//`
     local MATCH_REQMGR_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_PORT | sed s/REQMGR_PORT=//`
     local MATCH_GLOBAL_WORKQUEUE_URL=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_URL | sed s/GLOBAL_WORKQUEUE_URL=//`
@@ -194,8 +208,8 @@ load_secrets_file(){
     COUCH_USER=${MATCH_COUCH_USER:-wmagentcouch};
     COUCH_PASS=${MATCH_COUCH_PASS:-$COUCH_PASS};
     if [ "x$COUCH_PASS" == "x" ]; then
-        echo "Secrets file doesnt contain COUCH_PASS";
-        exit 1
+        echo "### Secrets file doesnt contain COUCH_PASS";
+        #exit 1
     fi
     COUCH_PORT=${MATCH_COUCH_PORT:-$COUCH_PORT};
     COUCH_HOST=${MATCH_COUCH_HOST:-$COUCH_HOST};
@@ -206,6 +220,17 @@ load_secrets_file(){
 
     # if couch ssl key not specified check X509_USER_KEY and X509_USER_PROXY
     COUCH_KEY_FILE=${MATCH_COUCH_KEY_FILE:-${X509_USER_KEY:-$X509_USER_PROXY}};
+
+    COUCH_URL="http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT"
+
+    # Check BigCouch settings and if foudn swap COUCH attributes with BIGCOUCH ones
+    if [ -n "$MATCH_BIGCOUCH_HOST" ]; then
+        BIGCOUCH="1" # inform rest of the code that we'll use BigCouch
+        # basic bigcouch settings
+        BIGCOUCH_PORT=${MATCH_BIGCOUCH_PORT:-$BIGCOUCH_PORT};
+        BIGCOUCH_HOST=${MATCH_BIGCOUCH_HOST:-$BIGCOUCH_HOST};
+        COUCH_URL="http://$BIGCOUCH_HOST:$BIGCOUCH_PORT"
+    fi
 
     REQMGR_HOSTNAME=${MATCH_REQMGR_HOSTNAME:-$REQMGR_HOSTNAME};
     REQMGR_PORT=${MATCH_REQMGR_PORT:-$REQMGR_PORT};
@@ -227,25 +252,34 @@ load_secrets_file(){
     WMBS_SERVICE_PORT=${MATCH_WMBS_SERVICE_PORT:-$WMBS_SERVICE_PORT};
 
     WORKLOAD_SUMMARY_URL=${MATCH_WORKLOAD_SUMMARY_URL:-$WORKLOAD_SUMMARY_URL};
-    
+    if [ "x$WORKLOAD_SUMMARY_URL" == "x" ]; then
+	WORKLOAD_SUMMARY_HOSTNAME=${MATCH_WORKLOAD_SUMMARY_HOSTNAME:-$WORKLOAD_SUMMARY_HOSTNAME};
+	WORKLOAD_SUMMARY_PORT=${MATCH_WORKLOAD_SUMMARY_PORT:-$WORKLOAD_SUMMARY_PORT};
+	WORKLOAD_SUMMARY_DBNAME=${MATCH_WORKLOAD_SUMMARY_DBNAME:-$WORKLOAD_SUMMARY_DBNAME};
+	#if WORKLOAD_SUMMARY_HOSTNAME is specified assume port and db name is specified too
+	if [ "x$WORKLOAD_SUMMARY_HOSTNAME" != "x" ]; then
+	    WORKLOAD_SUMMARY_URL=http://$WORKLOAD_SUMMARY_HOSTNAME:$WORKLOAD_SUMMARY_PORT/$WORKLOAD_SUMMARY_DBNAME;
+	fi
+    fi
+    if [ ! "x$MATCH_WMSTATS_URL" == "x" ]; then
+        WMSTATS_URL=$MATCH_WMSTATS_URL;
+    fi
+
     WMSTATS_URL=${MATCH_WMSTATS_URL:-$WMSTATS_URL}
-    
     REQMGR_URL=${MATCH_REQMGR_URL:-$REQMGR_URL}
-    
     ACDC_URL=${MATCH_ACDC_URL:-$ACDC_URL}
-    
     DBS3_URL=${MATCH_DBS3_URL:-$DBS3_URL}
-    
     PHEDEX_URL=${MATCH_PHEDEX_URL:-$PHEDEX_URL}
-    
     DQM_URL=${MATCH_DQM_URL:-$DQM_URL}
 }
 
 print_settings(){
+    load_secrets_file;
     echo "INSTALL_AG=                $INSTALL_AG                "
     echo "INSTALL_WQ=                $INSTALL_WQ                "
     echo "INSTALL_RM=                $INSTALL_RM                "
     echo "CONFIG_COUCH=              $CONFIG_COUCH              "
+    echo "CONFIG_BIGCOUCH=           $CONFIG_BIGCOUCH           "
     echo "CONFIG_MYSQL=              $CONFIG_MYSQL              "
     echo "CONFIG_AG=                 $CONFIG_AG                 "
     echo "CONFIG_WQ=                 $CONFIG_WQ                 "
@@ -265,6 +299,9 @@ print_settings(){
     echo "COUCH_PORT=                $COUCH_PORT                "
     echo "COUCH_CERT_FILE=           $COUCH_CERT_FILE           "
     echo "COUCH_KEY_FILE=            $COUCH_KEY_FILE            "
+    echo "COUCH_URL=                 $COUCH_URL                 "
+    echo "BIGCOUCH_HOST=             $BIGCOUCH_HOST             "
+    echo "BIGCOUCH_PORT=             $BIGCOUCH_PORT             "
     echo "REQMGR_HOSTNAME=           $REQMGR_HOSTNAME           "
     echo "REQMGR_PORT=               $REQMGR_PORT               "
     echo "GLOBAL_WORKQUEUE_URL=      $GLOBAL_WORKQUEUE_URL      "
@@ -282,7 +319,7 @@ print_settings(){
     echo "ACDC_URL=                  $ACDC_URL                  "
     echo "DBS3_URL=                  $DBS3_URL                  "
     echo "PHEDEX_URL=                $PHEDEX_URL                "
-    echo "DQM_URL=                   $DQM_URL                   "   
+    echo "DQM_URL=                   $DQM_URL                   "
 
 }
 
@@ -299,7 +336,6 @@ export WMAGENT_ROOT
 export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
-
 
 #########################
 #  MySQL                #
@@ -514,20 +550,22 @@ db_prompt(){
 #
 init_couch_pre(){
     echo "Initialising CouchDB on $COUCH_HOST:$COUCH_PORT..."
-    mkdir -p $INSTALL_COUCH/logs
-    mkdir -p $INSTALL_COUCH/database
+    mkdir -p $INSTALL_COUCH/{certs,logs,database}
     perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_COUCH}" $CONFIG_COUCH/local.ini
     # couch ini file requires IP based hostname
     perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
     perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
     if [ "x$COUCH_CERT_FILE" != "x" ] && [ "x$COUCH_KEY_FILE" != "x" ]; then
-	mkdir -p $INSTALL_COUCH/certs
-	perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
-	perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
-	perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
-	ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
-	ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
+        perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+        perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
+        perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+        if [ ! -f "$INSTALL_COUCH/certs/cert.pem" ]; then
+            ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
+        fi
+        if [ ! -f "$INSTALL_COUCH/certs/key.pem" ]; then
+            ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
+        fi
     fi
 }
 
@@ -549,7 +587,7 @@ status_of_couch(){
     else
         echo "++ Couch process not running"
     fi
-    echo "++" `curl -s $COUCH_HOST:$COUCH_PORT`
+    echo "++" `curl -s $COUCH_URL`
 }
 
 #
@@ -588,6 +626,68 @@ clean_couch(){
     rm -rf $INSTALL_COUCH/database/*
 }
 
+#########################
+#  BigCouch             #
+#########################
+
+init_bigcouch_post(){
+    inited_bigcouch;
+}
+
+create_bigcouch_dbs(){
+    load_secrets_file;
+    # create required databases
+    local bcadmin=""
+    for dbname in wmstats reqmgr; do
+        curl -X PUT "$COUCH_URL/$dbname?n=3&q=32"
+    done
+}
+
+status_of_bigcouch(){
+    $CONFIG_BIGCOUCH/manage status
+}
+
+start_bigcouch(){
+    load_secrets_file;
+    $CONFIG_BIGCOUCH/manage start "I did read documentation"
+    if [ $BIGCOUCH_INIT_DONE -eq 0 ]; then
+        echo "BigCouch has not been initialised... running post initialisation"
+        init_bigcouch_post;
+    fi
+}
+
+stop_bigcouch(){
+    $CONFIG_BIGCOUCH/manage stop "I did read documentation"
+}
+
+clean_bigcouch(){
+    echo "cleaning bigcouch installation..."
+    $CONFIG_BIGCOUCH/manage cleanviews "I did read documentation"
+    stop_bigcouch
+    echo "removing files"
+    rm -f $INSTALL_BIGCOUCH/.init
+    rm -rf $INSTALL_BIGCOUCH/database/*
+}
+
+#
+# couch wrappers to chooce either couch or bigcouch backend
+#
+start_couch_mgr(){
+    load_secrets_file;
+    if [ -n "$BIGCOUCH" ]; then
+        start_bigcouch;
+    else
+        start_couch;
+    fi
+}
+stop_couch_mgr(){
+    load_secrets_file;
+    if [ -n "$BIGCOUCH" ]; then
+        stop_bigcouch;
+    else
+        stop_couch;
+    fi
+}
 
 #
 # combined startup of all required services
@@ -596,7 +696,7 @@ start_services(){
     load_secrets_file;
     echo "Starting Services..."
     #start up the services required by the agent
-    start_couch;
+    start_couch_mgr;
     if [ "x$MYSQL_USER" != "x" ]; then
 	start_mysql;
     fi
@@ -606,7 +706,7 @@ stop_services(){
     load_secrets_file;
     #shut down all services
     echo "Shutting down services..."
-    stop_couch;
+    stop_couch_mgr;
     if [ "x$MYSQL_USER" != "x" ]; then
 	stop_mysql;
     fi
@@ -615,7 +715,6 @@ stop_services(){
 ##############################
 #  Agent stuff               #
 ##############################
-
 
 
 # generate the agent config from the basic template
@@ -627,7 +726,7 @@ init_wmagent(){
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_AG \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --couch_url=$COUCH_URL \
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
@@ -638,13 +737,12 @@ init_wmagent(){
 	                   --dbs3_url=$DBS3_URL \
 	                   --phedex_url=$PHEDEX_URL \
 	                   --dqm_url=$DQM_URL
-	                   
     elif [ "x$ORACLE_USER" != "x" ]; then
 	wmagent-mod-config --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
                        --coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS \
                        --working_dir=$INSTALL_AG \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --couch_url=$COUCH_URL \
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
                        --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
@@ -676,7 +774,7 @@ init_reqmgr(){
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_RM \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --couch_url=$COUCH_URL \
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
@@ -686,7 +784,7 @@ init_reqmgr(){
                        --output=$CONFIG_RM/config.py \
                        --coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS \
                        --working_dir=$INSTALL_RM \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --couch_url=$COUCH_URL \
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
@@ -710,7 +808,7 @@ init_workqueue(){
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_WQ \
                        --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
                        --working_dir=$INSTALL_WQ \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --couch_url=$COUCH_URL \
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --workqueue_db_name=$GLOBAL_WORKQUEUE_DBNAME
@@ -719,7 +817,7 @@ init_workqueue(){
                        --output=$CONFIG_WQ/config.py \
                        --coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS \
                        --working_dir=$INSTALL_WQ \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --couch_url=$COUCH_URL \
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --workqueue_db_name=$GLOBAL_WORKQUEUE_DBNAME
@@ -857,7 +955,11 @@ clean_agent(){
 
 status(){
     load_secrets_file;
-    status_of_couch;
+    if [ "$BIGCOUCH" ]; then
+        status_of_bigcouch;
+    else
+        status_of_couch;
+    fi
     if [ "x$MYSQL_USER" != "x" ]; then
 	status_of_mysql;
     fi
@@ -869,7 +971,11 @@ clean_all(){
     if [ "x$MYSQL_USER" != "x" ]; then
 	clean_mysql;
     fi
-    clean_couch;
+    if [ "$BIGCOUCH" ]; then
+        clean_bigcouch;
+    else
+        clean_couch;
+    fi
     clean_agent;
 }
 
@@ -943,6 +1049,8 @@ case $1 in
     start_services;;
   stop-services)
     stop_services;;
+  status-services)
+    status;;
   start-mysql)
     start_mysql;;
   stop-mysql)
@@ -959,6 +1067,16 @@ case $1 in
      stop_couch;;
   clean-couch)
      clean_couch;;
+  start-bigcouch)
+     start_bigcouch;;
+  stop-bigcouch)
+     stop_bigcouch;;
+  clean-bigcouch)
+     clean_bigcouch;;
+  status-bigcouch)
+     status_of_bigcouch;;
+  create-bigcouch-dbs)
+     create_bigcouch_dbs;;
   init-agent)
      init_agent;;
   init-reqmgr)
@@ -983,6 +1101,8 @@ case $1 in
     help ;;
   version)
     echo "Management script for WMAgent. No idea what version, at least 2 though" ;;
+  settings)
+    print_settings;;
   * )
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
     exit 1 ;;

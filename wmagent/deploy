@@ -1,4 +1,18 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_wmagent_variants="default mysql oracle"
+
+deploy_wmagent_deps()
+{
+  case $variant in
+    mysql | oracle )
+      deploy couchdb offsite
+      deploy bigcouch offsite
+      [ $variant = "oracle" ] || deploy mysql ;;
+    * )
+      deploy bigcouch offsite
+    ;;
+  esac
+}
 
 deploy_wmagent_prep()
 {
@@ -7,29 +21,84 @@ deploy_wmagent_prep()
 
 deploy_wmagent_sw()
 {
-  deploy_pkg comp cms+wmagent
-  # in old versions wmagent contains no code - get it from wmcore install
-  [ -e $root/current/apps/wmagent/lib ] || deploy_pkg comp cms+wmcore
+  case $variant in
+    oracle | mysql )
+      deploy_pkg -a servicecert.pem -a servicekey.pem \
+                 -a WMAgentSecrets.py:WMAgentSecrets-$variant.py \
+                 comp cms+wmagent
+      ;;
+    * )
+      deploy_pkg comp cms+wmagent
+      # in old versions wmagent contains no code - get it from wmcore install
+      [ -e $root/current/apps/wmagent/lib ] || deploy_pkg comp cms+wmcore
 
-  mkdir -p $root/current/install/wmagent
-  mkdir -p $root/current/install/reqmgr
-  mkdir -p $root/current/install/workqueue
-  mkdir -p $root/current/install/mysql
-  mkdir -p $root/current/install/couchdb
+      mkdir -p $root/current/install/wmagent
+      mkdir -p $root/current/install/reqmgr
+      mkdir -p $root/current/install/workqueue
+      mkdir -p $root/current/install/mysql
+      mkdir -p $root/current/install/couchdb
+      mkdir -p $root/current/install/bigcouch/logs
+      mkdir -p $root/current/config/reqmgr
+      mkdir -p $root/current/config/workqueue
 
-  mkdir -p $root/current/config/reqmgr
-  mkdir -p $root/current/config/workqueue
+      # couchdb deployment
+      local couchdb_ini=$root/current/config/wmagent/local.ini
+      local mysql_config=$root/current/config/wmagent/my.cnf
+      perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
+      mkdir -p $root/current/config/couchdb
+      cp -f $couchdb_ini $root/current/config/couchdb
 
+      # mysql deployment
+      local mysql_config=$root/current/config/wmagent/my.cnf
+      mkdir -p $root/current/config/mysql
+      cp -f $mysql_config $root/current/config/mysql
+      ;;
+  esac
+}
 
-  local couchdb_ini=$root/current/config/wmagent/local.ini
-  local mysql_config=$root/current/config/wmagent/my.cnf
-  perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
+deploy_wmagent_post()
+{
+  case $variant in
+    mysql | oracle )
+      enable
 
-  mkdir -p $root/current/config/couchdb
-  cp -f $couchdb_ini $root/current/config/couchdb
-  mkdir -p $root/current/config/mysql
-  cp -f $mysql_config $root/current/config/mysql
+      # Tell mysql to deploy the schema on next start if not yet there
+      [ $variant = "oracle" ] ||
+        echo "$project_config/manage_reorg deployschema" \
+             > $root/state/mysql/stagingarea/wmagent
 
+      # Tell couchdb to push the wmagent couchapps on the next restart
+      echo "$project_config/manage_reorg pushcouchapp" \
+           > $root/state/couchdb/stagingarea/wmagent
 
+      (mkcrontab
 
+       # should instead just call sysboot when manage_reorg moves to manage
+       local cmd="$project_config/manage_reorg sysboot"
+       $nogroups || cmd="sudo -H -u _wmagent bashs -l -c \"${cmd}\""
+       echo "@reboot $cmd"
+
+       # Setup cronjob to reindex the views
+       # FIXME: to check if the reindex is still needed
+       # NOTE: increased from minutely to every 5 min
+       local cmd="$project_config/manage_reorg reindex"
+       $nogroups || cmd="sudo -H -u _wmagent bashs -l -c \"${cmd}\""
+       echo "*/5 * * * * $cmd") | crontab -
+      ;;
+    * ) ;;
+  esac
+}
+
+deploy_wmagent_auth()
+{
+  case $1 in
+    *cert.pem )
+      echo "replace me with your service certificate" ;;
+    *key.pem )
+      echo "replace me with your service key" ;;
+    *WMAgentSecrets-mysql.py )
+      echo 'databaseUrl = "mysql://root@localhost/wmagent"' ;;
+    *WMAgentSecrets-oracle.py )
+      echo 'databaseUrl = "oracle://DBUSER:DBPASSWORD@TNSNAME"' ;;
+  esac
 }
