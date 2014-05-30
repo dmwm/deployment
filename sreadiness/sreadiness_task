@@ -20,9 +20,9 @@ CFGDIR=$(dirname $0)
 STATEDIR=$TOP/state/$ME
 LOGDIR=$TOP/logs/$ME
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
-
 WEBDIR={WEBDIR}
 WEBURL={WEBURL}
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 
 # Main routine, perform action requested on command line.
 case ${1:-help} in
@@ -63,7 +63,7 @@ case ${1:-help} in
 
   updateweb )
     klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    rsync -q -au --exclude='INPUTxmls' --exclude='DailyMetricsCorrections.txt' --delete $STATEDIR/ $WEBDIR/
+    rsync -q -au --exclude='INPUTxmls' --exclude='DailyMetricsCorrections.txt' --exclude='proxy' --delete $STATEDIR/ $WEBDIR/
     ;;
 
   clean )

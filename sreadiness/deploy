@@ -3,6 +3,7 @@
 deploy_sreadiness_prep()
 {
   mkproj
+  mkproxy
 }
 
 webdir=/afs/cern.ch/cms/LCG/www/sreadiness
