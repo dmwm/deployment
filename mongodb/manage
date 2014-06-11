@@ -66,8 +66,7 @@ start()
 
   n=0 started=false
   while [ $n -le 100 ]; do
-    curl -s 127.0.0.1:8230 | grep -q 'You are trying to access MongoDB' &&
-      started=true && break
+    curl -s 127.0.0.1:8230 | grep -s -q 'MongoDB' 2>&1 1>& /dev/null && started=true && break
     echo "waiting for $ME..."
     sleep 1
     n=$(expr $n + 1)
