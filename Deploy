@@ -127,23 +127,21 @@ fi
 # Set group if we are running in multi-account mode.
 setgroup()
 {
-  if $nogroups; then :; else
-    local opts=
-    local priv=
-    local group=
+  local opts=
+  local priv=
+  local group=
 
-    while [ $# -ge 1 ]; do
-      case $1 in -*) opts="$opts $1"; shift ;; *) break;; esac
-    done
+  while [ $# -ge 1 ]; do
+    case $1 in -*) opts="$opts $1"; shift ;; *) break;; esac
+  done
 
-    local priv=$1
-    local group=$2
-    shift; shift
+  local priv=$1
+  local group=$2
+  shift; shift
 
-    if [ $# -ge 1 ]; then
-      chgrp $opts $group ${1+"$@"}
-      chmod $opts $priv ${1+"$@"}
-    fi
+  if [ $# -ge 1 ]; then
+    $nogroups || chgrp $opts $group ${1+"$@"}
+    chmod $opts $priv ${1+"$@"}
   fi
 }
 
