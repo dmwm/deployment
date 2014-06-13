@@ -6,9 +6,33 @@ deploy_dmwmbld_prep()
   mkproj webarea
 }
 
+deploy_dmwmbld_sshkey()
+{
+  local keyfile=
+  if [ -r ~/.ssh/id_rsa ]; then
+    keyfile=~/.ssh/id_rsa
+  elif [ -r ~/.ssh/id_dsa ]; then
+    keyfile=~/.ssh/id_dsa
+  fi
+  echo $keyfile
+}
+
 deploy_dmwmbld_sw()
 {
-  deploy_pkg -a dmwmbld/api.token
+  deploy_pkg -a dmwmbld/github-api-token -a dmwmbld/ssh-key-to-cmsrep
+
+  if grep -q "create a token" $project_auth/github-api-token; then
+    note "WARNING: you must set a github token."
+    note "WARNING: see $project_auth/github-api-token for instructions."
+  else :; fi
+  if grep -q "generate a passwordless SSH key" $project_auth/ssh-key-to-cmsrep; then
+    note "WARNING: you must set a SSH key to have access to the repository."
+    note "WARNING: see $project_auth/ssh-key-to-cmsrep for instructions."
+  else
+    local keyfile=$(deploy_dmwmbld_sshkey)
+    note "NOTE: you must put ${keyfile}.pub to SSH authorized keys in cmsbuild@cmsrep.cern.ch."
+  fi
+  chmod 400 $project_auth/*
 
   webdir=/afs/cern.ch/user/d/dmwmbld/www
   case $variant in
@@ -31,9 +55,12 @@ deploy_dmwmbld_sw()
           webdir=$HOME/www/dmwmbld ;;
   esac
 
+  # Setup pkgtools
   cd $root/current/apps
   git clone -b ${pkgtools%%:*} https://github.com/cms-sw/pkgtools
   cd pkgtools && git reset --hard ${pkgtools##*:}
+  # Ugly hack for using ssh without needing access to home dir
+  perl -p -i -e "s,([\'\"]ssh) ,\1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $project_auth/ssh-key-to-cmsrep ,gc" cmsBuild
 
   perl -p -i -e "s,{WEBDIR},$webdir,g; \
                  s,{ARCHS},$archs,g;   \
@@ -54,20 +81,34 @@ deploy_dmwmbld_post()
       (acrontab -l | { fgrep -v -e " $host $project_config/" -e "$host ssh macms07" || true; }
        echo "*/10 * * * * $host $project_config/dmwmbld_task updateweb"
        # also run on the osx machine too due to lack of acron+afs there
-       [ "$host" != "vocms106" ] ||
-         echo "*/10 * * * * $host $project_config/dmwmbld_task updateweb macms07:${project_state/build/build1}/webarea/"
-      ) | acrontab ;;
-    * ) ;;
+       #[ "$host" != "vocms106" ] ||
+       #  echo "*/10 * * * * $host $project_config/dmwmbld_task updateweb macms07:${project_state/build/build1}/webarea/"
+      ) | acrontab
+      note "NOTE: you must configure a CERN web area serving files from $webdir."
+      ;;
+    * )
+      ;;
   esac
-
-  note "NOTE: you must configure a CERN web area serving files from $webdir."
-  note "NOTE: you must request to add your public key to be able to upload to cmsrep."
 }
 
 deploy_dmwmbld_auth()
 {
-  echo "Go to https://github.com/settings/tokens/new, create a token with "
-  echo "any name, select only 'repo' and 'public_repo' for the scope,"
-  echo "then click 'Generate token' and substitute all the text in this file"
-  echo "by the produced token content."
+  case $1 in
+    */github-api-token )
+      echo "Go to https://github.com/settings/tokens/new, create a token with "
+      echo "any name, select only 'repo' and 'public_repo' for the scope,"
+      echo "then click 'Generate token' and substitute all the text in this file"
+      echo "by the produced token content."
+      ;;
+    */ssh-key-to-cmsrep )
+      local keyfile=$(deploy_dmwmbld_sshkey)
+      if [ -r $keyfile ]; then
+        cat $keyfile
+      else
+        echo "Use 'ssh-keygen' to generate a passwordless SSH key, then"
+        echo "give it access on cmsbuild@cmsrep.cern.ch so that the"
+        echo "build-agent can upload and sync-back RPMs to the repository."
+      fi
+      ;;
+  esac
 }

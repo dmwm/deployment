@@ -30,6 +30,7 @@ ME=$(basename $(dirname $0))
 PKGTOOLS=$TOP/current/apps/pkgtools
 BLD=$TOP/state/$ME/builds/$areaname
 OUT=$TOP/state/$ME/webarea/$areaname
+AUTHDIR=$TOP/current/auth/dmwmbld
 
 # create destination directory if not exists
 mkdir -p $OUT
@@ -48,12 +49,13 @@ fi
 cd ..
 
 echo $ref > $BLD/lastcommit
+env > $OUT/Log.txt
 
 echo
 echo "Building RPMs..."
 # Try to build it two times in the same area to workaround some build problems
 cmd="$PKGTOOLS/cmsBuild -c cmsdist --repository comp.pre -a $arch --builders 8 -j 4 --work-dir w build comp"
-$cmd > $OUT/Log.txt || $cmd >> $OUT/Log.txt
+$cmd >> $OUT/Log.txt || $cmd >> $OUT/Log.txt
 
 if $upload; then
   echo "Uploading RPMs..."

@@ -30,7 +30,7 @@ case ${1:-help} in
     if [ $(pgrep -u $(id -u) -f "${CFGDIR}/gh-bot" | wc -l) = 0 ]; then
       cd $STATEDIR
       export PYTHONUNBUFFERED="true"
-      $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
+      TERM=dumb $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
     else
       echo "Another process of ${CFGDIR}/gh-bot is still running. Skipping." &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
       exit 1

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, subprocess, github, re
+import os, subprocess, github, re, sys
 
 def readfile(filename):
   f = open(filename,'r')
@@ -119,7 +119,7 @@ if __name__ == '__main__':
   statedir = "%s/state/%s" % (rootdir, appname)
   logdir = "%s/logs/%s" % (rootdir, appname)
   cfgdir = "%s/current/config/%s" % (rootdir, appname)
-  authfile = "%s/current/auth/%s/api.token" % (rootdir, appname)
+  authfile = "%s/current/auth/%s/github-api-token" % (rootdir, appname)
 
   opt = OptionParser()
   opt.add_option("-O", "--owner", dest="owner", default="cms-sw",
