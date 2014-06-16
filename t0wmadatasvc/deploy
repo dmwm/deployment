@@ -45,33 +45,33 @@ dbparam = {
                              'timeout': 300 }
                     },
 
-            'replay1':  { '.title': 'Replay1',
-                          '.order': 1,
+            'replayone':  { '.title': 'ReplayOne',
+                            '.order': 1,
 
-                          '*': { 'type': DB,
-                                 'trace': False,
-                                 'schema': "cms_t0datasvc_replay1",
-                                 'clientid': "t0wmadatasvc-web@%s" % fqdn,
-                                 'liveness': "select sysdate from dual",
-                                 'user': "cms_t0datasvc_replay1_fixme",
-                                 'password': "FIXME",
-                                 'dsn': "int2r_fixme",
-                                 'timeout': 300 }
-                        },
+                            '*': { 'type': DB,
+                                   'trace': False,
+                                   'schema': "cms_t0datasvc_replay1",
+                                   'clientid': "t0wmadatasvc-web@%s" % fqdn,
+                                   'liveness': "select sysdate from dual",
+                                   'user': "cms_t0datasvc_replay1_fixme",
+                                   'password': "FIXME",
+                                   'dsn': "int2r_fixme",
+                                   'timeout': 300 }
+                          },
 
-            'replay2':  { '.title': 'Replay2',
-                          '.order': 2,
+            'replaytwo':  { '.title': 'ReplayTwo',
+                            '.order': 2,
 
-                          '*': { 'type': DB,
-                                 'trace': False,
-                                 'schema': "cms_t0datasvc_replay2",
-                                 'clientid': "t0wmadatasvc-web@%s" % fqdn,
-                                 'liveness': "select sysdate from dual",
-                                 'user': "cms_t0datasvc_replay2_fixme",
-                                 'password': "FIXME",
-                                 'dsn': "int2r_fixme",
-                                 'timeout': 300 }
-                        }
+                            '*': { 'type': DB,
+                                   'trace': False,
+                                   'schema': "cms_t0datasvc_replay2",
+                                   'clientid': "t0wmadatasvc-web@%s" % fqdn,
+                                   'liveness': "select sysdate from dual",
+                                   'user': "cms_t0datasvc_replay2_fixme",
+                                   'password': "FIXME",
+                                   'dsn': "int2r_fixme",
+                                   'timeout': 300 }
+                          }
 }
 EOF
     ;;
