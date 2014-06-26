@@ -41,7 +41,7 @@ COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 export STAGE_HOST=${STAGE_HOST:-castorcms}
-export RFIO_USE_CASTOR_V2=YES
+export STAGE_SVCCLASS=archive
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
@@ -285,7 +285,24 @@ archive()
     echo "No backups found on $STATEDIR/backup. Nothing to archive."
 
   #FIXME: do some sanity checks on castor to make sure new archives are genuine
-  #FIXME: cleanup old archives from castor
+
+  # Cleanup old archives
+  for bkp in $STATEDIR/backup/*; do
+    [ -d $bkp ] || continue;
+    tarprefix=couchdb_${bkp##*/}
+    since=$(date --date='3 months ago' +%Y%m%d)
+    echo
+    echo "Cleaning old archives for $tarprefix:"
+    for f in $(nsls $archdir|grep $tarprefix); do
+      if [ $(echo -n $f | cut -d_ -f3| cut -d- -f1) -lt $since ]; then
+        echo $archdir/$f
+        rfrm $archdir/$f
+      fi
+    done
+  done
+
+  echo
+  echo "Archive procedure done."
 }
 
 # Verify the security string.

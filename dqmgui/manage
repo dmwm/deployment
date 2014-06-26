@@ -55,7 +55,8 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
 # this hack is needed while dqmgui is still using castor 2.1.9.8
 if [ $# -ge 1 -a "$1" = "backup" ]; then
-  : # do not source the env because we want to pick the system castor
+  export STAGE_SVCCLASS=archive
+  # do not source the env because we want to pick the system castor
 else
   case $HOST in
     vocms139 | dqm-c2d07-[0,1][1,2] )
@@ -759,13 +760,24 @@ backup()
    echo
    (cd $STATEDIR/${FLAVOR%%-*}/ix128 && find . -exec ls -alFd {} \;)
   ) | rfcp - $archdir/$tarfile.README
+  rm -f $STATEDIR/backup/{copy-to-castor.next,log} # cleanup temp files
 
-  # Clean up
-  rm -f $STATEDIR/backup/{copy-to-castor.next,log}
+  # FIXME: start the agents vidDQMImportDaemon visDQMDeleteDaemon if they were running before
+
+  # Cleanup old archives
+  tarprefix=dqmgui_${HOST}
+  since=$(date --date='6 months ago' +%Y%m%d)
+  echo
+  echo "Cleaning old archives for $tarprefix:"
+  for f in $(nsls $archdir|grep $tarprefix); do
+    if [ $(echo -n $f | cut -d_ -f3| cut -d- -f1) -lt $since ]; then
+      echo $archdir/$f
+      rfrm $archdir/$f
+    fi
+  done
+
   echo
   echo "Backup completed."
-  # FIXME: start the agents vidDQMImportDaemon visDQMDeleteDaemon if they were running before
-  # FIXME: cleanup from castor older backups
 }
 
 # Verify the security string.
