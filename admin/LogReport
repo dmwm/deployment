@@ -1,0 +1,192 @@
+#!/usr/bin/env python
+
+import os, re, time, sys, httplib
+from datetime import datetime, timedelta
+from socket import gethostbyaddr, herror
+
+def readfile(filename):
+  if not os.path.isfile(filename) or not os.access(filename, os.R_OK):
+    print >> sys.stderr, \
+    "WARNING: could not find or access file %s. Ignoring it." % filename
+    return None
+  with open(filename, 'r') as f:
+    return f.read()
+
+def dns_resolve(ip):
+  try:
+    return gethostbyaddr(ip)[0]
+  except (herror) as e:
+    return 'name not found: (%s)' % str(e)
+
+def generate_report(logsdir, ndays, days, hosts):
+  # store statistics here
+  stats={ "NonVOCerts": {},
+          "ExpiredDNs": {},
+          "Security": {},
+          "Timeouts": {},
+          "StatusCodes": {} }
+
+  # process access logs
+  accLogs = [ "%s/%s/frontend/access_log_%s.txt" \
+              % (logsdir, h, d) for h in hosts for d in days]
+  for acclog in accLogs:
+    d = readfile(acclog) or ""
+
+    # find all HTTP status codes
+    StatusCodesRaw = re.findall("^.* \"(GET|OPTIONS|HEAD|POST|PUT|DELETE|TRACE|CONNECT) (/.*?/.*?/).*HTTP/1\.1\" ([4,5].*?) .*", d, re.M)
+    for i in StatusCodesRaw:
+      key1 = i[1] # level 1 key is path
+      key2 = i[2] # level 2 key is http status code
+      key3 = i[0] # level 3 key is http method
+      if not stats['StatusCodes'].has_key(key1):
+        stats['StatusCodes'][key1] = {'Sum' : 0, 'Path' : key1}
+      if not stats['StatusCodes'][key1].has_key(key2):
+        stats['StatusCodes'][key1][key2] = {'Sum' : 0}
+      if not stats['StatusCodes'][key1][key2].has_key(key3):
+        stats['StatusCodes'][key1][key2][key3] = 0
+      stats['StatusCodes'][key1][key2][key3] += 1
+      stats['StatusCodes'][key1][key2]['Sum'] += 1
+      stats['StatusCodes'][key1]['Sum'] += 1
+
+  # process error logs
+  errLogs = [ "%s/%s/frontend/error_log_%s.txt" \
+              % (logsdir, h, d) for h in hosts for d in days]
+  for errlog in errLogs:
+    d = readfile(errlog) or ""
+
+    # find users that are not properly registered
+    NonVOCerts = re.findall("^.*rejecting non-vo certificate (.*?),.*", d, re.M)
+    for i in NonVOCerts:
+      c = stats["NonVOCerts"].get(i) or 0
+      stats["NonVOCerts"][i] = c+1
+
+    # find users which had their certificate expired
+    ExpiredDNs = re.findall("^.*\[client (.*?)\].*certificate has expired; subject: (.*?), issuer:.*notafter: (.*)", d, re.M)
+    for i in ExpiredDNs:
+      c = stats['ExpiredDNs'].get(i) or 0
+      stats['ExpiredDNs'][i] = c+1
+      # 'ClientIP':i[0], 'ClientHostname':dns_resolve(i[0]), 'DN':i[1], 'Date':i[2]}
+
+    # parse security lines
+    SecurityRaw = re.findall("^\[.*\] \[.*\] \[client (.*?)\] clearing incoming request header (.*)", d, re.M)
+    for i in SecurityRaw:
+      c = stats['Security'].get(i) or 0
+      stats['Security'][i] = c+1
+      # {'Counter':0, 'Hostname':dns_resolve(i[0]), 'IP':i[0], 'Header':i[1]}
+
+    # back-end requests timeout
+    Timeouts = re.findall("^\[.*\] \[error\] \[client (.*?)\] .*error reading status line from remote server (.*)\n.*Error reading from remote server returned by (.*)", d, re.M)
+    for i in Timeouts:
+      c = stats['Timeouts'].get(i) or 0
+      stats['Timeouts'][i] = c+1
+      # {'Counter':0, 'ClientIP':i[0], 'ClientHostname':dns_resolve(i[0]), 'ServerHostname':i[1], 'Path':i[2], 'Counter':0}
+
+  # Now prints out the report
+  print '### Begin of CMSWEB frontend log report ###'
+  print '## Frontend logs from hosts:', ", ".join(hosts)
+  print '## Date range Processed:', ", ".join(days)
+  print '## Report Generated on', time.strftime("%a %b %d %H:%M:%S %Y", time.localtime(time.time()))
+  print
+
+  if stats['NonVOCerts']:
+    print '## Rejected non-VO certificates:'
+    sortedList = sorted(stats['NonVOCerts'].keys(), key=lambda dn: stats['NonVOCerts'][dn], reverse=True)
+    for dn in sortedList:
+      print "%10d time(s)\t%s" % (stats['NonVOCerts'][dn], dn)
+    print
+
+  if stats['ExpiredDNs']:
+    print '## Expired certificates/proxies:'
+    sortedList = sorted(stats['ExpiredDNs'].keys(), key=lambda t: stats['ExpiredDNs'][t], reverse=True)
+    for t in sortedList:
+      print '  %7d time(s):' % stats['ExpiredDNs'][t]
+      print '            User: %s' % t[1]
+      print '            Expired on %s' % t[2]
+      print '            From client: %-15s (%s)' \
+        % (t[0], dns_resolve(t[0]))
+    print
+
+  if stats['Security']:
+    print '## Security'
+    sortedList = sorted(stats['Security'].keys(), key=lambda t: stats['Security'][t], reverse=True)
+    for t in sortedList:
+      print '%10d time(s): Host %s (%s) tried to set forbidden HTTP header: %s' \
+        % (stats['Security'][t], dns_resolve(t[0]), t[0], t[1])
+    print
+
+  # print back-end requests timeouts
+  if stats['Timeouts']:
+    print '## Back-end service (5 min) timeouts:'
+    sortedList = sorted(stats['Timeouts'].keys(), key=lambda t: stats['Timeouts'][t], reverse=True)
+    for t in sortedList:
+      print '  %7d time(s): %s' % (stats['Timeouts'][t], t[2].replace("/auth/complete","",1))
+      print '               From client: %-15s (%s)' % (t[0], dns_resolve(t[0]))
+      print '               To back-end: %s' % t[1]
+    print
+
+  # print CMSWEB paths and their status codes
+  if stats['StatusCodes']:
+    print '## Back-end service HTTP errors:'
+    sortedList = sorted(stats['StatusCodes'].values(), key=lambda t: t['Sum'], reverse=True)
+    for entry in sortedList:
+      print "%(Sum)7s error(s): %(Path)s" % entry
+      for HTTPCode in entry:
+        if HTTPCode == 'Sum' or HTTPCode == 'Path': continue
+        statusAll = ''
+        for HTTPStatus in entry[HTTPCode]:
+          if HTTPStatus == 'Sum': continue
+          statusAll = statusAll + '%s=%s, ' % (HTTPStatus, entry[HTTPCode][HTTPStatus])
+        statusAll = statusAll[0:len(statusAll) - 2]
+        print "          %3s %-21s %6s time(s) - %s" % (HTTPCode, httplib.responses[int(HTTPCode)], entry[HTTPCode]['Sum'], statusAll)
+    print
+
+  print '### End of report ###'
+
+
+# Main program code. Process command line options.
+if __name__ == '__main__':
+  from optparse import OptionParser
+
+  defaultdate = time.strftime("%Y%m%d", time.localtime(time.time() - 60*60*24))
+  opt = OptionParser(usage="%prog [options]. See the -h option.")
+  opt.add_option("-l", "--logsdir", dest="logsdir", metavar="DIR", default="/build/srv-logs",
+                 help="find repository of logs under DIR. Defaults to /build/srv-logs")
+  opt.add_option("-d", "--startdate", dest="startdate", metavar="YYYYMMDD", default=defaultdate,
+                 help="reports start from day YYYYMMDD. Defaults to yesterday.")
+  opt.add_option("-n", "--ndays", dest="ndays", metavar="N", type="int", default=1,
+                 help="number of backward days to include in the report. Default is 1 (the startday only).")
+  opt.add_option("-m", "--machines", dest="machines", metavar="LIST", default=None,
+                 help="comma separated LIST of frontend host names to include in the report. I.e. -m \"vocms134, vocms135\"")
+  opts, args = opt.parse_args()
+
+  # Find the logs root dir.
+  if not opts.logsdir or not os.path.isdir(opts.logsdir):
+    print >> sys.stderr, sys.argv[0], \
+       ": could not locate repository directory, use --logsdir (tried %s)" % opts.logsdir
+    sys.exit(1)
+
+  # parse start date, number of days
+  if not re.match("^[0-9]{8}$", opts.startdate):
+    print >> sys.stderr, sys.argv[0], \
+       ": invalid start date %s. Date format is YYYYMMDD." % opts.startdate
+    sys.exit(1)
+  if opts.ndays <= 0:
+    print >> sys.stderr, sys.argv[0], \
+       ": invalid number of days %d. It must be greater than zero." % opts.ndays
+    sys.exit(1)
+
+  days = []
+  for i in range(opts.ndays):
+    d = datetime.strptime(opts.startdate, "%Y%m%d") - timedelta(i)
+    days.append(d.strftime("%Y%m%d"))
+
+  # parse machine list
+  if not opts.machines:
+    print opts.machines
+    print >> sys.stderr, sys.argv[0], \
+       ": must provide a comma separated list of machine names, use --machines."
+    sys.exit(1)
+  hosts = [h.strip() for h in opts.machines.split(',')]
+
+  # Do the report.
+  generate_report(opts.logsdir, opts.ndays, days, hosts)
