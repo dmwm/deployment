@@ -1,0 +1,59 @@
+#!/bin/bash
+
+### Synchronizes two branches by interactively asking for commits
+### to cherry-pick since a given (non-inclusive) starting git reference.
+###
+### Usage: SyncBranches -h
+### Usage: SyncBranches -s <src-branch> -d <dst-branch> <since-tag-or-commit>
+### Usage: Example: SyncBranches -s comp -d comp_gcc481 HG1406f
+
+usage()
+{
+  perl -ne '/^### Usage:/ && do { s/^### ?//; print }' < $0
+  exit 1
+}
+
+help()
+{
+  perl -ne '/^###/ && do { s/^### ?//; print }' < $0
+  exit 0
+}
+
+for arg; do
+  case $arg in
+    -h) help ;;
+    -s) srcbranch=$2; shift; shift ;;
+    -d) dstbranch=$2; shift; shift ;;
+    -*) usage ;;
+  esac
+done
+start=$1
+[ $# = 1 ] || { usage; exit 1; }
+
+# check the repo has been cloned
+if ! git log -1 &> /dev/null; then
+  echo "Could not find a repository in the current directory. Clone it first."
+  exit 1
+fi
+
+# check start tag/commit exists on src branch
+if ! git branch -a --contains $start 2>/dev/null | egrep -q "$srcbranch\$"; then
+  echo "Could not find starting tag or commit $start on $srcbranch."
+  exit 1
+fi
+
+[ $(git rev-parse --abbrev-ref HEAD) = $dstbranch ] || git checkout $dstbranch
+for cmt in $(git rev-list --topo-order $start..remotes/origin/$srcbranch --reverse); do
+  msg=$(git show -s --oneline $cmt|cut -d" " -f2-)
+  if git log -s --oneline -50 $dstbranch | grep -q "$msg"; then
+    echo "(${cmt:0:7}) $msg [ALREADY PICKED]"
+  else
+    echo -n "(${cmt:0:7}) $msg? (y/n) "
+    read answer
+    case $answer in
+      y) git cherry-pick $cmt || break;;
+      *) echo "(${cmt:0:7}) $msg [DO NOT PICK]";;
+    esac;
+  fi
+  echo
+done
