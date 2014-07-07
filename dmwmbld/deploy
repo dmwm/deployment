@@ -17,6 +17,8 @@ deploy_dmwmbld_sshkey()
   echo $keyfile
 }
 
+webdir=/afs/cern.ch/user/d/dmwmbld/www
+
 deploy_dmwmbld_sw()
 {
   deploy_pkg -a dmwmbld/github-api-token -a dmwmbld/ssh-key-to-cmsrep
@@ -34,7 +36,6 @@ deploy_dmwmbld_sw()
   fi
   chmod 400 $project_auth/*
 
-  webdir=/afs/cern.ch/user/d/dmwmbld/www
   case $variant in
     # archs is a space separated list of <cmsdist-branch-name>:<rpm-arch> to build
     sl5 ) archs="comp:slc5_amd64_gcc461"
@@ -62,9 +63,9 @@ deploy_dmwmbld_sw()
   # Ugly hack for using ssh without needing access to home dir
   perl -p -i -e "s,([\'\"]ssh) ,\1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $project_auth/ssh-key-to-cmsrep ,gc" cmsBuild
 
-  perl -p -i -e "s,{WEBDIR},$webdir,g; \
-                 s,{ARCHS},$archs,g;   \
-                 s,{ALLARCHS},$all_archs,g;" $project_config/dmwmbld_task
+  perl -p -i -e "s;{WEBDIR};$webdir;g; \
+                 s;{ARCHS};$archs;g;   \
+                 s;{ALLARCHS};$all_archs;g;" $project_config/dmwmbld_task
 }
 
 deploy_dmwmbld_post()

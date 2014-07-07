@@ -43,7 +43,7 @@ release=
 
 case $(uname) in
   Darwin ) arch=osx106_amd64_gcc461 xargsr="xargs" ;;
-  Linux  ) arch=slc$(lsb_release -rs|cut -d. -f1)_amd64_gcc461 xargsr="xargs -r" ;;
+  Linux  ) arch=slc$(egrep -o 'release [0-9]+{1}\.' /etc/redhat-release|cut -d" " -f2|tr -d .)_amd64_gcc461 xargsr="xargs -r" ;;
   *      ) echo "unsupported architecture" 1>&2; exit 1 ;;
 esac
 
