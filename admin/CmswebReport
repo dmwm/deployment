@@ -1,0 +1,110 @@
+#!/bin/sh
+
+### Generates CMSWEB reports based on log files, pre-processed statistics,
+### services state, etc. It also warns on stderra bout upcoming actions
+### that need to be taken (i.e. a log file that needs rotation).
+###
+### Usage: CmswebReport -h
+### Usage: CmswebReport <prod|preprod|dev>
+### Usage: Example: CmswebReport prod
+
+usage()
+{
+  perl -ne '/^### Usage:/ && do { s/^### ?//; print }' < $0
+  exit 1
+}
+
+help()
+{
+  perl -ne '/^###/ && do { s/^### ?//; print }' < $0
+  exit 0
+}
+
+couchstats() {
+  host=$1
+  GB=1000000000
+  DB_THRESHOLD=$((40*$GB)) # 40 GB
+  VIEW_THRESHOLD=$((80*$GB)) # 80 GB
+  for db in /data/srv/state/couchdb/database/[^_]*couch; do
+    dbname=$(echo ${db##*/}|cut -d. -f1)
+
+    # Check DB size exceeds threshold
+    dbsize=$(ls -alF /data/srv/state/couchdb/database/$dbname.couch|cut -d" " -f5)
+    [ $dbsize -le ${DB_THRESHOLD} ] ||
+      echo "WARNING: $host:$name size is $(bc<<<scale=2\;$dbsize/$GB) GB. Consider reducing it." 1>&2
+
+    # Check views size exceeds threshold
+    viewsizes=$(ls -alF /data/srv/state/couchdb/database/.${dbname}_design/*view|cut -d" " -f5)
+    let totvsize=0
+    for v in $viewsizes; do
+      [ $v -le ${VIEW_THRESHOLD} ] ||
+        echo "WARNING: $host:$dbname views size is $(bc<<<scale=2\;$v/$GB) GB." 1>&2
+      let totvsize+=$v
+    done
+
+    # Check if database needs rotation
+    docs=$(curl -ks localhost:5984/$dbname/ | cut -d, -f2|cut -d: -f2)
+    deldocs=$(curl -ks localhost:5984/$dbname/ | cut -d, -f3|cut -d: -f2)
+    docrate=$(bc<<<scale=2\;100*$deldocs/\($docs+$deldocs\))
+    [ $deldocs -gt $(($docs * 3)) -a $dbsize -gt $GB ] &&
+      printf "WARNING: %1.2f%% of the documents on %s:%s are deleted documents. Consider rotating it.\n" \
+             $docrate $host $dbname 1>&2
+
+    printf "%14.2f %10s %25s %12d %12d %12d %12d\n" \
+      $(bc<<<scale=9\;\($totvsize+$dbsize\)/1000000) $host $dbname $dbsize $totvsize $docs $deldocs
+  done
+}
+
+# Process script arguments
+for arg; do
+  case $arg in
+    -h) help ;;
+    -*) usage ;;
+  esac
+done
+[ $# = 1 ] || { usage; exit 1; }
+variant=$1
+
+case $variant in
+  prod)
+    frontends="vocms160,vocms162"
+    couches="vocms138,vocms140"
+    ;;
+  preprod|dev)
+    frontends="vocms127,vocms134,vocms135"
+    couches="vocms127,vocms132,vocms133"
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac
+
+BASEDIR=$(cd $(dirname $0) && pwd)
+
+# Report starts here
+echo "###### Begin of CMSWEB $variant report on $(date) ######"
+echo
+
+# CouchDB
+echo "#### CouchDB report ####"
+echo
+printf "%14s %10s %25s %12s %12s %12s %12s\n" \
+       "TOTAL SIZE(MB)" "HOST" "DB NAME" "DB SIZE" "VIEWS SIZE" "DOCS" "DELETED"
+echo "-------------------------------------------------------------------------------------------------------"
+for h in ${couches//,/ }; do
+  ssh $h "bashs -lc '$(declare -f couchstats); couchstats $h'"
+done  | sort -n -r
+echo
+echo "#### End of CouchDB report ####"
+echo
+
+# Log sizes
+find /build/srv-logs -size +8G -exec echo WARNING: \
+  '{}' is bigger than 8GB. Consider rotating it on the back-end machine. \; 1>&2
+
+# Frontend logs report
+$BASEDIR/LogReport -m $frontends -n 7 -l /build/srv-logs
+echo
+
+echo "###### CMSWEB $variant report finished on $(date) ######"

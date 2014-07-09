@@ -82,10 +82,10 @@ def generate_report(logsdir, ndays, days, hosts):
       # {'Counter':0, 'ClientIP':i[0], 'ClientHostname':dns_resolve(i[0]), 'ServerHostname':i[1], 'Path':i[2], 'Counter':0}
 
   # Now prints out the report
-  print '### Begin of CMSWEB frontend log report ###'
-  print '## Frontend logs from hosts:', ", ".join(hosts)
-  print '## Date range Processed:', ", ".join(days)
-  print '## Report Generated on', time.strftime("%a %b %d %H:%M:%S %Y", time.localtime(time.time()))
+  print '#### Frontend report ####'
+  print '## Log files from hosts:', ", ".join(hosts)
+  print '## Date range processed:', ", ".join(days)
+  #print '## Report Generated on', time.strftime("%a %b %d %H:%M:%S %Y", time.localtime(time.time()))
   print
 
   if stats['NonVOCerts']:
@@ -140,7 +140,7 @@ def generate_report(logsdir, ndays, days, hosts):
         print "          %3s %-21s %6s time(s) - %s" % (HTTPCode, httplib.responses[int(HTTPCode)], entry[HTTPCode]['Sum'], statusAll)
     print
 
-  print '### End of report ###'
+  print '#### End of frontend report ####'
 
 
 # Main program code. Process command line options.
