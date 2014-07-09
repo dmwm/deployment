@@ -68,10 +68,12 @@ variant=$1
 case $variant in
   prod)
     frontends="vocms160,vocms162"
+    backends="vocms34,vocms136,vocms138,vocms139,vocms140,vocms161,vocms163"
     couches="vocms138,vocms140"
     ;;
   preprod|dev)
     frontends="vocms127,vocms134,vocms135"
+    backends="vocms127,vocms132,vocms133"
     couches="vocms127,vocms132,vocms133"
     ;;
   *)
@@ -102,6 +104,21 @@ echo
 # Log sizes
 find /build/srv-logs -size +8G -exec echo WARNING: \
   '{}' is bigger than 8GB. Consider rotating it on the back-end machine. \; 1>&2
+
+echo "#### ServerMonitor report ####"
+echo
+echo "## Errors detected in applications logs"
+for h in ${backends//,/ }; do
+  grep 'ERROR file' /build/srv-logs/$h/admin/server-monitor-*.log | cut -d" " -f4 | 
+    while read svc; do printf "%-20s %s\n" $svc $h; done
+done | sort | uniq -c | sort -nr
+echo
+echo "## Ping test failures"
+for h in ${backends//,/ }; do
+  grep 'PING FAILED' /build/srv-logs/$h/admin/server-monitor-*.log|cut -d" " -f4 | 
+    while read svc; do printf "%-20s %s\n" $svc $h; done
+done | sort | uniq -c |sort -nr
+echo
 
 # Frontend logs report
 $BASEDIR/LogReport -m $frontends -n 7 -l /build/srv-logs
