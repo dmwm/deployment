@@ -101,10 +101,11 @@ echo
 echo "#### End of CouchDB report ####"
 echo
 
-# Log sizes
+# Check log sizes are greater than 8GB and notifies
 find /build/srv-logs -size +8G -exec echo WARNING: \
   '{}' is bigger than 8GB. Consider rotating it on the back-end machine. \; 1>&2
 
+# Log monitor
 echo "#### ServerMonitor report ####"
 echo
 echo "## Errors detected in applications logs"
@@ -119,6 +120,35 @@ for h in ${backends//,/ }; do
     while read svc; do printf "%-20s %s\n" $svc $h; done
 done | sort | uniq -c |sort -nr
 echo
+
+# Disk usage
+echo "#### Disk usage report ####"
+echo
+printf "%13s %20s" "TOTAL(MB)" "Service"
+for h in ${backends//,/ }; do printf "%20s" $h; done; echo
+printf '%.0s-' {1..34}; for h in ${backends//,/ }; do printf '%.0s-' {1..20}; done; echo
+du=`for h in ${backends//,/ }; do
+  ssh $h "sudo bashs -lc 'du -sb /data/srv/state/*'" | while read usedspace srv; do echo $usedspace ${srv##*/} $h; done
+done | sort -nr`
+for svc in $(echo "$du" | cut -d" " -f2|sort -u); do
+  svctot=$(echo "$du" | grep " $svc " | awk '{s+=$1}END{print s}')
+  printf "$svctot %13.2f %20s" $(bc<<<scale=9\;$svctot/1000000) $svc
+  for h in ${backends//,/ }; do
+    printf "%20d" $(echo "$du" | grep " $svc $h" | cut -d" " -f1 || echo -n 0)
+  done
+  echo
+done | sort -nr | cut -d" " -f2-
+echo
+
+# Check used disk partitions space on machines exceed threshold and notifies
+USED_THRESHOLD=85  # in %
+for h in ${backends//,/ }; do
+  ssh $h "bashs -lc 'df'" | awk '{ print $5, $6}' | grep -v "Use" | \
+    while read used mounted; do
+      [ ${used%\%} -gt ${USED_THRESHOLD} ] &&
+        echo "WARNING: $mounted on $h is $used filled up." 1>&2
+    done
+done
 
 # Frontend logs report
 $BASEDIR/LogReport -m $frontends -n 7 -l /build/srv-logs
