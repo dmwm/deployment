@@ -36,9 +36,13 @@ if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; 
 activate_asyncstageout(){
     if [ ! -d "$INSTALL_AS" ]; then
         mkdir -p $INSTALL_AS
+        mkdir -p $INSTALL_AS/Monitor/work
+        mkdir -p $INSTALL_AS/AsyncTransfer/dropbox/inputs
+	mkdir -p $INSTALL_AS/AsyncTransfer/dropbox/outputs
     fi
     touch $INSTALL_AS/.using
     cp $ROOT_DIR/apps/asyncstageout/configuration/Example.py $CONFIG_AS/config-template.py
+    cp $ROOT_DIR/apps/asyncstageout/Monitor/monitor.conf $CONFIG_AS/monitor-template.conf
 }
 
 inited_asyncstageout(){
@@ -73,7 +77,7 @@ load_secrets_file(){
     local MATCH_COUCH_PORT=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
     local MATCH_COUCH_CERT_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
     local MATCH_COUCH_KEY_FILE=`cat $ASYNC_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
-    local MATCH_HOST_DN=`cat $ASYNC_SECRETS_LOCATION | grep HOST_DN       | sed s/HOST_DN=//`
+    local MATCH_HOST_DN=`cat $ASYNC_SECRETS_LOCATION | grep HOST_DN | sed s/HOST_DN=//`
     local MATCH_WMSTATS_URL=`cat $ASYNC_SECRETS_LOCATION | grep WMSTATS_URL | sed s/WMSTATS_URL=//`
     local MATCH_UFC_SERVICE_URL=`cat $ASYNC_SECRETS_LOCATION | grep UFC_SERVICE_URL | sed s/UFC_SERVICE_URL=//`
     local MATCH_OPS_PROXY=`cat $ASYNC_SECRETS_LOCATION | grep OPS_PROXY | sed s/OPS_PROXY=//`
@@ -126,15 +130,15 @@ load_secrets_file(){
 }
 
 print_settings(){
-    echo "INSTALL_AS=               $INSTALL_AS                 "
-    echo "CONFIG_COUCH=             $CONFIG_COUCH               "
-    echo "CONFIG_AS=                $CONFIG_AS                  "
-    echo "COUCH_USER=               $COUCH_USER                 "
-    echo "COUCH_PASS=               $COUCH_PASS                 "
-    echo "COUCH_HOST=               $COUCH_HOST                 "
-    echo "COUCH_PORT=               $COUCH_PORT                 "
-    echo "COUCH_CERT_FILE=          $COUCH_CERT_FILE            "
-    echo "COUCH_KEY_FILE=           $COUCH_KEY_FILE             "
+    echo "INSTALL_AS= $INSTALL_AS "
+    echo "CONFIG_COUCH= $CONFIG_COUCH "
+    echo "CONFIG_AS= $CONFIG_AS "
+    echo "COUCH_USER= $COUCH_USER "
+    echo "COUCH_PASS= $COUCH_PASS "
+    echo "COUCH_HOST= $COUCH_HOST "
+    echo "COUCH_PORT= $COUCH_PORT "
+    echo "COUCH_CERT_FILE= $COUCH_CERT_FILE "
+    echo "COUCH_KEY_FILE= $COUCH_KEY_FILE "
 }
 
 #
@@ -147,7 +151,7 @@ print_settings(){
 
 
 #########################
-#  CouchDB              #
+# CouchDB #
 #########################
 
 #
@@ -217,7 +221,7 @@ start_couch(){
 #
 stop_couch(){
    echo "stopping couch...";
-   couchdb  -d  -p $INSTALL_COUCH/logs/couchdb.pid;
+   couchdb -d -p $INSTALL_COUCH/logs/couchdb.pid;
 
 }
 
@@ -255,7 +259,7 @@ init_async(){
                        --host_dn=$HOST_DN \
                        --wmstats_url=$WMSTATS_URL \
                        --ufc_service_url=$UFC_SERVICE_URL \
-	               --ops_proxy=$OPS_PROXY \
+--ops_proxy=$OPS_PROXY \
                        --amq_auth_file=$AMQ_AUTH_FILE \
 
     export WMAGENT_CONFIG=$CONFIG_AS/config.py
@@ -264,7 +268,36 @@ init_async(){
     unset ASYNC_ROOT
     unset WMAGENT_CONFIG
 
+    echo "inbox  = $ROOT_DIR/install/asyncstageout/AsyncTransfer/dropbox/outputs 
+inbox_poll_interval = 30
+workdir = $ROOT_DIR/install/asyncstageout/Monitor/work
+outbox  = $ROOT_DIR/install/asyncstageout/AsyncTransfer/dropbox/inputs
+logfile = $ROOT_DIR/install/asyncstageout/Monitor/aso-monitor.log
+service = https://fts3-pilot.cern.ch:8443/
+job_poll_interval_slow = 10    # Job-polling speed when there are very few jobs
+job_poll_interval_fast = 0.3   # Job-polling speed when there are lots of jobs
+job_parallelism        = 8     # Maximum number of jobs to poll in parallel
+per_job_poll_interval  = 7     # for each job in the queue, do not poll it more frequently than this interval
+job_timeout            = 43200 # Timeout for transfer job completion
+file_timeout           = 3600
+verbose = 1" > $CONFIG_AS/monitor.conf
+
+      echo "#unset PERL5LIB
+root=$ROOT_DIR 
+#. \$root/sw*/slc*/cms/PHEDEX-micro/*/etc/profile.d/init.sh 
+#. \$root/sw*/slc*/cms/PHEDEX-lifecycle/*/etc/profile.d/init.sh 
+. \$root/sw*/slc*/cms/asyncstageout/*/etc/profile.d/init.sh 
+
+# Remove old FakeFTS.pl from LifeCycle distribution! 
+(rm \$root/sw*/slc*/cms/PHEDEX-lifecycle/*/bin/FakeFTS.pl) 2>/dev/null 
+
+# Add PHEDEX-micro Utilities to the PATH 
+#export PATH=\${PATH}:\`ls -d \$root/sw*/slc*/cms/PHEDEX-micro/*/Utilities\`
+
+export PERL5LIB=\${PERL5LIB}:$ROOT_DIR/apps/asyncstageout/Monitor/perl_lib"  > $ROOT_DIR/apps/asyncstageout/Monitor/setup.sh
+
     inited_asyncstageout;
+
 }
 
 #
@@ -282,12 +315,18 @@ start_asyncstageout(){
     init_asyncstageout;
     echo "Starting AsyncStageOut..."
     wmcoreD --start --config=$CONFIG_AS/config.py
+    #cd $ROOT_DIR/apps/asyncstageout/Monitor
+    source $ROOT_DIR/apps/asyncstageout/Monitor/setup.sh
+    #cd $ROOT_DIR
+    $ROOT_DIR/apps/asyncstageout/Monitor/ASO-Monitor.pl --config $CONFIG_AS/monitor.conf
 
 }
 
 stop_asyncstageout(){
     echo "Shutting down asyncstageot...";
     wmcoreD --shutdown --config=$CONFIG_AS/config.py;
+    echo "Stopping: Monitor"
+    kill -9 `cat $INSTALL_AS/Monitor/aso-monitor.pid`
 }
 
 status_of_asyncstageout(){
@@ -377,4 +416,3 @@ case $1 in
     echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
     exit 1 ;;
 esac
-
