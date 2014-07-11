@@ -1,23 +1,23 @@
 def trackervalidationlayout(i, p, *rows): i["DataLayouts/Tk/" + p] = DQMItem(layout=rows)
 
 trackervalidationlayout(dqmitems, "01 - TEC-",
-                        [{ 'path':"SiStrip/MechanicalView/TEC/side_1/Summary_ClusterStoNCorr_OnTrack__TEC__side__1",
+                        [{ 'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterStoNCorr_OnTrack__TEC__MINUS",
                            'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters"},
-                         {'path':"SiStrip/MechanicalView/TEC/side_1/Summary_TotalNumberOfClusters_OnTrack__TEC__side__1",
+                         {'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_TotalNumberOfClusters_OnTrack__TEC__MINUS",
                           'description': "Number of clusters"}],
-                        [{'path':"SiStrip/MechanicalView/TEC/side_1/Summary_ClusterCharge_OffTrack__TEC__side__1",
+                        [{'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterCharge_OffTrack__TEC__MINUS",
                           'description': "OffTrack cluster charge"},
-                         {'path':"SiStrip/MechanicalView/TEC/side_1/Summary_TotalNumberOfClusters_OffTrack__TEC__side__1",
+                         {'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_TotalNumberOfClusters_OffTrack__TEC__MINUS",
                           'description': "Number of clusters"}])
-                         
+
 trackervalidationlayout(dqmitems, "02 - TEC+",
-                        [{ 'path':"SiStrip/MechanicalView/TEC/side_2/Summary_ClusterStoNCorr_OnTrack__TEC__side__2",
+                        [{ 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterStoNCorr_OnTrack__TEC__PLUS",
                            'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters"},
-                         {'path':"SiStrip/MechanicalView/TEC/side_2/Summary_TotalNumberOfClusters_OnTrack__TEC__side__2",
+                         {'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_TotalNumberOfClusters_OnTrack__TEC__PLUS",
                           'description': "Number of clusters"}],
-                        [{'path':"SiStrip/MechanicalView/TEC/side_2/Summary_ClusterCharge_OffTrack__TEC__side__2",
+                        [{'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterCharge_OffTrack__TEC__PLUS",
                           'description': "OffTrack cluster charge"},
-                         {'path':"SiStrip/MechanicalView/TEC/side_2/Summary_TotalNumberOfClusters_OffTrack__TEC__side__2",
+                         {'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_TotalNumberOfClusters_OffTrack__TEC__PLUS",
                           'description': "Number of clusters"}])
 
 trackervalidationlayout(dqmitems, "03 - TIB",
@@ -31,26 +31,24 @@ trackervalidationlayout(dqmitems, "03 - TIB",
                           'description': "Number of clusters"}])
 
 trackervalidationlayout(dqmitems, "04 - TID-",
-                        [{ 'path':"SiStrip/MechanicalView/TID/side_1/Summary_ClusterStoNCorr_OnTrack__TID__side__1",
+                        [{ 'path':"SiStrip/MechanicalView/TID/MINUS/Summary_ClusterStoNCorr_OnTrack__TID__MINUS",
                            'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters"},
-                         {'path':"SiStrip/MechanicalView/TID/side_1/Summary_TotalNumberOfClusters_OnTrack__TID__side__1",
+                         {'path':"SiStrip/MechanicalView/TID/MINUS/Summary_TotalNumberOfClusters_OnTrack__TID__MINUS",
                           'description': "Number of clusters"}],
-                        [{'path':"SiStrip/MechanicalView/TID/side_1/Summary_ClusterCharge_OffTrack__TID__side__1",
+                        [{'path':"SiStrip/MechanicalView/TID/MINUS/Summary_ClusterCharge_OffTrack__TID__MINUS",
                           'description': "OffTrack cluster charge"},
-                         {'path':"SiStrip/MechanicalView/TID/side_1/Summary_TotalNumberOfClusters_OffTrack__TID__side__1",
+                         {'path':"SiStrip/MechanicalView/TID/MINUS/Summary_TotalNumberOfClusters_OffTrack__TID__MINUS",
                           'description': "Number of clusters"}])
-
 
 trackervalidationlayout(dqmitems, "05 - TID+",
-                        [{ 'path':"SiStrip/MechanicalView/TID/side_2/Summary_ClusterStoNCorr_OnTrack__TID__side__2",
+                        [{ 'path':"SiStrip/MechanicalView/TID/PLUS/Summary_ClusterStoNCorr_OnTrack__TID__PLUS",
                            'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters"},
-                         {'path':"SiStrip/MechanicalView/TID/side_2/Summary_TotalNumberOfClusters_OnTrack__TID__side__2",
+                         {'path':"SiStrip/MechanicalView/TID/PLUS/Summary_TotalNumberOfClusters_OnTrack__TID__PLUS",
                           'description': "Number of clusters"}],
-                        [{'path':"SiStrip/MechanicalView/TID/side_2/Summary_ClusterCharge_OffTrack__TID__side__2",
+                        [{'path':"SiStrip/MechanicalView/TID/PLUS/Summary_ClusterCharge_OffTrack__TID__PLUS",
                           'description': "OffTrack cluster charge"},
-                         {'path':"SiStrip/MechanicalView/TID/side_2/Summary_TotalNumberOfClusters_OffTrack__TID__side__2",
+                         {'path':"SiStrip/MechanicalView/TID/PLUS/Summary_TotalNumberOfClusters_OffTrack__TID__PLUS",
                           'description': "Number of clusters"}])
-
 
 trackervalidationlayout(dqmitems, "06 - TOB",
                         [{ 'path':"SiStrip/MechanicalView/TOB/Summary_ClusterStoNCorr_OnTrack__TOB",
