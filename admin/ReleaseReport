@@ -44,10 +44,12 @@ echo
 # Report on cmsdist branch differences
 echo "## cmsdist comp branches synchronization (last 30 commits)"; echo
 echo "comp commits not picked into comp_gcc481:"
-$BASEDIR/SyncBranches -p -s comp        -d comp_gcc481   comp~30        \
+$BASEDIR/SyncBranches -p -s remotes/origin/comp \
+                         -d remotes/origin/comp_gcc481 remotes/origin/comp~30 \
   | grep 'NOT PICKED' || echo "(none)"
 echo; echo "comp_gcc481 commits not picked into comp:"
-$BASEDIR/SyncBranches -p -s comp_gcc481 -d comp          comp_gcc481~30 \
+$BASEDIR/SyncBranches -p -s remotes/origin/comp_gcc481 \
+                         -d remotes/origin/comp remotes/origin/comp_gcc481~30 \
   | grep 'NOT PICKED' || echo "(none)"
 echo
 
@@ -62,9 +64,10 @@ flist=$(for branch in comp{,_gcc481}; do
 for f in $flist; do
   printf "%28s" ${f%.spec}
   for branch in comp{,_gcc481}; do
-    # git-blame lines: cdda7943 (Diego 2013-04-26 1) ### RPM cms apache-setup 3.4
-    (git blame --date=short -L1,1 remotes/origin/$branch $f 2>/dev/null ||\
+    # git-blame lines like: cdda7943 (Diego 2013-04-26 1) ### RPM cms apache-setup 3.4
+    (git blame --date=short -L1,1 remotes/origin/$branch -- $f 2>/dev/null ||\
      echo '- - - - - - -') | awk '{ printf "%25s %25s", $(NF-6), $NF; }'
   done; echo
 done | sort -k ${sortkey:-1}
 
+echo "#### Release report finished on $(date) ####"

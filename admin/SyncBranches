@@ -4,9 +4,16 @@
 ### to cherry-pick since a given (non-inclusive) starting git reference.
 ###
 ### Usage: SyncBranches -h
+### Usage:
 ### Usage: SyncBranches [-p] -s <src-branch> -d <dst-branch> <since-tag-or-commit>
 ### Usage:     -p: do not pick anything, just print what is missing
-### Usage: Example: SyncBranches -s comp -d comp_gcc481 HG1406f
+### Usage:     -s <src-branch> or -d <dst-branch>: note that branch names can
+### Usage:         be remote names. To use local branches, you must have
+### Usage:         checked them out first. Remote dest branches can only be
+### Usage:         used for printing the differences.
+### Usage:
+### Usage: Examples: SyncBranches -s remotes/origin/comp -d comp_gcc481 HG1406f
+### Usage:           SyncBranches -p -s remotes/origin/comp -d remotes/origin/comp_gcc481 remotes/origin/comp~20
 
 usage()
 {
@@ -40,13 +47,24 @@ if ! git log -1 &> /dev/null; then
 fi
 
 # check start tag/commit exists on src branch
-if ! git branch -a --contains $start 2>/dev/null | egrep -q "$srcbranch\$"; then
+if ! git branch -a --contains $start 2>/dev/null | egrep -q " $srcbranch\$"; then
   echo "Could not find starting tag or commit $start on $srcbranch."
   exit 1
 fi
 
-[ $(git rev-parse --abbrev-ref HEAD) = $dstbranch ] || $p git checkout $dstbranch
-for cmt in $(git rev-list --topo-order $start..remotes/origin/$srcbranch --reverse); do
+# when not in print-only mode, check the dest branch is local and we are there
+if [ -z "$p" ]; then
+  if [ "${dstbranch:0:8}" = "remotes/" ]; then
+    echo "Cannot use a remote branch as destine for checky-picking.";
+    exit 1
+  fi
+  if [ $(git rev-parse --abbrev-ref HEAD) != $dstbranch ]; then
+    echo "You must git-checkout the local $dstbranch branch first."
+    exit 1
+  fi
+fi
+
+for cmt in $(git rev-list --topo-order $start..$srcbranch --reverse); do
   msg=$(git show -s --oneline $cmt|cut -d" " -f2-)
   printf "%s %70s" "(${cmt:0:7})" "$msg"
   if git log -s --oneline -50 $dstbranch | grep -q "$msg"; then
@@ -59,5 +77,4 @@ for cmt in $(git rev-list --topo-order $start..remotes/origin/$srcbranch --rever
       *) printf "%18s\n" "[    NOT PICKED]";;
     esac;
   fi
-  #$p echo
 done
