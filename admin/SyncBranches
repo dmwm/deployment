@@ -4,7 +4,8 @@
 ### to cherry-pick since a given (non-inclusive) starting git reference.
 ###
 ### Usage: SyncBranches -h
-### Usage: SyncBranches -s <src-branch> -d <dst-branch> <since-tag-or-commit>
+### Usage: SyncBranches [-p] -s <src-branch> -d <dst-branch> <since-tag-or-commit>
+### Usage:     -p: do not pick anything, just print what is missing
 ### Usage: Example: SyncBranches -s comp -d comp_gcc481 HG1406f
 
 usage()
@@ -19,9 +20,11 @@ help()
   exit 0
 }
 
+p=
 for arg; do
   case $arg in
     -h) help ;;
+    -p) p=true; shift;;
     -s) srcbranch=$2; shift; shift ;;
     -d) dstbranch=$2; shift; shift ;;
     -*) usage ;;
@@ -42,18 +45,19 @@ if ! git branch -a --contains $start 2>/dev/null | egrep -q "$srcbranch\$"; then
   exit 1
 fi
 
-[ $(git rev-parse --abbrev-ref HEAD) = $dstbranch ] || git checkout $dstbranch
+[ $(git rev-parse --abbrev-ref HEAD) = $dstbranch ] || $p git checkout $dstbranch
 for cmt in $(git rev-list --topo-order $start..remotes/origin/$srcbranch --reverse); do
   msg=$(git show -s --oneline $cmt|cut -d" " -f2-)
+  printf "%s %70s" "(${cmt:0:7})" "$msg"
   if git log -s --oneline -50 $dstbranch | grep -q "$msg"; then
-    echo "(${cmt:0:7}) $msg [ALREADY PICKED]"
+    printf "%8s%18s\n" "" "[ALREADY PICKED]"
   else
-    echo -n "(${cmt:0:7}) $msg? (y/n) "
-    read answer
+    printf "%8s" "$($p echo -n '? (y/n)')"
+    $p read -s answer
     case $answer in
-      y) git cherry-pick $cmt || break;;
-      *) echo "(${cmt:0:7}) $msg [DO NOT PICK]";;
+      y) printf "%18s\n" "[    PICKING...]"; git cherry-pick $cmt || break;;
+      *) printf "%18s\n" "[    NOT PICKED]";;
     esac;
   fi
-  echo
+  #$p echo
 done
