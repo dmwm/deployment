@@ -1,0 +1,70 @@
+#!/bin/sh
+
+### Utilitarian script to report the status of the current release and notify
+### about actions to be taken.
+###
+### Usage: ReleaseReport -h
+### Usage: ReleaseReport [-s <comp|comp_gcc481>]
+### Usage:     -s <comp|comp_gcc481>: sort by the last update on branch instead of package name
+### Usage: Example: ./ReleaseReport -s comp
+
+BASEDIR=$(cd $(dirname $0) && pwd)
+
+usage()
+{
+  perl -ne '/^### Usage:/ && do { s/^### ?//; print }' < $0
+  exit 1
+}
+
+help()
+{
+  perl -ne '/^###/ && do { s/^### ?//; print }' < $0
+  exit 0
+}
+
+# Process script arguments
+for arg; do
+  case $arg in
+    -h) help ;;
+    -s) case $2 in comp) sortkey=2;; comp_gcc481) sortkey=4;; *) usage;; esac
+        shift; shift ;;
+    -*) usage ;;
+  esac
+done
+# Check the repo has been cloned
+if ! git log -1 &> /dev/null; then
+  echo "Could not find cmsdist repository in the current directory. Clone it first."
+  exit 1
+fi
+
+# Report starts here
+echo "#### Release report ####"
+echo
+
+# Report on cmsdist branch differences
+echo "## cmsdist comp branches synchronization (last 30 commits)"; echo
+echo "comp commits not picked into comp_gcc481:"
+$BASEDIR/SyncBranches -p -s comp        -d comp_gcc481   comp~30        \
+  | grep 'NOT PICKED' || echo "(none)"
+echo; echo "comp_gcc481 commits not picked into comp:"
+$BASEDIR/SyncBranches -p -s comp_gcc481 -d comp          comp_gcc481~30 \
+  | grep 'NOT PICKED' || echo "(none)"
+echo
+
+# Report on cmsdist outdated packages
+echo "## cmsdist package version updates"; echo
+printf "%28s %24s %25s %24s %25s\n" \
+       "Package" "comp update" "comp version" "comp_gcc481 update" "comp_gcc481 version"
+printf '%.0s-' {1..130}; echo
+flist=$(for branch in comp{,_gcc481}; do
+         git ls-tree -r --name-only remotes/origin/$branch | egrep '\.spec'
+       done | sort -u)
+for f in $flist; do
+  printf "%28s" ${f%.spec}
+  for branch in comp{,_gcc481}; do
+    # git-blame lines: cdda7943 (Diego 2013-04-26 1) ### RPM cms apache-setup 3.4
+    (git blame --date=short -L1,1 remotes/origin/$branch $f 2>/dev/null ||\
+     echo '- - - - - - -') | awk '{ printf "%25s %25s", $(NF-6), $NF; }'
+  done; echo
+done | sort -k ${sortkey:-1}
+
