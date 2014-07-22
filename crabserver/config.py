@@ -22,6 +22,8 @@ app.description = 'CRABServer RESTFull API'
 app.title = 'CRABRESTFull'
 
 views = conf.section_('views')
+ui = views.section_('ui')
+ui.object = 'CRABInterface.Pages.FrontPage.FrontPage'
 
 data = views.section_('data')
 data.object = 'CRABInterface.RESTBaseAPI.RESTBaseAPI'
