@@ -458,7 +458,8 @@ deploy_system_post()
         tk compat-libstdc++-33 'ca_*' dummy-ca-certs lcg-CA \
 	fetch-crl edg-mkgridmap git-all stgit colordiff libXpm-devel finger \
 	$(yum -q list compat-{readline5,libtermcap} perl-ExtUtils-Embed 2>/dev/null | \
-	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}')
+	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}') \
+        libXmu mesa-libGLU arc.x86_64
 
       # Install myproxy and voms tools as there is no slc6 build for it in AFS.
       # Only gets the voms configuration from AFS.
