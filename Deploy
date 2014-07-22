@@ -42,8 +42,15 @@ privauthdir=
 release=
 
 case $(uname) in
-  Darwin ) arch=osx106_amd64_gcc461 xargsr="xargs" ;;
-  Linux  ) arch=slc$(egrep -o 'release [0-9]+{1}\.' /etc/redhat-release|cut -d" " -f2|tr -d .)_amd64_gcc461 xargsr="xargs -r" ;;
+  Darwin ) arch=osx108_amd64_gcc481 xargsr="xargs" ;;
+  Linux  ) linuxmajor=$(egrep -o 'release [0-9]+{1}\.' /etc/redhat-release|cut -d" " -f2|tr -d .)
+           if [ $linuxmajor = 5 ]; then
+             arch=slc5_amd64_gcc461
+           else
+             arch=slc${linuxmajor}_amd64_gcc481
+           fi
+           xargsr="xargs -r"
+           ;;
   *      ) echo "unsupported architecture" 1>&2; exit 1 ;;
 esac
 
