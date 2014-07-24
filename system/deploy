@@ -3,6 +3,19 @@ deploy_system_variants="frontend backend image devvm devmac"
 system_arch=$(uname)
 : ${CMS_DEV_ROOT:=/data}
 
+# Ask for confirmation
+confirm()
+{
+  key=$(perl -e 'print map{chr(1+32*(2+int(rand(2)))+int(rand(26)))} 0..9')
+  echo; echo "********************************************"
+  echo -n "*** $1? if yes, say [$key]: "
+  read answer
+  case $answer in
+    $key ) true ;;
+    * ) exit 2 ;;
+  esac
+}
+
 # Add a local group if it doesn't already exist.
 add_local_group()
 {
@@ -434,6 +447,7 @@ deploy_system_post()
 
     devvm )
       MYGROUP=$(id -gn)
+      PATH=$PATH:/sbin:/usr/sbin
 
       # Fix /etc/sudoers. We can't have 'requiretty' as we need crontab
       # to sudo to service accounts, and we need NOPASSWD so that user
@@ -454,6 +468,7 @@ deploy_system_post()
         http://cern.ch/grid-deployment/glite/repos/3.2/glite-SCAS.repo
 
       # Install additional required packages.
+      note "INFO: installing required system packages. This operation may take a few minutes complete."
       sudo yum -y install \
         tk compat-libstdc++-33 'ca_*' dummy-ca-certs lcg-CA \
 	fetch-crl edg-mkgridmap git-all stgit colordiff libXpm-devel finger \
@@ -486,6 +501,46 @@ deploy_system_post()
       sudo /sbin/iptables -I $fwchain 5 -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
       sudo /sbin/iptables -I $fwchain 6 -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
       sudo sh -c '/sbin/iptables-save > /etc/sysconfig/iptables'
+
+      # Default SLC5/6 installations don't use the whole ephemeral disk
+      # available. Try expanding them automatically.
+      vgroup='VolGroup00' lvolume='LogVol00'
+      if [ X"$(mount |grep $vgroup-$lvolume|awk '{ print $3 }')" = X'/' ]; then
+        note "INFO: default SLC5/6 image detected. Checking if there is unallocated disk space we could use..."
+        # Detect if there is free space at the end of the disk
+        free=$(($(sudo parted -s /dev/vda -- unit B print free|grep 'Free Space' |tail -n1|awk '{ print $3 }' |tr -d 'B')))
+        if [ $free -ge 1000000000 ]; then
+          note "INFO: can resize '/' to increase in $((free / 1000000)) MB. Proceed? (y/n) "
+          read answer
+          case $answer in
+            y )
+              note "INFO: starting to resize. This operation may take a long time to complete. Please wait."
+              # guess the last partition number
+              partno=$(($(sudo fdisk -l /dev/vda |grep '/dev/vda'|tail -n1| awk '{ print $1 }' | egrep -o '[0-9]+')))
+              if [ $partno -gt 0 -a $partno -lt 4 ]; then
+                newpart=$(($partno + 1))
+                # Create a LVM partition, ignore sync failure
+                echo -e "c\np\nn\np\n${newpart}\n\n\nt\n${newpart}\n8e\nw\n" | sudo fdisk /dev/vda || true
+                # Force re-sync
+                sudo partx -a /dev/vda 2> /dev/null # can ignore errors
+                # Increase the size of the logical volume
+                sudo pvcreate /dev/vda$newpart
+                sudo vgextend $vgroup /dev/vda$newpart
+                sudo lvextend /dev/$vgroup/$lvolume /dev/vda$newpart
+                sudo resize2fs /dev/$vgroup/$lvolume
+                note "INFO: partition resizing operation completed successfully."
+              else
+                note "ERROR: not possible to create another primary partition. Ignoring resizing."
+              fi
+              ;;
+            * )
+              note "INFO: keeping disk partition setup as it is."
+              ;;
+          esac
+        else
+          note "INFO: machine already using all the ephemeral vm storage space allocated to it."
+        fi
+      fi
 
       # Create groups and accounts.
       system_groups_and_accounts
