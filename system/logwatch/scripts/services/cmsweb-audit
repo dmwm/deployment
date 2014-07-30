@@ -115,6 +115,11 @@ rxcouch = ((re.compile(r"^(curl) (-s) '(localhost:5984/)[0-9a-z_]+(/_all_docs"
                        r"[0-9A-Za-z]+(/_info)$"),
             [r"\1", r"\2", r"\3DB\4VIEW\5"]))
 
+# Gitweb git commnads.
+rxgitweb = ((re.compile(r"^(/usr/bin/git) (--git-dir=/data/srv/state/gitweb/reps/siteconf/\.git)"
+                        r" (ls-tree|cat-file|rev-list) [-A-Za-z0-9/._ =]+$"),
+             [r"\1", r"\2", r"\3", r"SOMETHING"]),)
+
 # MongoDB external sorts.
 rxmongod = re.compile(r"^/data/srv[-a-z]*/[a-zA-Z0-9]+/sw[.a-z]*/[_a-z0-9]+/"
 		      r"external/mongo/[-.a-z0-9]+/bin/mongod$")
@@ -651,6 +656,17 @@ def filter_path(info):
         info['execve-args'] = [m.expand(i) for i in argv]
         return False
 
+  # Collapse gitweb git commands
+  if (info['uid'] == '_gitweb'
+      and info['syscall'] == 'execve'
+      and info['success'] == 'yes'):
+    cmd = command(info)
+    for rx, argv in rxgitweb:
+      m = rx.match(cmd)
+      if m:
+        info['execve-args'] = [m.expand(i) for i in argv]
+        return False
+    
   # Collapse admin command paths from unlink system calls.
   if (info['uid'] == 'cmsweb'
       and info['syscall'] == 'unlink'
