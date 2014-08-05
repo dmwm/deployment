@@ -268,7 +268,7 @@ init_async(){
     unset ASYNC_ROOT
     unset WMAGENT_CONFIG
 
-    echo "inbox  = $ROOT_DIR/install/asyncstageout/AsyncTransfer/dropbox/outputs 
+    echo "inbox  = $ROOT_DIR/install/asyncstageout/AsyncTransfer/dropbox/outputs
 inbox_poll_interval = 30
 workdir = $ROOT_DIR/install/asyncstageout/Monitor/work
 outbox  = $ROOT_DIR/install/asyncstageout/AsyncTransfer/dropbox/inputs
@@ -278,20 +278,20 @@ job_poll_interval_slow = 10    # Job-polling speed when there are very few jobs
 job_poll_interval_fast = 0.3   # Job-polling speed when there are lots of jobs
 job_parallelism        = 8     # Maximum number of jobs to poll in parallel
 per_job_poll_interval  = 7     # for each job in the queue, do not poll it more frequently than this interval
-job_timeout            = 43200 # Timeout for transfer job completion
-file_timeout           = 3600
+job_timeout            = 72000 # Timeout for transfer job completion
+file_timeout           = 18000
 verbose = 1" > $CONFIG_AS/monitor.conf
 
       echo "#unset PERL5LIB
-root=$ROOT_DIR 
-#. \$root/sw*/slc*/cms/PHEDEX-micro/*/etc/profile.d/init.sh 
-#. \$root/sw*/slc*/cms/PHEDEX-lifecycle/*/etc/profile.d/init.sh 
-. \$root/sw*/slc*/cms/asyncstageout/*/etc/profile.d/init.sh 
+root=$ROOT_DIR
+#. \$root/sw*/slc*/cms/PHEDEX-micro/*/etc/profile.d/init.sh
+#. \$root/sw*/slc*/cms/PHEDEX-lifecycle/*/etc/profile.d/init.sh
+. \$root/sw*/slc*/cms/asyncstageout/*/etc/profile.d/init.sh
 
-# Remove old FakeFTS.pl from LifeCycle distribution! 
-(rm \$root/sw*/slc*/cms/PHEDEX-lifecycle/*/bin/FakeFTS.pl) 2>/dev/null 
+# Remove old FakeFTS.pl from LifeCycle distribution!
+(rm \$root/sw*/slc*/cms/PHEDEX-lifecycle/*/bin/FakeFTS.pl) 2>/dev/null
 
-# Add PHEDEX-micro Utilities to the PATH 
+# Add PHEDEX-micro Utilities to the PATH
 #export PATH=\${PATH}:\`ls -d \$root/sw*/slc*/cms/PHEDEX-micro/*/Utilities\`
 
 export PERL5LIB=\${PERL5LIB}:$ROOT_DIR/apps/asyncstageout/Monitor/perl_lib"  > $ROOT_DIR/apps/asyncstageout/Monitor/setup.sh
