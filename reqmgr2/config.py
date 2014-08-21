@@ -83,4 +83,5 @@ wmdatamining.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cach
 #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
 wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
-wmdatamining.duration = 60 * 15  #every 15 min
+wmdatamining.activeDuration = 60 * 15  # every 15 min
+wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
