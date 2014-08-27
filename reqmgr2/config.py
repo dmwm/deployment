@@ -4,9 +4,11 @@ Everything configurable in ReqMgr is defined here.
 
 """
 
-
+import socket
 from WMCore.Configuration import Configuration
 from os import path
+
+HOST = socket.gethostname().lower()
 
 config = Configuration()
 
@@ -72,16 +74,27 @@ ui.static_content_dir = path.join(path.abspath(__file__.rsplit('/', 3)[0]),
                                  main.application,
                                  "data")
 
-extentions = config.section_("extensions")
-wmdatamining = extentions.section_("wmdatamining")
-wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
+if  HOST.startswith("vocms34"):
+    extentions = config.section_("extensions")
+    wmdatamining = extentions.section_("wmdatamining")
+    wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
+    wmdatamining.wmstats_url = "https://cmsweb.cern.ch/couchdb/wmstats"
+    wmdatamining.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
+    #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
+    wmdatamining.activeDuration = 60 * 15  # every 15 min
+    wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
 
-#TODO initially getting the data from cmsweb, once stable enough push to production
-#remove following 2 lines and uncomments next 2 lines
-wmdatamining.wmstats_url = "https://cmsweb.cern.ch/couchdb/wmstats"
-wmdatamining.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
-#wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
-#wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
-wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
-wmdatamining.activeDuration = 60 * 15  # every 15 min
-wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
+#  for dev and vm use testbed data
+if  HOST.startswith("vocms127"):
+    extentions = config.section_("extensions")
+    wmdatamining = extentions.section_("wmdatamining")
+    wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
+    wmdatamining.wmstats_url = "https://cmsweb-testbed.cern.ch/couchdb/wmstats"
+    wmdatamining.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/reqmgr_workload_cache"
+    #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
+    wmdatamining.activeDuration = 60 * 15  # every 15 mins
+    wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
