@@ -12,6 +12,7 @@ deploy_gitweb_prep()
 deploy_gitweb_sw()
 {
   deploy_pkg comp external+gitweb
+  deploy_pkg comp external+python 
   perl -p -i -e "s,\@STATEDIR\@,$project_state,g" $project_config/gitweb_config.perl
 }
 
