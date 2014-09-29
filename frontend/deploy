@@ -64,12 +64,12 @@ deploy_frontend_sw()
 deploy_frontend_post()
 {
   local certs
-  if [ -r /etc/grid-security/hostkey.pem ]; then
-    certs=/etc/grid-security
-  elif [ -r $root/certs/hostkey.pem ]; then
+  if [ -r $root/certs/hostkey.pem ]; then
     certs=$root/certs
   elif [ -r /data/certs/hostkey.pem ]; then
     certs=/data/certs
+  elif [ -r /etc/grid-security/hostkey.pem ]; then
+    certs=/etc/grid-security
   else
     note "ERROR: cannot find hostcert/key to use"
     exit 1
