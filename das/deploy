@@ -21,7 +21,7 @@ deploy_das_sw()
 
 deploy_das_post()
 {
-  case $host in vocms34 | vocms13[2689] | vocms16[13] ) disable ;; * ) enable ;; esac
+  case $host in vocms34 | vocms13[2689] | vocms16[13] | vocms034 | vocms013[2689] | vocms016[13] ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
   # clean-up
   local das_stage=$root/state/das/stagingarea

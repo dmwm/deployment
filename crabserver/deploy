@@ -35,7 +35,7 @@ deploy_crabserver_sw()
 
 deploy_crabserver_post()
 {
-  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
+  case $host in vocms13[89] | vocms140 | vocms013[89] | vocms0140  ) disable ;; * ) enable ;; esac
 
   (mkcrontab; sysboot) | crontab -
 }

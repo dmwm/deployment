@@ -97,7 +97,7 @@ start()
 {
   echo "starting $ME"
   # choose correct DAS map file
-  case $host in vocms133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
+  case $host in vocms133 | vocms0133 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
   local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
   cp -f $mapfile $STAGEDIR/update_mapping_db.js
   # start DAS service (it will load DAS maps into MongoDB and start DAS server)

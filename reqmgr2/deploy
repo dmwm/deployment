@@ -42,7 +42,7 @@ deploy_reqmgr2_sw()
 
 deploy_reqmgr2_post()
 {
-  case $host in vocms13[89] ) disable;;  * ) enable;; esac
+  case $host in vocms13[89] | vocms013[89] ) disable;;  * ) enable;; esac
 
   # ReqMgr2 specific couchdb stuff
   # Tell couch to pick up reqmgr on the next restart
@@ -63,7 +63,7 @@ deploy_reqmgr2_post()
   (mkcrontab
    sysboot
    case $host in
-     vocms34 | vocms13[2689] | vocms16[13] ) ;;
+     vocms34 | vocms13[2689] | vocms16[13] | vocms034 | vocms013[2689] | vocms016[13] ) ;;
      * )
        local cmd="$project_config/manage updateversions 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""

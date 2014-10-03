@@ -404,7 +404,7 @@ deploy_system_post()
 
           note "IMPORTANT: run the following to update /root/.ssh/known_hosts"
           note "   sudo cfg/admin/ImageKey start"
-          note "   for h in vocms{34,127,13{2,3,4,5,6,8,9},140,16{0,1,2,3}}{,.cern.ch}; do"
+          note "   for h in vocms{34,127,13{2,3,4,5,6,8,9},140,16{0,1,2,3},034,0127,013{2,3,4,5,6,8,9},0140,016{0,1,2,3}}{,.cern.ch}; do"
           note "     echo \$h; sudo cfg/admin/ImageKey run ssh cmsweb@\$h uptime"
           note "   done"
           note "   sudo cfg/admin/ImageKey stop"

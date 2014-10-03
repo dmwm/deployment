@@ -47,7 +47,7 @@ server.source('DQMStripChart')
 # to test the relval server configuration on their local machine, they
 # are still able to do that using the old schema.
 
-if socket.gethostname().lower().split('.')[0] == 'vocms139':
+if socket.gethostname().lower().split('.')[0] in ['vocms139','vocms0139']  :
     server.source('DQMArchive', "%s/ix128" % STATEDIR, '^/Global/')
 else:
     server.source('DQMArchive', "%s/ix" % STATEDIR, '^/Global/')

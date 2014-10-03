@@ -77,7 +77,7 @@ deploy_dmwmbld_post()
   ) | crontab -
 
   case $host:$root in
-    vocms106:/build/dmwmbld/srv | vocms22:/build/dmwmbld/srv )
+    vocms106:/build/dmwmbld/srv | vocms22:/build/dmwmbld/srv | vocms0106:/build/dmwmbld/srv | vocms022:/build/dmwmbld/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { fgrep -v -e " $host $project_config/" -e "$host ssh macms07" || true; }
        echo "*/10 * * * * $host $project_config/dmwmbld_task updateweb"

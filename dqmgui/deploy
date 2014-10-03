@@ -48,7 +48,8 @@ deploy_dqmgui_sw()
 
 deploy_dqmgui_post()
 {
-  case $host in vocms34 | vocms13[26] | vocms140 | vocms16[13] ) disable ;; * ) enable ;; esac
+  case $host in vocms34 | vocms13[26] | vocms140 | vocms16[13] | vocms034 | vocms013[26] | vocms0140 | vocms016[13] ) disable ;; * ) enable ;; 
+esac
   case $variant in bare ) return ;; esac
 
   (mkcrontab; sysboot
@@ -62,7 +63,7 @@ deploy_dqmgui_post()
    }) | crontab -
 
   case $host:$root in
-    vocms13[389]:/data/srv | vocms127:/data/srv )
+    vocms13[389]:/data/srv | vocms127:/data/srv  )
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
        # Enable the afs-sync only on vocms138
@@ -71,7 +72,7 @@ deploy_dqmgui_post()
 
        # Set the backup to castor.
        case $host in
-         vocms13[89] ) echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
+         vocms13[89] | vocms013[89] ) echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
                             "$project_config/manage backup"                \
                             "/castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'" ;;
          * ) ;;

@@ -59,7 +59,7 @@ if [ $# -ge 1 -a "$1" = "backup" ]; then
   # do not source the env because we want to pick the system castor
 else
   case $HOST in
-    vocms139 | dqm-c2d07-[0,1][1,2] )
+    vocms139 | vocms0139 | dqm-c2d07-[0,1][1,2] )
       # assume not to pollute the global environments since this
       # will only be executed on 128-updated machines
       . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
@@ -79,8 +79,8 @@ export RFIO_USE_CASTOR_V2=YES
 # Set Flavor for HOST:DOMAIN
 case $HOST:$DOMAIN in
   *:cms  ) FLAVOR=online ;;
-  vocms138:* ) FLAVOR=offline-caf; ALTERNATIVE_USER='cmsweb' ;;
-  vocms139:* ) FLAVOR=relval; ALTERNATIVE_USER='cmsweb' ;;
+  vocms138:* | vocms0138:* ) FLAVOR=offline-caf; ALTERNATIVE_USER='cmsweb' ;;
+  vocms139:* | vocms0139:* ) FLAVOR=relval; ALTERNATIVE_USER='cmsweb' ;;
   vocms*:* ) FLAVOR=dev; ALTERNATIVE_USER='cmsweb' ;;
   *:cern.ch ) FLAVOR=offline;;
 esac
@@ -206,7 +206,7 @@ start()
 
   # first start webserver
   case $HOST:${1:-webserver} in
-    vocms139:*webserver* )
+    vocms139:*webserver* | vocms0139:*webserver* )
       for cfg in $CONFIGS; do
         [ ! -d $STATEDIR/$cfg/ix128 ] && \
           (echo Creating index $STATEDIR/$cfg/ix128; visDQMIndex create $STATEDIR/$cfg/ix128)
@@ -292,7 +292,7 @@ start()
         $STATEDIR/online/ix128
       ;;
 
-    vocms139:*agents* ) # relval server
+    vocms139:*agents* | vocms0139:*agents* ) # relval server
       refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       # standard lot of agents
@@ -359,7 +359,7 @@ start()
       done
       ;;
 
-    vocms138:*agents* ) # offline
+    vocms138:*agents* | vocms0138:*agents* ) # offline
       refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       # standard lot of agents
@@ -456,7 +456,7 @@ start()
       done
       ;;
 
-    vocms13[89]:*stageout* ) # offline
+    vocms13[89]:*stageout* | vocms013[89]:*stageout* ) # offline
       refuseproc "stageout agents" "visDQMZipCastorStager"
 
       # standard lot of agents
@@ -473,7 +473,7 @@ start()
       done
       ;;
 
-    vocms138:*afs-sync* )
+    vocms138:*afs-sync* | vocms0138:*afs-sync* )
       refuseproc "afs sync" "visDQMAfsSync"
 
       DIRS=OnlineData,OfflineData/HIRun2011/StreamHIExpress
@@ -556,7 +556,7 @@ start()
         done' </dev/null 2>&1 | rotatelogs $LOGDIR/agent-migration-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
-    vocms116:*migration* ) # offline
+    vocms116:*migration* | vocms0116:*migration*  ) # offline
       refuseproc "migration agents" "visDQMMigrationProcess" "refusing to restart"
 
       for i in $(seq 1 $(expr 5 + $(expr $(date +%s) % 10))); do key=$RANDOM; done

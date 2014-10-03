@@ -48,11 +48,11 @@ if [ -f $ROOT/auth/$ME/security.ini ]; then
   export SEC_MOD_INI=$ROOT/auth/$ME/security.ini
   export PYTHONPATH=$SITEDB_LEGACY_PYTHONPATH:$PYTHONPATH
   case $(hostname -s | tr '[:upper:]' '[:lower:]') in
-   vocms34 | vocms136 | vocms16[13] )
+   vocms34 | vocms136 | vocms16[13] | vocms034 | vocms0136 | vocms016[13] )
      NODE=https://cmsweb.cern.ch ;;
-   vocms132 | vocms133 )
+   vocms132 | vocms133 | vocms0132 | vocms0133 )
      NODE=https://cmsweb-testbed.cern.ch ;;
-   vocms127 )
+   vocms127 | vocms0127 )
      NODE=https://cmsweb-dev.cern.ch ;;
    * )
      NODE=https://$(hostname -f) ;;
