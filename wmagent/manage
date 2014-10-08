@@ -76,6 +76,7 @@ DBS3_URL=
 PHEDEX_URL=
 DQM_URL=
 DASHBOARD_URL=
+REQUESTCOUCH_URL=
 
 #
 # Init checks
@@ -170,6 +171,7 @@ load_secrets_file(){
     local MATCH_PHEDEX_URL=`cat $WMAGENT_SECRETS_LOCATION | grep PHEDEX_URL | sed s/PHEDEX_URL=//`
     local MATCH_DQM_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DQM_URL | sed s/DQM_URL=//`
     local MATCH_DASHBOARD_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DASHBOARD_URL | sed s/DASHBOARD_URL=//`
+    local MATCH_REQUESTCOUCH_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQUESTCOUCH_URL | sed s/REQUESTCOUCH_URL=//`
 
     # database settings (mysql or oracle)
     if [ "x$MATCH_ORACLE_USER" == "x" ]; then
@@ -237,6 +239,8 @@ load_secrets_file(){
     DQM_URL=${MATCH_DQM_URL:-$DQM_URL}
 
     DASHBOARD_URL=${MATCH_DASHBOARD_URL:-$DASHBOARD_URL}
+    
+    REQUESTCOUCH_URL=${MATCH_REQUESTCOUCH_URL:-$REQUESTCOUCH_URL}
 }
 
 print_settings(){
@@ -279,6 +283,7 @@ print_settings(){
     echo "PHEDEX_URL=                $PHEDEX_URL                "
     echo "DQM_URL=                   $DQM_URL                   "
     echo "DASHBOARD_URL=             $DASHBOARD_URL             "
+    echo "REQUESTCOUCH_URL=          $REQUESTCOUCH_URL          "
 
 }
 
@@ -634,7 +639,8 @@ init_wmagent(){
 	                   --dbs3_url=$DBS3_URL \
 	                   --phedex_url=$PHEDEX_URL \
 	                   --dqm_url=$DQM_URL \
-	                   --dashboard_url=$DASHBOARD_URL
+	                   --dashboard_url=$DASHBOARD_URL \
+	                   --requestcouch_url=$REQUESTCOUCH_URL
 	                   
     elif [ "x$ORACLE_USER" != "x" ]; then
 	wmagent-mod-config --input=$CONFIG_AG/config-template.py \
@@ -652,7 +658,8 @@ init_wmagent(){
 	                   --dbs3_url=$DBS3_URL \
 	                   --phedex_url=$PHEDEX_URL \
 	                   --dqm_url=$DQM_URL \
-	                   --dashboard_url=$DASHBOARD_URL
+	                   --dashboard_url=$DASHBOARD_URL \
+	                   --requestcouch_url=$REQUESTCOUCH_URL
 
     else
 	echo "No database configured, should never have reached this point..."
@@ -678,7 +685,8 @@ init_reqmgr(){
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --wmstats_url=$WMSTATS_URL
+                       --wmstats_url=$WMSTATS_URL \
+                       --requestcouch_url=$REQUESTCOUCH_URL
    elif [ "x$ORACLE_USER" != "x" ]; then
 	wmagent-mod-config --input=$CONFIG_RM/config-template.py \
                        --output=$CONFIG_RM/config.py \
@@ -688,7 +696,8 @@ init_reqmgr(){
                        --reqmgr_port=$REQMGR_PORT \
                        --reqmgr_hostname=$REQMGR_HOSTNAME \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --wmstats_url=$WMSTATS_URL
+                       --wmstats_url=$WMSTATS_URL \
+                       --requestcouch_url=$REQUESTCOUCH_URL
     else
 	echo "No database configured, should never have reached this point..."
 	exit 1;
