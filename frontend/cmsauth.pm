@@ -368,7 +368,7 @@ sub auth_trouble_handler : method
     $message .= "<p>Your browser offered a DN '$dn' which was rejected"
               . " because of unsafe characters in range 0x00 - 0x1f.</p>";
   }
-  elsif ($dn !~ m{^/(?:C|O|DC)=.*/CN=.})
+  elsif ($dn !~ /^CN=.*DC=ch$/)
   {
     $dn = encode_entities($dn);
     $message .= "<p>Your browser offered a DN '$dn' which was rejected"
@@ -842,7 +842,7 @@ sub authn_cert($$)
   # Report failure if DN seems funny.
   if (! utf8::is_utf8($dn)
       || $dn =~ /[\x00-\x1f]/
-      || $dn !~ m{^/(?:C|O|DC)=.*/CN=.})
+      || $dn !~ /^CN=.*DC=ch$/)
   {
     $r->log->notice("$me rejecting unexpected certificate $dn,"
 	            . " verify $verify, vstart $vstart, vend $vend,"
