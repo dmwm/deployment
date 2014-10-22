@@ -106,6 +106,10 @@ def update(outfile, dbcfg, verbose, quiet, apache24):
           "PASSWD": passwd, "ROLES": {} }
     if  apache24:
         ndn = dn.split('/')
+        if  'OU=computers' in ndn: # computer DN
+            # last two parts were splitted due to slash, we'll merge them back
+            last = '%s/%s' % (ndn[-2], ndn[-1])
+            ndn = ndn[:-3] + [last]
         ndn.reverse()
         p.update({"DN": ','.join(ndn)[:-1]})
     byuid[id] = p
