@@ -107,7 +107,7 @@ def update(outfile, dbcfg, verbose, quiet, apache24):
     if  apache24:
         ndn = dn.split('/')
         ndn.reverse()
-        p.update({"DN"; ','.join(ndn)[:-1])
+        p.update({"DN": ','.join(ndn)[:-1]})
     byuid[id] = p
     people.append(p)
 
