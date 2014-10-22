@@ -91,11 +91,11 @@ deploy_frontend_post()
   (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
    echo "13 */6 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
         "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
-        "-o $PWD/etc/voms-gridmap.txt --vo cms"
+        "-o $PWD/etc/voms-gridmap.txt --vo cms --apache24"
    case $host in vocms* ) silent= ;; * ) silent=-q;; esac
    echo "*/4 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
         "PYTHONPATH=$project_auth:\$PYTHONPATH $project_config/mkauthmap" \
-        "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
+        "$silent -c sitedbread.db -o $PWD/etc/authmap.json --apache24"
    case $host in
      vocms135 | vocms162 | vocms0135 | vocms0162 ) ;;
      vocms160  ) echo "23 */6 * * * $project_config/update-keys $PWD vocms162" ;;
