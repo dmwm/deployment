@@ -84,6 +84,10 @@ deploy_couchdb_post()
     * )
       ;;
   esac
+
+  # change ownership of hmackey
+  sudo chown _couchdb $root/current/auth/couchdb/hmackey.ini
+  sudo chmod 660 $root/current/auth/couchdb/hmackey.ini
 }
 
 deploy_couchdb_auth()
