@@ -24,12 +24,12 @@ deploy_dbs_sw()
 
 deploy_dbs_post()
 {
-  case $host in vocms13[89] | vocms140 | vocms013[89] | vocms0140 ) disable ;; * ) enable ;; esac
+  case $host in vocms13[89] | vocms140 | vocms0128 | vocms013[89] | vocms0140 ) disable ;; * ) enable ;; esac
 
   (mkcrontab
    sysboot
    case $host in
-     vocms13[89] | vocms140 | vocms013[89] | vocms0140 )
+     vocms13[89] | vocms140 | vocms0128 | vocms013[89] | vocms0140 )
        ;;
      * )
        local cmd="$project_config/manage setinstances 'I did read documentation'"

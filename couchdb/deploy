@@ -41,7 +41,7 @@ deploy_couchdb_post()
 {
   (mkcrontab
    case $host in
-      vocms34 | vocms13[69] | vocms16[13] | vocms034 | vocms013[69] | vocms016[13] )
+      vocms34 | vocms13[69] | vocms16[13] | vocms034 | vocms0128 | vocms013[69] | vocms016[13] )
        disable ;;
      * )
        enable
