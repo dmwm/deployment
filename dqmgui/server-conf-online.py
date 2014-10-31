@@ -26,7 +26,7 @@ DOMAIN      = socket.getfqdn().split('.',1)[-1].lower()
 HOSTADDR    = socket.getaddrinfo(HOST, None)[0][4][0]
 BASEDIR     = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HOSTALIAS   = HOST
-COLLHOST    = 'localhost'
+COLLHOST    = '127.0.0.1'
 COLLPORT    = DOMAIN == 'cms' and 9190 or 8061
 SERVICENAME = 'Online Development'
 SERVERPORT  = 8070
