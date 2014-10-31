@@ -82,6 +82,10 @@ if  HOST.startswith("vocms034"):
     wmdatamining.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
     #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
+    wmdatamining.mcm_cert = "/data/srv/current/auth/reqmgr2/dmwm-service-cert.pem"
+    wmdatamining.mcm_key = "/data/srv/current/auth/reqmgr2/dmwm-service-key.pem"
+    wmdatamining.mcm_tmp_dir = "/tmp"
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 min
     wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
@@ -95,6 +99,10 @@ if  HOST.startswith("vocms0127"):
     wmdatamining.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/reqmgr_workload_cache"
     #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
+    wmdatamining.mcm_cert = "/data/srv/current/auth/reqmgr2/dmwm-service-cert.pem"
+    wmdatamining.mcm_key = "/data/srv/current/auth/reqmgr2/dmwm-service-key.pem"
+    wmdatamining.mcm_tmp_dir = "/tmp/mcm"
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 mins
     wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
