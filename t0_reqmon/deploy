@@ -22,6 +22,8 @@ deploy_t0_reqmon_post()
   for couch in couchdb:5984 bigcouch:5985; do
     echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WMStats" \
          "http://localhost:${couch##*:}/tier0_wmstats" > $root/state/${couch%%:*}/stagingarea/t0_reqmon
+    echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/T0Request" \
+         "http://localhost:${couch##*:}/t0_request" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
     echo "couchapp push $root/current/apps/t0_reqmon/data/couchapps/WorkloadSummary" \
          "http://localhost:${couch##*:}/t0_workloadsummary" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
   done

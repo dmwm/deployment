@@ -18,7 +18,7 @@ deploy_gitweb_sw()
 
 deploy_gitweb_post()
 {
-  case $host in vocms13[89] | vocms140 | vocms013[89] | vocms0140  ) disable;; * ) enable;; esac
+  case $host in vocms13[89] | vocms140 | vocms0128 | vocms013[89] | vocms0140  ) disable;; * ) enable;; esac
 
   rm -fr $PWD/{htdocs,etc,var}
   (set -e
@@ -43,7 +43,7 @@ deploy_gitweb_post()
   klist -s # must have afs kerberos token
   (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
    [ ! -f $root/enabled/$project ] || echo "6 * * * * $host $project_config/manage get siteconf 'I did read documentation'"
-   case $host in vocms136 | vocms0136 )
+   case $host in vocms0136 )
      echo "6 */3 * * * $host $project_config/manage updateadmins siteconf 'I did read documentation'" ;;
    esac
   ) | acrontab

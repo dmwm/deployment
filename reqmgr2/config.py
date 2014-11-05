@@ -74,7 +74,7 @@ ui.static_content_dir = path.join(path.abspath(__file__.rsplit('/', 3)[0]),
                                  main.application,
                                  "data")
 
-if  HOST.startswith("vocms34"):
+if  HOST.startswith("vocms034"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
@@ -87,7 +87,7 @@ if  HOST.startswith("vocms34"):
     wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
 
 #  for dev and vm use testbed data
-if  HOST.startswith("vocms127"):
+if  HOST.startswith("vocms0127"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
