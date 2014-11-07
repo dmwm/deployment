@@ -9,7 +9,7 @@ from WMCore.Configuration import Configuration
 from os import path
 
 HOST = socket.gethostname().lower()
-
+ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
 
 main = config.section_("main")
@@ -23,7 +23,7 @@ main.index = "ui"
 main.authz_defaults = {"role": None, "group": None, "site": None}
 
 sec = main.section_("tools").section_("cms_auth")
-sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
+sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 
 # this is where the application will be mounted, where the REST API
 # is reachable and this features in CMS web frontend rewrite rules
@@ -69,7 +69,7 @@ data.dbs_url = "https://cmsweb.cern.ch/dbs/prod/global/DBSReader"
 # web user interface
 ui = views.section_("ui")
 ui.object = "WMCore.ReqMgr.WebGui.FrontPage.FrontPage"
-ui.static_content_dir = path.join(path.abspath(__file__.rsplit('/', 3)[0]),
+ui.static_content_dir = path.join(path.abspath(ROOTDIR),
                                  "apps",
                                  main.application,
                                  "data")
@@ -82,6 +82,10 @@ if  HOST.startswith("vocms034"):
     wmdatamining.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
     #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
+    wmdatamining.mcm_cert = "%s/auth/reqmgr2/dmwm-service-cert.pem" % ROOTDIR
+    wmdatamining.mcm_key = "%s/auth/reqmgr2/dmwm-service-key.pem" % ROOTDIR
+    wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 min
     wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
@@ -95,6 +99,10 @@ if  HOST.startswith("vocms0127"):
     wmdatamining.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/reqmgr_workload_cache"
     #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
+    wmdatamining.mcm_cert = "%s/auth/reqmgr2/dmwm-service-cert.pem" % ROOTDIR
+    wmdatamining.mcm_key = "%s/auth/reqmgr2/dmwm-service-key.pem" % ROOTDIR
+    wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 mins
     wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours

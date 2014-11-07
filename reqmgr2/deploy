@@ -17,7 +17,7 @@ deploy_reqmgr2_deps()
 
 deploy_reqmgr2_prep()
 {
-  mkproj
+  mkproj tmp
 }
 
 deploy_reqmgr2_sw()
