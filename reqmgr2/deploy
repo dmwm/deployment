@@ -63,7 +63,7 @@ deploy_reqmgr2_post()
   (mkcrontab
    sysboot
    case $host in
-     vocms34 | vocms13[2689] | vocms16[13] | vocms034 | vocms0128 | vocms013[2689] | vocms016[13] ) ;;
+     vocms34 | vocms13[2689] | vocms16[13] | vocms034 | vocms0128 | vocms0306 | vocms013[2689] | vocms016[13] ) ;;
      * )
        local cmd="$project_config/manage updateversions 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
