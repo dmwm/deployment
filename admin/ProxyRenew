@@ -155,9 +155,15 @@ for proxy in proxy-*.cert; do
   # If we fail to get VOMS extensions, keep the plain proxy certificate.
   unset X509_USER_CERT
   unset X509_USER_KEY
+  
+  cp "$proxy.new" "$proxy.new.cert"
+  perl -p -i -e 'BEGIN{undef $/;} s,-----BEGIN RSA.*END RSA PRIVATE KEY-----\n,,smg' "$proxy.new.cert"
+  cp "$proxy.new" "$proxy.new.key"
+  perl -p -i -e 'BEGIN{undef $/;} s,-----BEGIN CERTIFICATE.*?END CERTIFICATE-----\n,,smg' "$proxy.new.key"
+  chmod 400 "$proxy.new.key"
 
   if voms-proxy-init -valid $h:$m -voms "$voms" \
-                     -cert "$proxy.new" -key "$proxy.new" \
+                     -cert "$proxy.new.cert" -key "$proxy.new.key" \
                      -out "$proxy.voms" -bits 1024 -quiet >> $errlog 2>&1; then
     actime=$(voms-proxy-info -file "$proxy.voms" -actimeleft)
     if [ X"$actime" != X ]; then
