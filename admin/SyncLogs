@@ -1,8 +1,20 @@
 #!/bin/sh
 
 # Rsync append only .txt and .log files
-for h in vocms{34,127,13{2,3,4,5,6,8,9},140,16{0,1,2,3},034,012{7,8},013{2,3,4,5,6,8,9},0140,016{0,1,2,3},030{6,7}}; do
-  rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 2>/dev/null
+
+# Front-ends in the AI infrastructure
+for h in vocms0{127,134,135,160,162}; do
+  rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
+done
+
+# Back-ends in the AI infrastructure
+for h in vocms0{132,133,34,136,161,163,128,140}; do
+  rsync -rm -e "ssh -c arcfour256 -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
+done
+
+# Machines in the old infrastructure
+for h in vocms{34,127,13{2,3,4,5,6,8,9},140,16{0,1,2,3}}; do
+  rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 
 done
 
 # Delete files not modified in the last 7 days
