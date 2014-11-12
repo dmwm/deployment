@@ -5,6 +5,7 @@
 ^/auth/complete/(?:couchdb/asynctransfer|aso-monitor|couchdb2)(?:/|$) vocms0132.cern.ch  :affinity
 ^/auth/complete/(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0133.cern.ch :affinity
 ^/auth/complete/(?:c)(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|tier0_wmstats|t0_workloadsummary|acdcserver|aso-monitor)(?:/|$) vocms0133.cern.ch :affinity
-^/auth/complete/(?:crabcache|das)(?:/|$) vocms0133.cern.ch
+^/auth/complete/crabcache(?:/|$) vocms0133.cern.ch
+^/auth/complete/das(?:/|$) vocms0132.cern.ch|vocms0133.cern.ch :affinity
 ^/overview(?:/|$) vocms0132.cern.ch
 ^ vocms0132.cern.ch|vocms0133.cern.ch
