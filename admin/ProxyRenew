@@ -185,7 +185,7 @@ for proxy in proxy-*.cert; do
   fi
 
   # Use this proxy.
-  rm -f "$proxy.voms"
+  rm -f "$proxy.voms" "$proxy.new.key" "$proxy.new.cert"
   mv -f "$proxy.new" "$proxy"
   chmod go-rwx "$proxy"
   got_proxy=$(expr $got_proxy + 1)
