@@ -12,7 +12,7 @@ deploy_ssb_prep()
 }
 
 outdir=/afs/cern.ch/cms/LCG/SiteComm
-ssbver=5ab0e7063b44c47725e4b31c84bf9de9570a6c87 # FIX: should use a tag
+ssbver=500571b1f497226a1138d8a3ec05d8d0d0e8c72f # FIX: should use a tag
 
 deploy_ssb_sw()
 {
