@@ -26,11 +26,15 @@ deploy_crabserver_sw()
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
 
-  case $variant in prod | preprod | dev ) extconfig=$variant;; *) extconfig=dev;; esac
+  case $variant in
+    prod )    extconfig=$variant; aso="";;
+    preprod ) extconfig=$variant; aso="-testbed";;
+    * )       extconfig=dev;      aso="-dev";;
+  esac
   echo "data.mode = \"cmsweb-$extconfig\"" >> $project_config/config.py
-  case $variant in prod ) aso="" ;; preprod ) aso="-testbed" ;; * ) aso="-dev";; esac
   echo "data.asourl = \"https://cmsweb$aso.cern.ch/couchdb/asynctransfer\"" >> $project_config/config.py
   touch $project_config/condor_config
+  perl -p -i -e "s;/prod/info;/$extconfig/info;g" $project_config/monitoring.ini
 }
 
 deploy_crabserver_post()
