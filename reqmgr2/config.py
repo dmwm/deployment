@@ -88,10 +88,10 @@ if  HOST.startswith("vocms034"):
     wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 min
-    wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
+    wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
 
 #  for dev and vm use testbed data
-if  HOST.startswith("vocms0127"):
+if  HOST.startswith("vocms0133"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
@@ -105,4 +105,4 @@ if  HOST.startswith("vocms0127"):
     wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 mins
-    wmdatamining.archiveDuration = 60 * 60 * 24 # every 24 hours
+    wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
