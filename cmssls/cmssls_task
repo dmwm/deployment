@@ -31,6 +31,9 @@ case ${1:-help} in
          ./$sls > $STATEDIR/sls_$(echo ${sls#Feed}| tr '[A-Z]' '[a-z]').xml
        fi
     done
+    for myfeed in $STATEDIR/*xml; do
+      curl -F file=@$myfeed xsls.cern.ch
+    done
     ;;
 
   updateweb )
