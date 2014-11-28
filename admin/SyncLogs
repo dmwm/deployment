@@ -8,12 +8,12 @@ for h in vocms0{127,134,135,160,162}; do
 done
 
 # Back-ends in the AI infrastructure
-for h in vocms0{132,133,34,136,161,163,128,140}; do
+for h in vocms0{132,133,34,136,161,163,140,306,307}; do
   rsync -rm -e "ssh -c arcfour256 -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
 # Machines in the old infrastructure
-for h in vocms{34,127,13{2,3,4,5,6,8,9},140,16{0,1,2,3}}; do
+for h in vocms{13{3,4,8,9},140,162}; do
   rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 
 done
 

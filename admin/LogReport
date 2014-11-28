@@ -156,8 +156,7 @@ if __name__ == '__main__':
   opt.add_option("-n", "--ndays", dest="ndays", metavar="N", type="int", default=1,
                  help="number of backward days to include in the report. Default is 1 (the startday only).")
   opt.add_option("-m", "--machines", dest="machines", metavar="LIST", default=None,
-                 help="comma separated LIST of frontend host names to include in the report. I.e. -m \"vocms134, vocms135, vocms0134, 
-vocms0135\"")
+                 help="comma separated LIST of frontend host names to include in the report. I.e. -m \"vocms0134,vocms0135\"")
   opts, args = opt.parse_args()
 
   # Find the logs root dir.
