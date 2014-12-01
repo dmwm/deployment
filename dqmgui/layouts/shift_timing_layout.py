@@ -1,6 +1,6 @@
 def shifttiminglayout(i, p, *rows): i["00 Shift/Detector_Timing_Plots/" + p] = DQMItem(layout=rows)
 
-shifttiminglayout(dqmitems, "01 Pixel Charge Summary",
+shifttiminglayout(dqmitems, "01 Pixel",
   [{ 'path': "Pixel/Barrel/ALLMODS_chargeCOMB_Barrel",
      'description': "190456 example of timing problem <a href=https://twikilink>My link to plot instructions</a>",
      'draw': { 'withref': "yes" }},
@@ -8,23 +8,23 @@ shifttiminglayout(dqmitems, "01 Pixel Charge Summary",
      'description': "190456 example of timing problem <a href=https://twikilink>My link to plot instructions</a>",
      'draw': { 'withref': "yes" }}])
 
-shifttiminglayout(dqmitems, "02 SiStrip Signal-to-Noise",
+shifttiminglayout(dqmitems, "02 SiStrip",
   [{ 'path': "SiStrip/MechanicalView/TIB/Summary_ClusterStoNCorr_OnTrack__TIB",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TIB  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ",
      'draw': { 'withref': "yes" }},
    { 'path': "SiStrip/MechanicalView/TOB/Summary_ClusterStoNCorr_OnTrack__TOB",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TOB  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ",
      'draw': { 'withref': "yes" }}],
-  [{ 'path': "SiStrip/MechanicalView/TID/side_1/Summary_ClusterStoNCorr_OnTrack__TID__side__1",
+  [{ 'path': "SiStrip/MechanicalView/TID/PLUS/Summary_ClusterStoNCorr_OnTrack__TID__PLUS",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TID -ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ",
      'draw': { 'withref': "yes" }},
-   { 'path': "SiStrip/MechanicalView/TID/side_2/Summary_ClusterStoNCorr_OnTrack__TID__side__2",
+   { 'path': "SiStrip/MechanicalView/TID/MINUS/Summary_ClusterStoNCorr_OnTrack__TID__MINUS",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TID +ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ",
      'draw': { 'withref': "yes" }}],
-  [{ 'path': "SiStrip/MechanicalView/TEC/side_1/Summary_ClusterStoNCorr_OnTrack__TEC__side__1",
+  [{ 'path': "SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterStoNCorr_OnTrack__TEC__PLUS",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TEC -ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ",
      'draw': { 'withref': "yes" }},
-   { 'path': "SiStrip/MechanicalView/TEC/side_2/Summary_ClusterStoNCorr_OnTrack__TEC__side__2",
+   { 'path': "SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterStoNCorr_OnTrack__TEC__MINUS",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TEC +ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ",
      'draw': { 'withref': "yes" }}])
 
@@ -60,10 +60,10 @@ shifttiminglayout(dqmitems, "04 Hcal",
     'draw': { 'withref': "no" }}])
 
 shifttiminglayout(dqmitems, "05 DT ",
- [{ 'path': "DT/03-LocalTrigger-DCC/Wheel0/DCC_CorrectBXPhi_W0 (DTTF Timing)",
+ [{ 'path': "DT/03-LocalTrigger-DCC/Wheel0/DCC_CorrectBXPhi_W0",
     'description': "ToAdd",
     'draw': { 'withref': "no" }},
-  { 'path': "DT/04-LocalTrigger-DDU/Wheel0/DDU_CorrectBXPhi_W0 (DT Timing)",
+  { 'path': "DT/04-LocalTrigger-DDU/Wheel0/DDU_CorrectBXPhi_W0",
     'description': "ToAdd",
     'draw': { 'withref': "no" }}])
 
@@ -85,7 +85,7 @@ shifttiminglayout(dqmitems, "07 CSC",
  [{ 'path': "CSC/Summary/CSC_AFEB_RawHits_Time_mean",
     'description': "ToAdd",
     'draw': { 'withref': "no" }},
-  { 'path': "CSC/Summary/CSC_AFEB_RawHits_Time",
+  { 'path': "CSC/Summary/CSC_AFEB_RawHits_Time_rms",
     'description': "ToAdd",
     'draw': { 'withref': "no" }}],
  [{ 'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode",
@@ -95,7 +95,8 @@ shifttiminglayout(dqmitems, "07 CSC",
     'description': "ToAdd",
     'draw': { 'withref': "no" }}])
 
-#shifttiminglayout(dqmitems, "07 ",
-# [{ 'path': "",
-#    'description': "ToAdd",
-#    'draw': { 'withref': "no" }},],)
+# Template (to be removed when this is reasonably ready)
+##shifttiminglayout(dqmitems, "07 ",
+## [{ 'path': "",
+##    'description': "ToAdd",
+##    'draw': { 'withref': "no" }},],)
