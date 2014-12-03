@@ -59,12 +59,8 @@ if [ $# -ge 1 -a "$1" = "backup" ]; then
   # do not source the env because we want to pick the system castor
 else
   case $HOST in
-    vocms139 | vocms0139 | dqm-c2d07-[0,1][1,2] )
-      # assume not to pollute the global environments since this
-      # will only be executed on 128-updated machines
-      . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
     * )
-      . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
+      . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
   esac
 fi
 
@@ -206,20 +202,11 @@ start()
 
   # first start webserver
   case $HOST:${1:-webserver} in
-    vocms139:*webserver* | vocms0139:*webserver* )
+    *:*webserver* )
       for cfg in $CONFIGS; do
         [ ! -d $STATEDIR/$cfg/ix128 ] && \
           (echo Creating index $STATEDIR/$cfg/ix128; visDQMIndex create $STATEDIR/$cfg/ix128)
         monControl start all from $CFGDIR/server-conf-$cfg.py
-      done ;;
-    *:*webserver* )
-      for cfg in $CONFIGS; do
-        [ ! -d $STATEDIR/$cfg/ix ] && \
-          (echo Creating index $STATEDIR/$cfg/ix; visDQMIndex create $STATEDIR/$cfg/ix)
-        monControl start all from $CFGDIR/server-conf-$cfg.py
-        if [ ! -d $STATEDIR/$cfg/ix128 ]; then
-	  (echo Creating index128 $STATEDIR/$cfg/ix128; source $ROOT/apps/dqmgui/128/etc/profile.d/env.sh; visDQMIndex create $STATEDIR/$cfg/ix128 )
-        fi
       done ;;
   esac
 
@@ -292,7 +279,7 @@ start()
         $STATEDIR/online/ix128
       ;;
 
-    vocms139:*agents* | vocms0139:*agents* ) # relval server
+    vocms13[89]:*agents* | vocms013[89]:*agents* ) # relval/offline/caf server
       refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       # standard lot of agents
@@ -325,7 +312,7 @@ start()
         startagent $D/agent-zverifier \
           visDQMZipCastorVerifier \
           $DQM_DATA/agents/verify \
-          marco.rovere@cern.ch,atanas.batinkov@cern.ch,edgar.eduardo.rosales.rosero@cern.ch  \
+          marco.rovere@cern.ch,atanas.batinkov@cern.ch \
           $DQM_DATA/zipped \
           $CASTORDIR \
           24 \
@@ -356,88 +343,6 @@ start()
             $DQM_DATA/agents/ixmerge \
             $DQM_DATA/ix128 \
             $DQM_DATA/agents/register
-      done
-      ;;
-
-    vocms138:*agents* | vocms0138:*agents* ) # offline
-      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
-
-      # standard lot of agents
-      for D in $CONFIGS; do
-        D=${D}
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
-        DQM_DATA=$STATEDIR/$D
-
-	startagent $D/agent-receive \
-	  visDQMReceiveDaemon \
-	  $DQM_DATA/uploads \
-	  $DQM_DATA/data \
-	  $DQM_DATA/agents/register \
-	  $DQM_DATA/agents/register128 \
-	  $DQM_DATA/agents/zip
-
-        startagent $D/agent-zip \
-          visDQMZipDaemon \
-          $DQM_DATA/agents/zip \
-          $DQM_DATA/data \
-          $DQM_DATA/zipped \
-          $DQM_DATA/agents/freezer
-
-        startagent $D/agent-zfreeze \
-          visDQMZipFreezeDaemon \
-          $DQM_DATA/agents/freezer \
-          $DQM_DATA/zipped \
-          7 \
-          $DQM_DATA/agents/stageout
-
-        startagent $D/agent-zverifier \
-          visDQMZipCastorVerifier \
-          $DQM_DATA/agents/verify \
-          marco.rovere@cern.ch,atanas.batinkov@cern.ch,edgar.eduardo.rosales.rosero@cern.ch  \
-          $DQM_DATA/zipped \
-          $CASTORDIR \
-          24 \
-          $DQM_DATA/agents/clean
-
-        startagent $D/agent-import \
-          visDQMImportDaemon \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/data \
-          $DQM_DATA/ix \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/vcontrol
-
-        startagent -e 128 $D/agent-import-128 \
-          visDQMImportDaemon \
-          $DQM_DATA/agents/register128 \
-          $DQM_DATA/data \
-          $DQM_DATA/ix128
-
-	startagent $D/agent-export \
-	  visDQMExportDaemon \
-	  $DQM_DATA/ix \
-	  $DQM_DATA/agents/export \
-	  $DQM_DATA/data \
-	  "numObjects > 0 and runNumber >= 190389" \
-	  $DQM_DATA/agents/register128
-
-        startagent $D/agent-qcontrol \
-          visDQMRootFileQuotaControl \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-${D}.py
-
-        startagent $D/agent-vcontrol \
-          visDQMVerControlDaemon \
-          $DQM_DATA/agents/vcontrol \
-          $DQM_DATA/data
-
-        startagent $D/agent-ixmerge \
-            visDQMIndexMergeDaemon \
-            $DQM_DATA/agents/ixmerge \
-            $DQM_DATA/ix \
-            $DQM_DATA/agents/register
 
         if [ $D = offline ]; then
           startagent $D/agent-osync \
@@ -453,6 +358,7 @@ start()
             $DQM_DATA/data/OnlineData \
             $DQM_DATA/agents/zip
         fi
+
       done
       ;;
 
@@ -505,11 +411,11 @@ start()
           $DQM_DATA/data \
           $DQM_DATA/agents/register
 
-        startagent $D/agent-import \
+        startagent $D/agent-import-128 \
           visDQMImportDaemon \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $DQM_DATA/ix \
+          $DQM_DATA/ix128 \
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/vcontrol
 
