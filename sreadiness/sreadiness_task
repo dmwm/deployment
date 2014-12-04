@@ -34,31 +34,31 @@ case ${1:-help} in
       enabledlinks )
         ./EnabledLinksFromPhEDExDataSrv.py -p $STATEDIR/CommLinksReports/ \
                        -u $WEBURL > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S)
-        cp style-css-links.css $STATEDIR/CommLinksReports/HTML/
+        cp css/style-css-links.css $STATEDIR/CommLinksReports/HTML/
         ;;
       insitedb )
         ./IsSiteInSiteDB.py -p $STATEDIR/SitesInSiteDB/ \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
       sreadiness )
         ./SiteReadiness.py  -p $STATEDIR/SiteReadiness/ -c $STATEDIR/DailyMetricsCorrections.txt \
-                            -u $WEBURL -x true \
+                            -u $WEBURL -x true -i $STATEDIR/InputFiles \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S)
-        cp style-css-reports.css $STATEDIR/SiteReadiness/HTML/
+        cp css/style-css-reports.css $STATEDIR/SiteReadiness/HTML/
         ;;
       usablesites )
         ./UsableSites.py    -p $STATEDIR/SiteReadinessAnalysis/ -u $WEBURL \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
+
+      fetchInput )
+        git clone https://github.com/altundag/SiteReadiness.git $STATEDIR/TMP
+        mv $STATEDIR/TMP/input $STATEDIR/InputFiles
+        rm -rf $STATEDIR/TMP
+        ;;
+
       * )
         echo "$0 $1: unknown action '$2', please try '$0 help' or documentation." 1>&2
         exit 1 ;;
     esac
-    ;;
-
-  metricscorrections )
-    # Check out the latest metrics corrections
-    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    svn export -q svn+ssh://svn.cern.ch/reps/cmsfomon/SiteReadiness/trunk/DailyMetricsCorrections.txt@HEAD \
-                                  $STATEDIR/DailyMetricsCorrections.txt
     ;;
 
   updateweb )
