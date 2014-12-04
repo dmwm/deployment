@@ -9,6 +9,7 @@
 ##H   metricscorrections  update the daily metrics corrections by fetching the latest revision from SVN
 ##H   updateweb           update the web area
 ##H   clean               clean logs that were not touched in the last week, and historical data older than 3 months
+##H   fetchinput          download input files which are needed for the site readiness scripts
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/SiteReadiness
@@ -49,7 +50,7 @@ case ${1:-help} in
         ./UsableSites.py    -p $STATEDIR/SiteReadinessAnalysis/ -u $WEBURL \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
 
-      fetchInput )
+      fetchinput )
         git clone https://github.com/altundag/SiteReadiness.git $STATEDIR/TMP
         mv $STATEDIR/TMP/input $STATEDIR/InputFiles
         rm -rf $STATEDIR/TMP
