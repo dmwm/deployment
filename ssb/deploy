@@ -39,7 +39,7 @@ deploy_ssb_post()
   ) | acrontab
 
   (mkcrontab
-   echo "55 0 * * * $project_config/ssb_task siteavail"
+   echo "10 2 * * * $project_config/ssb_task siteavail"
    echo "55 0 * * * $project_config/ssb_task hctest 24"
    echo "55 * * * * $project_config/ssb_task hctest 6"
    echo "0 * * * * $project_config/ssb_task storage"
