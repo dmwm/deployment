@@ -32,7 +32,7 @@ case ${1:-help} in
        fi
     done
     for myfeed in $STATEDIR/*xml; do
-      curl -F file=@$myfeed xsls.cern.ch
+      curl -s -F file=@$myfeed xsls.cern.ch &> /dev/null
     done
     ;;
 
