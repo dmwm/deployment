@@ -29,7 +29,6 @@ deploy_sreadiness_post()
      $project_state/DailyMetricsCorrections.txt
 
   (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
-   echo "0 */6 * * * $host $project_config/sreadiness_task metricscorrections"
    echo "5 * * * * $host $project_config/sreadiness_task updateweb"
   ) | acrontab
 
@@ -37,6 +36,7 @@ deploy_sreadiness_post()
    echo "05 */6 * * * $project_config/sreadiness_task run enabledlinks"
    echo "15 */6 * * * $project_config/sreadiness_task run insitedb"
    echo "35 */6 * * * $project_config/sreadiness_task run sreadiness"
+   echo "45 */3 * * * $project_config/sreadiness_task run fetchinput"
    echo "00 * * * * $project_config/sreadiness_task run usablesites"
    echo "00 0 * * * $project_config/sreadiness_task clean"
   ) | crontab -

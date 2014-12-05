@@ -34,36 +34,36 @@ case ${1:-help} in
       enabledlinks )
         ./EnabledLinksFromPhEDExDataSrv.py -p $STATEDIR/CommLinksReports/ \
                        -u $WEBURL > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S)
-        cp style-css-links.css $STATEDIR/CommLinksReports/HTML/
+        cp css/style-css-links.css $STATEDIR/CommLinksReports/HTML/
         ;;
       insitedb )
         ./IsSiteInSiteDB.py -p $STATEDIR/SitesInSiteDB/ \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
       sreadiness )
-        ./SiteReadiness.py  -p $STATEDIR/SiteReadiness/ -c $STATEDIR/DailyMetricsCorrections.txt \
-                            -u $WEBURL -x true \
+        ./SiteReadiness.py  -p $STATEDIR/SiteReadiness/ \
+                            -u $WEBURL -x true -i $STATEDIR/srrepo/input \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S)
-        cp style-css-reports.css $STATEDIR/SiteReadiness/HTML/
+        cp css/style-css-reports.css $STATEDIR/SiteReadiness/HTML/
         ;;
       usablesites )
         ./UsableSites.py    -p $STATEDIR/SiteReadinessAnalysis/ -u $WEBURL \
                                   > $LOGDIR/$2-$(date +%Y-%m-%d_%H-%M-%S) ;;
+
+      fetchinput )
+        cd $STATEDIR
+        [ -d $STATEDIR/srrepo ] || git clone -b test https://github.com/altundag/SiteReadiness srrepo
+        cd srrepo && git pull > /dev/null
+        ;;
+
       * )
         echo "$0 $1: unknown action '$2', please try '$0 help' or documentation." 1>&2
         exit 1 ;;
     esac
     ;;
 
-  metricscorrections )
-    # Check out the latest metrics corrections
-    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    svn export -q svn+ssh://svn.cern.ch/reps/cmsfomon/SiteReadiness/trunk/DailyMetricsCorrections.txt@HEAD \
-                                  $STATEDIR/DailyMetricsCorrections.txt
-    ;;
-
   updateweb )
     klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    rsync -q -au --exclude='INPUTxmls' --exclude='DailyMetricsCorrections.txt' --exclude='proxy' --delete $STATEDIR/ $WEBDIR/
+    rsync -q -au --exclude='INPUTxmls' --exclude='DailyMetricsCorrections.txt' --exclude='proxy' --exclude='srrepo' --delete $STATEDIR/ $WEBDIR/
     ;;
 
   clean )
