@@ -40,7 +40,7 @@ server.source('DQMOverlay')
 server.source('DQMStripChart')
 server.source('DQMCertification')
 server.source('DQMLive', "localhost:8061")
-server.source('DQMArchive', "%s/ix" % STATEDIR, '^/Global/')
+server.source('DQMArchive', "%s/ix128" % STATEDIR, '^/Global/')
 server.source('DQMLayout')
 
 execfile(CONFIGDIR + "/dqm-services.py")
