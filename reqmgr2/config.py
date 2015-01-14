@@ -68,11 +68,32 @@ data.dbs_url = "https://cmsweb.cern.ch/dbs/prod/global/DBSReader"
 
 # web user interface
 ui = views.section_("ui")
-ui.object = "WMCore.ReqMgr.WebGui.FrontPage.FrontPage"
 ui.static_content_dir = path.join(path.abspath(ROOTDIR),
                                  "apps",
                                  main.application,
                                  "data")
+#ui.object = "WMCore.ReqMgr.WebGui.FrontPage.FrontPage"
+ui.object = "WMCore.ReqMgr.Web.ReqMgrService.ReqMgrService"
+ui.tmpldir = path.join(ui.static_content_dir, "html", "ReqMgr", "templates")
+ui.imgdir = path.join(ui.static_content_dir, "html", "ReqMgr", "img")
+ui.cssdir = path.join(ui.static_content_dir, "html", "ReqMgr", "style")
+ui.jsdir = path.join(ui.static_content_dir, "html", "ReqMgr", "javascript")
+#TODO : need to find correct location for this
+ui.sdir = path.join(ui.static_content_dir, "html", "ReqMgr", "javascript")
+
+ui.yuidir = path.join(ui.static_content_dir, "html", "ReqMgr", "yui")
+ui.admin = 'cms-service-webtools@cern.ch'
+ui.title = 'CMS ReqMgr Documentation'
+ui.description = 'Documentation on the ReqMgrService'
+ui.base = '/reqmgr2'
+ui.index = 'reqmgr2' # this part must be activated, see below
+ui.reqmgr = data # this part contains uiuration for ReqMgr REST API, see above
+# This need to be removed when ReqMgr Client is removed
+ui.reqmgr.reqmgr2_url = "https://reqmgr2-dev.cern.ch/reqmgr2" # this part contains uiuration for ReqMgr REST API, see above
+ui_main = ui.section_("main")
+ui_main.application = ui.index
+#ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
+
 
 if  HOST.startswith("vocms034"):
     extentions = config.section_("extensions")
@@ -88,7 +109,15 @@ if  HOST.startswith("vocms034"):
     wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 min
-    wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
+    wmdatamining.archiveDuration = 60 * 60 * 24 # every 4 hours
+    
+    # ACDC cleanup Thread
+    couchCleanup = extentions.section_("couchCleanup")
+    couchCleanup.object = "WMCore.ReqMgr.CherryPyThreads.CouchDBCleanup.CouchDBCleanup"
+    couchCleanup.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
+    couchCleanup.acdc_url = "https://cmsweb.cern.ch/couchdb/acdcserver"
+    couchCleanup.acdcCleanDuration = 60 * 60 * 24 # every 4 hours
+    
 
 #  for dev and vm use testbed data
 if  HOST.startswith("vocms0133"):
@@ -106,3 +135,10 @@ if  HOST.startswith("vocms0133"):
     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 mins
     wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
+    
+    # ACDC cleanup Thread
+    couchCleanup = extentions.section_("couchCleanup")
+    couchCleanup.object = "WMCore.ReqMgr.CherryPyThreads.CouchDBCleanup.CouchDBCleanup"
+    couchCleanup.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/reqmgr_workload_cache"
+    couchCleanup.acdc_url = "https://cmsweb-testbed.cern.ch/couchdb/acdcserver"
+    couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
