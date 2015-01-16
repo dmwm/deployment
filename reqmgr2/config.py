@@ -74,7 +74,7 @@ ui.static_content_dir = path.join(path.abspath(ROOTDIR),
                                  main.application,
                                  "data")
 
-if  HOST.startswith("vocms034"):
+if  HOST.startswith("vocms0307"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
