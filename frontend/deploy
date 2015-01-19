@@ -44,15 +44,15 @@ deploy_frontend_sw()
    $name                                              \
    -r $PWD                                            \
    -l $project_logs                                   \
-   -a $APACHE2_ROOT                                   \
+   -a $APACHE24_ROOT                                  \
    $user                                              \
    -o "$opts"                                         \
    -p $project_config/mpm.conf                        \
    -c $project_config/frontend.conf                   \
    -d $project_config/htdocs                          \
-   -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh"             \
+   -e "$APACHE24_SETUP_ROOT/etc/env.d/*.sh"           \
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
-   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so)
+   -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so)
   [ $? = 0 ]
 
   rm -f $PWD/etc/keys/authz-headers

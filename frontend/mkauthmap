@@ -34,7 +34,7 @@ def die(fmt, *args):
   sys.exit(1)
 
 # Main routine to perform the update.
-def update(outfile, dbcfg, verbose, quiet):
+def update(outfile, dbcfg, verbose, quiet, apache24):
   people = []
   byuid = {}
 
@@ -104,6 +104,14 @@ def update(outfile, dbcfg, verbose, quiet):
     # Remember this user.
     p = { "ID": id, "LOGIN": login, "NAME": name, "DN": dn,
           "PASSWD": passwd, "ROLES": {} }
+    if  apache24:
+        ndn = dn.split('/')
+        if  'OU=computers' in ndn: # computer DN
+            # last two parts were splitted due to slash, we'll merge them back
+            last = '%s/%s' % (ndn[-2], ndn[-1])
+            ndn = ndn[:-3] + [last]
+        ndn.reverse()
+        p.update({"DN": ','.join(ndn)[:-1]})
     byuid[id] = p
     people.append(p)
 
@@ -169,6 +177,7 @@ if __name__ == "__main__":
   parser.add_option("-q", action="store_true", dest="quiet", help="squelch database errors")
   parser.add_option("-o", metavar="FILE", dest="out", help="output file")
   parser.add_option("-c", metavar="MODULE.NAME", dest="cfg", help="database configuration")
+  parser.add_option("--apache24", action="store_true", dest="apache24", help="Format DNs for apache24")
   options, args = parser.parse_args()
 
   # Check options; try to load database configuration.
@@ -187,7 +196,7 @@ if __name__ == "__main__":
 
   # Attempt to update, report errors.
   try:
-    update(options.out, dbcfg, options.verbose, options.quiet)
+    update(options.out, dbcfg, options.verbose, options.quiet, options.apache24)
   except Exception, e:
     die("failed to update %s: %s\n  %s", options.out, str(e),
         format_exc().replace("\n", "  \n"))
