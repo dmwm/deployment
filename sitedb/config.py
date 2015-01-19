@@ -16,7 +16,7 @@ if HOST.startswith("vocms0127"):
   config.views.data.rebusfetchto = "dev"
   config.views.data.rebusfetchtime = 10800
 
-if HOST.startswith("vocms0136"):
+if HOST.startswith("vocms0161"):
   config.views.data.ldapsync = True
   config.views.data.ldsyncto = "prod"
   config.views.data.ldsynctime = 300
