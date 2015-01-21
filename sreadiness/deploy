@@ -23,11 +23,6 @@ deploy_sreadiness_post()
   # Enable directory listing
   echo 'Options +Indexes' > $project_state/.htaccess
 
-  # Check out the latest metrics corrections
-  klist -s
-  svn export -q svn+ssh://svn.cern.ch/reps/cmsfomon/SiteReadiness/trunk/DailyMetricsCorrections.txt@HEAD \
-     $project_state/DailyMetricsCorrections.txt
-
   (acrontab -l | { fgrep -v -e "$host $project_config/" || true; }
    echo "5 * * * * $host $project_config/sreadiness_task updateweb"
   ) | acrontab

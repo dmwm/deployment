@@ -6,7 +6,6 @@
 ##H   help                show this help
 ##H   version             get current version of the service
 ##H   run [what]          call the sreadiness scripts to update the state
-##H   metricscorrections  update the daily metrics corrections by fetching the latest revision from SVN
 ##H   updateweb           update the web area
 ##H   clean               clean logs that were not touched in the last week, and historical data older than 3 months
 ##H
@@ -51,7 +50,7 @@ case ${1:-help} in
 
       fetchinput )
         cd $STATEDIR
-        [ -d $STATEDIR/srrepo ] || git clone -b test https://github.com/altundag/SiteReadiness srrepo
+        [ -d $STATEDIR/srrepo ] || git clone https://github.com/CMSCompOps/SiteReadiness srrepo
         cd srrepo && git pull > /dev/null
         ;;
 
@@ -63,7 +62,7 @@ case ${1:-help} in
 
   updateweb )
     klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
-    rsync -q -au --exclude='INPUTxmls' --exclude='DailyMetricsCorrections.txt' --exclude='proxy' --exclude='srrepo' --delete $STATEDIR/ $WEBDIR/
+    rsync -q -au --exclude='INPUTxmls' --exclude='proxy' --exclude='srrepo' --delete $STATEDIR/ $WEBDIR/
     ;;
 
   clean )
