@@ -1,4 +1,4 @@
-def shifttiminglayout(i, p, *rows): i["00 Shift/Detector Timing Plots/" + p] = DQMItem(layout=rows)
+def shifttiminglayout(i, p, *rows): i["00 Shift/DetectorTimingPlots/" + p] = DQMItem(layout=rows)
 
 shifttiminglayout(dqmitems, "01 Pixel",
   [{ 'path': "Pixel/Barrel/ALLMODS_chargeCOMB_Barrel",
