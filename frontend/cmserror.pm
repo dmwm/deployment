@@ -39,12 +39,9 @@ sub handler($)
   my $err = $r->path_info();
   my $title = "Unexpected error occurred";
   my $message = "<p>An unspecified error occurred.</p>";
-  my $ticket = "please be so kind as to report this problem to the"
-             . " <a href='https://savannah.cern.ch/support/?func="
-             . "additem&group=cmscompinfrasup&category_id=123&privacy=1&"
-             . "assigned_to=5156&custom_sb2=102&custom_sb1=102&summary="
-             . "cmsweb%20issue%3a%20unexpected%20401%20error%20code&"
-             . "add_cc=cms-service-webtools\@cern.ch'>operators</a>";
+  my $ticket = "please be so kind and <a href='https://ggus.eu/?"
+             . "mode=ticket_cms'>create a ticket</a> to"
+             . "\"CMS Web Tools\" support unit</a>";
 
   if ($err eq "/401")
   {
