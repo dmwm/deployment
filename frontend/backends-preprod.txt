@@ -1,7 +1,7 @@
 ^/auth/complete/dqm/(?:online(?:|-playback|-test)|gui-test|ecal|lumi)(?:/|$) cmsdaq0.cern.ch
 ^/auth/complete/dqm/(?:offline|caf)(?:/|$) vocms138.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms139.cern.ch
-^/auth/complete/dqm/dev(?:/|$) vocms133.cern.ch
+^/auth/complete/dqm/dev(?:/|$) vocms0133.cern.ch
 ^/auth/complete/(?:couchdb/asynctransfer|aso-monitor|couchdb2)(?:/|$) vocms0132.cern.ch  :affinity
 ^/auth/complete/(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0133.cern.ch :affinity
 ^/auth/complete/(?:c)(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|tier0_wmstats|t0_workloadsummary|acdcserver|aso-monitor)(?:/|$) vocms0133.cern.ch :affinity
