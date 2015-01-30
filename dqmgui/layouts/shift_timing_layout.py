@@ -1,4 +1,4 @@
-def shifttiminglayout(i, p, *rows): i["00 Shift/Detector_Timing_Plots/" + p] = DQMItem(layout=rows)
+def shifttiminglayout(i, p, *rows): i["00 Shift/DetectorTimingPlots/" + p] = DQMItem(layout=rows)
 
 shifttiminglayout(dqmitems, "01 Pixel",
   [{ 'path': "Pixel/Barrel/ALLMODS_chargeCOMB_Barrel",
@@ -73,7 +73,16 @@ shifttiminglayout(dqmitems, "06 RPC",
     'draw': { 'withref': "no" }},
   { 'path': "L1T/L1TGMT/n_RPCf_vs_CSCTF",
     'description': "ToAdd",
-    'draw': { 'withref': "no" }}])
+    'draw': { 'withref': "no" }}],
+ [{ 'path': "L1T/L1TGMT/bx_DT_vs_RPC",
+    'description': "ToAdd",
+    'draw': { 'withref': "no" }},
+  { 'path': "L1T/L1TGMT/bx_CSC_vs_RPC",
+    'description': "ToAdd",
+    'draw': { 'withref': "no" }},
+  { 'path': "L1T/L1TGMT/bx_DT_vs_CSC",
+    'description': "ToAdd",
+    'draw': { 'withref': "no" }},],)
 
 shifttiminglayout(dqmitems, "07 CSC",
  [{ 'path': "L1T/L1TGMT/bx_DT_vs_CSC",
