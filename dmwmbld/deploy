@@ -6,22 +6,12 @@ deploy_dmwmbld_prep()
   mkproj webarea
 }
 
-deploy_dmwmbld_sshkey()
-{
-  local keyfile=
-  if [ -r ~/.ssh/id_rsa ]; then
-    keyfile=~/.ssh/id_rsa
-  elif [ -r ~/.ssh/id_dsa ]; then
-    keyfile=~/.ssh/id_dsa
-  fi
-  echo $keyfile
-}
-
 webdir=/afs/cern.ch/user/d/dmwmbld/www
 
 deploy_dmwmbld_sw()
 {
-  deploy_pkg -a dmwmbld/github-api-token -a dmwmbld/ssh-key-to-cmsrep
+  deploy_pkg -a dmwmbld/github-api-token \
+             -a dmwmbld/ssh-key-to-cmsrep -a dmwmbld/ssh-key-to-cmsrep.pub
 
   if grep -q "create a token" $project_auth/github-api-token; then
     note "WARNING: you must set a github token."
@@ -31,8 +21,8 @@ deploy_dmwmbld_sw()
     note "WARNING: you must set a SSH key to have access to the repository."
     note "WARNING: see $project_auth/ssh-key-to-cmsrep for instructions."
   else
-    local keyfile=$(deploy_dmwmbld_sshkey)
-    note "NOTE: you must put ${keyfile}.pub to SSH authorized keys in cmsbuild@cmsrep.cern.ch."
+    note "NOTE: you must put $project_auth/ssh-key-to-cmsrep.pub key"\
+         "into SSH authorized keys for cmsbuild@cmsrep.cern.ch."
   fi
   chmod 400 $project_auth/*
 
@@ -101,15 +91,10 @@ deploy_dmwmbld_auth()
       echo "then click 'Generate token' and substitute all the text in this file"
       echo "by the produced token content."
       ;;
-    */ssh-key-to-cmsrep )
-      local keyfile=$(deploy_dmwmbld_sshkey)
-      if [ -r $keyfile ]; then
-        cat $keyfile
-      else
-        echo "Use 'ssh-keygen' to generate a passwordless SSH key, then"
-        echo "give it access on cmsbuild@cmsrep.cern.ch so that the"
-        echo "build-agent can upload and sync-back RPMs to the repository."
-      fi
+    */ssh-key-to-cmsrep* )
+      echo "Use 'ssh-keygen' to generate a passwordless SSH key, then"
+      echo "give it access on cmsbuild@cmsrep.cern.ch so that the"
+      echo "build-agent can upload and sync-back RPMs to the repository."
       ;;
   esac
 }
