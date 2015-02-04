@@ -21,7 +21,7 @@
 ### note that the account name (-l cmsweb_backends) and renewing host list
 ### (-R pattern) should be registered with px.support@cern.ch prior to use.
 ###
-###  export GT_PROXY_MODE=old
+###  export GT_PROXY_MODE="rfc"
 ###  myproxy-init -x -R "*/CN=vocms0(34|13[2345689]|140|16[0-3]).cern.ch" \
 ###    -c 720 -t 36 -s myproxy.cern.ch -l cmsweb_backends_$(id -un)
 ###
@@ -29,7 +29,7 @@
 ### operator needs to re-bootstrap the renewal process by copying a seed
 ### proxy to the backend servers for use by ProxyRenew:
 ###
-###  voms-proxy-init -voms cms
+###  voms-proxy-init -rfc -voms cms
 ###  scp -p /tmp/x509up_u$(id -u) \
 ###    cmsweb@vocmsNNN.cern.ch:/data/system/current/auth/proxy/seed-$(id -un).cert
 ###
@@ -37,7 +37,7 @@
 [ $(uname) = Darwin ] && exit 0 # deactivated for now
 
 verbose=false
-export GT_PROXY_MODE=old
+export GT_PROXY_MODE="rfc"
 if [ -x /usr/bin/myproxy-init -a -x /usr/bin/voms-proxy-init ]; then :; else
   source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
 fi
@@ -162,7 +162,7 @@ for proxy in proxy-*.cert; do
   perl -p -i -e 'BEGIN{undef $/;} s,-----BEGIN CERTIFICATE.*?END CERTIFICATE-----\n,,smg' "$proxy.new.key"
   chmod 400 "$proxy.new.key"
 
-  if voms-proxy-init -valid $h:$m -voms "$voms" \
+  if voms-proxy-init -rfc -valid $h:$m -voms "$voms" \
                      -cert "$proxy.new.cert" -key "$proxy.new.key" \
                      -out "$proxy.voms" -bits 1024 -quiet >> $errlog 2>&1; then
     actime=$(voms-proxy-info -file "$proxy.voms" -actimeleft)

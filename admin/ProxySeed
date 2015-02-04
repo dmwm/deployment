@@ -58,7 +58,7 @@ esac
 if [ -x /usr/bin/myproxy-init -a -x /usr/bin/voms-proxy-init ]; then :; else
   source /afs/cern.ch/project/gd/LCG-share/sl5/etc/profile.d/grid_env.sh
 fi
-export GT_PROXY_MODE=old
+export GT_PROXY_MODE="rfc"
 
 case $type in
   dev )
@@ -67,5 +67,5 @@ case $type in
   prod )
     try myproxy-init $pxparam -R "*/CN=*cms*.cern.ch" -l cmsweb_backends_$me ;;
 esac
-try voms-proxy-init -voms cms -valid 36:00
+try voms-proxy-init -rfc -voms cms -valid 36:00
 try scp -p /tmp/x509up_u$(id -u) $dest/seed-$me.cert

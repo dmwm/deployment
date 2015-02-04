@@ -35,7 +35,7 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms34 | vocms034 |  vocms127 |  vocms012[78] | vocms13[2345689] | vocms013[2345689] | vocms140 | vocms0140 | vocms16[0123] | vocms016[0123] | vocms030[67] )
+    vocms34 | vocms034 |  vocms127 |  vocms0127 | vocms13[2345689] | vocms013[2345689] | vocms140 | vocms0140 | vocms16[0123] | vocms016[0123] | vocms030[67] )
       pxlabel=cmsweb_backends ;;
     * )
       pxlabel=devvm_$(echo $host | tr - _) ;;
