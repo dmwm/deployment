@@ -187,7 +187,7 @@ private:
 	(o.name.find("dxdz vs lumi") != std::string::npos) || (o.name.find("dydz vs lumi") != std::string::npos) || (o.name.find("pixelHits vs lumi") != std::string::npos) ||
 	(o.name.find("good vertices vs lumi") != std::string::npos))
       {
-      	ps->SetOptFit(1110)
+      	ps->SetOptFit(1110);
       	ps->SetOptStat(10);
 
 	return;
