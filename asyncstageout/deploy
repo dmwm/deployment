@@ -55,6 +55,22 @@ deploy_asyncstageout_post()
              "$root/current/apps/asyncstageout/couchapp/monitor" \
              "http://localhost:${couch##*:}/asynctransfer" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/MonitorByDest" \
+             "http://localhost:${couch##*:}/asynctransfer" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/MonitorBySource" \
+             "http://localhost:${couch##*:}/asynctransfer" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/MonitorFilesCount" \
+             "http://localhost:${couch##*:}/asynctransfer" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/current/apps/asyncstageout/couchapp/MonitorStartedEnded" \
+             "http://localhost:${couch##*:}/asynctransfer" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
       done
       ;;
   esac
