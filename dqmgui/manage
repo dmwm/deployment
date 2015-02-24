@@ -312,7 +312,7 @@ start()
         startagent $D/agent-zverifier \
           visDQMZipCastorVerifier \
           $DQM_DATA/agents/verify \
-          marco.rovere@cern.ch,atanas.batinkov@cern.ch \
+          marco.rovere@cern.ch,atanas.batinkov@cern.ch,broen.van.besien@cern.ch \
           $DQM_DATA/zipped \
           $CASTORDIR \
           24 \
