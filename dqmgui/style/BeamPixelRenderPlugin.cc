@@ -2,8 +2,8 @@
   \File BeamPixelRenderPlugin
   \Display Plugin for BeamSpot from Pixel-Vertices
   \author Mauro Dinardo
-  \version $ Revision: 1.0 $
-  \date $ Date: 2010/30/03 08:11:00 $
+  \version $ Revision: 2.0 $
+  \date $ Date: 2015/16/02 18:11:00 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -72,9 +72,7 @@ public:
     c->cd();
 
     if (dynamic_cast<TH2F*>(o.object)) preDrawTH2F(c, o);
-
     if (dynamic_cast<TH1F*>(o.object)) preDrawTH1F(c, o);
-
     if (dynamic_cast<TProfile*>(o.object)) preDrawTProfile(c, o);
   }
 
@@ -107,7 +105,8 @@ private:
 	c->SetGrid();
 	obj->SetContour(NCont_rainbow);
 	gStyle->SetPalette(NCont_rainbow, hcalRainbowColors);
-	gStyle->SetOptStat(1110);
+	TPaveStats* ps = (TPaveStats*)c->GetPrimitive("stats");
+	ps->SetOptStat(1110);
 	obj->SetStats(kTRUE);
 	obj->SetOption("colz");
 	gStyle->SetStatX(0.9);
@@ -154,7 +153,8 @@ private:
     gStyle->SetCanvasBorderMode(0);
     gStyle->SetPadBorderMode(0);
     gStyle->SetPadBorderSize(0);
-    gStyle->SetOptStat(111110);
+    TPaveStats* ps = (TPaveStats*)c->GetPrimitive("stats");
+    ps->SetOptStat(111110);
 
     TAxis* xa = obj->GetXaxis();
     TAxis* ya = obj->GetYaxis();
@@ -170,7 +170,7 @@ private:
 
     if ((o.name.find("hist pixelHits vs lumi") != std::string::npos) || (o.name.find("hist good vx vs lumi") != std::string::npos))
       {
-	gStyle->SetOptStat(10);
+      	ps->SetOptStat(10);
 
 	gStyle->SetErrorX(0.);
 	gStyle->SetEndErrorSize(0.);
@@ -187,8 +187,8 @@ private:
 	(o.name.find("dxdz vs lumi") != std::string::npos) || (o.name.find("dydz vs lumi") != std::string::npos) || (o.name.find("pixelHits vs lumi") != std::string::npos) ||
 	(o.name.find("good vertices vs lumi") != std::string::npos))
       {
-	gStyle->SetOptFit(1110);
-	gStyle->SetOptStat(10);
+      	ps->SetOptFit(1110);
+      	ps->SetOptStat(10);
 
 	return;
       }
@@ -203,7 +203,8 @@ private:
     gStyle->SetCanvasBorderMode(0);
     gStyle->SetPadBorderMode(0);
     gStyle->SetPadBorderSize(0);
-    gStyle->SetOptStat(1110);
+    TPaveStats* ps = (TPaveStats*)c->GetPrimitive("stats");
+    ps->SetOptStat(1110);
 
     TAxis* xa = obj->GetXaxis();
     TAxis* ya = obj->GetYaxis();
