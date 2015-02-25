@@ -217,23 +217,23 @@ system_install_hostcert()
     fi
   done
   if $badcert; then
+    # no valid cert with enough life left was found. Getting a new one
     case $(hostname -f) in
       *.cern.ch )
 	(set -e
-	 cd /tmp
-	 tmp=$(mktemp -d -t cert-$$-XXXXX)
-	 req=$(hostname -s).csr
-	 cn=/CN=$(hostname -f)
-	 cd $tmp
-         note "WARNING: requesting now a new host certificate via ca.cern.ch"
-         note "WARNING: you will prompted for your login or grid certificate password"
-         note "WARNING: by supplying your password you agree to CERN computing rules"
+         cd /tmp
+         tmp=$(mktemp -d -t cert-$$-XXXXX)
+         req=$(hostname -s).csr
+         cn=/CN=$(hostname -f)
+         cd $tmp
+         note "WARNING: requesting now a new grid host certificate via gridca.cern.ch"
+         note "WARNING: it will use your kerberos credentials for the Single Sign On."
          openssl req -new -subj $cn -out $req -nodes -sha512 -newkey rsa:2048 -keyout hostkey.pem
-	 $project_config_src/careq-cern-ch $req hostcert.pem 1>&11 2>&22
-	 chmod 400 $req hostkey.pem
-	 chmod 644 hostcert.pem
-	 mv -f $req host{key,cert}.pem $CMS_DEV_ROOT/certs
-	 rm -r $tmp)
+         $project_config_src/careq-cern-ch $req hostcert.pem 1>&11 2>&22
+         chmod 400 $req hostkey.pem
+         chmod 644 hostcert.pem
+         mv -f $req host{key,cert}.pem $CMS_DEV_ROOT/certs
+         rm -r $tmp)
 	[ $? = 0 ]
 	;;
 
@@ -416,31 +416,41 @@ deploy_system_post()
         /etc/sudoers /etc/sudoers.d/cern-config-users 2> /dev/null
 
       # Install additional yum repositories
-      #  EGI-trustanchors provides the updated CAs
+
+      # EGI-trustanchors provides the updated CAs
       sudo wget -q -O /etc/yum.repos.d/egi-trustanchors.repo \
         http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
-      #  (glite-VOBOX instead of glite-SCAS?)
-      sudo wget -q -O /etc/yum.repos.d/glite-scas.repo \
-        http://cern.ch/grid-deployment/glite/repos/3.2/glite-SCAS.repo
+
+      # EMI Grid middleware
+      case $arch in
+        slc5*) sudo rpm -ivh --force \
+                 http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
+               ;;
+        * ) sudo rpm -ivh --force \
+              http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm      
+            ;;
+      esac
+
+      # WLCG specific (needed for getting the cms voms config files)
+      sudo wget -q -O /etc/yum.repos.d/wlcg.sl6.repo \
+        http://linuxsoft.cern.ch/wlcg/wlcg-sl6.repo
+      sudo wget -q -O /etc/pki/rpm-gpg/RPM-GPG-KEY-wlcg \
+        http://linuxsoft.cern.ch/wlcg/RPM-GPG-KEY-wlcg
 
       # Install additional required packages.
       note "INFO: installing required system packages. This operation may take a few minutes complete."
       sudo yum -y install \
         tk compat-libstdc++-33 'ca_*' dummy-ca-certs lcg-CA \
-	fetch-crl edg-mkgridmap git-all stgit colordiff libXpm-devel finger \
+	fetch-crl git-all stgit colordiff libXpm-devel finger \
 	$(yum -q list compat-{readline5,libtermcap} perl-ExtUtils-Embed 2>/dev/null | \
 	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}') \
-        libXmu mesa-libGLU arc.x86_64
+        libXmu mesa-libGLU arc.x86_64 # openssl098e compat-expat1
 
-      # Install myproxy and voms tools as there is no slc6 build for it in AFS.
-      # Only gets the voms configuration from AFS.
-      sudo yum -y install myproxy
-      sudo rsync -cavu \
-        /afs/cern.ch/project/gd/LCG-share/current/glite/etc/vomses/ /etc/vomses/
-      sudo rsync -cavu \
-        /afs/cern.ch/project/gd/LCG-share/current/external/etc/grid-security/vomsdir/ \
-        /etc/grid-security/vomsdir/
-      sudo chown -R root:root /etc/vomses /etc/grid-security/vomsdir
+      # Install myproxy and voms tools.
+      sudo yum -y install myproxy wlcg-voms-cms voms-clients3
+
+      # Install cern-get-sso-cookie
+      sudo yum -y install cern-get-sso-cookie
 
       # Should be ok to use bashs from slc5 on slc6. There is no build for slc6 yet.
       if rpm --quiet -q bashs; then :; else

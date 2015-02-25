@@ -14,6 +14,7 @@ try:
   from httplib import HTTPSConnection
 except:
   from httplib import HTTPS as HTTPSConnection
+from HTMLParser import HTMLParser
 
 DEBUG = False
 ssl_key_file = None
@@ -34,17 +35,20 @@ class X509Auth(AbstractHTTPHandler):
 
 def parse_form_fields(page):
   """Parses and decodes HTML form inputs with 'name' and 'value'."""
+  h = HTMLParser()
   result = {}
   for item in page.split('<input '):
     if item.find('name=') != -1 and item.find('value=') != -1:
       key = item.split('name="')[1].split('"')[0]
-      val = item.split('value="')[1].split('"')[0] \
-            .replace('&quot;', '"').replace('&lt;','<')
+      val = h.unescape(item.split('value="')[1].split('"')[0])
       result[key] = val
   return result
 
 def sso_auth(auth_url):
   """Authenticate to CERN SSO for `url`."""
+  # Instantiate html parser to use when unescaping html
+  h = HTMLParser()
+
   # Setup HTTP handlers
   cookieproc = HTTPCookieProcessor()
   opener = build_opener(cookieproc)
@@ -58,7 +62,7 @@ def sso_auth(auth_url):
   login_page = login.read()
   m = re.search(r'href="(auth/sslclient/[^"]*)"', login_page)
   assert m, "No cert login link at <%s>" % login.geturl()
-  login_url = urljoin(login.geturl(), m.group(1).replace("&amp;", "&"))
+  login_url = urljoin(login.geturl(), h.unescape(m.group(1)))
 
   # Redo opener to include X509 cert auth. Keep cookies.
   opener = build_opener(cookieproc, X509Auth())
@@ -72,7 +76,7 @@ def sso_auth(auth_url):
   sso_data = parse_form_fields(jump_page)
   m = re.search(r'<form[^>]* action="([^"]*?)">', jump_page)
   assert m, "No form to post after sso auth?"
-  master_url = m.group(1)
+  master_url = h.unescape(m.group(1))
 
   # Reset opener to remove the X509 authentication but keep cookies.
   opener = build_opener(cookieproc)
@@ -126,7 +130,7 @@ if __name__ == "__main__":
     exit(1)
 
   # Authenticate to CERN SSO.
-  ca_url = "https://gridca.cern.ch/gridca/HostCertificates/RequestHostCertificate.aspx"
+  ca_url = "https://gridca.cern.ch/gridca/host/HostSelection.aspx?template=EE2Host&instructions=openssl"
   url, form_data, initial_page = sso_auth(ca_url)
 
   # Unfortunately, gridca.cern.ca returns /gridca as initial page, so
@@ -145,18 +149,21 @@ if __name__ == "__main__":
   reqdata = open(req).read()
 
   # Submit the form with the host name.
-  form_data['ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$TbHostName'] = host
+  form_data['ctl00$ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$HostSiteContentPlaceholder$ManagedHostSelection$TbHostName'] = host
   url, form_data, hostreq_page = sso_request(ca_url, form_data)
 
-  # Now submit the certificate request.
-  form_data['ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$TbCreateCertificateRequest'] = reqdata
-  form_data['ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$DdlReminders'] = 'Requester'
-  url, form_data, downloadcert_page = sso_request(ca_url, form_data)
+  # Now submit the certificate request. Note the request
+  # goes to "url", not "ca_url".
+  form_data['ctl00$ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$HostSiteContentPlaceholder$TbCreateCertificateRequest'] = reqdata
+  form_data['ctl00$ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$HostSiteContentPlaceholder$ExpirationRemindersCtrl$DdlReminders'] = 'Requester'
+  del(form_data['ctl00$ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$HostSiteContentPlaceholder$UploadButton'])
+  del(form_data['ctl00$ctl00$ctl00$NICEMasterPageBodyContent$SiteContentPlaceholder$HostSiteContentPlaceholder$UploadCertificateRequest'])
+  url, form_data, downloadcert_page = sso_request(url, form_data)
 
   # Find the link for downloading certificate PEM file.
-  m = re.search(r'href="(host.cert\?requestID=.*encoding=b64)"', downloadcert_page)
+  m = re.search(r'href="(host.cert\?template=EE2Host&requestID=.*encoding=b64)"', downloadcert_page)
   assert m, "No PEM download link at <%s>" % url
-  pem_url = urljoin(url, m.group(1).replace("&amp;", "&"))
+  pem_url = urljoin(url, HTMLParser().unescape(m.group(1)))
 
   # Finally download the PEM file.
   data = urlopen(pem_url).read()

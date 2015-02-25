@@ -421,6 +421,7 @@ set -ex
 
 # Record beginning of installation.
 note "INFO: $now: starting deployment of: $*"
+note "INFO: installation log can be found in $errlog"
 
 # Loop over all requested services and install them one at a time.
 (for svc; do deploy $(echo $svc | tr / ' '); done)
@@ -431,7 +432,6 @@ set +ex
 exec 1>&11 2>&22
 
 # Report program result
-note "INFO: installation log can be found in $errlog"
 case $exit in
   0 ) note "INFO: installation completed sucessfully" ;;
   * ) note "ERROR: installation failed with exit code $exit" ;;
