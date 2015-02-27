@@ -304,6 +304,9 @@ deploy_system_post()
       sudo sh -c '/usr/bin/puppet agent -t' ||
         note "WARNING: puppet agent exited with code $?."
 
+      sudo sh -c '/usr/local/sbin/distro_sync.sh &> /dev/null' ||
+        note "WARNING: distro_sync script exited with code $?."
+
       # Must have various directories.
       [ -d /data/user ]
       [ -d /data/certs ]
