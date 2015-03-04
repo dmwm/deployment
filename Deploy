@@ -414,10 +414,11 @@ note() { echo "$*" >> $errlog; echo "$*" 1>&11; }
 # Start error log and make sure it gets wiped on exit.
 errlog=$root/.deploy/$(date +%Y%m%d-%H%M%S)-$$-$(echo $stages | tr -d ' ').log
 trap "(exit 77); exit 77" 1 2 15
+trap 'err=$?; note "ERROR: installation failed with exit code $err."; exit $err' ERR
 : > $errlog
 exec 11>&1 22>&2
 exec 1>>$errlog 2>&1
-set -ex
+set -eEx
 
 # Record beginning of installation.
 note "INFO: $now: starting deployment of: $*"
@@ -428,7 +429,7 @@ note "INFO: installation log can be found in $errlog"
 
 # Resume normal output.
 exit=$?
-set +ex
+set +eEx
 exec 1>&11 2>&22
 
 # Report program result
