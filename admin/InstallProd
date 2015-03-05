@@ -18,7 +18,7 @@
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s start[:what]
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s stop[:what]
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s check -v VER
-### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s state:check
+### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s state:check -u USER
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s state:production -u USER
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -s kstop
 
@@ -46,6 +46,7 @@ confirm()
   esac
 }
 
+CMD="$0 $@"
 STAGE= VER= REPO= ACFG= PKGS= HOSTS= PXUSER= STEM= ARCH= RELEASE=
 eval set -- $(getopt -n $0 -o A:R:hs:d:v:r:a:p:t:u:x: -- ${1+"$@"})
 [ $? = 0 ] || usage
@@ -105,9 +106,9 @@ case $STAGE in
     ;;
   state )
     [ X"$HOSTS" = X ] && usage
-    case $PXUSER:$WHAT in
-      :production | :maintenance ) usage ;;
-      :check | *:production | *:maintenance ) ;;
+    [ X"$PXUSER" = X ] && usage
+    case $WHAT in
+      check | production | maintenance ) ;;
       * ) usage ;;
     esac
     ;;
@@ -129,6 +130,18 @@ case $STAGE in
     ;;
 esac
 
+
+# Create directory for deployment logs.
+[ -d $PWD/.deploy ] || {
+  mkdir -p $PWD/.deploy || exit $?
+  chmod go-rwx $PWD/.deploy || exit $?
+}
+
+# Save all the output on errlog
+errlog=$PWD/.deploy/$STEM-$(date '+%Y%m%d').log
+echo "INFO: this installation log can be found in $errlog"
+(
+echo "$(date '+%Y%m%d-%H%M%S'): $CMD"
 case $STAGE in
   image )
     set -ex
@@ -212,42 +225,45 @@ case $STAGE in
 
   state )
     set -e
-    update=
     case $WHAT in
       check )
-        set -x
         for host in $HOSTS; do
-          ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 15 || true
+          (echo 'sudo /usr/sbin/lemon-host-check -t 15'
+           echo 'echo "File /etc/iss.nologin" $(test -f /etc/issuse && echo exists || echo does not exist)'
+          ) | ssh cmsweb@$host bashs -l || true
 	done
+        echo "Checking alarm status in roger:"
+        ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch \
+          roger show $HOSTS | egrep 'hostname|app_alarmed|appstate'|tr -d ','
 	;;
 
-      maintenance | production )
-        for host in $HOSTS; do
-          cur=$(ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch roger show $host|grep appstate|cut -d"\"" -f 4)
-	  echo "$host in state $cur"
-	  update="${update:+$update }$host"
-        done
+      maintenance )
         set -x
-        case $WHAT:$update in
-          maintenance:vocms* )
-            ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch roger update --all_alarms false $update
-            # The following removes the machine from the DNS load balancing
-            for host in $update; do
-              ssh cmsweb@$host sudo touch /etc/iss.nologin
-            done
-	    ;;
-          production:vocms* )
-            for host in $update; do
-              ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 15 || true
-	    done
-            set +x; confirm "ok to put $update into $WHAT"; set -x
-	    ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch roger update --all_alarms true $update
-            # Remove iss.nologin file to put frontends back to DNS load balancing
-            for host in $update; do
-              ssh cmsweb@$host sudo rm -f /etc/iss.nologin
-            done
-	    ;;
-        esac
+        (echo "roger show $HOSTS | egrep 'hostname|app_alarmed|appstate'|tr -d ','"
+         echo "roger update --all_alarms false $HOSTS"
+        ) | ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch sh -l
+
+        # The following removes the host from the DNS load balancing, if any
+        for host in $HOSTS; do
+          ssh cmsweb@$host sudo touch /etc/iss.nologin
+        done
+        ;;
+
+      production )
+        for host in $HOSTS; do
+          ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 15 || true
+        done
+        confirm "ok to put $HOSTS into $WHAT"
+ 
+        set -x
+        (echo "roger update --all_alarms true $HOSTS"
+         echo "roger show $HOSTS | egrep 'hostname|app_alarmed|appstate'|tr -d ','"
+        ) | ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch sh -l
+
+        # The following puts the host back to the DNS load balancing, if any
+        for host in $HOSTS; do
+          ssh cmsweb@$host sudo rm -f /etc/iss.nologin
+        done
         ;;
     esac
     ;;
@@ -258,12 +274,10 @@ case $STAGE in
     echo "Running sysprep for $HOSTS. This can take a few minutes..."
     set -e
     for host in $HOSTS; do
-      (rsync -zavmH --delete -f '-s .svn' $PWD/cfg/ cmsweb@$host:/tmp/foo/
+      (rsync -zavmHq --delete -f '-s .svn' -f '-s .git' $PWD/cfg/ cmsweb@$host:/tmp/foo/
        (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
         echo "cd /tmp/foo"
         echo "./Deploy $ARCH -t dummy -s post \$PWD system/$WHAT"
-        echo "cat /tmp/foo/.deploy/*"
-        echo "rm -rf /tmp/foo"
         echo "exit 0") |
         ssh cmsweb@$host bashs -l
       ) &> $errlog.$host &
@@ -271,6 +285,10 @@ case $STAGE in
     wait
     cat $errlog.*
     confirm "sysprep passed for $HOSTS"
+    for host in $HOSTS; do
+      (echo "exec 2>&1; set -ex; hostname -f; rm -fr /tmp/foo") |
+       ssh cmsweb@$host bashs -l
+    done
     ;;
 
   sync )
@@ -280,7 +298,7 @@ case $STAGE in
     set -ex
     (cd srv && rm current && ln -s $VER current)
     for host in $HOSTS; do
-      (sudo rsync -zavmH -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
+      (sudo rsync -zavmHq -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
         --rsync-path="sudo rsync" --delete \
         -f "+ /srv-$STEM/$VER" $EXTRA -f ". $PWD/cfg/admin/rsync-$STEM.rules" \
         $PWD/ cmsweb@$host:$PWD/) &> $errlog.$host &
@@ -403,5 +421,6 @@ case $STAGE in
     exit 1
     ;;
 esac
+) 2>&1 | tee -a $errlog  # save all the output for forensics if needed
 
 exit 0
