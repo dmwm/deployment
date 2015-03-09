@@ -71,7 +71,7 @@ case ${1:-help} in
     [ X"$FILES" = X ] || rm -f $FILES
 
     # cleans historical data older than 3 months
-    FILES=$(find $STATEDIR -type f \( -name '*' ! -name ".htaccess" \) -mtime +90)
+    FILES=$(find $STATEDIR -type d \( -path "$STATEDIR/proxy" -o -path "$STATEDIR/srrepo" \) -prune -o -type f \( -name '*' -a ! -name ".htaccess" \) -mtime +90 -print)
     [ X"$FILES" = X ] || rm -f $FILES 
     ;;
 
