@@ -248,7 +248,7 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
           obj->SetMinimum(0.75);
           return;
         }
-      if( o.name.find( "FedChLErrArray" ) != std::string::npos )
+      if( o.name.find( "FedChLErr" ) != std::string::npos )
       {
         gPad->SetGrid();
 	gPad->SetRightMargin(0.15);
@@ -256,7 +256,7 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
 	obj->SetOption("colztext");
       }
 
-      if( o.name.find( "FedETypeNErrArray" ) != std::string::npos )
+      if( o.name.find( "FedETypeNErr" ) != std::string::npos )
       {
         gPad->SetGrid();
 	gPad->SetLeftMargin(0.3);
@@ -267,7 +267,7 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
 	return;
       }
 
-      if( o.name.find( "FedChNErrArray" ) != std::string::npos )
+      if( o.name.find( "FedChNErr" ) != std::string::npos )
       {
         gPad->SetGrid();
 	gPad->SetRightMargin(0.15);

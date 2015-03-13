@@ -27,7 +27,6 @@ server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracki
                  'SiStrip/Layouts/06 - OffTrackCluster (Total Number)',
                  'SiStrip/Layouts/07 - Tracking ReportSummary',
                  'SiStrip/Layouts/08 - Tracks (pp collisions)',
-                 'SiStrip/Layouts/08b - Tracks (pp collisions) old layout',
                  'SiStrip/Layouts/09 - Tracks (Cosmic Tracking)')
 
 server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStripLAS', '^SiStripLAS/', '',
@@ -174,11 +173,20 @@ server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1TEMU', '^L1TEMU/', '',
                  'L1TEMU/HCAL/HTPErrorFlag')
 
 server.workspace('DQMContent', 40, 'Trigger/Lumi', 'HLT', '^HLT/', '',
-                'HLT/FourVector/PathsSummary/HLT_Egamma_Pass_Any',
-                'HLT/FourVector/PathsSummary/HLT_JetMet_Pass_Any',
-                'HLT/FourVector/PathsSummary/HLT_Muon_Pass_Any',
-                'HLT/FourVector/PathsSummary/HLT_Rest_Pass_Any',
-                'HLT/FourVector/PathsSummary/HLT_Special_Pass_Any'
+                 'HLT/TriggerRates/L1 Algo/L1_SingleMuOpen (bit 55)',
+                 'HLT/TriggerRates/L1 Algo/L1_SingleEG5 (bit 47)',
+                 'HLT/TriggerRates/Streams/A',
+                 'HLT/TriggerRates/Streams/Calibration',
+                 'HLT/TriggerRates/Streams/DQM',
+                 'HLT/TriggerRates/Streams/DQMCalibration',
+                 'HLT/TriggerRates/HLT/HLT_Random_v2 accept',
+                 'HLT/TriggerRates/HLT/HLT_L1SingleMuOpen_v6 accept',
+                 'HLT/TriggerRates/HLT/HLT_L1SingleEG5_v1 accept',
+                 'HLT/TriggerRates/HLT/HLT_Physics_v4 accept',
+                 'HLT/TriggerRates/physics',
+                 'HLT/TriggerRates/calibration',
+                 'HLT/TriggerRates/random',
+                 'HLT/TriggerRates/processed'
                 )
 
 server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel)/', 'Collisions/TrackingFeedBack',

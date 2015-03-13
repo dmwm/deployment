@@ -1,11 +1,11 @@
 def shiftpixellayout(i, p, *rows): i["00 Shift/Pixel/" + p] = DQMItem(layout=rows)
 shiftpixellayout(dqmitems, "01 - Total number of errors",
-  [{ 'path': "Pixel/AdditionalPixelErrors/FedChNErrArray",
+  [{ 'path': "Pixel/AdditionalPixelErrors/FedChNErr",
      'description': "Total number of errors in a map of FED channels (y-axis) vs. FED (x-axis). Look for channels with thousands of errors!",
      'draw': { 'withref': "no" }}]
   )
 shiftpixellayout(dqmitems, "02 - Error types",
-  [{ 'path': "Pixel/AdditionalPixelErrors/FedETypeNErrArray",
+  [{ 'path': "Pixel/AdditionalPixelErrors/FedETypeNErr",
      'description': "Total number of errors per error type (y-axis) vs. FED (x-axis). Large amounts (hundreds)of errors other than Timeout, EventNumber, and Dcol,Pixel values would be unusual!",
      'draw': { 'withref': "no" }}]
   )

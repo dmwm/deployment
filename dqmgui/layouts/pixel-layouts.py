@@ -5,17 +5,17 @@ pixellayout(dqmitems, "000 - Pixel FED Occupancy vs Lumi Sections",
                'draw': { 'withref': "no" }}]
               )
 pixellayout(dqmitems, "00a - Pixel_Error_Summary",
-  [{ 'path': "Pixel/AdditionalPixelErrors/FedChLErrArray",
+  [{ 'path': "Pixel/AdditionalPixelErrors/FedChLErr",
      'description': "Error type of last error in a map of FED channels (y-axis) vs. FED (x-axis). Channel 0 is assigned for errors where the channel number is not known.",
      'draw': { 'withref': "no" }}]
   )
 pixellayout(dqmitems, "00b - Pixel_Error_Summary",
-  [{ 'path': "Pixel/AdditionalPixelErrors/FedChNErrArray",
+  [{ 'path': "Pixel/AdditionalPixelErrors/FedChNErr",
      'description': "Total number of errors in a map of FED channels (y-axis) vs. FED (x-axis). Channel 0 is assigned for errors where the channel number is not known.",
      'draw': { 'withref': "no" }}]
   )
 pixellayout(dqmitems, "00c - Pixel_Error_Summary",
-  [{ 'path': "Pixel/AdditionalPixelErrors/FedETypeNErrArray",
+  [{ 'path': "Pixel/AdditionalPixelErrors/FedETypeNErr",
      'description': "Total number of errors per error type in a map of error type (y-axis) vs. FED (x-axis)",
      'draw': { 'withref': "no" }}]
   )
