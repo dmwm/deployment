@@ -5,10 +5,24 @@ Everything configurable in ReqMgr is defined here.
 """
 
 import socket
+import re
 from WMCore.Configuration import Configuration
 from os import path
 
 HOST = socket.gethostname().lower()
+if re.match(r"^vocms0?(?:34|128|13[689]|140|16[13]|30[67])\.cern\.ch$", HOST):
+  SERVER_BASE = "https://cmsweb.cern.ch"
+  DBS_INS = "prod"
+elif re.match(r"^vocms0?(?:13[23])\.cern\.ch$", HOST):
+  SERVER_BASE = "https://cmsweb-testbed.cern.ch"
+  DBS_INS = "int"
+elif re.match(r"^vocms0?127\.cern\.ch$", HOST):
+  SERVER_BASE = "https://cmsweb-dev.cern.ch"
+  DBS_INS = "dev"
+else:
+  SERVER_BASE = "https://%s" % HOST
+  DBS_INS = "private_vm"
+
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
 
@@ -63,8 +77,12 @@ data.tag_collector_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML?anytype
 # request related settings (e.g. default injection arguments)
 data.default_sw_version = "CMSSW_5_2_5"
 data.default_sw_scramarch = "slc5_amd64_gcc434"
-data.dqm_url = "https://cmsweb.cern.ch/dqm/dev"
-data.dbs_url = "https://cmsweb.cern.ch/dbs/prod/global/DBSReader"
+data.dqm_url = "%s/dqm/dev" % SERVER_BASE
+#use dbs testbed for private vm test
+if DBS_INS == "private_vm":
+    data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
+else:
+    data.dbs_url = "%s/dbs/%s/global/DBSReader" % (SERVER_BASE, DBS_INS)
 
 # web user interface
 ui = views.section_("ui")
@@ -89,7 +107,7 @@ ui.base = '/reqmgr2'
 ui.index = 'reqmgr2' # this part must be activated, see below
 ui.reqmgr = data # this part contains uiuration for ReqMgr REST API, see above
 # This need to be removed when ReqMgr Client is removed
-ui.reqmgr.reqmgr2_url = "https://reqmgr2-dev.cern.ch/reqmgr2" # this part contains uiuration for ReqMgr REST API, see above
+ui.reqmgr.reqmgr2_url = "%s/reqmgr2" % SERVER_BASE # this part contains uiuration for ReqMgr REST API, see above
 ui_main = ui.section_("main")
 ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
@@ -117,6 +135,8 @@ if  HOST.startswith("vocms0307"):
     couchCleanup.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
     couchCleanup.acdc_url = "https://cmsweb.cern.ch/couchdb/acdcserver"
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
+    couchCleanup.workqueue_url = "https://cmsweb.cern.ch/couchdb/workqueue"
+    couchCleanup.workqueueCleanDuration = 60 * 60 * 12 # every 12 hours
     
 
 #  for dev and vm use testbed data
@@ -142,3 +162,6 @@ if  HOST.startswith("vocms0133"):
     couchCleanup.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/reqmgr_workload_cache"
     couchCleanup.acdc_url = "https://cmsweb-testbed.cern.ch/couchdb/acdcserver"
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
+    couchCleanup.workqueue_url = "https://cmsweb-testbed.cern.ch/couchdb/workqueue"
+    couchCleanup.workqueueCleanDuration = 60 * 60 * 4 # every 4 hours
+    
