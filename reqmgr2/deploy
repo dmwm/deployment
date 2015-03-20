@@ -32,12 +32,14 @@ deploy_reqmgr2_sw()
   else :; fi
 
   case $variant in
-    prod )    couch_host="https://cmsweb.cern.ch/couchdb" ;;
-    preprod ) couch_host="https://cmsweb-testbed.cern.ch/couchdb" ;;
-    dev )     couch_host="https://cmsweb-dev.cern.ch/couchdb" ;;
-    * )       couch_host="https://`hostname -f`/couchdb" ;;
+    prod )    base_url="https://cmsweb.cern.ch"         dbs_ins="prod";;
+    preprod ) base_url="https://cmsweb-testbed.cern.ch" dbs_ins="int";;
+    dev )     base_url="https://cmsweb-dev.cern.ch"     dbs_ins="dev";;
+    * )       base_url="https://`hostname -f`"          dbs_ins="private_vm";;
   esac
-  perl -p -i -e "s{\"\@\@COUCH_HOST\@\@\"}{\"$couch_host\"}g" $project_config/config.py
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
+                 s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
+       $project_config/config.py
 }
 
 deploy_reqmgr2_post()

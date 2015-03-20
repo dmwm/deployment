@@ -9,6 +9,9 @@ from WMCore.Configuration import Configuration
 from os import path
 
 HOST = socket.gethostname().lower()
+BASE_URL = "@@BASE_URL@@"
+DBS_INS = "@@DBS_INS@@"
+
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
 
@@ -42,7 +45,7 @@ views = config.section_("views")
 data = views.section_("data")
 data.object = "WMCore.ReqMgr.Service.RestApiHub.RestApiHub"
 # The couch host is defined during deployment time.
-data.couch_host = "@@COUCH_HOST@@"
+data.couch_host = "%s/couchdb" % BASE_URL
 # main ReqMgr CouchDB database containing all requests with spec files attached
 data.couch_reqmgr_db = "reqmgr_workload_cache"
 # ReqMgr database containing groups, teams, software, etc
@@ -52,6 +55,9 @@ data.couch_config_cache_db = "reqmgr_config_cache"
 data.couch_workload_summary_db = "workloadsummary"
 data.couch_wmstats_db = "wmstats"
 data.couch_wmdatamining_db = "wmdatamining"
+data.couch_acdc_db = "acdcserver"
+data.couch_workqueue_db = "workqueue"
+
 # number of past days since when to display requests in the default view
 data.default_view_requests_since_num_days = 30 # days
 # resource to fetch CMS software versions and scramarch info from
@@ -63,8 +69,12 @@ data.tag_collector_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML?anytype
 # request related settings (e.g. default injection arguments)
 data.default_sw_version = "CMSSW_5_2_5"
 data.default_sw_scramarch = "slc5_amd64_gcc434"
-data.dqm_url = "https://cmsweb.cern.ch/dqm/dev"
-data.dbs_url = "https://cmsweb.cern.ch/dbs/prod/global/DBSReader"
+data.dqm_url = "%s/dqm/dev" % BASE_URL
+#use dbs testbed for private vm test
+if DBS_INS == "private_vm":
+    data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
+else:
+    data.dbs_url = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
 
 # web user interface
 ui = views.section_("ui")
@@ -89,56 +99,57 @@ ui.base = '/reqmgr2'
 ui.index = 'reqmgr2' # this part must be activated, see below
 ui.reqmgr = data # this part contains uiuration for ReqMgr REST API, see above
 # This need to be removed when ReqMgr Client is removed
-ui.reqmgr.reqmgr2_url = "https://reqmgr2-dev.cern.ch/reqmgr2" # this part contains uiuration for ReqMgr REST API, see above
+ui.reqmgr.reqmgr2_url = "%s/reqmgr2" % BASE_URL # this part contains uiuration for ReqMgr REST API, see above
 ui_main = ui.section_("main")
 ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
-
+# Production instance of wmdatamining, must be a production back-end
 if  HOST.startswith("vocms0307"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
-    wmdatamining.wmstats_url = "https://cmsweb.cern.ch/couchdb/wmstats"
-    wmdatamining.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
-    #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
-    #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
     wmdatamining.mcm_cert = "%s/auth/reqmgr2/dmwm-service-cert.pem" % ROOTDIR
     wmdatamining.mcm_key = "%s/auth/reqmgr2/dmwm-service-key.pem" % ROOTDIR
     wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
-    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 min
     wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
     
-    # ACDC cleanup Thread
+    # ACDC/workqueue cleanup threads
     couchCleanup = extentions.section_("couchCleanup")
     couchCleanup.object = "WMCore.ReqMgr.CherryPyThreads.CouchDBCleanup.CouchDBCleanup"
-    couchCleanup.reqmgrdb_url = "https://cmsweb.cern.ch/couchdb/reqmgr_workload_cache"
-    couchCleanup.acdc_url = "https://cmsweb.cern.ch/couchdb/acdcserver"
+    couchCleanup.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    couchCleanup.acdc_url = "%s/%s" % (data.couch_host, data.couch_acdc_db)
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
+    couchCleanup.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
+    couchCleanup.workqueueCleanDuration = 60 * 60 * 12 # every 12 hours
     
 
-#  for dev and vm use testbed data
+# Testbed instance of wmdatamining, can be any dev or preprod back-end
+# Reads data from testbed, but writes to its own wmdatamining db
 if  HOST.startswith("vocms0133"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
-    wmdatamining.wmstats_url = "https://cmsweb-testbed.cern.ch/couchdb/wmstats"
-    wmdatamining.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/reqmgr_workload_cache"
-    #wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
-    #wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    wmdatamining.wmstats_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_wmstats_db
+    wmdatamining.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_reqmgr_db
+    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
     wmdatamining.mcm_cert = "%s/auth/reqmgr2/dmwm-service-cert.pem" % ROOTDIR
     wmdatamining.mcm_key = "%s/auth/reqmgr2/dmwm-service-key.pem" % ROOTDIR
     wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
-    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
     wmdatamining.activeDuration = 60 * 15  # every 15 mins
     wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
     
-    # ACDC cleanup Thread
+    # ACDC/workqueue cleanup threads
     couchCleanup = extentions.section_("couchCleanup")
     couchCleanup.object = "WMCore.ReqMgr.CherryPyThreads.CouchDBCleanup.CouchDBCleanup"
-    couchCleanup.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/reqmgr_workload_cache"
-    couchCleanup.acdc_url = "https://cmsweb-testbed.cern.ch/couchdb/acdcserver"
+    couchCleanup.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_reqmgr_db
+    couchCleanup.acdc_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_acdc_db
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
+    couchCleanup.workqueue_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_workqueue_db
+    couchCleanup.workqueueCleanDuration = 60 * 60 * 4 # every 4 hours
