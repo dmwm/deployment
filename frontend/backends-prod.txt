@@ -7,5 +7,9 @@
 ^/auth/complete/(?:c?)(?:couchdb|workqueue|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0140.cern.ch :affinity
 ^/auth/complete/das(?:/|$) vocms0306.cern.ch|vocms0307.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) vocms0306.cern.ch
+^/auth/complete/scheddmon/0/ vocms095.cern.ch
+^/auth/complete/scheddmon/1/ vocms096.cern.ch
+^/auth/complete/scheddmon/2/ vocms0109.cern.ch
+^/auth/complete/scheddmon/3/ vocms0114.cern.ch
 ^/overview(?:/|$) vocms163.cern.ch
 ^ vocms034.cern.ch|vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch
