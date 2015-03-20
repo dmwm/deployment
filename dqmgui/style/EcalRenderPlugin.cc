@@ -3,6 +3,7 @@
 /*
   \file EcalRenderPlugin
   \brief Display Plugin for Quality Histograms
+  \author M.Sun
   \author Y. Iiyama
   \author G. Della Ricca
   \author B. Gobbo
@@ -1193,7 +1194,7 @@ EcalRenderPlugin::getPlotType(TH1 const* obj, TString const& fullpath) const
       case kEESM:
         if(nbx == 85 && nby == 20) btype = kCrystal;
         else if(nbx == 17 && nby == 4) btype = kSuperCrystal;
-        else if((nbx == 40 || nbx == 45) && nby == 40) btype = kCrystal;
+        else if((nbx == 30 || nbx == 40 || nbx == 45) && (nby == 40 || nby == 35)) btype = kCrystal;
         else if((nbx == 8 || nbx == 9) && nby == 8) btype = kSuperCrystal;
         break;
       case kSMMEM:

@@ -2,8 +2,8 @@
   \File BeamPixelRenderPlugin
   \Display Plugin for BeamSpot from Pixel-Vertices
   \author Mauro Dinardo
-  \version $ Revision: 1.0 $
-  \date $ Date: 2010/30/03 08:11:00 $
+  \version $ Revision: 2.0 $
+  \date $ Date: 2015/23/02 23:00:00 $
 */
 
 #include "DQM/DQMRenderPlugin.h"
@@ -72,9 +72,7 @@ public:
     c->cd();
 
     if (dynamic_cast<TH2F*>(o.object)) preDrawTH2F(c, o);
-
     if (dynamic_cast<TH1F*>(o.object)) preDrawTH1F(c, o);
-
     if (dynamic_cast<TProfile*>(o.object)) preDrawTProfile(c, o);
   }
 
@@ -107,6 +105,7 @@ private:
 	c->SetGrid();
 	obj->SetContour(NCont_rainbow);
 	gStyle->SetPalette(NCont_rainbow, hcalRainbowColors);
+	gStyle->SetPadRightMargin(0.02);
 	gStyle->SetOptStat(1110);
 	obj->SetStats(kTRUE);
 	obj->SetOption("colz");
@@ -170,6 +169,7 @@ private:
 
     if ((o.name.find("hist pixelHits vs lumi") != std::string::npos) || (o.name.find("hist good vx vs lumi") != std::string::npos))
       {
+	gStyle->SetOptFit(1110);
 	gStyle->SetOptStat(10);
 
 	gStyle->SetErrorX(0.);
@@ -189,6 +189,10 @@ private:
       {
 	gStyle->SetOptFit(1110);
 	gStyle->SetOptStat(10);
+
+	obj->SetMarkerStyle(20);
+	obj->SetMarkerSize(0.5);
+	obj->SetMarkerColor(4);
 
 	return;
       }

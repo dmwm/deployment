@@ -88,8 +88,7 @@ server.workspace('DQMContent', 45, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonito
                                   'Tracking/Layouts/01 - Tracking ReportSummary',
                                   'Tracking/Layouts/02 - Tracks (pp collisions)',
                  'Tracking/Layouts/03 - Tracks (Cosmic Tracking)',
-                 'Tracking/Layouts/05 - Number of Seeds (pp collisions)',
-                 'Tracking/Layouts/08 - Tracks (pp collisions) old layout'
+                 'Tracking/Layouts/05 - Number of Seeds (pp collisions)'
                                   )
 
 server.workspace('DQMContent', 46, 'POG', 'Tau', '^RecoTauV/', '',

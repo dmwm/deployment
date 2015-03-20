@@ -53,7 +53,7 @@ trackinglayout(dqmitems, "05 - Number of Seeds (pp collisions)",
     'description': "Number of Seed in tracking iteration 5 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
     { 'path': "Tracking/TrackParameters/TrackBuilding/NumberOfSeeds_tobTecStepSeeds_iter6",
     'description': "Number of Seed in tracking iteration 6 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
-    
+
 trackinglayout(dqmitems, "06 - Offline PV",
   [{ 'path': "OfflinePV/offlinePrimaryVertices/tagDiffX",
      'description': "Difference between PV and beamspot in x-direction"},
@@ -74,16 +74,3 @@ trackinglayout(dqmitems, "07 - Beam Monitor",
     { 'path': "AlcaBeamMonitor/Debug/hsigmaZLumibased PrimaryVertex-DataBase fit",
      'description': ""},
    ])
-trackinglayout(dqmitems, "08 - Tracks (pp collisions) old layout",
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfGoodTracks_GenTk",
-    'description': "Number of Reconstructed Tracks with high purity selection and pt > 1 GeV - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/HitProperties/GoodTrackNumberOfRecHitsPerTrack_GenTk",
-    'description': "Number of RecHits per Track with high purity selection and pt > 1 GeV  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackPt_ImpactPoint_GenTk",
-    'description': "Pt of Reconstructed Track with high purity selection and pt > 1 GeV  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}],
- [{ 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackChi2oNDF_GenTk",
-    'description': "Chi Square per DoF with high purity selection and pt > 1 GeV  -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackPhi_ImpactPoint_GenTk",
-    'description': "Phi distribution of Reconstructed Tracks with high purity selection and pt > 1 GeV -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
-  { 'path': "Tracking/TrackParameters/GeneralProperties/GoodTrackEta_ImpactPoint_GenTk",
-    'description': " Eta distribution of Reconstructed Tracks with high purity selection and pt > 1 GeV - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
