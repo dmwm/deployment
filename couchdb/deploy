@@ -16,13 +16,14 @@ deploy_couchdb_prep()
 deploy_couchdb_sw()
 {
   rm -f $project_auth/hmackey.ini
-  deploy_pkg -a couchdb/hmackey.ini comp external+couchdb
-  perl -p -i -e "s|{ROOT}|$root|g" $project_config/local.ini
 
   case $variant in
     default )
+      deploy_pkg -l couchdb -a couchdb/hmackey.ini comp external+couchdb15
+      chmod 660 $project_auth/hmackey.ini
       ;;
     * )
+      deploy_pkg -a couchdb/hmackey.ini comp external+couchdb
       perl -p -i -e "s|bind_address = 0.0.0.0|bind_address = 127.0.0.1|g" $project_config/local.ini
       (echo
        echo "[ssl]"
@@ -35,6 +36,7 @@ deploy_couchdb_sw()
       ) >> $project_config/local.ini
       ;;
   esac
+  perl -p -i -e "s|{ROOT}|$root|g" $project_config/local.ini
 }
 
 deploy_couchdb_post()
