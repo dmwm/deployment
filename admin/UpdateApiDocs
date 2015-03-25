@@ -2,8 +2,8 @@
 
 WEBDIR=/afs/cern.ch/user/c/cmsweb/www/apidoc
 SWDIR=/afs/cern.ch/cms/cmsweb/sw
-OLD_ARCH=slc5_amd64_gcc434
-NEW_ARCH=slc5_amd64_gcc461
+OLD_ARCH=slc5_amd64_gcc461
+NEW_ARCH=slc6_amd64_gcc481
 
 set -e
 for A in $OLD_ARCH $NEW_ARCH; do
