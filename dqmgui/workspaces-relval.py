@@ -36,7 +36,7 @@ server.workspace('DQMContent', 23, 'Data', 'Jet' , '^Jet/', '')
 server.workspace('DQMContent', 24, 'Data', 'MET' , '^MET/', '')
 server.workspace('DQMContent', 25, 'Data', 'BTag' , '^BTag/', '')
 server.workspace('DQMContent', 26, 'Data', 'Tau' , '^Tau/', '')
-server.workspace('DQMContent', 26, 'Data', 'PFlow' , '^ParticleFlow/', '')
+server.workspace('DQMContent', 27, 'Data', 'PFlow' , '^ParticleFlow/', '')
 
 server.workspace('DQMContent', 30, 'Monte Carlo', 'MC Tk' , '^(Tk/|TrackerDigisV|TrackerHitsV|TrackerRecHitsV|Pixel|SiStrip|Tracking)', 'MCLayouts/Tk',
                  'MCLayouts/Tk/01 - TrackerDigisV',
