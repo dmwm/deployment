@@ -36,13 +36,13 @@ cmsdist()
 
   for PULL in $PULLS; do
     echo "Pull: $URL/$PULL"
-    authdate=`curl -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'Date:.*' | cut -d: -f 2- | sed 's/^ *//g'` 
-    author=`curl -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'From:.*' | cut -d: -f 2-| sed 's/^ *//g'` 
-    title=`curl -ks ${URL}/${PULL}.patch | head -n4 | grep 'PATCH' | cut -d"]" -f 2- | sed 's/^ *//g'`
+    authdate=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'Date:.*' | cut -d: -f 2- | sed 's/^ *//g'` 
+    author=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'From:.*' | cut -d: -f 2-| sed 's/^ *//g'` 
+    title=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | grep 'PATCH' | cut -d"]" -f 2- | sed 's/^ *//g'`
     echo "Summary: authdate=$authdate, author=$author, title=$title"
   
     stg new -m "${title%\.}. Close #$PULL." pullreq-$PULL --author "$author" --authdate "$authdate" 
-    curl -ks ${URL}/${PULL}.diff | git apply
+    curl -L -ks ${URL}/${PULL}.diff | git apply
     # When there are new files, we need to add them
     git add -A
     stg refresh
@@ -60,13 +60,13 @@ deployment()
   for PULL in $PULLS; do
     echo "Pull: $URL/$PULL"
 
-    authdate=`curl -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'Date:.*' | cut -d: -f 2- | sed 's/^ *//g'`
-    author=`curl -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'From:.*' | cut -d: -f 2- | sed 's/^ *//g'`
-    title=`curl -ks ${URL}/${PULL}.patch | head -n4 | grep 'PATCH' | cut -d"]" -f 2- | sed 's/^ *//g'`
+    authdate=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'Date:.*' | cut -d: -f 2- | sed 's/^ *//g'`
+    author=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'From:.*' | cut -d: -f 2- | sed 's/^ *//g'`
+    title=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | grep 'PATCH' | cut -d"]" -f 2- | sed 's/^ *//g'`
     echo "Summary: authdate=$authdate, author=$author, title=$title"
 
     stg new -m "${title%\.}. Close #$PULL." pullreq-$PULL --author "$author" --authdate "$authdate"
-    curl -ks ${URL}/${PULL}.diff | git apply
+    curl -L -ks ${URL}/${PULL}.diff | git apply
     # When there are new files, we need to add them
     git add -A
     stg refresh
