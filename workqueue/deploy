@@ -55,13 +55,13 @@ deploy_workqueue_post()
   local housekeep="15-55/20 * * * * $cmd"
 
   (mkcrontab;
-   case $host in
-     vocms34 | vocms13[2689] | vocms16[13] | vocms034 | vocms0128 | vocms0306 | vocms0307 | vocms013[2689] | vocms016[13] )
-       ;;
-     * )
+   case $variant:$host in
+     prod:vocms0140 | preprod:vocms0133 | dev:vocms0127 | default:* )
        echo "${req_sync}"
        echo "${locations}"
        echo "${housekeep}"
+       ;;
+     * )
        ;;
    esac) | crontab -
 }
