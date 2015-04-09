@@ -26,5 +26,7 @@ deploy_reqmon_post()
          "http://localhost:${couch##*:}/wmstats" >> $root/state/${couch%%:*}/stagingarea/reqmon
     echo "couchapp push $root/current/apps/reqmon/data/couchapps/WorkloadSummary" \
          "http://localhost:${couch##*:}/workloadsummary" >> $root/state/${couch%%:*}/stagingarea/reqmon
+    echo "couchapp push $root/current/apps/reqmon/data/couchapps/LogDB" \
+         "http://localhost:${couch##*:}/wmstats_logdb" >> $root/state/${couch%%:*}/stagingarea/reqmon  
   done
 }
