@@ -12,4 +12,4 @@
 ^/auth/complete/scheddmon/2/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/3/ vocms0114.cern.ch
 ^/overview(?:/|$) vocms163.cern.ch
-^ vocms034.cern.ch|vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch
+^ vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch
