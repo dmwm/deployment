@@ -40,7 +40,7 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
-export POPDB_VERSION
+export VICTOR_WEB_VERSION
 
 # Start service conditionally on crond restart.
 sysboot()
@@ -53,6 +53,7 @@ sysboot()
 # Start the service.
 start()
 {
+  cd $STATEDIR
   echo "starting $ME"
   $STATEDIR/etc/httpd restart </dev/null 2>&1
 }
@@ -121,7 +122,7 @@ case ${1:-status} in
     ;;
 
   version )
-    echo "$POPDB_VERSION"
+    echo "$VICTOR_WEB_VERSION"
     ;;
 
   * )

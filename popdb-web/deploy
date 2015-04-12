@@ -1,59 +1,59 @@
 # vim: set ft=sh sw=2 ts=8 et :
 
-deploy_popdb_deps()
+deploy_popdb_web_deps()
 {
   deploy admin
   deploy backend
 }
 
-deploy_popdb_prep()
+deploy_popdb_web_prep()
 {
   mkproj
 }
 
-deploy_popdb_sw()
+deploy_popdb_web_sw()
 {
-  deploy_pkg -a popdb/conf_secret.ini -l popdb comp cms+popdb
+  deploy_pkg -a popdb-web/conf_secret.ini -l popdb-web comp cms+popdb-web
   (set -e
-   . $root/current/apps/popdb/etc/profile.d/init.sh
-  AUTHDIR=$root/current/auth/popdb
+   . $root/current/apps/popdb-web/etc/profile.d/init.sh
+  AUTHDIR=$root/current/auth/popdb-web
   perl -p -i -e "
         s|\@ROOT\@|$root/|g; \
-        s|\@POPDB_ROOT\@|$POPDB_ROOT/|g; \
+        s|\@POPDB_WEB_ROOT\@|$POPDB_WEB_ROOT/|g; \
         s|\@CONFIG\@|$project_config|g; \
         s|\@AUTH\@|$AUTHDIR|g; "\
-        $project_config/popdb.conf \
+        $project_config/popdb-web.conf \
         $project_config/settings.py \
         $project_config/confSettings.py \
         $project_config/conf.ini \
         $project_config/popularity_wsgi.py )
 }
 
-deploy_popdb_post()
+deploy_popdb_web_post()
 {
   case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
     (mkcrontab; sysboot) | crontab -
    (set -e
-   . $root/current/apps/popdb/etc/profile.d/init.sh
+   . $root/current/apps/popdb-web/etc/profile.d/init.sh
    mkserver \
    -r $PWD \
    -l $project_logs \
    -a $APACHE2_ROOT \
    -o "$opts" \
-   -c $project_config/popdb.conf \
+   -c $project_config/popdb-web.conf \
    -p $project_config/httpd-mpm.conf \
    -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh" \
-   -e "$POPDB_ROOT/etc/env.d/*.sh" \
+   -e "$POPDB_WEB_ROOT/etc/env.d/*.sh" \
    -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so \
    -m cache_module:$APACHE2_ROOT/modules/mod_cache.so \
    -m disk_cache_module:$APACHE2_ROOT/modules/mod_disk_cache.so \
    -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so)
   [ $? = 0 ]
   setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
-  setgroup ug+rw,o-w _popdb $PWD/var
+  setgroup ug+rw,o-w _popdb-web $PWD/var
 }
 
-deploy_popdb_auth()
+deploy_popdb_web_auth()
 {
   echo "[db_sections]"
   echo "default = db_section1"

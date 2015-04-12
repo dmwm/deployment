@@ -12,7 +12,7 @@ class confSettings:
     def __init__(self):
         configfilenames = ['conf.ini','conf_secret.ini']
         #self.popularity_base = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../.."))
-        #self.popularity_base = "@POPDB_ROOT@/popdb/"
+        #self.popularity_base = "@POPDB_WEB_ROOT@/popdb/"
         self.popularity_base = ["@CONFIG@", "@AUTH@"]
         try:
             self.configfilepath = [self.dirwalk(self.popularity_base[index], configfilename).next()+'/'+configfilename for index,configfilename in enumerate(configfilenames)]
