@@ -3,17 +3,17 @@
 # Rsync append only .txt and .log files
 
 # Front-ends in the AI infrastructure
-for h in vocms0{127,134,135,160,162}; do
+for h in vocms0{127,134,135,160,162,164}; do
   rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
 # Back-ends in the AI infrastructure
-for h in vocms0{132,133,34,136,161,163,140,306,307}; do
+for h in vocms0{132,133,136,161,163,165,140,306,307}; do
   rsync -rm -e "ssh -c arcfour256 -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
 # Machines in the old infrastructure
-for h in vocms{13{3,4,8,9},140,162}; do
+for h in vocms{13{3,8,9},140}; do
   rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 
 done
 

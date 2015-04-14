@@ -2,7 +2,7 @@
 
 import os, re, time, sys, httplib
 from datetime import datetime, timedelta
-from socket import gethostbyaddr, herror
+from socket import gethostbyaddr, gaierror
 
 def readfile(filename):
   if not os.path.isfile(filename) or not os.access(filename, os.R_OK):
@@ -15,7 +15,7 @@ def readfile(filename):
 def dns_resolve(ip):
   try:
     return gethostbyaddr(ip)[0]
-  except (herror) as e:
+  except gaierror, e:
     return 'name not found: (%s)' % str(e)
 
 def generate_report(logsdir, ndays, days, hosts):
@@ -156,7 +156,7 @@ if __name__ == '__main__':
   opt.add_option("-n", "--ndays", dest="ndays", metavar="N", type="int", default=1,
                  help="number of backward days to include in the report. Default is 1 (the startday only).")
   opt.add_option("-m", "--machines", dest="machines", metavar="LIST", default=None,
-                 help="comma separated LIST of frontend host names to include in the report. I.e. -m \"vocms0134,vocms0135\"")
+                 help="comma separated LIST of frontend host names to include in the report. I.e. -m \"vocms0134, vocms0135\"")
   opts, args = opt.parse_args()
 
   # Find the logs root dir.

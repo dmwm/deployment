@@ -34,13 +34,9 @@ couchstats() {
       echo "WARNING: $host:$dbname size is $(bc<<<scale=2\;$dbsize/$GB) GB. Consider reducing it." 1>&2
 
     # Check views size exceeds threshold
-    viewsizes=$(ls -alF /data/srv/state/couchdb/database/.${dbname}_design/*view|cut -d" " -f5)
-    let totvsize=0
-    for v in $viewsizes; do
-      [ $v -le ${VIEW_THRESHOLD} ] ||
-        echo "WARNING: $host:$dbname views size is $(bc<<<scale=2\;$v/$GB) GB." 1>&2
-      let totvsize+=$v
-    done
+    viewsizes=$(du -sb /data/srv/state/couchdb/database/.${dbname}_design/ |cut -f1)
+    [ $viewsizes -le ${VIEW_THRESHOLD} ] ||
+        echo "WARNING: $host:$dbname views size is $(bc<<<scale=2\;$viewsizes/$GB) GB." 1>&2
 
     # Check if database needs rotation
     docs=$(curl -ks localhost:5984/$dbname/ | cut -d, -f2|cut -d: -f2)
@@ -51,7 +47,7 @@ couchstats() {
              $docrate $host $dbname 1>&2
 
     printf "%14.2f %10s %25s %12d %12d %12d %12d\n" \
-      $(bc<<<scale=9\;\($totvsize+$dbsize\)/1000000) $host $dbname $dbsize $totvsize $docs $deldocs
+      $(bc<<<scale=9\;\($viewsizes+$dbsize\)/1000000) $host $dbname $dbsize $viewsizes $docs $deldocs
   done
 }
 
@@ -67,8 +63,8 @@ variant=$1
 
 case $variant in
   prod)
-    frontends="vocms0160,vocms0162"
-    backends="vocms034,vocms0136,vocms138,vocms139,vocms0140,vocms0161,vocms0163,vocms0306,vocms0307"
+    frontends="vocms0160,vocms0162,vocms0164"
+    backends="vocms0136,vocms138,vocms139,vocms0140,vocms0161,vocms0163,vocms0165,vocms0306,vocms0307"
     couches="vocms0306,vocms0307,vocms0140"
     ;;
   preprod|dev)
