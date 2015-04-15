@@ -422,7 +422,7 @@ sub auth_trouble_handler : method
   {
     $message .= "<p>Your certificate is not registered member of the"
               . " CMS VO. You need to register at <a href='"
-              . "https://voms.cern.ch:8443/voms/cms/admin/home.action"
+              . "https://voms2.cern.ch:8443/voms/cms"
 	      . "'>VOMS</a> after which it will take up to six hours"
               . "for us to get the information.</p>"
   }
