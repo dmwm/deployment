@@ -61,21 +61,21 @@ def generate_report(logsdir, ndays, days, hosts):
       stats["NonVOCerts"][i] = c+1
 
     # find users which had their certificate expired
-    ExpiredDNs = re.findall("^.*\[client (.*?)\].*certificate has expired; subject: (.*?), issuer:.*notafter: (.*)", d, re.M)
+    ExpiredDNs = re.findall("^.*\[client (.*?)(?:\:\d+)?\].*certificate has expired; subject: (.*?), issuer:.*notafter: (.*)", d, re.M)
     for i in ExpiredDNs:
       c = stats['ExpiredDNs'].get(i) or 0
       stats['ExpiredDNs'][i] = c+1
       # 'ClientIP':i[0], 'ClientHostname':dns_resolve(i[0]), 'DN':i[1], 'Date':i[2]}
 
     # parse security lines
-    SecurityRaw = re.findall("^\[.*\] \[.*\] \[client (.*?)\] clearing incoming request header (.*)", d, re.M)
+    SecurityRaw = re.findall("^\[.*\] \[.*\] \[client (.*?)(?:\:\d+)?\] clearing incoming request header (.*)", d, re.M)
     for i in SecurityRaw:
       c = stats['Security'].get(i) or 0
       stats['Security'][i] = c+1
       # {'Counter':0, 'Hostname':dns_resolve(i[0]), 'IP':i[0], 'Header':i[1]}
 
     # back-end requests timeout
-    Timeouts = re.findall("^\[.*\] \[error\] \[client (.*?)\] .*error reading status line from remote server (.*)\n.*Error reading from remote server returned by (.*)", d, re.M)
+    Timeouts = re.findall("^\[.*\] \[error\] \[client (.*?)(?:\:\d+)?\] .*error reading status line from remote server (.*)\n.*Error reading from remote server returned by (.*)", d, re.M)
     for i in Timeouts:
       c = stats['Timeouts'].get(i) or 0
       stats['Timeouts'][i] = c+1
