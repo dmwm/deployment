@@ -53,20 +53,17 @@ FLAVOR=dev
 ALTERNATIVE_USER=$(stat $TOP -c %U)
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
-# this hack is needed while dqmgui is still using castor 2.1.9.8
-if [ $# -ge 1 -a "$1" = "backup" ]; then
-  export STAGE_SVCCLASS=archive
-  # do not source the env because we want to pick the system castor
-else
-  case $HOST in
-    vocms139 | dqm-c2d07-[0,1][1,2] )
-      # assume not to pollute the global environments since this
-      # will only be executed on 128-updated machines
-      . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
-    * )
-      . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
-  esac
-fi
+# Use the archive castor pool
+export STAGE_SVCCLASS=archive
+
+case $HOST in
+  vocms139 | dqm-c2d07-[0,1][1,2] )
+    # assume not to pollute the global environments since this
+    # will only be executed on 128-updated machines
+    . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
+  * )
+    . $ROOT/apps/dqmgui/etc/profile.d/env.sh ;;
+esac
 
 export QUIET_ASSERT=a
 export X509_CERT_DIR=/etc/grid-security/certificates
