@@ -15,8 +15,8 @@ def readfile(filename):
 def dns_resolve(ip):
   try:
     return gethostbyaddr(ip)[0]
-  except gaierror, e:
-    return 'name not found: (%s)' % str(e)
+  except:
+    return 'name not found: (%s)' % str(ip)
 
 def generate_report(logsdir, ndays, days, hosts):
   # store statistics here
