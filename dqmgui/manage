@@ -3,16 +3,17 @@
 ##H Usage 1: manage [options] ACTION [ARG] [SECURITY-STRING]
 ##H
 ##H Available actions:
-##H   help        show this help
-##H   version     get current version of the service
-##H   status      show current service's status
-##H   dstatus      show current service's detailed status
-##H   sysboot     start server from crond if not running
-##H   restart     (re)start the service
-##H   start       (re)start the service
-##H   stop        stop the service
-##H   compile     refresh render plugins
-##H   backup      backup the current service state by archiving it to ARG area in castor
+##H   help              show this help
+##H   version           get current version of the service
+##H   status            show current service's status
+##H   dstatus            show current service's detailed status
+##H   sysboot           start server from crond if not running
+##H   restart           (re)start the service
+##H   start             (re)start the service
+##H   stop              stop the service
+##H   compile           refresh render plugins
+##H   backup            backup the current service state by archiving it to ARG area in castor
+##H   rootfilesbackup   backup new root files to castor
 ##H
 ##H Usage 2: manage [options] ACTION COMPONENTs [SECURITY-STRING]
 ##H COMPONENTs: webserver collector renderer logger agents afs-sync migration
@@ -362,20 +363,144 @@ start()
       done
       ;;
 
-    vocms13[89]:*stageout* | vocms013[89]:*stageout* ) # offline
-      refuseproc "stageout agents" "visDQMZipCastorStager"
+    # Special setup for the vocms0133 test server. (In the past this didn't run the Castor agent chain)
+    # This runs the agents to backup the zipped root files to caster, but in a "faster" way
+    vocms0133:*agents*:*agents* )
+      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       # standard lot of agents
       for D in $CONFIGS; do
         D=${D}
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         DQM_DATA=$STATEDIR/$D
-        startagent $D/agent-zstager \
-          visDQMZipCastorStager \
-          $DQM_DATA/agents/stageout \
+
+        startagent $D/agent-receive \
+	  visDQMReceiveDaemon \
+	  $DQM_DATA/uploads \
+	  $DQM_DATA/data \
+	  $DQM_DATA/agents/register \
+	  $DQM_DATA/agents/zip
+
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+	# BVB: We freeze zip files faster (1 days instead of 7)
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          1 \
+          $DQM_DATA/agents/stageout
+
+	# BVB: We verify zip files faster (12 hours instead of 24)
+        startagent $D/agent-zverifier \
+          visDQMZipCastorVerifier \
+          $DQM_DATA/agents/verify \
+          marco.rovere@cern.ch,atanas.batinkov@cern.ch,broen.vanbesien@cern.ch \
           $DQM_DATA/zipped \
           $CASTORDIR \
-          $DQM_DATA/agents/verify
+          12 \
+          $DQM_DATA/agents/clean
+
+        startagent $D/agent-import-128 \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $DQM_DATA/ix128 \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-qcontrol \
+          visDQMRootFileQuotaControl \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $CFGDIR/quota-rfqc-${D}.py
+
+        startagent $D/agent-vcontrol \
+          visDQMVerControlDaemon \
+          $DQM_DATA/agents/vcontrol \
+          $DQM_DATA/data
+
+        startagent $D/agent-ixmerge \
+            visDQMIndexMergeDaemon \
+            $DQM_DATA/agents/ixmerge \
+            $DQM_DATA/ix128 \
+            $DQM_DATA/agents/register
+      done
+      ;;
+
+    # BVB: This is only for testing
+    broendqmonlineslc6:*agents* ) # my test system (basically doing what offline does)
+      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
+
+      # standard lot of agents
+      for D in $CONFIGS; do
+        D=${D}
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/logarchive/test/dqmguidata/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        DQM_DATA=$STATEDIR/$D
+
+        startagent $D/agent-receive \
+	  visDQMReceiveDaemon \
+	  $DQM_DATA/uploads \
+	  $DQM_DATA/data \
+	  $DQM_DATA/agents/register \
+	  $DQM_DATA/agents/zip
+
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+	# BVB: We freeze zip files immediately (0 days instead of 7)
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          0 \
+          $DQM_DATA/agents/stageout
+
+	# BVB: We verify zip files immediately (0 hours instead of 24)
+        startagent $D/agent-zverifier \
+          visDQMZipCastorVerifier \
+          $DQM_DATA/agents/verify \
+          marco.rovere@cern.ch,atanas.batinkov@cern.ch,broen.vanbesien@cern.ch \
+          $DQM_DATA/zipped \
+          $CASTORDIR \
+          0 \
+          $DQM_DATA/agents/clean
+
+        startagent $D/agent-import-128 \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $DQM_DATA/ix128 \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/vcontrol
+
+        startagent $D/agent-qcontrol \
+          visDQMRootFileQuotaControl \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $CFGDIR/quota-rfqc-${D}.py
+
+        startagent $D/agent-vcontrol \
+          visDQMVerControlDaemon \
+          $DQM_DATA/agents/vcontrol \
+          $DQM_DATA/data
+
+        startagent $D/agent-ixmerge \
+            visDQMIndexMergeDaemon \
+            $DQM_DATA/agents/ixmerge \
+            $DQM_DATA/ix128 \
+            $DQM_DATA/agents/register
       done
       ;;
 
@@ -513,6 +638,9 @@ stop()
   case ${1:-afs-sync} in *afs-sync* )
     killproc "$ME afs sync" "visDQMAfsSync" ;;
   esac
+  case ${1:-sound} in *sound* )
+    killproc "$ME sound alarm daemon " "visDQMSoundAlarmDaemon" ;;
+  esac
   case $1 in *migration* )
     killproc "$ME migration agents" "visDQMMigration|sleep" ;;
   esac
@@ -544,9 +672,6 @@ status()
   case ${1:-agents} in *agents* )
     statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
   esac
-  case ${1:-stageout} in *stageout* )
-    statproc -u $ALTERNATIVE_USER "$ME stageout agent" "visDQMZipCastorStager" ;;
-  esac
   case ${1:-afs-sync} in *afs-sync* )
     statproc -u $ALTERNATIVE_USER "$ME afs sync" "visDQMAfsSync" ;;
   esac
@@ -573,9 +698,6 @@ detailstatus()
   case ${1:-agents} in *agents* )
     sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
   esac
-  case ${1:-stageout} in *stageout* )
-    sdproc -u $ALTERNATIVE_USER "$ME stageout agent" "visDQMZipCastorStager" ;;
-  esac
   case ${1:-afs-sync} in *afs-sync* )
     sdproc -u $ALTERNATIVE_USER "$ME afs sync" "visDQMAfsSync" ;;
   esac
@@ -592,7 +714,35 @@ compile()
   done
 }
 
+# Backup new root files (zipped) to castor
+rootfilesbackup()
+{
+  refuseproc "castor root file backup" "visDQMZipCastorStager"
+
+  for D in $CONFIGS; do
+    D=${D}
+    CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+    # BVB: Modify Castor dir for specific local test server, so that this can be tested by the cmsdqm account
+    case $HOST in
+      ( broendqmonlineslc6 )
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/logarchive/test/dqmguidata/$(echo $D | sed -r 's/(offline|relval)/dqmdata/') ;;
+    esac
+    DQM_DATA=$STATEDIR/$D
+    LOGSTEM=$D/agent-castorrootfilebackup
+    # Start the original agent process, however, not as an agent, but directly in the current thread.
+    # The agent was modified in such a way that it exits after each cycle.
+    # It is supposed to be started from/by acrontab.
+    visDQMZipCastorStager \
+      $DQM_DATA/agents/stageout \
+      $DQM_DATA/zipped \
+      $CASTORDIR \
+      $DQM_DATA/agents/verify \
+      </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
+  done
+}
+
 # Backups dqmgui by archiving its state to castor
+# This is the backup of the index
 backup()
 {
   local archdir=$1
@@ -710,18 +860,18 @@ done
 newline=""
 getconfigs
 
-# Check user name. Everything except afs-sync and castor stageout must
-# run as non-$ALTERNATIVE_USER account, afs-sync and castor stageout must be under
-# $ALTERNATIVE_USER, refuse to run otherwise.
+# Check user name. Everything except afs-sync, backup (of index) and
+# rootfilesbackup must run as non-$ALTERNATIVE_USER account, afs-sync, backup
+# and rootfilesbackup must be under $ALTERNATIVE_USER, refuse to run otherwise.
 case $FLAVOR:$(id -un):$1:$2 in
-  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:*:stageout | *:$ALTERNATIVE_USER:backup:* )
+  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:rootfilesbackup:* | *:$ALTERNATIVE_USER:backup:* )
     ;;
 
-  offline-caf:$ALTERNATIVE_USER:* | offline-caf:*:afs-sync | offline-caf:*:stageout )
+  offline-caf:$ALTERNATIVE_USER:*:* | offline-caf:*:*:afs-sync | relval:*:rootfilesbackup:* | offline-caf:*:backup:* )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 
-  relval:$ALTERNATIVE_USER:* | relval:*:afs-sync | relval:*:stageout | relval:*:backup:* )
+  relval:$ALTERNATIVE_USER:*:* | relval:*:*:afs-sync | relval:*:rootfilesbackup:* | relval:*:backup:* )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 esac
@@ -771,6 +921,11 @@ case ${1:-status} in
   xstop )
     check "$3"
     stop "$2"
+    ;;
+
+  rootfilesbackup )
+    check "$2"
+    rootfilesbackup
     ;;
 
   backup )
