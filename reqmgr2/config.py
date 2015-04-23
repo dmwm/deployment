@@ -11,6 +11,8 @@ from os import path
 HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
 DBS_INS = "@@DBS_INS@@"
+COUCH_URL = "%s/couchdb" % BASE_URL
+LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
@@ -45,7 +47,7 @@ views = config.section_("views")
 data = views.section_("data")
 data.object = "WMCore.ReqMgr.Service.RestApiHub.RestApiHub"
 # The couch host is defined during deployment time.
-data.couch_host = "%s/couchdb" % BASE_URL
+data.couch_host = COUCH_URL
 # main ReqMgr CouchDB database containing all requests with spec files attached
 data.couch_reqmgr_db = "reqmgr_workload_cache"
 # ReqMgr database containing groups, teams, software, etc
@@ -57,6 +59,8 @@ data.couch_wmstats_db = "wmstats"
 data.couch_wmdatamining_db = "wmdatamining"
 data.couch_acdc_db = "acdcserver"
 data.couch_workqueue_db = "workqueue"
+data.central_logdb_url = LOG_DB_URL
+data.log_reporter = "request_manager"
 
 # number of past days since when to display requests in the default view
 data.default_view_requests_since_num_days = 30 # days
@@ -128,6 +132,14 @@ if  HOST.startswith("vocms0307"):
     couchCleanup.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     couchCleanup.workqueueCleanDuration = 60 * 60 * 12 # every 12 hours
     
+    
+    # LogDB task (update and clean up)
+    logDBTasks = extentions.section_("logDBTasks")
+    logDBTasks.object = "WMCore.ReqMgr.CherryPyThreads.LogDBTasks.LogDBTasks"
+    logDBTasks.central_logdb_url = data.central_logdb_url
+    logDBTasks.log_reporter = data.log_reporter
+    logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 7 # 7 days
+    logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min
 
 # Testbed instance of wmdatamining, can be any dev or preprod back-end
 # Reads data from testbed, but writes to its own wmdatamining db
@@ -153,3 +165,11 @@ if  HOST.startswith("vocms0133"):
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
     couchCleanup.workqueue_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_workqueue_db
     couchCleanup.workqueueCleanDuration = 60 * 60 * 4 # every 4 hours
+    
+        # LogDB task (update and clean up)
+    logDBTasks = extentions.section_("logDBTasks")
+    logDBTasks.object = "WMCore.ReqMgr.CherryPyThreads.LogDBTasks.LogDBTasks"
+    logDBTasks.central_logdb_url = data.central_logdb_url
+    logDBTasks.log_reporter = data.log_reporter
+    logDBTasks.logDBCleanDuration = 60 * 60 * 24 # 1 days
+    logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min

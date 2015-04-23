@@ -21,6 +21,8 @@ REQMGR2 = "https://%s/reqmgr2" % HOST
 COUCH = "https://%s/couchdb" % HOST
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 PHEDEX = "https://%s/phedex/datasvc/json/prod/" % HOST
+LOG_DB_URL = "%s/wmstats_logdb" % COUCH
+LOG_REPORTER = "global_workqueue"
 
 root = __file__.rsplit('/', 4)[0]
 cache_dir = os.path.join(root, 'state', 'workqueue', 'cache')
@@ -43,8 +45,12 @@ config.WorkQueueManager.queueParams = {'WMStatsCouchUrl': "%s/%s" % (COUCH, wmst
 config.WorkQueueManager.queueParams['PhEDExEndpoint'] = PHEDEX
 config.WorkQueueManager.queueParams['QueueURL'] = WEBURL
 config.WorkQueueManager.queueParams['ReqMgrServiceURL'] = REQMGR2
+config.WorkQueueManager.queueParams['central_logdb_url'] = LOG_DB_URL
+config.WorkQueueManager.queueParams['log_reporter'] = LOG_REPORTER
 config.WorkQueueManager.reqMgrConfig = {}
 config.WorkQueueManager.reqMgrConfig['endpoint'] = REQMGR
 # when reqmgr2 is ready change following to endpoint and reqmgr2_only to True
 config.WorkQueueManager.reqMgrConfig['reqmgr2_endpoint'] = REQMGR2
 config.WorkQueueManager.reqMgrConfig['reqmgr2_only'] = False
+config.WorkQueueManager.reqMgrConfig['central_logdb_url'] = LOG_DB_URL
+config.WorkQueueManager.reqMgrConfig['log_reporter'] = LOG_REPORTER
