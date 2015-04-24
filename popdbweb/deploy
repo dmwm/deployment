@@ -1,0 +1,77 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_popdbweb_deps()
+{
+  deploy admin
+  deploy backend
+}
+
+deploy_popdbweb_prep()
+{
+  mkproj
+}
+
+deploy_popdbweb_sw()
+{
+  deploy_pkg -a popdbweb/conf_secret.ini -a popdbweb/djangokey.py comp cms+popdbweb
+  (set -e
+   . $root/current/apps/popdbweb/etc/profile.d/init.sh
+   perl -p -i -e "
+        s|\@ROOT\@|$root|g; \
+        s|\@POPDBWEB_ROOT\@|$POPDBWEB_ROOT|g; \
+        s|\@CONFIG\@|$project_config|g; \
+        s|\@AUTH\@|$project_auth|g; "\
+        $project_config/popdbweb.conf \
+        $project_config/settings.py \
+        $project_config/confSettings.py \
+        $project_config/conf.ini \
+        $project_config/popularity_wsgi.py)
+}
+
+deploy_popdbweb_post()
+{
+  case $host in vocms013[89] | vocms0140 | vocms030[67] ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+  (set -e
+   . $root/current/apps/popdbweb/etc/profile.d/init.sh
+   mkserver \
+     -r $PWD \
+     -l $project_logs \
+     -a $APACHE2_ROOT \
+     -o "$opts" \
+     -c $project_config/popdbweb.conf \
+     -p $project_config/httpd-mpm.conf \
+     -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh" \
+     -e "$POPDBWEB_ROOT/etc/env.d/*.sh" \
+     -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so \
+     -m cache_module:$APACHE2_ROOT/modules/mod_cache.so \
+     -m disk_cache_module:$APACHE2_ROOT/modules/mod_disk_cache.so \
+     -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so)
+  [ $? = 0 ]
+  setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
+  setgroup ug+rw,o-w _popdbweb $PWD/var
+}
+
+deploy_popdbweb_auth()
+{
+  case $1 in
+    */conf_secret.ini )
+      echo "[db_sections]"
+      echo "default = db_section1"
+      echo "CMS_POPULARITY_SYSTEM = db_section1"
+      echo "CMS_EOS_POPULARITY_SYSTEM = db_section2"
+      for i in db_section1 db_section2; do
+        echo "[$i]"
+        echo "ENGINE = django.db.backends.oracle"
+        echo "NAME = CMSR1__FILL_ME_IN__"
+        echo "USER = CMS_POPULARITY_SYSTEM_R_OR_CMS_EOS_POPULARITY_SYSTEM__FILL_ME_IN__"
+        echo "PASSWORD = __FILL_ME_IN__"
+        echo "HOST = cmsr1-v_OR_int2r1-v.cern.ch__FILL_ME_IN__"
+        echo "PORT = 10121__FILL_ME_IN__"
+      done
+      ;;
+    */djangokey.py )
+      perl -e "print \"SECRET_KEY = '\",map{chr(1+32*(2+int(rand(2)))+int(rand(26)))} 0..39; print \"'\n\""
+      ;;
+  esac
+}
