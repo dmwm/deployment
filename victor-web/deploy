@@ -1,0 +1,63 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_victor_web_deps()
+{
+  deploy admin
+  deploy backend
+}
+
+deploy_victor_web_prep()
+{
+  mkproj
+}
+
+deploy_victor_web_sw()
+{
+  deploy_pkg -a victor-web/victor_db.py -l victor-web comp cms+victor-web
+  (set -e
+   . $root/current/apps/victor-web/etc/profile.d/init.sh
+  perl -p -i -e "
+        s|\@ROOT\@|$root/|g; \
+        s|\@VICTOR_WEB_ROOT\@|$VICTOR_WEB_ROOT/|g; \
+        s|\@CONFIG\@|$project_config|g; "\
+        $project_config/victor-web.conf \
+        $project_config/settings.py \
+        $project_config/victor_wsgi.py )
+}
+
+deploy_victor_web_post()
+{
+  case $host in vocms13[89] | vocms140 ) disable ;; * ) enable ;; esac
+    (mkcrontab; sysboot) | crontab -
+   (set -e
+   . $root/current/apps/victor-web/etc/profile.d/init.sh
+   mkserver \
+   -r $PWD \
+   -l $project_logs \
+   -a $APACHE2_ROOT \
+   -o "$opts" \
+   -c $project_config/victor-web.conf \
+   -p $project_config/httpd-mpm.conf \
+   -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh" \
+   -e "$VICTOR_WEB_ROOT/etc/env.d/*.sh" \
+   -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so \
+   -m cache_module:$APACHE2_ROOT/modules/mod_cache.so \
+   -m disk_cache_module:$APACHE2_ROOT/modules/mod_disk_cache.so \
+   -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so)
+  [ $? = 0 ]
+  setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
+  setgroup ug+rw,o-w _victor-web $PWD/var
+}
+
+deploy_victor_web_auth()
+{
+    echo "'default': {"
+    echo "'ENGINE': 'django.db.backends.oracle',"
+    echo "'NAME': 'database',"
+    echo "'USER':  'reader',"
+    echo "'PASSWORD': 'secret',"
+    echo "'HOST': 'database-host',"
+    echo "'PORT': 'port',"
+    echo "}"   
+
+}
