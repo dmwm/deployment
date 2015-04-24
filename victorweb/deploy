@@ -1,0 +1,71 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_victorweb_deps()
+{
+  deploy admin
+  deploy backend
+}
+
+deploy_victorweb_prep()
+{
+  mkproj
+}
+
+deploy_victorweb_sw()
+{
+  deploy_pkg -a victorweb/victor_db.py -a victorweb/djangokey.py comp cms+victorweb
+  (set -e
+   . $root/current/apps/victorweb/etc/profile.d/init.sh
+   perl -p -i -e "
+        s|\@ROOT\@|$root|g; \
+        s|\@VICTORWEB_ROOT\@|$VICTORWEB_ROOT|g; \
+        s|\@CONFIG\@|$project_config|g;"   \
+           $project_config/victorweb.conf  \
+           $project_config/settings.py     \
+           $project_config/victor_wsgi.py)
+}
+
+deploy_victorweb_post()
+{
+  case $host in vocms013[89] | vocms0140 | vocms030[67] ) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+  (set -e
+   . $root/current/apps/victorweb/etc/profile.d/init.sh
+   mkserver \
+     -r $PWD \
+     -l $project_logs \
+     -a $APACHE2_ROOT \
+     -o "$opts" \
+     -c $project_config/victorweb.conf \
+     -p $project_config/httpd-mpm.conf \
+     -e "$APACHE_SETUP_ROOT/etc/env.d/*.sh" \
+     -e "$VICTORWEB_ROOT/etc/env.d/*.sh" \
+     -m perl_module:$MOD_PERL2_ROOT/modules/mod_perl.so \
+     -m cache_module:$APACHE2_ROOT/modules/mod_cache.so \
+     -m disk_cache_module:$APACHE2_ROOT/modules/mod_disk_cache.so \
+     -m wsgi_module:$MOD_WSGI_ROOT/modules/mod_wsgi.so)
+  [ $? = 0 ]
+  setgroup -R ugo+r,go-w _config $PWD/{*.conf,etc,htdocs}
+  setgroup ug+rw,o-w _victorweb $PWD/var
+}
+
+deploy_victorweb_auth()
+{
+  case $1 in
+    */victor_db.py )
+      echo "DATABASES={"
+      echo "    'default': {"
+      echo "    'ENGINE': 'django.db.backends.oracle',"
+      echo "    'NAME': 'CMSR1__FILL_ME_IN__',"
+      echo "    'USER': 'CMS_CLEANING_AGENT_R__FILL_ME_IN__',"
+      echo "    'PASSWORD': '__FILL_ME_IN__',"
+      echo "    'HOST': 'cmsr1-s__FIX__.cern.ch__FILL_ME_IN__',"
+      echo "    'PORT': '10121__FILL_ME_IN__',"
+      echo "    }"
+      echo "}"
+      ;;
+    */djangokey.py )
+      perl -e "print \"SECRET_KEY = '\",map{chr(1+32*(2+int(rand(2)))+int(rand(26)))} 0..39; print \"'\n\""
+      ;;
+  esac
+}

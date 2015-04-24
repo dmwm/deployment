@@ -111,18 +111,19 @@ hostcert_to_system()
 system_groups_and_accounts()
 {
   # Create groups. Add myself to all the groups.
-  for ng in T:100000:_config    F:100001:_empty       T:100002:_sw         \
-            T:100003:_auth      T:100010:_frontend    T:100020:_admin      \
-            T:100021:_base      T:100022:_couchdb     T:100023:_das        \
-            T:100024:_dbs       T:100026:_dqmgui      T:100027:_filemover  \
-            T:100028:_overview  T:100029:_phedex      T:100030:_sitedb     \
-            T:100031:_t0mon     T:100032:_mongodb     T:100033:_reqmgr     \
-            T:100034:_workqueue T:100035:_configcache T:100037:_t0datasvc  \
-            T:100038:_reqmon    T:100039:_crabserver  T:100040:_crabcache  \
-            T:100041:_dmwmmon   T:100042:_an_reqmgr   T:100043:_an_workqueue\
+  for ng in T:100000:_config    F:100001:_empty       T:100002:_sw           \
+            T:100003:_auth      T:100010:_frontend    T:100020:_admin        \
+            T:100021:_base      T:100022:_couchdb     T:100023:_das          \
+            T:100024:_dbs       T:100026:_dqmgui      T:100027:_filemover    \
+            T:100028:_overview  T:100029:_phedex      T:100030:_sitedb       \
+            T:100031:_t0mon     T:100032:_mongodb     T:100033:_reqmgr       \
+            T:100034:_workqueue T:100035:_configcache T:100037:_t0datasvc    \
+            T:100038:_reqmon    T:100039:_crabserver  T:100040:_crabcache    \
+            T:100041:_dmwmmon   T:100042:_an_reqmgr   T:100043:_an_workqueue \
             T:100044:_an_reqmon T:100045:_t0wmadatasvc T:100046:_dbsmigration\
-            T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver \
-            T:100050:_gitweb    T:100051:_bigcouch; do
+            T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver   \
+            T:100050:_gitweb    T:100051:_bigcouch    T:100052:_victorweb    \
+            T:100053:_popdbweb; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -161,6 +162,8 @@ system_groups_and_accounts()
   add_local_user 100049 _acdcserver   ,_config "ACDC Server App"
   add_local_user 100050 _gitweb       ,_config "GitWeb App"
   add_local_user 100051 _bigcouch     ,_config "BigCouch App"
+  add_local_user 100052 _victorweb   ,_config "Victor Cleaner App"
+  add_local_user 100053 _popdbweb    ,_config "CMS Popularity App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
