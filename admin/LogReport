@@ -2,7 +2,7 @@
 
 import os, re, time, sys, httplib
 from datetime import datetime, timedelta
-from socket import gethostbyaddr, herror
+from socket import gethostbyaddr, gaierror
 
 def readfile(filename):
   if not os.path.isfile(filename) or not os.access(filename, os.R_OK):
@@ -15,8 +15,8 @@ def readfile(filename):
 def dns_resolve(ip):
   try:
     return gethostbyaddr(ip)[0]
-  except (herror) as e:
-    return 'name not found: (%s)' % str(e)
+  except:
+    return 'name not found: (%s)' % str(ip)
 
 def generate_report(logsdir, ndays, days, hosts):
   # store statistics here
@@ -61,21 +61,21 @@ def generate_report(logsdir, ndays, days, hosts):
       stats["NonVOCerts"][i] = c+1
 
     # find users which had their certificate expired
-    ExpiredDNs = re.findall("^.*\[client (.*?)\].*certificate has expired; subject: (.*?), issuer:.*notafter: (.*)", d, re.M)
+    ExpiredDNs = re.findall("^.*\[client (.*?)(?:\:\d+)?\].*certificate has expired; subject: (.*?), issuer:.*notafter: (.*)", d, re.M)
     for i in ExpiredDNs:
       c = stats['ExpiredDNs'].get(i) or 0
       stats['ExpiredDNs'][i] = c+1
       # 'ClientIP':i[0], 'ClientHostname':dns_resolve(i[0]), 'DN':i[1], 'Date':i[2]}
 
     # parse security lines
-    SecurityRaw = re.findall("^\[.*\] \[.*\] \[client (.*?)\] clearing incoming request header (.*)", d, re.M)
+    SecurityRaw = re.findall("^\[.*\] \[.*\] \[client (.*?)(?:\:\d+)?\] clearing incoming request header (.*)", d, re.M)
     for i in SecurityRaw:
       c = stats['Security'].get(i) or 0
       stats['Security'][i] = c+1
       # {'Counter':0, 'Hostname':dns_resolve(i[0]), 'IP':i[0], 'Header':i[1]}
 
     # back-end requests timeout
-    Timeouts = re.findall("^\[.*\] \[error\] \[client (.*?)\] .*error reading status line from remote server (.*)\n.*Error reading from remote server returned by (.*)", d, re.M)
+    Timeouts = re.findall("^\[.*\] \[error\] \[client (.*?)(?:\:\d+)?\] .*error reading status line from remote server (.*)\n.*Error reading from remote server returned by (.*)", d, re.M)
     for i in Timeouts:
       c = stats['Timeouts'].get(i) or 0
       stats['Timeouts'][i] = c+1
@@ -156,7 +156,7 @@ if __name__ == '__main__':
   opt.add_option("-n", "--ndays", dest="ndays", metavar="N", type="int", default=1,
                  help="number of backward days to include in the report. Default is 1 (the startday only).")
   opt.add_option("-m", "--machines", dest="machines", metavar="LIST", default=None,
-                 help="comma separated LIST of frontend host names to include in the report. I.e. -m \"vocms0134,vocms0135\"")
+                 help="comma separated LIST of frontend host names to include in the report. I.e. -m \"vocms0134, vocms0135\"")
   opts, args = opt.parse_args()
 
   # Find the logs root dir.

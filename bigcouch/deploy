@@ -41,7 +41,7 @@ deploy_bigcouch_post()
 
   (mkcrontab
    case $host in
-     vocms34 | vocms13[2689] | vocms16[13] | vocms140 |  vocms034 | vocms0128 | vocms013[2689] | vocms016[13] | vocms0140 | vocms0306 | vocms0307 )
+     vocms34 | vocms13[2689] | vocms16[13] | vocms140 |  vocms034 | vocms0128 | vocms013[2689] | vocms016[135] | vocms0140 | vocms0306 | vocms0307 )
        disable ;;
      * )
        enable

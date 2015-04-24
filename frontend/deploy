@@ -99,7 +99,7 @@ deploy_frontend_post()
    case $host in
      vocms135 | vocms162 | vocms0135 | vocms0162 ) ;;
      vocms160  ) echo "23 */6 * * * $project_config/update-keys $PWD vocms162" ;;
-     vocms0160 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms0162" ;;
+     vocms0160 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms0162 vocms0164" ;;
      vocms134 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms135" ;;
      vocms0134 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms0135" ;;
      *)        echo "23 */6 * * * $project_config/update-keys $PWD" ;;

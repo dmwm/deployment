@@ -23,6 +23,7 @@ help()
 couchstats() {
   host=$1
   GB=1000000000
+  MB=1000000
   DB_THRESHOLD=$((40*$GB)) # 40 GB
   VIEW_THRESHOLD=$((80*$GB)) # 80 GB
   for db in /data/srv/state/couchdb/database/[^_]*couch; do
@@ -34,24 +35,24 @@ couchstats() {
       echo "WARNING: $host:$dbname size is $(bc<<<scale=2\;$dbsize/$GB) GB. Consider reducing it." 1>&2
 
     # Check views size exceeds threshold
-    viewsizes=$(ls -alF /data/srv/state/couchdb/database/.${dbname}_design/*view|cut -d" " -f5)
-    let totvsize=0
-    for v in $viewsizes; do
-      [ $v -le ${VIEW_THRESHOLD} ] ||
-        echo "WARNING: $host:$dbname views size is $(bc<<<scale=2\;$v/$GB) GB." 1>&2
-      let totvsize+=$v
-    done
+    viewsize=$(du -sb /data/srv/state/couchdb/database/.${dbname}_design/ |cut -f1)
+    [ $viewsize -le ${VIEW_THRESHOLD} ] ||
+        echo "WARNING: $host:$dbname views size is $(bc<<<scale=2\;$viewsize/$GB) GB." 1>&2
 
     # Check if database needs rotation
     docs=$(curl -ks localhost:5984/$dbname/ | cut -d, -f2|cut -d: -f2)
+    [ -n "$docs" ] || docs=0
     deldocs=$(curl -ks localhost:5984/$dbname/ | cut -d, -f3|cut -d: -f2)
-    docrate=$(bc<<<scale=2\;100*$deldocs/\($docs+$deldocs\))
-    [ $deldocs -gt $(($docs * 3)) -a $dbsize -gt $GB ] &&
-      printf "WARNING: %1.2f%% of the documents on %s:%s are deleted documents. Consider rotating it.\n" \
-             $docrate $host $dbname 1>&2
+    [ -n "$deldocs" ] || deldocs=0
+    if [ $deldocs -gt 0 ]; then
+      docrate=$(bc<<<scale=2\;100*$deldocs/\($docs+$deldocs\))
+      [ $deldocs -gt $(($docs * 3)) -a $dbsize -gt $GB ] &&
+        printf "WARNING: %1.2f%% of the documents on %s:%s are deleted documents. Consider rotating it.\n" \
+               $docrate $host $dbname 1>&2
+    fi
 
-    printf "%14.2f %10s %25s %12d %12d %12d %12d\n" \
-      $(bc<<<scale=9\;\($totvsize+$dbsize\)/1000000) $host $dbname $dbsize $totvsize $docs $deldocs
+    printf "%14.2f %10s %25s %14.2f %17.2f %12d %12d\n" \
+      $(bc<<<scale=9\;\($viewsize+$dbsize\)/$MB) $host $dbname $(bc<<<scale=9\;$dbsize/$MB) $(bc<<<scale=9\;$viewsize/$MB) $docs $deldocs
   done
 }
 
@@ -67,8 +68,8 @@ variant=$1
 
 case $variant in
   prod)
-    frontends="vocms0160,vocms0162"
-    backends="vocms034,vocms0136,vocms138,vocms139,vocms0140,vocms0161,vocms0163,vocms0306,vocms0307"
+    frontends="vocms0160,vocms0162,vocms0164"
+    backends="vocms0136,vocms138,vocms139,vocms0140,vocms0161,vocms0163,vocms0165,vocms0306,vocms0307"
     couches="vocms0306,vocms0307,vocms0140"
     ;;
   preprod|dev)
@@ -91,8 +92,8 @@ echo
 # CouchDB
 echo "#### CouchDB report ####"
 echo
-printf "%14s %10s %25s %12s %12s %12s %12s\n" \
-       "TOTAL SIZE(MB)" "HOST" "DB NAME" "DB SIZE" "VIEWS SIZE" "DOCS" "DELETED"
+printf "%14s %10s %25s %14s %17s %12s %12s\n" \
+       "TOTAL SIZE(MB)" "HOST" "DB NAME" "DB SIZE(MB)" "VIEWS SIZE(MB)" "DOCS" "DELETED"
 echo "-------------------------------------------------------------------------------------------------------"
 for h in ${couches//,/ }; do
   ssh -i $HOME/.ssh/id_dsa_backend $h "bashs -lc '$(declare -f couchstats); couchstats $h'"
@@ -125,8 +126,8 @@ echo
 echo "#### Disk usage report ####"
 echo
 printf "%13s %20s" "TOTAL(MB)" "Service"
-for h in ${backends//,/ }; do printf "%20s" $h; done; echo
-printf '%.0s-' {1..34}; for h in ${backends//,/ }; do printf '%.0s-' {1..20}; done; echo
+for h in ${backends//,/ }; do printf "%14s" $h; done; echo
+printf '%.0s-' {1..34}; for h in ${backends//,/ }; do printf '%.0s-' {1..14}; done; echo
 du=`for h in ${backends//,/ }; do
   ssh -i $HOME/.ssh/id_dsa_backend $h "sudo bashs -lc 'du -sb /data/srv/state/*'" | while read usedspace srv; do echo $usedspace ${srv##*/} $h; done
 done | sort -nr`
@@ -134,7 +135,8 @@ for svc in $(echo "$du" | cut -d" " -f2|sort -u); do
   svctot=$(echo "$du" | grep " $svc " | awk '{s+=$1}END{print s}')
   printf "$svctot %13.2f %20s" $(bc<<<scale=9\;$svctot/1000000) $svc
   for h in ${backends//,/ }; do
-    printf "%20d" $(echo "$du" | grep " $svc $h" | cut -d" " -f1 || echo -n 0)
+    val=0$(echo "$du" | grep " $svc $h" | cut -d" " -f1)
+    printf "%14.2f" $(bc<<<scale=9\;$val/1000000)
   done
   echo
 done | sort -nr | cut -d" " -f2-

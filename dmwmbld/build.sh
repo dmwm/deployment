@@ -44,7 +44,7 @@ git reset --hard $ref
 
 if [ -z "$diffurl" ]; then :; else
   echo "Applying diff from URL: $diffurl"
-  curl -ks -X GET $diffurl | git apply
+  curl -ksL -X GET $diffurl | git apply
 fi
 cd ..
 
