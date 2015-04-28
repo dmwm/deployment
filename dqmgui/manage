@@ -54,14 +54,7 @@ FLAVOR=dev
 ALTERNATIVE_USER=$(stat $TOP -c %U)
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
-# This hack is needed while dqmgui is still compiling with castor 2.1.9.8
-case "$1" in
-  backup | rootfilesbackup )
-    # do not source the env because we want to pick the system castor
-    ;;
-  * )
-    . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh ;;
-esac
+. $ROOT/apps/dqmgui/128/etc/profile.d/env.sh
 
 export QUIET_ASSERT=a
 export X509_CERT_DIR=/etc/grid-security/certificates
