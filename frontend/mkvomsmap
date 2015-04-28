@@ -13,8 +13,8 @@ a very short time while the new file is moved in place.
 
 The URIs should be of the form:
 
-  vomss://voms.cern.ch:8443/voms/cms?/cms/Role=production
-  vomss://voms.cern.ch:8443/voms/cms?/cms
+  vomss://voms2.cern.ch:8443/voms/cms?/cms/Role=production
+  vomss://voms2.cern.ch:8443/voms/cms?/cms
 
 If CONFIG-FILE is given, it's assumed to consist of lines in format
 'group URI VONAME', compatible with edg-mkgridmap. The VONAME given
