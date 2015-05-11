@@ -64,13 +64,12 @@ deploy_reqmgr2_post()
   # Setup reqmgr2 cronjobs
   (mkcrontab
    sysboot
-   case $host in
-     vocms34 | vocms13[2689] | vocms16[13] | vocms034 | vocms0128 | vocms0306 | vocms013[2689] | vocms016[135] ) ;;
-     * )
+   case $variant:$host in
+     prod:vocms0140 | preprod:vocms0133 | dev:vocms0127 | default:* )
        local cmd="$project_config/manage updateversions 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
-       echo "58 * * * * $cmd" # run every 58 minutes
-       ;;
+       echo "58 * * * * $cmd" ;;
+     * ) ;;
    esac) | crontab -
 }
 

@@ -96,14 +96,17 @@ deploy_frontend_post()
    echo "*/4 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
         "PYTHONPATH=$project_auth:\$PYTHONPATH $project_config/mkauthmap" \
         "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
-   case $host in
-     vocms135 | vocms162 | vocms0135 | vocms0162 ) ;;
-     vocms160  ) echo "23 */6 * * * $project_config/update-keys $PWD vocms162" ;;
-     vocms0160 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms0162 vocms0164" ;;
-     vocms134 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms135" ;;
-     vocms0134 ) echo "23 */6 * * * $project_config/update-keys $PWD vocms0135" ;;
-     *)        echo "23 */6 * * * $project_config/update-keys $PWD" ;;
-   esac) | crontab -
+
+   case $variant:$host in
+     prod:vocms0160 )
+       echo "23 */6 * * * $project_config/update-keys $PWD vocms0162 vocms0164" ;;
+     preprod:vocms0134 )
+       echo "23 */6 * * * $project_config/update-keys $PWD vocms0135" ;;
+     dev:vocms0127 | default:* )
+       echo "23 */6 * * * $project_config/update-keys $PWD" ;;
+     * ) ;;
+   esac
+  ) | crontab -
 
   (crontab -l | grep -e '^[A-Z0-9_]*=' -e $project_config/ |
    perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
