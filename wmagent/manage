@@ -156,6 +156,7 @@ load_secrets_file(){
     local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_PASS | sed s/MYSQL_PASS=//`
     local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
     local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
     local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
     local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
     local MATCH_REQMGR_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_HOSTNAME | sed s/REQMGR_HOSTNAME=//`
@@ -207,7 +208,8 @@ load_secrets_file(){
         echo "Secrets file doesnt contain COUCH_PASS";
         exit 1
     fi
-
+    
+    COUCH_PORT=${MATCH_COUCH_PORT:-$COUCH_PORT};
     # if couch ssl certificate not specified check X509_USER_CERT and X509_USER_PROXY
     COUCH_CERT_FILE=${MATCH_COUCH_CERT_FILE:-${X509_USER_CERT:-$X509_USER_PROXY}};
 
@@ -275,6 +277,7 @@ print_settings(){
     echo "MYSQL_PASS=                $MYSQL_PASS                "
     echo "COUCH_USER=                $COUCH_USER                "
     echo "COUCH_PASS=                $COUCH_PASS                "
+    echo "COUCH_PORT=                $COUCH_PORT                "
     echo "COUCH_CERT_FILE=           $COUCH_CERT_FILE           "
     echo "COUCH_KEY_FILE=            $COUCH_KEY_FILE            "
     echo "REQMGR_HOSTNAME=           $REQMGR_HOSTNAME           "
