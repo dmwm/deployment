@@ -46,6 +46,16 @@ config.mongodb.dburi = ['mongodb://localhost:8230']
 config.mongodb.lifetime = 300
 config.mongodb.dbname = 'das'
 
+# pycurl configuration
+config.component_('pycurl')
+config.pycurl.FOLLOWLOCATION=1
+config.pycurl.CONNECTTIMEOUT=270
+config.pycurl.MAXREDIRS=5
+config.pycurl.NOSIGNAL=1
+config.pycurl.TIMEOUT=270
+config.pycurl.SSL_VERIFYPEER=False
+config.pycurl.VERBOSE=0
+
 # dasdb configuration
 config.component_('dasdb')
 config.dasdb.dbname = 'das'
