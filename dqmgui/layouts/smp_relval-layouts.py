@@ -5,9 +5,8 @@
 def smpHLTlayouts(i, p, *rows):
     i["HLT/Layouts/" + p] = DQMItem(layout=rows)
 
-## Collections for SMP 
+## Collections for SMP
 workDir = "SMP/"
-
 
 #
 ## Summary plots
@@ -35,8 +34,6 @@ for i, path in enumerate(paths):
             [{'path': "HLT/Muon/Distributions/%s/recEffPhi_Total" % path, 'description':""}],
             [{'path': "HLT/Muon/Distributions/%s/recTurnOn1_Total" % path, 'description':""}])
 
-
-
 #
 ## Single Electron: W or Z sample. EGM POG
 #
@@ -49,9 +46,10 @@ smpHLTlayouts(dqmitems, workDir+"SingleElectron/00 - Instructions",
 for i, path in enumerate(paths):
     path += "_DQM"
     smpHLTlayouts(dqmitems, workDir+"SingleElectron/%02d - %s" % (i+1, path),
+            [{'path': "HLT/HLTEgammaValidation/%s/final_eff_vs_et" % path, 'description':""}],
             [{'path': "HLT/HLTEgammaValidation/%s/gen_et" % path, 'description':""}],
+            [{'path': "HLT/HLTEgammaValidation/%s/final_eff_vs_eta" % path, 'description':""}],
             [{'path': "HLT/HLTEgammaValidation/%s/gen_eta" % path, 'description':""}])
-
 
 #
 ## Double muon: Z sample. Higgs, HWW (didn't see these paths under MUO)
@@ -112,7 +110,6 @@ for i, path in enumerate(paths):
     smpHLTlayouts(dqmitems, workDir+"MuEG/%02d - %s_reco" % (i+1, path),
             [{'path': "HLT/Higgs/HWW/Eff_recMuMaxPt1_%s" % path, 'description':""}],
             [{'path': "HLT/Higgs/HWW/Eff_recMuMaxPt2_%s" % path, 'description':""}])
-
 
 #
 ## Single Photon: Hgg sample. SMP PAG
