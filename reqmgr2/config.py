@@ -5,6 +5,7 @@ Everything configurable in ReqMgr is defined here.
 """
 
 import socket
+import time
 from WMCore.Configuration import Configuration
 from os import path
 
@@ -109,7 +110,7 @@ ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
 # Production instance of wmdatamining, must be a production back-end
-if  HOST.startswith("vocms0307"):
+if  HOST.startswith("vocms0307") or HOST.startswith("vocms0133"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
@@ -122,6 +123,7 @@ if  HOST.startswith("vocms0307"):
     wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
     wmdatamining.activeDuration = 60 * 15  # every 15 min
     wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
+    wmdatamining.log_file = '%s/logs/reqmgr2/wmdataminig-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     
     # ACDC/workqueue cleanup threads
     couchCleanup = extentions.section_("couchCleanup")
@@ -131,7 +133,7 @@ if  HOST.startswith("vocms0307"):
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
     couchCleanup.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     couchCleanup.workqueueCleanDuration = 60 * 60 * 12 # every 12 hours
-    
+    couchCleanup.log_file = '%s/logs/reqmgr2/couchCleanup-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     
     # LogDB task (update and clean up)
     logDBTasks = extentions.section_("logDBTasks")
@@ -140,36 +142,13 @@ if  HOST.startswith("vocms0307"):
     logDBTasks.log_reporter = data.log_reporter
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 7 # 7 days
     logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min
-
-# Testbed instance of wmdatamining, can be any dev or preprod back-end
-# Reads data from testbed, but writes to its own wmdatamining db
-if  HOST.startswith("vocms0133"):
-    extentions = config.section_("extensions")
-    wmdatamining = extentions.section_("wmdatamining")
-    wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
-    wmdatamining.wmstats_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_wmstats_db
-    wmdatamining.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_reqmgr_db
-    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
-    wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
-    wmdatamining.mcm_cert = "%s/auth/reqmgr2/dmwm-service-cert.pem" % ROOTDIR
-    wmdatamining.mcm_key = "%s/auth/reqmgr2/dmwm-service-key.pem" % ROOTDIR
-    wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
-    wmdatamining.activeDuration = 60 * 15  # every 15 mins
-    wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
+    logDBTasks.log_file = '%s/logs/reqmgr2/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     
-    # ACDC/workqueue cleanup threads
-    couchCleanup = extentions.section_("couchCleanup")
-    couchCleanup.object = "WMCore.ReqMgr.CherryPyThreads.CouchDBCleanup.CouchDBCleanup"
-    couchCleanup.reqmgrdb_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_reqmgr_db
-    couchCleanup.acdc_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_acdc_db
-    couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
-    couchCleanup.workqueue_url = "https://cmsweb-testbed.cern.ch/couchdb/%s" % data.couch_workqueue_db
-    couchCleanup.workqueueCleanDuration = 60 * 60 * 4 # every 4 hours
+    # status change task 
+    statusChangeTasks = extentions.section_("statusChangeTasks")
+    statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
+    statusChangeTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    statusChangeTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    statusChangeTasks.checkStatusDuration = 60 * 30  # every 30 min
+    statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     
-        # LogDB task (update and clean up)
-    logDBTasks = extentions.section_("logDBTasks")
-    logDBTasks.object = "WMCore.ReqMgr.CherryPyThreads.LogDBTasks.LogDBTasks"
-    logDBTasks.central_logdb_url = data.central_logdb_url
-    logDBTasks.log_reporter = data.log_reporter
-    logDBTasks.logDBCleanDuration = 60 * 60 * 24 # 1 days
-    logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min

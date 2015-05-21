@@ -45,6 +45,7 @@ config.WorkQueueManager.queueParams = {'WMStatsCouchUrl': "%s/%s" % (COUCH, wmst
 config.WorkQueueManager.queueParams['PhEDExEndpoint'] = PHEDEX
 config.WorkQueueManager.queueParams['QueueURL'] = WEBURL
 config.WorkQueueManager.queueParams['ReqMgrServiceURL'] = REQMGR2
+config.WorkQueueManager.queueParams['RequestDBURL'] = "%s/%s" % (COUCH, reqmgrCouchDB)
 config.WorkQueueManager.queueParams['central_logdb_url'] = LOG_DB_URL
 config.WorkQueueManager.queueParams['log_reporter'] = LOG_REPORTER
 config.WorkQueueManager.reqMgrConfig = {}
