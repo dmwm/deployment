@@ -43,7 +43,7 @@ deploy_dqmgui_prep()
 
 deploy_dqmgui_sw()
 {
-  deploy_pkg comp cms+dqmgui
+  deploy_pkg -a dqmgui/GoogleAPI.py comp cms+dqmgui
 }
 
 deploy_dqmgui_post()
@@ -121,4 +121,14 @@ deploy_dqmgui_post()
 
   #Clear black list
   find $project_state -maxdepth 2 -name blacklist.txt -exec rm {} \;
+}
+
+deploy_dqmgui_auth() {
+  case $1 in
+    */GoogleAPI.py)
+      cat <<- \EOF
+api_key=None
+EOF
+    ;;
+  esac
 }
