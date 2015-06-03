@@ -71,30 +71,42 @@ deploy_dqmgui_post()
      esac
    }) | crontab -
 
-  # BEWARE!!!: For the slc6 servers, backups only turned on for the DQMGUI dev server (on pre-prod)!!!
   case $host:$root in
-    vocms13[389]:/data/srv | vocms0133:/data/srv | broen* )
+    vocms13[389]:/data/srv | vocms013[389]:/data/srv | broen* )
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
 
        # Enable the afs-sync only on vocms138
+       # Remains only on SLC5. Will not be migrated to SLC6.
        case $host in
          vocms138 )
            echo "6 */3 * * * $host $project_config/manage -q xstart afs-sync 'I did read documentation'" ;;
        esac
 
        # Set the backup of the index files to castor
+       # During the parallel run period, should only run on SLC5
+       # after that, should swith to SLC6
        case $host in
-         vocms13[89] | vocms013[89] )
+         vocms13[89] )
            echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
                             "$project_config/manage backup" \
                             "/castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'" ;;
        esac
 
-       # Set the backup of the root files (castor stageout) on slc6 (pre)prod machines only
+       # Set the backup of the zipped root files (castor stageout)
+       # Currently only on SLC6 dev machine
+       # After the parallel run this must be switched on on the prod machines
        case $host in
-         vocms013[389] | broen* )
-           echo "*/15 * * * * $host $project_config/manage rootfilesbackup 'I did read documentation'" ;;
+         vocms0133 | broen* )
+           echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" ;;
+       esac
+
+       # Set the check/verification of the backup of the zipped root files
+       # Currently only on SLC6 dev machine
+       # After the parallel run this must be switched on on the prod machines
+       case $host in
+         vocms0133 | broen* )
+           echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" ;;
        esac
       ) | acrontab
       ;;

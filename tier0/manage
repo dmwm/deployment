@@ -382,14 +382,14 @@ start_tier0(){
     init_tier0;
     if [ $USING_TIER0 -eq 1 ]; then
         echo "Starting Tier0..."
-	/afs/usr/local/bin/k5reauth -f -- "wmcoreD --start --config=$CONFIG_TIER0/config.py"
+	wmcoreD --start --config=$CONFIG_TIER0/config.py
     fi
 }
 
 stop_tier0(){
     if [ $USING_TIER0 -eq 1 ]; then
         echo "Shutting down Tier0...";
-        wmcoreD --shutdown --config=$CONFIG_TIER0/config.py;
+        wmcoreD --shutdown --config=$CONFIG_TIER0/config.py
     fi
 }
 
@@ -411,7 +411,7 @@ clean_tier0(){
     if [ $USING_TIER0 -eq 1 ]; then
         echo "Cleaning Tier0..."
         rm -rf $INSTALL_TIER0/*
-        rm -f $CONFIG_TIER0/config.py;
+        rm -f $CONFIG_TIER0/config.py
         rm -f $INSTALL_TIER0/.init
     fi
 }

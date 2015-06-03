@@ -6,4 +6,6 @@
 ^/auth/complete/scheddmon/1/ vocms096.cern.ch
 ^/auth/complete/scheddmon/2/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/3/ vocms0114.cern.ch
+^/auth/complete/scheddmon/4/ vocms066.cern.ch
+^/auth/complete/scheddmon/5/ vocms059.cern.ch
 ^ localhost

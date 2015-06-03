@@ -59,7 +59,7 @@ config.component_('web')
 config.web.host = "127.0.0.1"
 config.web.port = 8251
 config.web.log_screen = True
-config.web.thread_pool = 10
+config.web.thread_pool = 50
 
 config.component_('dbsmigration')
 config.dbsmigration.instances = view_mapping[VARIANT]['DBSMigrate']

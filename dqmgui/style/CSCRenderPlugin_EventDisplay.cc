@@ -70,7 +70,7 @@ EventDisplay::EventDisplay() {
 
   for (int h = 0; h < 3; h++) {
     for (int l = 0; l < 6; l++) {
-      for (int x = 0; x < 160; x++) {
+      for (int x = 0; x < 224; x++) {
         bBox[h][l][x] = 0;
         bKey[h][x] = 0;
         tKey[h][x] = 0;
@@ -399,6 +399,6 @@ int EventDisplay::countStrips(int station, int ring) const {
  * @return number of strips in inner corner
  */
 int EventDisplay::countStripsNose(int station, int ring) const {
-  if (station == 1 && ring == 1) return 16;
+  if (station == 1 && ring == 1) return 48;
   return 0;
 }

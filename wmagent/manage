@@ -42,6 +42,11 @@ ORACLE_TNS=
 
 MYSQL_USER=
 MYSQL_PASS=
+if [ -z "$DBSOCK" ]; then
+    MYSQL_SOCK=$INSTALL_MYSQL/logs/mysql.sock 
+else
+    MYSQL_SOCK=$DBSOCK
+fi
 
 COUCH_USER=
 COUCH_PASS=
@@ -151,6 +156,7 @@ load_secrets_file(){
     local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_PASS | sed s/MYSQL_PASS=//`
     local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
     local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
     local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
     local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
     local MATCH_REQMGR_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_HOSTNAME | sed s/REQMGR_HOSTNAME=//`
@@ -202,7 +208,8 @@ load_secrets_file(){
         echo "Secrets file doesnt contain COUCH_PASS";
         exit 1
     fi
-
+    
+    COUCH_PORT=${MATCH_COUCH_PORT:-$COUCH_PORT};
     # if couch ssl certificate not specified check X509_USER_CERT and X509_USER_PROXY
     COUCH_CERT_FILE=${MATCH_COUCH_CERT_FILE:-${X509_USER_CERT:-$X509_USER_PROXY}};
 
@@ -270,6 +277,7 @@ print_settings(){
     echo "MYSQL_PASS=                $MYSQL_PASS                "
     echo "COUCH_USER=                $COUCH_USER                "
     echo "COUCH_PASS=                $COUCH_PASS                "
+    echo "COUCH_PORT=                $COUCH_PORT                "
     echo "COUCH_CERT_FILE=           $COUCH_CERT_FILE           "
     echo "COUCH_KEY_FILE=            $COUCH_KEY_FILE            "
     echo "REQMGR_HOSTNAME=           $REQMGR_HOSTNAME           "
@@ -330,7 +338,7 @@ init_mysql_db_post(){
     echo "Installing the mysql schema..."
     load_secrets_file;
     local TIMEOUT=0;
-    while [ ! -e $INSTALL_MYSQL/logs/mysql.sock ]
+    while [ ! -e $MYSQL_SOCK ]
     do
         sleep 2;
         TIMEOUT=$(($TIMEOUT+2))
@@ -340,7 +348,7 @@ init_mysql_db_post(){
         fi
     done
     echo "Socket file exists, proceeding with schema install..."
-    mysqladmin -u root password $MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock
+    mysqladmin -u root password $MYSQL_PASS --socket=$MYSQL_SOCK
 
     inited_mysql;
 
@@ -348,21 +356,21 @@ init_mysql_db_post(){
     local SQLUSER="CREATE USER '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASS}';"
     local SQLGRANT="GRANT ALL ON *.* TO $MYSQL_USER@localhost WITH GRANT OPTION;"
 
-    mysql -u root -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "$SQLUSER"
-    mysql -u root -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "$SQLGRANT"
+    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "$SQLUSER"
+    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "$SQLGRANT"
 
     # create databases for agent, wq or reqmgr
     if [ $USING_AG -eq 1 ]; then
         echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
-        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_AG}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_AG}"
     fi
     if [ $USING_WQ -eq 1 ]; then
         echo "Installing WorkQueue Database: ${MYSQL_DATABASE_WQ}"
-        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_WQ}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_WQ}"
     fi
     if [ $USING_RM -eq 1 ]; then
         echo "Installing ReqMgr Database: ${MYSQL_DATABASE_RM}"
-        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_RM}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_RM}"
     fi
 }
 
@@ -387,7 +395,7 @@ status_of_mysql(){
         echo "++ MYSQL process not running"
     fi
 
-    echo "++" `mysqladmin -u root --password=$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock status`
+    echo "++" `mysqladmin -u root --password=$MYSQL_PASS --socket=$MYSQL_SOCK status`
 }
 
 #
@@ -407,19 +415,18 @@ start_mysql(){
 	init_mysql_db_pre;
     fi
 
-
     # Start mysqld to install the database schemas
     #
     echo "starting mysqld_safe..."
     nohup mysqld_safe --defaults-extra-file=$CONFIG_MYSQL/my.cnf \
                       --datadir=$INSTALL_MYSQL/database \
                       --log-bin \
-                      --socket=$INSTALL_MYSQL/logs/mysql.sock \
+                      --socket=$MYSQL_SOCK \
                       --skip-networking --log-error=$INSTALL_MYSQL/logs/error.log \
                       --pid-file=$INSTALL_MYSQL/logs/mysqld.pid > /dev/null 2>&1 < /dev/null &
     local TIMEOUT=0;
     echo "Checking MySQL Socket file exists..."
-    while [ ! -e $INSTALL_MYSQL/logs/mysql.sock ]
+    while [ ! -e $MYSQL_SOCK ]
       do
       sleep 2;
       TIMEOUT=$(($TIMEOUT+2))
@@ -428,14 +435,14 @@ start_mysql(){
 	  exit 1;
       fi
     done
-    echo "Socket file exists: $INSTALL_MYSQL/logs/mysql.sock"
+    echo "Socket file exists: $MYSQL_SOCK"
 
     if [ $MYSQL_INIT_DONE -eq 0 ]; then
         echo "MySQL has not been initialised... running post initialisation";
         init_mysql_db_post;
     fi
     echo "Checking Server connection..."
-    mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "SHOW GLOBAL STATUS" > /dev/null;
+    mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "SHOW GLOBAL STATUS" > /dev/null;
     if [ $? -ne 0 ]; then
 	echo "ERROR: checking mysql database is running, failed to execute SHOW GLOBAL STATUS"
 	exit 1
@@ -454,17 +461,17 @@ stop_mysql(){
     fi
 
     echo "stopping mysql..."
-    mysqladmin -u root -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock shutdown &
+    mysqladmin -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK shutdown &
     wait $!
     echo "Making sure the MySQL socket file is removed..."
     local TIMEOUT=0;
-    while [ -e $INSTALL_MYSQL/logs/mysql.sock ]
+    while [ -e $MYSQL_SOCK ]
       do
       sleep 2;
       TIMEOUT=$(($TIMEOUT+2))
       if [ $TIMEOUT -ge 300 ]; then
 	  echo "ERROR: Timeout waiting for mysqld to shutdown."
-	  echo "ERROR: Socket file still exists: $INSTALL_MYSQL/logs/mysql.sock"
+	  echo "ERROR: Socket file still exists: $MYSQL_SOCK"
 	  exit 1;
       fi
     done
@@ -485,7 +492,7 @@ clean_mysql(){
     if [ -e $INSTALL_MYSQL/logs/mysql.pid ]; then stop_mysql; fi;
 
     /bin/rm -f $INSTALL_MYSQL/.init
-    /bin/rm -f $INSTALL_MYSQL/logs/mysql.sock
+    /bin/rm -f $MYSQL_SOCK
     /bin/rm -f $INSTALL_MYSQL/logs/mysqld.pid
     /bin/rm -rf $INSTALL_MYSQL/database/*
 }
@@ -498,11 +505,11 @@ db_prompt(){
     if [ "x$MYSQL_USER" != "x" ]; then
 	case "$2" in
 	  "reqmgr")
-	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_RM};;
+	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_RM};;
 	  "workqueue")
-	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_WQ};;
+	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_WQ};;
 	  "wmagent")
-	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --database=${MYSQL_DATABASE_AG};;
+	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_AG};;
 	  *)
 	      echo "Unknown arg to db_prompt: $2"
 	      echo "Should be one of reqmgr, workqueue, wmagent"
@@ -636,7 +643,7 @@ init_wmagent(){
 	wmagent-mod-config --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
-                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --mysql_socket=$MYSQL_SOCK \
                        --working_dir=$INSTALL_AG \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
@@ -693,7 +700,7 @@ init_reqmgr(){
 	wmagent-mod-config --input=$CONFIG_RM/config-template.py \
                        --output=$CONFIG_RM/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
-                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --mysql_socket=$MYSQL_SOCK \
                        --working_dir=$INSTALL_RM \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_port=$REQMGR_PORT \
@@ -731,7 +738,7 @@ init_workqueue(){
 	wmagent-mod-config --input=$CONFIG_WQ/config-template.py \
                        --output=$CONFIG_WQ/config.py \
                        --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_WQ \
-                       --mysql_socket=$INSTALL_MYSQL/logs/mysql.sock \
+                       --mysql_socket=$MYSQL_SOCK \
                        --working_dir=$INSTALL_WQ \
                        --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
                        --reqmgr_port=$REQMGR_PORT \
@@ -849,8 +856,8 @@ clean_agent(){
         rm -f $INSTALL_RM/.init
 
 	if [ "x$MYSQL_USER" != "x" ]; then
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "drop database ${MYSQL_DATABASE_RM}"
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_RM}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "drop database ${MYSQL_DATABASE_RM}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_RM}"
 	fi
     fi
     if [ $USING_WQ -eq 1 ]; then
@@ -860,8 +867,8 @@ clean_agent(){
         rm -f $INSTALL_WQ/.init
 
 	if [ "x$MYSQL_USER" != "x" ]; then
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "drop database ${MYSQL_DATABASE_WQ}"
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_WQ}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "drop database ${MYSQL_DATABASE_WQ}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_WQ}"
 	fi
     fi
     if [ $USING_AG -eq 1 ]; then
@@ -871,8 +878,8 @@ clean_agent(){
         rm -f $INSTALL_AG/.init
 
 	if [ "x$MYSQL_USER" != "x" ]; then
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "drop database ${MYSQL_DATABASE_AG}"
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$INSTALL_MYSQL/logs/mysql.sock --exec "create database ${MYSQL_DATABASE_AG}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "drop database ${MYSQL_DATABASE_AG}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_AG}"
 	fi
     fi
 }

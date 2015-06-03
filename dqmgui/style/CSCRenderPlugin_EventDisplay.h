@@ -39,7 +39,7 @@ class EventDisplay {
 
   private:
 
-    static const unsigned int   HISTO_WIDTH = 200;
+    static const unsigned int   HISTO_WIDTH = 225;
 
     TPad* pad0;
     TPad* pad1;
@@ -53,11 +53,11 @@ class EventDisplay {
     TText* tLayer;
     TText* tYLabel[6];
     TText* tXTitle[3];
-    TText* tXLabel[3][160];
+    TText* tXLabel[3][224];
     TBox*  bBlank;
-    TBox*  bBox[3][6][160];
-    TBox*  bKey[3][160];
-    TText* tKey[3][160];
+    TBox*  bBox[3][6][224];
+    TBox*  bKey[3][224];
+    TText* tKey[3][224];
 
     TExec* greyscaleExec;
     TExec* normalExec;
