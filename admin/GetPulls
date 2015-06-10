@@ -56,6 +56,7 @@ cmsdist()
 deployment()
 {
   URL="https://github.com/${USER}/${REPO}/pull"
+  API="https://api.github.com/repos/${USER}/${REPO}/pulls"
   stg init
 
   for PULL in $PULLS; do
@@ -63,7 +64,7 @@ deployment()
 
     authdate=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'Date:.*' | cut -d: -f 2- | sed 's/^ *//g'`
     author=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | egrep -o 'From:.*' | cut -d: -f 2- | sed 's/^ *//g'`
-    title=`curl -L -ks ${URL}/${PULL}.patch | head -n4 | grep 'PATCH' | cut -d"]" -f 2- | sed 's/^ *//g'`
+    title=`curl -s ${API}/${PULL} | grep \"title\": | cut -d\" -f4 | sed 's/\(^.\)/\u\1/g'`
     echo "Summary: authdate=$authdate, author=$author, title=$title"
 
     stg new -m "${title%\.}. Close #$PULL." pullreq-$PULL --author "$author" --authdate "$authdate"
