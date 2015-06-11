@@ -1,0 +1,32 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dcafpilot_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+  deploy mongodb
+  deploy admin
+}
+
+deploy_dcafpilot_prep()
+{
+  mkproj stagingarea
+  mkproxy
+}
+
+deploy_dcafpilot_sw()
+{
+  deploy_pkg comp cms+DCAFPilot
+  perl -p -i -e "s|{ROOT}|$root|" $project_config/setup.sh
+}
+
+deploy_dcafpilot_post()
+{
+  local aroot=$root/state/dcafpilot/analytics
+  mkdir -p $aroot/{data,predictions}
+  local arootlog=$root/logs/dcafpilot
+  (mkcrontab
+   echo "50 20 * * 5 source $project_config/setup.sh && \$DCAFPILOT_ROOT/bin/cron4dataframe.sh $project_config/dcaf.cfg $aroot $aroot/data > $arootlog/cron4dataframe.log 2>&1"
+   echo "15 18 * * * source $project_config/setup.sh && \$DCAFPILOT_ROOT/bin/cron4models.sh $aroot $aroot/data > $arootlog/cron4models.log 2>&1"
+   echo "10 3 * * * source $project_config/setup.sh && \$DCAFPILOT_ROOT/bin/cron4verify.sh $aroot/data/predictions > $arootlog/cron4verify.log 2>&1"
+  ) | crontab -
+}
