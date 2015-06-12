@@ -741,6 +741,14 @@ indexbackup()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/ixbackup/$D
         ;;
     esac
+    # The standard amount of days after which we do a full backup is 50 days.
+    # Only for testing purposes, we set this on 5 days for vocms0133.
+    FULLBACKUPDAYS=50
+    case $HOST in
+      vocms0133 )
+        FULLBACKUPDAYS=5
+        ;;
+    esac
     DQM_DATA=$STATEDIR/$D
     LOGSTEM=$D/agent-castorindexbackup
     # Start the process not as an agent, but directly in the current thread.
@@ -751,7 +759,7 @@ indexbackup()
       $DQM_DATA/ix128 \
       $CASTORDIR \
       broen.van.besien@cern.ch \
-      --fullbackup 50 \
+      --fullbackup $FULLBACKUPDAYS \
       </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
   done
 }
