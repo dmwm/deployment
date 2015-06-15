@@ -451,7 +451,7 @@ deploy_system_post()
 	fetch-crl git-all stgit colordiff libXpm-devel finger \
 	$(yum -q list compat-{readline5,libtermcap} perl-ExtUtils-Embed 2>/dev/null | \
 	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}') \
-        libXmu mesa-libGLU arc.x86_64 # openssl098e compat-expat1
+        libXmu mesa-libGLU arc.x86_64 arc-server
 
       # Install myproxy and voms tools.
       sudo yum -y install myproxy wlcg-voms-cms voms-clients3
@@ -474,6 +474,10 @@ deploy_system_post()
       sudo /sbin/iptables -I $fwchain 5 -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
       sudo /sbin/iptables -I $fwchain 6 -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
       sudo sh -c '/sbin/iptables-save > /etc/sysconfig/iptables'
+
+      # Enable xinetd, which would run the arc server when needed
+      sudo /sbin/chkconfig --levels 2345 xinetd on
+      sudo /sbin/service xinetd restart
 
       # Default SLC5/6 installations don't use the whole ephemeral disk
       # available. Try expanding them automatically.
