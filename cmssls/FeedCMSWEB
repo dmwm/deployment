@@ -24,6 +24,12 @@ XML_TEMPLATE = """\
     <availabilitydesc>
       %(availdesc)s
     </availabilitydesc>
+    <contact>
+      %(contact)s
+    </contact>
+    <webpage>
+      %(webpage)s
+    </webpage>
     <availabilityinfo>%(availinfo)s</availabilityinfo>
     <lemon>
       %(hostlist)s
@@ -91,6 +97,8 @@ def spit_xml(feedname, lemonfeeds, name_id, isexcept, xml_out_dir):
     'avail': avail,
     'availinfo': "Found " + str(availinfo) + " exception(s).",
     'availdesc': "Availability is 0% if there exist a lemon alarm in any of\n      the CMSWEB machines running this service, 100% otherwise.",
+    'contact': "cms-service-webtools@cern.ch",
+    'webpage': "https://cern.ch/cms-http-group/ops-trouble.html",
     'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
     'hostlist': hl.strip(" \n"),
     'notes': "This SLS is a mapping from the following lemon metrics/exceptions:\n      " + mn.strip(),
@@ -133,6 +141,8 @@ def aggregate_xml(feeds_availability, xml_out_dir):
     'avail': avail,
     'availinfo': "Found " + str(nfailedservices) + " service(s) with exceptions.",
     'availdesc': "Availability represents the percentage of services working properly on CMSWEB.\n      Any value below 100% represents a critical issue!",
+    'contact': "cms-service-webtools@cern.ch",
+    'webpage': "https://cern.ch/cms-http-group/ops-trouble.html",
     'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
     'hostlist': hl.strip(" \n"),
     'notes': "This SLS is a general mapping from the following services:\n      " + str("\n      ").join(services),
