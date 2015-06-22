@@ -85,7 +85,6 @@ deploy_dqmgui_post()
 
        # Set the backup of the index files to castor
        # During the parallel run period, should only run on SLC5
-       # after that, should swith to SLC6
        case $host in
          vocms13[89] )
            echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
@@ -93,7 +92,15 @@ deploy_dqmgui_post()
                             "/castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'" ;;
        esac
 
-       # Set the backup of the zipped root files (castor stageout)
+       # Set the backup of the index (index CASTOR stageout)
+       # Currently only on SLC6 dev machine
+       # After the parallel run this must be switched on on the prod machines
+       case $host in
+         vocms0133 | broen* )
+           echo "*/15 * * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
+       esac
+       
+       # Set the backup of the zipped root files (zip CASTOR stageout)
        # Currently only on SLC6 dev machine
        # After the parallel run this must be switched on on the prod machines
        case $host in
