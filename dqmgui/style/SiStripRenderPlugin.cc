@@ -176,7 +176,7 @@ private:
         return;
       }
 
-      if( o.name.find( "StripClusVsPixClus" )  != std::string::npos)
+	  if( o.name.find( "StripClusVsPixClus" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
@@ -184,7 +184,7 @@ private:
 	return;
       }
 
-      if( o.name.find( "SeedPhiVsEta" )  != std::string::npos)
+	  if( o.name.find( "SeedPhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
@@ -380,6 +380,14 @@ private:
     }
 
       if( o.name.find( "NumberOfLayersVsPhiVsEta" ) != std::string::npos )
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+	return;
+      }
+
+	  if( o.name.find( "StripClusVsBXandOrbit" ) != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);

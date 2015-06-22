@@ -19,7 +19,7 @@ rpclayout(dqmitems, "00-Summary_Map",
           [{ 'path': "RPC/EventInfo/reportSummaryMap", 'description': summary + rpclink }])
 
 rpclayout(dqmitems, "01-Fatal_FED_Errors",
-          [{ 'path': "RPC/FEDIntegrity_EvF/FEDFatal", 'description': fed + rpclink }])
+          [{ 'path': "RPC/FEDIntegrity_SM/FEDFatal", 'description': fed + rpclink }])
 ##-------------------
 
 #RPC Events

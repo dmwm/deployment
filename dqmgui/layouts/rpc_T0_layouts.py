@@ -18,7 +18,6 @@ bx  = "RPC BX distribution "
 rpclayout(dqmitems, "00-Summary_Map",
           [{ 'path': "RPC/EventInfo/reportSummaryMap", 'description': summary + rpclink }])
 
-
 #FED Fatal
 rpclayout(dqmitems, "01-Fatal_FED_Errors",
           [{ 'path': "RPC/FEDIntegrity/FEDFatal", 'description': fed + rpclink }])
@@ -173,8 +172,8 @@ rpclayout(dqmitems, "23-Barrel_Efficiency",
            { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_-1", 'description': eff + rpclink  }],
 
           [{ 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_0", 'description': eff + rpclink  },
-           { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_+1", 'description': eff + rpclink  },
-           { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_+2", 'description': eff + rpclink  }]
+           { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_1", 'description': eff + rpclink  },
+           { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_2", 'description': eff + rpclink  }]
           )
 
 rpclayout(dqmitems, "24-Endcap_Positive_Efficiency_Distribution",
