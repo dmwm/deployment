@@ -54,6 +54,7 @@ QUIET=false
 FLAVOR=dev
 ALTERNATIVE_USER=$(stat $TOP -c %U)
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+PYTHONPATH=${ROOT}/auth/${ME}:${PYTHONPATH}
 
 . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh
 
