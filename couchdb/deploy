@@ -43,7 +43,7 @@ deploy_couchdb_post()
 {
   (mkcrontab
    case $host in
-      vocms34 | vocms13[69] | vocms16[13] | vocms034 | vocms013[689] | vocms016[135] )
+     vocms013[689] | vocms016[135] )
        disable ;;
      * )
        enable
@@ -59,28 +59,22 @@ deploy_couchdb_post()
 
        # Daily backup the databases to other cluster machines
        case $host in
-         vocms140 ) tohost=vocms138;;
-         vocms138 ) tohost=vocms140;;
-         vocms132 ) tohost=vocms133;;
-         vocms133 ) tohost=vocms132;;
-         vocms127 ) tohost=vocms127;;
-         vocms0140 ) tohost=vocms0128;;
-         vocms0128 ) tohost=vocms0140;;
-         vocms0132 ) tohost=vocms0133;;
-         vocms0133 ) tohost=vocms0132;;
-         vocms0127 ) tohost=vocms0127;;
-         vocms0306 ) tohost=vocms0307;;
-         vocms0307 ) tohost=vocms0306;;
+         vocms0127 ) tohost=vocms0127 hour=1;;
+         vocms0132 ) tohost=vocms0133 hour=1;;
+         vocms0133 ) tohost=vocms0132 hour=2;;
+         vocms0140 ) tohost=vocms0133 hour=3;;
+         vocms0306 ) tohost=vocms0140 hour=4;;
+         vocms0307 ) tohost=vocms0140 hour=5;;
                 * ) tohost=;;
        esac
        [ -z "$tohost" ] ||
-         echo "#0 21 * * * $project_config/manage backup $tohost:$project_state/backup/$host 'I did read documentation'"
+         echo "0 $hour * * * $project_config/manage backup $tohost:$project_state/backup/$host 'I did read documentation'"
        ;;
    esac) | crontab -
 
   # Weekly archive backups to castor
   case $host in
-    vocms140 | vocms138 | vocms13[23] | vocms127 | vocms0140 | vocms0128 | vocms0306 | vocms0307 | vocms013[23] | vocms0127 )
+    vocms0140 | vocms0306 | vocms0307 | vocms013[23] | vocms0127 )
       klist -s # must have afs kerberos token
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
        echo "#30 4 * * 0 $host $project_config/manage archive /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'") | acrontab
