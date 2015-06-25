@@ -1,0 +1,32 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_dcafpilot_deps()
+{
+  deploy backend
+  deploy wmcore-auth
+  deploy mongodb
+  deploy admin
+}
+
+deploy_dcafpilot_prep()
+{
+  mkproj analytics analytics/{data,predictions}
+  mkproxy
+}
+
+deploy_dcafpilot_sw()
+{
+  deploy_pkg comp cms+DCAFPilot
+}
+
+deploy_dcafpilot_post()
+{
+  case $host in vocms013[689] | vocms0140 | vocms016[135] ) disable ;; * ) enable ;; esac
+  (mkcrontab
+   sysboot
+   for action in dataframe:'50 20 * * 5' models:'15 18 * * *' verify:'10 3 * * *'; do
+     local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
+     $nogroups || cmd="sudo -H -u _dcafpilot bashs -l -c \"${cmd}\""
+     echo "${action##*:} $cmd"
+   done
+  ) | crontab -
+}
