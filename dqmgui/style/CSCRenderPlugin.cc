@@ -91,6 +91,9 @@ public:
 
     c->cd();
 
+    gStyle->SetPalette(1,0);
+    obj->SetFillColor(45);
+
     if (reMatch(".*CSC_[0-9]+_[0-9]+/Chamber_Event_Display_No[0-9]$", o.name))
       {
         TH2* tmp = dynamic_cast<TH2*>(obj);
@@ -122,6 +125,7 @@ public:
 //        return;
       }
 
+/*
     if (reMatch(".*Summary/CSC_[a-zA-Z0-9_-]+$", o.name) ||
         reMatch(".*FEDIntegrity/CSC_[a-zA-Z0-9_-]+$", o.name))
       {
@@ -129,6 +133,7 @@ public:
         chamberMap.draw(obj2);
 //        return;
       }
+*/
 
     if (reMatch(".*Summary/Event_Display_Anode$", o.name))
       {
@@ -451,6 +456,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_L1A_out_of_sync_Fract$", o.name))
@@ -468,6 +475,8 @@ public:
             obj->SetMaximum(obj->GetMinimum() + 0.01);
           }
         gPad->SetLogz();
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/DMB_wo_ALCT$", o.name))
@@ -703,6 +712,18 @@ public:
         gPad->SetLogz();
         return;
       }
+    if (reMatch(".*/CSC_standby$", o.name))
+      {
+        /** Applying definition [chamberMap] **/
+  obj->SetStats(false);
+        gStyle->SetOptStat("e");
+  obj->SetOption("colz");
+        gPad->SetGridx();
+        gPad->SetGridy();
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
+        return;
+      }
     if (reMatch(".*/CSC_Unpacked$", o.name))
       {
         /** Applying definition [chamberMap] **/
@@ -712,6 +733,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_DMB_input_fifo_full$", o.name))
@@ -723,6 +746,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_DMB_input_timeout$", o.name))
@@ -734,6 +759,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Reporting$", o.name))
@@ -745,6 +772,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_wo_ALCT$", o.name))
@@ -756,6 +785,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_wo_CLCT$", o.name))
@@ -767,6 +798,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_wo_CFEB$", o.name))
@@ -778,6 +811,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Unpacked_with_errors$", o.name))
@@ -789,6 +824,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Unpacked_with_warnings$", o.name))
@@ -800,6 +837,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Format_Errors$", o.name))
@@ -811,6 +850,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+  TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Format_Errors_Fract$", o.name))
@@ -828,6 +869,8 @@ public:
             obj->SetMaximum(obj->GetMinimum() + 0.01);
           }
         gPad->SetLogz();
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_DMB_input_fifo_full_Fract$", o.name))
@@ -840,6 +883,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_DMB_input_timeout_Fract$", o.name))
@@ -852,6 +897,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_wo_ALCT_Fract$", o.name))
@@ -864,6 +911,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_wo_CLCT_Fract$", o.name))
@@ -876,6 +925,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_wo_CFEB_Fract$", o.name))
@@ -888,6 +939,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Unpacked_Fract$", o.name))
@@ -900,6 +953,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Format_Warnings$", o.name))
@@ -911,6 +966,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_Format_Warnings_Fract$", o.name))
@@ -928,6 +985,8 @@ public:
             obj->SetMaximum(obj->GetMinimum() + 0.01);
           }
         gPad->SetLogz();
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/All_Readout_Errors$", o.name))
@@ -978,6 +1037,20 @@ public:
         return;
       }
     if (reMatch(".*/All_DDUs_Format_Errors$", o.name))
+      {
+        /** Applying histogram **/
+        gPad->SetLeftMargin(0.3);
+        obj->SetStats(false);
+        gStyle->SetOptStat("e");
+        obj->SetOption("colz");
+        gPad->SetGridx();
+        gPad->SetGridy();
+        obj->SetNdivisions(obj->GetNbinsX(),"X");
+        obj->GetXaxis()->CenterLabels(true);
+        obj->SetLabelSize(0.025,"X");
+        return;
+      }
+    if (reMatch(".*/All_DDUs_Output_Path_Status$", o.name))
       {
         /** Applying histogram **/
         gPad->SetLeftMargin(0.3);
@@ -1100,6 +1173,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_ALCT0_BXN_rms$", o.name))
@@ -1112,6 +1187,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/Plus_endcap_ALCT0_dTime$", o.name))
@@ -1128,19 +1205,23 @@ public:
         obj->SetOption("texthist");
         return;
       }
+
     if (reMatch(".*/CSC_CLCT0_BXN_mean$", o.name))
       {
         /** Applying definition [chamberMap] **/
         obj->SetStats(false);
-        obj->SetMinimum(-170.);
         obj->SetMaximum(-140.);
+  obj->SetMinimum(-200.);
         gStyle->SetOptStat("e");
         obj->SetOption("colz");
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
+
     if (reMatch(".*/CSC_CLCT0_BXN_rms$", o.name))
       {
         /** Applying definition [chamberMap] **/
@@ -1151,6 +1232,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/Plus_endcap_CLCT0_dTime$", o.name))
@@ -1177,6 +1260,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_AFEB_RawHits_Time_rms$", o.name))
@@ -1189,6 +1274,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/Plus_endcap_AFEB_RawHits_Time$", o.name))
@@ -1215,6 +1302,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_CFEB_SCA_CellPeak_Time_rms$", o.name))
@@ -1227,6 +1316,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/Plus_endcap_CFEB_SCA_CellPeak_Time$", o.name))
@@ -1253,6 +1344,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_CFEB_Comparators_Time_rms$", o.name))
@@ -1265,6 +1358,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/Plus_endcap_CFEB_Comparators_Time$", o.name))
@@ -1291,6 +1386,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_ALCT_CLCT_Match_rms$", o.name))
@@ -1303,6 +1400,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/Plus_endcap_ALCT_CLCT_Match_Time$", o.name))
@@ -1329,6 +1428,8 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_CLCT_Planes_with_Hits$", o.name))
@@ -1341,13 +1442,18 @@ public:
         gPad->SetGridx();
         gPad->SetGridy();
         /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         return;
       }
     if (reMatch(".*/CSC_ALCT0_Quality$", o.name))
       {
         /** Applying definition [chamberMap] **/
+  TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         obj->SetStats(false);
         obj->SetMinimum(0.);
+  obj->SetMaximum(3.);
         gStyle->SetOptStat("e");
         obj->SetOption("colz");
         gPad->SetGridx();
@@ -1358,8 +1464,11 @@ public:
     if (reMatch(".*/CSC_CLCT0_Quality$", o.name))
       {
         /** Applying definition [chamberMap] **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
         obj->SetStats(false);
         obj->SetMinimum(0.);
+        obj->SetMaximum(6.);
         gStyle->SetOptStat("e");
         obj->SetOption("colz");
         gPad->SetGridx();
@@ -1570,70 +1679,70 @@ public:
         obj->SetOption("coltext");
         return;
       }
-    if (reMatch(".*/ALCT%d_BXN$", o.name))
+    if (reMatch(".*/ALCT[0-1]_BXN$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("eo");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/ALCT%d_KeyWG$", o.name))
+    if (reMatch(".*/ALCT[0-1]_KeyWG$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/ALCT%d_Pattern$", o.name))
+    if (reMatch(".*/ALCT[0-1]_Pattern$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/ALCT%d_Pattern_Distr$", o.name))
+    if (reMatch(".*/ALCT[0-1]_Pattern_Distr$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("texthist");
         return;
       }
-    if (reMatch(".*/ALCT%d_Quality$", o.name))
+    if (reMatch(".*/ALCT[0-1]_Quality$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/ALCT%d_Quality_Distr$", o.name))
+    if (reMatch(".*/ALCT[0-1]_Quality_Distr$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("texthist");
         return;
       }
-    if (reMatch(".*/ALCT%d_Quality_Profile$", o.name))
+    if (reMatch(".*/ALCT[0-1]_Quality_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("P");
         return;
       }
-    if (reMatch(".*/ALCT%d_dTime$", o.name))
+    if (reMatch(".*/ALCT[0-1]_dTime$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("emuo");
         obj->SetOption("texthist");
         return;
       }
-    if (reMatch(".*/ALCT%d_dTime_Profile$", o.name))
+    if (reMatch(".*/ALCT[0-1]_dTime_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("P");
         return;
       }
-    if (reMatch(".*/ALCT%d_dTime_vs_KeyWG$", o.name))
+    if (reMatch(".*/ALCT[0-1]_dTime_vs_KeyWG$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
@@ -1647,14 +1756,14 @@ public:
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/ALCTTime_Ly%d$", o.name))
+    if (reMatch(".*/ALCTTime_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/ALCTTime_Ly%d_Profile$", o.name))
+    if (reMatch(".*/ALCTTime_Ly[1-6]_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
@@ -1696,14 +1805,14 @@ public:
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/ALCT_Ly%d_Efficiency$", o.name))
+    if (reMatch(".*/ALCT_Ly[1-6]_Efficiency$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/ALCT_Ly%d_Rate$", o.name))
+    if (reMatch(".*/ALCT_Ly[1-6]_Rate$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
@@ -1755,14 +1864,14 @@ public:
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/CLCT%d_dTime_Profile$", o.name))
+    if (reMatch(".*/CLCT[0-1]_dTime_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("P");
         return;
       }
-    if (reMatch(".*/CFEB%d_DMB_L1A_diff$", o.name))
+    if (reMatch(".*/CFEB[0-1]_DMB_L1A_diff$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("emuo");
@@ -1774,129 +1883,129 @@ public:
         gPad->SetLogy();
         return;
       }
-    if (reMatch(".*/CFEB%d_Free_SCA_Cells$", o.name))
+    if (reMatch(".*/CFEB[0-7]_Free_SCA_Cells$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         return;
       }
-    if (reMatch(".*/CFEB%d_L1A_Sync_Time$", o.name))
+    if (reMatch(".*/CFEB[0-7]_L1A_Sync_Time$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("eo");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/CFEB%d_L1A_Sync_Time_DMB_diff$", o.name))
+    if (reMatch(".*/CFEB[0-7]_L1A_Sync_Time_DMB_diff$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("emuo");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/CFEB%d_L1A_Sync_Time_vs_DMB$", o.name))
+    if (reMatch(".*/CFEB[0-7]_L1A_Sync_Time_vs_DMB$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CFEB%d_LCT_PHASE_vs_L1A_PHASE$", o.name))
+    if (reMatch(".*/CFEB[0-7]_LCT_PHASE_vs_L1A_PHASE$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("textcol");
         return;
       }
-    if (reMatch(".*/CFEB%d_SCA_Block_Occupancy$", o.name))
+    if (reMatch(".*/CFEB[0-7]_SCA_Block_Occupancy$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("eo");
         return;
       }
-    if (reMatch(".*/CFEB%d_SCA_Blocks_Locked_by_LCTs$", o.name))
+    if (reMatch(".*/CFEB[0-7]_SCA_Blocks_Locked_by_LCTs$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         return;
       }
-    if (reMatch(".*/CFEB%d_SCA_Blocks_Locked_by_LCTxL1$", o.name))
+    if (reMatch(".*/CFEB[0-7]_SCA_Blocks_Locked_by_LCTxL1$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         return;
       }
-    if (reMatch(".*/CFEB_ActiveStrips_Ly%d$", o.name))
+    if (reMatch(".*/CFEB_ActiveStrips_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         return;
       }
-    if (reMatch(".*/CFEB_Active_Samples_vs_Strip_Ly%d$", o.name))
+    if (reMatch(".*/CFEB_Active_Samples_vs_Strip_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CFEB_Active_Samples_vs_Strip_Ly%d_Profile$", o.name))
+    if (reMatch(".*/CFEB_Active_Samples_vs_Strip_Ly[1-6]_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("P");
         return;
       }
-    if (reMatch(".*/CFEB_Cluster_Duration_Ly_%d$", o.name))
+    if (reMatch(".*/CFEB_Cluster_Duration_Ly_[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         return;
       }
-    if (reMatch(".*/CFEB_Clusters_Charge_Ly_%d$", o.name))
+    if (reMatch(".*/CFEB_Clusters_Charge_Ly_[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("eom");
         return;
       }
-    if (reMatch(".*/CFEB_Number_of_Clusters_Ly_%d$", o.name))
+    if (reMatch(".*/CFEB_Number_of_Clusters_Ly_[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         return;
       }
-    if (reMatch(".*/CFEB_Out_Off_Range_Strips_Ly%d$", o.name))
+    if (reMatch(".*/CFEB_Out_Off_Range_Strips_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         return;
       }
-    if (reMatch(".*/CFEB_Pedestal_withEMV_Sample_01_Ly%d$", o.name))
+    if (reMatch(".*/CFEB_Pedestal_withEMV_Sample_01_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("P");
         return;
       }
-    if (reMatch(".*/CFEB_Pedestal_withRMS_Sample_01_Ly%d$", o.name))
+    if (reMatch(".*/CFEB_Pedestal_withRMS_Sample_01_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         return;
       }
-    if (reMatch(".*/CFEB_PedestalRMS_Sample_01_Ly%d$", o.name))
+    if (reMatch(".*/CFEB_PedestalRMS_Sample_01_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         return;
       }
-    if (reMatch(".*/CFEB_SCA_Cell_Peak_Ly_%d$", o.name))
+    if (reMatch(".*/CFEB_SCA_Cell_Peak_Ly_[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CFEB_Width_of_Clusters_Ly_%d$", o.name))
+    if (reMatch(".*/CFEB_Width_of_Clusters_Ly_[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
@@ -1920,7 +2029,7 @@ public:
         gStyle->SetOptStat("emr");
         return;
       }
-    if (reMatch(".*/CLCT%d_BXN$", o.name))
+    if (reMatch(".*/CLCT[0-1]_BXN$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("eo");
@@ -1941,77 +2050,77 @@ public:
         obj->SetOption("texthist");
         return;
       }
-    if (reMatch(".*/CLCT%d_DiStrip_Pattern$", o.name))
+    if (reMatch(".*/CLCT[0-1]_DiStrip_Pattern$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CLCT%d_DiStrip_Quality$", o.name))
+    if (reMatch(".*/CLCT[0-1]_DiStrip_Quality$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CLCT%d_DiStrip_Quality_Profile$", o.name))
+    if (reMatch(".*/CLCT[0-1]_DiStrip_Quality_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("P");
         return;
       }
-    if (reMatch(".*/CLCT%d_Half_Strip_Pattern$", o.name))
+    if (reMatch(".*/CLCT[0-1]_Half_Strip_Pattern$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CLCT%d_Half_Strip_Quality$", o.name))
+    if (reMatch(".*/CLCT[0-1]_Half_Strip_Quality$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CLCT%d_Half_Strip_Quality_Profile$", o.name))
+    if (reMatch(".*/CLCT[0-1]_Half_Strip_Quality_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("P");
         return;
       }
-    if (reMatch(".*/CLCT%d_KeyDiStrip$", o.name))
+    if (reMatch(".*/CLCT[0-1]_KeyDiStrip$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/CLCT%d_KeyHalfStrip$", o.name))
+    if (reMatch(".*/CLCT[0-1]_KeyHalfStrip$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/CLCT%d_dTime$", o.name))
+    if (reMatch(".*/CLCT[0-1]_dTime$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("emuo");
         obj->SetOption("texthist");
         return;
       }
-    if (reMatch(".*/CLCT%d_dTime_vs_DiStrip$", o.name))
+    if (reMatch(".*/CLCT[0-1]_dTime_vs_DiStrip$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CLCT%d_dTime_vs_Half_Strip$", o.name))
+    if (reMatch(".*/CLCT[0-1]_dTime_vs_Half_Strip$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
@@ -2037,14 +2146,14 @@ public:
         obj->SetOption("col");
         return;
       }
-    if (reMatch(".*/CLCTTime_Ly%d$", o.name))
+    if (reMatch(".*/CLCTTime_Ly[1-6]$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
         obj->SetOption("colz");
         return;
       }
-    if (reMatch(".*/CLCTTime_Ly%d_Profile$", o.name))
+    if (reMatch(".*/CLCTTime_Ly[1-6]_Profile$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
@@ -2086,14 +2195,14 @@ public:
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/CLCT_Ly%d_Efficiency$", o.name))
+    if (reMatch(".*/CLCT_Ly[1-6]_Efficiency$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("eou");
         obj->SetOption("hist");
         return;
       }
-    if (reMatch(".*/CLCT_Ly%d_Rate$", o.name))
+    if (reMatch(".*/CLCT_Ly[1-6]_Rate$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("e");
@@ -2126,14 +2235,14 @@ public:
         obj->SetOption("texthist");
         return;
       }
-    if (reMatch(".*/CLCT%d_Half_Strip_Pattern_Distr$", o.name))
+    if (reMatch(".*/CLCT[0-1]_Half_Strip_Pattern_Distr$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
         obj->SetOption("texthist");
         return;
       }
-    if (reMatch(".*/CLCT%d_Half_Strip_Quality_Distr$", o.name))
+    if (reMatch(".*/CLCT[0-1]_Half_Strip_Quality_Distr$", o.name))
       {
         /** Applying histogram **/
         gStyle->SetOptStat("em");
@@ -2567,12 +2676,21 @@ public:
         reMatch(".*/CSCOfflineMonitor/Efficiency/hStripEff2$", o.name) ||
         reMatch(".*/CSCOfflineMonitor/Efficiency/hWireEff2$", o.name) ||
         reMatch(".*/CSCOfflineMonitor/Efficiency/hSensitiveAreaEvt$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Efficiency/hEffDenominator$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Efficiency/hRHSTE2$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Efficiency/hSSTE2$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Efficiency/hStripSTE2$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Efficiency/hWireSTE2$", o.name) ||
         reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTgetBX2DMeans$", o.name) ||
         reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTgetBX2Denominator$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTgetBX2DNumerator$", o.name) ||
         reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTMatch2DMeans$", o.name) ||
         reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTMatch2Denominator$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTMatch2DNumerator$", o.name) ||
         reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1A2DMeans$", o.name) ||
-        reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1A2Denominator$", o.name))
+        reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1A2Denominator$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1A2DNumerator$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/recHits/hRHGlobal.*", o.name))
       {
         obj->SetStats(true);
         gStyle->SetOptStat("e");
@@ -2580,10 +2698,68 @@ public:
         return;
       }
 
-    if (reMatch(".*/CSCOfflineMonitor/recHits/hRHSumQ.*", o.name))
+    if (reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTMatch$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1A$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTgetBX$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/PedestalNoise/hStripPedME.*", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Resolution/hSResid.*", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/recHits/hRHTiming.*", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/recHits/hRHstpos.*", o.name) ||
+        reMatch(".*/CSCOfflineMonitor/Segments/hSTimeCathode$", o.name) ||
+        reMatch(".*/CSCOfflineMonitor/Segments/hSTimeCombined$", o.name))
+      {
+        obj->SetStats(true);
+        gStyle->SetOptStat("euomr");
+        return;
+      }
+
+    if (reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTgetBXSerial$", o.name) ||
+        reMatch(".*/CSCOfflineMonitor/BXMonitor/hALCTMatchSerial$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/BXMonitor/hCLCTL1ASerial$", o.name))
+      {
+        obj->SetStats(true);
+        gStyle->SetOptStat("eoum");
+  obj->SetOption("colz");
+        return;
+      }
+
+    if (reMatch(".*/CSCOfflineMonitor/recHits/hRHsterr.*", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/recHits/hRHSumQ.*", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSChiSq$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSChiSqm.*", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSChiSqp.*", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSnSegments$", o.name))
       {
         obj->SetStats(true);
         gStyle->SetOptStat("eomr");
+        return;
+      }
+
+    if (reMatch(".*/CSCOfflineMonitor/Digis/hStripNFired$", o.name) ||
+        reMatch(".*/CSCOfflineMonitor/Digis/hWirenGroupsTotal$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/recHits/hRHnrechits$", o.name))
+      {
+        obj->SetStats(true);
+        gStyle->SetOptStat("eomr");
+        gPad->SetLogy();
+        return;
+      }
+
+    if (reMatch(".*/CSCOfflineMonitor/Occupancy/hCSCOccupancy$", o.name))
+      {
+        obj->SetOption("texthist");
+  obj->SetStats(true);
+        gStyle->SetOptStat("e");
+        gPad->SetLogy();
+        return;
+      }
+
+    if (reMatch(".*/CSCOfflineMonitor/Segments/hSTimeVsTOF$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSTimeVsZ$", o.name))
+      {
+        obj->SetStats(true);
+        gStyle->SetOptStat("eou");
+        obj->SetOption("colz");
         return;
       }
 

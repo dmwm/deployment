@@ -37,7 +37,7 @@ for i, path in enumerate(paths):
 #
 ## Single Electron: W or Z sample. EGM POG
 #
-paths = ["HLT_Ele32_eta2p1_WP85_Gsf", "HLT_Ele32_eta2p1_WP75_Gsf", "HLT_Ele27_eta2p1_WP85_Gsf", "HLT_Ele27_eta2p1_WP75_Gsf", "HLT_Ele27_WP85_Gsf", "HLT_Ele27_WP75_Gsf"]
+paths = ["HLT_Ele23_WPLoose_Gsf_DQM", "HLT_Ele27_eta2p1_WPLoose_Gsf_DQM", "HLT_Ele32_eta2p1_WPLoose_Gsf_DQM"]
 
 #Instructions for the sample to use
 smpHLTlayouts(dqmitems, workDir+"SingleElectron/00 - Instructions",
@@ -139,7 +139,7 @@ for number in numbers:
 #
 ## Double Photon: Hgg sample. Higgs/Hgg
 #
-paths = ["HLT_Diphoton30_18_R9Id85_AND_Iso50T80LCaloId24b40e_AND_HE10P0_R9Id50b80e_DoublePV", "HLT_Diphoton30_18_R9Id85_AND_Iso50T80LCaloId24b40e_AND_HE10P0_R9Id50b80e_PV", "HLT_Diphoton30_18_R9Id85_AND_Iso50T80LCaloId24b40e_AND_HE10P0_R9Id50b80e_Solid_Mass30", "HLT_Diphoton28_14_R9Id85_OR_Iso50T80LCaloId24b40e_AND_HE10P5_R9Id50b80e_Mass50_Eta_1p5"]
+paths = ["HLT_Diphoton30_18_Solid_R9Id_AND_IsoCaloId_AND_HE_R9Id_Mass55", "HLT_Diphoton30EB_18EB_R9Id_OR_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55", "HLT_Diphoton30PV_18PV_R9Id_AND_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55"]
 
 #Instructions for the sample to use
 smpHLTlayouts(dqmitems, workDir+"DoublePhoton/00 - Instructions",
