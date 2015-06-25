@@ -116,8 +116,6 @@ csclayout(dqmitems,"07 Physics Efficiency - RecHits Plus",
       {'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp4", 'description': "Histogram shows 2D RecHits distribution in ME+4. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
 
 csclayout(dqmitems,"08 FED Data Integrity/00 FED Stats",
-    [{'path':"CSC/Summary/FEDEntries", 'description': "Histogram shows the number of FED/DCC events."},
-     {'path':"CSC/Summary/FEDBufferSize", 'description':"Histogram shows FED/DCCs buffer size (logarithmic scale)."}],
     [{'path':"CSC/Summary/FEDTotalEventSize", 'description':"Histogram shows the total event size statistics."}])
 
 csclayout(dqmitems,"08 FED Data Integrity/01 FED CSCs Stats",
@@ -125,11 +123,3 @@ csclayout(dqmitems,"08 FED Data Integrity/01 FED CSCs Stats",
      {'path':"CSC/Summary/FEDTotalALCTs", 'description':"Histogram shows the total number of ALCTs per event."}],
     [{'path':"CSC/Summary/FEDTotalCFEBs", 'description': "Histogram shows the total the number of CFEBs per event."},
      {'path':"CSC/Summary/FEDTotalTMBs", 'description':"Histogram shows the total number of TMBs per event."}])
-
-csclayout(dqmitems,"08 FED Data Integrity/02 FED Format Errors",
-    [{'path':"CSC/Summary/FEDFormat_Errors", 'description':"Histogram shows detailed table of detected types of FED/DCC Format Errors."},
-     {'path':"CSC/Summary/FEDFormatFatal", 'description':"Histogram shows the number of events with FED/DCC Fatal Format Errors, which can not be unpacked."}])
-
-csclayout(dqmitems,"08 FED Data Integrity/03 FED L1A out of sync",
-    [{'path':"CSC/Summary/FED_DDU_L1A_mismatch", 'description': "Histogram shows the number of events with FED/DCC-DDUs L1A numbers mismatch errors."}],
-    [{'path':"CSC/Summary/FED_DDU_L1A_mismatch_fract", 'description':"Histogram shows the fraction of events with FED/DCC-DDUs L1A numbers mismatch errors."}])
