@@ -460,10 +460,9 @@ deploy_system_post()
       # Install cern-get-sso-cookie
       sudo yum -y install cern-get-sso-cookie
 
-      # Should be ok to use bashs from slc5 on slc6. There is no build for slc6 yet.
-      if rpm --quiet -q bashs; then :; else
-        sudo rpm -ivh http://swrepsrv.cern.ch/swrep/x86_64_slc5/bashs-3.2-21.x86_64.rpm ||
-	  sudo ln /bin/bash{,s}
+      # Make bashs an alias for bash.
+      if [ -x /bin/bashs ]; then :; else
+        sudo ln -s /bin/bash{,s}
       fi
 
       # Update firewall rules, persist change across reboot.
@@ -479,6 +478,10 @@ deploy_system_post()
       # Enable xinetd, which would run the arc server when needed
       sudo /sbin/chkconfig --levels 2345 xinetd on
       sudo /sbin/service xinetd restart
+
+      # Enable fetch-crl cronjob
+      sudo /sbin/chkconfig --levels 2345 fetch-crl-cron on
+      sudo /sbin/service fetch-crl-cron restart
 
       # Default SLC5/6 installations don't use the whole ephemeral disk
       # available. Try expanding them automatically.
