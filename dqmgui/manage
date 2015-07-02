@@ -316,23 +316,6 @@ start()
             $DQM_DATA/ix128 \
             $DQM_DATA/agents/register
 
-        # When the period of parallel running is finished,
-        # the zip and zipfreeze below should be removed
-
-        startagent $D/agent-zip \
-          visDQMZipDaemon \
-          $DQM_DATA/agents/zip \
-          $DQM_DATA/data \
-          $DQM_DATA/zipped \
-          $DQM_DATA/agents/freezer
-
-        startagent $D/agent-zfreeze \
-          visDQMZipFreezeDaemon \
-          $DQM_DATA/agents/freezer \
-          $DQM_DATA/zipped \
-          7 \
-          $DQM_DATA/agents/stageout
-
         if [ $D = offline ]; then
           startagent $D/agent-osync \
             visDQMOnlineSyncDaemon \
@@ -387,8 +370,19 @@ start()
           $DQM_DATA/agents/vcontrol \
           $DQM_DATA/data
 
-        # When the period of parallel running is finished,
-        # zip and zipfreeze should be added here
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          7 \
+          $DQM_DATA/agents/stageout
 
         if [ $D = offline ]; then
           startagent $D/agent-osync \
@@ -409,7 +403,7 @@ start()
       ;;
 
     # Special setup for the vocms0133 test server. (In the past this didn't run the Castor agent chain)
-    # This runs the agents to backup the zipped root files to Castor, but at a "faster" tempo for testing
+    # This runs the agents to backup the zipped root files to Castor
     vocms0133:*agents* )
       refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
@@ -453,12 +447,11 @@ start()
           $DQM_DATA/zipped \
           $DQM_DATA/agents/freezer
 
-        # BVB: We freeze zip files faster (1 days instead of 7)
         startagent $D/agent-zfreeze \
           visDQMZipFreezeDaemon \
           $DQM_DATA/agents/freezer \
           $DQM_DATA/zipped \
-          1 \
+          7 \
           $DQM_DATA/agents/stageout
       done
       ;;
