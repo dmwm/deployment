@@ -9,24 +9,24 @@ deploy_dcafpilot_deps()
 
 deploy_dcafpilot_prep()
 {
-  mkproj stagingarea
+  mkproj analytics analytics/{data,predictions}
   mkproxy
 }
 
 deploy_dcafpilot_sw()
 {
   deploy_pkg comp cms+DCAFPilot
-  perl -p -i -e "s|{ROOT}|$root|" $project_config/setup.sh
 }
 
 deploy_dcafpilot_post()
 {
-  local aroot=$root/state/dcafpilot/analytics
-  mkdir -p $aroot/{data,predictions}
-  local arootlog=$root/logs/dcafpilot
+  case $host in vocms013[689] | vocms0140 | vocms016[135] ) disable ;; * ) enable ;; esac
   (mkcrontab
-   echo "50 20 * * 5 source $project_config/setup.sh && \$DCAFPILOT_ROOT/bin/cron4dataframe.sh $project_config/dcaf.cfg $aroot $aroot/data > $arootlog/cron4dataframe.log 2>&1"
-   echo "15 18 * * * source $project_config/setup.sh && \$DCAFPILOT_ROOT/bin/cron4models.sh $aroot $aroot/data > $arootlog/cron4models.log 2>&1"
-   echo "10 3 * * * source $project_config/setup.sh && \$DCAFPILOT_ROOT/bin/cron4verify.sh $aroot/data/predictions > $arootlog/cron4verify.log 2>&1"
+   sysboot
+   for action in dataframe:'50 20 * * 5' models:'15 18 * * *' verify:'10 3 * * *'; do
+     local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
+     $nogroups || cmd="sudo -H -u _dcafpilot bashs -l -c \"${cmd}\""
+     echo "${action##*:} $cmd"
+   done
   ) | crontab -
 }

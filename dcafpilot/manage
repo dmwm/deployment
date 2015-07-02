@@ -1,6 +1,6 @@
 #!/bin/sh
 
-##H Usage: manage ACTION [SECURITY-STRING]
+##H Usage: manage ACTION [ARG] [SECURITY-STRING]
 ##H
 ##H Available actions:
 ##H   help        show this help
@@ -10,6 +10,7 @@
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
 ##H   stop        stop the service
+##H   cron ARG    run cronjob named ARG (dataframe|models|verify)
 ##H
 
 if [ $(id -un)  = cmsweb ]; then
@@ -36,14 +37,13 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/DCAFPilot/etc/profile.d/init.sh
 
 export DCAFPILOT_ROOT
-export DCAFPILOT_PORT=8777
+export DCAFPILOT_PORT=8330
 export PYTHONUNBUFFERED=1
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
-export PREDICTIONDIR=$STATEDIR/analytics/predictions
 export DCAFPILOT_CONFIG=$ROOT/config/$ME/dcaf.cfg
-mkdir -p $PREDICTIONDIR
+export DCAFPILOT_PREDICTIONS=$STATEDIR/analytics/predictions
 
 cd $STATEDIR
 host=`hostname -s`
@@ -62,7 +62,7 @@ start()
 {
   echo "starting $ME"
   # start service
-  $DCAFPILOT_ROOT/bin/dcaf_server --port=$DCAFPILOT_PORT --pdir=$PREDICTIONDIR \
+  $DCAFPILOT_ROOT/bin/dcaf_server --config=$DCAFPILOT_CONFIG \
       </dev/null 2>&1 | rotatelogs $LOGDIR/dcaf-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
@@ -84,6 +84,33 @@ status()
   else
     echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
+}
+
+# Runs actions to be done through cronjobs
+cron()
+{
+  local action=$1
+  case $action in
+    dataframe )
+      $DCAFPILOT_ROOT/bin/cron4dataframe.sh $DCAFPILOT_CONFIG \
+                 $STATEDIR/analytics $STATEDIR/analytics/data \
+                 &> $LOGDIR/cron4dataframe.log
+      ;;
+    models )
+      $DCAFPILOT_ROOT/bin/cron4models.sh                      \
+                 $STATEDIR/analytics $STATEDIR/analytics/data \
+                 &> $LOGDIR/cron4models.log
+      ;;
+    verify )
+      $DCAFPILOT_ROOT/bin/cron4verify.sh                      \
+                 $STATEDIR/analytics/predictions              \
+                 &> $LOGDIR/cron4verify.log
+      ;;
+    * )
+      echo "You must specify the cron action to run: dataframe|models|verify "
+      exit 1
+      ;;
+  esac
 }
 
 # Verify the security string.
@@ -115,6 +142,11 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  cron )
+    check "$3"
+    cron $2
     ;;
 
   help )
