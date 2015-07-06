@@ -49,7 +49,7 @@ deploy_dqmgui_sw()
 deploy_dqmgui_post()
 {
   case $host in
-    vocms34 | vocms13[26] | vocms140 | vocms16[135] | vocms034 | vocms0128 | vocms013[26] | vocms0140 | vocms016[135] | vocms030[67] )
+    vocms34 | vocms13[26] | vocms140 | vocms16[135] | vocms034 | vocms0128 | vocms013[26] | vocms0140 | vocms016[135] | vocms030[67] | vocms0318 )
       disable
       ;;
     * )
