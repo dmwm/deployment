@@ -84,7 +84,7 @@ deploy_dqmgui_post()
        esac
 
        # Set the backup of the index files to castor
-       # During the parallel run period, should only run on SLC5
+       # This is the old index backup. Should only run on SLC5.
        case $host in
          vocms13[89] )
            echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
@@ -93,26 +93,23 @@ deploy_dqmgui_post()
        esac
 
        # Set the backup of the index (index CASTOR stageout)
-       # Currently only on SLC6 dev machine
-       # After the parallel run this must be switched on on the prod machines
+       # Only for Offline or Relval SLC6 machines
        case $host in
-         vocms0133 | broen* )
+         vocms013[389] | broen* )
            echo "*/15 * * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
        esac
-       
+
        # Set the backup of the zipped root files (zip CASTOR stageout)
-       # Currently only on SLC6 dev machine
-       # After the parallel run this must be switched on on the prod machines
+       # Only for Offline or Relval SLC6 machines
        case $host in
-         vocms0133 | broen* )
+         vocms013[389] | broen* )
            echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" ;;
        esac
 
        # Set the check/verification of the backup of the zipped root files
-       # Currently only on SLC6 dev machine
-       # After the parallel run this must be switched on on the prod machines
+       # Only for Offline or Relval SLC6 machines
        case $host in
-         vocms0133 | broen* )
+         vocms013[389] | broen* )
            echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" ;;
        esac
       ) | acrontab
