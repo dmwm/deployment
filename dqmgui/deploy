@@ -30,7 +30,7 @@ deploy_dqmgui_prep()
     * )
       for d in online offline caf relval dev; do
         extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
-	for a in clean freezer ixmerge qcontrol vcontrol register register128 stageout verify zip; do
+	for a in clean freezer ixmerge ixstageout qcontrol vcontrol register register128 stageout verify zip; do
 	  extra="$extra $d/agents/$a"
 	done
       done
@@ -43,13 +43,13 @@ deploy_dqmgui_prep()
 
 deploy_dqmgui_sw()
 {
-  deploy_pkg comp cms+dqmgui
+  deploy_pkg -a dqmgui/GoogleAPI.py comp cms+dqmgui
 }
 
 deploy_dqmgui_post()
 {
   case $host in
-    vocms34 | vocms13[26] | vocms140 | vocms16[135] | vocms034 | vocms0128 | vocms013[26] | vocms0140 | vocms016[135] | vocms030[67] )
+    vocms34 | vocms13[26] | vocms140 | vocms16[135] | vocms034 | vocms0128 | vocms013[26] | vocms0140 | vocms016[135] | vocms030[67] | vocms0318 )
       disable
       ;;
     * )
@@ -84,8 +84,7 @@ deploy_dqmgui_post()
        esac
 
        # Set the backup of the index files to castor
-       # During the parallel run period, should only run on SLC5
-       # after that, should swith to SLC6
+       # This is the old index backup. Should only run on SLC5.
        case $host in
          vocms13[89] )
            echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
@@ -93,19 +92,24 @@ deploy_dqmgui_post()
                             "/castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'" ;;
        esac
 
-       # Set the backup of the zipped root files (castor stageout)
-       # Currently only on SLC6 dev machine
-       # After the parallel run this must be switched on on the prod machines
+       # Set the backup of the index (index CASTOR stageout)
+       # Only for Offline or Relval SLC6 machines
        case $host in
-         vocms0133 | broen* )
+         vocms013[389] | broen* )
+           echo "*/15 * * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
+       esac
+
+       # Set the backup of the zipped root files (zip CASTOR stageout)
+       # Only for Offline or Relval SLC6 machines
+       case $host in
+         vocms013[389] | broen* )
            echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" ;;
        esac
 
        # Set the check/verification of the backup of the zipped root files
-       # Currently only on SLC6 dev machine
-       # After the parallel run this must be switched on on the prod machines
+       # Only for Offline or Relval SLC6 machines
        case $host in
-         vocms0133 | broen* )
+         vocms013[389] | broen* )
            echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" ;;
        esac
       ) | acrontab
@@ -121,4 +125,14 @@ deploy_dqmgui_post()
 
   #Clear black list
   find $project_state -maxdepth 2 -name blacklist.txt -exec rm {} \;
+}
+
+deploy_dqmgui_auth() {
+  case $1 in
+    */GoogleAPI.py)
+      cat <<- \EOF
+api_key=None
+EOF
+    ;;
+  esac
 }

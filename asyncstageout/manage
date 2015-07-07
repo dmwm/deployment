@@ -34,27 +34,22 @@ if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; 
 
 #callbacks to activate or show initialisation has been done
 activate_asyncstageout(){
-    if [ ! -d "$INSTALL_AS" ]; then
-        mkdir -p $INSTALL_AS
-        mkdir -p $INSTALL_AS/Monitor/work
-        mkdir -p $INSTALL_AS/AsyncTransfer/dropbox/inputs
-	mkdir -p $INSTALL_AS/AsyncTransfer/dropbox/outputs
-    fi
+    mkdir -p $INSTALL_AS
+    mkdir -p $INSTALL_AS/Monitor/work
+    mkdir -p $INSTALL_AS/AsyncTransfer/dropbox/inputs
+    mkdir -p $INSTALL_AS/AsyncTransfer/dropbox/outputs
     touch $INSTALL_AS/.using
     cp $ROOT_DIR/apps/asyncstageout/configuration/Example.py $CONFIG_AS/config-template.py
     cp $ROOT_DIR/apps/asyncstageout/Monitor/monitor.conf $CONFIG_AS/monitor-template.conf
 }
 
 inited_asyncstageout(){
-    if [ ! -d "$INSTALL_AS" ]; then
-        mkdir -p $INSTALL_AS
-    fi
+    mkdir -p $INSTALL_AS
     touch $INSTALL_AS/.init
 }
+
 inited_couch(){
-    if [ ! -d "$INSTALL_AS" ]; then
-        mkdir -p $INSTALL_AS
-    fi
+    mkdir -p $INSTALL_COUCH
     touch $INSTALL_COUCH/.init
 }
 
@@ -212,8 +207,6 @@ start_couch(){
        echo "CouchDB has not been initialised... running post initialisation"
        init_couch_post;
    fi
-
-
 }
 
 #
@@ -222,7 +215,6 @@ start_couch(){
 stop_couch(){
    echo "stopping couch...";
    couchdb -d -p $INSTALL_COUCH/logs/couchdb.pid;
-
 }
 
 clean_couch(){
@@ -231,7 +223,6 @@ clean_couch(){
     echo "removing files"
     rm -f $INSTALL_COUCH/.init
     rm -rf $INSTALL_COUCH/database/*
-
 }
 
 
@@ -259,7 +250,7 @@ init_async(){
                        --host_dn=$HOST_DN \
                        --wmstats_url=$WMSTATS_URL \
                        --ufc_service_url=$UFC_SERVICE_URL \
---ops_proxy=$OPS_PROXY \
+                       --ops_proxy=$OPS_PROXY \
                        --amq_auth_file=$AMQ_AUTH_FILE \
 
     export WMAGENT_CONFIG=$CONFIG_AS/config.py
@@ -304,10 +295,9 @@ export PERL5LIB=\${PERL5LIB}:$ROOT_DIR/apps/asyncstageout/Monitor/perl_lib"  > $
 # initialise the async
 #
 init_asyncstageout(){
-
     if [ $AS_INIT_DONE -eq 0 ]; then
-      echo "Initialising AsyncStageOut..."
-      init_async;
+        echo "Initialising AsyncStageOut..."
+        init_async;
     fi
 }
 
@@ -319,7 +309,6 @@ start_asyncstageout(){
     source $ROOT_DIR/apps/asyncstageout/Monitor/setup.sh
     #cd $ROOT_DIR
     $ROOT_DIR/apps/asyncstageout/Monitor/ASO-Monitor.pl --config $CONFIG_AS/monitor.conf
-
 }
 
 stop_asyncstageout(){
@@ -361,7 +350,6 @@ clean_asyncstageout(){
     rm -rf $INSTALL_AS/*
     rm -f $CONFIG_AS/config.py;
     rm -f $INSTALL_AS/.init
-
 }
 
 

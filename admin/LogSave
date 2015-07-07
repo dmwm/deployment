@@ -14,7 +14,7 @@ for applogs in $(find $BASEDIR/logs -depth -type d); do
   case $applogs in
     */frontend )
       # Archive front-end logs to secure area.
-      rsync --delete -f '-s *.txt' \
+      ionice -c3 rsync --delete -f '-s *.txt' \
         -auz --no-group -e 'ssh -c arcfour' $applogs/ $ARCHDIR/ ||
         { echo "failed to synchronise logs to $ARCHDIR: $?" 1>&2; exit 5; }
       ;;

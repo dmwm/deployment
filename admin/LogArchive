@@ -27,7 +27,7 @@ for applogs in $(find $BASEDIR/logs -depth -type d); do
           case $f in *.zip ) continue ;; esac
           kind=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
           month=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
-          zip -9Trmuoqj ${kind}_${month}.zip $f ||
+          ionice -c3 zip -9Trmuoqj ${kind}_${month}.zip $f ||
             { echo "$f: failed to archive logs: $?" 1>&2; exit 3; }
         done
 
@@ -37,7 +37,7 @@ for applogs in $(find $BASEDIR/logs -depth -type d); do
           case $f in *.zip ) continue ;; esac
           kind=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
           month=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
-          zip -9Truoqj ${kind}_${month}.zip $f ||
+          ionice -c3 zip -9Truoqj ${kind}_${month}.zip $f ||
             { echo "$f: failed to archive logs: $?" 1>&2; exit 4; }
         done
       ;;
@@ -56,7 +56,7 @@ for applogs in $(find $BASEDIR/logs -depth -type d); do
 	           -name '*.stdout' -o -name '*.stderr' \) \
 	        \! -name '*.zip' \
 	        -mtime +1 | sort)
-      [ X"$FILES" = X ] || zip -9Tmojq $zip $FILES
+      [ X"$FILES" = X ] || ionice -c3 zip -9Tmojq $zip $FILES
       set +e
       ;;
   esac

@@ -8,12 +8,11 @@ import urllib2
 import subprocess
 from xml.sax.saxutils import escape
 
-TPL_URL = "http://tpl-viewer.cern.ch/cdb-tpl-view/tpl_view.php?profile="
-PROD    = ["vocms34","vocms136","vocms138","vocms139","vocms140","vocms161","vocms163"]
-NONPROD = ["vocms132","vocms133","vocms127"] #pre-prod and dev
+TPL_URL = "https://metricmgr.cern.ch/api/v2/mix/production/yaml/"
+HOSTSCMD = "curl -s -u : --negotiate -H 'Accept: application/json' -k 'https://judy.cern.ch:9081//v3/facts/hostgroup?query=%5B%22%7E%22%2C+%22value%22%2C+%22vocms%2Fcmsweb%22%5D'" #query=["~","value","vocms/cmsweb"]
+ALARMCMD = "curl -s -u : --negotiate -H 'Accept: application/json' -k 'https://judy.cern.ch:9081//v3/nodes/%s.cern.ch/facts?query=%%5B%%22%%7E%%22%%2C+%%22name%%22%%2C+%%22alarmed%%22%%5D' | grep value" #query=["~","name","alarmed"]
 LEMONCMD = 'lemon-cli --script-mode -s -n "%s" -m "%s"'
 LEMON_EXPIRED = 86400 # time in seconds to consider lemon feeds as expired
-ID_SMS_STATE = "22002"
 
 XML_TEMPLATE = """\
 <?xml version="1.0" encoding="utf-8" ?>
@@ -23,27 +22,37 @@ XML_TEMPLATE = """\
     <availability>%(avail)i</availability>
     <timestamp>%(tstamp)s</timestamp>
     <availabilitydesc>
-       Availability is 0%% if there exist a lemon alarm in any of
-       the CMSWEB machines running this service, 100%% otherwise.
+      %(availdesc)s
     </availabilitydesc>
-    <availabilityinfo>Found %(availinfo)i exception(s).</availabilityinfo>
+    <contact>
+      %(contact)s
+    </contact>
+    <webpage>
+      %(webpage)s
+    </webpage>
+    <availabilityinfo>%(availinfo)s</availabilityinfo>
     <lemon>
       %(hostlist)s
     </lemon>
     <notes>
-This SLS is a mapping from the following lemon metrics/exceptions:
-%(mnames)s
+      %(notes)s
     </notes>
     <data>
-      <textvalue>Production hosts: %(prodhosts)s</textvalue>
-      <textvalue>Pre-production and Dev hosts: %(nonprodhosts)s</textvalue>
-      <textvalue>Detected alarms:</textvalue>
-      %(lemonfeeds)s%(numericvalue)s
+      %(data)s
     </data>
   </serviceupdate>
 """
 
-def spit_xml(feedname, lemonfeeds, name_id, isexcept, inproduction, xml_out_dir):
+HOSTS = []
+
+hosts = subprocess.Popen(HOSTSCMD,stdout=subprocess.PIPE,shell=True).stdout.read()
+hosts = re.findall('vocms[0-9]+',hosts)
+
+for host in hosts:
+  if not "false" in subprocess.Popen(ALARMCMD % host,stdout=subprocess.PIPE,shell=True).stdout.read(): # ignore production machines in maintenance
+    HOSTS.append(host)
+
+def spit_xml(feedname, lemonfeeds, name_id, isexcept, xml_out_dir):
   avail = 100
   availinfo = 0
   hostlist = set()
@@ -54,9 +63,6 @@ def spit_xml(feedname, lemonfeeds, name_id, isexcept, inproduction, xml_out_dir)
   for f in lemonfeeds.values():
     host,id,tstamp,v = f.split(" ",3)
 
-    if not inproduction[host]:
-      continue # ignore the feed if the machine is in maintenance or standby
-
     hostlist.add(host)
     mnames.add('cmsweb_'+name_id[id])
     if isexcept[id]:
@@ -64,37 +70,83 @@ def spit_xml(feedname, lemonfeeds, name_id, isexcept, inproduction, xml_out_dir)
       if int(state) == 1 and code in ['000', '135']:
         avail = 0
         availinfo += 1
-        failed += "<textvalue>" + escape(f.strip()) + "</textvalue>\n"
+        failed += "<textvalue>" + escape(f.strip()) + "</textvalue>\n      "
     else:
       numericvalue += "<numericvalue name=\"%s %s\">%s</numericvalue>\n      " \
-          % (host, name_id[id].replace(feedname+'_','',1), v.split(" ")[0])
+          % (host, name_id[id].replace(feedname+'_','',1), v.split(" ")[0].replace('_empty_', '0'))
 
- 
   if not failed:
     failed = "<textvalue>none</textvalue>"
 
   hl = ""
   for host in hostlist:
     hl += "<host>"+host+"</host>\n      "
-  phosts  = [h for h in hostlist & set(PROD)]
-  nphosts = [h for h in hostlist & set(NONPROD)]
 
   mn = ""
   for mname in mnames:
-    mn += mname+"\n"
+    mn += mname+"\n      "
+
+  data =  "<textvalue>Hosts: " + str(" ").join(hostlist) + "</textvalue>\n      "
+  data += "<textvalue>Detected alarms:</textvalue>\n      "
+  data += failed.strip(" \n")
+  data += numericvalue
 
   f=open(path.join(xml_out_dir,"sls_cmsweb_"+feedname+".xml"),"wt")
   f.write(XML_TEMPLATE % {
     'slsid': "cmsweb_"+feedname,
     'avail': avail,
-    'availinfo': availinfo,
+    'availinfo': "Found " + str(availinfo) + " exception(s).",
+    'availdesc': "Availability is 0% if there exist a lemon alarm in any of\n      the CMSWEB machines running this service, 100% otherwise.",
+    'contact': "cms-service-webtools@cern.ch",
+    'webpage': "https://cern.ch/cms-http-group/ops-trouble.html",
     'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
     'hostlist': hl.strip(" \n"),
-    'mnames': mn.strip(),
-    'lemonfeeds': failed.strip(" \n"),
-    'numericvalue': numericvalue.rstrip(" \n"),
-    'prodhosts': str(" ").join(phosts),
-    'nonprodhosts': str(" ").join(nphosts)
+    'notes': "This SLS is a mapping from the following lemon metrics/exceptions:\n      " + mn.strip(),
+    'data': data.strip(" \n")
+  })
+  f.close()
+
+  return (feedname, avail)
+
+def aggregate_xml(feeds_availability, xml_out_dir):
+  avail = 0
+  services = []
+  failedservices = []
+  nfailedservices = 0
+
+  for (n, a) in feeds_availability:
+    avail += a
+    services.append(n)
+    if a < 100:
+      failedservices.append("<textvalue>" + n + "</textvalue>")
+      nfailedservices += 1
+
+  avail /= len(services)
+
+  if nfailedservices == 0:
+    failedservices.append("<textvalue>none</textvalue>")
+
+  hl = ""
+  for host in HOSTS:
+    hl += "<host>"+host+"</host>\n      "
+
+  data =  "<textvalue>Hosts: " + str(" ").join(HOSTS) + "</textvalue>\n      "
+  data += "<textvalue>Failed services:</textvalue>\n      "
+  data += str("\n      ").join(failedservices) + "\n"
+  data += "      <numericvalue name=\"Failed Services\">" + str(nfailedservices) + "</numericvalue>"
+
+  f=open(path.join(xml_out_dir,"sls_cmsweb.xml"),"wt")
+  f.write(XML_TEMPLATE % {
+    'slsid': "cmsweb",
+    'avail': avail,
+    'availinfo': "Found " + str(nfailedservices) + " service(s) with exceptions.",
+    'availdesc': "Availability represents the percentage of services working properly on CMSWEB.\n      Any value below 100% represents a critical issue!",
+    'contact': "cms-service-webtools@cern.ch",
+    'webpage': "https://cern.ch/cms-http-group/ops-trouble.html",
+    'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
+    'hostlist': hl.strip(" \n"),
+    'notes': "This SLS is a general mapping from the following services:\n      " + str("\n      ").join(services),
+    'data': data
   })
   f.close()
 
@@ -102,11 +154,11 @@ def build_metric_ids():
   name_ids = {}
   idlist = ""
   isexcept = {}
-  metrics_page = urllib2.urlopen(TPL_URL+"prod/customization/cms/webtools/backend/lemon").read()
+  metrics_page = urllib2.urlopen(TPL_URL).read()
   
   # Exceptions and DQM special metrics
-  x = re.findall('monitoring/exception/_([0-9]+).*?cmsweb_(.*?)"',metrics_page,re.DOTALL)
-  y = re.findall('monitoring/metric/_([0-9]+)[^)]*?cmsweb_(dqm_[^_]*?_agents_import_queue)"',metrics_page,re.DOTALL)
+  x = re.findall('lemon_([0-9]+):\n.*exception.cmsweb_(.*)\n',metrics_page)
+  y = re.findall('lemon_([0-9]+):\n.*cmsweb_(dqm_[^_]*_agents_import_queue)\n',metrics_page)
   for (id,name) in x+y:
     name_ids[id] = name
     name_ids[name] = id
@@ -123,16 +175,11 @@ if __name__ == "__main__":
 
   (name_id, idlist, isexcept) = build_metric_ids()
   feeds={}
-  inproduction={}
 
-  cmd = LEMONCMD % (str(" ").join(PROD+NONPROD), idlist+" "+ID_SMS_STATE)
+  cmd = LEMONCMD % (str(" ").join(HOSTS), idlist)
   p=subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
   for line in p.stdout:
     host,id,tstamp,v = line.split(" ",3)
-
-    if id == ID_SMS_STATE:
-       inproduction[host] = v.startswith("production")
-       continue
 
     # lemonfeeds older then LEMON_EXPIRED seconds are considered
     # feeds from deactivated exceptions, so ignore
@@ -146,7 +193,10 @@ if __name__ == "__main__":
   if err:
     print err
 
+  aggregate = []
   for (k,v) in feeds.items():
-    spit_xml(k,v,name_id,isexcept,inproduction,xml_out_dir)
+    aggregate.append(spit_xml(k,v,name_id,isexcept,xml_out_dir))
+
+  aggregate_xml(aggregate, xml_out_dir)
 
   sys.exit(0)

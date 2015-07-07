@@ -12,8 +12,8 @@
 ##H   start           (re)start the service
 ##H   stop            stop the service
 ##H   compile         refresh render plugins
-##H   backup          backup the current service state by archiving it to ARG area in castor
-##H   zipbackup       backup new root files to castor
+##H   indexbackup     backup the index to CASTOR
+##H   zipbackup       backup new root files to CASTOR
 ##H   zipbackupcheck  check if the backup of the root files to castor was successful
 ##H
 ##H Usage 2: manage [options] ACTION COMPONENTs [SECURITY-STRING]
@@ -54,6 +54,7 @@ QUIET=false
 FLAVOR=dev
 ALTERNATIVE_USER=$(stat $TOP -c %U)
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+PYTHONPATH=${ROOT}/auth/${ME}:${PYTHONPATH}
 
 . $ROOT/apps/dqmgui/128/etc/profile.d/env.sh
 
@@ -229,7 +230,8 @@ start()
         visDQMSoundAlarmDaemon \
         http://localhost:8030/dqm/online \
         cmsdaqweb.cms \
-        50555 600 2
+        50555 600 2 \
+        cms-dqm-oncall@cern.ch
       ;;
 
     dqm-c2d07-02:*agents* ) # dqm-prod-offsite
@@ -314,23 +316,6 @@ start()
             $DQM_DATA/ix128 \
             $DQM_DATA/agents/register
 
-        # When the period of parallel running is finished,
-        # the zip and zipfreeze below should be removed
-
-        startagent $D/agent-zip \
-          visDQMZipDaemon \
-          $DQM_DATA/agents/zip \
-          $DQM_DATA/data \
-          $DQM_DATA/zipped \
-          $DQM_DATA/agents/freezer
-
-        startagent $D/agent-zfreeze \
-          visDQMZipFreezeDaemon \
-          $DQM_DATA/agents/freezer \
-          $DQM_DATA/zipped \
-          7 \
-          $DQM_DATA/agents/stageout
-
         if [ $D = offline ]; then
           startagent $D/agent-osync \
             visDQMOnlineSyncDaemon \
@@ -368,65 +353,10 @@ start()
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
           $DQM_DATA/ix128 \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/vcontrol
-
-        startagent $D/agent-qcontrol \
-          visDQMRootFileQuotaControl \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-${D}.py
-
-        startagent $D/agent-vcontrol \
-          visDQMVerControlDaemon \
-          $DQM_DATA/agents/vcontrol \
-          $DQM_DATA/data
-
-        # When the period of parallel running is finished,
-        # zip and zipfreeze should be added here
-
-        if [ $D = offline ]; then
-          startagent $D/agent-osync \
-            visDQMOnlineSyncDaemon \
-            -s https://cmsweb.cern.ch/dqm/online/data/browse/Original \
-            -d 14400 \
-            -n 50 \
-            /dev/null \
-            $DQM_DATA/data/OnlineData/original
-
-          startagent $D/agent-coinfo \
-            visDQMCreateInfoDaemon \
-            $DQM_DATA/data/OnlineData \
-            $DQM_DATA/agents/zip
-        fi
-
-      done
-      ;;
-
-    # Special setup for the vocms0133 test server. (In the past this didn't run the Castor agent chain)
-    # This runs the agents to backup the zipped root files to Castor, but in a "faster" way
-    vocms0133:*agents* )
-      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
-
-      for D in $CONFIGS; do
-        D=${D}
-        DQM_DATA=$STATEDIR/$D
-
-        startagent $D/agent-receive \
-          visDQMReceiveDaemon \
-          $DQM_DATA/uploads \
-          $DQM_DATA/data \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/agents/zip
-
-        startagent $D/agent-import-128 \
-          visDQMImportDaemon \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/data \
-          $DQM_DATA/ix128 \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/vcontrol
+          --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
+          --rsync \
+          --rsyncnext $DQM_DATA/agents/ixstageout \
+          --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
         startagent $D/agent-qcontrol \
           visDQMRootFileQuotaControl \
@@ -447,12 +377,81 @@ start()
           $DQM_DATA/zipped \
           $DQM_DATA/agents/freezer
 
-        # BVB: We freeze zip files faster (1 days instead of 7)
         startagent $D/agent-zfreeze \
           visDQMZipFreezeDaemon \
           $DQM_DATA/agents/freezer \
           $DQM_DATA/zipped \
-          1 \
+          7 \
+          $DQM_DATA/agents/stageout
+
+        if [ $D = offline ]; then
+          startagent $D/agent-osync \
+            visDQMOnlineSyncDaemon \
+            -s https://cmsweb.cern.ch/dqm/online/data/browse/Original \
+            -d 14400 \
+            -n 50 \
+            /dev/null \
+            $DQM_DATA/data/OnlineData/original
+
+          startagent $D/agent-coinfo \
+            visDQMCreateInfoDaemon \
+            $DQM_DATA/data/OnlineData \
+            $DQM_DATA/agents/zip
+        fi
+
+      done
+      ;;
+
+    # Special setup for the vocms0133 test server. (In the past this didn't run the Castor agent chain)
+    # This runs the agents to backup the zipped root files to Castor
+    vocms0133:*agents* )
+      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
+
+      for D in $CONFIGS; do
+        D=${D}
+        DQM_DATA=$STATEDIR/$D
+
+        startagent $D/agent-receive \
+          visDQMReceiveDaemon \
+          $DQM_DATA/uploads \
+          $DQM_DATA/data \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/agents/zip
+
+        startagent $D/agent-import-128 \
+          visDQMImportDaemon \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $DQM_DATA/ix128 \
+          --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
+          --rsync \
+          --rsyncnext $DQM_DATA/agents/ixstageout \
+          --email broen.van.besien@cern.ch
+
+        startagent $D/agent-qcontrol \
+          visDQMRootFileQuotaControl \
+          $DQM_DATA/agents/qcontrol \
+          $DQM_DATA/agents/register \
+          $DQM_DATA/data \
+          $CFGDIR/quota-rfqc-${D}.py
+
+        startagent $D/agent-vcontrol \
+          visDQMVerControlDaemon \
+          $DQM_DATA/agents/vcontrol \
+          $DQM_DATA/data
+
+        startagent $D/agent-zip \
+          visDQMZipDaemon \
+          $DQM_DATA/agents/zip \
+          $DQM_DATA/data \
+          $DQM_DATA/zipped \
+          $DQM_DATA/agents/freezer
+
+        startagent $D/agent-zfreeze \
+          visDQMZipFreezeDaemon \
+          $DQM_DATA/agents/freezer \
+          $DQM_DATA/zipped \
+          7 \
           $DQM_DATA/agents/stageout
       done
       ;;
@@ -477,8 +476,11 @@ start()
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
           $DQM_DATA/ix128 \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/vcontrol
+          --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
+          --rsync \
+          --time 05:00 \
+          --rsyncnext $DQM_DATA/agents/ixstageout \
+          --email broen.van.besien@cern.ch
 
         startagent $D/agent-qcontrol \
           visDQMRootFileQuotaControl \
@@ -545,8 +547,7 @@ start()
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
           $DQM_DATA/ix128 \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/vcontrol
+          --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol
 
         startagent $D/agent-qcontrol \
           visDQMRootFileQuotaControl \
@@ -718,99 +719,44 @@ compile()
   done
 }
 
-# Backups dqmgui by archiving its state to castor
-# This is the backup of the index
-backup()
+# Backup index to castor
+# The backup is incremental, with a full backup at regular intervals
+indexbackup()
 {
-  local archdir=$1
-  klist -s ||
-    { echo "You must have a valid kerberos token to run the backup." 1>&2; exit 20; }
-  rfstat $archdir >/dev/null ||
-    { echo "Could not stat $archdir in the castor archive" 1>&2; exit 19; }
-  test -d $STATEDIR/backup ||
-    { echo "Directory $STATEDIR/backup does not exist" 1>&2; exit 18; }
+  refuseproc "castor index backup" "visDQMIndexCastorStager"
 
-  echo "Checking for DQMGUI backups not yet staged out to tape:"
-  stager_qry -M $archdir | grep dqmgui_$HOST | grep -v STAGED || echo "all staged out."
-  echo
-
-  tarfile=dqmgui_${HOST}_$(date +%Y%m%d-%H%M).tar
-  (tar --version
-   echo
-   echo "Starting $HOST DQMGUI backup on $(date)"
-   # FIXME: stop the agents vidDQMImportDaemon visDQMDeleteDaemon to make the index read only
-
-   # The default tar (version 1.15.1) coming with SLC5 does not provide the TAR_VOLUME
-   # env var when calling the script to change tapes. That's very unfortunate, so we
-   # have to workaround to find the next tape number to use in the dest file suffix.
-   # It also doesn't pass any argument to the script, so we use a file on disk to
-   # pass input to it and to keep the state for the next call.
-   echo "$archdir/$tarfile.0" > $STATEDIR/backup/copy-to-castor.next
-
-   # Use tape length of 250GB. The maximum allowed by the CERN/IT is 500GB,
-   # but be careful bumping high numbers as we need local disk space of
-   # equal size to store the volume file. Sometimes we run short on disk
-   # space so better not risk filling up the partition while running a backup.
-   tar -c -M --tape-length=250000000 --file $STATEDIR/backup/partial.tar \
-       -C $STATEDIR/${FLAVOR%%-*}/ix128 . -F $CFGDIR/copy-to-castor.sh ||
-     errors=true
-
-   # Stage out the last tape volume too, regardless of errors in previous command.
-   $CFGDIR/copy-to-castor.sh || errors=true
-   [ $errors ] && echo "*** WARNING *** There were errors during the backup." \
-     || echo "Completed backup to castor on $(date)."
-  ) 2>&1 | tee $STATEDIR/backup/log
-
-  # Generate inplace documentation to make sure people know how to restore it
-  echo
-  echo Copying README file with instruction on how to restore it.
-  (let n=$(cat $STATEDIR/backup/copy-to-castor.next|awk -F. '{ print $NF; }')
-   echo "This is a multi-volume tape archive composed by $n tape(s)."
-   echo
-   echo "To extract one specific file, get the volume tar file and use:"
-   echo "  tar xvf $tarfile.N <filename-to-extract>"
-   echo
-   echo "If a file is spawned in multiple volumes, you must take all the"
-   echo "volumes containing the file and use:"
-   echo "  tar xvMf $tarfile.first-containing-the-file <filename-to-extract>"
-   echo
-   echo "To extract all the files, use:"
-   echo "  tar xvM \$(for c in {0..$((n-1))}; do echo -n \"-f $tarfile.\$c \"; done)"
-   echo
-   echo "Note you cannot concatenate the tar files together to extract a"
-   echo "multi-volume tape archive. For more information on how to"
-   echo "manipulate multi-volume tape archives, see the tar documentation."
-   echo
-   echo "When this backup was generated, it produced the following log:"
-   echo "-------"
-   cat $STATEDIR/backup/log
-   echo "-------"
-   echo "Find below a list of files of $STATEDIR/${FLAVOR%%-*}/ix128"
-   echo "just after the multi-volume tar was created. It should match"
-   echo "what's in the tar, otherwise it means things changed while"
-   echo "the backup was running (tar sometimes may not give warnings about"
-   echo "files that changed during the creation of the archive)."
-   echo
-   (cd $STATEDIR/${FLAVOR%%-*}/ix128 && find . -exec ls -alFd {} \;)
-  ) | rfcp - $archdir/$tarfile.README
-  rm -f $STATEDIR/backup/{copy-to-castor.next,log} # cleanup temp files
-
-  # FIXME: start the agents vidDQMImportDaemon visDQMDeleteDaemon if they were running before
-
-  # Cleanup old archives
-  tarprefix=dqmgui_${HOST}
-  since=$(date --date='6 months ago' +%Y%m%d)
-  echo
-  echo "Cleaning old archives for $tarprefix:"
-  for f in $(nsls $archdir|grep $tarprefix); do
-    if [ $(echo -n $f | cut -d_ -f3| cut -d- -f1) -lt $since ]; then
-      echo $archdir/$f
-      rfrm $archdir/$f
-    fi
+  for D in $CONFIGS; do
+    D=${D}
+    # Set default CASTOR directory to a testing area. Only the production servers get the real thing.
+    case $HOST in
+      vocms013[389] )
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/ixbackup/$D
+        ;;
+      * )
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/ixbackup/$D
+        ;;
+    esac
+    # The standard amount of days after which we do a full backup is 50 days.
+    # Only for testing purposes, we set this on 5 days for vocms0133.
+    FULLBACKUPDAYS=50
+    case $HOST in
+      vocms0133 )
+        FULLBACKUPDAYS=5
+        ;;
+    esac
+    DQM_DATA=$STATEDIR/$D
+    LOGSTEM=$D/agent-castorindexbackup
+    # Start the process not as an agent, but directly in the current thread.
+    # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
+    # The backup is incremental, but we do a full backup every 50 days.
+    visDQMIndexCastorStager \
+      $DQM_DATA/agents/ixstageout \
+      $DQM_DATA/ix128 \
+      $CASTORDIR \
+      broen.van.besien@cern.ch \
+      --fullbackup $FULLBACKUPDAYS \
+      </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
   done
-
-  echo
-  echo "Backup completed."
 }
 
 # Backup new root files (zipped) to castor
@@ -820,20 +766,19 @@ zipbackup()
 
   for D in $CONFIGS; do
     D=${D}
-    # Modify Castor dir for specific local test server, so that this can be tested by the cmsdqm account
+    # Set default CASTOR directory to a testing area. Only the production servers get the real thing.
     case $HOST in
       vocms013[389] )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         ;;
       * )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/logarchive/test/dqmguidata/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
-        ;; 
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        ;;
     esac
     DQM_DATA=$STATEDIR/$D
     LOGSTEM=$D/agent-castorzipbackup
-    # Start the original agent process, however, not as an agent, but directly in the current thread.
-    # The agent was modified in such a way that it exits after each cycle.
-    # It is supposed to be started from/by acrontab.
+    # Start the process not as an agent, but directly in the current thread.
+    # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
     visDQMZipCastorStager \
       $DQM_DATA/agents/stageout \
       $DQM_DATA/zipped \
@@ -899,19 +844,19 @@ done
 newline=""
 getconfigs
 
-# Check user name. Everything except afs-sync, backup (of index),zipbackup and
-# zipbackupcheck must run as non-$ALTERNATIVE_USER account, afs-sync, backup,
-# zipbackup and zipbackupcheck must be under $ALTERNATIVE_USER, refuse to run
-# otherwise.
+# Check user name. Everything except afs-sync, indexbackup, zipbackup and
+# zipbackupcheck must run as non-$ALTERNATIVE_USER account, afs-sync,
+# indexbackup, zipbackup and zipbackupcheck must be under $ALTERNATIVE_USER,
+# refuse to run otherwise.
 case $FLAVOR:$(id -un):$1:$2 in
-  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:backup:* | *:$ALTERNATIVE_USER:zipbackup:* | *:$ALTERNATIVE_USER:zipbackupcheck:* )
+  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:indexbackup:* | *:$ALTERNATIVE_USER:zipbackup:* | *:$ALTERNATIVE_USER:zipbackupcheck:* )
     ;;
 
-  offline-caf:$ALTERNATIVE_USER:*:* | offline-caf:*:*:afs-sync | offline-caf:*:backup:* | offline-caf:*:zipbackup:* | offline-caf:*:zipbackupcheck:* )
+  offline-caf:$ALTERNATIVE_USER:*:* | offline-caf:*:*:afs-sync | offline-caf:*:indexbackup:* | offline-caf:*:zipbackup:* | offline-caf:*:zipbackupcheck:* )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 
-  relval:$ALTERNATIVE_USER:*:* | relval:*:*:afs-sync | relval:*:backup:* | relval:*:zipbackup:* | relval:*:zipbackupcheck:* )
+  relval:$ALTERNATIVE_USER:*:* | relval:*:*:afs-sync | relval:*:indexbackup:* | relval:*:zipbackup:* | relval:*:zipbackupcheck:* )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 esac
@@ -963,9 +908,9 @@ case ${1:-status} in
     stop "$2"
     ;;
 
-  backup )
-    check "$3"
-    backup "$2"
+  indexbackup )
+    check "$2"
+    indexbackup
     ;;
 
   zipbackup )

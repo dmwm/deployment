@@ -1,0 +1,32 @@
+# vim: set ft=sh sw=2 ts=8 et :
+
+deploy_confdb_deps()
+{
+  deploy admin
+  deploy backend
+}
+
+deploy_confdb_prep()
+{
+  mkproj
+}
+
+deploy_confdb_sw()
+{
+  deploy_pkg -a confdb/ConfDBAuth.py comp cms+confdb
+}
+
+deploy_confdb_post()
+{
+  case $host in vocms013[389] | vocms0140 | vocms030[67] | vocms0318 | vocms016[135]) disable ;; * ) enable ;; esac
+  (mkcrontab; sysboot) | crontab -
+}
+
+deploy_confdb_auth()
+{
+  case $1 in
+    */ConfDBAuth.py )
+      echo "connectUrl = 'oracle://cms_hlt_gdr_r_FIXME:password_FIXME@(DESCRIPTION = (LOAD_BALANCE=on) (FAILOVER=ON) (ADDRESS = (PROTOCOL = TCP)(HOST = cmsr1-s_FIXME.cern.ch)(PORT = 10121)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = cms_cond_FIXME.cern.ch)))'"
+      ;;
+  esac
+}

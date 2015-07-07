@@ -123,7 +123,7 @@ system_groups_and_accounts()
             T:100044:_an_reqmon T:100045:_t0wmadatasvc T:100046:_dbsmigration\
             T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver   \
             T:100050:_gitweb    T:100051:_bigcouch    T:100052:_victorweb    \
-            T:100053:_popdbweb; do
+            T:100053:_popdbweb  T:100054:_dcafpilot   T:100055:_confdb; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -164,6 +164,8 @@ system_groups_and_accounts()
   add_local_user 100051 _bigcouch     ,_config "BigCouch App"
   add_local_user 100052 _victorweb   ,_config "Victor Cleaner App"
   add_local_user 100053 _popdbweb    ,_config "CMS Popularity App"
+  add_local_user 100054 _dcafpilot   ,_config "DCAFPilot App"
+  add_local_user 100055 _confdb      ,_config "ConfDB App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
@@ -366,7 +368,7 @@ deploy_system_post()
 
           note "IMPORTANT: run the following to update /root/.ssh/known_hosts"
           note "   sudo cfg/admin/ImageKey start"
-          note "   for h in vocms{0,}{30{6,7},34,12{7,8},13{2,3,4,5,6,8,9},140,16{0,1,2,3,4,5}}{,.cern.ch}; do"
+          note "   for h in vocms{0,}{306,307,318,34,12{7,8},13{2,3,4,5,6,8,9},140,16{0,1,2,3,4,5}}{,.cern.ch}; do"
           note "     echo \$h; sudo cfg/admin/ImageKey run ssh cmsweb@\$h uptime"
           note "   done"
           note "   sudo cfg/admin/ImageKey stop"
@@ -450,7 +452,7 @@ deploy_system_post()
 	fetch-crl git-all stgit colordiff libXpm-devel finger \
 	$(yum -q list compat-{readline5,libtermcap} perl-ExtUtils-Embed 2>/dev/null | \
 	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}') \
-        libXmu mesa-libGLU arc.x86_64 # openssl098e compat-expat1
+        libXmu mesa-libGLU arc.x86_64 arc-server
 
       # Install myproxy and voms tools.
       sudo yum -y install myproxy wlcg-voms-cms voms-clients3
@@ -458,10 +460,9 @@ deploy_system_post()
       # Install cern-get-sso-cookie
       sudo yum -y install cern-get-sso-cookie
 
-      # Should be ok to use bashs from slc5 on slc6. There is no build for slc6 yet.
-      if rpm --quiet -q bashs; then :; else
-        sudo rpm -ivh http://swrepsrv.cern.ch/swrep/x86_64_slc5/bashs-3.2-21.x86_64.rpm ||
-	  sudo ln /bin/bash{,s}
+      # Make bashs an alias for bash.
+      if [ -x /bin/bashs ]; then :; else
+        sudo ln -s /bin/bash{,s}
       fi
 
       # Update firewall rules, persist change across reboot.
@@ -473,6 +474,14 @@ deploy_system_post()
       sudo /sbin/iptables -I $fwchain 5 -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
       sudo /sbin/iptables -I $fwchain 6 -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
       sudo sh -c '/sbin/iptables-save > /etc/sysconfig/iptables'
+
+      # Enable xinetd, which would run the arc server when needed
+      sudo /sbin/chkconfig --levels 2345 xinetd on
+      sudo /sbin/service xinetd restart
+
+      # Enable fetch-crl cronjob
+      sudo /sbin/chkconfig --levels 2345 fetch-crl-cron on
+      sudo /sbin/service fetch-crl-cron restart
 
       # Default SLC5/6 installations don't use the whole ephemeral disk
       # available. Try expanding them automatically.

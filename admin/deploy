@@ -35,7 +35,7 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms034 |   vocms0127 | vocms13[2345689] | vocms013[2345689] | vocms140 | vocms0140 | vocms16[01235] | vocms016[01235] | vocms030[67] )
+    vocms034 |   vocms0127 | vocms13[2345689] | vocms013[2345689] | vocms140 | vocms0140 | vocms16[01235] | vocms016[01235] | vocms030[67] | vocms0318 )
       pxlabel=cmsweb_backends ;;
     * )
       pxlabel=devvm_$(echo $host | tr - _) ;;
@@ -60,7 +60,7 @@ deploy_admin_post()
    echo "*/6 * * * * . $project_config/init.sh && $project_config/ServerMonitor -q -v"
    echo "37 */8 * * * . $project_config/init.sh && $project_config/ServerMonitor -q -r"
    $pxskip || echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
-   echo "7 * * * * $project_config/LogArchive $root") |
+   echo "7 */12 * * * $project_config/LogArchive $root") |
    crontab -
 
   case $host:$root in
@@ -70,7 +70,7 @@ deploy_admin_post()
       LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; } | \
         { grep -v " $host .*/archive-log-files" || true; }
-       echo "27 */3 * * * $host $project_config/LogSave $root $LOGDIR/$host") | acrontab
+       echo "0 3 * * * $host $project_config/LogSave $root $LOGDIR/$host") | acrontab
       acrontab -l | fgrep " $host $project_config/" | sed "s|^[/*0-9 ]* $host ||" | sh -x
       ;;
   esac
