@@ -1,0 +1,129 @@
+#!/bin/sh
+
+##H Usage: manage ACTION [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help              show this help
+##H   version           get current version of the service
+##H   status            show current service's status
+##H   sysboot           start server from crond if not running
+##H   restart           (re)start the service
+##H   updateversions    update database with ScramArchs/CMSSW releases
+##H   start             (re)start the service
+##H   stop              stop the service
+##H
+##H For more details please refer to operations page:
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/ReqMgrSystemDesign
+##H [nice, obsolete twiki, leave for reference and example ...]
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+echo_e=-e bsdstart=bsdstart
+case $(uname) in
+  Darwin )
+    md5sum() { md5 -r ${1+"$@"}; }
+    echo_e= bsdstart=start
+    ;;
+esac
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+CFGFILE=$CFGDIR/config.py
+AUTHDIR=$TOP/current/auth/reqmon
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
+export WMCORE_ROOT=$REQMON_ROOT/lib/python*/site-packages
+if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
+  export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
+  export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
+fi
+
+
+# Start service conditionally on crond restart.
+sysboot()
+{
+  wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmon-%Y%m%d.log 86400" $CFGFILE
+}
+
+
+# Start the service.
+start()
+{
+  echo "starting $ME"
+  wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmon-%Y%m%d.log 86400" $CFGFILE
+}
+
+
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
+  wmc-httpd -k -d $STATEDIR $CFGFILE
+}
+
+
+# Check if the server is running.
+status()
+{
+  wmc-httpd -s -d $STATEDIR $CFGFILE
+}
+
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    sysboot
+    ;;
+
+  start | restart )
+    check "$2"
+    stop
+    start
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$2"
+    stop
+    ;;
+
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$REQMON_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
