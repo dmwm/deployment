@@ -6,7 +6,6 @@ deploy_reqmgr2_deps()
   deploy backend
   deploy wmcore-auth
   deploy couchdb
-  deploy bigcouch
   deploy reqmon
   deploy acdcserver $variant
 
