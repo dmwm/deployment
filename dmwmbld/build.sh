@@ -1,17 +1,20 @@
 #!/bin/bash
 
-##H Usage: build.sh [-u] [-p DIFFURL] AREANAME GHOWNER GHBRANCH GHREF ARCH
+##H Usage: build.sh [-u] [-p DIFFURL] [-l LOGFILE] AREANAME GHOWNER GHBRANCH GHREF ARCH
 ##H
 ##H Possible options:
 ##H  -u             Upload packages if build succeeds.
 ##H  -p DIFFURL     Apply patch from the provided DIFFURL.
+##H  -l LOGFILE     Set log file.
 ##H  -h             Display this help.
 
 upload=false
+logfile="Log.txt"
 while [ $# -ge 1 ]; do
   case $1 in
     -u ) upload=true; shift ;;
     -p ) diffurl="$2"; shift; shift ;;
+    -l ) logfile="$2"; shift; shift ;;
     -h ) perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0 1>&2; exit 1 ;;
     -* ) echo "$0: unrecognised option $1, use -h for help" 1>&2; exit 1 ;;
     *  ) break ;;
@@ -49,17 +52,17 @@ fi
 cd ..
 
 echo $ref > $BLD/lastcommit
-env > $OUT/Log.txt
+env > $OUT/$logfile
 
 echo
 echo "Building RPMs..."
 # Try to build it two times in the same area to workaround some build problems
 cmd="$PKGTOOLS/cmsBuild -c cmsdist --repository comp.pre -a $arch --builders 8 -j 4 --work-dir w build comp"
-$cmd >> $OUT/Log.txt || $cmd >> $OUT/Log.txt
+$cmd >> $OUT/$logfile || $cmd >> $OUT/$logfile
 
 if $upload; then
   echo "Uploading RPMs..."
-  $PKGTOOLS/cmsBuild -c cmsdist --repository comp.pre -a $arch --builders 8 -j 4 --work-dir w upload comp --sync-back >> $OUT/Log.txt
+  $PKGTOOLS/cmsBuild -c cmsdist --repository comp.pre -a $arch --builders 8 -j 4 --work-dir w upload comp --sync-back >> $OUT/$logfile
 else :; fi
 
 echo "Done"

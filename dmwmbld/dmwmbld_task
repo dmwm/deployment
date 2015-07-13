@@ -17,8 +17,10 @@ TOP=$(cd $(dirname $0)/../../.. && pwd)
 CFGDIR=$(dirname $0)
 STATEDIR=$TOP/state/$ME
 LOGDIR=$TOP/logs/$ME
+LOGFILE="dmwmbld-$(date +%Y%m%d)"
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
+LOGURL={LOGURL}
 WEBDIR={WEBDIR}
 ARCHS={ARCHS}
 ALLARCHS={ALLARCHS}
@@ -30,9 +32,10 @@ case ${1:-help} in
     if [ $(pgrep -u $(id -u) -f "${CFGDIR}/gh-bot" | wc -l) = 0 ]; then
       cd $STATEDIR
       export PYTHONUNBUFFERED="true"
-      TERM=dumb $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
+      echo -e "\n------------------------- $(date '+%Y-%m-%d %H:%M:%S') -------------------------" >> $LOGDIR/$LOGFILE
+      TERM=dumb $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS -U $LOGURL &>> $LOGDIR/$LOGFILE
+      echo -e "-----------------------------------------------------------------------\n" >> $LOGDIR/$LOGFILE
     else
-      echo "Another process of ${CFGDIR}/gh-bot is still running. Skipping." &> $LOGDIR/$(date +%Y-%m-%d_%H-%M-%S)
       exit 1
     fi
     ;;
@@ -40,7 +43,7 @@ case ${1:-help} in
   updateweb )
     klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
     # set it to dry-run since it needs testing
-    rsync -n -q -rvu ${2:-$STATEDIR/webarea/} $WEBDIR/
+    rsync -q -rvu ${2:-$STATEDIR/webarea/} $WEBDIR/
     ;;
 
   logclean )

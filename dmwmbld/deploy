@@ -6,6 +6,7 @@ deploy_dmwmbld_prep()
   mkproj webarea
 }
 
+logurl="https://cern.ch/cms-dmwm-builds/"
 webdir=/afs/cern.ch/user/d/dmwmbld/www
 
 deploy_dmwmbld_sw()
@@ -53,7 +54,8 @@ deploy_dmwmbld_sw()
   # Ugly hack for using ssh without needing access to home dir
   perl -p -i -e "s,([\'\"]ssh) ,\1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $project_auth/ssh-key-to-cmsrep ,gc" cmsBuild
 
-  perl -p -i -e "s;{WEBDIR};$webdir;g; \
+  perl -p -i -e "s;{LOGURL};$logurl;g; \
+                 s;{WEBDIR};$webdir;g; \
                  s;{ARCHS};$archs;g;   \
                  s;{ALLARCHS};$all_archs;g;" $project_config/dmwmbld_task
 }
