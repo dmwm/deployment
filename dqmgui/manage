@@ -402,9 +402,9 @@ start()
       done
       ;;
 
-    # Special setup for the vocms0133 test server. (In the past this didn't run the Castor agent chain)
+    # Special setup for the vocms0131 test server. (In the past this didn't run the Castor agent chain)
     # This runs the agents to backup the zipped root files to Castor
-    vocms0133:*agents* )
+    vocms0131:*agents* )
       refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       for D in $CONFIGS; do
@@ -729,7 +729,7 @@ indexbackup()
     D=${D}
     # Set default CASTOR directory to a testing area. Only the production servers get the real thing.
     case $HOST in
-      vocms013[389] )
+      vocms013[189] )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/ixbackup/$D
         ;;
       * )
@@ -737,10 +737,10 @@ indexbackup()
         ;;
     esac
     # The standard amount of days after which we do a full backup is 50 days.
-    # Only for testing purposes, we set this on 5 days for vocms0133.
+    # Only for testing purposes, we set this on 5 days for vocms0131.
     FULLBACKUPDAYS=50
     case $HOST in
-      vocms0133 )
+      vocms0131 )
         FULLBACKUPDAYS=5
         ;;
     esac
@@ -768,7 +768,7 @@ zipbackup()
     D=${D}
     # Set default CASTOR directory to a testing area. Only the production servers get the real thing.
     case $HOST in
-      vocms013[389] )
+      vocms013[189] )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         ;;
       * )
@@ -797,7 +797,7 @@ zipbackupcheck()
     D=${D}
     # Modify Castor dir for specific local test server, so that this can be tested by the cmsdqm account
     case $HOST in
-      vocms013[389] )
+      vocms013[189] )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         ;;
       * )

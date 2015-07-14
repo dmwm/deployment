@@ -65,7 +65,7 @@ deploy_reqmgr2_post()
   (mkcrontab
    sysboot
    case $variant:$host in
-     prod:vocms0140 | preprod:vocms0133 | dev:vocms0127 | default:* )
+     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | default:* )
        local cmd="$project_config/manage updateversions 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
        echo "58 * * * * $cmd" ;;
