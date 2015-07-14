@@ -37,7 +37,7 @@ for i, path in enumerate(paths):
 #
 ## Single Electron: W or Z sample. EGM POG
 #
-paths = ["HLT_Ele23_WPLoose_Gsf_DQM", "HLT_Ele27_eta2p1_WPLoose_Gsf_DQM", "HLT_Ele32_eta2p1_WPLoose_Gsf_DQM"]
+paths = ["HLT_Ele23_WPLoose_Gsf", "HLT_Ele27_eta2p1_WPLoose_Gsf", "HLT_Ele32_eta2p1_WPLoose_Gsf"]
 
 #Instructions for the sample to use
 smpHLTlayouts(dqmitems, workDir+"SingleElectron/00 - Instructions",
