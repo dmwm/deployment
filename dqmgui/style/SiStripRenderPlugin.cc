@@ -92,7 +92,7 @@ public:
     }
 
 private:
-  void preDrawTH2F( TCanvas *, const VisDQMObject &o )
+  void preDrawTH2F( TCanvas *c, const VisDQMObject &o )
     {
       TH2F* obj = dynamic_cast<TH2F*>( o.object );
       assert( obj );
@@ -180,6 +180,15 @@ private:
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+	return;
+      }
+
+	  if( o.name.find( "ClusterWidths_vs_Amplitudes" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+		c->SetLogz(1);
         obj->SetOption("colz");
 	return;
       }
