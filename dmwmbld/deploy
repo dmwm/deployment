@@ -33,12 +33,12 @@ deploy_dmwmbld_sw()
           all_archs=${archs##comp:}
           pkgtools="V00-21-XX:b174441c2295f1b30c5ff6494"
           ;;
-    sl6 ) archs="comp_gcc481:slc6_amd64_gcc481"
-          all_archs="slc6_amd64_gcc481,osx108_amd64_gcc481"
+    sl6 ) archs="comp_gcc481:slc6_amd64_gcc481 comp_gcc493:slc6_amd64_gcc493"
+          all_archs="slc6_amd64_gcc481,slc6_amd64_gcc493,osx108_amd64_gcc481 "
           pkgtools="V00-22-XX:434bf060200793b0120e0027f"
           ;;
     osx ) archs="comp_gcc481:osx108_amd64_gcc481"
-          all_archs="slc6_amd64_gcc481,osx108_amd64_gcc481"
+          all_archs="slc6_amd64_gcc481,slc6_amd64_gcc493,osx108_amd64_gcc481"
           pkgtools="V00-22-XX:434bf060200793b0120e0027f"
           ;;
     * )   archs="comp:$arch"

@@ -22,7 +22,7 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 
 LOGURL={LOGURL}
 WEBDIR={WEBDIR}
-ARCHS={ARCHS}
+ARCHS="{ARCHS}"
 ALLARCHS={ALLARCHS}
 DMWMBLD_VER={VER}
 
