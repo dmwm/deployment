@@ -96,7 +96,7 @@ deploy_dqmgui_post()
        # Only for Offline or Relval SLC6 machines
        case $host in
          vocms013[189] | broen* )
-           echo "*/15 * * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
+           echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
        esac
 
        # Set the backup of the zipped root files (zip CASTOR stageout)
