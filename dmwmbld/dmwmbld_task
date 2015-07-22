@@ -32,9 +32,11 @@ case ${1:-help} in
     if [ $(pgrep -u $(id -u) -f "${CFGDIR}/gh-bot" | wc -l) = 0 ]; then
       cd $STATEDIR
       export PYTHONUNBUFFERED="true"
-      echo -e "\n------------------------- $(date '+%Y-%m-%d %H:%M:%S') -------------------------" >> $LOGDIR/$LOGFILE
-      TERM=dumb $CFGDIR/gh-bot -B ${ARCHS%%:*} -a ${ARCHS##*:} -T $ALLARCHS -U $LOGURL &>> $LOGDIR/$LOGFILE
-      echo -e "-----------------------------------------------------------------------\n" >> $LOGDIR/$LOGFILE
+      for arch in $ARCHS; do
+        echo "------------- $(date '+%Y-%m-%d %H:%M:%S') $arch -------------" >> $LOGDIR/$LOGFILE
+        TERM=dumb $CFGDIR/gh-bot -B ${arch%%:*} -a ${arch##*:} -T $ALLARCHS -U $LOGURL &>> $LOGDIR/$LOGFILE
+        echo >> $LOGDIR/$LOGFILE
+      done
     else
       exit 1
     fi

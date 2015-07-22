@@ -105,7 +105,7 @@ def pre_release_rpms(gh, owner, repo, branch, arch, statedir, cfgdir, authfile):
 
   cm = gh.GetLatestCommit(owner, repo, branch)    
   if cm['sha'] != lastcm:
-    logfile = "prerelease_"+commit[:7]+datetime.datetime.now().strftime("-%Y%m%d-%H%M%S.log")
+    logfile = "prerelease_"+cm['sha'][:7]+datetime.datetime.now().strftime("-%Y%m%d-%H%M%S.log")
     print "New commit %s. Pre-releasing RPMs..." % cm['sha']
     subprocess.call(["%s/build.sh" % cfgdir, "-u", "-l", logfile,  branch, owner, branch, cm['sha'], arch])
   else:
