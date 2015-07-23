@@ -44,7 +44,7 @@ deploy_reqmgr2_sw()
 
 deploy_reqmgr2_post()
 {
-  case $host in vocms13[89] | vocms013[89] ) disable;;  * ) enable;; esac
+  case $host in vocms013[89] ) disable;;  * ) enable;; esac
 
   # ReqMgr2 specific couchdb stuff
   # Tell couch to pick up reqmgr on the next restart
