@@ -301,26 +301,32 @@ void ESRenderPlugin::preDrawTH2F( TCanvas *, const VisDQMObject &o ) {
    if ( name.find( "RecHit 2D Occupancy" ) != std::string::npos ) {
      gStyle->SetPalette(1);
      NEntries = obj->GetBinContent(40,40);
-     obj->SetBinContent(40,40,0.);
-     obj->Scale(1/NEntries);
-     obj->SetMaximum(32);
-     obj->GetZaxis()->SetNdivisions(8, kFALSE);
+     if (NEntries != 0) { // consider changing to < 1.
+       obj->SetBinContent(40,40,0.);
+       obj->Scale(1/NEntries);
+       obj->SetMaximum(32);
+       obj->GetZaxis()->SetNdivisions(8, kFALSE);
+     }
      return;
    }
 
    if ( name.find( "Digi 2D Occupancy" ) != std::string::npos ) {
      gStyle->SetPalette(1);
      NEntries = obj->GetBinContent(40,40);
-     obj->SetBinContent(40,40,0.);
-     obj->Scale(1/NEntries);
+     if (NEntries != 0) {
+       obj->SetBinContent(40,40,0.);
+       obj->Scale(1/NEntries);
+     }
      return;
    }
 
    if ( name.find( "Energy Density" ) != std::string::npos || name.find( "Occupancy with" ) != std::string::npos) {
      gStyle->SetPalette(1);
      NEntries = obj->GetBinContent(40,40);
-     obj->SetBinContent(40,40,0.);
-     obj->Scale(1/NEntries);
+     if (NEntries != 0) {
+       obj->SetBinContent(40,40,0.);
+       obj->Scale(1/NEntries);
+     }
      return;
    }
 
