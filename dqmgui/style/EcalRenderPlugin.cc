@@ -891,10 +891,10 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
   bool isTH2Derived(obj->InheritsFrom(TH2::Class()));
   bool isMap(isNewStyle ? obj->TestBit(0x00080000) : isTH2Derived);
 
-   // Include overflow stat entry for pedestal rms TH1*
+  // Include overflow stat entry for pedestal rms TH1*
   if( TPRegexp("E[BE]PedestalOnlineClient/E[BE]POT pedestal rms G12 E[BE][+-][0-1][0-9]").MatchB(fullpath) )
-    gStyle->SetOptStat(101111); 
-  
+    gStyle->SetOptStat(101111);
+
   if(isMap){
 
     canvas->SetBit(TCanvas::kClipFrame);
