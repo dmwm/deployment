@@ -1,10 +1,14 @@
-def hltlayout(i, p, *rows): i["HLT/Layouts/" + p] = DQMItem(layout=rows)
+def rateSummarylayout(i, p, *rows):
+  i[p] = DQMItem(layout=rows)
 
-hltlayout(dqmitems,"HLT/Layouts/highestRate Summary",
-          [{'path':'HLT/TriggerRates/HLT/HLT_PFJet200_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'},
-          {'path':'HLT/TriggerRates/HLT/HLT_Ele27_eta2p1_WPLoose_Gsf_v1 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'}],
-          [{'path':'HLT/TriggerRates/HLT/HLT_Photon30_R9Id90_HE10_IsoM_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'},
-          {'path':'HLT/TriggerRates/HLT/HLT_IsoMu24_eta2p1_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'}])
+rateSummarylayout(
+  dqmitems,
+  "HLT/Layouts/highestRate Summary",
+  [{'path':'HLT/TriggerRates/HLT/HLT_PFJet200_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'},
+   {'path':'HLT/TriggerRates/HLT/HLT_Ele27_eta2p1_WPLoose_Gsf_v1 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'}],
+  [{'path':'HLT/TriggerRates/HLT/HLT_Photon30_R9Id90_HE10_IsoM_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'},
+   {'path':'HLT/TriggerRates/HLT/HLT_IsoMu24_eta2p1_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'}]
+                 )
 
 def hlt_secondaryObjMonFolder(i, path, name):
   i["HLT/Layouts/secondaryObjectMonitor/%s" % name] = \
