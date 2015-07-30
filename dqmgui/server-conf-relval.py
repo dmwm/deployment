@@ -27,7 +27,17 @@ server.serverDir   = STATEDIR
 server.logFile     = '%s/weblog-%%Y%%m%%d.log' % LOGDIR
 server.baseUrl     = '/dqm/relval'
 server.title       = 'CMS data quality'
-server.serviceName = 'RelVal'
+# For convenience, we change the service name, depending on the server:
+hostname = socket.gethostname().lower().split('.')[0]
+# Relval production server
+if hostname == 'vocms0139':
+  server.serviceName = 'RelVal'
+# Relval test server
+elif hostname == 'vocms0131':
+  server.serviceName = 'RelVal Test'
+# Any local instance of the relval flavor
+else:
+  server.serviceName = 'RelVal Local'
 
 server.plugin('render', "%s/style/*.cc" % CONFIGDIR)
 server.extend('DQMRenderLink', server.pathOfPlugin('render'))
