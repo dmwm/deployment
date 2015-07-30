@@ -228,9 +228,7 @@ case $STAGE in
     case $WHAT in
       check )
         for host in $HOSTS; do
-          (echo 'sudo /usr/sbin/lemon-host-check -t 15'
-           echo 'echo "File /etc/iss.nologin" $(test -f /etc/issuse && echo exists || echo does not exist)'
-          ) | ssh cmsweb@$host bashs -l || true
+          echo 'sudo /usr/sbin/lemon-host-check -t 15' | ssh cmsweb@$host bashs -l || true
 	done
         echo "Checking alarm status in roger:"
         ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch \
@@ -241,12 +239,8 @@ case $STAGE in
         set -x
         (echo "roger show $HOSTS | egrep 'hostname|app_alarmed|appstate'|tr -d ','"
          echo "roger update --all_alarms false $HOSTS"
+         echo "roger update --appstate disabled $HOSTS"
         ) | ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch sh -l
-
-        # The following removes the host from the DNS load balancing, if any
-        for host in $HOSTS; do
-          ssh cmsweb@$host sudo touch /etc/iss.nologin
-        done
         ;;
 
       production )
@@ -256,14 +250,10 @@ case $STAGE in
         confirm "ok to put $HOSTS into $WHAT"
  
         set -x
-        (echo "roger update --all_alarms true $HOSTS"
+        (echo "roger update --appstate production $HOSTS"
+         echo "roger update --all_alarms true $HOSTS"
          echo "roger show $HOSTS | egrep 'hostname|app_alarmed|appstate'|tr -d ','"
         ) | ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch sh -l
-
-        # The following puts the host back to the DNS load balancing, if any
-        for host in $HOSTS; do
-          ssh cmsweb@$host sudo rm -f /etc/iss.nologin
-        done
         ;;
     esac
     ;;
