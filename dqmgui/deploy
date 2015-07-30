@@ -64,52 +64,31 @@ deploy_dqmgui_post()
      cmd="$project_config/daily"
      $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
      echo "17 2 * * * $cmd"
-     # Set the castor stageout (root files backup) on slc5 machines: run by cron under cmsweb account
-     case $host in
-       vocms13[89] )
-       echo "@reboot $project_config/manage xstart stageout 'I did read documentation'" ;;
-     esac
    }) | crontab -
 
   case $host:$root in
-    vocms13[89]:/data/srv | vocms013[189]:/data/srv | broen* )
+    vocms013[89]:/data/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
 
-       # Enable the afs-sync only on vocms138
-       # Remains only on SLC5. Will not be migrated to SLC6.
-       case $host in
-         vocms138 )
-           echo "6 */3 * * * $host $project_config/manage -q xstart afs-sync 'I did read documentation'" ;;
-       esac
-
-       # Set the backup of the index files to castor
-       # This is the old index backup. Should only run on SLC5.
-       case $host in
-         vocms13[89] )
-           echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
-                            "$project_config/manage backup" \
-                            "/castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'" ;;
-       esac
-
        # Set the backup of the index (index CASTOR stageout)
-       # Only for Offline or Relval SLC6 machines
+       # Only for Offline or Relval machines
        case $host in
-         vocms013[189] | broen* )
+         vocms013[89] )
            echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
        esac
 
        # Set the backup of the zipped root files (zip CASTOR stageout)
-       # Only for Offline or Relval SLC6 machines
+       # Only for Offline or Relval machines
        case $host in
-         vocms013[189] | broen* )
+         vocms013[89] )
            echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" ;;
        esac
 
        # Set the check/verification of the backup of the zipped root files
-       # Only for Offline or Relval SLC6 machines
+       # Only for Offline or Relval machines
        case $host in
-         vocms013[189] | broen* )
+         vocms013[89] )
            echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" ;;
        esac
       ) | acrontab

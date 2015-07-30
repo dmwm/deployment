@@ -17,7 +17,7 @@
 ##H   zipbackupcheck  check if the backup of the root files to castor was successful
 ##H
 ##H Usage 2: manage [options] ACTION COMPONENTs [SECURITY-STRING]
-##H COMPONENTs: webserver collector renderer logger agents afs-sync migration
+##H COMPONENTs: webserver collector renderer logger agents
 ##H
 ##H   xstatus     show status for COMPONENTs
 ##H   xdstatus    show detailed status for COMPONENTs
@@ -27,7 +27,7 @@
 ##H
 ##H Options:
 ##H -f flavor     Overide default flavor selected by server and domain.
-##H               Flavors are: {online, caf, offline, offline-caf, dev, relval}
+##H               Flavors are: {online, offline, relval, dev}
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
 
@@ -69,21 +69,24 @@ export STAGE_SVCCLASS=archive
 
 # Set Flavor for HOST:DOMAIN
 case $HOST:$DOMAIN in
-  *:cms  ) FLAVOR=online ;;
-  vocms138:* | vocms0138:* ) FLAVOR=offline-caf; ALTERNATIVE_USER='cmsweb' ;;
-  vocms139:* | vocms0139:* ) FLAVOR=relval; ALTERNATIVE_USER='cmsweb' ;;
-  vocms*:* ) FLAVOR=dev; ALTERNATIVE_USER='cmsweb' ;;
-  *:cern.ch ) FLAVOR=offline;;
+  # Anything in the CMS network, will be automatically Online
+  *:cms )       FLAVOR=online ;;
+  # On the production machines in the CERN network, flavor is based on the
+  # machine and they get an alternate user
+  vocms0138:* ) FLAVOR=offline; ALTERNATIVE_USER='cmsweb' ;;
+  vocms0139:* ) FLAVOR=relval;  ALTERNATIVE_USER='cmsweb' ;;
+  vocms0131:* ) FLAVOR=dev;     ALTERNATIVE_USER='cmsweb' ;;
+  # Private instances get the dev flavor, unless specified differently
+  *:cern.ch )   FLAVOR=dev;;
 esac
+
 # Select the right configuration and ALTERNATIVE_USER based on FLAVOR
 getconfigs(){
 case $FLAVOR in
-  caf ) CONFIGS="caf" ;;
-  online ) CONFIGS="online" ;;
-  offline-caf ) CONFIGS="offline caf";;
+  online )  CONFIGS="online";;
   offline ) CONFIGS="offline";;
-  relval ) CONFIGS="relval";;
-  dev ) CONFIGS="dev";;
+  relval )  CONFIGS="relval";;
+  dev )     CONFIGS="dev";;
 esac
 }
 
@@ -96,6 +99,7 @@ message()
   esac
 }
 
+# Procedure witch will check if a process is not already running before starting it
 refuseproc()
 {
   local title="$1" pat="$2" reason="$3"
@@ -195,7 +199,20 @@ start()
   cd $STATEDIR
   message "starting $ME/$FLAVOR ${1:-(default)}"
 
-  # first start webserver
+  # First start webserver
+  # This is the core of the GUI, so it's always started
+  start_webserver
+  # Then start agents
+  # Depending on the machine, different agents will be started
+  start_agents
+  # Finally start collector
+  # This is the part that can collect life data coming from CMSSW
+  # It's mostly used in the Online world
+  start_collector
+}
+
+start_webserver()
+{
   case $HOST:${1:-webserver} in
     *:*webserver* )
       for cfg in $CONFIGS; do
@@ -204,8 +221,10 @@ start()
         monControl start all from $CFGDIR/server-conf-$cfg.py
       done ;;
   esac
+}
 
-  # then start agents
+start_agents()
+{
   case $HOST:${1:-agents} in
     dqm-c2d07-01:*agents* ) # dqm-prod-local
       refuseproc "file agents" "visDQMIndex" "refusing to restart"
@@ -276,65 +295,17 @@ start()
         $STATEDIR/online/ix128
       ;;
 
-    vocms13[89]:*agents* ) # SLC5 relval/offline/caf server
-      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
+    ##### OFFLINE: Offline server vocms0138
+    # The Offline server runs
+    # - the standard receive and import daemons
+    # - the quota and version control daemons
+    # - the zip and zipfreeze daemons
+    # - the online sync and create info daemon that copies root data from the
+    #   Online to Offline
+    # Note that the agents to copy zip to Castor, verify zip from Castor and
+    # copy index to Castor run as tasks under acron.
+    vocms0138:*agents* )
 
-      for D in $CONFIGS; do
-        D=${D}
-        DQM_DATA=$STATEDIR/$D
-
-        startagent $D/agent-receive \
-          visDQMReceiveDaemon \
-          $DQM_DATA/uploads \
-          $DQM_DATA/data \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/agents/zip
-
-        startagent $D/agent-import-128 \
-          visDQMImportDaemon \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/data \
-          $DQM_DATA/ix128 \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/vcontrol
-
-        startagent $D/agent-qcontrol \
-          visDQMRootFileQuotaControl \
-          $DQM_DATA/agents/qcontrol \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-${D}.py
-
-        startagent $D/agent-vcontrol \
-          visDQMVerControlDaemon \
-          $DQM_DATA/agents/vcontrol \
-          $DQM_DATA/data
-
-        startagent $D/agent-ixmerge \
-            visDQMIndexMergeDaemon \
-            $DQM_DATA/agents/ixmerge \
-            $DQM_DATA/ix128 \
-            $DQM_DATA/agents/register
-
-        if [ $D = offline ]; then
-          startagent $D/agent-osync \
-            visDQMOnlineSyncDaemon \
-            -s https://cmsweb.cern.ch/dqm/online/data/browse/Original \
-            -d 14400 \
-            -n 50 \
-            /dev/null \
-            $DQM_DATA/data/OnlineData/original
-
-          startagent $D/agent-coinfo \
-            visDQMCreateInfoDaemon \
-            $DQM_DATA/data/OnlineData \
-            $DQM_DATA/agents/zip
-        fi
-
-      done
-      ;;
-
-    vocms013[89]:*agents* ) # SLC6 relval/offline/caf server
       refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
 
       for D in $CONFIGS; do
@@ -384,28 +355,31 @@ start()
           7 \
           $DQM_DATA/agents/stageout
 
-        if [ $D = offline ]; then
-          startagent $D/agent-osync \
-            visDQMOnlineSyncDaemon \
-            -s https://cmsweb.cern.ch/dqm/online/data/browse/Original \
-            -d 14400 \
-            -n 50 \
-            /dev/null \
-            $DQM_DATA/data/OnlineData/original
+        startagent $D/agent-osync \
+          visDQMOnlineSyncDaemon \
+          -s https://cmsweb.cern.ch/dqm/online/data/browse/Original \
+          -d 14400 \
+          -n 50 \
+          /dev/null \
+          $DQM_DATA/data/OnlineData/original
 
-          startagent $D/agent-coinfo \
-            visDQMCreateInfoDaemon \
-            $DQM_DATA/data/OnlineData \
-            $DQM_DATA/agents/zip
-        fi
-
+        startagent $D/agent-coinfo \
+          visDQMCreateInfoDaemon \
+          $DQM_DATA/data/OnlineData \
+          $DQM_DATA/agents/zip
       done
       ;;
 
-    # Special setup for the vocms0131 test server. (In the past this didn't run the Castor agent chain)
-    # This runs the agents to backup the zipped root files to Castor
-    vocms0131:*agents* )
-      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
+    ##### OFFLINE: Relval server vocms0139
+    # The Relval server runs
+    # - the standard receive and import daemons
+    # - the quota and version control daemons
+    # - the zip and zipfreeze daemons
+    # Note that the agents to copy zip to Castor, verify zip from Castor and
+    # copy index to Castor run as tasks under acron.
+    vocms0139:*agents* )
+
+      refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
 
       for D in $CONFIGS; do
         D=${D}
@@ -426,7 +400,7 @@ start()
           --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
           --rsync \
           --rsyncnext $DQM_DATA/agents/ixstageout \
-          --email broen.van.besien@cern.ch
+          --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
         startagent $D/agent-qcontrol \
           visDQMRootFileQuotaControl \
@@ -456,9 +430,18 @@ start()
       done
       ;;
 
-    # BVB: This is only for testing
-    broen*:*agents* ) # Broens test system (basically doing what offline does)
-      refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
+    ##### OFFLINE: Test server vocms0131
+    # The test server runs
+    # - the standard receive and import daemons
+    # - the quota and version control daemons
+    # This means that the test server doesn't run:
+    # - the zip and zipfreeze daemons
+    # - nor any of the acron tasks that do the backups to Castor
+    # However we keep a local backup of the index (rsynced by the import
+    # daemon), but this one is not backed up on Castor.
+    vocms0131:*agents* )
+
+      refuseproc "file agents" "visDQMIndex" "refusing to restart"
 
       for D in $CONFIGS; do
         D=${D}
@@ -468,8 +451,7 @@ start()
           visDQMReceiveDaemon \
           $DQM_DATA/uploads \
           $DQM_DATA/data \
-          $DQM_DATA/agents/register \
-          $DQM_DATA/agents/zip
+          $DQM_DATA/agents/register
 
         startagent $D/agent-import-128 \
           visDQMImportDaemon \
@@ -478,8 +460,6 @@ start()
           $DQM_DATA/ix128 \
           --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
           --rsync \
-          --time 05:00 \
-          --rsyncnext $DQM_DATA/agents/ixstageout \
           --email broen.van.besien@cern.ch
 
         startagent $D/agent-qcontrol \
@@ -493,46 +473,15 @@ start()
           visDQMVerControlDaemon \
           $DQM_DATA/agents/vcontrol \
           $DQM_DATA/data
-
-        startagent $D/agent-zip \
-          visDQMZipDaemon \
-          $DQM_DATA/agents/zip \
-          $DQM_DATA/data \
-          $DQM_DATA/zipped \
-          $DQM_DATA/agents/freezer
-
-        # BVB: We freeze zip files immediately (0 days instead of 7)
-        startagent $D/agent-zfreeze \
-          visDQMZipFreezeDaemon \
-          $DQM_DATA/agents/freezer \
-          $DQM_DATA/zipped \
-          0 \
-          $DQM_DATA/agents/stageout
       done
       ;;
 
-    vocms138:*afs-sync* ) # afs-sync only started on SLC5, stopped when migrating to SLC6
-      refuseproc "afs sync" "visDQMAfsSync"
-
-      DIRS=OnlineData,OfflineData/HIRun2011/StreamHIExpress
-      DIRS=$DIRS,OfflineData/HIRun2011/StreamExpressCosmics
-      DIRS=$DIRS,OfflineData/HIRun2011/Commissioning
-      DIRS=$DIRS,OfflineData/ComissioningHI11
-      DIRS=$DIRS,OfflineData/HIRun2011/Cosmics
-      DIRS=$DIRS,OfflineData/HIRun2011/MinimumBias
-
-      for D in offline; do
-        DQM_DATA=$STATEDIR/$D
-        startagent $D/agent-afssync \
-          visDQMAfsSync \
-          --dirs $DIRS \
-          --dirs_quotas=30G,20G,20G,15G,15G,15G,15G 130G \
-          $DQM_DATA/data /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/data
-      done
-      ;;
-
+    ##### PRIVATE or DEVELOPMENT instances
+    # The private or development servers run
+    # - the standard receive and import daemons
+    # - the quota and version control daemons
     *:*agents* )
-      refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
+      refuseproc "file agents" "visDQMIndex" "refusing to restart"
 
       for D in $FLAVOR; do
         DQM_DATA=$STATEDIR/$D
@@ -563,64 +512,12 @@ start()
       done
       ;;
   esac
+}
 
-  # maybe start migration
-  case $HOST:$1 in
-    dqm-c2d07-21:*migration* )
-      refuseproc "migration agents" "visDQMMigrationProcess" "refusing to restart"
-
-      for i in $(seq 1 $(expr 5 + $(expr $(date +%s) % 10))); do key=$RANDOM; done
-      message -n "$0: really start migration agents? (y/n) "
-      read answer; case $answer in y ) ;; * ) exit 2 ;; esac
-      message -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
-      read answer; case $answer in $key ) ;; * ) exit 2 ;; esac
-
-      zsh -c '
-        jobs -Z "visDQMMigrationProcess";
-        while true; do
-          for f in $(find repository{2,3}/original -name "DQM_V????_*_R00*.root" | sort); do
-            if [ $(find repository/original -name $(basename $f) | wc -l) = 0 ]; then
-              v=$(basename $f | sed "s/.*_V\([0-9][0-9][0-9][0-9]\)_.*/\1/")
-              b=uploads2/$v/$(basename $f | sed s/_V${v}_/_V0001_/)
-              [ -f $b -o -f $b.bad -o -f $b.origin.bad ] && continue
-              mkdir -p $(dirname $b)
-              ln $f $b
-              echo "md5:$(md5sum < $b | awk '{print $1}') $(stat -c '%s' $b) $b" > $b.origin
-            fi
-          done
-          sleep 1200
-        done' </dev/null 2>&1 | rotatelogs $LOGDIR/agent-migration-%Y%m%d.log 86400 >/dev/null 2>&1 &
-      ;;
-
-    vocms116:*migration* | vocms0116:*migration*  ) # offline
-      refuseproc "migration agents" "visDQMMigrationProcess" "refusing to restart"
-
-      for i in $(seq 1 $(expr 5 + $(expr $(date +%s) % 10))); do key=$RANDOM; done
-      message -n "$0: really start migration agents? (y/n) "
-      read answer; case $answer in y ) ;; * ) exit 2 ;; esac
-      message -n "$0: that was probably a mistake! say $key if you *really* want to continue: "
-      read answer; case $answer in $key ) ;; * ) exit 2 ;; esac
-
-      for D in offline caf dev; do
-        zsh -c '
-          cd '$D'
-          jobs -Z "visDQMMigrationProcess";
-          for f in $(find old/data -name "*.root.origin" | sort); do
-            if [ $(find repository/data -name $(basename ${f%.origin}) | wc -l) = 0 ]; then
-              v=$(basename $f | sed "s/.*_V\([0-9][0-9][0-9][0-9]\)_.*/\1/")
-              b=uploads2/$v/$(basename $f | sed s/_V${v}_/_V0001_/)
-              if [ ! -f $b -a ! -f $b.bad ]; then
-                mkdir -p $(dirname $b)
-                ln $f $b
-                ln ${f%.origin} ${b%.origin}
-              fi
-            fi
-          done' </dev/null 2>&1 | rotatelogs $LOGDIR/$D/agent-migration-$D-%Y%m%d.log 86400 >/dev/null 2>&1 &
-      done
-      ;;
-  esac
-
-  # finally start collector
+start_collector()
+{
+  # Note that the setup of the port to which a specific server is listening is
+  # not done here, but instead in the specific server config file.
   case $FLAVOR:$HOST:${1:-collector} in
     online:dqm-c2d07-[01]1:*collector* )
       DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
@@ -630,7 +527,6 @@ start()
     *:*:*collector* )
       DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
   esac
-
 }
 
 # Stop the service.
@@ -645,9 +541,6 @@ stop()
   esac
   case ${1:-sound} in *sound* )
     killproc "$ME sound alarm daemon " "visDQMSoundAlarmDaemon" ;;
-  esac
-  case $1 in *migration* )
-    killproc "$ME migration agents" "visDQMMigration|sleep" ;;
   esac
   case ${1:-collector} in *collector* )
     killproc "$ME collector" "DQMCollector"
@@ -677,15 +570,9 @@ status()
   case ${1:-agents} in *agents* )
     statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
   esac
-  case ${1:-afs-sync} in *afs-sync* )
-    statproc -u $ALTERNATIVE_USER "$ME afs sync" "visDQMAfsSync" ;;
-  esac
-  case $1 in *migration* )
-    statproc "$ME migration" "visDQMMigration|sleep" ;;
-  esac
 }
 
-# Give details of server componenets
+# Give details of server components
 detailstatus()
 {
   case ${1:-webserver} in *webserver* )
@@ -702,12 +589,6 @@ detailstatus()
   esac
   case ${1:-agents} in *agents* )
     sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
-  esac
-  case ${1:-afs-sync} in *afs-sync* )
-    sdproc -u $ALTERNATIVE_USER "$ME afs sync" "visDQMAfsSync" ;;
-  esac
-  case $1 in *migration* )
-    sdproc "$ME migration" "visDQMMigration|sleep" ;;
   esac
 }
 
@@ -727,21 +608,14 @@ indexbackup()
 
   for D in $CONFIGS; do
     D=${D}
-    # Set default CASTOR directory to a testing area. Only the production servers get the real thing.
+    # Set default CASTOR directory to a testing area. Only the production
+    # servers (Offline and Relval) get the real thing.
     case $HOST in
-      vocms013[189] )
+      vocms013[89] )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/ixbackup/$D
         ;;
       * )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/ixbackup/$D
-        ;;
-    esac
-    # The standard amount of days after which we do a full backup is 50 days.
-    # Only for testing purposes, we set this on 5 days for vocms0131.
-    FULLBACKUPDAYS=50
-    case $HOST in
-      vocms0131 )
-        FULLBACKUPDAYS=5
         ;;
     esac
     DQM_DATA=$STATEDIR/$D
@@ -766,9 +640,10 @@ zipbackup()
 
   for D in $CONFIGS; do
     D=${D}
-    # Set default CASTOR directory to a testing area. Only the production servers get the real thing.
+    # Set default CASTOR directory to a testing area. Only the production
+    # servers (Offline and Relval) get the real thing.
     case $HOST in
-      vocms013[189] )
+      vocms013[89] )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         ;;
       * )
@@ -797,12 +672,12 @@ zipbackupcheck()
     D=${D}
     # Modify Castor dir for specific local test server, so that this can be tested by the cmsdqm account
     case $HOST in
-      vocms013[189] )
+      vocms013[89] )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
         ;;
       * )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/logarchive/test/dqmguidata/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
-        ;; 
+        ;;
     esac
     DQM_DATA=$STATEDIR/$D
     LOGSTEM=$D/agent-castorzipbackupcheck
@@ -844,19 +719,19 @@ done
 newline=""
 getconfigs
 
-# Check user name. Everything except afs-sync, indexbackup, zipbackup and
-# zipbackupcheck must run as non-$ALTERNATIVE_USER account, afs-sync,
+# Check user name. Everything except indexbackup, zipbackup and
+# zipbackupcheck must run as non-$ALTERNATIVE_USER account,
 # indexbackup, zipbackup and zipbackupcheck must be under $ALTERNATIVE_USER,
 # refuse to run otherwise.
 case $FLAVOR:$(id -un):$1:$2 in
-  *:$ALTERNATIVE_USER:*:afs-sync | *:$ALTERNATIVE_USER:indexbackup:* | *:$ALTERNATIVE_USER:zipbackup:* | *:$ALTERNATIVE_USER:zipbackupcheck:* )
+  *:$ALTERNATIVE_USER:indexbackup:* | *:$ALTERNATIVE_USER:zipbackup:* | *:$ALTERNATIVE_USER:zipbackupcheck:* )
     ;;
 
-  offline-caf:$ALTERNATIVE_USER:*:* | offline-caf:*:*:afs-sync | offline-caf:*:indexbackup:* | offline-caf:*:zipbackup:* | offline-caf:*:zipbackupcheck:* )
+  offline:$ALTERNATIVE_USER:*:* | offline:*:indexbackup:* | offline:*:zipbackup:* | offline:*:zipbackupcheck:* )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 
-  relval:$ALTERNATIVE_USER:*:* | relval:*:*:afs-sync | relval:*:indexbackup:* | relval:*:zipbackup:* | relval:*:zipbackupcheck:* )
+  relval:$ALTERNATIVE_USER:*:* | relval:*:indexbackup:* | relval:*:zipbackup:* | relval:*:zipbackupcheck:* )
     echo "ERROR: please use another account" 1>&2
     exit 1 ;;
 esac
