@@ -460,7 +460,7 @@ start_agents()
           $DQM_DATA/ix128 \
           --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
           --rsync \
-          --email broen.van.besien@cern.ch
+          --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
         startagent $D/agent-qcontrol \
           visDQMRootFileQuotaControl \
@@ -627,7 +627,7 @@ indexbackup()
       $DQM_DATA/agents/ixstageout \
       $DQM_DATA/ix128 \
       $CASTORDIR \
-      broen.van.besien@cern.ch \
+      broen.van.besien@cern.ch,marco.rovere@cern.ch \
       --fullbackup $FULLBACKUPDAYS \
       </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
   done
@@ -644,10 +644,10 @@ zipbackup()
     # servers (Offline and Relval) get the real thing.
     case $HOST in
       vocms013[89] )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
         ;;
     esac
     DQM_DATA=$STATEDIR/$D
@@ -670,13 +670,14 @@ zipbackupcheck()
 
   for D in $CONFIGS; do
     D=${D}
-    # Modify Castor dir for specific local test server, so that this can be tested by the cmsdqm account
+    # Set default CASTOR directory to a testing area. Only the production
+    # servers (Offline and Relval) get the real thing.
     case $HOST in
       vocms013[89] )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/logarchive/test/dqmguidata/$(echo $D | sed -r 's/(offline|relval)/dqmdata/')
+        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
         ;;
     esac
     DQM_DATA=$STATEDIR/$D
@@ -686,7 +687,7 @@ zipbackupcheck()
     # It is supposed to be started from/by acrontab.
     visDQMZipCastorVerifier \
       $DQM_DATA/agents/verify \
-      marco.rovere@cern.ch,broen.van.besien@cern.ch \
+      broen.van.besien@cern.ch,marco.rovere@cern.ch \
       $DQM_DATA/zipped \
       $CASTORDIR \
       24 \
