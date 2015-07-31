@@ -335,7 +335,7 @@ start_agents()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-${D}.py
+          $CFGDIR/rootfilequota-${D}-prod.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -408,7 +408,7 @@ start_agents()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-${D}.py
+          $CFGDIR/rootfilequota-${D}-prod.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -468,7 +468,7 @@ start_agents()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-${D}.py
+          $CFGDIR/rootfilequota-${D}-test.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
@@ -505,7 +505,7 @@ start_agents()
           $DQM_DATA/agents/qcontrol \
           $DQM_DATA/agents/register \
           $DQM_DATA/data \
-          $CFGDIR/quota-rfqc-${D}.py
+          $CFGDIR/rootfilequota-local-development.py
 
         startagent $D/agent-vcontrol \
           visDQMVerControlDaemon \
