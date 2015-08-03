@@ -18,7 +18,13 @@ ecalpreshowerlayout(dqmitems, "02-OccupancySummary-EcalPreshower",
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit 2D Occupancy Z 1 P 2", 'description': "ES RecHit 2D Occupancy Z 1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
    { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit 2D Occupancy Z -1 P 2", 'description': "ES RecHit 2D Occupancy Z -1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
 
-ecalpreshowerlayout(dqmitems, "03-RechitEnergySummary-EcalPreshower",
+ecalpreshowerlayout(dqmitems, "03-GoodRechitEnergySummary-EcalPreshower",
+  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z 1 P 1", 'description': "ES RecHit Energy Z 1 P 1 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
+   { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z -1 P 1", 'description': "ES RecHit Energy Z -1 P 1 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }],
+  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z 1 P 2", 'description': "ES RecHit Energy Z 1 P 2 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
+   { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z -1 P 2", 'description': "ES RecHit Energy Z -1 P 2 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
+
+ecalpreshowerlayout(dqmitems, "04-RechitEnergySummary-EcalPreshower",
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 1", 'description': "ES RecHit Energy Z 1 P 1 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
    { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z -1 P 1", 'description': "ES RecHit Energy Z -1 P 1 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }],
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 2", 'description': "ES RecHit Energy Z 1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
@@ -37,7 +43,13 @@ ecalpreshowershiftlayout(dqmitems, "02-OccupancySummary-EcalPreshower",
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit 2D Occupancy Z 1 P 2", 'description': "ES RecHit 2D Occupancy Z 1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
    { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit 2D Occupancy Z -1 P 2", 'description': "ES RecHit 2D Occupancy Z -1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
 
-ecalpreshowershiftlayout(dqmitems, "03-RechitEnergySummary-EcalPreshower",
+ecalpreshowershiftlayout(dqmitems, "03-GoodRechitEnergySummary-EcalPreshower",
+  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z 1 P 1", 'description': "ES RecHit Energy Z 1 P 1 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
+   { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z -1 P 1", 'description': "ES RecHit Energy Z -1 P 1 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }],
+  [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z 1 P 2", 'description': "ES RecHit Energy Z 1 P 2 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
+   { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy with selected hits Z -1 P 2", 'description': "ES RecHit Energy Z -1 P 2 with good hits - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
+
+ecalpreshowershiftlayout(dqmitems, "04-RechitEnergySummary-EcalPreshower",
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 1", 'description': "ES RecHit Energy Z 1 P 1 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
    { 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z -1 P 1", 'description': "ES RecHit Energy Z -1 P 1 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }],
   [{ 'path': "EcalPreshower/ESOccupancyTask/ES RecHit Energy Z 1 P 2", 'description': "ES RecHit Energy Z 1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
