@@ -574,9 +574,15 @@ start_collector()
   # Note that the setup of the port to which a specific server is listening is
   # not done here, but instead in the specific server config file.
   case $FLAVOR:$HOST:${1:-collector} in
-    online:dqm-c2d07-[01]1:*collector* )
+    # Online servers: Collector for the first one, no collector for the other two:
+    online:srv-c2f11-29-01:*collector* )
       DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
-    online:dqm-c2d07-[01]2:*collector* ) ;;
+    online:srv-c2f11-29-02:*collector* ) ;;
+    online:srv-c2f11-29-04:*collector* ) ;;
+    # Playback server: Gets its own collector:
+    online:srv-c2f11-29-03:*collector* )
+      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+    # Rest/default: Standard collector:
     online:*:*collector* )
       DQMCollector --listen 9190 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
     *:*:*collector* )
