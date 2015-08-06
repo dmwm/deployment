@@ -1,4 +1,47 @@
-def hltlayout(i, p, *rows): i["HLT/Layouts/" + p] = DQMItem(layout=rows)
+def rateSummarylayout(i, p, *rows):
+  i[p] = DQMItem(layout=rows)
+
+rateSummarylayout(
+  dqmitems,
+  "HLT/Layouts/highestRate Summary",
+  [{'path':'HLT/TriggerRates/HLT/HLT_PFJet200_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'},
+   {'path':'HLT/TriggerRates/HLT/HLT_Ele27_eta2p1_WPLoose_Gsf_v1 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'}],
+  [{'path':'HLT/TriggerRates/HLT/HLT_Photon30_R9Id90_HE10_IsoM_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'},
+   {'path':'HLT/TriggerRates/HLT/HLT_IsoMu24_eta2p1_v2 accept', 'description':'# accepts per LS (divide by 23.3 to get rate in Hz)'}]
+                 )
+
+def hlt_secondaryObjMonFolder(i, path, name):
+  i["HLT/Layouts/secondaryObjectMonitor/%s" % name] = \
+    DQMItem(layout=[[path]])
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/TrackEta_ImpactPoint_GenTk", "TrackEta_ImpactPoint_GenTk")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/bJet_phi", "bJet_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Photon_eta","Photon_eta")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Photon_phi","Photon_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Muon_eta","Muon_eta")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Muon_phi","Muon_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/L2Muon_eta","L2Muon_eta")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/L2Muon_phi","L2Muon_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/L2NoBPTXMuon_eta","L2NoBPTXMuon_eta")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/L2NoBPTXMuon_phi","L2NoBPTXMuon_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Electron_eta","Electron_eta")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Electron_phi","Electron_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/CaloMET_phi","CaloMET_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/PFMET_phi","PFMET_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/bJet_phi","bJet_phi")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/bJet_eta","bJet_eta")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/TrackEta_ImpactPoint_GenTk","TrackEta_ImpactPoint_GenTk__iter2Merged")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/pixelTracks/GeneralProperties/TrackEta_ImpactPoint_GenTk","TrackEta_ImpactPoint_GenTk__pixelTracks")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/TrackPhi_ImpactPoint_GenTk","MergedTrackPhi_ImpactPoint_GenTk__iter2Merged")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/pixelTracks/GeneralProperties/TrackPhi_ImpactPoint_GenTk","TrackPhi_ImpactPoint_GenTk__pixelTracks")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/NumberOfTracks_GenTk","NumberOfTracks_GenTk__iter2Merged")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/pixelTracks/GeneralProperties/NumberOfTracks_GenTk","NumberOfTracks_GenTk__pixelTracks")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TIB/Summary_ClusterCharge_OffTrack__TIB","Summary_ClusterCharge_OffTrack__TIB")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TIB/Summary_ClusterStoNCorr_OnTrack__TIB","Summary_ClusterStoNCorr_OnTrack__TIB")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TOB/Summary_ClusterStoNCorr_OnTrack__TOB","Summary_ClusterStoNCorr_OnTrack__TOB")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TID/MINUS/Summary_ClusterStoNCorr_OnTrack__TID__MINUS","Summary_ClusterStoNCorr_OnTrack__TID__MINUS")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TID/PLUS/Summary_ClusterStoNCorr_OnTrack__TID__PLUS","Summary_ClusterStoNCorr_OnTrack__TID__PLUS")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterStoNCorr_OnTrack__TEC__MINUS","Summary_ClusterStoNCorr_OnTrack__TEC__MINUS")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterStoNCorr_OnTrack__TEC__PLUS","Summary_ClusterStoNCorr_OnTrack__TEC__PLUS")
 
 def hlt_evInfo_single(i, dir, name):
   i["HLT/Layouts/00-FourVector-Summary/%s" % name] = \
