@@ -65,7 +65,7 @@ start()
       </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-%Y%m%d.log 86400 >/dev/null 2>&1 &
 
   n=0 started=false
-  while [ $n -le 100 ]; do
+  while [ $n -le 300 ]; do
     curl -s 127.0.0.1:8230 | grep -s -q 'MongoDB' 2>&1 1>& /dev/null && started=true && break
     echo "waiting for $ME..."
     sleep 1

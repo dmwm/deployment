@@ -5,9 +5,9 @@ deploy_stagemanager_deps()
 {
   case $variant in
     default )
-      deploy couchdb 
-      deploy bigcouch ;;
-    * ) deploy couchdb offsite ;;
+      deploy $stage couchdb 
+      deploy $stage bigcouch ;;
+    * ) deploy $stage couchdb offsite ;;
   esac
 }
 
@@ -24,7 +24,7 @@ deploy_stagemanager_sw()
     t1_* )
       deploy_pkg comp cms+stagemanager-agent
       (echo -n "-v -s "
-       echo -n $variant | tr '[:lower:]' '[:upper:]') > $project_config/AgentOpts.txt
+       echo -n $variant | tr '[:lower:]' '[:upper:]') > $root/$cfgversion/config/$project/AgentOpts.txt
       ;;
   esac
 }
@@ -33,7 +33,7 @@ deploy_stagemanager_post()
 {
   # Tell couchdb to pick up stage manager on the next restart
   # and configure replication, compaction and backup, too
-  local couchdb_config=$root/current/config/couchdb
+  local couchdb_config=$root/$cfgversion/config/couchdb
   local couchdb_state=$root/state/couchdb
 
   for area in stagingarea replication; do
@@ -57,7 +57,7 @@ deploy_stagemanager_post()
   for db in $dbs; do
     # Push the database
     for couch in couchdb:5984 bigcouch:5985; do
-      echo "couchapp push $root/current/apps/stagemanager/${db##*_} http://localhost:${couch##*:}/$db" >> $root/state/${couch%%:*}/stagingarea/stagemanager
+      echo "couchapp push $root/$cfgversion/apps.$glabel/stagemanager/${db##*_} http://localhost:${couch##*:}/$db" >> $root/state/${couch%%:*}/stagingarea/stagemanager
     done
   done
 

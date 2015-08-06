@@ -2,13 +2,13 @@
 deploy_dqmgui_variants="default bare online"
 deploy_dqmgui_deps()
 {
-  deploy backend
-  [ $variant == online ] && deploy admin default || deploy admin $variant
+  deploy $stage backend
+  [ $variant == online ] && deploy $stage admin default || deploy $stage admin $variant
   case $variant in
     bare | online )
       ;;
     * )
-      deploy wmcore-auth
+      deploy $stage wmcore-auth
       ;;
   esac
 }

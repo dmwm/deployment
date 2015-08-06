@@ -48,7 +48,7 @@ deploy_dmwmbld_sw()
   esac
 
   # Setup pkgtools
-  cd $root/current/apps
+  cd $root/$cfgversion/apps.$glabel
   git clone -b ${pkgtools%%:*} https://github.com/cms-sw/pkgtools
   cd pkgtools && git reset --hard ${pkgtools##*:}
   # Ugly hack for using ssh without needing access to home dir
@@ -57,7 +57,7 @@ deploy_dmwmbld_sw()
   perl -p -i -e "s;{LOGURL};$logurl;g; \
                  s;{WEBDIR};$webdir;g; \
                  s;{ARCHS};$archs;g;   \
-                 s;{ALLARCHS};$all_archs;g;" $project_config/dmwmbld_task
+                 s;{ALLARCHS};$all_archs;g;" $root/$cfgversion/config/$project/dmwmbld_task
 }
 
 deploy_dmwmbld_post()

@@ -3,8 +3,8 @@ deploy_bigcouch_variants="default offsite"
 
 deploy_bigcouch_deps()
 {
-  deploy backend
-  deploy wmcore-auth
+  deploy $stage backend
+  deploy $stage wmcore-auth
 }
 
 deploy_bigcouch_prep()
@@ -18,7 +18,7 @@ deploy_bigcouch_sw()
   deploy_pkg -a bigcouch/hmackey.ini -a bigcouch/erlang.cookie comp external+bigcouch
 
   # path relocations
-  perl -p -i -e "s|{ROOT}|$root|g" $project_config/{local.ini,vm.args}
+  perl -p -i -e "s|{ROOT}|$root|g" $root/$cfgversion/config/bigcouch/{local.ini,vm.args}
 
   case $variant in
     default )
@@ -29,7 +29,7 @@ deploy_bigcouch_sw()
       # configuration so it can use a proxy certificate to authenticate
       # with the central couch.
       perl -p -i -e 's,bind_address = 0.0.0.0,bind_address = 127.0.0.1,g;' \
-                 -e 's,^;(\[ssl\]|(cert|key|cacert)_file),\1,g' $project_config/local.ini
+                 -e 's,^;(\[ssl\]|(cert|key|cacert)_file),\1,g' $root/$cfgversion/config/bigcouch/local.ini
       ;;
   esac
 }
@@ -60,7 +60,7 @@ deploy_bigcouch_auth()
      perl -e \
        'undef $/; print "[couch_cms_auth]\n";
         print "hmac_secret = ", unpack("h*", <STDIN>), "\n"' < \
-       $root/current/auth/wmcore-auth/header-auth-key
+       $root/$cfgversion/auth/wmcore-auth/header-auth-key
      ;;
     */erlang.cookie )
      perl -e 'open(R, "< /dev/urandom") or die; sysread(R, $K, 20) or die;

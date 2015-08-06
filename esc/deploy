@@ -14,11 +14,11 @@ deploy_esc_sw()
 
     comp )
       deploy_pkg comp cms+esc-webdoc 2011c
-      rm -f $root/current/apps/esc-webdoc
+      rm -f $root/$cfgversion/apps.$glabel/esc-webdoc
       deploy_pkg comp cms+esc 2011c
 
       rm -f $root/env-*.sh
-      for f in $project_config/env-*.sh; do
+      for f in $root/$cfgversion/config/$project/env-*.sh; do
         ln -s $f $root/$(basename $f)
       done
       ;;

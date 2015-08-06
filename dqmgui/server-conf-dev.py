@@ -1,7 +1,7 @@
 import os.path, socket; global CONFIGDIR
 from glob import glob
 CONFIGDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 1)[0]
-BASEDIR   = CONFIGDIR.replace("/current/config/dqmgui", "")
+BASEDIR   = __file__.rsplit('/', 4)[0]
 STATEDIR  = "%s/state/dqmgui/dev" % BASEDIR
 LOGDIR    = "%s/logs/dqmgui/dev" % BASEDIR
 

@@ -2,7 +2,7 @@
 
 deploy_crabhb_deps()
 {
-  deploy admin
+  deploy $stage admin
 }
 
 deploy_crabhb_prep()
@@ -17,14 +17,14 @@ deploy_crabhb_sw()
 {
   deploy_pkg comp cms+crabhb
 
-  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/crabhb_task
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $root/$cfgversion/config/$project/crabhb_task
 
   cd $project_state
   PATH=$PATH:/afs/cern.ch/cms/common
   export SCRAM_ARCH=slc5_amd64_gcc434
   . /afs/cern.ch/cms/LCG/LCG-2/UI/cms_ui_env.sh
   scramv1 project CMSSW CMSSW_4_2_8
-  cp $project_config/doHeartBeat.py CMSSW_4_2_8/src/
+  cp $root/$cfgversion/config/$project/doHeartBeat.py CMSSW_4_2_8/src/
   mkdir -p CMSSW_4_2_8/src/{CRABdirs,Cache}
 
   # Can't use crab from afs since it has a bunch of hardcoded configuration

@@ -4,9 +4,9 @@ deploy_dbs_variants="default prod preprod dev"
 
 deploy_dbs_deps()
 {
-  deploy admin
-  deploy backend
-  deploy wmcore-auth
+  deploy $stage admin
+  deploy $stage backend
+  deploy $stage wmcore-auth
 }
 
 deploy_dbs_prep()
@@ -18,28 +18,25 @@ deploy_dbs_prep()
 deploy_dbs_sw()
 {
   deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3
-  perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/dmwm/DBS/raw/master/view_instances.json,g" $project_config/manage
-  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $project_config/DBS.py
+  perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/dmwm/DBS/raw/master/view_instances.json,g" $root/$cfgversion/config/$project/manage
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBS.py
 }
 
 deploy_dbs_post()
 {
   case $host in vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
 
-  (mkcrontab
-   sysboot
+  local cmd="$project_config/manage setinstances 'I did read documentation'"
+  $nogroups || cmd="sudo -H -u _dbs bashs -l -c \"${cmd}\" 2> /dev/null"
+
+  (mkcrontab; sysboot
    case $host in
-     vocms013[89] | vocms0140 | vocms030[67] | vocms0318 )
-       ;;
-     * )
-       local cmd="$project_config/manage setinstances 'I did read documentation'"
-       $nogroups || cmd="sudo -H -u _dbs bashs -l -c \"${cmd}\" 2> /dev/null"
-       echo "*/30 * * * * $cmd"
-       [ -f $project_state/view_instances.json ] ||
-         { cp {$root/current/apps/dbs,$project_state}/view_instances.json;
-           $nogroups || chown _dbs:_dbs $project_state/view_instances.json; }
-       ;;
+     vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) ;;
+     * ) echo "*/30 * * * * $cmd" ;;
    esac) | crontab -
+   
+  # Force fetching of view instances during deployment
+  eval $cmd
 }
 
 deploy_dbs_auth()

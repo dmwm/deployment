@@ -1,7 +1,7 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_phedex_deps()
 {
-  deploy backend
+  deploy $stage backend
 }
 
 deploy_phedex_prep()
@@ -17,7 +17,7 @@ deploy_phedex_sw()
 
   (set -e
    for app in PHEDEX-{web,webapp,datasvc}; do
-     . $root/current/apps/$app/etc/profile.d/init.sh
+     . $root/$cfgversion/apps.$glabel/$app/etc/profile.d/init.sh
    done
    perl -p -i -e "
        s|\@ROOT\@|$root/|g; \
@@ -26,7 +26,7 @@ deploy_phedex_sw()
        s|\@WEBAPP_VERSION\@|$PHEDEX_WEBAPP_VERSION|g; \
        s|\@WEBAPP_BASEURL\@|/phedex/datasvc/app|g; \
        s|\@WEBAPP_DATASERVICEURL\@|/phedex/datasvc/json/|g;" \
-     $project_config/{app-*.conf,*.xml} \
+     $root/$cfgversion/config/$project/{app-*.conf,*.xml} \
      $PHEDEX_WEBAPP_ROOT/PhEDExWeb/ApplicationServer/js/phedex-base{,-loader}{,-min}.js)
   [ $? = 0 ]
 }

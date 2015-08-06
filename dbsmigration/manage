@@ -90,8 +90,13 @@ setinstances()
 {
   f=$(curl -ksL $JSONURL)
   if echo "$f" | python $CFGDIR/validate.py; then
-    [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] ||
-      { echo $f > $STATEDIR/view_instances.json; stop; start; }
+    [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] || {
+      echo $f > $STATEDIR/view_instances.json
+      if [ X"$(pgrep -u $(id -u) -f "StartUp.py.*[=]$CFGFILE" | sort -n)" != X ]; then
+        stop
+        start
+      fi
+    }
   else
     exit 3
   fi

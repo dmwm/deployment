@@ -3,8 +3,8 @@ deploy_workqueue_variants="default prod preprod dev"
 
 deploy_workqueue_deps()
 {
-  deploy couchdb
-  deploy bigcouch
+  deploy $stage couchdb
+  deploy $stage bigcouch
 }
 
 deploy_workqueue_prep()
@@ -23,7 +23,7 @@ deploy_workqueue_sw()
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
 
-  cp -p $project_config/GlobalWorkQueueConfig-${variant}.py $project_config/GlobalWorkQueueConfig.py
+  cp -p $root/$cfgversion/config/$project/{GlobalWorkQueueConfig-${variant}.py,GlobalWorkQueueConfig.py}
 }
 
 deploy_workqueue_post()
@@ -40,7 +40,7 @@ deploy_workqueue_post()
   done
 
   # Setup workqueue cronjobs
-  local manage=$root/current/config/workqueue/workqueue_task
+  local manage=$project_config/workqueue_task
 
   local cmd="$manage reqmgr_sync"
   $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""

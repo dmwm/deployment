@@ -2,8 +2,8 @@
 
 deploy_confdb_deps()
 {
-  deploy admin
-  deploy backend
+  deploy $stage admin
+  deploy $stage backend
 }
 
 deploy_confdb_prep()

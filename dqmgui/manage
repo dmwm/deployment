@@ -172,13 +172,8 @@ killproc()
 
 startagent()
 {
-  local edition=
-  case $1 in
-    -e ) edition=$2; shift;shift
-  esac
   local logstem=${1}; shift
-  ([ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
-   set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  (set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Start service conditionally on crond restart.

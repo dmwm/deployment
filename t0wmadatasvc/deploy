@@ -1,8 +1,8 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_t0wmadatasvc_deps()
 {
-  deploy backend
-  deploy wmcore-auth
+  deploy $stage backend
+  deploy $stage wmcore-auth
 }
 
 deploy_t0wmadatasvc_prep()

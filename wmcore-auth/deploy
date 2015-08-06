@@ -4,7 +4,7 @@ deploy_wmcore_auth_prep()
   mkproj -l -s
 
   local key=$privauthdir/wmcore/header-auth-key
-  if [ X"$privauthdir" = X ] || [ -s $key ]; then :; else
+  $authlink || if [ X"$privauthdir" = X ] || [ -s $key ]; then :; else
     note "INFO: creating header authentication key $key"
     rm -f $key
     deploy_wmcore_auth_genkey > $key
@@ -17,7 +17,6 @@ deploy_wmcore_auth_prep()
 
 deploy_wmcore_auth_sw()
 {
-  rm -f $project_auth/header-auth-key
   deploy_pkg -a wmcore-auth/header-auth-key
 }
 

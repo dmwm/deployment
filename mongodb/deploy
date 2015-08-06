@@ -1,7 +1,7 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_mongodb_deps()
 {
-  deploy backend
+  deploy $stage backend
 }
 
 deploy_mongodb_prep()
