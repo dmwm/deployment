@@ -208,6 +208,7 @@ private:
 	  o.name.find( "_time" )  != std::string::npos ) &&
 	o.name.find( "_all" )  == std::string::npos &&
 	o.name.find( "nTrk" )  == std::string::npos &&
+        o.name.find( "nVtx" )  == std::string::npos &&
 	o.name.find( "bx" )  == std::string::npos ) {
       gStyle->SetErrorX(0.);
       obj->SetLineColor(2);
@@ -217,7 +218,8 @@ private:
       return;
     }
 
-    if ( o.name.find( "_all" )  != std::string::npos ) {
+    if( o.name.find( "_all" )  != std::string::npos &&
+        o.name.find( "nVtx" )  == std::string::npos ) {
       c->SetGridy();
       gStyle->SetErrorX(0.);
       gStyle->SetEndErrorSize(0.);
