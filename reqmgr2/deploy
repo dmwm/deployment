@@ -3,16 +3,16 @@ deploy_reqmgr2_variants="default prod preprod dev"
 
 deploy_reqmgr2_deps()
 {
-  deploy backend
-  deploy wmcore-auth
-  deploy couchdb
-  deploy bigcouch
-  deploy reqmon
-  deploy acdcserver $variant
+  deploy $stage backend
+  deploy $stage wmcore-auth
+  deploy $stage couchdb
+  deploy $stage bigcouch
+  deploy $stage reqmon
+  deploy $stage acdcserver $variant
 
   # Use the couch databases from ReqMgr1. We must make sure ReqMgr1 is
   # on the same ReqMgr2 tag, otherwise the ReqMgr2's couchapps will be outdated.
-  deploy reqmgr $variant
+  deploy $stage reqmgr $variant
 }
 
 deploy_reqmgr2_prep()
@@ -39,12 +39,12 @@ deploy_reqmgr2_sw()
   esac
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
                  s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
-       $project_config/config.py
+       $root/$cfgversion/config/$project/config.py
 }
 
 deploy_reqmgr2_post()
 {
-  case $host in vocms13[89] | vocms013[89] ) disable;;  * ) enable;; esac
+  case $host in vocms013[89] ) disable;;  * ) enable;; esac
 
   # ReqMgr2 specific couchdb stuff
   # Tell couch to pick up reqmgr on the next restart
@@ -65,7 +65,7 @@ deploy_reqmgr2_post()
   (mkcrontab
    sysboot
    case $variant:$host in
-     prod:vocms0140 | preprod:vocms0133 | dev:vocms0127 | default:* )
+     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | default:* )
        local cmd="$project_config/manage updateversions 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
        echo "58 * * * * $cmd" ;;

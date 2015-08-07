@@ -7,20 +7,20 @@ import re
 import urllib2
 import subprocess
 from xml.sax.saxutils import escape
+from collections import defaultdict
 
 TPL_URL = "https://metricmgr.cern.ch/api/v2/mix/production/yaml/"
 HOSTSCMD = "curl -s -u : --negotiate -H 'Accept: application/json' -k 'https://judy.cern.ch:9081//v3/facts/hostgroup?query=%5B%22%7E%22%2C+%22value%22%2C+%22vocms%2Fcmsweb%22%5D'" #query=["~","value","vocms/cmsweb"]
-ALARMCMD = "curl -s -u : --negotiate -H 'Accept: application/json' -k 'https://judy.cern.ch:9081//v3/nodes/%s.cern.ch/facts?query=%%5B%%22%%7E%%22%%2C+%%22name%%22%%2C+%%22alarmed%%22%%5D' | grep value" #query=["~","name","alarmed"]
+ALARMCMD = "curl -s -u : --negotiate -H 'Accept: application/json' -k 'https://judy.cern.ch:9081//v3/nodes/%s.cern.ch/facts?query=%%5B%%22%%7E%%22%%2C+%%22name%%22%%2C+%%22alarmed%%22%%5D' | grep -1 app_alarmed" #query=["~","name","alarmed"]
 LEMONCMD = 'lemon-cli --script-mode -s -n "%s" -m "%s"'
 LEMON_EXPIRED = 86400 # time in seconds to consider lemon feeds as expired
 
 XML_TEMPLATE = """\
 <?xml version="1.0" encoding="utf-8" ?>
   <serviceupdate xmlns="http://sls.cern.ch/SLS/XML/update">
-
     <id>%(slsid)s</id>
-    <availability>%(avail)i</availability>
     <timestamp>%(tstamp)s</timestamp>
+    <status>%(status)s</status>
     <availabilitydesc>
       %(availdesc)s
     </availabilitydesc>
@@ -30,129 +30,83 @@ XML_TEMPLATE = """\
     <webpage>
       %(webpage)s
     </webpage>
-    <availabilityinfo>%(availinfo)s</availabilityinfo>
-    <lemon>
-      %(hostlist)s
-    </lemon>
-    <notes>
-      %(notes)s
-    </notes>
-    <data>
-      %(data)s
-    </data>
+    <availabilityinfo>
+      %(availinfo)s
+    </availabilityinfo>
   </serviceupdate>
 """
 
-HOSTS = []
+def spit_xml(feedname, lemonfeeds, isexcept, xml_out_dir):
+  nexceptions = 0
+  hosts = []
 
-hosts = subprocess.Popen(HOSTSCMD,stdout=subprocess.PIPE,shell=True).stdout.read()
-hosts = re.findall('vocms[0-9]+',hosts)
+  for f in lemonfeeds:
+    host,id,v = f.split(" ",2)
 
-for host in hosts:
-  if not "false" in subprocess.Popen(ALARMCMD % host,stdout=subprocess.PIPE,shell=True).stdout.read(): # ignore production machines in maintenance
-    HOSTS.append(host)
-
-def spit_xml(feedname, lemonfeeds, name_id, isexcept, xml_out_dir):
-  avail = 100
-  availinfo = 0
-  hostlist = set()
-  mnames = set()
-  numericvalue="\n      "
-
-  failed=""
-  for f in lemonfeeds.values():
-    host,id,tstamp,v = f.split(" ",3)
-
-    hostlist.add(host)
-    mnames.add('cmsweb_'+name_id[id])
     if isexcept[id]:
-      state, code, msg = v.split(" ",2)
-      if int(state) == 1 and code in ['000', '135']:
-        avail = 0
-        availinfo += 1
-        failed += "<textvalue>" + escape(f.strip()) + "</textvalue>\n      "
-    else:
-      numericvalue += "<numericvalue name=\"%s %s\">%s</numericvalue>\n      " \
-          % (host, name_id[id].replace(feedname+'_','',1), v.split(" ")[0].replace('_empty_', '0'))
+      state, code = v.split(" ",3)[1:3]
+      if int(state) == 1 and code in ['000', '005', '135']:
+        nexceptions += 1
+        if host not in hosts:
+          hosts.append(host)
 
-  if not failed:
-    failed = "<textvalue>none</textvalue>"
-
-  hl = ""
-  for host in hostlist:
-    hl += "<host>"+host+"</host>\n      "
-
-  mn = ""
-  for mname in mnames:
-    mn += mname+"\n      "
-
-  data =  "<textvalue>Hosts: " + str(" ").join(hostlist) + "</textvalue>\n      "
-  data += "<textvalue>Detected alarms:</textvalue>\n      "
-  data += failed.strip(" \n")
-  data += numericvalue
+  if nexceptions > 0:
+    status = "unavailable"
+    availinfo = "Found " + str(nexceptions) + " exception(s) in following server(s):\n      " + str("\n      ").join(hosts)
+  else:
+    status = "available"
+    availinfo = "This service is running well."
 
   f=open(path.join(xml_out_dir,"sls_cmsweb_"+feedname+".xml"),"wt")
   f.write(XML_TEMPLATE % {
     'slsid': "cmsweb_"+feedname,
-    'avail': avail,
-    'availinfo': "Found " + str(availinfo) + " exception(s).",
-    'availdesc': "Availability is 0% if there exist a lemon alarm in any of\n      the CMSWEB machines running this service, 100% otherwise.",
+    'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
+    'status': status,
+    'availdesc': "This service becomes \"unavailable\" if there exist a lemon alarm in any of the CMSWEB machines running it.",
     'contact': "cms-service-webtools@cern.ch",
     'webpage': "https://cern.ch/cms-http-group/ops-trouble.html",
-    'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
-    'hostlist': hl.strip(" \n"),
-    'notes': "This SLS is a mapping from the following lemon metrics/exceptions:\n      " + mn.strip(),
-    'data': data.strip(" \n")
+    'availinfo': availinfo
   })
   f.close()
 
-  return (feedname, avail)
+  return (feedname, status)
 
 def aggregate_xml(feeds_availability, xml_out_dir):
-  avail = 0
-  services = []
+  nworkingservices = 0
   failedservices = []
-  nfailedservices = 0
 
   for (n, a) in feeds_availability:
-    avail += a
-    services.append(n)
-    if a < 100:
-      failedservices.append("<textvalue>" + n + "</textvalue>")
-      nfailedservices += 1
+    if a == "available":
+      nworkingservices += 1
+    else:
+      failedservices.append(n)
 
-  avail /= len(services)
+  if nworkingservices == 0:
+    status = "unavailable"
+  elif nworkingservices < len(feeds_availability):
+    status = "degraded"
+  else:
+    status = "available"
 
-  if nfailedservices == 0:
-    failedservices.append("<textvalue>none</textvalue>")
-
-  hl = ""
-  for host in HOSTS:
-    hl += "<host>"+host+"</host>\n      "
-
-  data =  "<textvalue>Hosts: " + str(" ").join(HOSTS) + "</textvalue>\n      "
-  data += "<textvalue>Failed services:</textvalue>\n      "
-  data += str("\n      ").join(failedservices) + "\n"
-  data += "      <numericvalue name=\"Failed Services\">" + str(nfailedservices) + "</numericvalue>"
+  if len(failedservices) > 0:
+    availinfo = "Found exceptions in the following service(s):\n      " + str("\n      ").join(failedservices)
+  else:
+    availinfo = "All services on CMSWEB are running properly."
 
   f=open(path.join(xml_out_dir,"sls_cmsweb.xml"),"wt")
   f.write(XML_TEMPLATE % {
     'slsid': "cmsweb",
-    'avail': avail,
-    'availinfo': "Found " + str(nfailedservices) + " service(s) with exceptions.",
-    'availdesc': "Availability represents the percentage of services working properly on CMSWEB.\n      Any value below 100% represents a critical issue!",
+    'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
+    'status': status,
+    'availdesc': "CMSWEB becomes \"degraded\" if one or more services are not working properly.\n      Any other value than \"available\" represents a critical issue, and requires immediate action!",
     'contact': "cms-service-webtools@cern.ch",
     'webpage': "https://cern.ch/cms-http-group/ops-trouble.html",
-    'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
-    'hostlist': hl.strip(" \n"),
-    'notes': "This SLS is a general mapping from the following services:\n      " + str("\n      ").join(services),
-    'data': data
+    'availinfo': availinfo
   })
   f.close()
 
 def build_metric_ids():
   name_ids = {}
-  idlist = ""
   isexcept = {}
   metrics_page = urllib2.urlopen(TPL_URL).read()
   
@@ -161,11 +115,9 @@ def build_metric_ids():
   y = re.findall('lemon_([0-9]+):\n.*cmsweb_(dqm_[^_]*_agents_import_queue)\n',metrics_page)
   for (id,name) in x+y:
     name_ids[id] = name
-    name_ids[name] = id
-    idlist += id + " "
     isexcept[id] = (id,name) in x
   
-  return (name_ids,idlist.strip(),isexcept)
+  return (name_ids,isexcept)
 
 if __name__ == "__main__":
   if len(sys.argv) != 2:
@@ -173,21 +125,27 @@ if __name__ == "__main__":
     sys.exit(1)
   xml_out_dir = sys.argv[1]
 
-  (name_id, idlist, isexcept) = build_metric_ids()
-  feeds={}
+  HOSTS = []
+  hosts = subprocess.Popen(HOSTSCMD,stdout=subprocess.PIPE,shell=True).stdout.read()
+  hosts = re.findall('vocms[0-9]+',hosts)
 
-  cmd = LEMONCMD % (str(" ").join(HOSTS), idlist)
+  for host in hosts:
+    if not "false" in subprocess.Popen(ALARMCMD % host,stdout=subprocess.PIPE,shell=True).stdout.read(): # ignore production machines in maintenance
+      HOSTS.append(host)
+
+  (name_id,isexcept) = build_metric_ids()
+
+  feeds = defaultdict(list)
+  cmd = LEMONCMD % (str(" ").join(HOSTS), str(" ").join(name_id.keys()))
   p=subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
   for line in p.stdout:
-    host,id,tstamp,v = line.split(" ",3)
+    id,tstamp = line.split(" ",3)[1:3]
 
     # lemonfeeds older then LEMON_EXPIRED seconds are considered
     # feeds from deactivated exceptions, so ignore
     if int(tstamp) + LEMON_EXPIRED > int(time.time()):
        feedname = re.search('(.*?)_',name_id[id]).group(1)
-       f = feeds.get(feedname,{})
-       f[host+':'+id]=line
-       feeds[feedname] = f
+       feeds[feedname].append(line)
 
   err = p.stderr.read()
   if err:
@@ -195,7 +153,7 @@ if __name__ == "__main__":
 
   aggregate = []
   for (k,v) in feeds.items():
-    aggregate.append(spit_xml(k,v,name_id,isexcept,xml_out_dir))
+    aggregate.append(spit_xml(k,v,isexcept,xml_out_dir))
 
   aggregate_xml(aggregate, xml_out_dir)
 

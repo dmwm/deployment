@@ -2,8 +2,8 @@
 
 deploy_popdbweb_deps()
 {
-  deploy admin
-  deploy backend
+  deploy $stage admin
+  deploy $stage backend
 }
 
 deploy_popdbweb_prep()
@@ -15,17 +15,14 @@ deploy_popdbweb_sw()
 {
   deploy_pkg -a popdbweb/conf_secret.ini -a popdbweb/djangokey.py comp cms+popdbweb
   (set -e
-   . $root/current/apps/popdbweb/etc/profile.d/init.sh
+   . $root/$cfgversion/apps.$glabel/popdbweb/etc/profile.d/init.sh
    perl -p -i -e "
         s|\@ROOT\@|$root|g; \
         s|\@POPDBWEB_ROOT\@|$POPDBWEB_ROOT|g; \
         s|\@CONFIG\@|$project_config|g; \
-        s|\@AUTH\@|$project_auth|g; "\
-        $project_config/popdbweb.conf \
-        $project_config/settings.py \
-        $project_config/confSettings.py \
-        $project_config/conf.ini \
-        $project_config/popularity_wsgi.py)
+        s|\@AUTH\@|$root/current/auth/$project|g; "\
+        $root/$cfgversion/config/$project/{popdbweb.conf,settings.py,confSettings.py,conf.ini,popularity_wsgi.py}
+  )
 }
 
 deploy_popdbweb_post()

@@ -1,7 +1,7 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_dmwmmon_deps()
 {
-  deploy backend
+  deploy $stage backend
 }
 
 deploy_dmwmmon_prep()
@@ -15,13 +15,13 @@ deploy_dmwmmon_sw()
 
   (set -e
    for app in DMWMMON-datasvc; do
-     . $root/current/apps/$app/etc/profile.d/init.sh
+     . $root/$cfgversion/apps.$glabel/$app/etc/profile.d/init.sh
    done
    perl -p -i -e "
        s|\@ROOT\@|$root/|g; \
        s|\@WEB_VERSION\@|$DMWMMON_WEB_VERSION|g; \
        s|\@DATASVC_VERSION\@|$DMWMMON_DATASVC_VERSION|g;"\
-     $project_config/{app-*.conf,*.xml}
+     $root/$cfgversion/config/$project/{app-*.conf,*.xml}
   )
   [ $? = 0 ]
 }
@@ -29,7 +29,7 @@ deploy_dmwmmon_sw()
 deploy_dmwmmon_post()
 {
   case $host in
-    vocms13[89] | vocms140 | vocms0128 | vocms013[89] | vocms0140 | vocms030[67] | vocms0318 )
+    vocms013[89] | vocms0140 | vocms030[67] | vocms0318 )
       disable
       opts="" ;;
     * )

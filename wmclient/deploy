@@ -11,7 +11,7 @@ deploy_wmclient_sw()
 
 deploy_wmclient_post(){
 
-  local wmclient_root=$root/current/etc
+  local wmclient_root=$root/$cfgversion/etc
   mkdir -p $wmclient_root
   local wmclient_setup=$wmclient_root/wmclient.sh
 

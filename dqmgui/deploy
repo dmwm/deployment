@@ -2,13 +2,13 @@
 deploy_dqmgui_variants="default bare online"
 deploy_dqmgui_deps()
 {
-  deploy backend
-  [ $variant == online ] && deploy admin default || deploy admin $variant
+  deploy $stage backend
+  [ $variant == online ] && deploy $stage admin default || deploy $stage admin $variant
   case $variant in
     bare | online )
       ;;
     * )
-      deploy wmcore-auth
+      deploy $stage wmcore-auth
       ;;
   esac
 }
@@ -28,7 +28,7 @@ deploy_dqmgui_prep()
       ;;
 
     * )
-      for d in online offline caf relval dev; do
+      for d in online offline relval dev; do
         extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
 	for a in clean freezer ixmerge ixstageout qcontrol vcontrol register register128 stageout verify zip; do
 	  extra="$extra $d/agents/$a"
@@ -49,7 +49,7 @@ deploy_dqmgui_sw()
 deploy_dqmgui_post()
 {
   case $host in
-    vocms34 | vocms13[26] | vocms140 | vocms16[135] | vocms034 | vocms0128 | vocms013[26] | vocms0140 | vocms016[135] | vocms030[67] | vocms0318 )
+    vocms013[26] | vocms0140 | vocms016[135] | vocms030[67] | vocms0318 )
       disable
       ;;
     * )
@@ -64,52 +64,31 @@ deploy_dqmgui_post()
      cmd="$project_config/daily"
      $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
      echo "17 2 * * * $cmd"
-     # Set the castor stageout (root files backup) on slc5 machines: run by cron under cmsweb account
-     case $host in
-       vocms13[89] )
-       echo "@reboot $project_config/manage xstart stageout 'I did read documentation'" ;;
-     esac
    }) | crontab -
 
   case $host:$root in
-    vocms13[389]:/data/srv | vocms013[389]:/data/srv | broen* )
+    vocms013[89]:/data/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
 
-       # Enable the afs-sync only on vocms138
-       # Remains only on SLC5. Will not be migrated to SLC6.
-       case $host in
-         vocms138 )
-           echo "6 */3 * * * $host $project_config/manage -q xstart afs-sync 'I did read documentation'" ;;
-       esac
-
-       # Set the backup of the index files to castor
-       # This is the old index backup. Should only run on SLC5.
-       case $host in
-         vocms13[89] )
-           echo "30 3 * * 0 $host [ \$(date +\\%e) -le 7 ] &&" \
-                            "$project_config/manage backup" \
-                            "/castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'" ;;
-       esac
-
        # Set the backup of the index (index CASTOR stageout)
-       # Only for Offline or Relval SLC6 machines
+       # Only for Offline or Relval machines
        case $host in
-         vocms013[389] | broen* )
-           echo "*/15 * * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
+         vocms013[89] )
+           echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
        esac
 
        # Set the backup of the zipped root files (zip CASTOR stageout)
-       # Only for Offline or Relval SLC6 machines
+       # Only for Offline or Relval machines
        case $host in
-         vocms013[389] | broen* )
+         vocms013[89] )
            echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" ;;
        esac
 
        # Set the check/verification of the backup of the zipped root files
-       # Only for Offline or Relval SLC6 machines
+       # Only for Offline or Relval machines
        case $host in
-         vocms013[389] | broen* )
+         vocms013[89] )
            echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" ;;
        esac
       ) | acrontab

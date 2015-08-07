@@ -1,7 +1,7 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_gitweb_deps()
 {
-  deploy backend
+  deploy $stage backend
 }
 
 deploy_gitweb_prep()
@@ -13,12 +13,12 @@ deploy_gitweb_sw()
 {
   deploy_pkg comp external+gitweb
   deploy_pkg comp external+python 
-  perl -p -i -e "s,\@STATEDIR\@,$project_state,g" $project_config/gitweb_config.perl
+  perl -p -i -e "s,\@STATEDIR\@,$project_state,g" $root/$cfgversion/config/$project/gitweb_config.perl
 }
 
 deploy_gitweb_post()
 {
-  case $host in vocms13[89] | vocms140 | vocms0128 | vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable;; * ) enable;; esac
+  case $host in vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable;; * ) enable;; esac
 
   rm -fr $PWD/{htdocs,etc,var}
   (set -e

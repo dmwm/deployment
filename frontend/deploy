@@ -2,7 +2,7 @@
 deploy_frontend_variants="default prod preprod dev"
 deploy_frontend_deps()
 {
-  deploy wmcore-auth
+  deploy $stage wmcore-auth
 }
 
 deploy_frontend_prep()
@@ -15,8 +15,24 @@ deploy_frontend_sw()
 {
   deploy_pkg -a frontend/sitedbread.py comp cms+frontend
 
-  if grep -q Oracle $project_auth/sitedbread.py; then :; else
+  $authlink || if grep -q Oracle $project_auth/sitedbread.py; then :; else
     deploy_frontend_fakeauth $project_auth/users.db
+  fi
+
+}
+
+deploy_frontend_post()
+{
+  local certs
+  if [ -r $root/certs/hostkey.pem ]; then
+    certs=$root/certs
+  elif [ -r /data/certs/hostkey.pem ]; then
+    certs=/data/certs
+  elif [ -r /etc/grid-security/hostkey.pem ]; then
+    certs=/etc/grid-security
+  else
+    note "ERROR: cannot find hostcert/key to use"
+    exit 1
   fi
 
   local backends opts name user
@@ -36,6 +52,10 @@ deploy_frontend_sw()
   esac
   if $nogroups; then user="-u $(id -un):$(id -gn)"; else user="-u _frontend:_frontend"; fi
 
+  # This hack is needed while supporting old and new deployment procedures
+  $nogroups || { sudo chown -R $USER:_config $PWD/{*.conf,htdocs,etc} || true; }
+
+  # Generate apache httpd server configuration
   (. $root/current/apps/frontend/etc/profile.d/init.sh
    export AUTH_JSON_MAP=$PWD/etc/authmap.json
    export HOST_MAP_FILE=$project_config/$backends
@@ -54,26 +74,13 @@ deploy_frontend_sw()
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
    -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so)
   [ $? = 0 ]
-
   rm -f $PWD/etc/keys/authz-headers
-  ln $root/current/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
-  setgroup ugo+r,go-w _config $PWD/{*.conf,etc/{httpd,options.txt}}
-  setgroup -R ugo+r,go-w _config $PWD/{etc/env.d,htdocs}
-}
+  setgroup -R ugo+r,go-w _config $PWD/{*.conf,htdocs,etc/env.d,etc/keys}
+  setgroup ugo+r,go-w _config $PWD/{etc/,etc/{httpd,options.txt}}
+  setgroup ug+rw,o-w _frontend $PWD/var
 
-deploy_frontend_post()
-{
-  local certs
-  if [ -r $root/certs/hostkey.pem ]; then
-    certs=$root/certs
-  elif [ -r /data/certs/hostkey.pem ]; then
-    certs=/data/certs
-  elif [ -r /etc/grid-security/hostkey.pem ]; then
-    certs=/etc/grid-security
-  else
-    note "ERROR: cannot find hostcert/key to use"
-    exit 1
-  fi
+  # Hardlink to key used to hmac request headers
+  ln $root/$cfgversion/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
 
   # Do not require root access when running on single-user mode
   if $nogroups; then
@@ -94,7 +101,7 @@ deploy_frontend_post()
         "-o $PWD/etc/voms-gridmap.txt --vo cms"
    case $host in vocms* ) silent= ;; * ) silent=-q;; esac
    echo "*/4 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
-        "PYTHONPATH=$project_auth:\$PYTHONPATH $project_config/mkauthmap" \
+        "PYTHONPATH=$root/current/auth/frontend:\$PYTHONPATH $project_config/mkauthmap" \
         "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
 
    case $variant:$host in
@@ -108,9 +115,11 @@ deploy_frontend_post()
    esac
   ) | crontab -
 
+  # Run crontabs to generate initial auth files in state dir
   (crontab -l | grep -e '^[A-Z0-9_]*=' -e $project_config/ |
    perl -pe 's|^[/*0-9 ]* ||; s|(^[A-Z0-9_]+=)|export $1|') | sh -x
 
+  # This is needed on OSX only
   $nogroups || sudo rm -f $PWD/etc/httpd.plist
   perl -p -i -e "s|\@STATEDIR\@|$PWD|g" \
     < $project_config/httpd.plist.in \
@@ -118,6 +127,7 @@ deploy_frontend_post()
   chmod 644 $PWD/etc/httpd.plist
   $nogroups || sudo chown root:$(id -gn) $PWD/etc/httpd.plist
 
+  # Set to start frontend system wide
   if $nogroups; then
     :
   elif [ -d /etc/rc.d/init.d ]; then

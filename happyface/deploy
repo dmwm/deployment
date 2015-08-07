@@ -11,7 +11,7 @@ deploy_happyface_sw()
 {
   deploy_pkg comp cms+happyface
 
-  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/hf_task
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $root/$cfgversion/config/$project/hf_task
   perl -p -i -e "s,{OUTPUTDIR},$project_state/webpage,g; \
                  s,{DBPATH},$project_state/webpage,g" \
                 $root/current/apps/happyface/lib/python*/site-packages/HappyFace/run.cfg

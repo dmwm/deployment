@@ -9,26 +9,26 @@ deploy_wmagent_sw()
 {
   deploy_pkg comp cms+wmagent
   # in old versions wmagent contains no code - get it from wmcore install
-  [ -e $root/current/apps/wmagent/lib ] || deploy_pkg comp cms+wmcore
+  [ -e $root/$cfgversion/apps.$glabel/wmagent/lib ] || deploy_pkg comp cms+wmcore
 
-  mkdir -p $root/current/install/wmagent
-  mkdir -p $root/current/install/reqmgr
-  mkdir -p $root/current/install/workqueue
-  mkdir -p $root/current/install/mysql
-  mkdir -p $root/current/install/couchdb
+  mkdir -p $root/$cfgversion/install/wmagent
+  mkdir -p $root/$cfgversion/install/reqmgr
+  mkdir -p $root/$cfgversion/install/workqueue
+  mkdir -p $root/$cfgversion/install/mysql
+  mkdir -p $root/$cfgversion/install/couchdb
 
-  mkdir -p $root/current/config/reqmgr
-  mkdir -p $root/current/config/workqueue
+  mkdir -p $root/$cfgversion/config/reqmgr
+  mkdir -p $root/$cfgversion/config/workqueue
 
 
-  local couchdb_ini=$root/current/config/wmagent/local.ini
-  local mysql_config=$root/current/config/wmagent/my.cnf
-  perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
+  local couchdb_ini=$root/$cfgversion/config/wmagent/local.ini
+  local mysql_config=$root/$cfgversion/config/wmagent/my.cnf
+  perl -p -i -e "s{deploy_project_root}{$root/$cfgversion/install}g" $couchdb_ini
 
-  mkdir -p $root/current/config/couchdb
-  cp -f $couchdb_ini $root/current/config/couchdb
-  mkdir -p $root/current/config/mysql
-  cp -f $mysql_config $root/current/config/mysql
+  mkdir -p $root/$cfgversion/config/couchdb
+  cp -f $couchdb_ini $root/$cfgversion/config/couchdb
+  mkdir -p $root/$cfgversion/config/mysql
+  cp -f $mysql_config $root/$cfgversion/config/mysql
 
 
 

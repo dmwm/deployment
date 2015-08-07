@@ -3,8 +3,8 @@ deploy_crabserver_variants="default prod preprod dev"
 
 deploy_crabserver_deps()
 {
-  deploy backend
-  deploy wmcore-auth
+  deploy $stage backend
+  deploy $stage wmcore-auth
 }
 
 deploy_crabserver_prep()
@@ -31,14 +31,14 @@ deploy_crabserver_sw()
     preprod ) extconfig=$variant; aso="-testbed";;
     * )       extconfig=dev;      aso="-dev";;
   esac
-  echo "data.mode = \"cmsweb-$extconfig\"" >> $project_config/config.py
-  touch $project_config/condor_config
-  perl -p -i -e "s;/prod/info;/$extconfig/info;g" $project_config/monitoring.ini
+  echo "data.mode = \"cmsweb-$extconfig\"" >> $root/$cfgversion/config/$project/config.py
+  touch $root/$cfgversion/config/$project/condor_config
+  perl -p -i -e "s;/prod/info;/$extconfig/info;g" $root/$cfgversion/config/$project/monitoring.ini
 }
 
 deploy_crabserver_post()
 {
-  case $host in vocms13[89] | vocms140 | vocms0128 | vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
 
   (mkcrontab; sysboot) | crontab -
 }

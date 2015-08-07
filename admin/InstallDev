@@ -66,7 +66,7 @@ case $STAGE in
   image )
     set -ex
     mkdir -p $ROOT
-    $PWD/cfg/Deploy $ARCH $RELEASE $ACFG -t $VER $MULTIACC -w $RPMHOST -s prep $ROOT $PKGS
+    $PWD/cfg/Deploy $ARCH $RELEASE $ACFG $REPO -t $VER $MULTIACC -w $RPMHOST -s prep $ROOT $PKGS
     [ ! -d $ROOT/$VER/auth/proxy ] ||
       ssh -o PubkeyAuthentication=no -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed -t dev -d $USER@$(hostname -f):$ROOT/$VER/auth/proxy
     cmd="$PWD/cfg/Deploy $ARCH $RELEASE $ACFG $REPO -t $VER $MULTIACC -w $RPMHOST -s sw $ROOT $PKGS"
@@ -84,9 +84,9 @@ case $STAGE in
     for f in $ROOT/enabled/$WHAT; do
       [ -f "$f" ] || continue
       app=${f##*/}; case $app in frontend) u=root ;; * ) u=_$app ;; esac
-      (set -ex;
+      (set -x;
        cmd="$ROOT/current/config/$app/manage $STAGE 'I did read documentation'"
-       case $MULTIACC in -a) sudo -H -u $u bashs -lc "$cmd";; *) eval $cmd;; esac)
+       case $MULTIACC in -a) sudo -H -u $u bashs -lc "$cmd";; *) eval $cmd;; esac) || true
     done
     ;;
 

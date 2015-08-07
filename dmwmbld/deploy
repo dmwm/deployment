@@ -6,6 +6,7 @@ deploy_dmwmbld_prep()
   mkproj webarea
 }
 
+logurl="https://cern.ch/cms-dmwm-builds/"
 webdir=/afs/cern.ch/user/d/dmwmbld/www
 
 deploy_dmwmbld_sw()
@@ -32,12 +33,12 @@ deploy_dmwmbld_sw()
           all_archs=${archs##comp:}
           pkgtools="V00-21-XX:b174441c2295f1b30c5ff6494"
           ;;
-    sl6 ) archs="comp_gcc481:slc6_amd64_gcc481"
-          all_archs="slc6_amd64_gcc481,osx108_amd64_gcc481"
+    sl6 ) archs="comp_gcc481:slc6_amd64_gcc481 comp_gcc493:slc6_amd64_gcc493"
+          all_archs="slc6_amd64_gcc481,slc6_amd64_gcc493,osx108_amd64_gcc481 "
           pkgtools="V00-22-XX:434bf060200793b0120e0027f"
           ;;
     osx ) archs="comp_gcc481:osx108_amd64_gcc481"
-          all_archs="slc6_amd64_gcc481,osx108_amd64_gcc481"
+          all_archs="slc6_amd64_gcc481,slc6_amd64_gcc493,osx108_amd64_gcc481"
           pkgtools="V00-22-XX:434bf060200793b0120e0027f"
           ;;
     * )   archs="comp:$arch"
@@ -47,15 +48,16 @@ deploy_dmwmbld_sw()
   esac
 
   # Setup pkgtools
-  cd $root/current/apps
+  cd $root/$cfgversion/apps.$glabel
   git clone -b ${pkgtools%%:*} https://github.com/cms-sw/pkgtools
   cd pkgtools && git reset --hard ${pkgtools##*:}
   # Ugly hack for using ssh without needing access to home dir
   perl -p -i -e "s,([\'\"]ssh) ,\1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $project_auth/ssh-key-to-cmsrep ,gc" cmsBuild
 
-  perl -p -i -e "s;{WEBDIR};$webdir;g; \
+  perl -p -i -e "s;{LOGURL};$logurl;g; \
+                 s;{WEBDIR};$webdir;g; \
                  s;{ARCHS};$archs;g;   \
-                 s;{ALLARCHS};$all_archs;g;" $project_config/dmwmbld_task
+                 s;{ALLARCHS};$all_archs;g;" $root/$cfgversion/config/$project/dmwmbld_task
 }
 
 deploy_dmwmbld_post()
@@ -67,7 +69,7 @@ deploy_dmwmbld_post()
   ) | crontab -
 
   case $host:$root in
-    vocms106:/build/dmwmbld/srv | vocms22:/build/dmwmbld/srv | vocms0106:/build/dmwmbld/srv | vocms022:/build/dmwmbld/srv )
+    vocms0106:/build/dmwmbld/srv | vocms022:/build/dmwmbld/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { fgrep -v -e " $host $project_config/" -e "$host ssh macms07" || true; }
        echo "*/10 * * * * $host $project_config/dmwmbld_task updateweb"

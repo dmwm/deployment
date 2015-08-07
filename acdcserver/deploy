@@ -3,8 +3,8 @@ deploy_acdcserver_variants="default prod preprod dev"
 
 deploy_acdcserver_deps()
 {
-  deploy couchdb
-  deploy bigcouch
+  deploy $stage couchdb
+  deploy $stage bigcouch
 }
 
 deploy_acdcserver_prep()
@@ -19,7 +19,7 @@ deploy_acdcserver_sw()
     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
     comp cms+acdcserver
 
-  cp -p $project_config/ACDCConfig-${variant}.py $project_config/ACDCConfig.py
+  cp -p $root/$cfgversion/config/$project/{ACDCConfig-${variant}.py,ACDCConfig.py}
 
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
@@ -44,7 +44,7 @@ deploy_acdcserver_post()
 
   (mkcrontab;
    case $variant:$host in
-     prod:vocms0140 | preprod:vocms0133 | dev:vocms0127 | default:* )
+     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | default:* )
        echo "${cleanup}" ;;
      * ) ;;
    esac) | crontab -

@@ -2,7 +2,7 @@
 
 deploy_globalmon_deps()
 {
-  deploy admin
+  deploy $stage admin
 }
 
 deploy_globalmon_prep()
@@ -16,7 +16,7 @@ webdir=/afs/cern.ch/cms/LCG/www/otherops
 deploy_globalmon_sw()
 {
   deploy_pkg
-  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/globalmon_task
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $root/$cfgversion/config/$project/globalmon_task
 }
 
 deploy_globalmon_post()

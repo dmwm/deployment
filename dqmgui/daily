@@ -35,7 +35,7 @@ done
 
 ######################################################################
 # Delete transfered zip files
-for i in offline caf relval dev; do
+for i in offline relval dev; do
   ZIPREPO=$STATEDIR/$i/zipped
   CLEANDIR=$STATEDIR/$i/agents/clean
   if [ -d $ZIPREPO ] && [ -d $CLEANDIR ]; then

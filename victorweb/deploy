@@ -2,8 +2,8 @@
 
 deploy_victorweb_deps()
 {
-  deploy admin
-  deploy backend
+  deploy $stage admin
+  deploy $stage backend
 }
 
 deploy_victorweb_prep()
@@ -15,14 +15,13 @@ deploy_victorweb_sw()
 {
   deploy_pkg -a victorweb/victor_db.py -a victorweb/djangokey.py comp cms+victorweb
   (set -e
-   . $root/current/apps/victorweb/etc/profile.d/init.sh
+   . $root/$cfgversion/apps.$glabel/victorweb/etc/profile.d/init.sh
    perl -p -i -e "
         s|\@ROOT\@|$root|g; \
         s|\@VICTORWEB_ROOT\@|$VICTORWEB_ROOT|g; \
         s|\@CONFIG\@|$project_config|g;"   \
-           $project_config/victorweb.conf  \
-           $project_config/settings.py     \
-           $project_config/victor_wsgi.py)
+           $root/$cfgversion/config/$project/{victorweb.conf,settings.py,victor_wsgi.py}
+  )
 }
 
 deploy_victorweb_post()

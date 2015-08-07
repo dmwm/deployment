@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, subprocess, github, re, sys
+import os, subprocess, github, re, sys, datetime
 
 def readfile(filename):
   f = open(filename,'r')
@@ -27,7 +27,7 @@ def generate_index_page(pr, status, cfgdir, statedir):
 # Test builds for pull requests against an specific branch in the gh repo.
 # Update the pull req status according to overall result of tests on all
 # the architectures.
-def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, cfgdir, authfile):
+def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, logurl, cfgdir, authfile):
   # get the relevant pull requests
   PRs = [i for i in gh.GetPullRequests(owner, repo) \
            if i['base']['label'] == owner+':'+branch]
@@ -55,14 +55,15 @@ def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, 
 
     # Then build it if needs to be tested
     if to_build:
+      logfile = "test_"+commit[:7]+datetime.datetime.now().strftime("-%Y%m%d-%H%M%S.log")
       print '\nTesting (#%s), %s...' % (pr['number'], pr['title'])
       exitStatus = subprocess.call(["%s/build.sh" % cfgdir, \
-                     "-p", pr['diff_url'], str(pr['number']),\
+                     "-p", pr['diff_url'], "-l", logfile, str(pr['number']),\
                      owner, branch, "HEAD", arch])
       if exitStatus == 0: githubStatus = '+1'
       else: githubStatus = '-1'
       generate_index_page(pr, str(exitStatus), cfgdir, statedir)
-      gh.Comment2PullRequest(pr, '%s to %s on %s.' % (githubStatus, commit, arch))
+      gh.Comment2PullRequest(pr, '%s to %s on %s.<br>Build log can be found <a href="%s" target="_blank">here</a>.' % (githubStatus, commit, arch, logurl+str(pr['number'])+"/"+logfile))
 
     # Verify the overall status of architecture builds
     arch_status = {}
@@ -104,8 +105,9 @@ def pre_release_rpms(gh, owner, repo, branch, arch, statedir, cfgdir, authfile):
 
   cm = gh.GetLatestCommit(owner, repo, branch)    
   if cm['sha'] != lastcm:
+    logfile = "prerelease_"+cm['sha'][:7]+datetime.datetime.now().strftime("-%Y%m%d-%H%M%S.log")
     print "New commit %s. Pre-releasing RPMs..." % cm['sha']
-    subprocess.call(["%s/build.sh" % cfgdir, "-u", branch, owner, branch, cm['sha'], arch])
+    subprocess.call(["%s/build.sh" % cfgdir, "-u", "-l", logfile,  branch, owner, branch, cm['sha'], arch])
   else:
     print "Last commit is still the same: %s" % lastcm
 
@@ -136,6 +138,8 @@ if __name__ == '__main__':
                  help="store state under DIR")
   opt.add_option("-L", "--log", dest="logdir", metavar="DIR", default=logdir,
                  help="store logs under DIR")
+  opt.add_option("-U", "--url", dest="logurl",
+                 help="publish logs under url")
   opt.add_option("-C", "--cfg", dest="cfgdir", metavar="DIR", default=cfgdir,
                  help="find app cfg files under DIR")
   opt.add_option("-A", "--auth", dest="authfile", metavar="FILE", default=authfile,
@@ -178,6 +182,6 @@ if __name__ == '__main__':
                    opts.statedir, opts.cfgdir, opts.authfile)
 
   pull_req_tester(gh, opts.owner, opts.repo, opts.branch, opts.arch,
-                  opts.all_archs, opts.statedir, opts.logdir,
+                  opts.all_archs, opts.statedir, opts.logdir, opts.logurl,
                   opts.cfgdir, opts.authfile)
 

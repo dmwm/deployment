@@ -13,11 +13,11 @@ HOST = socket.getfqdn().lower()
 COUCH = "https://%s/couchdb" % HOST
 ADD_MONITOR_FLAG = False
 
-if re.match(r"^vocms0?(?:34|128|13[689]|140|16[135]|30[67]|318)\.cern\.ch$", HOST):
+if re.match(r"^vocms0(?:13[689]|140|16[135]|30[67]|318)\.cern\.ch$", HOST):
   COUCH = "https://cmsweb.cern.ch/couchdb"
-elif re.match(r"^vocms0?(?:13[23])\.cern\.ch$", HOST):
+elif re.match(r"^vocms0(?:13[12])\.cern\.ch$", HOST):
   COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
-elif re.match(r"^vocms0?127\.cern\.ch$", HOST):
+elif re.match(r"^vocms0127\.cern\.ch$", HOST):
   COUCH = "https://cmsweb-dev.cern.ch/couchdb"
 
 config = ReqMgrConfig.reqMgrConfig(installation=INSTALL,

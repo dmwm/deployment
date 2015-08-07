@@ -15,7 +15,7 @@ deploy_sreadiness_sw()
   weburl=http://cern.ch/cms-site-readiness
 
   perl -p -i -e "s,{WEBDIR},$webdir,g;\
-                 s,{WEBURL},$weburl,g;" $project_config/sreadiness_task
+                 s,{WEBURL},$weburl,g;" $root/$cfgversion/config/$project/sreadiness_task
 }
 
 deploy_sreadiness_post()

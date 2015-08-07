@@ -12,6 +12,7 @@
 ##H  -r A=B         Use repository B instead of A (e.g. comp=comp.pre).
 ##H  -t VERSION     Install software as VERSION.
 ##H  -p AUTH-DIR    Use private secrets from AUTH-DIR (default: use dummies).
+##H  -pl AUTH-DIR   Create a link to secrets on AUTH-DIR (overrides -p).
 ##H  -s STAGES      Install only STAGES parts of recipes (prep sw post).
 ##H  -H HOST        Install as if for HOST (default: hostname).
 ##H  -w HOST        Use the following host instead of cmsrep.cern.ch.
@@ -39,7 +40,9 @@ nogroups=true
 servicedir="$(cd $(dirname $0) && pwd)"
 cfgversion=
 privauthdir=
+authlink=false
 release=
+svcs=
 
 case $(uname) in
   Darwin ) arch=osx108_amd64_gcc481 xargsr="xargs" ;;
@@ -64,6 +67,7 @@ while [ $# -ge 1 ]; do
     -s ) stages="$2"; shift; shift ;;
     -t ) cfgversion="$2"; shift; shift ;;
     -p ) privauthdir="$2"; shift; shift ;;
+    -pl) privauthdir="$2"; authlink=true; shift; shift ;;
     -H ) host="$2"; shift; shift ;;
     -w ) rpmhost="$2"; shift; shift ;;
     -h ) perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0 1>&2; exit 1 ;;
@@ -90,7 +94,7 @@ case $cfgversion in */* | . | .. | .* )
   exit 1 ;;
 esac
 
-if [ X"$privauthdir" != X ] && [ ! -d "$privauthdir" ]; then
+if ! $authlink && [ X"$privauthdir" != X ] && [ ! -d "$privauthdir" ]; then
   echo "$privauthdir: not a directory" 1>&2
   exit 1
 fi
@@ -109,9 +113,11 @@ root="$1"; shift
   $chgrp _sw $root/.deploy || exit $?
 }
 
+
 # Create directory for the configuration version we are about to create.
-# (Re)set 'current' link to what we are about to install if necessary.
-for dir in $root/$cfgversion{,/bin,/apps,/auth,/config}; do
+grepo=$(echo "comp" | sed -e "$repoedit")
+glabel=$(echo $grepo | sed 's/^comp//; s/^\([^.]\)/.\1/; s/^/sw/; n')
+for dir in $root/$cfgversion{,/bin,/apps.$glabel,/config}; do
   [ -d $dir ] || {
     mkdir -p $dir || exit $?
     $chmod ug+rw,o-w $dir || exit $?
@@ -123,10 +129,14 @@ for dir in $root/{logs,state,enabled}; do
   [ -d $dir ] || mkdir -p $dir || exit $?
 done
 
-if [ ! -L $root/current ] || [ X$(readlink $root/current) != X$cfgversion ]; then
-  rm -f $root/current || exit $?
-  ln -s $cfgversion $root/current || exit $?
-fi
+[ -d $root/auth ] || {
+  mkdir -p $root/auth || exit $?
+  $chmod u=rwx,g=rx,o-rwx $root/auth || exit $?
+  $chgrp _config $root/auth || exit $?
+}
+
+# Get list of services to deploy
+for svc; do svcs="$svcs $svc"; done
 
 ######################################################################
 # Installation routines
@@ -175,8 +185,8 @@ mkproxy()
 {
   local path=$PWD/proxy/proxy.cert
   local link=$(echo $path | md5sum | awk '{print $1}' | cut -b 1-8)
-  local pxfile=$root/current/auth/proxy/PX$link
-  local pxdir=$root/current/auth/proxy
+  local pxfile=$root/$cfgversion/auth/proxy/PX$link
+  local pxdir=$root/$cfgversion/auth/proxy
   if $nogroups; then local acct=$USER; else local acct=_$project; fi
 
   mkdir -p $pxdir
@@ -204,9 +214,9 @@ mkproj()
     esac
   done
 
-  mkdir -p $project_config
-  $chgrp _sw $project_config
-  $chmod ug+rw,o-w $project_config
+  mkdir -p $root/$cfgversion/config/$project
+  $chgrp _sw $root/$cfgversion/config/$project
+  $chmod ug+rw,o-w $root/$cfgversion/config/$project
 
   if $nolog; then :; else
     mkdir -p $project_logs
@@ -250,9 +260,10 @@ inrepo()
   . $swarea/$arch/external/apt/*/etc/profile.d/init.sh
 }
 
-# Deploy some component.
+# Deploy stage of some component.
 deploy()
 {
+  local stage=$1; shift
   local pkg version variant
   case $1 in
     *@* ) pkg=${1%@*} version=${1#*@} ;;
@@ -287,7 +298,7 @@ deploy()
     setup="$setup; project_version_override='$version'"
     setup="$setup; project_config_src='$servicedir/$pkg'"
     setup="$setup; project_config='$root/current/config/$pkg'"
-    setup="$setup; project_auth='$root/current/auth/$pkg'"
+    setup="$setup; project_auth='$root/$cfgversion/auth/$pkg'"
     setup="$setup; project_state='$root/state/$pkg'"
     setup="$setup; project_logs='$root/logs/$pkg'"
     setup="$setup; variant='$var'"
@@ -295,9 +306,7 @@ deploy()
 
     eval "$setup; deploy_${name}_deps"
     note "INFO: deploying $pkg - variant: $var, version: ${version:-default}"
-    for stage in $stages; do
-      eval "$setup; deploy_${name}_$stage"
-    done
+    eval "$setup; deploy_${name}_$stage"
     eval "${name}_${varname}_deployed=1"
   else
     true
@@ -345,8 +354,8 @@ deploy_pkg()
 
      # Create application link.
      [ X"$link" != X ] || link=${pkg#*+}
-     rm -f $root/current/apps/$link
-     ln -s ../$label/$arch/$(echo $pkg+$ver | tr + /) $root/current/apps/$link)
+     rm -f $root/$cfgversion/apps.$label/$link
+     ln -s ../$label/$arch/$(echo $pkg+$ver | tr + /) $root/$cfgversion/apps.$label/$link)
     [ $? = 0 ]
 
     (set -e
@@ -368,19 +377,19 @@ deploy_pkg()
 
   # Install configuration.
   if $nogroups; then :; else
-    BADFILES=$(find $project_config -type f ! -group _config -print)
+    BADFILES=$(find $root/$cfgversion/config/$project -type f ! -group _config -print)
     [ X"$BADFILES" = X ] || note "WARNING: removing $BADFILES"
-    find $project_config -type f ! -group _config -print0 | $xargsr -t -0 rm -f
+    find $root/$cfgversion/config/$project -type f ! -group _config -print0 | $xargsr -t -0 rm -f
   fi
 
   (cd $project_config_src; find . -type f -print0 |
-   tar --null -T /dev/stdin -cf -) | tar -C $project_config -xvvf - \
+   tar --null -T /dev/stdin -cf -) | tar -C $root/$cfgversion/config/$project -xvvf - \
      --exclude CVS --exclude .svn --exclude .git \
      --exclude '*~' --exclude '.#*' --exclude '*.swp'
-  setgroup ug+r,go-w _config $(find $project_config -type f)
+  setgroup ug+r,go-w _config $(find $root/$cfgversion/config/$project -type f)
 
   # Install authentication file if any.
-  for authfile in $authfiles; do
+  $authlink || for authfile in $authfiles; do
     local authname=$(echo $project | tr - _)
     local authsrc=
     local authdest=
@@ -424,8 +433,37 @@ set -eEx
 note "INFO: $now: starting deployment of: $*"
 note "INFO: installation log can be found in $errlog"
 
-# Loop over all requested services and install them one at a time.
-(for svc; do deploy $(echo $svc | tr / ' '); done)
+# Make sure auth dir is ready before running sw
+if $authlink; then
+  note "INFO: Updating $root/$cfgversion/auth to $privauthdir"
+  rm -f $root/$cfgversion/auth
+  ln -s $privauthdir $root/$cfgversion/auth
+else
+  [ -d $root/$cfgversion/auth ] || {
+    mkdir -p $root/$cfgversion/auth
+    $chmod ug+rw,o-w $root/$cfgversion/auth
+    $chgrp _sw $root/$cfgversion/auth
+  }
+fi
+
+for stage in $stages; do
+  # Ensure links are pointing to the right release before running post
+  if [ X$stage = Xpost ]; then
+    if [ -e $root/$cfgversion/apps ] && [ X"$(readlink $root/$cfgversion/apps)" = X"apps.$glabel" ]; then :; else
+      note "INFO: Updating $root/$cfgversion/apps to apps.$glabel"
+      rm -f $root/$cfgversion/apps
+      ln -s apps.$glabel $root/$cfgversion/apps
+    fi
+    if [ -e $root/current ] && [ X"$(readlink $root/current)" = X"$cfgversion" ]; then :; else
+      note "INFO: Updating $root/current to $cfgversion"
+      rm -f $root/current
+      ln -s $cfgversion $root/current
+    fi
+  fi
+  
+  # Loop over all requested services and install them one at a time.
+  (for svc in $svcs; do deploy $stage $(echo $svc | tr / ' '); done)
+done
 
 # Resume normal output.
 exit=$?

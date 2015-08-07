@@ -1,7 +1,7 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_overview_deps()
 {
-  deploy backend
+  deploy $stage backend
 }
 
 deploy_overview_prep()
@@ -16,8 +16,7 @@ deploy_overview_sw()
 
 deploy_overview_post()
 {
-  case $host in vocms34 | vocms13[3689] | vocms140 | vocms161 | vocms034 | vocms013[3689] | vocms0128 | vocms0140 | vocms0161 | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; 
-esac
+  case $host in vocms013[1689] | vocms0140 | vocms016[15] | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot
    cmd="$project_config/daily"
    $nogroups || cmd="sudo -H -u _overview bashs -l -c '$cmd'"

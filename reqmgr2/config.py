@@ -110,7 +110,7 @@ ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
 # Production instance of wmdatamining, must be a production back-end
-if  HOST.startswith("vocms0307") or HOST.startswith("vocms0133"):
+if  HOST.startswith("vocms0307") or HOST.startswith("vocms0131"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"

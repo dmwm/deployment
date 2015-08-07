@@ -10,7 +10,7 @@ webdir=/afs/cern.ch/cms/LCG/www/SLS
 deploy_cmssls_sw()
 {
   deploy_pkg
-  perl -p -i -e "s,{WEBDIR},$webdir,g" $project_config/cmssls_task
+  perl -p -i -e "s,{WEBDIR},$webdir,g" $root/$cfgversion/config/cmssls/cmssls_task
 }
 
 deploy_cmssls_post()

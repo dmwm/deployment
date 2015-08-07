@@ -10,7 +10,7 @@ def reglob(pattern):
   return g
 
 CONFIGDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 1)[0]
-BASEDIR   = CONFIGDIR.replace("/current/config/dqmgui", "")
+BASEDIR   = __file__.rsplit('/', 4)[0]
 STATEDIR  = "%s/state/dqmgui/online" % BASEDIR
 LOGDIR    = "%s/logs/dqmgui/online" % BASEDIR
 
@@ -42,27 +42,40 @@ for alias in DQMSERVERS:
       break
   except: pass
 
-# Figure out settings for DQM servers
-if HOSTALIAS in DQMSERVERS:
+# Specific settings for online DQM fixed servers
+# We try to be as explicit as possible here:
+if HOSTALIAS == 'dqm-prod-local':
   COLLPORT    = 9090
   SERVERPORT  = 8030
-  if HOSTALIAS == 'dqm-integration':
-    SERVICENAME = 'Online Playback'
-    BASEURL     = '/dqm/online-playback'
+  SERVICENAME = 'Online'
+  BASEURL     = '/dqm/online'
+  UPLOADDIR   = '/dqmdata/dqm/uploads'
+  FILEREPO    = {'Original': '/dqmdata/dqm/repository/original/OnlineData'}
+  COLLHOST    = 'dqm-prod-local.cms'
 
-  else:
-    FILEREPO    = { "ROOT": "/dqmdata/dqm/repository/original/OnlineData",
-                    "Original": "/dqmdata/dqm/repository/original/OnlineData",
-                    "Merged": "/dqmdata/dqm/repository/merged/OnlineData" }
-    COLLHOST    = HOSTALIAS != 'dqm-prod-local' and 'dqm-prod-local.cms' or 'localhost'
-    if HOSTALIAS == 'dqm-test':
-      SERVICENAME = 'Online Test'
-      BASEURL     = '/dqm/online-test'
+elif HOSTALIAS == 'dqm-prod-offsite':
+  COLLPORT    = 9090
+  SERVERPORT  = 8030
+  SERVICENAME = 'Online'
+  BASEURL     = '/dqm/online'
+  UPLOADDIR   = '/dqmdata/dqm/uploads'
+  FILEREPO    = {'Original': '/dqmdata/dqm/repository/original/OnlineData'}
+  COLLHOST    = 'dqm-prod-local.cms'
 
-    else:
-      SERVICENAME = 'Online'
-      BASEURL     = '/dqm/online'
-      UPLOADDIR   = "/dqmdata/dqm/uploads"
+elif HOSTALIAS == 'dqm-integration':
+  COLLPORT    = 9090
+  SERVERPORT  = 8030
+  SERVICENAME = 'Online Playback'
+  BASEURL     = '/dqm/online-playback'
+
+elif HOSTALIAS == 'dqm-test':
+  COLLPORT    = 9090
+  SERVERPORT  = 8030
+  SERVICENAME = 'Online Test'
+  BASEURL     = '/dqm/online-test'
+  UPLOADDIR   = '/dqmdata/dqm/uploads'
+  FILEREPO    = {'Original': '/dqmdata/dqm/repository/original/OnlineData'}
+  COLLHOST    = 'dqm-prod-local.cms'
 
 # Server configuration.
 modules = ("Monitoring.DQM.GUI",)

@@ -3,18 +3,18 @@ deploy_reqmgr_variants="default prod preprod dev offsite"
 
 deploy_reqmgr_deps()
 {
-  deploy backend
-  deploy wmcore-auth
+  deploy $stage backend
+  deploy $stage wmcore-auth
   case $variant in
     offsite )
-      deploy couchdb offsite
-      deploy wmcore ;;
+      deploy $stage couchdb offsite
+      deploy $stage wmcore ;;
     * )
-      deploy couchdb
-      deploy bigcouch ;;
+      deploy $stage couchdb
+      deploy $stage bigcouch ;;
   esac
-  deploy reqmon
-  deploy acdcserver
+  deploy $stage reqmon
+  deploy $stage acdcserver
 }
 
 deploy_reqmgr_prep()
@@ -34,12 +34,12 @@ deploy_reqmgr_sw()
       deploy_pkg comp cms+dls-client
       deploy_pkg comp cms+dbs-client
 
-      local wmcore_etc=$root/current/apps/wmcore/etc
-      local couchdb_ini=$root/current/config/couchdb/local.ini
-      local mysql_config=$root/current/config/mysql/my.cnf
+      local wmcore_etc=$root/$cfgversion/apps.$glabel/wmcore/etc
+      local couchdb_ini=$root/$cfgversion/config/couchdb/local.ini
+      local mysql_config=$root/$cfgversion/config/mysql/my.cnf
 
       # get manage script from wmcore
-      cp $wmcore_etc/deploy/wmagent-manage $project_config/manage
+      cp $wmcore_etc/deploy/wmagent-manage $root/$cfgversion/config/reqmgr/manage
 
       # override the webtools couch config
       cp $wmcore_etc/deploy/wmagent-couch.ini $couchdb_ini
@@ -64,7 +64,7 @@ deploy_reqmgr_sw()
 
 deploy_reqmgr_post()
 {
-  case $host in vocms13[89] | vocms013[89] ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] ) disable ;; * ) enable ;; esac
 
   case $variant in
     offsite )
@@ -85,7 +85,7 @@ deploy_reqmgr_post()
       (mkcrontab
        sysboot
        case $variant:$host in
-         prod:vocms0140 | preprod:vocms0133 | dev:vocms0127 | default:* )
+         prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | default:* )
            local cmd="$project_config/manage updateversions 'I did read documentation'"
            $nogroups || cmd="sudo -H -u _reqmgr bashs -l -c \"${cmd}\""
            echo "58 * * * * $cmd" ;;

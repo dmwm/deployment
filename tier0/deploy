@@ -7,14 +7,14 @@ deploy_tier0_prep()
 
 deploy_tier0_sw()
 {
-  deploy_pkg comp.pre cms+t0
+  deploy_pkg comp cms+t0
 
-  mkdir -p $root/current/install/tier0
-  mkdir -p $root/current/install/couchdb
+  mkdir -p $root/$cfgversion/install/tier0
+  mkdir -p $root/$cfgversion/install/couchdb
 
-  local couchdb_ini=$root/current/config/tier0/local.ini
+  local couchdb_ini=$root/$cfgversion/config/tier0/local.ini
   perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
 
-  mkdir -p $root/current/config/couchdb
-  cp -f $couchdb_ini $root/current/config/couchdb
+  mkdir -p $root/$cfgversion/config/couchdb
+  cp -f $couchdb_ini $root/$cfgversion/config/couchdb
 }

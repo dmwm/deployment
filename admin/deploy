@@ -2,7 +2,7 @@
 deploy_admin_variants="default devtools bare"
 deploy_admin_deps()
 {
-  deploy backend
+  deploy $stage backend
 }
 
 deploy_admin_prep()
@@ -22,9 +22,9 @@ deploy_admin_sw()
   deploy_pkg -a proxy/.turd comp external+rotatelogs
   (for p in $pkgs; do
      echo ". $root/current/apps/$p/etc/profile.d/init.sh"
-   done) > $project_config/init.sh
-  setgroup u+rw,go-w _config $project_config/init.sh
-  rm -f $project_config/{Clone,Install,Image,rsync,UpdateApiDocs}*
+   done) > $root/$cfgversion/config/admin/init.sh
+  setgroup u+rw,go-w _config $root/$cfgversion/config/admin/init.sh
+  rm -f $root/$cfgversion/config/admin/{Clone,Install,Image,rsync,UpdateApiDocs}*
 }
 
 deploy_admin_post()
@@ -35,13 +35,13 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms034 |   vocms0127 | vocms13[2345689] | vocms013[2345689] | vocms140 | vocms0140 | vocms16[01235] | vocms016[01235] | vocms030[67] | vocms0318 )
+    vocms0127 | vocms013[1245689] | vocms0140 | vocms016[01235] | vocms030[67] | vocms0318 )
       pxlabel=cmsweb_backends ;;
     * )
       pxlabel=devvm_$(echo $host | tr - _) ;;
   esac
 
-  if [ $(ls $root/current/auth/proxy/PX* 2>/dev/null | wc -l) = 0 ]; then
+  if [ $(ls $root/$cfgversion/auth/proxy/PX* 2>/dev/null | wc -l) = 0 ]; then
     pxskip=true
   else
     pxskip=false
@@ -57,8 +57,7 @@ deploy_admin_post()
 
   (mkcrontab
    echo "@reboot . $project_config/init.sh && $project_config/ServerMonitor -r"
-   echo "*/6 * * * * . $project_config/init.sh && $project_config/ServerMonitor -q -v"
-   echo "37 */8 * * * . $project_config/init.sh && $project_config/ServerMonitor -q -r"
+   echo "37 */12 * * * . $project_config/init.sh && $project_config/ServerMonitor -q -r"
    $pxskip || echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
    echo "7 */12 * * * $project_config/LogArchive $root") |
    crontab -
