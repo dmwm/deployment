@@ -20,7 +20,17 @@ server.serverDir   = STATEDIR
 server.logFile     = '%s/weblog-%%Y%%m%%d.log' % LOGDIR
 server.baseUrl     = '/dqm/offline'
 server.title       = 'CMS data quality'
-server.serviceName = 'Offline'
+# For convenience, we change the service name, depending on the server:
+hostname = socket.gethostname().lower().split('.')[0]
+# Offline production server
+if hostname == 'vocms0138':
+  server.serviceName = 'Offline'
+# Relval test server
+elif hostname == 'vocms0131':
+  server.serviceName = 'Offline Test'
+# Any local instance of the relval flavor
+else:
+  server.serviceName = 'Offline Local'
 
 server.plugin('render', "%s/style/*.cc" % CONFIGDIR)
 server.extend('DQMRenderLink', server.pathOfPlugin('render'))
