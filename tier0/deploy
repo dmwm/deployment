@@ -7,7 +7,7 @@ deploy_tier0_prep()
 
 deploy_tier0_sw()
 {
-  deploy_pkg comp.pre cms+t0
+  deploy_pkg comp cms+t0
 
   mkdir -p $root/$cfgversion/install/tier0
   mkdir -p $root/$cfgversion/install/couchdb
