@@ -8,11 +8,11 @@
 ^/auth/complete/crabcache(?:/|$) vocms0131.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0132.cern.ch
 ^/auth/complete/das(?:/|$) vocms0132.cern.ch|vocms0131.cern.ch :affinity
-^/auth/complete/scheddmon/0/ vocms095.cern.ch
-^/auth/complete/scheddmon/1/ vocms096.cern.ch
-^/auth/complete/scheddmon/2/ vocms0109.cern.ch
-^/auth/complete/scheddmon/3/ vocms0114.cern.ch
-^/auth/complete/scheddmon/4/ vocms066.cern.ch
-^/auth/complete/scheddmon/5/ vocms059.cern.ch
+^/auth/complete/scheddmon/095/ vocms095.cern.ch
+^/auth/complete/scheddmon/096/ vocms096.cern.ch
+^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
+^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
+^/auth/complete/scheddmon/066/ vocms066.cern.ch
+^/auth/complete/scheddmon/059/ vocms059.cern.ch
 ^/overview(?:/|$) vocms0132.cern.ch
 ^ vocms0132.cern.ch|vocms0131.cern.ch
