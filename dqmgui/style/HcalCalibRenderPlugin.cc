@@ -1,9 +1,6 @@
 /*
  *	file:			HcalCalibRenderPlugin.cc
  *	author:			Viktor Khristenko
- *	Revision:		
- *
- *
  */
 
 //	DQM includes
@@ -102,27 +99,4 @@ class HcalCalibRenderPlugin : public DQMRenderPlugin
 		hcaldqm::HcalObjectCustomizer		_customizer;
 };
 
-
 static HcalCalibRenderPlugin instance;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

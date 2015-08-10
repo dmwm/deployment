@@ -2,7 +2,6 @@
  *	file:			HcalObjectCustomizer.h
  *	author:			Viktor Khristenko
  *	Revision
- *
  *	Description:	A wrapper around any Render Plugin.
  *		Created specifically for HcalRenderPlugin and 
  *		HcalCalibRenderPlugin. Provides object customization based on the 
@@ -10,7 +9,6 @@
  *		1) TObject::Class() -> TH1, TH2, TProfile, etc....
  *		=>	2.1) Based on the Object's name. See naming conventions
  *		=>	2.2) Based on the Bits of TObject using SetBit/TestBit
- *
  *		Naming Conventions(or Name Filters):
  *			If such a filter is part of the ME name, then customization by name
  *			will be applied. These filters are GLOBAL/UNIQUE, namely that is 
@@ -91,7 +89,6 @@ namespace hcaldqm
 			~HcalObjectCustomizer() {}
 
 			//	Apply standard customizations for Styles or Canvas or anything 
-			//	else
 			//	Apply standard customizations for all of the objects
 			void preDraw_Standard(TCanvas *c)
 			{
@@ -233,16 +230,3 @@ namespace hcaldqm
 			int					_verbosity;
 	};
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
