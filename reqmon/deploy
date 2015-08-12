@@ -1,8 +1,9 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_reqmon_deps()
 {
+  deploy $stage backend
+  deploy $stage wmcore-auth
   deploy $stage couchdb
-  deploy $stage bigcouch
 }
 
 deploy_reqmon_prep()
@@ -12,14 +13,32 @@ deploy_reqmon_prep()
 
 deploy_reqmon_sw()
 {
-  deploy_pkg comp cms+reqmon
-  perl -p -i -e 's/__fill_dbname_here__/wmstats/g' $root/$cfgversion/apps.$glabel/reqmon/data/couchapps/WMStats/_attachments/js/loader.js
+  deploy_pkg \
+    -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
+    -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+    comp cms+reqmon
+
+  if grep -rq "replace me" $project_auth; then
+    note "WARNING: replace certificates in $project_auth with real ones"
+  else :; fi
+
+  case $variant in
+    prod )    base_url="https://cmsweb.cern.ch"         dbs_ins="prod";;
+    preprod ) base_url="https://cmsweb-testbed.cern.ch" dbs_ins="int";;
+    dev )     base_url="https://cmsweb-dev.cern.ch"     dbs_ins="dev";;
+    * )       base_url="https://`hostname -f`"          dbs_ins="private_vm";;
+  esac
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
+                 s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
+       $root/$cfgversion/config/$project/config.py
 }
 
 deploy_reqmon_post()
 {
+  case $host in vocms13[89] | vocms013[89] ) disable;;  * ) enable;; esac
+
   # Tell couch to push the reqmon app on the next restart
-  for couch in couchdb:5984 bigcouch:5985; do
+  for couch in couchdb:5984; do
     echo "couchapp push $root/$cfgversion/apps.$glabel/reqmon/data/couchapps/WMStats" \
          "http://localhost:${couch##*:}/wmstats" > $root/state/${couch%%:*}/stagingarea/reqmon
     echo "couchapp push $root/$cfgversion/apps.$glabel/reqmon/data/couchapps/WMStatsErl" \
@@ -29,4 +48,14 @@ deploy_reqmon_post()
     echo "couchapp push $root/$cfgversion/apps.$glabel/reqmon/data/couchapps/LogDB" \
          "http://localhost:${couch##*:}/wmstats_logdb" >> $root/state/${couch%%:*}/stagingarea/reqmon  
   done
+
+  (mkcrontab; sysboot) | crontab -
+}
+
+deploy_reqmon_auth()
+{
+  case $1 in
+    */*-cert.pem ) echo "replace me with your dmwm service certificate" ;;
+    */*-key.pem )  echo "replace me with your dmwm service key" ;;
+  esac
 }

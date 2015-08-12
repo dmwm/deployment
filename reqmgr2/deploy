@@ -6,7 +6,6 @@ deploy_reqmgr2_deps()
   deploy $stage backend
   deploy $stage wmcore-auth
   deploy $stage couchdb
-  deploy $stage bigcouch
   deploy $stage reqmon
   deploy $stage acdcserver $variant
 
@@ -49,7 +48,7 @@ deploy_reqmgr2_post()
   # ReqMgr2 specific couchdb stuff
   # Tell couch to pick up reqmgr on the next restart
   local reqmgrapp=$root/current/apps/reqmgr2
-  for couch in couchdb:5984 bigcouch:5985; do
+  for couch in couchdb:5984; do
     echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux" \
          "http://localhost:${couch##*:}/reqmgr_auxiliary" \
          > $root/state/${couch%%:*}/stagingarea/reqmgr2
