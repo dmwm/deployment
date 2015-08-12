@@ -25,19 +25,21 @@ modules = ("Monitoring.DQM.GUI",)
 server.port        = 8081
 server.serverDir   = STATEDIR
 server.logFile     = '%s/weblog-%%Y%%m%%d.log' % LOGDIR
-server.baseUrl     = '/dqm/relval'
 server.title       = 'CMS data quality'
 # For convenience, we change the service name, depending on the server:
 hostname = socket.gethostname().lower().split('.')[0]
 # Relval production server
 if hostname == 'vocms0139':
   server.serviceName = 'RelVal'
+  server.baseUrl     = '/dqm/relval'
 # Relval test server
 elif hostname == 'vocms0131':
   server.serviceName = 'RelVal Test'
+  server.baseUrl     = '/dqm/relval-test'
 # Any local instance of the relval flavor
 else:
   server.serviceName = 'RelVal Local'
+  server.baseUrl     = '/dqm/relval'
 
 server.plugin('render', "%s/style/*.cc" % CONFIGDIR)
 server.extend('DQMRenderLink', server.pathOfPlugin('render'))

@@ -18,19 +18,21 @@ modules = ("Monitoring.DQM.GUI",)
 server.port        = 8080
 server.serverDir   = STATEDIR
 server.logFile     = '%s/weblog-%%Y%%m%%d.log' % LOGDIR
-server.baseUrl     = '/dqm/offline'
 server.title       = 'CMS data quality'
 # For convenience, we change the service name, depending on the server:
 hostname = socket.gethostname().lower().split('.')[0]
 # Offline production server
 if hostname == 'vocms0138':
   server.serviceName = 'Offline'
+  server.baseUrl     = '/dqm/offline'
 # Relval test server
 elif hostname == 'vocms0131':
   server.serviceName = 'Offline Test'
+  server.baseUrl     = '/dqm/offline-test'
 # Any local instance of the relval flavor
 else:
   server.serviceName = 'Offline Local'
+  server.baseUrl     = '/dqm/offline'
 
 server.plugin('render', "%s/style/*.cc" % CONFIGDIR)
 server.extend('DQMRenderLink', server.pathOfPlugin('render'))
