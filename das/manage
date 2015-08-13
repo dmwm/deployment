@@ -99,7 +99,7 @@ das_status="no"
 
 # helper function to check DAS server status
 check4das() {
-    das_cmd=`curl -s http://localhost:8212 | egrep -i "DAS systems" | grep -i "dbs"`
+    das_cmd=`curl -H "cms-auth-status:NONE" -s http://localhost:8212/das/nsystems | egrep -i "DAS systems" | grep -i "dbs"`
     if  [ -n "$das_cmd" ]; then
         das_status="ok"
         return
@@ -110,21 +110,24 @@ check4das() {
 
 # helper function to wait for DAS server to start
 # it will incrementally increase waiting time with 20 iterations (~3minute)
-wait4das() {
+start_das_cli() {
+    sleep 30
     local counter=0
     # check if mongodb is running
     while [  $counter -lt 20 ]; do
         check4das
         if [ "$das_status" == "ok" ]; then
+            DASMAPS_DIR=$STAGEDIR $DAS_ROOT/bin/das_server start_cli \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_cli-%Y%m%d.log 86400 >/dev/null 2>&1 &
             return
         fi
         let counter=counter+1
-        echo "DAS server is not running, check in $counter sec"
+        echo "DAS web server is not running, check in $counter sec"
         sleep $counter
     done
     check4das
     if [ "$das_status" == "no" ]; then
-        echo "DAS is not running, unable to start DAS server"
+        echo "DAS web server is not running, unable to start DAS cli server"
         exit 1
     fi
 }
@@ -139,10 +142,8 @@ start()
   # start DAS service (it will load DAS maps into MongoDB and start DAS server)
   DASMAPS_DIR=$STAGEDIR $DAS_ROOT/bin/das_server start \
       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
-  # wait until DAS service is up and running and then start second one to server CLI requests
-  wait4das
-  DASMAPS_DIR=$STAGEDIR $DAS_ROOT/bin/das_server start_cli \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/das_cli-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  # start DAS cli server in background since we need to wait for DAS web server/MongoDB
+  start_das_cli &
 }
 
 # Stop the service.
