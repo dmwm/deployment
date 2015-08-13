@@ -52,7 +52,6 @@ COLOR_NORMAL="\\033[0;39m"
 CONFIGS=
 QUIET=false
 FLAVOR=dev
-ALTERNATIVE_USER=$(stat $TOP -c %U)
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 PYTHONPATH=${ROOT}/auth/${ME}:${PYTHONPATH}
 
@@ -80,7 +79,7 @@ case $HOST:$DOMAIN in
   *:cern.ch )   FLAVOR=dev;;
 esac
 
-# Select the right configuration and ALTERNATIVE_USER based on FLAVOR
+# Select the right configuration based on FLAVOR
 getconfigs(){
 case $FLAVOR in
   online )                 CONFIGS="online";;
@@ -833,26 +832,25 @@ done
 newline=""
 getconfigs
 
-# Check user name. Everything except indexbackup, zipbackup and
-# zipbackupcheck must run as non-$ALTERNATIVE_USER account,
-# indexbackup, zipbackup and zipbackupcheck must be under $ALTERNATIVE_USER,
-# refuse to run otherwise.
-case $FLAVOR:$(id -un):$1:$2 in
-  *:$ALTERNATIVE_USER:indexbackup:* | *:$ALTERNATIVE_USER:zipbackup:* | *:$ALTERNATIVE_USER:zipbackupcheck:* )
-    ;;
-
-  offline:$ALTERNATIVE_USER:*:* | offline:*:indexbackup:* | offline:*:zipbackup:* | offline:*:zipbackupcheck:* )
-    echo "ERROR: please use another account" 1>&2
-    exit 1 ;;
-
-  relval:$ALTERNATIVE_USER:*:* | relval:*:indexbackup:* | relval:*:zipbackup:* | relval:*:zipbackupcheck:* )
-    echo "ERROR: please use another account" 1>&2
-    exit 1 ;;
-
-  dev:$ALTERNATIVE_USER:*:* | dev:*:indexbackup:* | dev:*:zipbackup:* | dev:*:zipbackupcheck:* )
-    echo "ERROR: please use another account" 1>&2
-    exit 1 ;;
-esac
+# Checking the user name:
+# If the $ALTERNATIVE_USER is set, then
+# - indexbackup, zipbackup and zipbackupcheck must run as the $ALTERNATIVE_USER
+# - all the rest is not allowed to run as the $ALTERNATIVE_USER.
+CURRENT_USER=$(id -un)
+if [ -n "$ALTERNATIVE_USER" ]; then
+  case $1 in
+    indexbackup | zipbackup | zipbackupcheck )
+      if [ "$CURRENT_USER" != "$ALTERNATIVE_USER" ]; then
+        echo "ERROR: Trying to start $1 as normal user, use ALTERNATIVE_USER instead." 1>&2
+        exit 1
+      fi ;;
+    * )
+      if [ "$CURRENT_USER" = "$ALTERNATIVE_USER" ]; then
+        echo "ERROR: Trying to run as ALTERNATIVE_USER, use normal user instead." 1>&2
+        exit 1
+      fi ;;
+  esac
+fi
 
 case ${1:-status} in
   sysboot )
