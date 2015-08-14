@@ -1,4 +1,4 @@
-from ConfDBAuth import connectUrl
+from ConfDBAuth import *
 
 cpconfig = {
   'server.socket_host': '0.0.0.0',
