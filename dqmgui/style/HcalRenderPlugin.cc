@@ -246,7 +246,7 @@ public:
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
   {
     // determine whether core object is an Hcal object
-    if (o.name.find( "Hcal/" ) != std::string::npos || o.name.find( "HcalCalib/" ) != std::string::npos)
+    if (o.name.find( "Hcal/" ) != std::string::npos)
       return true;
 
     return false;
