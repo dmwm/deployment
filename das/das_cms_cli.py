@@ -4,7 +4,7 @@ config = Configuration()
 
 # web_server configuration
 config.component_('web_server')
-config.web_server.thread_pool = 100
+config.web_server.thread_pool = 150
 config.web_server.socket_queue_size = 100
 config.web_server.timeout_monitor = False
 config.web_server.loglevel = 0
