@@ -136,8 +136,8 @@ private:
     obj->SetMarkerStyle(20);
     obj->SetMarkerColor(4);
 
-    if ((o.name.find("hist pixelHits vs lumi") != std::string::npos) || (o.name.find("hist good vx vs lumi") != std::string::npos) ||
-	(o.name.find("hist app status vs lumi") != std::string::npos))
+    if ((o.name.find("pixelHits vs lumi hist") != std::string::npos) || (o.name.find("good vx vs lumi hist") != std::string::npos) ||
+	(o.name.find("app status vs lumi hist") != std::string::npos))
       {
 	obj->SetMarkerSize(0.4);
 
@@ -246,7 +246,7 @@ private:
     xa->SetLabelSize(0.04);
     ya->SetLabelSize(0.04);
 
-    if ((o.name.find("hist pixelHits vs lumi") != std::string::npos) || (o.name.find("hist good vx vs lumi") != std::string::npos))
+    if ((o.name.find("pixelHits vs lumi hist") != std::string::npos) || (o.name.find("good vx vs lumi hist") != std::string::npos))
       {
 	gStyle->SetOptFit(1110);
 	gStyle->SetOptStat(10);
@@ -257,7 +257,7 @@ private:
 	return;
       }
 
-    if ((o.name.find("hist app status vs lumi") != std::string::npos) || (o.name.find("app status vs lumi") != std::string::npos))
+    if ((o.name.find("app status vs lumi hist") != std::string::npos) || (o.name.find("app status vs lumi") != std::string::npos))
       {
 	ya->SetRangeUser(-5,5);
 
