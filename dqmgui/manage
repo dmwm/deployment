@@ -502,13 +502,14 @@ start_agents_offline_relval_test()
     D=${D}
     DQM_DATA=$STATEDIR/$D
 
-    startagent $D/agent-receive \
-      visDQMReceiveDaemon \
-      $DQM_DATA/uploads \
-      $DQM_DATA/data \
-      $DQM_DATA/agents/register
-
     if [ "$D" = "dev" ]; then
+      startagent $D/agent-receive \
+        visDQMReceiveDaemon \
+        $DQM_DATA/uploads \
+        $DQM_DATA/data \
+        $DQM_DATA/agents/register \
+        $DQM_DATA/agents/zip
+
       startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/register \
@@ -521,6 +522,12 @@ start_agents_offline_relval_test()
       # We do the rsync, but only for the dev instance, it's propagated to the
       # agent dropbox to be backed up on Castor
     else
+      startagent $D/agent-receive \
+        visDQMReceiveDaemon \
+        $DQM_DATA/uploads \
+        $DQM_DATA/data \
+        $DQM_DATA/agents/register
+
       startagent $D/agent-import-128 \
         visDQMImportDaemon \
         $DQM_DATA/agents/register \
