@@ -315,14 +315,9 @@ start_agents_dqm_prod_local()
     visDQMReceiveDaemon \
     $DQM_DATA/uploads \
     $DQM_DATA/repository/original \
-    $DQM_DATA/agents/import-local \
-    $DQM_DATA/agents/import-offsite \
-    $DQM_DATA/agents/import-test \
-    $DQM_DATA/agents/import-fu04 \
     $DQM_DATA/agents/import-srv-c2f11-29-01 \
     $DQM_DATA/agents/import-srv-c2f11-29-02 \
     $DQM_DATA/agents/import-srv-c2f11-29-04
-    # TODO: Remove the first 4 destinations when the old servers are dead
 
   startagent $D/agent-import-128 \
     visDQMImportDaemon \
