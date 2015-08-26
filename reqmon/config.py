@@ -82,8 +82,8 @@ dataCacheTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
 dataCacheTasks.dataCacheUpdateDuration = 60 * 5 # every 5 min
 dataCacheTasks.log_file = '%s/logs/reqmon/dataCacheTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
 
-# Production instance of wmdatamining, must be a production back-end
-if  HOST.startswith("vocms0307") or HOST.startswith("vocms0133"):
+# Production/testbed instance of logdb, must be a production/testbed back-end
+if  HOST.startswith("vocms0307") or HOST.startswith("vocms0131"):
     
     # LogDB task (update and clean up)
     logDBTasks = extentions.section_("logDBTasks")
