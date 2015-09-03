@@ -323,7 +323,9 @@ start_agents_dqm_prod_local()
     visDQMImportDaemon \
     $DQM_DATA/agents/import-srv-c2f11-29-01 \
     $DQM_DATA/repository/original \
-    $STATEDIR/online/ix128
+    $STATEDIR/online/ix128 \
+    --rsync \
+    --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
   startagent $D/agent-sound \
     visDQMSoundAlarmDaemon \
