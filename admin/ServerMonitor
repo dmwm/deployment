@@ -118,7 +118,7 @@ class SystemMonitor(Monitor):
     @param proc_name -- regex pattern to match process name
     @param activity -- list of activities to log.
     The allowed activities are:
-    cpu, mem, user, system, rss, vms, threads, connections, io, files"""
+    cpu, mem, swp, user, system, rss, vms, swap, threads, connections, io, files"""
 
     def safemsg(field, f):
       try:
@@ -130,25 +130,34 @@ class SystemMonitor(Monitor):
         pass
       return msg
 
+    def swap_info(proc):
+      f = open("/proc/" + str(proc.pid) + "/status")
+      match = re.search("VmSwap:\s+([0-9]+)\skB", f.read())
+      return int(match.group(1)) * 1024
+
+    def swap_percent(proc):
+      return swap_info(proc) * 100.0 / psutil.swap_memory().total
+
     if not psutil:
       return
-    for pid in psutil.get_pid_list():
-      proc = psutil.Process(pid)
-      if proc.username != svc:
+    for proc in psutil.process_iter():
+      if proc.username() != svc:
         continue
-      cmd  = ' '.join(proc.cmdline)
+      cmd  = ' '.join(proc.cmdline())
       name = cmd.split('/')[-1]
       if proc_name and not re.search(proc_name, cmd):
         continue
-      msg  = 'PID: %s, NAME: %s, STATUS: %s' % (pid, name, proc.status)
-      mem_info = proc.get_memory_info()
-      cpu_info = proc.get_cpu_times()
+      msg  = 'PID: %s, NAME: %s, STATUS: %s' % (proc.pid, name, proc.status())
+      mem_info = proc.memory_info()
+      cpu_info = proc.cpu_times()
       for field in activity:
         field = field.strip()
         if field == 'cpu':
-          msg += ', CPU: %3.1f%%' % proc.get_cpu_percent(interval=1.0)
+          msg += ', CPU: %3.1f%%' % proc.cpu_percent(interval=1.0)
         elif field == 'mem':
-          msg += ', MEM: %3.1f%%' % proc.get_memory_percent()
+          msg += ', MEM: %3.1f%%' % proc.memory_percent()
+        elif field == 'swp':
+          msg += ', SWP: %3.1f%%' % swap_percent(proc)
         elif field == 'user':
           msg += ', USER: %s' % cpu_info.user
         elif field == 'system':
@@ -157,8 +166,10 @@ class SystemMonitor(Monitor):
           msg += ', RSS: %s' % mem_info.rss
         elif field == 'vms':
           msg += ', VMS: %s' % mem_info.vms
+        elif field == 'swap':
+          msg += ', SWAP: %s' % swap_info(proc)
         elif field == 'threads':
-          msg += safemsg(field, proc.get_num_threads)
+          msg += safemsg(field, proc.num_threads)
         elif field == 'connections':
           msg += safemsg(field, proc.get_connections)
         elif field == 'io':
