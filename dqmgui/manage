@@ -672,20 +672,25 @@ status()
 # Give details of server components
 detailstatus()
 {
-  case ${1:-webserver} in *webserver* )
-    sdproc "$ME webserver" "[/]monGui $CFGDIR" ;;
-  esac
-  case ${1:-renderer} in *renderer* )
-    sdproc "$ME renderer" "visDQMRender" ;;
-  esac
+  # Collector
   case ${1:-collector} in *collector* )
     sdproc "$ME collector" "DQMCollector" ;;
   esac
-  case ${1:-logger} in *logger* )
-    sdproc "$ME loggers" "rotatelogs" ;;
-  esac
+  # Agents
   case ${1:-agents} in *agents* )
     sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+  esac
+  # Server
+  case ${1:-webserver} in *webserver* )
+    sdproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  esac
+  # Part of the server are the render processes
+  case ${1:-renderer} in *renderer* )
+    sdproc "$ME renderer" "visDQMRender" ;;
+  esac
+  # Extra thing to check: loggers
+  case ${1:-logger} in *logger* )
+    sdproc "$ME loggers" "rotatelogs" ;;
   esac
 }
 
