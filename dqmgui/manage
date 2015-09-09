@@ -29,7 +29,7 @@
 ##H -f flavor     Overide default flavor selected by server and domain.
 ##H               Flavors are: {online, offline, relval, dev}
 ##H For more details please refer to operations page:
-##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGui
 
 echo_e=-e bsdstart=bsdstart
 case $(uname) in Darwin )
@@ -215,10 +215,10 @@ start_webserver()
 {
   case $HOST:${1:-webserver} in
     *:*webserver* )
-      for cfg in $CONFIGS; do
-        [ ! -d $STATEDIR/$cfg/ix128 ] && \
-          (echo Creating index $STATEDIR/$cfg/ix128; visDQMIndex create $STATEDIR/$cfg/ix128)
-        monControl start all from $CFGDIR/server-conf-$cfg.py
+      for CONFIG in $CONFIGS; do
+        [ ! -d $STATEDIR/$CONFIG/ix128 ] && \
+          (echo Creating index $STATEDIR/$CONFIG/ix128; visDQMIndex create $STATEDIR/$CONFIG/ix128)
+        monControl start all from $CFGDIR/server-conf-$CONFIG.py
       done ;;
   esac
 }
@@ -697,8 +697,8 @@ detailstatus()
 # (Re)compile render plugins.
 compile()
 {
-  for cfg in $CONFIGS; do
-    monControl rebuild all from $CFGDIR/server-conf-$cfg.py
+  for CONFIG in $CONFIGS; do
+    monControl rebuild all from $CFGDIR/server-conf-$CONFIG.py
   done
 }
 
@@ -720,8 +720,8 @@ indexbackup()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/ixbackup/$D
         ;;
     esac
-    # We run the backup everwhere when the backup method is called,
-    # expect for the offline and relval flavor on the dev server.
+    # We run the backup everywhere when the backup method is called,
+    # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
       vocms0131:offline | vocms0131:relval )
 	;;
@@ -759,8 +759,8 @@ zipbackup()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
         ;;
     esac
-    # We run the backup everwhere when the backup method is called,
-    # expect for the offline and relval flavor on the dev server.
+    # We run the backup everywhere when the backup method is called,
+    # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
       vocms0131:offline | vocms0131:relval )
 	;;
@@ -796,8 +796,8 @@ zipbackupcheck()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
         ;;
     esac
-    # We run the backup everwhere when the backup method is called,
-    # expect for the offline and relval flavor on the dev server.
+    # We run the backup everywhere when the backup method is called,
+    # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
       vocms0131:offline | vocms0131:relval )
 	;;
