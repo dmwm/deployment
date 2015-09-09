@@ -623,15 +623,20 @@ start_collector()
 }
 
 # Stop the service.
+# When starting, the order is: server - agents - collector
+# When stopping, the order is: collector - agents - server
 stop()
 {
   message "stopping $ME/$FLAVOR ${1:-(default)}"
-  case ${1:-agents} in *agents* )
-    killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
-  esac
+  # Collector
   case ${1:-collector} in *collector* )
     killproc "$ME collector" "DQMCollector"
   esac
+  # Agents
+  case ${1:-agents} in *agents* )
+    killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
+  esac
+  # Server (render processes are killed with the server)
   case ${1:-webserver} in *webserver* )
     for cfg in $CONFIGS; do
       monControl stop all from $CFGDIR/server-conf-$cfg.py
@@ -642,20 +647,25 @@ stop()
 # Check if the server is running.
 status()
 {
-  case ${1:-webserver} in *webserver* )
-    statproc "$ME webserver" "[/]monGui $CFGDIR" ;;
-  esac
-  case ${1:-renderer} in *renderer* )
-    statproc "$ME renderer" "visDQMRender" ;;
-  esac
+  # Collector
   case ${1:-collector} in *collector* )
     statproc "$ME collector" "DQMCollector" ;;
   esac
-  case ${1:-logger} in *logger* )
-    statproc "$ME loggers" "rotatelogs" ;;
-  esac
+  # Agents
   case ${1:-agents} in *agents* )
     statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+  esac
+  # Server
+  case ${1:-webserver} in *webserver* )
+    statproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  esac
+  # Part of the server are the render processes
+  case ${1:-renderer} in *renderer* )
+    statproc "$ME renderer" "visDQMRender" ;;
+  esac
+  # Extra thing to check: loggers
+  case ${1:-logger} in *logger* )
+    statproc "$ME loggers" "rotatelogs" ;;
   esac
 }
 
