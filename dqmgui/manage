@@ -630,16 +630,25 @@ stop()
   message "stopping $ME/$FLAVOR ${1:-(default)}"
   # Collector
   case ${1:-collector} in *collector* )
-    killproc "$ME collector" "DQMCollector"
+    killproc "$ME collector" "DQMCollector" ;;
   esac
   # Agents
   case ${1:-agents} in *agents* )
-    killproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*" ;;
+    killproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*"
+    # The visDQMZipCastorStager and visDQMZipCastorVerifier agents keep their
+    # status in a persisted file. When we restart (and hence stop) these
+    # agents we want these files to be deleted. Otherwise it would be as if
+    # these processes would run for years and years, while it's probably a good
+    # idea to reset them from time to time.
+    for CONFIG in $CONFIGS; do
+      rm -rf $STATEDIR/$CONFIG/agents/stageout/new.pickle
+      rm -rf $STATEDIR/$CONFIG/agents/verify/state.pickle
+    done ;;
   esac
   # Server (render processes are killed with the server)
   case ${1:-webserver} in *webserver* )
-    for cfg in $CONFIGS; do
-      monControl stop all from $CFGDIR/server-conf-$cfg.py
+    for CONFIG in $CONFIGS; do
+      monControl stop all from $CFGDIR/server-conf-$CONFIG.py
     done ;;
   esac
 }
