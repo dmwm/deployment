@@ -403,14 +403,14 @@ start_agents_offline()
       --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-${D}-prod.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
 
@@ -468,14 +468,14 @@ start_agents_relval()
       --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-${D}-prod.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
 
@@ -539,14 +539,14 @@ start_agents_offline_relval_test()
     fi
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-${D}-test.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
 
@@ -588,14 +588,14 @@ start_agents_local_development()
       --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-local-development.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
   done
@@ -634,7 +634,7 @@ stop()
   esac
   # Agents
   case ${1:-agents} in *agents* )
-    killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
+    killproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*" ;;
   esac
   # Server (render processes are killed with the server)
   case ${1:-webserver} in *webserver* )
@@ -653,7 +653,7 @@ status()
   esac
   # Agents
   case ${1:-agents} in *agents* )
-    statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+    statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip" ;;
   esac
   # Server
   case ${1:-webserver} in *webserver* )
@@ -678,7 +678,7 @@ detailstatus()
   esac
   # Agents
   case ${1:-agents} in *agents* )
-    sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
+    sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip" ;;
   esac
   # Server
   case ${1:-webserver} in *webserver* )
