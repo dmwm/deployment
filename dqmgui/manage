@@ -629,9 +629,6 @@ stop()
   case ${1:-agents} in *agents* )
     killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
   esac
-  case ${1:-sound} in *sound* )
-    killproc "$ME sound alarm daemon " "visDQMSoundAlarmDaemon" ;;
-  esac
   case ${1:-collector} in *collector* )
     killproc "$ME collector" "DQMCollector"
   esac
