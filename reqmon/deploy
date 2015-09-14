@@ -27,7 +27,12 @@ deploy_reqmon_sw()
   case $variant in
     prod )    base_url="https://cmsweb.cern.ch"         dbs_ins="prod";;
     preprod ) base_url="https://cmsweb-testbed.cern.ch" dbs_ins="int";;
-    dev )     base_url="https://cmsweb-dev.cern.ch"     dbs_ins="dev";;
+    dev )     case $host in
+                vocms0126 ) base_url="https://cmsweb-dev2.cern.ch";;
+                * )         base_url="https://cmsweb-dev.cern.ch";;
+              esac
+              dbs_ins="dev"
+              ;;
     * )       base_url="https://`hostname -f`"          dbs_ins="private_vm";;
   esac
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \

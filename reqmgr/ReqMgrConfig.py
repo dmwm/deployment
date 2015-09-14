@@ -19,6 +19,8 @@ elif re.match(r"^vocms0(?:13[12])\.cern\.ch$", HOST):
   COUCH = "https://cmsweb-testbed.cern.ch/couchdb"
 elif re.match(r"^vocms0127\.cern\.ch$", HOST):
   COUCH = "https://cmsweb-dev.cern.ch/couchdb"
+elif re.match(r"^vocms0126\.cern\.ch$", HOST):
+  COUCH = "https://cmsweb-dev2.cern.ch/couchdb"
 
 config = ReqMgrConfig.reqMgrConfig(installation=INSTALL,
   couchurl = COUCH, addMonitor = ADD_MONITOR_FLAG)

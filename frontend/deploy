@@ -44,7 +44,11 @@ deploy_frontend_post()
       opts="" name="-n cmsweb-testbed.cern.ch"
       backends=backends-preprod.txt ;;
     dev )
-      opts="-DTEST" name="-n cmsweb-dev.cern.ch"
+      opts="-DTEST" 
+      case $host in
+        vocms0126 ) name="-n cmsweb-dev2.cern.ch";;
+        * ) name="-n cmsweb-dev.cern.ch";;
+      esac
       backends=backends-dev.txt ;;
     * )
       opts="-DTEST" name=""
@@ -109,7 +113,7 @@ deploy_frontend_post()
        echo "23 */6 * * * $project_config/update-keys $PWD vocms0162 vocms0164" ;;
      preprod:vocms0134 )
        echo "23 */6 * * * $project_config/update-keys $PWD vocms0135" ;;
-     dev:vocms0127 | default:* )
+     dev:vocms0127 | dev:vocms0126 | default:* )
        echo "23 */6 * * * $project_config/update-keys $PWD" ;;
      * ) ;;
    esac
