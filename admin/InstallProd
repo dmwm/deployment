@@ -13,7 +13,9 @@
 ### Usage: InstallProd                        [-d DIR] -x PROD -t HOSTS -s sync -v VER
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s backup:restore
 ### Usage: InstallProd [-A arch]              [-d DIR] -x PROD -t HOSTS -s deployimage -p PKGS -r A=B -v VER
-### Usage: InstallProd [-A arch]              [-d DIR] -x PROD -t HOSTS -s deploypost -p PKGS -r A=B -v VER
+### Usage: InstallProd                        [-d DIR] -x PROD -t HOSTS -s deployauth -v VER -a AUTH 
+### Usage: InstallProd                        [-d DIR] -x PROD -t HOSTS -s deployproxy -u USER
+### Usage: InstallProd [-A arch]              [-d DIR] -x PROD -t HOSTS -s deploypost  -p PKGS -r A=B -v VER
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s post -v VER -p PKGS
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s migrate -p PKGS
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s reboot
@@ -65,7 +67,7 @@ for arg; do
     -u) PXUSER="$2"; shift; shift ;;
     -x) STEM="$2"; shift; shift ;;
     -r) REPO="-r $2"; shift; shift ;;
-    -a) ACFG="-p $2"; rm -f $2/auth/wmcore/header-auth-key*; shift; shift ;;
+    -a) ACFG="-p $2"; AUTH="$2"; rm -f $2/auth/wmcore/header-auth-key*; shift; shift ;;
     -p) PKGS="$2"; shift; shift ;;
     -h) help ;;
     --) shift; break ;;
@@ -125,6 +127,15 @@ case $STAGE in
   sync | check | deploycheck )
     [ X"$HOSTS" = X ] && usage
     [ X"$VER" = X ] && usage
+    ;;
+  deployauth )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$VER" = X ] && usage
+    [ X"$AUTH" = X ] && usage
+    ;;
+  deployproxy )
+    [ X"$HOSTS" = X ] && usage
+    [ X"$PXUSER" = X ] && usage
     ;;
   post | deploypost | deployimage )
     [ X"$HOSTS" = X ] && usage
@@ -191,6 +202,14 @@ case $STAGE in
     for host in $HOSTS; do
       (rsync -zavmHq --delete -f '-s .git' $PWD/cfg/ cmsweb@$host:$PWD/cfg/
        (echo "exec 2>&1; set -ex; hostname -f; cd $PWD"
+        echo "if [ ! -e $PWD/srv ]; then"
+        echo "  ln -s srv-$STEM srv"
+        echo "  mkdir -p srv-$STEM"
+        echo "else"
+        echo "  if [ X'\$(readlink $PWD/srv)' = X'srv-$STEM' ]; then :; else"
+        echo "     echo 'WARNING: $PWD/srv does not match srv-$STEM.'"
+        echo "  fi"
+        echo "fi"
         echo "$PWD/cfg/Deploy $ARCH -R comp@$VER $REPO -t $VER -pl $PWD/srv/auth -a -s prep $PWD/srv $PKGS"
         echo "sudo -H -u _sw bashs -lc \"$PWD/cfg/Deploy $ARCH -R comp@$VER $REPO -t $VER -pl $PWD/srv/auth -a -s sw $PWD/srv $PKGS\""
         echo "exit 0"
@@ -203,6 +222,66 @@ case $STAGE in
     confirm "deployimage passed for $HOSTS"
     ;;
 
+  # deployauth: from the image server, it syncs the secrets from AFS to
+  #             all the provided machines, setting proper permissions
+  deployauth )
+    errlog=$(mktemp /tmp/$(basename $0).XXXXXX)
+    trap "rm $errlog*" EXIT
+    echo "Running deployauth for $HOSTS. This can take a few minutes..."
+    set -ex
+    klist -s
+    filter='-f -rs_/proxy'
+    case $VER in
+      be* ) filter+=' -f -rs_/frontend';;
+      fe* ) filter+=' -f +s_/frontend -f +s_/wmcore-auth -f -rs_/' ;;
+    esac
+    for host in $HOSTS; do
+      (rsync -cavu $filter --rsync-path="sudo rsync" \
+             --delete --delete-excluded              \
+             $AUTH/ cmsweb@$host:$PWD/srv/auth/
+       (echo "exec 2>&1; set -ex; hostname -f; cd $PWD; klist -s"
+        echo "chown cmsweb:_config /data/srv/auth/"
+        echo "chmod 750 /data/srv/auth"
+        echo "for d in /data/srv/auth/*; do"
+        echo '  svc=$(basename $d)'
+        echo '  [ "$svc" != proxy ] || continue'
+        echo '  case $svc in'
+        echo '     wmcore-auth ) chown -R cmsweb:_config $d;;'
+        echo '     * ) chown -R cmsweb:_$svc $d;;'
+        echo '  esac'
+        echo '  chmod 750 $d'
+        echo '  chmod -R 440 $d/*'
+        echo 'done'
+        echo 'exit 0'
+       ) | ssh cmsweb@$host bashs -l
+      ) &> $errlog.$host &
+    done
+    wait
+    cat $errlog.*
+    set +x
+    confirm "deployauth passed for $HOSTS"
+    ;;
+
+  # deployproxy: re-seeds the proxy and synchronizes it to all
+  #              the provided machines
+  deployproxy )
+    errlog=$(mktemp /tmp/$(basename $0).XXXXXX)
+    seeddir=$(mktemp -d /tmp/seed-$PXUSER.XXXXXX)
+    trap "rm $errlog* $seeddir/*; rmdir $seeddir" EXIT
+    set -ex
+    ssh -o PubkeyAuthentication=no -t $PXUSER@$(hostname) $PWD/cfg/admin/ProxySeed \
+        -t prod -d cmsweb@$(hostname -f):$seeddir
+    echo "Running deployproxy for $HOSTS. This can take a few minutes..."
+    for host in $HOSTS; do
+      (scp -p $seeddir/seed-$PXUSER.cert cmsweb@$host:$PWD/srv/auth/proxy/
+      ) &> $errlog.$host &
+    done
+    wait
+    cat $errlog.*
+    set +x
+    confirm "deployproxy passed for $HOSTS"
+    ;;  
+
   # deploypost: from the image server, it runs post on all the machines
   #             effectively switching the release and setting cronjobs
   deploypost )
@@ -211,13 +290,10 @@ case $STAGE in
     echo "Running deploypost for $HOSTS. This can take a few minutes..."
     set -ex
     for host in $HOSTS; do
-      (sudo rsync -zavmHq -e "$PWD/cfg/admin/ImageKey run ssh -c arcfour" \
-        --rsync-path="sudo rsync" --delete $PWD/srv-$STEM/$VER/auth/ cmsweb@$host:$PWD/srv-$STEM/auth/
        (echo "exec 2>&1; set -ex; hostname -f; cd $PWD; klist -s"
         echo "$PWD/cfg/Deploy $ARCH -R comp@$VER $REPO -t $VER -pl $PWD/srv/auth -a -s post $PWD/srv $PKGS"
         echo "exit 0"
-       ) | ssh cmsweb@$host bashs -l
-      ) &> $errlog.$host &
+       ) | ssh cmsweb@$host bashs -l &> $errlog.$host &
     done
     wait
     cat $errlog.*

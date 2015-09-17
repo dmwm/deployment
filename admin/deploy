@@ -19,7 +19,7 @@ deploy_admin_sw()
     ;;
   esac
   deploy_pkg comp external+py2-psutil
-  deploy_pkg -a proxy/.turd comp external+rotatelogs
+  deploy_pkg comp external+rotatelogs
   (for p in $pkgs; do
      echo ". $root/current/apps/$p/etc/profile.d/init.sh"
    done) > $root/$cfgversion/config/admin/init.sh

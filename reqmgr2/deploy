@@ -6,7 +6,7 @@ deploy_reqmgr2_deps()
   deploy $stage backend
   deploy $stage wmcore-auth
   deploy $stage couchdb
-  deploy $stage reqmon
+  deploy $stage reqmon $variant
   deploy $stage acdcserver $variant
 
   # Use the couch databases from ReqMgr1. We must make sure ReqMgr1 is

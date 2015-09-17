@@ -13,8 +13,8 @@ deploy_reqmgr_deps()
       deploy $stage couchdb
       deploy $stage bigcouch ;;
   esac
-  deploy $stage reqmon
-  deploy $stage acdcserver
+  deploy $stage reqmon $variant
+  deploy $stage acdcserver $variant
 }
 
 deploy_reqmgr_prep()

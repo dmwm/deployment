@@ -9,7 +9,7 @@ TOPDIR = ROOTDIR.rsplit('/', 1)[0]
 VARIANT="@@VARIANT@@"
 
 # load secrets
-sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
+sys.path.append(os.path.join(ROOTDIR, 'auth/dbsmigration'))
 from DBSSecrets import *
 
 # get viewnames -> instance names list
