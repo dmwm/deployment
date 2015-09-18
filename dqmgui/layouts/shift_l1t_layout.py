@@ -24,16 +24,16 @@ l1tlayout(dqmitems,"06 Global Muon Trigger CSC-RPC BX Correlation",
     [{'path': "L1T/L1TGMT/bx_CSC_vs_RPC", 'description': "CSC-RPC BX correlation. The red maximum should be in the middle of the 3x3 histograms. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
 
 l1tlayout(dqmitems,"07 Global Calorimeter Trigger Iso EM Occupancy",
-    [{'path': "L1T/L1TGCT/IsoEmRankEtaPhi", 'description': "(Eta, Phi) map of Isolated Electron Occupancy. x-axis: phi (0-17) y-axis: eta (0-21) z-axis: number of isolated electron candidates. Electrons are not found in HF so eta bins 0-3 and 18-21 should be empty. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
+    [{'path': "L1T/L1TStage1Layer2/IsoEmRankEtaPhi", 'description': "(Eta, Phi) map of Isolated Electron Occupancy. x-axis: phi (0-17) y-axis: eta (0-21) z-axis: number of isolated electron candidates. Electrons are not found in HF so eta bins 0-3 and 18-21 should be empty. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
 
 l1tlayout(dqmitems,"08 Global Calorimeter Trigger NonIso EM Occupancy",
-  [{'path': "L1T/L1TGCT/NonIsoEmRankEtaPhi", 'description': "(Eta,Phi) map of Non Isolated Electron Occupancy. x-axis: phi (0-17) y-axis: eta (0-21) z-axis: number of non-isolated electron candidates. Electrons are not found in HF so eta bins 0-3 and 18-21 should be empty.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
+  [{'path': "L1T/L1TStage1Layer2/NonIsoEmRankEtaPhi", 'description': "(Eta,Phi) map of Non Isolated Electron Occupancy. x-axis: phi (0-17) y-axis: eta (0-21) z-axis: number of non-isolated electron candidates. Electrons are not found in HF so eta bins 0-3 and 18-21 should be empty.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
 
 l1tlayout(dqmitems,"09 Global Calorimeter Trigger Jets Occupancy",
-    [{'path': "L1T/L1TGCT/AllJetsEtEtaPhi", 'description': "(Eta,Phi) map of Central Jet Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
+    [{'path': "L1T/L1TStage1Layer2/AllJetsEtEtaPhi", 'description': "(Eta,Phi) map of Central Jet Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
 
 l1tlayout(dqmitems,"10 Global Calorimeter Trigger Tau Jets Occupancy",
-  [{'path': "L1T/L1TGCT/TauJetsEtEtaPhi", 'description': "(Eta,Phi) map of Tau Jet Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
+  [{'path': "L1T/L1TStage1Layer2/TauJetsEtEtaPhi", 'description': "(Eta,Phi) map of Tau Jet Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
 
 l1tlayout(dqmitems,"11 Physics Trigger Rate",
     [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/Physics_Trigger_Rate", 'description': "Physics Trigger Rate. x-axis: Time(lumisection); y-axis: Rate (Hz).  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
