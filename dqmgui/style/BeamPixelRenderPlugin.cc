@@ -93,7 +93,7 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
 
-    if ((o.name.find("vertex zx") != std::string::npos) || (o.name.find("vertex zy") != std::string::npos) || (o.name.find("vertex xy") != std::string::npos))
+    if ((o.name.find("E - vertex zx") != std::string::npos) || (o.name.find("E - vertex zy") != std::string::npos) || (o.name.find("E - vertex xy") != std::string::npos))
       {
 	c->SetGrid();
 	c->SetRightMargin(0.12);
@@ -105,7 +105,7 @@ private:
 	return;
       }
 
-    if (o.name.find("fit results") != std::string::npos)
+    if (o.name.find("A - fit results") != std::string::npos)
       {
 	c->SetGrid();
 
@@ -130,24 +130,22 @@ private:
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
     assert(obj);
 
-    c->SetGrid(false, false);
+    c->SetGrid(false, true);
     c->SetTopMargin(0.12);
-
+    
     obj->SetMarkerStyle(20);
     obj->SetMarkerColor(4);
-
-    if ((o.name.find("pixelHits vs lumi hist") != std::string::npos) || (o.name.find("good vx vs lumi hist") != std::string::npos) ||
-	(o.name.find("app status vs lumi hist") != std::string::npos))
-      {
-	obj->SetMarkerSize(0.4);
-
-	return;
-      }
-
-    if ((o.name.find("muX vs lumi") != std::string::npos) || (o.name.find("muY vs lumi") != std::string::npos) || (o.name.find("muZ vs lumi") != std::string::npos) ||
-	(o.name.find("sigmaX vs lumi") != std::string::npos) || (o.name.find("sigmaY vs lumi") != std::string::npos) || (o.name.find("sigmaZ vs lumi") != std::string::npos) ||
-	(o.name.find("dxdz vs lumi") != std::string::npos) || (o.name.find("dydz vs lumi") != std::string::npos) || (o.name.find("pixelHits vs lumi") != std::string::npos) ||
-	(o.name.find("good vertices vs lumi") != std::string::npos) || (o.name.find("app status vs lumi") != std::string::npos))
+    
+    if ((o.name.find("I - app status vs lumi") != std::string::npos) ||
+	(o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
+	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos))
+      c->SetGrid(false, false);
+    
+    if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
+	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
+	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
+	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos) ||
+	(o.name.find("I - app status vs lumi") != std::string::npos))
       {
 	obj->SetMarkerSize(0.5);
 
@@ -177,7 +175,7 @@ private:
     TAxis* xa = obj->GetXaxis();
     TAxis* ya = obj->GetYaxis();
 
-    if ((o.name.find("vertex zx") != std::string::npos) || (o.name.find("vertex zy") != std::string::npos) || (o.name.find("vertex xy") != std::string::npos))
+    if ((o.name.find("E - vertex zx") != std::string::npos) || (o.name.find("E - vertex zy") != std::string::npos) || (o.name.find("E - vertex xy") != std::string::npos))
       {
 	xa->SetTitleOffset(1.15);
 	ya->SetTitleOffset(1.15);
@@ -195,7 +193,7 @@ private:
 	return;
       }
 
-    if (o.name.find("fit results") != std::string::npos)
+    if (o.name.find("A - fit results") != std::string::npos)
       {
 	xa->SetTitleOffset(0.85);
 	ya->SetTitleOffset(1.15);
@@ -226,7 +224,7 @@ private:
 
     TGaxis::SetMaxDigits(3);
 
-    c->SetGrid(false, false);
+    c->SetGrid(false, true);
 
     gStyle->SetCanvasBorderMode(0);
     gStyle->SetPadBorderMode(0);
@@ -246,19 +244,10 @@ private:
     xa->SetLabelSize(0.04);
     ya->SetLabelSize(0.04);
 
-    if ((o.name.find("pixelHits vs lumi hist") != std::string::npos) || (o.name.find("good vx vs lumi hist") != std::string::npos))
+    if (o.name.find("I - app status vs lumi") != std::string::npos)
       {
-	gStyle->SetOptFit(1110);
-	gStyle->SetOptStat(10);
+	c->SetGrid(false, false);
 
-	gStyle->SetErrorX(0.);
-	gStyle->SetEndErrorSize(0.);
-
-	return;
-      }
-
-    if ((o.name.find("app status vs lumi hist") != std::string::npos) || (o.name.find("app status vs lumi") != std::string::npos))
-      {
 	ya->SetRangeUser(-5,5);
 
 	gStyle->SetOptStat(10);
@@ -269,15 +258,22 @@ private:
 
 	return;
       }
-
-    if ((o.name.find("muX vs lumi") != std::string::npos) || (o.name.find("muY vs lumi") != std::string::npos) || (o.name.find("muZ vs lumi") != std::string::npos) ||
-	(o.name.find("sigmaX vs lumi") != std::string::npos) || (o.name.find("sigmaY vs lumi") != std::string::npos) || (o.name.find("sigmaZ vs lumi") != std::string::npos) ||
-	(o.name.find("dxdz vs lumi") != std::string::npos) || (o.name.find("dydz vs lumi") != std::string::npos) || (o.name.find("pixelHits vs lumi") != std::string::npos) ||
-	(o.name.find("good vertices vs lumi") != std::string::npos))
+    
+    if ((o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
+	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos))
+      c->SetGrid(false, false);
+    
+    if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
+	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
+	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
+	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos))
       {
 	gStyle->SetOptFit(1110);
 	gStyle->SetOptStat(10);
-
+	
+ 	gStyle->SetErrorX(0.);
+	gStyle->SetEndErrorSize(0.);
+	
 	return;
       }
   }
