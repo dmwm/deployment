@@ -248,7 +248,7 @@ private:
       {
 	c->SetGrid(false, false);
 
-	ya->SetRangeUser(-5,5);
+	ya->SetRangeUser(-6,6);
 
 	gStyle->SetOptStat(10);
 	gStyle->SetEndErrorSize(0.);
@@ -262,7 +262,7 @@ private:
     if ((o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
 	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos))
       c->SetGrid(false, false);
-    
+
     if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
 	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
 	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
