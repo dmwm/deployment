@@ -19,7 +19,7 @@ deploy_admin_sw()
     ;;
   esac
   deploy_pkg comp external+py2-psutil
-  deploy_pkg -a proxy/.turd comp external+rotatelogs
+  deploy_pkg comp external+rotatelogs
   (for p in $pkgs; do
      echo ". $root/current/apps/$p/etc/profile.d/init.sh"
    done) > $root/$cfgversion/config/admin/init.sh
@@ -35,7 +35,7 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms0127 | vocms013[1245689] | vocms0140 | vocms016[01235] | vocms030[67] | vocms0318 )
+    vocms0126 | vocms0127 | vocms013[1245689] | vocms0140 | vocms016[01235] | vocms030[67] | vocms0318 )
       pxlabel=cmsweb_backends ;;
     * )
       pxlabel=devvm_$(echo $host | tr - _) ;;
@@ -63,7 +63,7 @@ deploy_admin_post()
    crontab -
 
   case $host:$root in
-    vocms0127:/data/srv | vocms0134:/data/srv | vocms0135:/data/srv | \
+    vocms0126:/data/srv | vocms0127:/data/srv | vocms0134:/data/srv | vocms0135:/data/srv | \
     vocms0160:/data/srv | vocms0162:/data/srv | vocms0164:/data/srv )
       klist -s # must have afs kerberos token
       LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive

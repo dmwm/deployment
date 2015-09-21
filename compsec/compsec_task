@@ -1,0 +1,98 @@
+#!/bin/sh
+
+##H Usage: compsec_task ACTION
+##H
+##H Available actions:
+##H   help                show this help
+##H   inventory           generates inventory of cms devices
+##H   portscan            scans devices for open ports
+##H   webscan             runs skipfish vulnerability test against web services
+##H   codescan            static code analyzer for common vulnerabilities
+##H   updateweb           sync produced files to the public web area
+##H   logclean [minutes]  archive logs older than 24h and deletes those older than [minutes] (def. 2 weeks)
+##H
+##H For more details please refer to operations page:
+##H   https://gitlab.cern.ch/cms-comp-security/security-scans/tree/master
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+CFGDIR=$(dirname $0)
+STATEDIR=$TOP/state/$ME
+LOGDIR=$TOP/logs/$ME
+LOGFILE="compsec-$(date +%Y%m%d)"
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
+
+LOGURL={LOGURL}
+WEBDIR={WEBDIR}
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+cd $STATEDIR/reports
+export PYTHONUNBUFFERED=1
+
+isrunning() {
+  if [ $(pgrep -u $(id -u) -f "python.*$1" | wc -l) = 0 ]; then
+   return 1
+  fi
+  return 0
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-help} in
+  inventory )
+    isrunning "main_cms_inventory.py" &&
+      { echo "Inventory script still running. Ignoring this cycle."; exit 1; }
+    python $ROOT/apps/security-scans/main_cms_inventory.py || exit 1
+    ;;
+
+  portscan )
+    isrunning "main_nmap_scan.py" &&
+      { echo "Port scan script still running. Ignoring this cycle."; exit 1; }
+    python $ROOT/apps/security-scans/main_nmap_scan.py || exit 1
+    echo "You can find the NMAP report outputs on $LOGURL/reports-nmap/"
+    ;; 
+
+  webscan )
+    isrunning "main_webapp_scan.py" &&
+      { echo "Web scan script still running. Ignoring this cycle."; exit 1; }
+    cd $SKIPFISH_ROOT
+    python $ROOT/apps/security-scans/main_webapp_scan.py || exit 1
+    echo "You can find the skipfish report outputs on $LOGURL/reports-webapp-scan/"
+    ;;
+
+  codescan )
+    isrunning "main_code_scan.py" &&
+      { echo "Code scan script still running. Ignoring this cycle."; exit 1; }
+    export RATS_ROOT
+    python $ROOT/apps/security-scans/main_code_scan.py || exit 1
+    echo "You can find the RATS report outputs on $LOGURL/reports-rats/"
+    ;;
+
+  updateweb )
+    klist -s || { echo "$0: you must have a valid afs kerberos token."; exit 1; }
+    # set it to dry-run since it needs testing
+    rsync -q -rvu --delete --delete-excluded ${2:-$STATEDIR/reports/} $WEBDIR/
+    ;;
+
+  logclean )
+    # archive logs that have not been touched in last 24h
+    FILES=$(find $LOGDIR -maxdepth 1 -type f -name '*-*-*_*-*-*' -mtime +0 | sort)
+    [ X"$FILES" = X ] || zip -9Tmojq $LOGDIR/old-logs$(date +%Y%m%d-%H%M).zip $FILES
+
+    # and deletes them
+    [ X"$FILES" = X ] || rm -f $FILES
+
+    # also delete old archives
+    MIN=$(($2)); [ $MIN -lt 1 ] && MIN=20160 # defaults to 2 weeks
+    find $LOGDIR -maxdepth 1 -name '*.zip' -cmin +$MIN -exec rm {} \;
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

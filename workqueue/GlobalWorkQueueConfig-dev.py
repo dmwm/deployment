@@ -15,10 +15,18 @@ workqueueDBName = 'workqueue'
 workqueueInboxDbName = 'workqueue_inbox'
 wmstatDBName = 'wmstats'
 reqmgrCouchDB = "reqmgr_workload_cache"
-HOST = "cmsweb-dev.cern.ch"
-REQMGR = "https://%s/reqmgr/reqMgr" % HOST
-REQMGR2 = "https://%s/reqmgr2" % HOST
-COUCH = "https://%s/couchdb" % HOST
+
+HOST = socket.getfqdn().lower()
+if re.match(r"^vocms0127\.cern\.ch$", HOST):
+  ALIAS = "cmsweb-dev.cern.ch"
+elif re.match(r"^vocms0126\.cern\.ch$", HOST):
+  ALIAS = "cmsweb-dev2.cern.ch"
+else:
+  ALIAS = HOST
+
+REQMGR = "https://%s/reqmgr/reqMgr" % ALIAS
+REQMGR2 = "https://%s/reqmgr2" % ALIAS
+COUCH = "https://%s/couchdb" % ALIAS
 WEBURL = "%s/%s" % (COUCH, workqueueDBName)
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH
 LOG_REPORTER = "global_workqueue"
@@ -31,7 +39,7 @@ os.environ['WMCORE_CACHE_DIR'] = cache_dir
 config = Configuration()
 
 config.section_("Agent")
-config.Agent.hostName = HOST
+config.Agent.hostName = ALIAS
 
 config.component_("WorkQueueManager")
 config.WorkQueueManager.namespace = "WMComponent.WorkQueueManager.WorkQueueManager"

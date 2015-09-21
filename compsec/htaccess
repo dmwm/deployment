@@ -1,0 +1,8 @@
+SSLRequireSSL
+AuthType Shibboleth
+ShibRequireSession On
+ShibRequireAll On
+ShibExportAssertion Off
+Require valid-user
+Require adfs-group "sysadmin-team" "cms-http-group" "cms-comp-security" "cert-sec"
+Options +Indexes

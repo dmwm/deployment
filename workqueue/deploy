@@ -56,7 +56,7 @@ deploy_workqueue_post()
 
   (mkcrontab;
    case $variant:$host in
-     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | default:* )
+     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | dev:vocms0126 | default:* )
        echo "${req_sync}"
        echo "${locations}"
        echo "${housekeep}"

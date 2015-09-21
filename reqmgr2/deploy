@@ -6,8 +6,7 @@ deploy_reqmgr2_deps()
   deploy $stage backend
   deploy $stage wmcore-auth
   deploy $stage couchdb
-  deploy $stage bigcouch
-  deploy $stage reqmon
+  deploy $stage reqmon $variant
   deploy $stage acdcserver $variant
 
   # Use the couch databases from ReqMgr1. We must make sure ReqMgr1 is
@@ -49,7 +48,7 @@ deploy_reqmgr2_post()
   # ReqMgr2 specific couchdb stuff
   # Tell couch to pick up reqmgr on the next restart
   local reqmgrapp=$root/current/apps/reqmgr2
-  for couch in couchdb:5984 bigcouch:5985; do
+  for couch in couchdb:5984; do
     echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux" \
          "http://localhost:${couch##*:}/reqmgr_auxiliary" \
          > $root/state/${couch%%:*}/stagingarea/reqmgr2
@@ -65,7 +64,7 @@ deploy_reqmgr2_post()
   (mkcrontab
    sysboot
    case $variant:$host in
-     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | default:* )
+     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | dev:vocms0126 | default:* )
        local cmd="$project_config/manage updateversions 'I did read documentation'"
        $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
        echo "58 * * * * $cmd" ;;

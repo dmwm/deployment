@@ -1,0 +1,61 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_compsec_prep()
+{
+  mkproj reports
+}
+
+logurl="https://cern.ch/cms-dmwm-builds/security"
+webdir=/afs/cern.ch/user/d/dmwmbld/www/security
+
+deploy_compsec_sw()
+{
+  deploy_pkg comp cms+compsec
+
+  # Fetch comp security tools
+  cd $root/$cfgversion/apps.$glabel
+  git clone https://gitlab.cern.ch/cms-comp-security/security-scans.git
+  perl -p -i -e "s;dictionary='skipfish/;dictionary='$root/current/apps/security-scans/skipfish/;g" \
+       security-scans/lib/webappscanlib.py
+  perl -p -i -e "s;webapps=webapps;webapps=webapps,outdir='$root/state/$project/reports/reports-webapp-scan';g" \
+       security-scans/main_webapp_scan.py
+  perl -p -i -e "s;outdir=generallib.*reports-webapp-scan'\);outdir='somewhere';g" \
+       security-scans/main_webapp_scan.py
+  perl -p -i -e "s;outdir=generallib.*reports-rats'\);outdir='$root/state/$project/reports/reports-rats';g; \
+                 s;tempdir=generallib.*temp'\);tempdir='$root/state/$project/temp';g" \
+       security-scans/main_code_scan.py
+  perl -p -i -e "s;rats --quiet;rats --quiet -d \\\$RATS_ROOT/share/rats-c.xml -d \\\$RATS_ROOT/share/rats-openssl.xml -d \\\$RATS_ROOT/share/rats-perl.xml -d \\\$RATS_ROOT/share/rats-python.xml;g" \
+       security-scans/lib/codescanlib.py
+  perl -p -i -e "s;reports/reports-inventory;reports/reports-cms-inventory;g" \
+       security-scans/cms_inventory/egroup_device_inventory.py
+
+  perl -p -i -e "s;{LOGURL};$logurl;g;  \
+                 s;{WEBDIR};$webdir;g;" \
+                $root/$cfgversion/config/$project/compsec_task
+}
+
+deploy_compsec_post()
+{
+  cp $project_config/htaccess $project_state/reports/.htaccess
+  mkdir $project_state/reports/reports-rats
+
+  # We currently run these jobs from jenkins, keeping here for documentation.
+  (mkcrontab
+   echo "#0 0 * * * $project_config/compsec_task inventory"
+   echo "#0 3 * * * $project_config/compsec_task portscan"
+   echo "#0 6 * * * $project_config/compsec_task webscan"
+   echo "#0 9 * * * $project_config/compsec_task codescan"
+  ) | crontab -
+
+  # Copy output reports to webarea
+  case $host:$root in
+    vocms022:/build/dmwmbld/srv )
+      klist -s # must have afs kerberos token
+      (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
+       echo "*/10 * * * * $host $project_config/compsec_task updateweb"
+      ) | acrontab
+      note "NOTE: you must configure a CERN web area serving files from $webdir."
+      ;;
+    * )
+      ;;
+  esac
+}

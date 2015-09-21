@@ -67,28 +67,28 @@ deploy_dqmgui_post()
    }) | crontab -
 
   case $host:$root in
-    vocms013[89]:/data/srv )
+    vocms013[189]:/data/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
 
        # Set the backup of the index (index CASTOR stageout)
-       # Only for Offline or Relval machines
+       # Only for Offline, Relval or Dev machines
        case $host in
-         vocms013[89] )
+         vocms013[189] )
            echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" ;;
        esac
 
        # Set the backup of the zipped root files (zip CASTOR stageout)
-       # Only for Offline or Relval machines
+       # Only for Offline, Relval or Dev machines
        case $host in
-         vocms013[89] )
+         vocms013[189] )
            echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" ;;
        esac
 
        # Set the check/verification of the backup of the zipped root files
-       # Only for Offline or Relval machines
+       # Only for Offline, Relval or Dev machines
        case $host in
-         vocms013[89] )
+         vocms013[189] )
            echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" ;;
        esac
       ) | acrontab
