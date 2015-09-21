@@ -35,8 +35,8 @@ elif VARIANT == 'dev':
                 'dev/phys02': dbs3_dp2_i2,
                 'dev/phys03': dbs3_dp3_i2}
 else:
-  db_mapping = {'dev/global': dbs3_none_i2,
-                'dev/phys03': dbs3_none_i2}
+  db_mapping = {'dev/global': dbs3_l2_i2,
+                'dev/phys03': dbs3_p_i2}
 
 thread_mapping = {'prod/global': 1,
                   'prod/phys01': 1,
@@ -59,7 +59,7 @@ config.component_('web')
 config.web.host = "127.0.0.1"
 config.web.port = 8251
 config.web.log_screen = True
-config.web.thread_pool = 50
+config.web.thread_pool = 15
 
 config.component_('dbsmigration')
 config.dbsmigration.instances = view_mapping[VARIANT]['DBSMigrate']
