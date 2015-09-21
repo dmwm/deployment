@@ -33,43 +33,14 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 CFGFILE=$CFGDIR/config.py
-COLOR_OK="\\033[0;32m"        # LEGACY ONLY
-COLOR_WARN="\\033[0;31m"      # LEGACY ONLY
-COLOR_NORMAL="\\033[0;39m"    # LEGACY ONLY
 
 . $ROOT/apps/$ME/etc/profile.d/env.sh
 PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
-
-# Set up environment for legacy server if one was installed.
-use_legacy=false
-if [ -f $ROOT/auth/$ME/security.ini ]; then
-  use_legacy=true
-  export YUI_ROOT
-  export SEC_MOD_INI=$ROOT/auth/$ME/security.ini
-  export PYTHONPATH=$SITEDB_LEGACY_PYTHONPATH:$PYTHONPATH
-  case $(hostname -s | tr '[:upper:]' '[:lower:]') in
-   vocms34 | vocms136 | vocms16[13] | vocms034 | vocms0136 | vocms016[13] )
-     NODE=https://cmsweb.cern.ch ;;
-   vocms132 | vocms133 | vocms0132 | vocms0133 )
-     NODE=https://cmsweb-testbed.cern.ch ;;
-   vocms127 | vocms0127 )
-     NODE=https://cmsweb-dev.cern.ch ;;
-   * )
-     NODE=https://$(hostname -f) ;;
-  esac
-  case $(uname) in Darwin )
-    pgrep() { /opt/local/bin/pgrep ${1+"$@"}; }
-    ;;
-  esac
-fi
 
 # Start service conditionally on crond restart.
 sysboot()
 {
   wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/sitedb-%Y%m%d.log 86400" $CFGFILE
-  if $use_legacy; then
-    [ $(pgrep -u $(id -u) -f "cmsWeb.*[/]sitedb" | wc -l) = 0 ] && start
-  fi
 }
 
 # Start the service.
@@ -77,12 +48,6 @@ start()
 {
   echo "starting $ME"
   wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/sitedb-%Y%m%d.log 86400" $CFGFILE
-  if $use_legacy; then
-    cd $STATEDIR
-    cmsWeb --base-url $NODE/sitedb -p 8055 --default-page /sitelist/ \
-      --my-sitedb-ini=$ROOT/auth/$ME/sitedb.ini </dev/null 2>&1 |
-      rotatelogs $LOGDIR/sitedb-legacy-%Y%m%d.log 86400 >/dev/null 2>&1 &
-  fi
 }
 
 # Stop the service.
@@ -90,28 +55,12 @@ stop()
 {
   echo "stopping $ME"
   wmc-httpd -k -d $STATEDIR $CFGFILE
-  if $use_legacy; then
-    for PID in $(pgrep -u $(id -u) -f "cmsWeb.*[/]sitedb" | sort -rn); do
-      PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
-               perl -n -e 'print join(" ", (split)[0..6])')
-      echo "Stopping $PID ($PSLINE):"
-      kill -9 $PID
-    done
-  fi
 }
 
 # Check if the server is running.
 status()
 {
   wmc-httpd -s -d $STATEDIR $CFGFILE
-  if $use_legacy; then
-    pid=$(pgrep -u $(id -u) -f "cmsWeb.*[/]sitedb" | sort -n)
-    if [ X"$pid" = X ]; then
-      echo $echo_e "$ME legacy is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
-    else
-      echo $echo_e "$ME legacy is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
-    fi
-  fi
 }
 
 # Verify the security string.
