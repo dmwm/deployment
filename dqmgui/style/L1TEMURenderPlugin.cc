@@ -189,7 +189,7 @@ private:
             t_text->DrawText(2.25, 12.3, "IsoEG");
             t_text->DrawText(2.25, 11.3, "CenJet");
             t_text->DrawText(2.25, 10.3, "ForJet");
-            t_text->DrawText(2.25, 9.3, "TauJet");
+            t_text->DrawText(2.25, 9.3, "Tau");
             t_text->DrawText(2.25, 8.3, "ETT");
             t_text->DrawText(2.25, 7.3, "ETM");
             t_text->DrawText(2.25, 6.3, "HTT");
@@ -206,7 +206,7 @@ private:
             t_text->DrawText(1.25, 7.3, "CSC TPG");
             t_text->DrawText(1.25, 6.3, "DT TF");
             t_text->DrawText(1.25, 5.3, "DT TPG");
-            t_text->DrawText(1.25, 4.3, "GCT");
+            t_text->DrawText(1.25, 4.3, "Stage1Layer2");
             t_text->DrawText(1.25, 3.3, "RCT");
             t_text->DrawText(1.25, 2.3, "HCAL TPG");
             t_text->DrawText(1.25, 1.3, "ECAL TPG");
