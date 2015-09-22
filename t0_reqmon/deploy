@@ -1,8 +1,11 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_t0_reqmon_variants="default prod preprod dev"
+
 deploy_t0_reqmon_deps()
 {
+  deploy $stage backend
+  deploy $stage wmcore-auth
   deploy $stage couchdb
-  deploy $stage bigcouch
 }
 
 deploy_t0_reqmon_prep()
@@ -12,21 +15,52 @@ deploy_t0_reqmon_prep()
 
 deploy_t0_reqmon_sw()
 {
-  deploy_pkg comp cms+t0_reqmon
-  perl -p -i -e 's/__fill_dbname_here__/tier0_wmstats/g' $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/WMStats/_attachments/js/loader.js
+  deploy_pkg \
+    -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
+    -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+    comp cms+t0_reqmon
+
+  if grep -rq "replace me" $project_auth; then
+    note "WARNING: replace certificates in $project_auth with real ones"
+  else :; fi
+
+  case $variant in
+    prod )    base_url="https://cmsweb.cern.ch"         ;;
+    preprod ) base_url="https://cmsweb-testbed.cern.ch" ;;
+    dev )     case $host in
+                vocms0126 ) base_url="https://cmsweb-dev2.cern.ch";;
+                * )         base_url="https://cmsweb-dev.cern.ch";;
+              esac
+              ;;
+    * )       base_url="https://`hostname -f`"          ;;
+  esac
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g;" \
+       $root/$cfgversion/config/$project/config.py
 }
 
 deploy_t0_reqmon_post()
 {
+  case $host in vocms13[89] | vocms013[89] ) disable;;  * ) enable;; esac
+  
   # Tell couch to push the t0_reqmon app on the next restart
-  for couch in couchdb:5984 bigcouch:5985; do
+  for couch in couchdb:5984; do
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/WMStats" \
          "http://localhost:${couch##*:}/tier0_wmstats" > $root/state/${couch%%:*}/stagingarea/t0_reqmon
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/T0Request" \
          "http://localhost:${couch##*:}/t0_request" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/WorkloadSummary" \
          "http://localhost:${couch##*:}/t0_workloadsummary" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
-    echo "couchapp push $root/$cfgversion/apps.$glabel/reqmon/data/couchapps/LogDB" \
-         "http://localhost:${couch##*:}/t0_logdb" >> $root/state/${couch%%:*}/stagingarea/reqmon
+    echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/LogDB" \
+         "http://localhost:${couch##*:}/t0_logdb" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
   done
+  
+  (mkcrontab; sysboot) | crontab -
+}
+
+deploy_t0_reqmon_auth()
+{
+  case $1 in
+    */*-cert.pem ) echo "replace me with your dmwm service certificate" ;;
+    */*-key.pem )  echo "replace me with your dmwm service key" ;;
+  esac
 }
