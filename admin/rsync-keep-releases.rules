@@ -1,11 +1,11 @@
 # Ignore current month release files
--rs /srv-dev/HG1509[a-z]
--rs /srv-*/[a-z][a-z]HG1509[a-z]
+-rs /srv-dev/HG1510[a-z]
+-rs /srv-*/[a-z][a-z]HG1510[a-z]
 
 # Ignore previous month latest release files
--rs /srv-dev/HG1507[c-z]
--rs /srv-preprod/[a-z][a-z]HG1507[f-z]
--rs /srv-prod/[a-z][a-z]HG1507[f-z]
+-rs /srv-dev/HG1509[j-z]
+-rs /srv-preprod/[a-z][a-z]HG1509[j-z]
+-rs /srv-prod/[a-z][a-z]HG1509[i-z]
 
 # Do not exclude the receiver's proxy files from current and previous releases
 -r /srv-dev/HG15[01][0-9][a-z]/auth/proxy/proxy*.cert
