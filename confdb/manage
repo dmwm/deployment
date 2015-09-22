@@ -40,6 +40,7 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 PYTHONPATH=$AUTHDIR:$CFGDIR:$PYTHONPATH
 export CONFDB_VERSION
+export STATEDIR
 
 
 # Start service conditionally on crond restart.
