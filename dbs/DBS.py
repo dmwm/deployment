@@ -37,8 +37,8 @@ elif VARIANT == 'dev':
                 'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}],
                 'dev/phys03': [dbs3_dp3_i2, {'reader':{},'writer':{}}]}
 else:
-  db_mapping = {'dev/global': [dbs3_none_i2,{'reader':{},'writer':{}}],
-                'dev/phys03': [dbs3_none_i2, {'reader':{},'writer':{}}]}
+  db_mapping = {'dev/global': [dbs3_l2_i2,{'reader':{},'writer':{}}],
+                'dev/phys03': [dbs3_p_i2, {'reader':{},'writer':{}}]}
 
 config = Configuration()
 config.component_('SecurityModule')
@@ -46,7 +46,7 @@ config.SecurityModule.key_file = os.path.join(ROOTDIR, 'auth/wmcore-auth/header-
 
 config.component_('Webtools')
 config.Webtools.port = 8250
-config.Webtools.thread_pool = 50
+config.Webtools.thread_pool = 15
 config.Webtools.log_screen = False
 config.Webtools.proxy_base = 'True'
 config.Webtools.application = 'dbs'
@@ -71,7 +71,7 @@ for viewname, access in [('DBSReader','reader'),('DBSWriter','writer'),('DBSMigr
     view.section_('model')
     view.model.object = 'dbs.web.%sModel' % viewname
     view.section_('formatter')
-    view.formatter.object = 'WMCore.WebTools.RESTFormatter'
+    view.formatter.object = 'WMCore.WebTools.DBSRESTFormatter'
     view.section_('database')
     view.section_('security')
     dbinst=view.database.section_('instances')
