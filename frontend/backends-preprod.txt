@@ -1,5 +1,5 @@
 ^/auth/complete/dqm/(?:online|online-playback|online-test)(?:/|$) cmsdaq0.cern.ch
-^/auth/complete/dqm/offline(?:/|$) vocms138.cern.ch
+^/auth/complete/dqm/offline(?:/|$) vocms0138.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms139.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|relval-test)(?:/|$) vocms0131.cern.ch
 ^/auth/complete/(?:couchdb/asynctransfer|aso-monitor|couchdb2)(?:/|$) vocms0132.cern.ch  :affinity
