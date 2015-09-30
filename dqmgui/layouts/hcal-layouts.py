@@ -97,7 +97,8 @@ hcallayout(dqmitems, "10 HCAL Error Thresholds",
             ])
 
 hcallayout(dqmitems, "11 HCAL HBHE Timing Shifts on Digi Level",
-		[{
+	[
+		{
 			"path" : "Hcal/HcalTimingTask/HBHE/HBHE_TS5TS4_iphi1to2_iphi51to72",
 			"description" : "Ratio of TS5 to TS4 for HBHEc"
 		},
@@ -108,15 +109,18 @@ hcallayout(dqmitems, "11 HCAL HBHE Timing Shifts on Digi Level",
 		{
 			"path" : "Hcal/HcalTimingTask/HBHE/HBHE_TS5TS4_iphi27to50",
 			"description" : "Ratio of TS5 to TS4 for HBHEb"
-		}],
-		[{
+		}
+	,
+	
+		{
 			"path" : "Hcal/HcalTimingTask/HBHE/HBHE_TimingDiffs",
 			"description" : "Relative difference among the partitions TS5 to TS4 ratio. Shouldn't be greater 13% for the Physics Data Taking"
 		},
 		{
 			"path" : "Hcal/HcalTimingTask/HBHE/HBHE_TS5TS4VSiphi",
 			"description" : "Ratio of TS5 to TS4 vs iphi"
-		}]
+		}
+	]
 )
 
 hcallayout(dqmitems, "12 HCAL HBHE Timing Shifts on RecHit Level",
@@ -129,8 +133,8 @@ hcallayout(dqmitems, "12 HCAL HBHE Timing Shifts on RecHit Level",
 			"path" : "Hcal/HcalRecHitTask/HE/HE_RecHitTimeVSiphi",
 			"description" : "HE RecHit Timing vs iphi - Shows potential TCDS related Shifts among partitions"
 		}
-	],
-	[
+	,
+	
 		{
 			"path" : "Hcal/HcalRecHitTask/HBHE/HBHE_RecHitTime_iphi1to2_iphi51to72",
 			"description" : "HBHE RecHit Timing for HBHEc"
@@ -156,8 +160,8 @@ hcallayout(dqmitems, "13 HCAL Occupancies vs LS",
 			"path" : "Hcal/HcalDigiTask/HE/HE_OccupancyVSls_NoZSCut",
 			"description" : "HE Digi Occupancy vs LS. HE has ZS. Even with ZS, in case of beam presence, there shouldn't be any real drops observed"
 		}
-	],
-	[
+	,
+	
 		{
 			"path" : "Hcal/HcalDigiTask/HF/HF_OccupancyVSls_NoZSCut",
 			"description" : "HF Digi Occupancy vs LS. No ZS for HF - 1728 channels should be read out all the time for each event "
@@ -179,8 +183,8 @@ hcallayout(dqmitems, "14 HCAL HF Timing",
 			"path" : "Hcal/HcalTimingTask/HF/HFP_QTS2QTS12vsLS",
 			"description" : "HFM Ratio of Q in TS2 over the sum of Qs in TS1 & TS2. For low PU this ratio should be very close to 1, > 0.96; However for high PU running ratio on average should be 0.5"
 		}
-	],
-	[
+	,
+	
 		{
 			"path" : "Hcal/HcalTimingTask/HF/HFMiphi3ieta41D2_QTS2QTS12",
 			"description" : "HFM iphi3 ieta-41 D2 Ratio of Q in TS2 over the sum of Qs in TS1 & TS2. Currently this is one of the 50/50 Channels"
@@ -189,8 +193,8 @@ hcallayout(dqmitems, "14 HCAL HF Timing",
 			"path" : "Hcal/HcalTimingTask/HF/HFMiphi3ieta41D2_Timing",
 			"description" : "HFM iphi3 ieta-41 D2 Nominal fC weighted Time Average. Currently this is one of the 50/50 Channels"
 		}
-	],
-	[
+	,
+	
 		{
 			"path" : "Hcal/HcalTimingTask/HF/HFPiphi3ieta41D2_QTS2QTS12",
 			"description" : "HFP iphi3 ieta41 D2 Ratio of Q in TS2 over the sum of Qs in TS1 & TS2. Currently this is one of the 50/50 Channels"
@@ -198,7 +202,7 @@ hcallayout(dqmitems, "14 HCAL HF Timing",
 		{
 			"path" : "Hcal/HcalTimingTask/HF/HFPiphi3ieta41D2_Timing",
 			"description" : "HFP iphi3 ieta41 D2 Nominal fC weighted Time Average. Currently this is one of the 50/50 Channels"
-		},
+		}
 	]
 )
 
@@ -212,8 +216,8 @@ hcallayout(dqmitems, "15 HCAL HBHE RecHit Timing",
 			"path" : "Hcal/HcalRecHitTask/HB/HB_RecHitTimeVSenergy",
 			"description" : "HB RecHit Timing vs Energy for E>5GeV, "
 		}
-	],
-	[
+	,
+	
 		{
 			"path" : "Hcal/HcalRecHitTask/HE/HE_RecHitTime",
 			"description" : "HE RecHit Timing, E>5GeV, "
