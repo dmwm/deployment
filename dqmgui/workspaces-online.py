@@ -89,7 +89,11 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^Hcal/', '',
                  'Hcal/Layouts/08 HCAL Lumi Problems',
                  'Hcal/Layouts/09 HCAL Calibration Type',
                  'Hcal/Layouts/10 HCAL Error Thresholds',
-                 'Hcal/Layouts/11 ZDC Report Summary'
+				 'Hcal/Layouts/11 HCAL HBHE Timing Shifts on Digi Level',
+				 'Hcal/Layouts/12 HCAL HBHE Timing Shifts on RecHit Level',
+				 'Hcal/Layouts/13 HCAL Occupancies vs LS',
+				 'Hcal/Layouts/14 HCAL HF Timing',
+				 'Hcal/Layouts/15 HCAL HBHE RecHit Timing'
                  )
 
 server.workspace('DQMContent',30,'Calorimeter','HCALcalib', '^HcalCalib/', '',
