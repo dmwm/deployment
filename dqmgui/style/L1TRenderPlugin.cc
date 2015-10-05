@@ -726,7 +726,7 @@ private:
             t_text->DrawText(1.25, 7.3, "CSC TPG");
             t_text->DrawText(1.25, 6.3, "DT TF");
             t_text->DrawText(1.25, 5.3, "DT TPG");
-            t_text->DrawText(1.25, 4.3, "GCT");
+            t_text->DrawText(1.25, 4.3, "Stage1Layer2");
             t_text->DrawText(1.25, 3.3, "RCT");
             t_text->DrawText(1.25, 2.3, "HCAL TPG");
             t_text->DrawText(1.25, 1.3, "ECAL TPG");

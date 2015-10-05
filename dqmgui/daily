@@ -2,16 +2,14 @@
 
 # DQM daily maintenance script.
 #
-# See the operations documentation on how to use this script:
-#   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
+# General documentation on DQM GUI:
+#   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGui
 
 ######################################################################
 # Figure out where the server is based on this script's location.
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
 STATEDIR=$TOP/state/$ME
-LOGDIR=$TOP/logs
-HOST=$(hostname -s | tr [:upper:] [:lower:])
 
 if [ X"$STATEDIR" = X ]; then
   echo "$0: cannot figure out server location"
@@ -51,17 +49,3 @@ for i in offline relval dev; do
     done
   fi
 done
-
-####################################################################
-# See if we are in online to do some more clean up. Move old
-# zip archives to the filer
-case $HOST in dqm-c2d07-* )
-  LOGFILER=/dqmdata/logs/$HOST
-  for a in $(find  $LOGDIR -name \*.zip -mtime +2)
-  do
-    service=$(dirname ${a/$LOGDIR\//})
-    [ ! -d $LOGFILER/$service ] && mkdir -p $LOGFILER/$service
-    mv $a $LOGFILER/$service
-  done
-  ;;
-esac

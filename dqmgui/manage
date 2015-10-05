@@ -29,12 +29,14 @@
 ##H -f flavor     Overide default flavor selected by server and domain.
 ##H               Flavors are: {online, offline, relval, dev}
 ##H For more details please refer to operations page:
-##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGuiProduction
+##H   https://twiki.cern.ch/twiki/bin/view/CMS/DQMGui
 
-echo_e=-e bsdstart=bsdstart
+echo_e=-e
+bsdstart=bsdstart
 case $(uname) in Darwin )
   md5sum() { md5 -r ${1+"$@"}; }
-  echo_e= bsdstart=start
+  echo_e=
+  bsdstart=start
   ;;
 esac
 
@@ -143,7 +145,7 @@ sdproc()
   title="$1" pat="$2"
   local title="$1" pat="$2"
   message $echo_e "${COLOR_OK}${newline}${title}:${COLOR_NORMAL}"
-  pgrep -u $(id -u) -f "$pat" | xargs -r ps -o pid=,bsdstart=,args= |
+  pgrep -u $(id -u) -f "$pat" | xargs -r ps -o pid=,$bsdstart=,args= |
     perl -p -e 'use Term::ANSIColor qw(:constants);s/^/  /; END { $. || print RED,"  (none running)", RESET, "\n" } ' |
     sort -k 4
   newline="\n"
@@ -215,10 +217,10 @@ start_webserver()
 {
   case $HOST:${1:-webserver} in
     *:*webserver* )
-      for cfg in $CONFIGS; do
-        [ ! -d $STATEDIR/$cfg/ix128 ] && \
-          (echo Creating index $STATEDIR/$cfg/ix128; visDQMIndex create $STATEDIR/$cfg/ix128)
-        monControl start all from $CFGDIR/server-conf-$cfg.py
+      for CONFIG in $CONFIGS; do
+        [ ! -d $STATEDIR/$CONFIG/ix128 ] && \
+          (echo Creating index $STATEDIR/$CONFIG/ix128; visDQMIndex create $STATEDIR/$CONFIG/ix128)
+        monControl start all from $CFGDIR/server-conf-$CONFIG.py
       done ;;
   esac
 }
@@ -323,7 +325,9 @@ start_agents_dqm_prod_local()
     visDQMImportDaemon \
     $DQM_DATA/agents/import-srv-c2f11-29-01 \
     $DQM_DATA/repository/original \
-    $STATEDIR/online/ix128
+    $STATEDIR/online/ix128 \
+    --rsync \
+    --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
   startagent $D/agent-sound \
     visDQMSoundAlarmDaemon \
@@ -403,14 +407,14 @@ start_agents_offline()
       --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-${D}-prod.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
 
@@ -468,14 +472,14 @@ start_agents_relval()
       --email broen.van.besien@cern.ch,marco.rovere@cern.ch
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-${D}-prod.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
 
@@ -539,14 +543,14 @@ start_agents_offline_relval_test()
     fi
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-${D}-test.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
 
@@ -588,14 +592,14 @@ start_agents_local_development()
       --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol
 
     startagent $D/agent-qcontrol \
-      visDQMRootFileQuotaControl \
+      visDQMRootFileQuotaControlDaemon \
       $DQM_DATA/agents/qcontrol \
       $DQM_DATA/agents/register \
       $DQM_DATA/data \
       $CFGDIR/rootfilequota-local-development.py
 
     startagent $D/agent-vcontrol \
-      visDQMVerControlDaemon \
+      visDQMRootFileVersionControlDaemon \
       $DQM_DATA/agents/vcontrol \
       $DQM_DATA/data
   done
@@ -623,24 +627,32 @@ start_collector()
 }
 
 # Stop the service.
+# When starting, the order is: server - agents - collector
+# When stopping, the order is: collector - agents - server
 stop()
 {
   message "stopping $ME/$FLAVOR ${1:-(default)}"
-  case ${1:-agents} in *agents* )
-    killproc "$ME file agents" "visDQM.*Daemon|visDQMZip|visDQMRootFileQuotaControl" ;;
-  esac
-  case ${1:-afs-sync} in *afs-sync* )
-    killproc "$ME afs sync" "visDQMAfsSync" ;;
-  esac
-  case ${1:-sound} in *sound* )
-    killproc "$ME sound alarm daemon " "visDQMSoundAlarmDaemon" ;;
-  esac
+  # Collector
   case ${1:-collector} in *collector* )
-    killproc "$ME collector" "DQMCollector"
+    killproc "$ME collector" "DQMCollector" ;;
   esac
+  # Agents
+  case ${1:-agents} in *agents* )
+    killproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*"
+    # The visDQMZipCastorStager and visDQMZipCastorVerifier agents keep their
+    # status in a persisted file. When we restart (and hence stop) these
+    # agents we want these files to be deleted. Otherwise it would be as if
+    # these processes would run for years and years, while it's probably a good
+    # idea to reset them from time to time.
+    for CONFIG in $CONFIGS; do
+      rm -rf $STATEDIR/$CONFIG/agents/stageout/new.pickle
+      rm -rf $STATEDIR/$CONFIG/agents/verify/state.pickle
+    done ;;
+  esac
+  # Server (render processes are killed with the server)
   case ${1:-webserver} in *webserver* )
-    for cfg in $CONFIGS; do
-      monControl stop all from $CFGDIR/server-conf-$cfg.py
+    for CONFIG in $CONFIGS; do
+      monControl stop all from $CFGDIR/server-conf-$CONFIG.py
     done ;;
   esac
 }
@@ -648,48 +660,58 @@ stop()
 # Check if the server is running.
 status()
 {
-  case ${1:-webserver} in *webserver* )
-    statproc "$ME webserver" "[/]monGui $CFGDIR" ;;
-  esac
-  case ${1:-renderer} in *renderer* )
-    statproc "$ME renderer" "visDQMRender" ;;
-  esac
+  # Collector
   case ${1:-collector} in *collector* )
     statproc "$ME collector" "DQMCollector" ;;
   esac
+  # Agents
+  case ${1:-agents} in *agents* )
+    statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip" ;;
+  esac
+  # Server
+  case ${1:-webserver} in *webserver* )
+    statproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  esac
+  # Part of the server are the render processes
+  case ${1:-renderer} in *renderer* )
+    statproc "$ME renderer" "visDQMRender" ;;
+  esac
+  # Extra thing to check: loggers
   case ${1:-logger} in *logger* )
     statproc "$ME loggers" "rotatelogs" ;;
-  esac
-  case ${1:-agents} in *agents* )
-    statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
   esac
 }
 
 # Give details of server components
 detailstatus()
 {
-  case ${1:-webserver} in *webserver* )
-    sdproc "$ME webserver" "[/]monGui $CFGDIR" ;;
-  esac
-  case ${1:-renderer} in *renderer* )
-    sdproc "$ME renderer" "visDQMRender" ;;
-  esac
+  # Collector
   case ${1:-collector} in *collector* )
     sdproc "$ME collector" "DQMCollector" ;;
   esac
+  # Agents
+  case ${1:-agents} in *agents* )
+    sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip" ;;
+  esac
+  # Server
+  case ${1:-webserver} in *webserver* )
+    sdproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  esac
+  # Part of the server are the render processes
+  case ${1:-renderer} in *renderer* )
+    sdproc "$ME renderer" "visDQMRender" ;;
+  esac
+  # Extra thing to check: loggers
   case ${1:-logger} in *logger* )
     sdproc "$ME loggers" "rotatelogs" ;;
-  esac
-  case ${1:-agents} in *agents* )
-    sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Verifier|visDQMIndex|zip|visDQMRootFileQuotaControl" ;;
   esac
 }
 
 # (Re)compile render plugins.
 compile()
 {
-  for cfg in $CONFIGS; do
-    monControl rebuild all from $CFGDIR/server-conf-$cfg.py
+  for CONFIG in $CONFIGS; do
+    monControl rebuild all from $CFGDIR/server-conf-$CONFIG.py
   done
 }
 
@@ -711,8 +733,8 @@ indexbackup()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/ixbackup/$D
         ;;
     esac
-    # We run the backup everwhere when the backup method is called,
-    # expect for the offline and relval flavor on the dev server.
+    # We run the backup everywhere when the backup method is called,
+    # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
       vocms0131:offline | vocms0131:relval )
 	;;
@@ -750,8 +772,8 @@ zipbackup()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
         ;;
     esac
-    # We run the backup everwhere when the backup method is called,
-    # expect for the offline and relval flavor on the dev server.
+    # We run the backup everywhere when the backup method is called,
+    # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
       vocms0131:offline | vocms0131:relval )
 	;;
@@ -787,8 +809,8 @@ zipbackupcheck()
         CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
         ;;
     esac
-    # We run the backup everwhere when the backup method is called,
-    # expect for the offline and relval flavor on the dev server.
+    # We run the backup everywhere when the backup method is called,
+    # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
       vocms0131:offline | vocms0131:relval )
 	;;
