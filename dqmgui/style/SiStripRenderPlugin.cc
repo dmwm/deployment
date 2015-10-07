@@ -201,6 +201,15 @@ private:
 	return;
       }
 
+	  if( (o.name.find( "Number" ) != std::string::npos) && (o.name.find( "VsPhiVsEtaPerTrack" )  != std::string::npos) )
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+	return;
+      }
+
+
 	if( o.name.find( "TrackCandPhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
