@@ -19,6 +19,16 @@ deploy_frontend_sw()
     deploy_frontend_fakeauth $project_auth/users.db
   fi
 
+  # New mod_perl2 version contains breaking api changes, fix it here
+  # while supporting both old and new architecture
+  case $arch in
+    slc6_amd64_gcc493 )
+      perl -p -i -e 's|connection->remote_addr|connection->client_addr|g' \
+           $root/$cfgversion/config/$project/cmsauth.pm
+      ;;
+    * )
+      ;;
+  esac
 }
 
 deploy_frontend_post()
