@@ -93,7 +93,8 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^Hcal/', '',
 				 'Hcal/Layouts/12 HCAL HBHE Timing Shifts on RecHit Level',
 				 'Hcal/Layouts/13 HCAL Occupancies vs LS',
 				 'Hcal/Layouts/14 HCAL HF Timing',
-				 'Hcal/Layouts/15 HCAL HBHE RecHit Timing'
+				 'Hcal/Layouts/15 HCAL HBHE RecHit Timing',
+				 "Hcal/Layouts/16 HCAL D1&D2 Digi and RecHit Occupancies with Cuts"
                  )
 
 server.workspace('DQMContent',30,'Calorimeter','HCALcalib', '^HcalCalib/', '',
