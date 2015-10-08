@@ -252,5 +252,23 @@ hcallayout(dqmitems, "16 HCAL D1&D2 Digi and RecHit Occupancies with Cuts",
 	]
 )
 
+hcallayout(dqmitems, "17 HCAL HFP&HFM RecHit iphi-dependent Occupancies",
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HF_iphiOccupancyRatios",
+			"description" : "For each uHTR, the overall occupancy is being calculated and then compared to the neighbors. During PHYSICS, we should observe stability of at least 20%(ratios should be >0.8)"
+		}
+	],
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFM_OccupancyVSiphi",
+			"description" : "Occupancy vs iphi Plot for HFM. integrated over ieta"
+		},
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFP_OccupancyVSiphi",
+			"description" : "Occupancy vs iphi Plot for HFP. integrated over ieta"
+		}
+	]
+)
 
 
