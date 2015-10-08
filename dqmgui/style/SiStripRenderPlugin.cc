@@ -209,7 +209,6 @@ private:
 	return;
       }
 
-
       if( o.name.find( "SeedsVsClusters" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
@@ -389,21 +388,13 @@ private:
         return;
       }
 
-      if( o.name.find( "NumberOfRecHitVsPhiVsEta" )  != std::string::npos)
+      if( o.name.find( "VsPhiVsEtaPerTrack" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
       return;
     }
-
-      if( o.name.find( "NumberOfLayersVsPhiVsEta" ) != std::string::npos )
-      {
-        obj->SetStats( kFALSE );
-        gStyle->SetPalette(1,0);
-        obj->SetOption("colz");
-	return;
-      }
 
 	  if( o.name.find( "StripClusVsBXandOrbit" ) != std::string::npos)
       {
