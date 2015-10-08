@@ -4,7 +4,6 @@ deploy_acdcserver_variants="default prod preprod dev"
 deploy_acdcserver_deps()
 {
   deploy $stage couchdb
-  deploy $stage bigcouch
 }
 
 deploy_acdcserver_prep()
@@ -30,7 +29,7 @@ deploy_acdcserver_post()
 {
   # Tell couch to push acdcserver apps on the next restart
   local manage=$project_config/acdcserver_manage
-  for couch in couchdb:5984 bigcouch:5985; do
+  for couch in couchdb:5984; do
     echo "couchapp push $root/current/apps/acdcserver/data/couchapps/ACDC" \
          "http://localhost:${couch##*:}/acdcserver" > $root/state/${couch%%:*}/stagingarea/acdcserver
     echo "couchapp push $root/current/apps/acdcserver/data/couchapps/GroupUser" \
