@@ -229,7 +229,46 @@ hcallayout(dqmitems, "15 HCAL HBHE RecHit Timing",
 	]
 )
 
+hcallayout(dqmitems, "16 HCAL D1&D2 Digi and RecHit Occupancies with Cuts",
+	[
+		{
+			"path" : "Hcal/HcalDigiTask/HBHEHF_OccupancyMapD1_ZSCut",
+			"description" : "HBHEHF D1 Digi Occupancy after applying 3TS cut of 20nom fC"
+		},
+		{
+			"path" : "Hcal/HcalDigiTask/HBHEHF_OccupancyMapD2_ZSCut",
+			"description" : "HBHEHF D2 Digi Occupancy after applying 3TS cut of 20nom fC"
+		}
+	],
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HBHEHFD1_RecHitOccupancy",
+			"description" : "HBHEHF D1 RecHit Occupancy after applying 5GeV Cut"
+		},
+		{
+			"path" : "Hcal/HcalRecHitTask/HBHEHFD2_RecHitOccupancy",
+			"description" : "HBHEHF D2 RecHit Occupancy after applying 5GeV Cut"
+		}
+	]
+)
 
-
+hcallayout(dqmitems, "17 HCAL HFP&HFM RecHit iphi-dependent Occupancies",
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HF_iphiOccupancyRatios",
+			"description" : "For each uHTR, the overall occupancy is being calculated and then compared to the neighbors. During PHYSICS, we should observe stability of at least 20%(ratios should be >0.8)"
+		}
+	],
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFM_OccupancyVSiphi",
+			"description" : "Occupancy vs iphi Plot for HFM. integrated over ieta"
+		},
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFP_OccupancyVSiphi",
+			"description" : "Occupancy vs iphi Plot for HFP. integrated over ieta"
+		}
+	]
+)
 
 
