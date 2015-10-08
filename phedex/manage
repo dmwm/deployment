@@ -44,7 +44,7 @@ for app in PHEDEX-{datasvc,web,webapp}; do
   . $ROOT/apps/$app/etc/profile.d/init.sh
 done
 PHEDEX_GRAPHS_ROOT=$PHEDEX_WEB_ROOT/Documentation/WebSite/PlotConfig
-GLOBAL_GRAPHS_ROOT=$WEBTOOLS_ROOT/lib/python2.6/site-packages/Tools/GraphTool
+GLOBAL_GRAPHS_ROOT=$WEBTOOLS_ROOT/lib/python`echo $PYTHON_VERSION | cut -f1,2 -d.`/site-packages/Tools/GraphTool
 export PYTHONPATH=$PHEDEX_GRAPHS_ROOT/src:$GLOBAL_GRAPHS_ROOT/src:$PYTHONPATH
 export GLOBAL_GRAPHS_ROOT # for the .xml files
 export MPLCONFIGDIR=$STATEDIR

@@ -40,11 +40,12 @@ COLOR_NORMAL="\\033[0;39m"
 
 export DAS_ROOT YUI_ROOT
 export PYTHONUNBUFFERED=1
-export DAS_PYTHONPATH=$DAS_ROOT/lib/python2.6/site-packages
-export DAS_JSPATH=$DAS_ROOT/lib/python2.6/site-packages/src/js
-export DAS_CSSPATH=$DAS_ROOT/lib/python2.6/site-packages/src/css
-export DAS_TMPLPATH=$DAS_ROOT/lib/python2.6/site-packages/src/templates
-export DAS_IMAGESPATH=$DAS_ROOT/lib/python2.6/site-packages/src/images
+PYTHONV=`echo $PYTHON_VERSION | cut -f1,2 -d.`
+export DAS_PYTHONPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages
+export DAS_JSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/js
+export DAS_CSSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/css
+export DAS_TMPLPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/templates
+export DAS_IMAGESPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/images
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
