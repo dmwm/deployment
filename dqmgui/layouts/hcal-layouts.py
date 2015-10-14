@@ -252,5 +252,29 @@ hcallayout(dqmitems, "16 HCAL D1&D2 Digi and RecHit Occupancies with Cuts",
 	]
 )
 
+hcallayout(dqmitems, "17 HCAL RAW Evn/Bcn Mismatches",
+	[
+		{
+			"path" : "Hcal/HcalRawTask/uTCA/uTCA_CratesVSslots_dBcN",
+			"description" : "uTCA Crates BCN Mistmaches"
+		},
+		{
+			"path" : "Hcal/HcalRawTask/uTCA/uTCA_CratesVSslots_dEvN",
+			"description" : "uTCA Crates EVN Mistmaches"
+		}
+	]
+)
 
+hcallayout(dqmitems, "18 HCAL HF Data/Emul TP Et Mismatches",
+	[
+		{
+			"path" : "Hcal/HcalTPTask/HF/HF_SOI_Et_Correlation",
+			"description" : "HF Et Correlation for Data vs Emulator"
+		},
+		{
+			"path" : "Hcal/HcalTPTask/HBHEHF_Mismatch_SOIEt",
+			"description" : "HBHEHF Map of SOI Et Mismatches"
+		}
+	]
+)
 
