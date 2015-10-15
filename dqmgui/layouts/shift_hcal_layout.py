@@ -254,7 +254,50 @@ shifthcallayout(dqmitems, "16 HCAL D1&D2 Digi and RecHit Occupancies with Cuts",
 	]
 )
 
+shifthcallayout(dqmitems, "17 HCAL HFP&HFM RecHit iphi-dependent Occupancies Tracking",
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HF_iphiOccupancyRatios",
+			"description" : "HFP&HFM uHTR Occupancy Ratios with neighboring uHTR in terms of iphi"
+		}
+	],
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFM_OccupancyVSiphi",
+			"description" : "HFM Occupancy vs iphi"
+		},
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFP_OccupancyVSiphi",
+			"description" : "HFP Occupancy vs iphi"
+		}
+	]
+)
 
+shifthcallayout(dqmitems, "18 HCAL RAW Evn&Bcn Mismatches",
+	[
+		{
+			"path" : "Hcal/HcalRawTask/uTCA/uTCA_CratesVSslots_dBcN",
+			"description" : "uTCA Crates BCN Mismatches"
+		},
+		{
+			"path" : "Hcal/HcalRawTask/uTCA/uTCA_CratesVSslots_dEvN",
+			"description" : "uTCA Crates EVN Mismatches"
+		}
+	]
+)
+
+shifthcallayout(dqmitems, "19 HCAL HF Data&Emul TP Et Mismatches",
+	[
+		{
+			"path" : "Hcal/HcalTPTask/HF/HF_SOI_Et_Correlation",
+			"description" : "HF Et Correlation for Data vs Emulator"
+		},
+		{
+			"path" : "Hcal/HcalTPTask/HBHEHF_Mismatch_SOIEt",
+			"description" : "HBHEHF Map of SOI Et Mismatches"
+		}
+	]
+)
 
 
 
