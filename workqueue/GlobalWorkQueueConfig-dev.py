@@ -20,7 +20,7 @@ HOST = socket.getfqdn().lower()
 if re.match(r"^vocms0127\.cern\.ch$", HOST):
   ALIAS = "cmsweb-dev.cern.ch"
 elif re.match(r"^vocms0126\.cern\.ch$", HOST):
-  ALIAS = "cmsweb-dev2.cern.ch"
+  ALIAS = "cmsweb-sec.cern.ch"
 else:
   ALIAS = HOST
 

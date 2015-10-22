@@ -56,7 +56,7 @@ deploy_frontend_post()
     dev )
       opts="-DTEST" 
       case $host in
-        vocms0126 ) name="-n cmsweb-dev2.cern.ch";;
+        vocms0126 ) name="-n cmsweb-sec.cern.ch";;
         * ) name="-n cmsweb-dev.cern.ch";;
       esac
       backends=backends-dev.txt ;;
