@@ -3,7 +3,6 @@ deploy_asyncstageout_variants="default offsite"
 deploy_asyncstageout_deps()
 {
   deploy $stage couchdb
-  case $variant in offsite ) ;; * ) deploy $stage bigcouch ;; esac
 }
 
 deploy_asyncstageout_prep()
@@ -42,7 +41,7 @@ deploy_asyncstageout_post()
       ;;
     default )
       # Tell couch to push the AlertsCollector couchapp on the next restart
-      for couch in couchdb:5984 bigcouch:5985; do
+      for couch in couchdb:5984; do
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/AsyncTransfer" \
              "http://localhost:${couch##*:}/asynctransfer" \

@@ -13,7 +13,6 @@ deploy_alertscollector_deps()
       ;;
     * )
       deploy $stage couchdb default
-      deploy $stage bigcouch default
       ;;
   esac
 }
@@ -31,7 +30,7 @@ deploy_alertscollector_sw()
 deploy_alertscollector_post()
 {
   # Tell couch to push the AlertsCollector couchapp on the next restart
-  for couch in couchdb:5984 bigcouch:5985; do
+  for couch in couchdb:5984; do
     echo "couchapp push " \
          "$root/$cfgversion/apps.$glabel/alertscollector/data/couchapps/AlertsCollector" \
          "http://localhost:${couch##*:}/alertscollector" \

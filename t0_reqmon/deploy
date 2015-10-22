@@ -28,7 +28,7 @@ deploy_t0_reqmon_sw()
     prod )    base_url="https://cmsweb.cern.ch"         ;;
     preprod ) base_url="https://cmsweb-testbed.cern.ch" ;;
     dev )     case $host in
-                vocms0126 ) base_url="https://cmsweb-dev2.cern.ch";;
+                vocms0126 ) base_url="https://cmsweb-sec.cern.ch";;
                 * )         base_url="https://cmsweb-dev.cern.ch";;
               esac
               ;;

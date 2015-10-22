@@ -130,6 +130,21 @@ class SystemMonitor(Monitor):
         pass
       return msg
 
+    def safefield(field, f):
+      try:
+        return f()
+      except Exception, e:
+        if can_talk:
+          logmsg(svc, "SYSTEM", "IGNORE", "failed to get %s field information: %s" % (field, str(e).replace("\n", "; ")))
+        pass
+        return 0
+
+    def addfield(dic, field, value):
+      try:
+        dic[field] += value
+      except:
+        dic[field] = value
+
     def swap_info(proc):
       f = open("/proc/" + str(proc.pid) + "/status")
       match = re.search("VmSwap:\s+([0-9]+)\skB", f.read())
@@ -140,6 +155,8 @@ class SystemMonitor(Monitor):
 
     if not psutil:
       return
+
+    data = {'processes': 0}
     for proc in psutil.process_iter():
       if proc.username() != svc:
         continue
@@ -147,36 +164,49 @@ class SystemMonitor(Monitor):
       name = cmd.split('/')[-1]
       if proc_name and not re.search(proc_name, cmd):
         continue
-      msg  = 'PID: %s, NAME: %s, STATUS: %s' % (proc.pid, name, proc.status())
       mem_info = proc.memory_info()
       cpu_info = proc.cpu_times()
+      data['processes'] += 1
       for field in activity:
         field = field.strip()
         if field == 'cpu':
-          msg += ', CPU: %3.1f%%' % proc.cpu_percent(interval=1.0)
+          addfield(data, field, proc.cpu_percent())
         elif field == 'mem':
-          msg += ', MEM: %3.1f%%' % proc.memory_percent()
+          addfield(data, field, proc.memory_percent())
         elif field == 'swp':
-          msg += ', SWP: %3.1f%%' % swap_percent(proc)
+          addfield(data, field, swap_percent(proc))
         elif field == 'user':
-          msg += ', USER: %s' % cpu_info.user
+          addfield(data, field, cpu_info.user)
         elif field == 'system':
-          msg += ', SYSTEM: %s' % cpu_info.system
+          addfield(data, field, cpu_info.system)
         elif field == 'rss':
-          msg += ', RSS: %s' % mem_info.rss
+          addfield(data, field, mem_info.rss)
         elif field == 'vms':
-          msg += ', VMS: %s' % mem_info.vms
+          addfield(data, field, mem_info.vms)
         elif field == 'swap':
-          msg += ', SWAP: %s' % swap_info(proc)
+          addfield(data, field, swap_info(proc))
         elif field == 'threads':
-          msg += safemsg(field, proc.num_threads)
+          addfield(data, field, safefield('threads', proc.num_threads))
         elif field == 'connections':
-          msg += safemsg(field, proc.get_connections)
+          addfield(data, field, safefield('connections', proc.connections))
         elif field == 'io':
-          msg += safemsg(field, proc.get_io_counters)
+          addfield(data, field, safefield('io', proc.io_counters))
         elif field == 'files':
-          msg += safemsg(field, proc.get_open_files)
-      logmsg(svc, "SYSTEM", msg)
+          addfield(data, field, safefield('files', proc.open_files))
+
+    if data['processes'] < 1:
+      return
+    msg  = 'PROCESSES: %s' % str(data['processes'])
+    for field in activity:
+      field = field.strip()
+      if field in ['pid', 'name', 'status']:
+        continue
+      if field in ['cpu', 'mem', 'swp']:
+        msg += ', %s: %3.1f%%' % (field.upper(), data[field])
+      else:
+        msg += ', %s: %s' % (field.upper(), data[field])
+
+    logmsg(svc, "SYSTEM", msg)
 
 class ProcessMonitor(Monitor):
   """Monitor which looks for process command lines matching a regexp.

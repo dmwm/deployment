@@ -10,8 +10,7 @@ deploy_reqmgr_deps()
       deploy $stage couchdb offsite
       deploy $stage wmcore ;;
     * )
-      deploy $stage couchdb
-      deploy $stage bigcouch ;;
+      deploy $stage couchdb ;;
   esac
   deploy $stage reqmon $variant
   deploy $stage acdcserver $variant
@@ -72,7 +71,7 @@ deploy_reqmgr_post()
     * )
       # Tell couch to pick up reqmgr on the next restart
       local reqmgrapp=$root/current/apps/reqmgr
-      for couch in couchdb:5984 bigcouch:5985; do
+      for couch in couchdb:5984; do
         echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr" \
              "http://localhost:${couch##*:}/reqmgr_workload_cache" \
           > $root/state/${couch%%:*}/stagingarea/reqmgr

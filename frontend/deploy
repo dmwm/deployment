@@ -19,6 +19,16 @@ deploy_frontend_sw()
     deploy_frontend_fakeauth $project_auth/users.db
   fi
 
+  # New mod_perl2 version contains breaking api changes, fix it here
+  # while supporting both old and new architecture
+  case $arch in
+    slc6_amd64_gcc493 )
+      perl -p -i -e 's|connection->remote_addr|connection->client_addr|g' \
+           $root/$cfgversion/config/$project/cmsauth.pm
+      ;;
+    * )
+      ;;
+  esac
 }
 
 deploy_frontend_post()
@@ -46,7 +56,7 @@ deploy_frontend_post()
     dev )
       opts="-DTEST" 
       case $host in
-        vocms0126 ) name="-n cmsweb-dev2.cern.ch";;
+        vocms0126 ) name="-n cmsweb-sec.cern.ch";;
         * ) name="-n cmsweb-dev.cern.ch";;
       esac
       backends=backends-dev.txt ;;

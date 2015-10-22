@@ -42,8 +42,9 @@ private :
   TH2C* ebSMLabels;
   TH2C* ebSMShiftedLabels;
 
-  TH2C* eemTTLabels;
-  TH2C* eepTTLabels;
+  TH2C* eeTTLabels;
+  TH2C* eemTCCLabels;
+  TH2C* eepTCCLabels;
   TH2C* eemSCLabels;
   TH2C* eepSCLabels;
   TH2C* eemSMLabels;
@@ -59,6 +60,7 @@ private :
   TLine* eeTCCSectors[707];
   TLine* eeTTSectors[2413];
   TLine* ecalSubdetPartitions[3];
+  TLine* ecalRCTSectors[36];
 
   TObjArray* eeDCCArray[10];
   TObjArray* eeTCCArray[10];
@@ -72,6 +74,9 @@ private :
 
   TGaxis* timingAxis;
   TGaxis* ebpSMPhiAxis[18];
+  TGaxis* rctEtaAxis;
+  TGaxis* rctPhiAxis;
+  TGaxis* ecalEtaAxis;
 
 public :
   EcalRenderPlugin();
@@ -115,11 +120,13 @@ private :
   enum BinningType{
     kCrystal,
     kTriggerTower,
+    kPseudoStrip,
     kSuperCrystal,
     kTCC,
     kDCC,
     kProjEta,
     kProjPhi,
+    kRCT,
     kUser,
     kReport,
     kTrend,
@@ -134,8 +141,9 @@ EcalRenderPlugin::EcalRenderPlugin() :
   ebTTLabels(0),
   ebSMLabels(0),
   ebSMShiftedLabels(0),
-  eemTTLabels(0),
-  eepTTLabels(0),
+  eeTTLabels(0),
+  eemTCCLabels(0),
+  eepTCCLabels(0),
   eemSCLabels(0),
   eepSCLabels(0),
   eemSMLabels(0),
@@ -149,7 +157,10 @@ EcalRenderPlugin::EcalRenderPlugin() :
   accumPalette(),
   timingPalette(),
   pedestalPalette(),
-  timingAxis(0)
+  timingAxis(0),
+  rctEtaAxis(0),
+  rctPhiAxis(0),
+  ecalEtaAxis(0)
 {
   for(int i(0); i < 330; ++i)
     eeDCCSectors[i] = 0;
@@ -159,6 +170,8 @@ EcalRenderPlugin::EcalRenderPlugin() :
     eeTTSectors[i] = 0;
   for(int i(0); i < 3; ++i)
     ecalSubdetPartitions[i] = 0;
+  for(int i(0); i < 36; ++i)
+    ecalRCTSectors[i] = 0;
 
   for(int i(0); i < 10; ++i){
     eeDCCArray[i] = 0;
@@ -177,8 +190,9 @@ EcalRenderPlugin::~EcalRenderPlugin()
   delete ebTTLabels;
   delete ebSMLabels;
   delete ebSMShiftedLabels;
-  delete eemTTLabels;
-  delete eepTTLabels;
+  delete eeTTLabels;
+  delete eemTCCLabels;
+  delete eepTCCLabels;
   delete eemSCLabels;
   delete eepSCLabels;
   delete eemSMLabels;
@@ -201,7 +215,9 @@ EcalRenderPlugin::~EcalRenderPlugin()
     delete eeTTSectors[i];
   for(int i(0); i < 3; ++i)
     delete ecalSubdetPartitions[i];
-
+  for(int i(0); i < 36; ++i)
+    delete ecalRCTSectors[i];
+ 
   for(int i(0); i < 10; ++i){
     delete eeDCCArray[i];
     delete eeTCCArray[i];
@@ -324,8 +340,9 @@ EcalRenderPlugin::initialise(int, char **)
   ebSMLabels = new TH2C("ebSMLabels", "ebSMLabels", 18, 0., 360., 2, -85., 85.);
   ebSMShiftedLabels = new TH2C("ebSMShiftedLabels", "ebSMShiftedLabels", 18, -3.6652, 2.6180, 2, -1.479, 1.479);
 
-  eemTTLabels = new TH2C("eemTTLabels", "eemTTLabels", 100, 0., 100., 100, 0., 100.);
-  eepTTLabels = new TH2C("eepTTLabels", "eepTTLabels", 100, 0., 100., 100, 0., 100.);
+  eeTTLabels = new TH2C("eeTTLabels", "eeTTLabels", 100, 0., 100., 100, 0., 100.);
+  eemTCCLabels = new TH2C("eemTCCLabels", "eemTCCLabels", 100, 0., 100., 100, 0., 100.);
+  eepTCCLabels = new TH2C("eepTCCLabels", "eepTCCLabels", 100, 0., 100., 100, 0., 100.);
   eemSCLabels = new TH2C("eemSCLabels", "eemSCLabels", 22, -5., 105., 22, -5., 105.);
   eepSCLabels = new TH2C("eepSCLabels", "eepSCLabels", 22, -5., 105., 22, -5., 105.);
   eemSMLabels = new TH2C("eemSMLabels", "eemSMLabels", 10, 0., 100., 10, 0., 100.);
@@ -341,8 +358,9 @@ EcalRenderPlugin::initialise(int, char **)
   ebSMLabels->SetDirectory(gROOT);
   ebSMShiftedLabels->SetDirectory(gROOT);
 
-  eemTTLabels->SetDirectory(gROOT);
-  eepTTLabels->SetDirectory(gROOT);
+  eeTTLabels->SetDirectory(gROOT);
+  eemTCCLabels->SetDirectory(gROOT);
+  eepTCCLabels->SetDirectory(gROOT);
   eemSCLabels->SetDirectory(gROOT);
   eepSCLabels->SetDirectory(gROOT);
   eemSMLabels->SetDirectory(gROOT);
@@ -358,8 +376,9 @@ EcalRenderPlugin::initialise(int, char **)
   ebSMLabels->SetMinimum(-18.1);
   ebSMShiftedLabels->SetMinimum(-18.1);
 
-  eemTTLabels->SetMinimum(0.1);
-  eepTTLabels->SetMinimum(0.1);
+  eeTTLabels->SetMinimum(0.1);
+  eemTCCLabels->SetMinimum(0.1);
+  eepTCCLabels->SetMinimum(0.1);
   eemSCLabels->SetMinimum(0.1);
   eepSCLabels->SetMinimum(0.1);
   eemSMLabels->SetMinimum(-9.1);
@@ -402,9 +421,17 @@ EcalRenderPlugin::initialise(int, char **)
   int iyTT[] = {54, 58, 61, 64, 69, 74, 77, 79, 84, 87, 91, 92, 94, 95, 97, 97, 99, 99, 99, 99, 97, 96, 94, 94, 91, 91, 86, 84, 79, 77, 74, 69, 64, 61, 57, 52, 47, 43, 40, 37, 32, 27, 24, 22, 17, 14, 10, 9, 7, 6, 4, 4, 2, 2, 2, 2, 4, 5, 7, 7, 10, 10, 15, 17, 22, 24, 27, 32, 37, 40, 44, 49, 52, 57, 61, 65, 69, 72, 75, 78, 81, 84, 87, 89, 91, 92, 94, 94, 96, 96, 96, 95, 94, 94, 92, 91, 89, 86, 85, 82, 78, 75, 72, 68, 64, 60, 57, 52, 49, 44, 40, 36, 32, 29, 26, 23, 19, 16, 14, 12, 10, 9, 7, 7, 5, 5, 5, 6, 7, 7, 9, 10, 12, 15, 16, 19, 23, 26, 29, 33, 37, 41, 44, 49, 52, 57, 60, 64, 67, 70, 73, 76, 78, 81, 84, 85, 87, 89, 90, 91, 92, 92, 91, 91, 91, 90, 89, 87, 85, 84, 81, 78, 76, 73, 70, 67, 64, 60, 57, 52, 49, 44, 41, 37, 34, 31, 28, 25, 23, 20, 17, 16, 14, 12, 11, 10, 9, 9, 10, 10, 10, 11, 12, 14, 16, 17, 20, 23, 25, 28, 31, 34, 37, 41, 44, 49, 53, 56, 59, 62, 66, 68, 71, 74, 76, 78, 81, 82, 84, 87, 87, 87, 87, 88, 88, 87, 87, 87, 86, 84, 82, 81, 78, 76, 74, 71, 67, 65, 62, 59, 56, 52, 48, 45, 42, 39, 35, 33, 30, 27, 25, 23, 20, 19, 17, 14, 14, 14, 14, 13, 13, 14, 14, 14, 15, 17, 19, 20, 23, 25, 27, 30, 34, 36, 39, 42, 45, 49, 52, 56, 58, 61, 64, 67, 69, 72, 73, 75, 78, 79, 80, 82, 84, 83, 84, 85, 85, 84, 83, 83, 82, 80, 79, 78, 75, 74, 72, 69, 67, 64, 61, 58, 55, 52, 49, 45, 43, 40, 37, 34, 32, 29, 28, 26, 23, 22, 21, 19, 17, 18, 17, 16, 16, 17, 18, 18, 19, 21, 22, 23, 26, 27, 29, 32, 34, 37, 40, 43, 46, 49, 52, 54, 57, 59, 62, 64, 67, 69, 71, 74, 76, 77, 78, 79, 80, 80, 80, 82, 81, 80, 80, 79, 79, 77, 77, 75, 73, 71, 69, 66, 64, 62, 59, 57, 54, 52, 49, 47, 44, 42, 39, 37, 34, 32, 30, 27, 25, 24, 23, 22, 21, 21, 21, 19, 20, 21, 21, 22, 22, 24, 24, 26, 28, 30, 32, 35, 37, 39, 42, 44, 47, 49, 52, 54, 57, 59, 62, 64, 66, 67, 69, 71, 72, 74, 74, 76, 77, 77, 77, 77, 77, 77, 77, 77, 75, 74, 74, 72, 70, 69, 67, 66, 63, 62, 59, 56, 54, 51, 49, 47, 44, 42, 39, 37, 35, 34, 32, 30, 29, 27, 27, 25, 24, 24, 24, 24, 24, 24, 24, 24, 26, 27, 27, 29, 31, 32, 34, 35, 38, 39, 42, 45, 47, 50, 52, 54, 55, 58, 59, 62, 64, 65, 67, 68, 69, 71, 72, 72, 74, 74, 74, 74, 74, 74, 73, 74, 72, 72, 71, 69, 69, 67, 64, 63, 61, 59, 58, 55, 53, 51, 49, 47, 46, 43, 42, 39, 37, 36, 34, 33, 32, 30, 29, 29, 27, 27, 27, 27, 27, 27, 28, 27, 29, 29, 30, 32, 32, 34, 37, 38, 40, 42, 43, 46, 48, 50, 52, 54, 55, 57, 59, 60, 61, 62, 64, 66, 67, 68, 69, 69, 69, 69, 71, 71, 71, 71, 69, 69, 69, 68, 68, 67, 65, 64, 62, 61, 60, 58, 56, 54, 54, 51, 49, 47, 46, 44, 42, 41, 40, 39, 37, 35, 34, 33, 32, 32, 32, 32, 30, 30, 30, 30, 32, 32, 32, 33, 33, 34, 36, 37, 39, 40, 41, 43, 45, 47, 47, 50, 52, 54, 57, 60, 62, 64, 66, 67, 67, 66, 66, 66, 64, 62, 59, 57, 54, 52, 49, 47, 44, 41, 39, 37, 35, 34, 34, 35, 35, 35, 37, 39, 42, 44, 47, 49, 52, 54, 56, 59, 59, 62, 62, 63, 64, 64, 63, 62, 62, 59, 59, 56, 54, 52, 49, 47, 45, 42, 42, 39, 39, 38, 37, 37, 38, 39, 39, 42, 42, 45, 47, 49};
   int iTT[] = {3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 7, 8, 5, 6, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 11, 12, 9, 10, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 15, 16, 13, 14, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 19, 20, 17, 18, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 23, 21, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25, 27, 25};
 
+  int ixTCC[] = {92, 90, 83, 72, 59, 43, 30, 19, 12, 9, 12, 19, 30, 43, 59, 72, 83, 90, 77, 76, 72, 65, 56, 46, 36, 30, 25, 24, 24, 29, 36, 46, 56, 65, 71, 77};
+  int iyTCC[] = {51, 65, 77, 86, 91, 91, 86, 77, 66, 51,36, 24, 15, 10, 10, 15, 24, 35, 49, 60, 68, 74, 77, 77, 74, 68, 60, 50, 40, 33, 27, 24, 24, 27, 33, 40};
+  int imTCC[] = {19, 20, 21, 22, 23, 24, 25, 26, 27, 28,29, 30, 31, 32, 33, 34, 35, 36, 1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15, 16, 17, 18};
+  int ipTCC[] = {73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108}; 
+
   for(unsigned i = 0; i < 720; i++){
-    eemTTLabels->SetBinContent(ixTT[i], iyTT[i], iTT[i]);
-    eepTTLabels->SetBinContent(ixTT[i], iyTT[i], iTT[i]);
+    eeTTLabels->SetBinContent(ixTT[i], iyTT[i], iTT[i]);
+  }
+  for(unsigned i = 0; i < 36; i++){
+    eemTCCLabels->SetBinContent(ixTCC[i], iyTCC[i], imTCC[i]);
+    eepTCCLabels->SetBinContent(ixTCC[i], iyTCC[i], ipTCC[i]);
   }
 
   // 484 entries
@@ -521,8 +548,9 @@ EcalRenderPlugin::initialise(int, char **)
   ebSMLabels->SetMarkerSize(2);
   ebSMShiftedLabels->SetMarkerSize(2);
 
-  eemTTLabels->SetMarkerSize(0.9);
-  eepTTLabels->SetMarkerSize(0.9);
+  eeTTLabels->SetMarkerSize(0.9);
+  eemTCCLabels->SetMarkerSize(2);
+  eepTCCLabels->SetMarkerSize(2);
   eemSCLabels->SetMarkerSize(2);
   eepSCLabels->SetMarkerSize(2);
   eemSMLabels->SetMarkerSize(2);
@@ -557,11 +585,13 @@ EcalRenderPlugin::initialise(int, char **)
   for(int i(0); i < 357; i++){
     eeTCCSectors[i] = new TLine(hLinesTCC[i][1], hLinesTCC[i][0], hLinesTCC[i][2], hLinesTCC[i][0]);
     eeTCCSectors[i]->SetLineStyle(2);
+    eeTCCSectors[i]->SetLineWidth(2);
   }
   int vLinesTCC[350][3] = {{5, 41, 42}, {5, 58, 59}, {10, 25, 27}, {10, 73, 75}, {11, 27, 28}, {11, 42, 43}, {11, 57, 58}, {11, 72, 73}, {13, 49, 51}, {14, 28, 29}, {14, 43, 44}, {14, 46, 49}, {14, 51, 54}, {14, 56, 57}, {14, 71, 72}, {15, 29, 30}, {15, 38, 46}, {15, 54, 62}, {15, 70, 71}, {16, 30, 31}, {16, 37, 38}, {16, 62, 63}, {16, 69, 70}, {17, 35, 37}, {17, 43, 44}, {17, 56, 57}, {17, 63, 65}, {18, 31, 32}, {18, 34, 35}, {18, 44, 45}, {18, 55, 56}, {18, 65, 66}, {18, 68, 69}, {19, 31, 34}, {19, 66, 69}, {20, 13, 15}, {20, 29, 32}, {20, 68, 71}, {20, 85, 87}, {21, 15, 17}, {21, 28, 29}, {21, 32, 33}, {21, 67, 68}, {21, 71, 72}, {21, 83, 85}, {22, 27, 28}, {22, 33, 35}, {22, 65, 67}, {22, 72, 73}, {23, 17, 18}, {23, 26, 27}, {23, 73, 74}, {23, 82, 83}, {24, 25, 26}, {24, 74, 75}, {25, 18, 21}, {25, 24, 25}, {25, 35, 36}, {25, 45, 46}, {25, 54, 55}, {25, 64, 65}, {25, 75, 76}, {25, 79, 82}, {26, 23, 24}, {26, 76, 77}, {27, 21, 24}, {27, 36, 37}, {27, 46, 47}, {27, 53, 54}, {27, 63, 64}, {27, 76, 79}, {28, 21, 22}, {28, 37, 38}, {28, 46, 47}, {28, 53, 54}, {28, 62, 63}, {28, 78, 79}, {29, 20, 21}, {29, 24, 25}, {29, 45, 46}, {29, 54, 55}, {29, 75, 76}, {29, 79, 80}, {30, 25, 27}, {30, 38, 40}, {30, 45, 47}, {30, 53, 55}, {30, 60, 62}, {30, 73, 75}, {31, 19, 20}, {31, 27, 28}, {31, 72, 73}, {31, 80, 81}, {32, 28, 30}, {32, 46, 47}, {32, 53, 54}, {32, 70, 72}, {33, 5, 6}, {33, 46, 47}, {33, 53, 54}, {33, 94, 95}, {34, 6, 9}, {34, 18, 19}, {34, 47, 48}, {34, 52, 53}, {34, 81, 82}, {34, 91, 94}, {35, 9, 12}, {35, 17, 18}, {35, 30, 33}, {35, 40, 42}, {35, 47, 48}, {35, 52, 53}, {35, 58, 60}, {35, 67, 70}, {35, 82, 83}, {35, 88, 91}, {36, 13, 14}, {36, 86, 87}, {37, 12, 13}, {37, 14, 15}, {37, 16, 17}, {37, 33, 34}, {37, 42, 44}, {37, 47, 48}, {37, 52, 53}, {37, 56, 58}, {37, 66, 67}, {37, 83, 84}, {37, 85, 86}, {37, 87, 88}, {38, 15, 16}, {38, 17, 19}, {38, 34, 35}, {38, 63, 66}, {38, 81, 83}, {38, 84, 85}, {39, 19, 20}, {39, 43, 44}, {39, 45, 55}, {39, 56, 57}, {39, 62, 63}, {39, 80, 81}, {40, 20, 25}, {40, 35, 40}, {40, 43, 45}, {40, 55, 57}, {40, 60, 62}, {40, 75, 80}, {41, 25, 26}, {41, 42, 43}, {41, 57, 58}, {41, 74, 75}, {42, 26, 29}, {42, 40, 42}, {42, 58, 59}, {42, 71, 74}, {43, 29, 32}, {43, 40, 41}, {43, 59, 60}, {43, 68, 71}, {44, 32, 33}, {44, 67, 68}, {45, 33, 40}, {45, 60, 67}, {46, 14, 15}, {46, 85, 86}, {49, 13, 14}, {49, 86, 87}, {50, 0, 39}, {50, 61, 100}, {51, 13, 14}, {51, 86, 87}, {54, 14, 15}, {54, 85, 86}, {55, 33, 39}, {55, 61, 67}, {56, 32, 33}, {56, 67, 68}, {57, 29, 32}, {57, 68, 71}, {58, 26, 29}, {58, 59, 60}, {58, 71, 74}, {59, 25, 26}, {59, 74, 75}, {60, 0, 3}, {60, 20, 25}, {60, 38, 40}, {60, 60, 65}, {60, 75, 80}, {60, 97, 99}, {61, 19, 20}, {61, 37, 38}, {61, 43, 44}, {61, 56, 57}, {61, 80, 81}, {62, 15, 16}, {62, 17, 19}, {62, 34, 37}, {62, 65, 66}, {62, 81, 83}, {62, 84, 85}, {63, 12, 13}, {63, 14, 15}, {63, 16, 17}, {63, 33, 34}, {63, 42, 44}, {63, 47, 48}, {63, 52, 53}, {63, 56, 58}, {63, 66, 67}, {63, 83, 84}, {63, 85, 86}, {63, 87, 88}, {64, 13, 14}, {64, 86, 87}, {65, 3, 5}, {65, 9, 12}, {65, 17, 18}, {65, 30, 33}, {65, 40, 42}, {65, 47, 48}, {65, 52, 53}, {65, 58, 60}, {65, 67, 70}, {65, 82, 83}, {65, 88, 91}, {65, 95, 97}, {66, 6, 9}, {66, 18, 19}, {66, 47, 48}, {66, 52, 53}, {66, 81, 82}, {66, 91, 94}, {67, 5, 6}, {67, 46, 47}, {67, 53, 54}, {67, 94, 95}, {68, 28, 30}, {68, 46, 47}, {68, 53, 54}, {68, 70, 72}, {69, 19, 20}, {69, 27, 28}, {69, 72, 73}, {69, 80, 81}, {70, 25, 27}, {70, 38, 40}, {70, 45, 47}, {70, 53, 55}, {70, 60, 62}, {70, 73, 75}, {71, 20, 21}, {71, 24, 25}, {71, 45, 46}, {71, 54, 55}, {71, 75, 76}, {71, 79, 80}, {72, 21, 22}, {72, 37, 38}, {72, 46, 47}, {72, 53, 54}, {72, 62, 63}, {72, 78, 79}, {73, 21, 24}, {73, 36, 37}, {73, 46, 47}, {73, 53, 54}, {73, 63, 64}, {73, 76, 79}, {74, 23, 24}, {74, 76, 77}, {75, 5, 8}, {75, 18, 21}, {75, 24, 25}, {75, 35, 36}, {75, 45, 46}, {75, 54, 55}, {75, 64, 65}, {75, 75, 76}, {75, 79, 82}, {75, 92, 95}, {76, 25, 26}, {76, 74, 75}, {77, 17, 18}, {77, 26, 27}, {77, 73, 74}, {77, 82, 83}, {78, 27, 28}, {78, 33, 35}, {78, 65, 67}, {78, 72, 73}, {79, 15, 17}, {79, 28, 29}, {79, 32, 33}, {79, 67, 68}, {79, 71, 72}, {79, 83, 85}, {80, 8, 15}, {80, 29, 32}, {80, 68, 71}, {80, 85, 92}, {81, 31, 34}, {81, 66, 69}, {82, 31, 32}, {82, 34, 35}, {82, 44, 45}, {82, 55, 56}, {82, 65, 66}, {82, 68, 69}, {83, 35, 37}, {83, 43, 44}, {83, 56, 57}, {83, 63, 65}, {84, 30, 31}, {84, 37, 38}, {84, 62, 63}, {84, 69, 70}, {85, 13, 15}, {85, 29, 30}, {85, 38, 46}, {85, 54, 62}, {85, 70, 71}, {85, 85, 87}, {86, 28, 29}, {86, 43, 44}, {86, 46, 49}, {86, 51, 54}, {86, 56, 57}, {86, 71, 72}, {87, 15, 20}, {87, 49, 51}, {87, 80, 85}, {89, 27, 28}, {89, 42, 43}, {89, 57, 58}, {89, 72, 73}, {90, 25, 27}, {90, 73, 75}, {92, 20, 25}, {92, 75, 80}, {95, 25, 35}, {95, 41, 42}, {95, 58, 59}, {95, 65, 75}, {97, 35, 40}, {97, 60, 65}, {99, 59, 60}, {100, 40, 59}};
   for(int i(0); i < 350; i++){
     eeTCCSectors[i + 357] = new TLine(vLinesTCC[i][0], vLinesTCC[i][1], vLinesTCC[i][0], vLinesTCC[i][2]);
     eeTCCSectors[i + 357]->SetLineStyle(2);
+    eeTCCSectors[i + 357]->SetLineWidth(2);
   }
 
   eeTCCArray[9] = new TObjArray(707);
@@ -663,6 +693,18 @@ EcalRenderPlugin::initialise(int, char **)
     ecalSubdetPartitions[i]->SetLineStyle(2);
     ecalSubdetPartitions[i]->SetLineWidth(3);
   }
+
+  for(int i(0); i < 19; i++){
+    ecalRCTSectors[i] = new TLine( -32 + (i+1)%2*4 , i*4, 32-(i+1)%2*4 , i*4 );
+    ecalRCTSectors[i]->SetLineWidth(3);
+    if(i%2 == 0)ecalRCTSectors[i]->SetLineColor(kRed);
+  }
+  for(int i(0); i< 17; ++i){
+    ecalRCTSectors[i + 19] = new TLine(-32+i*4, 0, -32+i*4, 72);
+    ecalRCTSectors[i + 19]->SetLineWidth(3);
+    ecalRCTSectors[i + 19]->SetLineColor(kRed);
+    if(i%2 == 1 && i != 1 && i != 15)ecalRCTSectors[i + 19]->SetLineStyle(3);
+  }
 }
 
 inline
@@ -737,13 +779,19 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
     else if(fullpath.Contains("SummaryMap")){
       dqm::utils::reportSummaryMapPalette(static_cast<TH2*>(obj));
     }
+    else if(fullpath.Contains("Masking")){
+      obj->SetMinimum(0);
+      obj->SetMaximum(1.0);
+      gStyle->SetPalette(2);
+      renderInfo.drawOptions = "col";
+    }
     else{
       obj->SetMinimum(0.);
       gStyle->SetPalette(accumPalette.size(), &(accumPalette[0]));
     }
   }
   else if(obj->IsA() == TProfile::Class()){
-    gStyle->SetOptStat("e");
+    gStyle->SetOptStat("ourme");
     gPad->SetLogy(false);
     obj->SetMarkerStyle(8);
     renderInfo.drawOptions = "P";
@@ -751,6 +799,7 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
   else if(obj->IsA() == TH1F::Class() || obj->IsA() == TH1D::Class()){
     gStyle->SetOptStat("ourme");
 
+    canvas->UseCurrentStyle();
     bool isProjection(fullpath.Contains(" eta") || fullpath.Contains(" phi"));
     bool isTrend(fullpath.Contains("Trend"));
 
@@ -759,7 +808,10 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
     else
       gPad->SetLogy(false);
 
-    renderInfo.drawOptions = "HIST";
+    if((fullpath.Contains("EventInfo/Calib")))
+      renderInfo.drawOptions = "bar2 TEXT0";
+    else 
+      renderInfo.drawOptions = "HIST";
   }
 
   bool applyDefaults(true);
@@ -803,7 +855,7 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
       else{
 	obj->GetXaxis()->SetNdivisions(obj->GetNbinsX() / 5);
 	obj->GetYaxis()->SetNdivisions(obj->GetNbinsY() / 5);
-        if(btype == kTriggerTower) gPad->SetGrid(false, false);
+        if(btype == kTriggerTower || btype == kPseudoStrip) gPad->SetGrid(false, false);
       }
       break;
     case kSMMEM:
@@ -813,10 +865,18 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
       obj->GetYaxis()->SetNdivisions(1);
       break;
     case kEcal:
-      obj->GetXaxis()->SetNdivisions(9, false);
-      obj->GetYaxis()->SetNdivisions(6, false);
-      obj->GetXaxis()->SetLabelSize(0.);
-      obj->GetYaxis()->SetLabelSize(0.1);
+      if(btype == kRCT){
+         obj->GetXaxis()->SetNdivisions(64, false);
+         obj->GetYaxis()->SetNdivisions(72, false);
+         obj->GetXaxis()->SetLabelSize(0);
+         obj->GetYaxis()->SetLabelSize(0);
+      }
+      else{
+         obj->GetXaxis()->SetNdivisions(9, false);
+         obj->GetYaxis()->SetNdivisions(6, false);
+         obj->GetXaxis()->SetLabelSize(0.);
+         obj->GetYaxis()->SetLabelSize(0.1);
+      }
       break;
     case kMEM:
       obj->GetXaxis()->SetNdivisions(44);
@@ -862,6 +922,7 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
 	gStyle->SetOptStat("e");
     }
   }
+
 }
 
 inline
@@ -872,6 +933,10 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
   TH1* obj(static_cast<TH1*>(dqmObject.object));
 
   canvas->cd();
+
+  if(obj->IsA() == TH1F::Class() || obj->IsA() == TH1D::Class()){
+    gStyle->SetOptStat("ourme");
+  }
 
   bool applyDefaults(true);
   postDrawByName(canvas, dqmObject, imgInfo, applyDefaults);
@@ -890,10 +955,6 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
   bool isNewStyle(obj->TestBit(0x00f80000));
   bool isTH2Derived(obj->InheritsFrom(TH2::Class()));
   bool isMap(isNewStyle ? obj->TestBit(0x00080000) : isTH2Derived);
-
-  // Include overflow stat entry for pedestal rms TH1*
-  if( TPRegexp("E[BE]PedestalOnlineClient/E[BE]POT pedestal rms G12 E[BE][+-][0-1][0-9]").MatchB(fullpath) )
-    gStyle->SetOptStat(101111);
 
   if(isMap){
 
@@ -961,8 +1022,8 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
 	  int iSM(TString(matches->At(1)->GetName()).Atoi());
 
 	  TH2C* labels(0);
-	  if(btype == kTriggerTower)
-	    labels = iSM < 0 ? eemTTLabels : eepTTLabels;
+	  if(btype == kTriggerTower || btype == kPseudoStrip)
+	    labels = eeTTLabels;
 	  else
 	    labels = iSM < 0 ? eemSCLabels : eepSCLabels;
 
@@ -970,12 +1031,23 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
 	  labels->GetYaxis()->SetRangeUser(obj->GetYaxis()->GetXmin(), obj->GetYaxis()->GetXmax() - 0.5);
 	  labels->Draw("text same");
 
+          if(btype == kTriggerTower || btype == kPseudoStrip) { 
+             eemTCCLabels->GetXaxis()->SetRangeUser(obj->GetXaxis()->GetXmin(), obj->GetXaxis()->GetXmax() - 1);
+             eemTCCLabels->GetYaxis()->SetRangeUser(obj->GetYaxis()->GetXmin(), obj->GetYaxis()->GetXmax() - 1); 
+             eepTCCLabels->GetXaxis()->SetRangeUser(obj->GetXaxis()->GetXmin(), obj->GetXaxis()->GetXmax() - 1);
+             eepTCCLabels->GetYaxis()->SetRangeUser(obj->GetYaxis()->GetXmin(), obj->GetYaxis()->GetXmax() - 1); 
+             if(iSM < 0)
+               eemTCCLabels->Draw("text same");
+             else 
+               eepTCCLabels->Draw("text same");
+          }
+
 	  // historical - plots up to 2012C were mirrored for EE-
           // drawEESectors() need to shift the objects accordingly
 	  if(iSM < 0 && !isNewStyle) iSM += 10;
 
 	  drawEESectors('D', iSM, obj);
-	  if(btype == kTriggerTower){
+	  if(btype == kTriggerTower || btype == kPseudoStrip){
 	    drawEESectors('T', iSM, obj);
 	    drawEESectors('t', iSM, obj);
 	  }
@@ -990,10 +1062,22 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
       MEMLabels->Draw("text same");
       break;
     case kEcal:
-      gStyle->SetPaintTextFormat("+03g");
-      ecalSMLabels->Draw("text same");
-      for(int i(0); i < 3; ++i)
-        ecalSubdetPartitions[i]->Draw();
+      if(btype == kRCT){
+        rctEtaAxis = new TGaxis(-28, 0, 28, 0, 4, 18, 14,"BMN+-");
+        ecalEtaAxis = new TGaxis(-32, 72, 32, 72, -32, 32, 416,"BLN-");
+        rctPhiAxis = new TGaxis(-32, 0, -32, 72, 0, 18, 18,"BMN+-");
+        rctEtaAxis->Draw("same");
+        ecalEtaAxis->Draw("same");
+        rctPhiAxis->Draw("same");
+        for(int i(0); i < 36; ++i)
+          ecalRCTSectors[i]->Draw();
+      }
+      else{
+        gStyle->SetPaintTextFormat("+03g");
+        ecalSMLabels->Draw("text same");
+        for(int i(0); i < 3; ++i)
+          ecalSubdetPartitions[i]->Draw();
+      }
       break;
     case kEBMEM:
       if(!isNewStyle){
@@ -1210,6 +1294,7 @@ EcalRenderPlugin::getPlotType(TH1 const* obj, TString const& fullpath) const
         btype = kCrystal; break;
       case kEcal:
         if(nbx == 9 && nby == 6) btype = kDCC;
+        else if(nbx == 64 && nby == 72) btype = kRCT;
         break;
       default:
         btype = kUser; break;
@@ -1346,7 +1431,9 @@ EcalRenderPlugin::getPlotType(TH1 const* obj, TString const& fullpath) const
     }
   }
 
-  if(fullpath.Contains("TT ") && ((isEB && btype == kSuperCrystal) || (isEE && btype == kCrystal)))
+  if(fullpath.Contains("Masking "))
+    btype = kPseudoStrip;
+  else if(fullpath.Contains("TT ") && ((isEB && btype == kSuperCrystal) || (isEE && btype == kCrystal)))
     btype = kTriggerTower;
   else if(fullpath.Contains(" eta"))
     btype = kProjEta;

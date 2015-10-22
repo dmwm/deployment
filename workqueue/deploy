@@ -4,7 +4,6 @@ deploy_workqueue_variants="default prod preprod dev"
 deploy_workqueue_deps()
 {
   deploy $stage couchdb
-  deploy $stage bigcouch
 }
 
 deploy_workqueue_prep()
@@ -34,7 +33,7 @@ deploy_workqueue_post()
   eval $cmd
 
   # Tell couch to push workqueue apps on the next restart
-  for couch in couchdb:5984 bigcouch:5985; do
+  for couch in couchdb:5984; do
     echo "$project_config/workqueue_task pushcouchapp http://localhost:${couch##*:}" \
       > $root/state/${couch%%:*}/stagingarea/workqueue
   done

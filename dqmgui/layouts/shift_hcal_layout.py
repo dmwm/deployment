@@ -231,9 +231,73 @@ shifthcallayout(dqmitems, "15 HCAL HBHE RecHit Timing",
 	]
 )
 
+shifthcallayout(dqmitems, "16 HCAL D1&D2 Digi and RecHit Occupancies with Cuts",
+	[
+		{
+			"path" : "Hcal/HcalDigiTask/HBHEHF_OccupancyMapD1_ZSCut",
+			"description" : "HBHEHF D1 Digi Occupancy after applying 3TS cut of 20 nom fC"
+		},
+		{
+			"path" : "Hcal/HcalDigiTask/HBHEHF_OccupancyMapD2_ZSCut",
+			"description" : "HBHEHF D2 Digi Occupancy after applying 3TS cut of 20 nomfC"
+		}
+	],
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HBHEHFD1_RecHitOccupancy",
+			"description" : "HBHEHF D1 RecHit Occupancy after applying 5GeV Cut"
+		},
+		{
+			"path" : "Hcal/HcalRecHitTask/HBHEHFD2_RecHitOccupancy",
+			"description" : "HBHEHF D2 RecHit Occupancy after applying 5GeV Cut"
+		}
+	]
+)
 
+shifthcallayout(dqmitems, "17 HCAL HFP&HFM RecHit iphi-dependent Occupancies Tracking",
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HF_iphiOccupancyRatios",
+			"description" : "HFP&HFM uHTR Occupancy Ratios with neighboring uHTR in terms of iphi"
+		}
+	],
+	[
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFM_OccupancyVSiphi",
+			"description" : "HFM Occupancy vs iphi"
+		},
+		{
+			"path" : "Hcal/HcalRecHitTask/HF/HFP_OccupancyVSiphi",
+			"description" : "HFP Occupancy vs iphi"
+		}
+	]
+)
 
+shifthcallayout(dqmitems, "18 HCAL RAW Evn&Bcn Mismatches",
+	[
+		{
+			"path" : "Hcal/HcalRawTask/uTCA/uTCA_CratesVSslots_dBcN",
+			"description" : "uTCA Crates BCN Mismatches"
+		},
+		{
+			"path" : "Hcal/HcalRawTask/uTCA/uTCA_CratesVSslots_dEvN",
+			"description" : "uTCA Crates EVN Mismatches"
+		}
+	]
+)
 
+shifthcallayout(dqmitems, "19 HCAL HF Data&Emul TP Et Mismatches",
+	[
+		{
+			"path" : "Hcal/HcalTPTask/HF/HF_SOI_Et_Correlation",
+			"description" : "HF Et Correlation for Data vs Emulator"
+		},
+		{
+			"path" : "Hcal/HcalTPTask/HBHEHF_Mismatch_SOIEt",
+			"description" : "HBHEHF Map of SOI Et Mismatches"
+		}
+	]
+)
 
 
 
