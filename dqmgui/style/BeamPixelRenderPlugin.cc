@@ -2,7 +2,7 @@
   \File BeamPixelRenderPlugin
   \Display Plugin for BeamSpot from Pixel-Vertices
   \author Mauro Dinardo
-  \version $ Revision: 3.0 $
+  \version $ Revision: 3.5 $
   \date $ Date: 2015/17/08 23:00:00 $
 */
 
@@ -93,7 +93,8 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
 
-    if ((o.name.find("E - vertex zx") != std::string::npos) || (o.name.find("E - vertex zy") != std::string::npos) || (o.name.find("E - vertex xy") != std::string::npos))
+    if ((o.name.find("E - vertex zx") != std::string::npos) || (o.name.find("E - vertex zy") != std::string::npos) || (o.name.find("E - vertex xy") != std::string::npos) ||
+	(o.name.find("G - vertex zx cum") != std::string::npos) || (o.name.find("G - vertex zy cum") != std::string::npos) || (o.name.find("G - vertex xy cum") != std::string::npos))
       {
 	c->SetGrid();
 	c->SetRightMargin(0.12);
@@ -136,16 +137,17 @@ private:
     obj->SetMarkerStyle(20);
     obj->SetMarkerColor(4);
     
-    if ((o.name.find("I - app status vs lumi") != std::string::npos) ||
+    if ((o.name.find("K - app status vs lumi") != std::string::npos) ||
 	(o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
-	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos))
+	(o.name.find("H - vertex x cum") != std::string::npos) || (o.name.find("H - vertex y cum") != std::string::npos) || (o.name.find("H - vertex z cum") != std::string::npos) ||
+	(o.name.find("I - good vertices vs lumi") != std::string::npos) || (o.name.find("J - pixelHits vs lumi") != std::string::npos))
       c->SetGrid(false, false);
     
     if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
 	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
 	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
-	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos) ||
-	(o.name.find("I - app status vs lumi") != std::string::npos))
+	(o.name.find("I - good vertices vs lumi") != std::string::npos) || (o.name.find("J - pixelHits vs lumi") != std::string::npos) ||
+	(o.name.find("K - app status vs lumi") != std::string::npos))
       {
 	obj->SetMarkerSize(0.5);
 
@@ -175,7 +177,8 @@ private:
     TAxis* xa = obj->GetXaxis();
     TAxis* ya = obj->GetYaxis();
 
-    if ((o.name.find("E - vertex zx") != std::string::npos) || (o.name.find("E - vertex zy") != std::string::npos) || (o.name.find("E - vertex xy") != std::string::npos))
+    if ((o.name.find("E - vertex zx") != std::string::npos) || (o.name.find("E - vertex zy") != std::string::npos) || (o.name.find("E - vertex xy") != std::string::npos) ||
+	(o.name.find("G - vertex zx cum") != std::string::npos) || (o.name.find("G - vertex zy cum") != std::string::npos) || (o.name.find("G - vertex xy cum") != std::string::npos))
       {
 	xa->SetTitleOffset(1.15);
 	ya->SetTitleOffset(1.15);
@@ -244,7 +247,7 @@ private:
     xa->SetLabelSize(0.04);
     ya->SetLabelSize(0.04);
 
-    if (o.name.find("I - app status vs lumi") != std::string::npos)
+    if (o.name.find("K - app status vs lumi") != std::string::npos)
       {
 	c->SetGrid(false, false);
 
@@ -259,14 +262,15 @@ private:
 	return;
       }
     
-    if ((o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
-	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos))
+    if ((o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||	
+	(o.name.find("H - vertex x cum") != std::string::npos) || (o.name.find("H - vertex y cum") != std::string::npos) || (o.name.find("H - vertex z cum") != std::string::npos) ||
+	(o.name.find("I - good vertices vs lumi") != std::string::npos) || (o.name.find("J - pixelHits vs lumi") != std::string::npos))
       c->SetGrid(false, false);
 
     if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
 	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
 	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
-	(o.name.find("G - good vertices vs lumi") != std::string::npos) || (o.name.find("H - pixelHits vs lumi") != std::string::npos))
+	(o.name.find("I - good vertices vs lumi") != std::string::npos) || (o.name.find("J - pixelHits vs lumi") != std::string::npos))
       {
 	gStyle->SetOptFit(1110);
 	gStyle->SetOptStat(10);
