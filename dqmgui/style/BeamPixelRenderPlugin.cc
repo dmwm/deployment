@@ -120,6 +120,12 @@ private:
       {
 	c->SetGrid(false, false);
 
+	obj->GetXaxis()->SetLabelSize(0);
+	obj->GetXaxis()->SetTickLength(0);
+
+	obj->GetYaxis()->SetLabelSize(0);
+	obj->GetYaxis()->SetTickLength(0);
+
 	obj->SetStats(false);
 
 	return;
