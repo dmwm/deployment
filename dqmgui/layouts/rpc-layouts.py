@@ -47,23 +47,35 @@ rpclayout(dqmitems, "05-Barrel_TOP_Summary",
            { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Roll_vs_Sector_Wheel-2", 'description': top + rpclink}]
           )
 
-rpclayout(dqmitems, "06-EndCap_TOP_Summary_Distribution",
-          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk3", 'description': top + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk2", 'description': top + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk1", 'description': top + rpclink }],
+rpclayout(dqmitems, "06-Positive_EndCap_Positive_TOP_Summary_Distribution",
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk4", 'description': top + rpclink },
+           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk3", 'description': top + rpclink }],
 
-          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk-3", 'description': top + rpclink},
-           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk-2", 'description': top + rpclink},
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk2", 'description': top + rpclink},
+           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk1", 'description': top + rpclink}]
+          )
+
+rpclayout(dqmitems, "06-Negative_Endcap_TOP_Summary_Distribution",
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk-4", 'description': top + rpclink },
+           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk-3", 'description': top + rpclink }],
+
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk-2", 'description': top + rpclink},
            { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Distribution_Disk-1", 'description': top + rpclink}]
           )
 
-rpclayout(dqmitems, "07-EndCap_TOP_Summary",
-          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk3", 'description': top + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk2", 'description': top + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk1", 'description': top + rpclink }],
+rpclayout(dqmitems, "07-Positive_EndCap_TOP_Summary",
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk4", 'description': top + rpclink },
+           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk3", 'description': top + rpclink }],
 
-          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-3", 'description': top + rpclink},
-           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-2", 'description': top + rpclink},
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk2", 'description': top + rpclink},
+           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk1", 'description': top + rpclink}]
+          )
+
+rpclayout(dqmitems, "07-Negative_EndCap_TOP_Summary",
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-4", 'description': top + rpclink },
+           { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-3", 'description': top + rpclink }],
+
+          [{ 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-2", 'description': top + rpclink},
            { 'path': "RPC/AllHits/SummaryHistograms/RPCChamberQuality_Ring_vs_Segment_Disk-1", 'description': top + rpclink}]
           )
 
@@ -133,13 +145,20 @@ rpclayout(dqmitems, "17-Barrel_Bunch_Crossing",
            { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Wheel_-2", 'description': bx + rpclink  }]
           )
 
-rpclayout(dqmitems, "18-EndCap_Bunch_Crossing",
-          [{ 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_3", 'description': bx + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_2", 'description': bx + rpclink },
-           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_1", 'description': bx + rpclink }],
+rpclayout(dqmitems, "18-Positive_EndCap_Bunch_Crossing",
+          [{ 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_4", 'description': bx + rpclink },
+           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_3", 'description': bx + rpclink }],
 
-          [{ 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_-3", 'description': bx + rpclink},
-           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_-2", 'description': bx + rpclink},
-           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_-1", 'description': bx  + rpclink}]
+          [{ 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_2", 'description': bx + rpclink},
+           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_1", 'description': bx + rpclink}]
+          )
+
+
+rpclayout(dqmitems, "18-Negative_EndCap_Bunch_Crossing",
+          [{ 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_-4", 'description': bx + rpclink },
+           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_-3", 'description': bx + rpclink }],
+
+          [{ 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_-2", 'description': bx + rpclink},
+           { 'path': "RPC/AllHits/SummaryHistograms/BxDistribution_Disk_-1", 'description': bx + rpclink}]
           )
 ##------------------------
