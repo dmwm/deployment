@@ -17,7 +17,7 @@ deploy_crabcache_sw()
 
 deploy_crabcache_post()
 {
-  case $host in vocms013[12] | vocms012[67] | vocms0140 | vocms030[67] | vocms0318 ) enable ;; vocms* ) disable ;; * ) enable ;; esac
+  case $host in vocms013[689] | vocms016[135] ) disable ;; * ) enable ;; esac
 
   local cmd="$project_config/manage clean 3"
   $nogroups || cmd="sudo -H -u _crabcache bashs -l -c '$cmd'"

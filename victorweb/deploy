@@ -26,8 +26,9 @@ deploy_victorweb_sw()
 
 deploy_victorweb_post()
 {
-  case $host in vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] | vocms0140 | vocms0307 | vocms0318 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
+
   (set -e
    . $root/current/apps/victorweb/etc/profile.d/init.sh
    mkserver \

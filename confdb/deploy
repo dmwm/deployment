@@ -18,7 +18,7 @@ deploy_confdb_sw()
 
 deploy_confdb_post()
 {
-  case $host in vocms013[1389] | vocms0140 | vocms0306 | vocms0318 | vocms016[135]) disable ;; * ) enable ;; esac
+  case $host in vocms013[689] | vocms016[135] ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 }
 

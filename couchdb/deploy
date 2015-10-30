@@ -64,9 +64,9 @@ deploy_couchdb_post()
          vocms0132 ) tohost=vocms0131 hour=1;;
          vocms0131 ) tohost=vocms0132 hour=2;;
          vocms0140 ) tohost=vocms0131 hour=3;;
-         vocms0306 | vocms0318 ) tohost=vocms0140 hour=4;;
+         vocms0318 ) tohost=vocms0140 hour=4;;
          vocms0307 ) tohost=vocms0140 hour=5;;
-                * ) tohost=;;
+                 * ) tohost=;;
        esac
        [ -z "$tohost" ] ||
          echo "0 $hour * * * $project_config/manage backup $tohost:$project_state/backup/$host 'I did read documentation'"
@@ -75,7 +75,7 @@ deploy_couchdb_post()
 
   # Weekly archive backups to castor
   case $host in
-    vocms0140 | vocms0306 | vocms0307 | vocms0318 | vocms013[123] | vocms0127 | vocms0126)
+    vocms012[67] | vocms013[12] | vocms0140 | vocms0307 | vocms0318 )
       klist -s # must have afs kerberos token
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
        echo "#30 4 * * 0 $host $project_config/manage archive /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'") | acrontab
