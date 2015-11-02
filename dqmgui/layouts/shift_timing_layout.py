@@ -1,4 +1,11 @@
-def shifttiminglayout(i, p, *rows): i["00 Shift/DetectorTimingPlots/" + p] = DQMItem(layout=rows)
+# These timing layouts were once added to the shift workspace to do the timing
+# studies during the commissioning in 2015.
+# We leave this file intact here, but disable it by commenting out the actual
+# method body.
+
+def shifttiminglayout(i, p, *rows):
+  pass
+  ##i["00 Shift/DetectorTimingPlots/" + p] = DQMItem(layout=rows)
 
 shifttiminglayout(dqmitems, "01 Pixel",
   [{ 'path': "Pixel/Barrel/ALLMODS_chargeCOMB_Barrel",
@@ -103,9 +110,3 @@ shifttiminglayout(dqmitems, "07 CSC",
   { 'path': "CSC/CSCOfflineMonitor/Segments/hSTimeVsTOF",
     'description': "ToAdd",
     'draw': { 'withref': "no" }}])
-
-# Template (to be removed when this is reasonably ready)
-##shifttiminglayout(dqmitems, "07 ",
-## [{ 'path': "",
-##    'description': "ToAdd",
-##    'draw': { 'withref': "no" }},],)
