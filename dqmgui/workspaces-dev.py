@@ -39,7 +39,6 @@ server.workspace('DQMContent', 25, 'Calorimeter', 'HCALcalib', '^HcalCalib/', ''
 server.workspace('DQMContent', 31, 'Trigger/Lumi', 'L1T', '^L1T/', '')
 server.workspace('DQMContent', 32, 'Trigger/Lumi', 'L1TEMU', '^L1TEMU/', '')
 server.workspace('DQMContent', 33, 'Trigger/Lumi', 'HLT', '^HLT/', '')
-server.workspace('DQMContent', 34, 'Trigger/Lumi', 'HLX', '^HLX', '')
 
 # POG workspaces:
 server.workspace('DQMContent', 41, 'POG', 'Muons', '^Muons/', '')
