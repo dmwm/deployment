@@ -418,3 +418,6 @@ sistriplayout(dqmitems, "31 - TEC- Residual",
      'description': "Hit Residual in TEC- Wheel #8"},
    { 'path': "SiStrip/MechanicalView/TEC/MINUS/wheel_9/HitResiduals_TEC__wheel__9",
      'description': "Hit Residual in TEC- Wheel #9"}])
+sistriplayout(dqmitems, "32 - HLT_Random_v2 counts",
+  [{ 'path': "HLT/TriggerRates/HLT/HLT_Random_v2 counts",
+     'description': "Number of Random triggers vs LS. Essential for offline SiStrip calibration. If empty ask Shift Leader to include Randoms in HLT."}])

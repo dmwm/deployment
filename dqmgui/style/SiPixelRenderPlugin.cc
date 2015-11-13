@@ -245,7 +245,7 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
           gPad->SetRightMargin(0.15);
           obj->SetOption("colz");
           obj->SetMaximum(1.0);
-          obj->SetMinimum(0.75);
+          obj->SetMinimum(0.95);
           return;
         }
       if( o.name.find( "FedChLErr" ) != std::string::npos )
