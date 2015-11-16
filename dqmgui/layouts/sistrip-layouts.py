@@ -420,4 +420,4 @@ sistriplayout(dqmitems, "31 - TEC- Residual",
      'description': "Hit Residual in TEC- Wheel #9"}])
 sistriplayout(dqmitems, "32 - HLT_Random_v2 counts",
   [{ 'path': "HLT/TriggerRates/HLT/HLT_Random_v2 counts",
-     'description': "Number of Random triggers vs LS. Essential for offline SiStrip calibration. If empty ask Shift Leader to include Randoms in HLT."}])
+      'description': "Number of Random triggers vs LS. Essential for offline SiStrip calibration. If empty ask Shift Leader to include Randoms in HLT - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> "}])
