@@ -1,0 +1,24 @@
+# Please note that you must include with '+r' rules
+# any top dir and subdir where the file patterns you want excluded
+# are located. Otherwise, the catch all '-r /***'
+# rule at the end will tell rsync to ignore those (sub)trees completely.
+
+# Do not transfer anything, we are only going to delete on destination
+-s /***
+
+# Include older releases for deletion
++r /srv*/
++r /srv*/HG1510[a-z]***
++r /srv*/[bf]eHG1510[a-z]***
++r /srv*/HG150[1-9][a-z]***
++r /srv*/[bf]eHG150[1-9][a-z]***
+
+# Include here anything else you may want to clean up
++r /.deploy/***
++r /cfg*/***
++r /srv*/.deploy/
++r /srv*/.deploy/20150*.log
++r /srv*/.deploy/201510*.log
+
+# Do not delete anything else
+-r /***
