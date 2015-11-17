@@ -1,4 +1,8 @@
-def shiftcastorlayout(i, p, *rows): i["00 Shift/Castor/" + p] = DQMItem(layout=rows)
+def shiftcastorlayout(i, p, *rows):
+    # BVB: After discussion with the Castor group, we're hiding all the Castor
+    # shift layouts until the plots are updated and re-documented
+    ##i["00 Shift/Castor/" + p] = DQMItem(layout=rows)
+    pass
 
 shiftcastorlayout(dqmitems, "01 - Report Summary Map",
            [{ 'path': "Castor/EventInfo/reportSummaryMap",
@@ -39,7 +43,7 @@ shiftcastorlayout(dqmitems, "08 - RecHit Occupancy Map",
            [{ 'path': "Castor/CastorRecHitMonitor/CastorRecHits Occupancy Map",
              'description':"CASTOR RecHit Occupancy Map"}]
            )
-           
+
 shiftcastorlayout(dqmitems, "09a - RecHit Energy by modules",
            [{ 'path': "Castor/CastorRecHitMonitor/CastorRecHit Energy in modules- above threshold",
              'description':""}]
