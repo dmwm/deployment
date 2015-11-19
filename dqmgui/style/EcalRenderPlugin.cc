@@ -1111,6 +1111,8 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
      !fullpath.Contains("pedestal") &&
      !fullpath.Contains("event size") &&
      !fullpath.Contains("Trigger Primitives") &&
+     !fullpath.Contains("Occupancy") &&
+     !fullpath.Contains("TestPulse") &&
      !fullpath.Contains("Cluster")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1183,6 +1185,25 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
 
     applyDefaults = false;
   }
+
+  if( TPRegexp("E[BE]OccupancyTask/E[BE]OT (|TP )(digi |rec hit )(|thr )occupancy (|EE [+-] )projection (eta|phi)").MatchB(fullpath) ||
+      TPRegexp("E[BE]ClusterTask/E[BE]CLT BC number projection (eta|phi)(| EE [+-])").MatchB(fullpath) ){
+    if( obj->GetMaximum() > 0. ) obj->GetYaxis()->SetRangeUser( 0.,1.2*obj->GetMaximum() );
+  }
+
+  if( TPRegexp("E[BE]TestPulseTask/Gain(12|6|1)/E[BE]TPT amplitude E[BE][+-][0-1][0-9] (G12|G6|G1)").MatchB(fullpath) ){
+    if( fullpath.Contains("EBTPT") )
+      obj->GetZaxis()->SetRangeUser( 100.,800. );
+    else if( fullpath.Contains("EETPT") )
+      obj->GetZaxis()->SetRangeUser( 150.,850. );
+  }
+
+  if( TPRegexp("E[BE]TestPulseClient/E[BE]TPT test pulse rms (G12|G6|G1) E[BE][+-][0-1][0-9]").MatchB(fullpath) ){
+    if( fullpath.Contains(" G12 ") )     obj->GetZaxis()->SetRangeUser( 0.,10.  );
+    else if( fullpath.Contains(" G6 ") ) obj->GetZaxis()->SetRangeUser( 0.,80.  );
+    else if( fullpath.Contains(" G1 ") ) obj->GetZaxis()->SetRangeUser( 0.,160. );
+  }
+
 }
 
 inline
