@@ -1,7 +1,11 @@
-def shiftcastorlayout(i, p, *rows): i["00 Shift/Castor/" + p] = DQMItem(layout=rows)
+def shiftcastorlayout(i, p, *rows):
+    # BVB: After discussion with the Castor group, we're hiding all the Castor
+    # shift layouts until the plots are updated and re-documented
+    ##i["00 Shift/Castor/" + p] = DQMItem(layout=rows)
+    pass
 
 shiftcastorlayout(dqmitems, "CASTOR Absolute reportSummaryMap",
-           [{ 'path': "Castor/EventInfo/reportSummaryMap",
+            [{ 'path': "Castor/EventInfo/reportSummaryMap",
              'description':""}]
            )
 
