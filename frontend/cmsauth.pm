@@ -424,7 +424,27 @@ sub auth_trouble_handler : method
               . " CMS VO. You need to register at <a href='"
               . "https://voms2.cern.ch:8443/voms/cms"
 	      . "'>VOMS</a> after which it will take up to six hours"
-              . "for us to get the information.</p>"
+              . " for us to get the information.</p>"
+  }
+
+  if ($dn && exists $authz_by_dn{$dn})
+  {
+    $message .= "<p>Your certificate is mapped to the username '"
+             . $authz_by_dn{$dn}{LOGIN} . "' in SiteDB.</p>";
+  }
+  elsif ($dn && ($dn =~ m{(.*?)(?:(?:/CN=\d+|/CN=proxy)|(/CN=limited proxy))+$}o
+                 && exists $authz_by_dn{$1}))
+  {
+    $message .= "<p>Your certificate is mapped to the username '"
+             . $authz_by_dn{$1}{LOGIN} . "' in SiteDB.</p>";
+  }
+  else
+  {
+    $message .= "<p>Your certificate is not mapped to any user"
+              . " in SiteDB. Go to the CERN certificate mapping"
+              . " <a href='https://resources.web.cern.ch/resources/Manage/Accounts/MapCertificate.aspx'>"
+              . "page</a>, remove all existing mappings and add your certificate."
+              . " The information should take up to one hour to propagate.</p>"
   }
 
   $message .= "<p>For more details please see <a href='"
