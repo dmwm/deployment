@@ -156,13 +156,6 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'Castor', '^Castor/', '',
                 )
 
 # Trigger/Lumi workspaces:
-server.workspace('DQMContent', 40, 'Trigger/Lumi', 'HLX', '^HLX/', '',
-                 'HLX/Layouts/HF-Comparison',
-                 'HLX/Layouts/HLX-Averages',
-                 'HLX/Layouts/HLX-Luminosity',
-                 'HLX/Layouts/HLX-Occupancy-Check-Sums',
-                 'HLX/Layouts/HLX-EtSumAndLumi-History-Plots',
-                )
 server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1T', '^(L1T|L1TEMU)/', '',
                  'L1T/L1TGT/algo_bits',
                  'L1T/L1TGT/tt_bits',
