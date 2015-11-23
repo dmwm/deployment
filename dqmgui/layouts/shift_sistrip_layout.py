@@ -65,3 +65,6 @@ shiftsistriplayout(dqmitems, "06 - Cosmic Tracks",
     'description': "Phi distribution of cosmic tracks -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "yes" }},
   { 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_CKFTk",
     'description': " Eta distribution of cosmic tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "yes" }}])
+shiftsistriplayout(dqmitems, "07 - HLT_Random_v1 counts",
+  [{ 'path': "HLT/TriggerRates/HLT/HLT_Random_v1 counts",
+      'description': "Number of Random triggers vs LS. Essential for offline SiStrip calibration. If empty ask Shift Leader to include Randoms in HLT - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> "}])
