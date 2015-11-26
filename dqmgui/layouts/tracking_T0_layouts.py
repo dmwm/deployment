@@ -49,7 +49,6 @@ trackinglayout(dqmitems, "05 - Tracking vs LS",
   [ { 'path': "Tracking/TrackParameters/highPurityTracks/pt_1/GeneralProperties/NumberOfRecHitsPerTrackVsLS_GenTk",
       'description': "Number of rec hits per track vs LS",
       'draw': { 'withref': "yes" }}])
-
 trackinglayout(dqmitems, "06 - Number of Seeds (pp collisions)",
  [{ 'path': "Tracking/TrackParameters/generalTracks/TrackBuilding/NumberOfSeeds_initialStepSeeds_initialStep",
     'description': "Number of Seed in tracking iteration 0 (no entry: ERROR) - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
