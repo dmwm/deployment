@@ -45,6 +45,7 @@ server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStrip', '^(SiStrip|Tracki
                  'SiStrip/Layouts/07 - Tracking ReportSummary',
                  'SiStrip/Layouts/08 - Tracks (pp collisions)',
                  'SiStrip/Layouts/09 - Tracks (Cosmic Tracking)',
+                 'SiStrip/Layouts/10 - Tracks (HI run)',
                 )
 server.workspace('DQMContent', 20, 'Tracker/Muons', 'SiStripLAS', '^SiStripLAS/', '',
                  'SiStripLAS/Layouts/00 - SiStripLAS ReportSummary',
