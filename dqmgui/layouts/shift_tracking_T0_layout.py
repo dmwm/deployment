@@ -29,7 +29,7 @@ shifttrackinglayout(dqmitems, "03 - Tracks (Cosmic Tracking)",
     'description': "Phi distribution of Reconstructed Tracks -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineTracking>DQMShiftOfflineTracking</a> ", 'draw': { 'withref': "yes" }},
   { 'path': "Tracking/TrackParameters/GeneralProperties/TrackEta_CKFTk",
     'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineTracking>DQMShiftOfflineTracking</a> ", 'draw': { 'withref': "yes" }}])
-trackinglayout(dqmitems, "04 - Tracks (HI run)",
+shifttrackinglayout(dqmitems, "04 - Tracks (HI run)",
  [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfTracks_HeavyIonTk",
     'description': "Number of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
   { 'path': "Tracking/TrackParameters/HitProperties/NumberOfRecHitsPerTrack_HeavyIonTk",
