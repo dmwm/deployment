@@ -83,7 +83,9 @@ clean_cache()
   [ "$(($1))" = "$1" ] || 
     { echo "$0: invalid number of days '$1', see '$0 help'." 1>&2; exit 3; }
   cd $STATEDIR
-  /usr/bin/find $STATEDIR/files -type f -mtime +$1 -exec rm {} \;
+  /usr/bin/find $STATEDIR/files -type f -mtime +$1 -delete
+  # Prune empty dirs not touched in the last 30 min
+  /usr/bin/find $STATEDIR/files -mindepth 1 -type d -mmin +30 -empty -delete
 }
 
 # Main routine, perform action requested on command line.
