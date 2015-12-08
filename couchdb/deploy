@@ -48,13 +48,13 @@ deploy_couchdb_post()
      * )
        enable
        sysboot
-       local hour=0
-       for action in "compact wmstats" "compact all_but_wmstats" \
-        "compactviews wmstats WMStats" "compactviews all_but_wmstats all"; do
-         local cmd="$project_config/manage $action 'I did read documentation'"
+       # Set cronjobs to compact databases and views at selected times
+       for task in "0:compact wmstats" "6:compact all_but_wmstats" \
+                   "12:compactviews wmstats WMStats" "12:compactviews wmstats WMStatsErl" \
+                   "18:compactviews all_but_wmstats all"; do
+         local cmd="$project_config/manage ${task#*:} 'I did read documentation'"
          $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
-         echo "1 $hour * * * $cmd"
-         hour=$((hour+6))
+         echo "1 ${task%%:*} * * * $cmd"
        done
 
        # Daily backup the databases to other cluster machines
