@@ -1,4 +1,15 @@
 def shiftpixellayout(i, p, *rows): i["00 Shift/Pixel/" + p] = DQMItem(layout=rows)
+shiftpixellayout(dqmitems, "01 - Barrel OnTrack cluster positions",
+        [{ 'path': "Pixel/Clusters/OnTrack/position_siPixelClusters_Layer_1", 'description': "Global position of OnTrack clusters in Barrel/Layer_1 <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>"}],
+        [{ 'path': "Pixel/Clusters/OnTrack/position_siPixelClusters_Layer_2", 'description': "Global position of OnTrack clusters in Barrel/Layer_2 <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>"}],
+        [{ 'path': "Pixel/Clusters/OnTrack/position_siPixelClusters_Layer_3", 'description': "Global position of OnTrack clusters in Barrel/Layer_3 <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>"}]
+)
+shiftpixellayout(dqmitems, "02 - Endcap OnTrack cluster positions",
+        [{ 'path': "Pixel/Clusters/OnTrack/position_siPixelClusters_mz_Disk_1", 'description': "Global position of OnTrack clusters in Endcap -z Disk_1 <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>"},
+            { 'path': "Pixel/Clusters/OnTrack/position_siPixelClusters_mz_Disk_2", 'description': "Global position of OnTrack clusters in Endcap -z Disk_2 <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>"}],
+        [{ 'path': "Pixel/Clusters/OnTrack/position_siPixelClusters_pz_Disk_1", 'description': "Global position of OnTrack clusters in Endcap +z Disk_1 <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>"},
+            { 'path': "Pixel/Clusters/OnTrack/position_siPixelClusters_pz_Disk_2", 'description': "Global position of OnTrack clusters in Endcap +z Disk_2 <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>"}]
+)
 shiftpixellayout(dqmitems, "03 - Mean digi charge Barrel",
   [{ 'path': "Pixel/Barrel/SUMOFF_adc_Barrel", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiPixel>Description for the Central DQM Shifter</a>"}]
 )
