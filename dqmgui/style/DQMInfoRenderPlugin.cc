@@ -252,8 +252,16 @@ private:
       {
 	if ( obj->GetBinContent(i,topBin) != 0 )
 	{
-	   maxRange = TMath::Max(i+1,2);  // leave at least 2 bins
-	   break;
+          // We make an extra white band to the right of the plot for better
+          // visibility. (Was originally done in the code, but this belongs
+          // more in the render plugin.)
+          for ( int j = 1; j <= topBin; j++ ) {
+              obj->SetBinContent(i + 1, j, -1.);
+          }
+          // Set the range of the plot to span up to the last filled bin of
+          // the top row + the extra row we added:
+          maxRange = TMath::Max(i + 1, 2);  // leave at least 2 bins
+          break;
 	}
       }
 
