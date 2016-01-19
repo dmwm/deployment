@@ -71,15 +71,9 @@ server.workspace('DQMContent', 23, 'Calorimeter', 'HCAL', '^Hcal/', '',
                  'Hcal/Layouts/07 HCAL Hot Cell Check',
                 )
 server.workspace('DQMContent', 20, 'Calorimeter', 'CASTOR', '^Castor/', '',
-                 'Castor/Layouts/CASTOR Channel Status',
-                 'Castor/Layouts/CASTOR RecHit Energies',
-		 'Castor/Layouts/CASTOR RecHit Energy in modules',
-		 'Castor/Layouts/CASTOR RecHit Energy in sectors',
-		 'Castor/Layouts/CASTOR RecHitEnergy 2D Map',
-                 'Castor/Layouts/CASTOR All Digi Values',
-                 'Castor/Layouts/CASTOR average pulse in bunch crossings',
-                 'Castor/Layouts/CASTOR hits 3D- cumulative',
-                 'Castor/Layouts/CASTOR hits 3D- event with the largest deposited E',
+                 'Castor/Layouts/01 - Map of frontend and readout errors',
+                 'Castor/Layouts/02 - Channel-wise timing',
+		 'Castor/Layouts/03 - Map of rechit occupancies',
                 )
 
 # Trigger/Lumi workspaces:
