@@ -34,9 +34,8 @@ COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
 
-. $ROOT/apps/DCAFPilot/etc/profile.d/init.sh
+. $ROOT/apps/wmarchive/etc/profile.d/init.sh
 
-export WMCORE_ROOT
 export WMARCHIVE_ROOT
 export WMARCHIVE_PORT=8247
 export PYTHONUNBUFFERED=1
@@ -56,7 +55,7 @@ host=`hostname -s`
 sysboot()
 {
   dostart=false
-  if [ $(pgrep -u $(id -u) -f "[/]DCAF/web/server" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "[/]wmarch" | wc -l) = 0 ]; then
       dostart=true
   fi
   $dostart && start
@@ -66,15 +65,14 @@ start()
 {
   echo "starting $ME"
   # start service
-  $WMCORE_ROOT/bin/wmc-httpd -r -d /tmp -l $log $WMARCHIVE_CONFIG \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/dcaf-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  $WMARCHIVE_ROOT/bin/wmc-httpd -r -d $LOGDIR $WMARCHIVE_CONFIG &
 }
 
 # Stop the service.
 stop()
 {
   echo "stopping $ME"
-  for pid in $(pgrep -u $(id -u) -f "[/]wmarch"); do
+  for pid in $(pgrep -u $(id -u) -f "[/]wmarch_config.py"); do
       kill -9 $pid
   done
 }
@@ -82,7 +80,7 @@ stop()
 # Check if the server is running.
 status()
 {
-  local pid=$(pgrep -u $(id -u) -f "[/]wmarch" | sort -n)
+  local pid=$(pgrep -u $(id -u) -f "[/]wmarch_config.py" | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
