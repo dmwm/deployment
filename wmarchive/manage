@@ -37,6 +37,7 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/wmarchive/etc/profile.d/init.sh
 
 export WMARCHIVE_ROOT
+export WMA_STATIC_ROOT=$WMARCHIVE_ROOT/data
 export WMARCHIVE_PORT=8247
 export PYTHONUNBUFFERED=1
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
