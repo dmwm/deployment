@@ -123,7 +123,8 @@ system_groups_and_accounts()
             T:100044:_an_reqmon T:100045:_t0wmadatasvc T:100046:_dbsmigration\
             T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver   \
             T:100050:_gitweb    T:100051:_bigcouch    T:100052:_victorweb    \
-            T:100053:_popdbweb  T:100054:_dcafpilot   T:100055:_confdb; do
+            T:100053:_popdbweb  T:100054:_dcafpilot   T:100055:_confdb       \
+            T:100056:_wmarchive; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -166,6 +167,7 @@ system_groups_and_accounts()
   add_local_user 100053 _popdbweb    ,_config "CMS Popularity App"
   add_local_user 100054 _dcafpilot   ,_config "DCAFPilot App"
   add_local_user 100055 _confdb      ,_config "ConfDB App"
+  add_local_user 100056 _wmarchive   ,_config "WMArchive App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
