@@ -14,6 +14,7 @@ deploy_confdb_prep()
 deploy_confdb_sw()
 {
   deploy_pkg -a confdb/ConfDBAuth.py comp cms+confdb
+  rm $root/$cfgversion/apps.$glabel/confdb/Application_py266/ConfDBAuth.py
 }
 
 deploy_confdb_post()
