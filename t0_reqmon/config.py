@@ -78,4 +78,15 @@ if  HOST.startswith("vocms0307") or HOST.startswith("vocms0131"):
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
     logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min
     logDBTasks.log_file = '%s/logs/t0_reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
-    
+        
+    # Cleaning up wmstats db
+    cleanUpTask = extentions.section_("cleanUpTask")
+    cleanUpTask.object = "WMCore.WMStats.CherryPyThreads.CleanUpTask.CleanUpTask"
+    cleanUpTask.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    cleanUpTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    cleanUpTask.reqdb_couch_app = "T0Request"
+    cleanUpTask.central_logdb_url = data.central_logdb_url
+    cleanUpTask.log_reporter = data.log_reporter
+    cleanUpTask.DataKeepDays = 0.125 # 3 hours - unit is a day
+    cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12 # every 12 hours
+    cleanUpTask.log_file = '%s/logs/t0_reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
