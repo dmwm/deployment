@@ -45,8 +45,8 @@ export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export WMARCHIVE_CONFIG=$ROOT/config/$ME/wmarch_config.py
 export MONGO_URI="mongodb://localhost:8230"
-export AVRO_STORAGE=$STATEDIR/avro
-export AVRO_SCHEMA=$STATEDIR/avro/current.avsc
+export AVRO_STORAGE=$STATEDIR/avro/data
+export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
 export CLEANUP_TSTAMP=7776000 # 3 months, 3*30*24*60*60
 
 cd $STATEDIR
