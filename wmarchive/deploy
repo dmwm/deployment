@@ -1,10 +1,10 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_wmarchive_deps()
 {
-  deploy backend
-  deploy wmcore-auth
-  deploy mongodb
-  deploy admin
+  deploy $stage backend
+  deploy $stage wmcore-auth
+  deploy $stage mongodb
+  deploy $stage admin
 }
 
 deploy_wmarchive_prep()
