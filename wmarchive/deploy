@@ -9,7 +9,7 @@ deploy_wmarchive_deps()
 
 deploy_wmarchive_prep()
 {
-  mkproj avro avro/{data,schemas}
+  mkproj avro avro/{data,schemas,migrate}
   mkproxy
 }
 
