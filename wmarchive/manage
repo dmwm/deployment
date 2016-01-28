@@ -46,6 +46,7 @@ export X509_USER_KEY=$X509_USER_PROXY
 export WMARCHIVE_CONFIG=$ROOT/config/$ME/wmarch_config.py
 export MONGO_URI="mongodb://localhost:8230"
 export AVRO_STORAGE=$STATEDIR/avro/data
+export AVRO_MIGRATE=$STATEDIR/avro/migrate
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
 export CLEANUP_TSTAMP=7776000 # 3 months, 3*30*24*60*60
 
@@ -98,6 +99,11 @@ cron()
       $WMARCHIVE_ROOT/bin/mongo2avro \
           --mongo=$MONGO_URI --schema=$AVRO_SCHEMA \
           --odir=$AVRO_STORAGE --verbose &> $LOGDIR/mongo2avro.log
+      ;;
+    migrate2hdfs )
+      $WMARCHIVE_ROOT/bin/migrate2hdfs \
+          --idir=$AVRO_STORAGE --odir=$AVRO_MIGRATE --check --remove \
+          --verbose &> $LOGDIR/migrate2hdfs.log
       ;;
     mongocleanup )
       $WMARCHIVE_ROOT/bin/mongocleanup \
