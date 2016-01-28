@@ -97,12 +97,12 @@ cron()
     mongo2avro )
       $WMARCHIVE_ROOT/bin/mongo2avro \
           --mongo=$MONGO_URI --schema=$AVRO_SCHEMA \
-          --odir=$AVRO_STORAGE --verbose &> $LOGDIR/cron4dataframe.log
+          --odir=$AVRO_STORAGE --verbose &> $LOGDIR/mongo2avro.log
       ;;
     mongocleanup )
       $WMARCHIVE_ROOT/bin/mongocleanup \
           --mongo=$MONGO_URI --tstamp=$CLEANUP_TSTAMP \
-          --verbose &> $LOGDIR/cron4dataframe.log
+          --verbose &> $LOGDIR/mongocleanup.log
       ;;
     * )
       echo "You must specify the cron action to run: mongo2avro|mongocleanup "
