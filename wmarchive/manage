@@ -49,7 +49,9 @@ export AVRO_STORAGE=$STATEDIR/avro/data
 # area on HDFS where we'll migrate the data
 export HDFS_MIGRATE=/user/valya/data
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
-export CLEANUP_TSTAMP=7776000 # 3 months, 3*30*24*60*60
+# we'll clean-up data a one day old if their storage type is avroio
+export CLEANUP_TSTAMP=1d
+export CLEANUP_STYPE="avroio"
 
 cd $STATEDIR
 host=`hostname -s`
@@ -108,7 +110,7 @@ cron()
       ;;
     mongocleanup )
       $WMARCHIVE_ROOT/bin/mongocleanup \
-          --mongo=$MONGO_URI --tstamp=$CLEANUP_TSTAMP \
+          --mongo=$MONGO_URI --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE \
           --verbose &> $LOGDIR/mongocleanup.log
       ;;
     * )
