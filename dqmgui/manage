@@ -203,14 +203,14 @@ start()
 
   # First start webserver
   # This is the core of the GUI, so it's always started
-  start_webserver
+  start_webserver $1
   # Then start agents
   # Depending on the machine, different agents will be started
-  start_agents
+  start_agents $1
   # Finally start collector
   # This is the part that can collect life data coming from CMSSW
   # It's mostly used in the Online world
-  start_collector
+  start_collector $1
 }
 
 start_webserver()
