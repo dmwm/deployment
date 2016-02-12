@@ -84,7 +84,7 @@ config.das.api_workers = 2
 config.das.error_expire = 300
 config.das.emptyset_expire = 5
 config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned by _das account
-config.das.services = ['dbs3','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr','mcm']
+config.das.services = ['dbs3','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr2','mcm']
 config.das.main_dbs = 'dbs3'
 
 # keyword search configuration
