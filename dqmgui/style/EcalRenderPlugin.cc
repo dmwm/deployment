@@ -1113,7 +1113,8 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
      !fullpath.Contains("Trigger Primitives") &&
      !fullpath.Contains("Occupancy") &&
      !fullpath.Contains("TestPulse") &&
-     !fullpath.Contains("Cluster")) return;
+     !fullpath.Contains("Cluster") &&
+     !fullpath.Contains("energy Side")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
 
@@ -1191,6 +1192,13 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetGrid(false, false);
 
+    applyDefaults = false;
+  }
+  else if(TPRegexp("Preshower EE vs ES energy Side[+-]").MatchB(fullpath)){
+    obj->GetXaxis()->SetNoExponent(kTRUE);
+    gStyle->SetPalette(1);
+    gPad->SetGrid(false, false);
+    
     applyDefaults = false;
   }
 
