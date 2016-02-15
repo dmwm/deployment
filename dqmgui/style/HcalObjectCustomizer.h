@@ -10,12 +10,6 @@
  *		=>	2.1) Based on the Object's name. See naming conventions
  *		=>	2.2) Based on the Bits of TObject using SetBit/TestBit
  *		Naming Conventions(or Name Filters):
- *			If such a filter is part of the ME name, then customization by name
- *			will be applied. These filters are GLOBAL/UNIQUE, namely that is 
- *			by the design...
- *			1) Summary - All MEs having "Summary" in their name 
- *				are used as Summary Plots and customized accordingly
- *			2) Map - All MEs like that are typically TH2D or PROF2D
  */
 
 //	ROOT Includes
@@ -74,10 +68,24 @@ namespace hcaldqm
 	int const bitshift = 19;
 	enum ObjectBits
 	{
-		kLogx		= 0,
-		kLogy		= 1,
-		kLogz		= 2,
-		nObjectBits = 3
+		kAxisLogx		= 0,
+		kAxisLogy		= 1,
+		kAxisLogz		= 2,
+		kAxisLS			= 3,
+		kAxisFlag		= 4,
+		nObjectBits = 5
+	};
+
+	//	Summary Detector Status Constants
+	enum Quality
+	{
+		fNA = 1,
+		fGood = 2,
+		fProblematic = 3,
+		fLow = 4,
+		fVeryLow = 5,
+		fXXX = 6,
+		nQuality = 7
 	};
 
 	//	Class HcalObjectCustomizer
@@ -119,7 +127,23 @@ namespace hcaldqm
 
 			//	Initialize all the Color Schemes
 			void initialize_ColorSchemes()
-			{}
+			{
+				//	summary
+				_n_summary = nQuality-fNA;
+				_colors_summary[0] = kWhite;
+				_colors_summary[1] = kGreen;
+				_colors_summary[2] = kYellow;
+				_colors_summary[3] = kRed;
+				_colors_summary[4] = kRed;
+				_colors_summary[5] = kBlack;
+				_contours_summary[0] = fNA;
+				_contours_summary[1] = fGood;
+				_contours_summary[2] = fProblematic;
+				_contours_summary[3] = fLow;
+				_contours_summary[4] = fVeryLow;
+				_contours_summary[5] = fXXX;
+				_contours_summary[6] = nQuality;
+			}
 
 			//	Initialize Filters - Names for Searching
 			void initialize_Filters()
@@ -132,7 +156,7 @@ namespace hcaldqm
 			}
 
 			//	Customize 1D
-			void customize_1D(hcaldqm::ROOTType, TCanvas* c, 
+			void pre_customize_1D(hcaldqm::ROOTType type, TCanvas* c, 
 				VisDQMObject const& o,
 				VisDQMImgInfo const& ii, VisDQMRenderInfo &ri)
 			{
@@ -142,12 +166,34 @@ namespace hcaldqm
 				//	by default
 
 				//	further customization
-				this->customize_ByName(c, o, ii, ri);
-				this->customize_ByBits(c, o, ii, ri);
+				this->pre_customize_ByName(c, o, ii, ri);
+				this->pre_customize_ByBits(type, c, o, ii, ri);
+
+				//	for 1D Profiles
+				if (type==kTProfile)
+				{
+					TProfile *obj = dynamic_cast<TProfile*>(o.object);
+					bool foundfirst = false;
+					int first = 1;
+					int last = 1;
+					for (int i=first; i<=obj->GetNbinsX(); i++)
+					{
+						if (!foundfirst && obj->GetBinContent(i)!=0)
+						{
+							first = i;
+							foundfirst = true;
+						}
+						if (obj->GetBinContent(i)!=0)
+							last = i+1;
+					}
+					if (last-first>=1)
+						obj->GetXaxis()->SetRange(first, last);
+					obj->SetMarkerStyle(20);
+				}
 			}
 
 			//	Customize 2D
-			void customize_2D(hcaldqm::ROOTType, TCanvas* c, 
+			void pre_customize_2D(hcaldqm::ROOTType type, TCanvas* c, 
 				VisDQMObject const& o,
 				VisDQMImgInfo const& ii, VisDQMRenderInfo &ri)
 			{
@@ -167,28 +213,57 @@ namespace hcaldqm
 				gStyle->SetPalette(1);
 
 				//		
-				this->customize_ByName(c, o, ii, ri);
-				this->customize_ByBits(c, o, ii, ri);
+				this->pre_customize_ByName(c, o, ii, ri);
+				this->pre_customize_ByBits(type, c, o, ii, ri);
+			}
+
+			//	post customize 1D
+			void post_customize_1D(hcaldqm::ROOTType,
+				TCanvas *, VisDQMObject const&, VisDQMImgInfo const&)
+			{}
+
+			//	post customize 2D
+			void post_customize_2D(hcaldqm::ROOTType,
+				TCanvas *, VisDQMObject const& o, VisDQMImgInfo const&)
+			{
+				if (_verbosity>0)
+					std::cout << "Caliing post_customize_2D" << std::endl;
+
+				TString fullpath(o.name.c_str());
+				
+				//	for summaries
+				if (fullpath.Contains("Summary"))
+				{
+					gPad->Update();
+					TBox *box_GOOD = new TBox(0.8, 0.8, 0.9, 0.9);
+					box_GOOD->SetFillColor(kGreen);
+					box_GOOD->Draw();
+				}
 			}
 
 			//	Customize By Name
-			void customize_ByName(TCanvas*,
+			void pre_customize_ByName(TCanvas*,
 				VisDQMObject const& o, VisDQMImgInfo const&,
-				VisDQMRenderInfo &)
+				VisDQMRenderInfo & ri)
 			{
 				if (_verbosity>0)
 					std::cout << "Calling customize_ByName" << std::cout;
 
 				TString fullpath(o.name.c_str());
-				if (!fullpath.Contains("Summary") &&
-					!fullpath.Contains("Map"))
-					return;
 
-				//	
+				//	for summaries
+				if (fullpath.Contains("Summary"))
+				{
+					ri.drawOptions = "colz";
+					gStyle->SetPalette(_n_summary,
+						_colors_summary);
+					((TH2*)o.object)->SetContour(_n_summary+1, 
+						_contours_summary);
+				}
 			}
 
 			//	Customize by Bits
-			void customize_ByBits(TCanvas*,
+			void pre_customize_ByBits(hcaldqm::ROOTType type, TCanvas*,
 				VisDQMObject const& o, VisDQMImgInfo const&,
 				VisDQMRenderInfo &)
 			{
@@ -203,14 +278,39 @@ namespace hcaldqm
 					//	do based on which bit it is
 					switch (i)
 					{
-						case kLogx:
+						case kAxisLogx:
 							gPad->SetLogx(1);
 							break;
-						case kLogy:
+						case kAxisLogy:
 							gPad->SetLogy(1);
 							break;
-						case kLogz:
+						case kAxisLogz:
 							gPad->SetLogz(1);
+							break;
+						case kAxisLS:
+							
+							if (type==kTH2D || type==kTH2F)
+							{
+								TH2 *obj = dynamic_cast<TH2*>(o.object);
+								bool foundfirst = false;
+								int first = 1;
+								int last = 1;
+								for (int i=first; i<=obj->GetNbinsX(); i++)
+								{
+									if (!foundfirst && 
+										obj->GetBinContent(i, 1)!=0)
+									{
+										first = i;
+										foundfirst = true;
+									}
+									if (obj->GetBinContent(i, 1)!=0)
+										last = i+1;
+								}
+								if (last-first>=1)
+									obj->GetXaxis()->SetRange(first, last);
+							}
+							break;
+						case kAxisFlag:
 							break;
 						default:
 							break;
@@ -224,9 +324,19 @@ namespace hcaldqm
 				return o->TestBit(BIT(ibit+bitshift));
 			}
 
+
+
 			// Some members....
 		protected:
 			RenderType			_type;
 			int					_verbosity;
+
+			/*
+			 *	Declare all the colors/contours
+			 */
+			//	summary
+			unsigned int _n_summary;
+			Int_t _colors_summary[10];
+			Double_t _contours_summary[10];
 	};
 }
