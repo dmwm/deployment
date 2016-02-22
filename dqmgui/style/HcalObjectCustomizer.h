@@ -77,6 +77,7 @@ namespace hcaldqm
 	};
 
 	//	Summary Detector Status Constants
+	//	to be used in the next iteration of cmssw
 	enum Quality
 	{
 		fNA = 1,
@@ -87,6 +88,12 @@ namespace hcaldqm
 		fXXX = 6,
 		nQuality = 7
 	};
+
+	double const GOOD = 0.98;
+	double const PROBLEMATIC = 0.95;
+	double const LOW = 0.75;
+	double const VERY_LOW = 0.5;
+	double const NOT_APPLICABLE = -1;
 
 	//	Class HcalObjectCustomizer
 	class HcalObjectCustomizer
