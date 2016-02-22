@@ -8,7 +8,7 @@ if __name__=="__main__":
 
 def hcalcaliblayout(i, p, *rows): i["HcalCalib/Layouts/" + p] = DQMItem(layout=rows)
 
-hcalcaliblayouts(dqmitems, "01 HCAL PEDESTAL MEANs",
+hcalcaliblayout(dqmitems, "01 HCAL PEDESTAL MEANs",
 	[
 		{
 			'path' : "HcalCalib/PedestalTask/Means/SubDet/HB",
@@ -30,7 +30,7 @@ hcalcaliblayouts(dqmitems, "01 HCAL PEDESTAL MEANs",
 		}
 	]
 )
-hcalcaliblayouts(dqmitems, "02 HCAL PEDESTAL RMSs",
+hcalcaliblayout(dqmitems, "02 HCAL PEDESTAL RMSs",
 	[
 		{
 			'path' : "HcalCalib/PedestalTask/PedestalRMSs/SubDet/HB",
@@ -52,7 +52,7 @@ hcalcaliblayouts(dqmitems, "02 HCAL PEDESTAL RMSs",
 		}
 	]
 )
-hcalcaliblayouts(dqmitems, "03 HCAL PEDESTAL MEANs 2D",
+hcalcaliblayout(dqmitems, "03 HCAL PEDESTAL MEANs 2D",
 	[
 		{
 			'path' : "HcalCalib/PedestalTask/PedestalMeans/depth/depth1",
@@ -74,7 +74,7 @@ hcalcaliblayouts(dqmitems, "03 HCAL PEDESTAL MEANs 2D",
 		}
 	]
 )
-hcalcaliblayouts(dqmitems, "01 HCAL PEDESTAL RMSs",
+hcalcaliblayout(dqmitems, "01 HCAL PEDESTAL RMSs",
 	[
 		{
 			'path' : "HcalCalib/PedestalTask/PedestalRMSs/depth/depth1",
