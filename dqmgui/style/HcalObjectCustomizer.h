@@ -136,20 +136,17 @@ namespace hcaldqm
 			void initialize_ColorSchemes()
 			{
 				//	summary
-				_n_summary = nQuality-fNA;
+				_n_summary = 5;
 				_colors_summary[0] = kWhite;
-				_colors_summary[1] = kGreen;
-				_colors_summary[2] = kYellow;
-				_colors_summary[3] = kRed;
-				_colors_summary[4] = kRed;
-				_colors_summary[5] = kBlack;
-				_contours_summary[0] = fNA;
-				_contours_summary[1] = fGood;
-				_contours_summary[2] = fProblematic;
-				_contours_summary[3] = fLow;
-				_contours_summary[4] = fVeryLow;
-				_contours_summary[5] = fXXX;
-				_contours_summary[6] = nQuality;
+				_colors_summary[1] = kBlack;
+				_colors_summary[2] = kRed;
+				_colors_summary[3] = kYellow;
+				_colors_summary[4] = kGreen;
+				_contours_summary[0] = NOT_APPLICABLE-0.05;
+				_contours_summary[1] = VERY_LOW-0.05;
+				_contours_summary[2] = LOW-0.05;
+				_contours_summary[3] = PROBLEMATIC-0.05;
+				_contours_summary[4] = GOOD-0.05;
 			}
 
 			//	Initialize Filters - Names for Searching
