@@ -130,7 +130,7 @@ if __name__ == "__main__":
     exit(1)
 
   # Authenticate to CERN SSO.
-  ca_url = "https://gridca.cern.ch/gridca/host/HostSelection.aspx?template=EE2Host&instructions=openssl"
+  ca_url = "https://ca.cern.ch/ca/host/HostSelection.aspx?template=ee2host&instructions=openssl"
   url, form_data, initial_page = sso_auth(ca_url)
 
   # Unfortunately, gridca.cern.ca returns /gridca as initial page, so
