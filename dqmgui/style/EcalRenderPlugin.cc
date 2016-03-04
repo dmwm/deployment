@@ -1114,6 +1114,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
      !fullpath.Contains("Occupancy") &&
      !fullpath.Contains("TestPulse") &&
      !fullpath.Contains("Cluster") &&
+     !fullpath.Contains("channel status") &&
      !fullpath.Contains("energy Side")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1200,6 +1201,12 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     gPad->SetGrid(false, false);
     
     applyDefaults = false;
+  }
+
+  if( TPRegexp("E[BE]IntegrityClient/E[BE]IT (|EE [+-] )channel status map").MatchB(fullpath) ) {
+    if( obj->GetMaximum() > 0. ) obj->GetZaxis()->SetRangeUser( 0.,14. );
+    obj->SetContour(14);
+    gStyle->SetPalette(1);
   }
 
   if( TPRegexp("E[BE]OccupancyTask/E[BE]OT (|TP )(digi |rec hit )(|thr )occupancy (|EE [+-] )projection (eta|phi)").MatchB(fullpath) ||
