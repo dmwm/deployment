@@ -105,6 +105,7 @@ ui.index = 'reqmgr2' # this part must be activated, see below
 ui.reqmgr = data # this part contains uiuration for ReqMgr REST API, see above
 # This need to be removed when ReqMgr Client is removed
 ui.reqmgr.reqmgr2_url = "%s/reqmgr2" % BASE_URL # this part contains uiuration for ReqMgr REST API, see above
+ui.reqmgr.wmstats_url = "%s/wmstatsserver" % BASE_URL
 ui_main = ui.section_("main")
 ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
