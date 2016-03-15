@@ -911,7 +911,7 @@ ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/08 Timing mean',
 	   [{'path': 'Ecal/Trends/TimingClient EB timing mean', 'description': 'Trend of timing mean. Plots simple average of all channel timing means at each lumisection.'}],
 	   [{'path': 'Ecal/Trends/TimingClient EE timing mean', 'description': 'Trend of timing mean. Plots simple average of all channel timing means at each lumisection.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/09 Timing rms',
-	   [{'path': 'Ecal/Trends/TimingClient EB timing RMS', 'description': 'Trend of timing rms. Plots simple average of all channel timing rms at each lumisection.'}],
+	   [{'path': 'Ecal/Trends/TimingClient EB timing rms', 'description': 'Trend of timing rms. Plots simple average of all channel timing rms at each lumisection.'}],
 	   [{'path': 'Ecal/Trends/TimingClient EE timing rms', 'description': 'Trend of timing rms. Plots simple average of all channel timing rms at each lumisection.'}])
 
 #____________________ Layouts / 12 By SuperModule ____________________
