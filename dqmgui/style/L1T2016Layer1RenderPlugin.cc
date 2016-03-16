@@ -50,7 +50,7 @@ public:
 
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
     {
-      if( o.name.find( "L1T2016/L1TLayer1/" ) != std::string::npos )
+      if( o.name.find( "L1T2016/L1TLayer1" ) != std::string::npos )
         return true;
 
       return false;
@@ -115,6 +115,17 @@ private:
       return true;
     }
     return false;
+  }
+
+  void drawExclusionBox(double x1, double y1, double x2, double y2)
+  {
+    // Clamp in case we are zoomed
+    if ( x1 < gPad->GetFrame()->GetX1() ) x1 = gPad->GetFrame()->GetX1();
+    if ( x2 > gPad->GetFrame()->GetX2() ) x2 = gPad->GetFrame()->GetX2();
+    if ( y1 < gPad->GetFrame()->GetY1() ) y1 = gPad->GetFrame()->GetY1();
+    if ( y2 > gPad->GetFrame()->GetY2() ) y2 = gPad->GetFrame()->GetY2();
+    if ( y1 < y2 && x1 < x2 )
+      exclusionBox_->DrawBox(x1, y1, x2, y2);
   }
 
   void preDrawTH2F( TCanvas *c, const VisDQMObject &o, VisDQMRenderInfo &r )
@@ -188,14 +199,14 @@ private:
 
       if( name.find( "ecalOcc" ) != std::string::npos )
       {
-        exclusionBox_->DrawBox(-.5, -0.5, .5, 71.5);
+        drawExclusionBox(-.5, 0.5, .5, 72.5);
 
         if ( checkAndRemove(drawOptions, "tlabels") )
         {
           char text[20];
           for (int ieta=-28; ieta<29; ++ieta) {
             if ( ieta == 0 ) continue;
-            for (int iphi=0; iphi<72; ++iphi) {
+            for (int iphi=1; iphi<=72; ++iphi) {
               if ( ieta < c->GetFrame()->GetX1() || ieta > c->GetFrame()->GetX2() || iphi < c->GetFrame()->GetY1() || iphi > c->GetFrame()->GetY2() ) continue;
               sprintf(text, "% d,%d", ieta, iphi);
               tlabels_.DrawText(ieta, iphi, text);
@@ -205,24 +216,24 @@ private:
       }
       else if( name.find( "hcalOcc" ) != std::string::npos )
       {
-        exclusionBox_->DrawBox(-.5, -0.5, .5, 71.5);
+        drawExclusionBox(-.5, 0.5, .5, 72.5);
         // HF granularity reduction
-        for (int i=0; i<72; i+=2) {
-          exclusionBox_->DrawBox(28.5, i-0.5, 41.5, i+0.5);
-          exclusionBox_->DrawBox(-28.5, i-0.5, -41.5, i+0.5);
+        for (int i=2; i<=72; i+=2) {
+          drawExclusionBox(28.5, i-0.5, 41.5, i+0.5);
+          drawExclusionBox(-41.5, i-0.5, -28.5, i+0.5);
         }
-        for (int i=1; i<72; i+=4) {
-          exclusionBox_->DrawBox(39.5, i-0.5, 41.5, i+0.5);
-          exclusionBox_->DrawBox(-39.5, i-0.5, -41.5, i+0.5);
+        for (int i=1; i<=72; i+=4) {
+          drawExclusionBox(39.5, i-0.5, 41.5, i+0.5);
+          drawExclusionBox(-41.5, i-0.5, -39.5, i+0.5);
         }
         if ( checkAndRemove(drawOptions, "tlabels") )
         {
           char text[20];
           for (int ieta=-42; ieta<42; ++ieta) {
             if ( ieta == 0 ) continue;
-            for (int iphi=0; iphi<72; ++iphi) {
+            for (int iphi=1; iphi<=72; ++iphi) {
               if ( abs(ieta) > 28 && iphi%2==0 ) continue;
-              if ( abs(ieta) > 39 && iphi%4!=1 ) continue;
+              if ( abs(ieta) > 39 && iphi%4!=3 ) continue;
               if ( ieta < c->GetFrame()->GetX1() || ieta > c->GetFrame()->GetX2() || iphi < c->GetFrame()->GetY1() || iphi > c->GetFrame()->GetY2() ) continue;
               sprintf(text, "% d,%d", ieta, iphi);
               tlabels_.DrawText(ieta, iphi, text);
