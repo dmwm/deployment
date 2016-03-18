@@ -43,3 +43,4 @@ data.object = 'WMArchive.Service.RestApi.RestInterface'
 #data.short_storage_uri = 'avroio:%s/storage/schema.avsc' % ROOTDIR
 data.short_storage_uri = 'mongodb://localhost:8230'
 data.long_storage_uri = 'sparkio:///cms/wmarchive/data/schema.avsc'
+data.specmap = os.path.join(ROOTDIR, 'maps/qlmap.txt')
