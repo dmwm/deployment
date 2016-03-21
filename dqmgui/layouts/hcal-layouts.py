@@ -11,7 +11,6 @@ if __name__=='__main__':
 def hcallayout(i, p, *rows):
 	i['Hcal/Layouts/' + p] = DQMItem(layout=rows)
 
-
 hcallayout(dqmitems, 'Missing1LS/DIGI/FED/FED1100', [{'path':'/DigiTask/Missing1LS/FED/FED1100', 'description':''}])
 
 hcallayout(dqmitems, 'Missing1LS/DIGI/FED/FED1102', [{'path':'/DigiTask/Missing1LS/FED/FED1102', 'description':''}])
