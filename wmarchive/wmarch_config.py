@@ -46,3 +46,6 @@ data.long_storage_uri = 'sparkio:///cms/wmarchive/data/schema.avsc'
 data.long_storage_thr = 1*30*24*60*60 # 1 month
 data.specmap = os.path.join(ROOTDIR, 'maps/qlmap.txt')
 data.wmauri = 'http://localhost:%s' % main.port
+# yarn option will be passed to myspark string
+# use empty string for no yarn or --yarn or --yarn-cluster strings
+data.yarn = ''
