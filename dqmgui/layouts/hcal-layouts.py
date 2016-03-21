@@ -614,14 +614,7 @@ hcallayout(dqmitems, 'Shape/DIGI/FEDSlot/FED731S8', [{'path':'Hcal/DigiTask/Shap
 
 hcallayout(dqmitems, 'Shape/DIGI/FEDSlot/FED731S9', [{'path':'Hcal/DigiTask/Shape/FEDSlot/FED731S9', 'description':"""Signal Shape.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description">Details...</a>"""}])
 
-hcallayout(dqmitems, 'Summary/TP', [{'path':'Hcal/TPTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
+hcallayout(dqmitems, 'Summary/TP', [{'path':'Hcal/TPTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
 
 hcallayout(dqmitems, 'BadQualityvsBX/RAW', [{'path':'Hcal/RawTask/BadQualityvsBX/BadQualityvsBX', 'description':"""BadQuality Channels vs BX.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description">Details...</a>"""}])
 
@@ -721,14 +714,7 @@ hcallayout(dqmitems, 'EtData/TP/TTSubdet/HBHE', [{'path':'Hcal/TPTask/EtData/TTS
 
 hcallayout(dqmitems, 'EtData/TP/TTSubdet/HF', [{'path':'Hcal/TPTask/EtData/TTSubdet/HF', 'description':"""Et Data Distributions.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description">Details...</a>"""}])
 
-hcallayout(dqmitems, 'Summary/RAW', [{'path':'Hcal/RawTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
+hcallayout(dqmitems, 'Summary/RAW', [{'path':'Hcal/RawTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyvsLS/DIGI/Subdet/HB', [{'path':'Hcal/DigiTask/OccupancyvsLS/Subdet/HB', 'description':"""Occupancy vs LS.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description">Details...</a> or <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description">Here...</a>"""}])
 
@@ -842,14 +828,7 @@ hcallayout(dqmitems, 'EtMsm/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/EtMsm/El
 
 hcallayout(dqmitems, 'OccupancyCutData/TP', [{'path':'Hcal/TPTask/OccupancyCutData/OccupancyCutData', 'description':"""Occupancy Distributions for Data with a cut on Et  <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description">Details...</a>"""}])
 
-hcallayout(dqmitems, 'Summary/RECO', [{'path':'Hcal/RecHitTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
+hcallayout(dqmitems, 'Summary/RECO', [{'path':'Hcal/RecHitTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
 
 hcallayout(dqmitems, 'Energy/RECO/Electronics/VME', [{'path':'Hcal/RecHitTask/Energy/Electronics/VME', 'description':"""Energy Distributions.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description">Details...</a>"""}])
 
@@ -1375,14 +1354,7 @@ hcallayout(dqmitems, 'EtData/TP/Electronics/VME', [{'path':'Hcal/TPTask/EtData/E
 
 hcallayout(dqmitems, 'EtData/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/EtData/Electronics/uTCA', 'description':"""Et Data Distributions.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description">Details...</a>"""}])
 
-hcallayout(dqmitems, 'Summary/DIGI', [{'path':'Hcal/DigiTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
+hcallayout(dqmitems, 'Summary/DIGI', [{'path':'Hcal/DigiTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
 
 hcallayout(dqmitems, 'Timing/DIGI/FEDSlot/FED1100S1', [{'path':'Hcal/DigiTask/Timing/FEDSlot/FED1100S1', 'description':"""Timing either @RECO or @DIGI level. Timing is always computed after a cut.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description">Details...</a> or <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description">Here...</a>"""}])
 
@@ -3528,35 +3500,7 @@ hcallayout(dqmitems, 'MsnEmul/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/MsnEmu
 
 hcallayout(dqmitems, 'MsnData/TP', [{'path':'Hcal/TPTask/MsnData/MsnData', 'description':"""Distribution of channels missing from Data w.r.t. Emulator  <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description">Details...</a>"""}])
 
-hcallayout(dqmitems, '00 Current Summary', [{'path':'Hcal/TPTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}, {'path':'Hcal/RawTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}], [{'path':'Hcal/RecHitTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}, {'path':'Hcal/DigiTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.
-Color Scheme:
-<font color='green'>GOOD</font>
-<font color='yellow'>PROBLEMATIC</font>
-<font color='red'>BAD</font>
-<font color='black'>BAD</font>
-WHITE color stands for INAPPLICABLE flag
-Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
+hcallayout(dqmitems, '00 Current Summary', [{'path':'Hcal/TPTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}, {'path':'Hcal/RawTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}], [{'path':'Hcal/RecHitTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}, {'path':'Hcal/DigiTask/Summary/Summary', 'description':"""Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
 
 hcallayout(dqmitems, 'RAW Bad Quality', [{'path':'Hcal/RawTask/BadQualityvsBX/BadQualityvsBX', 'description':"""BadQuality Channels vs BX.   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description">Details...</a>"""}, {'path':'Hcal/RawTask/BadQualityvsLS/BadQualityvsLS', 'description':"""BadQuality Channels vs LS  <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description">Details...</a>"""}])
 
