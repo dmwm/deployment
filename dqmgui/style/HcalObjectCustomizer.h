@@ -136,17 +136,20 @@ namespace hcaldqm
 			void initialize_ColorSchemes()
 			{
 				//	summary
-				_n_summary = 5;
+				_n_summary = nQuality - fNA;
 				_colors_summary[0] = kWhite;
-				_colors_summary[1] = kBlack;
-				_colors_summary[2] = kRed;
-				_colors_summary[3] = kYellow;
-				_colors_summary[4] = kGreen;
-				_contours_summary[0] = NOT_APPLICABLE-0.05;
-				_contours_summary[1] = VERY_LOW-0.05;
-				_contours_summary[2] = LOW-0.05;
-				_contours_summary[3] = PROBLEMATIC-0.05;
-				_contours_summary[4] = GOOD-0.05;
+				_colors_summary[1] = kGreen;
+				_colors_summary[2] = kYellow;
+				_colors_summary[3] = kRed;
+				_colors_summary[4] = kRed;
+				_colors_summary[5] = kBlack;
+				_contours_summary[0] = fNA;
+				_contours_summary[1] = fGood;
+				_contours_summary[2] = fProblematic;
+				_contours_summary[3] = fLow;
+				_contours_summary[4] = fVeryLow;
+				_contours_summary[5] = fXXX;
+				_contours_summary[6] = nQuality;
 			}
 
 			//	Initialize Filters - Names for Searching
@@ -236,13 +239,13 @@ namespace hcaldqm
 				TString fullpath(o.name.c_str());
 				
 				//	for summaries
-				if (fullpath.Contains("Summary"))
+				/*if (fullpath.Contains("Summary"))
 				{
 					gPad->Update();
 					TBox *box_GOOD = new TBox(0.8, 0.8, 0.9, 0.9);
 					box_GOOD->SetFillColor(kGreen);
 					box_GOOD->Draw();
-				}
+				}*/
 			}
 
 			//	Customize By Name
@@ -258,7 +261,7 @@ namespace hcaldqm
 				//	for summaries
 				if (fullpath.Contains("Summary"))
 				{
-					ri.drawOptions = "colz";
+					ri.drawOptions = "col";
 					gStyle->SetPalette(_n_summary,
 						_colors_summary);
 					((TH2*)o.object)->SetContour(_n_summary+1, 
