@@ -1,5 +1,4 @@
 
-
 # Dummy check of python syntax within file when run stand-alone
 if __name__=="__main__":
     class DQMItem:
