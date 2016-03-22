@@ -42,7 +42,13 @@ export WMARCHIVE_PORT=8247
 export PYTHONUNBUFFERED=1
 export JAVA_JDK_ROOT
 export JAVA_HOME=$JAVA_JDK_ROOT
-export KRB5CCNAME=$STATEDIR/krb5cc.txt
+
+# kerberos
+export WMAKEYTAB=$STATEDIR/wma.keytab
+principal=`klist -k $WMAKEYTAB | tail -1 | awk '{print $2}'`
+kinit $principal -k -t $WMAKEYTAB
+
+# GRID
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
