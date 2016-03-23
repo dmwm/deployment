@@ -4,7 +4,7 @@ if __name__=="__main__":
 			print layout
 	dqmitems={}
 
-def shifthcalcaliblayout(i, p, *rows): i['00 Shift/Hcal/' + p] = DQMItem(layout=rows)
+def shifthcalcaliblayout(i, p, *rows): i['00 Shift/HcalCalib/' + p] = DQMItem(layout=rows)
 
 
 shifthcalcaliblayout(dqmitems, '00 Current Summary', [{'path':'HcalCalib/PedestalTask/Summary/Summary', 'description':"""Calibration Summary. Anything that is not either WHITE or GREEN is BAD.<br>Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>BAD</font> for BAD<br>WHITE color stands for INAPPLICABLE flag<br>Flags(Y) vs FED(X). For details...   <a href="https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Summary_Generation_Description">Details...</a>"""}])
