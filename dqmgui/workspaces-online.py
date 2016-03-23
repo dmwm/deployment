@@ -98,7 +98,7 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'Ecal', '^Ecal(|Barrel|Endcap|
                  'Ecal/Layouts/01 Occupancy Summary',
                  'Ecal/Layouts/02 Calibration Summary',
                 )
-server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^Hcal/', '',
+server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
                  'Hcal/Layouts/00 Current Summary',
                  'Hcal/Layouts/DIGI Missing 1LS',
 				 'Hcal/Layouts/DIGI Occupancy',

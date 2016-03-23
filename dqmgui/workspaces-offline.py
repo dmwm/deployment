@@ -62,7 +62,7 @@ server.workspace('DQMContent', 22, 'Calorimeter', 'EcalPreshower', '^EcalPreshow
                  'EcalPreshower/Layouts/04-ESTimingTaskSummary-EcalPreshower',
                 )
 
-server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^Hcal/', '',
+server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
                  'Hcal/Layouts/00 Current Summary',
                  'Hcal/Layouts/DIGI Missing 1LS',
 				 'Hcal/Layouts/DIGI Occupancy',
