@@ -35,7 +35,8 @@ class HcalRenderPlugin : public DQMRenderPlugin
 		{
 			//	return true only if that is Hcal/ or HcalCalib/
 			return o.name.find("Hcal/")!=std::string::npos || 
-				o.name.find("HcalCalib/")!=std::string::npos;
+				o.name.find("HcalCalib/")!=std::string::npos ||
+				o.name.find("Hcal2/")!=std::string::npos;
 		}
 
 		//	if applies gives true - execute just before calling 
