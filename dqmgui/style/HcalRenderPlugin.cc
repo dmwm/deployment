@@ -141,5 +141,4 @@ class HcalRenderPlugin : public DQMRenderPlugin
 		//	A wrapper around the Plugins...
 		hcaldqm::HcalObjectCustomizer		_customizer;
 };
-
 static HcalRenderPlugin instance;
