@@ -177,6 +177,8 @@ namespace hcaldqm
 				this->pre_customize_ByBits(type, c, o, ii, ri);
 
 				//	for 1D Profiles
+				//	NOTE: for profiles always hide non occupied xbins
+				//	independent of the type of the axis (LS or not...)
 				if (type==kTProfile)
 				{
 					TProfile *obj = dynamic_cast<TProfile*>(o.object);
@@ -295,9 +297,9 @@ namespace hcaldqm
 							gPad->SetLogz(1);
 							break;
 						case kAxisLS:
-							
 							if (type==kTH2D || type==kTH2F)
 							{
+								//	for 2D with X axis as LS
 								TH2 *obj = dynamic_cast<TH2*>(o.object);
 								bool foundfirst = false;
 								int first = 1;
@@ -315,6 +317,28 @@ namespace hcaldqm
 								}
 								if (last-first>=1)
 									obj->GetXaxis()->SetRange(first, last);
+							}
+							else if ( type==kTH1F || type==kTH1D)
+							{
+								//	for 1D with X axis as LS
+								TH1 *obj = dynamic_cast<TH1*>(o.object);
+								bool foundfirst = false;
+								int first = 1;
+								int last = 1;
+								for (int i=first; i<=obj->GetNbinsX(); i++)
+								{
+									if (!foundfirst && 
+										obj->GetBinContent(i)!=0)
+									{
+										first = i;
+										foundfirst = true;
+									}
+									if (obj->GetBinContent(i)!=0)
+										last = i+1;
+								}
+								if (last-first>=1)
+									obj->GetXaxis()->SetRange(first, last);
+								obj->SetMarkerStyle(20);
 							}
 							break;
 						case kAxisFlag:
