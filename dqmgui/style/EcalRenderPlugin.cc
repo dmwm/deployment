@@ -1204,8 +1204,8 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
   }
 
   if( TPRegexp("E[BE]IntegrityClient/E[BE]IT (|EE [+-] )channel status map").MatchB(fullpath) ) {
-    if( obj->GetMaximum() > 0. ) obj->GetZaxis()->SetRangeUser( 0.,14. );
-    obj->SetContour(14);
+    if( obj->GetMaximum() > 0. ) obj->GetZaxis()->SetRangeUser( 0.,15. );
+    obj->SetContour(15);
     gStyle->SetPalette(1);
   }
 
