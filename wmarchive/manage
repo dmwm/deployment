@@ -1,0 +1,180 @@
+#!/bin/sh
+
+##H Usage: manage ACTION [ARG] [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H   cron ARG    run cronjob named ARG (dataframe|models|verify)
+##H
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+echo_e=-e
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e=
+  ;;
+esac
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
+. $ROOT/apps/wmarchive/etc/profile.d/init.sh
+
+export WMARCHIVE_ROOT
+export WMA_STATIC_ROOT=$WMARCHIVE_ROOT/data
+export WMARCHIVE_PORT=8247
+export PYTHONUNBUFFERED=1
+export JAVA_JDK_ROOT
+export JAVA_HOME=$JAVA_JDK_ROOT
+
+# kerberos
+export WMAKEYTAB=$STATEDIR/wma.keytab
+principal=`klist -k $WMAKEYTAB | tail -1 | awk '{print $2}'`
+kinit $principal -k -t $WMAKEYTAB
+
+# GRID
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
+export WMARCHIVE_CONFIG=$ROOT/config/$ME/wmarch_config.py
+export MONGO_URI="mongodb://localhost:8230"
+export AVRO_STORAGE=$STATEDIR/avro/data
+# area on HDFS where we'll migrate the data
+export HDFS_MIGRATE=/user/valya/data
+export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
+# we'll clean-up data a one day old if their storage type is avroio
+export CLEANUP_TSTAMP=1d
+export CLEANUP_STYPE="avroio"
+
+cd $STATEDIR
+host=`hostname -s`
+
+# Start service conditionally on crond restart.
+sysboot()
+{
+  dostart=false
+  if [ $(pgrep -u $(id -u) -f "[/]wmarch" | wc -l) = 0 ]; then
+      dostart=true
+  fi
+  $dostart && start
+}
+
+start()
+{
+  echo "starting $ME"
+  # start service
+  $WMARCHIVE_ROOT/bin/wmc-httpd -r -d $LOGDIR $WMARCHIVE_CONFIG &
+}
+
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
+  for pid in $(pgrep -u $(id -u) -f "[/]wmarch_config.py"); do
+      kill -9 $pid
+  done
+}
+
+# Check if the server is running.
+status()
+{
+  local pid=$(pgrep -u $(id -u) -f "[/]wmarch_config.py" | sort -n)
+  if [ X"$pid" = X ]; then
+    echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+  else
+    echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+  fi
+}
+
+# Runs actions to be done through cronjobs
+cron()
+{
+  local action=$1
+  case $action in
+    mongo2avro )
+      $WMARCHIVE_ROOT/bin/mongo2avro \
+          --mongo=$MONGO_URI --schema=$AVRO_SCHEMA \
+          --odir=$AVRO_STORAGE --verbose &> $LOGDIR/mongo2avro.log
+      ;;
+    migrate2hdfs )
+      $WMARCHIVE_ROOT/bin/migrate2hdfs \
+          --idir=$AVRO_STORAGE --odir=$HDFS_MIGRATE --check --remove \
+          --verbose &> $LOGDIR/migrate2hdfs.log
+      ;;
+    mongocleanup )
+      $WMARCHIVE_ROOT/bin/mongocleanup \
+          --mongo=$MONGO_URI --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE \
+          --verbose &> $LOGDIR/mongocleanup.log
+      ;;
+    * )
+      echo "You must specify the cron action to run: mongo2avro|mongocleanup "
+      exit 1
+      ;;
+  esac
+}
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    sysboot
+    ;;
+
+  start | restart )
+    check "$2"
+    stop
+    start
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$2"
+    stop
+    ;;
+
+  cron )
+    check "$3"
+    cron $2
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$WMARCHIVE_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

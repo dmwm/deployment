@@ -1,0 +1,32 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmarchive_deps()
+{
+  deploy $stage backend
+  deploy $stage wmcore-auth
+  deploy $stage mongodb
+  deploy $stage admin
+}
+
+deploy_wmarchive_prep()
+{
+  mkproj avro avro/{data,schemas,migrate}
+  mkproxy
+}
+
+deploy_wmarchive_sw()
+{
+  deploy_pkg comp cms+wmarchive
+}
+
+deploy_wmarchive_post()
+{
+  case $host in vocms013[689] | vocms0140 | vocms016[135] ) disable ;; * ) enable ;; esac
+  (mkcrontab
+   sysboot
+   for action in mongo2avro:'50 20 * * 5' mongocleanup:'10 10 * * 7' migrate2hdfs:'0 0 * * *'; do
+     local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
+     $nogroups || cmd="sudo -H -u _wmarchive bashs -l -c \"${cmd}\""
+     echo "${action##*:} $cmd"
+   done
+  ) | crontab -
+}
