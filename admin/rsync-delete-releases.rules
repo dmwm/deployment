@@ -17,7 +17,7 @@
 +r /.deploy/***
 +r /cfg*/***
 +r /srv*/.deploy/
-+r /srv*/.deploy/20160[2]*.log
++r /srv*/.deploy/20160[1-2]*.log
 +r /srv*/.deploy/2015[1-12]*.log
 
 # Do not delete anything else
