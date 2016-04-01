@@ -244,29 +244,73 @@ private:
       TH2F* obj = dynamic_cast<TH2F*>( o.object );
       assert( obj );
 
-      int topBin = obj->GetNbinsY();
-      int nbins = obj->GetNbinsX();
-      int maxRange = nbins;
+      // Because we don't want to trigger the shifters on subdetectors that 
+      // are "not in" for a longer time, we want to hide them from the HV plot.
+      // In practice, this need was created by ZDC and CASTOR not being in for
+      // a longer period.
+      // - Either we remove these subdetectors from the plot in CMSSW at the
+      //   source where the plot is created.
+      // - Or we just remove them when the plot is displayed in the GUI.
+      // We decided to go for the second option, since it makes more sence to
+      // keep all data related to the DTS bits available in the data.
+      // Doing the "masking" in the renderplugin in the GUI also gives us a
+      // lot more flexibility in terms of fast turning it on or of.
 
-      for ( int i = nbins; i > 0; --i )
+      // The difficulty is in the hiding of certain horizontal lines when the
+      // plot is rendered. There is not really any option for that in root.
+      // The only way is to actually create a new plot with different data.
+      // We will first clone the plot "obj" to have the original data.
+      // Then we will determine the dimensions of our updated plot.
+      // And finally copy the data from the cloned plot back to our original
+      // plot, but leaving out the unwanted subdetectors.
+      
+      // Clone the plot:
+      TH2F *myClonedPlot = dynamic_cast<TH2F*>(obj->Clone("Cloned"));
+      // And reset the original:
+      obj->Reset();
+
+      // Determine the dimensions of the new plot:
+      int maxBinX = myClonedPlot->GetNbinsX();
+      int maxBinY = myClonedPlot->GetNbinsY();
+
+      // We scan from right to left to see which is the rightmost bin with data
+      for ( int binX = myClonedPlot->GetNbinsX(); binX > 0; --binX )
       {
-        if ( obj->GetBinContent(i,topBin) != 0 )
+        // For this scan, we look at the top line, corresponding to "Valid"
+        if ( myClonedPlot->GetBinContent(binX,maxBinY) != 0 )
         {
-          // We make an extra white band to the right of the plot for better
-          // visibility. (Was originally done in the code, but this belongs
-          // more in the render plugin.)
-          for ( int j = 1; j <= topBin; j++ ) {
-              obj->SetBinContent(i + 1, j, -1.);
-          }
           // Set the range of the plot to span up to the last filled bin of
-          // the top row + the extra row we added:
-          maxRange = TMath::Max(i + 1, 2);  // leave at least 2 bins
+          // the top row + an extra column we will add:
+          maxBinX = TMath::Max(binX + 1, 2);  // leave at least 2 bins
           break;
         }
       }
 
-      obj->GetXaxis()->SetRange(1,maxRange);
-      obj->GetYaxis()->SetRange(1,topBin);
+      // Now we basically copy the data from the cloned plot back into the
+      // original one.
+      int binYNew = 0;
+      for ( int binYOrig = 1; binYOrig <= maxBinY; binYOrig++ ) {
+        TString label = TString(myClonedPlot->GetYaxis()->GetBinLabel(binYOrig));
+        // This is where we do the filtering: We skip the lines with the
+        // following labels
+        if (label != "CASTOR" && label != "ZDC") {
+          binYNew++;
+          for ( int binX = 1; binX < maxBinX; binX++ ) {
+            // Just copy the data, with possible offset in Y
+            obj->SetBinContent(binX, binYNew, myClonedPlot->GetBinContent(binX, binYOrig)); 
+          }
+          // Of course, we have to update the label as well
+          obj->GetYaxis()->SetBinLabel(binYNew, label);
+          // We make an extra white band to the right of the plot for better
+          // visibility. (Was originally done in the code, but this belongs
+          // more in the render plugin.)
+          obj->SetBinContent(maxBinX, binYNew, -1.); 
+        }
+      }
+      
+      // We set the ranges to plot, for Y this is the _new_ range:
+      obj->GetXaxis()->SetRange(1,maxBinX);
+      obj->GetYaxis()->SetRange(1,binYNew);
 
       gPad->SetGrid(1,1);
       gPad->SetLeftMargin(0.12);
@@ -290,7 +334,7 @@ private:
       gStyle->SetPalette(2, pcol);
       obj->SetMinimum(-1.e-15);
       obj->SetMaximum(1.0);
-      obj->SetOption("colz");
+      obj->SetOption("col");
 
       return;
 
