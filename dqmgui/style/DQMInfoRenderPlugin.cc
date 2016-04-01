@@ -244,7 +244,7 @@ private:
       TH2F* obj = dynamic_cast<TH2F*>( o.object );
       assert( obj );
 
-      // Because we don't want to trigger the shifters on subdetectors that 
+      // Because we don't want to trigger the shifters on subdetectors that
       // are "not in" for a longer time, we want to hide them from the HV plot.
       // In practice, this need was created by ZDC and CASTOR not being in for
       // a longer period.
@@ -263,7 +263,7 @@ private:
       // Then we will determine the dimensions of our updated plot.
       // And finally copy the data from the cloned plot back to our original
       // plot, but leaving out the unwanted subdetectors.
-      
+
       // Clone the plot:
       TH2F *myClonedPlot = dynamic_cast<TH2F*>(obj->Clone("Cloned"));
       // And reset the original:
@@ -297,17 +297,17 @@ private:
           binYNew++;
           for ( int binX = 1; binX < maxBinX; binX++ ) {
             // Just copy the data, with possible offset in Y
-            obj->SetBinContent(binX, binYNew, myClonedPlot->GetBinContent(binX, binYOrig)); 
+            obj->SetBinContent(binX, binYNew, myClonedPlot->GetBinContent(binX, binYOrig));
           }
           // Of course, we have to update the label as well
           obj->GetYaxis()->SetBinLabel(binYNew, label);
           // We make an extra white band to the right of the plot for better
           // visibility. (Was originally done in the code, but this belongs
           // more in the render plugin.)
-          obj->SetBinContent(maxBinX, binYNew, -1.); 
+          obj->SetBinContent(maxBinX, binYNew, -1.);
         }
       }
-      
+
       // We set the ranges to plot, for Y this is the _new_ range:
       obj->GetXaxis()->SetRange(1,maxBinX);
       obj->GetYaxis()->SetRange(1,binYNew);
