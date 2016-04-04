@@ -63,7 +63,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python -u -m WMCore.WebTools.Root --ini=$CFGFILE \
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so python -u -m WMCore.WebTools.Root --ini=$CFGFILE \
     </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
