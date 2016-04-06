@@ -89,10 +89,7 @@ private:
     gStyle->SetOptStat(111110);
     gStyle->SetTitleSize(0.06,"");
     gStyle->SetTitleX(0.18);
-//    gStyle->SetTitleSize(0.02,"XY");
-//    gStyle->SetLabelSize(0.05,"XY");
-//    gStyle->SetTitleOffset(1.2,"X");
-//    gStyle->SetTitleOffset(1.6,"Y");
+
 
     TH1F* obj = dynamic_cast<TH1F*>( o.object );
     assert( obj );
@@ -108,23 +105,18 @@ private:
 	maxMoveCut_ = obj->GetBinContent(10);
 	maxErrorCut_ = obj->GetBinContent(11);
 	
-    //if((o.name.find( "Xpos" ) != std::string::npos) || (o.name.find( "Ypos" ) != std::string::npos) || (o.name.find( "Zpos" ) != std::string::npos)) obj->GetXaxis()->SetTitle("[#mu m]");
-    //if((o.name.find( "h_summary" ) != std::string::npos))return;
-
 	obj->SetLineColor(kBlack);
 	obj->SetLineWidth(2);
 	obj->SetFillColor(kGreen+3);
 	
 	double max = 0;
 	double min = 0;
-	
-	
+		
 	for (int i = 1; i < 7; i++){
 		
 		if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
 		if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
 		
-
 		if (fabs(obj->GetBinContent(i)) > maxMoveCut_) obj->SetFillColor(kRed);		
 		else if (obj->GetBinContent(i) > cut_){
 			
@@ -193,77 +185,60 @@ private:
     obj->SetStats( kFALSE );
 
        
-	cut_ = obj->GetBinContent(8); 
-  	sigCut_ = obj->GetBinContent(9);
-	maxMoveCut_ = obj->GetBinContent(10);
-	maxErrorCut_ = obj->GetBinContent(11);  
-
-	
-                            
-	TLine* line = new TLine();
-	line->SetBit(kCanDelete);
-	line->SetLineWidth(2);
-	line->SetLineColor(kRed+2);   
-	line->DrawLine(0, cut_, 6, cut_);
+    cut_ = obj->GetBinContent(8); 
+    sigCut_ = obj->GetBinContent(9);
+    maxMoveCut_ = obj->GetBinContent(10); 
+    maxErrorCut_ = obj->GetBinContent(11);  
+	                    
+    TLine* line = new TLine();
+    line->SetBit(kCanDelete);
+    line->SetLineWidth(2);
+    line->SetLineColor(kRed+2);   
+    line->DrawLine(0, cut_, 6, cut_);
     line->DrawLine(0, -cut_, 6, -cut_);
 
     TText* t_text = new TText();
     t_text->SetBit(kCanDelete);
     t_text->SetNDC(true);
 
-	bool hitMax = false;
-	bool moved = false;
-	bool hitMaxError = false;
-	bool sigMove = false;
-	
-	
-	for (int i = 1; i < 7; i++){
-
-		if (fabs(obj->GetBinContent(i)) > maxMoveCut_){
+    bool hitMax = false;
+    bool moved = false;
+    bool hitMaxError = false;
+    bool sigMove = false;
 		
-			hitMax = true;
-
-				
-		}		
-		else if (obj->GetBinContent(i) > cut_){
-			moved = true;
-			if (obj->GetBinError(i) > maxErrorCut_){
-				hitMaxError = true;	
-									
-			}
-			else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
-			
-				sigMove = true;
-					
-			}
+    for (int i = 1; i < 7; i++){
+	if (fabs(obj->GetBinContent(i)) > maxMoveCut_){
+		hitMax = true;
+	}		
+	else if (obj->GetBinContent(i) > cut_){
+		moved = true;
+		if (obj->GetBinError(i) > maxErrorCut_){
+			hitMaxError = true;	
 		}
-	
+		else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
+			sigMove = true;					
+		}
 	}
+    }
 	
-	if (hitMax){
-	
+    if (hitMax){
+	obj->SetFillColor(kRed);
+	t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");	
+   }
+   else if (moved) {	
+	if (hitMaxError){
 		obj->SetFillColor(kRed);
-		t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");	
+		t_text->DrawText(0.25,0.8, "Movement uncertainty exceeds maximum");
 	}
-	
-	else if (moved) {
-		
-		if (hitMaxError){
-		
-			obj->SetFillColor(kRed);
-			t_text->DrawText(0.25,0.8, "Movement uncertainty exceeds maximum");
-		}
-		
-		else if (sigMove){
-		
-			obj->SetFillColor(kOrange);
-			t_text->DrawText(0.25,0.8, "Significant movement observed");
-		}
+	else if (sigMove){
+		obj->SetFillColor(kOrange);
+		t_text->DrawText(0.25,0.8, "Significant movement observed");
 	}
-	else t_text->DrawText(0.25,0.8, "Movement within limits");
+   }
+   else t_text->DrawText(0.25,0.8, "Movement within limits");
 
 
-    return;
+   return;
   }
 
   void postDrawTH2F(TCanvas *, const VisDQMObject &o)
