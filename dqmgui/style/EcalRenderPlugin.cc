@@ -314,8 +314,8 @@ EcalRenderPlugin::initialise(int, char **)
   for(int i(0); i < 11; i++){
     accumMaskedPalette[i] = kWhite;
   }
-  accumMaskedPalette[11] = kGray;
-  accumMaskedPalette[12] = kGray+3;
+  accumMaskedPalette[11] = kGray+1;
+  accumMaskedPalette[12] = kBlack;
   accumMaskedPalette[13] = kBlue;
 
   iCol += nAccum;
