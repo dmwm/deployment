@@ -100,44 +100,42 @@ private:
     c->SetLeftMargin(0.11);
     c->SetRightMargin(0.09);
 
-	cut_ = obj->GetBinContent(8);
-	sigCut_ = obj->GetBinContent(9);
-	maxMoveCut_ = obj->GetBinContent(10);
-	maxErrorCut_ = obj->GetBinContent(11);
-	
-	obj->SetLineColor(kBlack);
-	obj->SetLineWidth(2);
-	obj->SetFillColor(kGreen+3);
-	
-	double max = 0;
-	double min = 0;
-		
-	for (int i = 1; i < 7; i++){
-		
-		if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
-		if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
-		
-		if (fabs(obj->GetBinContent(i)) > maxMoveCut_) obj->SetFillColor(kRed);		
-		else if (obj->GetBinContent(i) > cut_){
-			
-			if (obj->GetBinError(i) > maxErrorCut_){
-				obj->SetFillColor(kRed);	
-			}
-			else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
-			
-				obj->SetFillColor(kGreen+3);
-			}
+    cut_ = obj->GetBinContent(8);
+    sigCut_ = obj->GetBinContent(9);
+    maxMoveCut_ = obj->GetBinContent(10);
+    maxErrorCut_ = obj->GetBinContent(11);
+
+    obj->SetLineColor(kBlack);
+    obj->SetLineWidth(2);
+    obj->SetFillColor(kGreen+3);
+
+    double max = 0;
+    double min = 0;
+
+    for (int i = 1; i < 7; i++){
+
+	if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
+	if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
+
+	if (fabs(obj->GetBinContent(i)) > maxMoveCut_) obj->SetFillColor(kRed);		
+	else if (obj->GetBinContent(i) > cut_){
+		if (obj->GetBinError(i) > maxErrorCut_){
+			obj->SetFillColor(kRed);	
 		}
-	
+		else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
+				obj->SetFillColor(kGreen+3);
+		}
 	}
+	
+    }
 
 
-	obj->GetXaxis()->SetBinLabel(1,"FPIX(x+,z-)");
-	obj->GetXaxis()->SetBinLabel(2,"FPIX(x-,z-)");
-	obj->GetXaxis()->SetBinLabel(3,"BPIX(x+)");
-	obj->GetXaxis()->SetBinLabel(4,"BPIX(x-)");
-	obj->GetXaxis()->SetBinLabel(5,"FPIX(x+,z+)");
-	obj->GetXaxis()->SetBinLabel(6,"FPIX(x-,z+)");
+    obj->GetXaxis()->SetBinLabel(1,"FPIX(x+,z-)");
+    obj->GetXaxis()->SetBinLabel(2,"FPIX(x-,z-)");
+    obj->GetXaxis()->SetBinLabel(3,"BPIX(x+)");
+    obj->GetXaxis()->SetBinLabel(4,"BPIX(x-)");
+    obj->GetXaxis()->SetBinLabel(5,"FPIX(x+,z+)");
+    obj->GetXaxis()->SetBinLabel(6,"FPIX(x-,z+)");
 
     obj->GetXaxis()->SetTitleSize(0.06);
     obj->GetXaxis()->SetLabelSize(0.06);
@@ -149,9 +147,7 @@ private:
     obj->GetYaxis()->SetRangeUser(min-20,max+20);
 
     obj->SetStats(kFALSE);
-     
     obj->SetOption("histe");
-    
   }
 
   void preDrawTH2F(TCanvas *, const VisDQMObject &o)
@@ -184,12 +180,11 @@ private:
 
     obj->SetStats( kFALSE );
 
-       
     cut_ = obj->GetBinContent(8); 
     sigCut_ = obj->GetBinContent(9);
     maxMoveCut_ = obj->GetBinContent(10); 
     maxErrorCut_ = obj->GetBinContent(11);  
-	                    
+                    
     TLine* line = new TLine();
     line->SetBit(kCanDelete);
     line->SetLineWidth(2);
@@ -205,7 +200,7 @@ private:
     bool moved = false;
     bool hitMaxError = false;
     bool sigMove = false;
-		
+	
     for (int i = 1; i < 7; i++){
 	if (fabs(obj->GetBinContent(i)) > maxMoveCut_){
 		hitMax = true;
@@ -220,7 +215,7 @@ private:
 		}
 	}
     }
-	
+
     if (hitMax){
 	obj->SetFillColor(kRed);
 	t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");	
@@ -236,7 +231,6 @@ private:
 	}
    }
    else t_text->DrawText(0.25,0.8, "Movement within limits");
-
 
    return;
   }
