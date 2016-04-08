@@ -12,9 +12,9 @@ ecallayout(dqmitems, 'Ecal/Layouts/01 Occupancy Summary',
 	   [{'path': 'EcalEndcap/EEOccupancyTask/EEOT digi occupancy EE -','description': 'Digi occupancy.'},
 	    {'path': 'EcalEndcap/EEOccupancyTask/EEOT digi occupancy EE +','description': 'Digi occupancy.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/02 Calibration Summary',
-	   [{'path': 'EcalBarrel/EBSummaryClient/EB global calibration quality', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, Pedestal gain 12, and Test Pulse gain 12 quality summary.'}],
-	   [{'path': 'EcalEndcap/EESummaryClient/EE global calibration quality EE -', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, Pedestal gain 12, and Test Pulse gain 12 quality summary.'},
-	    {'path': 'EcalEndcap/EESummaryClient/EE global calibration quality EE +', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, Pedestal gain 12, and Test Pulse gain 12 quality summary.'}])
+	   [{'path': 'EcalBarrel/EBSummaryClient/EB global calibration quality', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, and Pedestal gain 12 quality summaries.'}],
+	   [{'path': 'EcalEndcap/EESummaryClient/EE global calibration quality EE -', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, and Pedestal gain 12 quality summaries.'},
+	    {'path': 'EcalEndcap/EESummaryClient/EE global calibration quality EE +', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, and Pedestal gain 12 quality summaries.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/00 Summary',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EB global summary', 'description': 'Summary of the data quality. A channel is red if it is red in any one of RawData, Integrity, Timing, TriggerPrimitives, and HotCells task. A cluster of bad towers in this plot will cause the ReportSummary for the FED to go to 0 in online DQM.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EE global summary EE -', 'description': 'Summary of the data quality. A channel is red if it is red in any one of RawData, Integrity, Timing, TriggerPrimitives, and HotCells task. A cluster of bad towers in this plot will cause the ReportSummary for the FED to go to 0 in online DQM.'},
@@ -561,6 +561,18 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/09 Emulation Timing',
 	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT max TP matching index', 'description': 'Distribution of the index of emulated TP with the highest Et value.'}],
 	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT max TP matching index EE -', 'description': 'Distribution of the index of emulated TP with the highest Et value.'},
 	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT max TP matching index EE +', 'description': 'Distribution of the index of emulated TP with the highest Et value.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/10 TTF4 Occupancy',
+	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 Occupancy',      'description': 'Occupancy for TP digis with TTF=4.'}],
+	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE -', 'description': 'Occupancy for TP digis with TTF=4.'},
+	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE +', 'description': 'Occupancy for TP digis with TTF=4.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/11 TTF4 vs Masking Status',
+     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 vs Masking Status',      'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}],
+     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE -', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'},
+      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE +', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/12 TT Masking Status',
+     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TT Masking Status',      'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'}],
+     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE -', 'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'},
+      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE +', 'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
