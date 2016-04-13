@@ -30,7 +30,7 @@ public:
 
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
   {
-    if(o.name.find( "AlcaReco/SiPixelAli/" ) != std::string::npos)return true;
+    if(o.name.find( "SiPixelAli/" ) != std::string::npos)return true;
     else return false;
   }
 
@@ -100,33 +100,37 @@ private:
     c->SetLeftMargin(0.11);
     c->SetRightMargin(0.09);
 
-    cut_ = obj->GetBinContent(8);
+    sig_ = obj->GetBinContent(8);
     sigCut_ = obj->GetBinContent(9);
     maxMoveCut_ = obj->GetBinContent(10);
     maxErrorCut_ = obj->GetBinContent(11);
+
 
     obj->SetLineColor(kBlack);
     obj->SetLineWidth(2);
     obj->SetFillColor(kGreen+3);
 
-    double max = 0;
-    double min = 0;
+    double max = -1000;
+    double min = 1000;
+
 
     for (int i = 1; i < 7; i++){
 
-	if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
-	if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
+    	if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
+    	if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
 
-	if (fabs(obj->GetBinContent(i)) > maxMoveCut_) obj->SetFillColor(kRed);		
+
+	if (fabs(obj->GetBinContent(i)) > maxMoveCut_) obj->SetFillColor(kRed);
 	else if (obj->GetBinContent(i) > cut_){
+
 		if (obj->GetBinError(i) > maxErrorCut_){
-			obj->SetFillColor(kRed);	
+			obj->SetFillColor(kRed);
 		}
 		else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
-				obj->SetFillColor(kGreen+3);
+
+			obj->SetFillColor(kGreen+3);
 		}
 	}
-	
     }
 
 
@@ -144,10 +148,13 @@ private:
 
     obj->GetYaxis()->SetTitleSize(0.06);
     obj->GetYaxis()->SetLabelSize(0.06);
-    obj->GetYaxis()->SetRangeUser(min-20,max+20);
+
+    obj->GetYaxis()->SetRangeUser(std::min(min-20,-cut_-20),std::max(max+20,cut_+20));
 
     obj->SetStats(kFALSE);
+    obj->SetFillStyle(3017);
     obj->SetOption("histe");
+    
   }
 
   void preDrawTH2F(TCanvas *, const VisDQMObject &o)
@@ -180,17 +187,19 @@ private:
 
     obj->SetStats( kFALSE );
 
-    cut_ = obj->GetBinContent(8); 
+    cut_ = obj->GetBinContent(8);
     sigCut_ = obj->GetBinContent(9);
-    maxMoveCut_ = obj->GetBinContent(10); 
-    maxErrorCut_ = obj->GetBinContent(11);  
+    maxMoveCut_ = obj->GetBinContent(10);
+    maxErrorCut_ = obj->GetBinContent(11);
                     
     TLine* line = new TLine();
     line->SetBit(kCanDelete);
     line->SetLineWidth(2);
-    line->SetLineColor(kRed+2);   
+    line->SetLineColor(kRed+2);
     line->DrawLine(0, cut_, 6, cut_);
     line->DrawLine(0, -cut_, 6, -cut_);
+    line->SetLineColor(kBlue+2);
+    line->DrawLine(0, 0, 6, 0);
 
     TText* t_text = new TText();
     t_text->SetBit(kCanDelete);
@@ -200,27 +209,28 @@ private:
     bool moved = false;
     bool hitMaxError = false;
     bool sigMove = false;
-	
+
+
     for (int i = 1; i < 7; i++){
+
 	if (fabs(obj->GetBinContent(i)) > maxMoveCut_){
-		hitMax = true;
+		hitMax = true;	
 	}		
 	else if (obj->GetBinContent(i) > cut_){
 		moved = true;
 		if (obj->GetBinError(i) > maxErrorCut_){
-			hitMaxError = true;	
+			hitMaxError = true;
 		}
 		else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
-			sigMove = true;					
+			sigMove = true;
 		}
 	}
     }
-
     if (hitMax){
 	obj->SetFillColor(kRed);
 	t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");	
-   }
-   else if (moved) {	
+    }
+    else if (moved) {	
 	if (hitMaxError){
 		obj->SetFillColor(kRed);
 		t_text->DrawText(0.25,0.8, "Movement uncertainty exceeds maximum");
@@ -229,10 +239,11 @@ private:
 		obj->SetFillColor(kOrange);
 		t_text->DrawText(0.25,0.8, "Significant movement observed");
 	}
-   }
-   else t_text->DrawText(0.25,0.8, "Movement within limits");
+    }
+    else t_text->DrawText(0.25,0.8, "Movement within limits");
 
-   return;
+
+    return;
   }
 
   void postDrawTH2F(TCanvas *, const VisDQMObject &o)
