@@ -562,17 +562,17 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/09 Emulation Timing',
 	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT max TP matching index EE -', 'description': 'Distribution of the index of emulated TP with the highest Et value.'},
 	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT max TP matching index EE +', 'description': 'Distribution of the index of emulated TP with the highest Et value.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/10 TTF4 Occupancy',
-	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 Occupancy',      'description': 'Occupancy for TP digis with TTF=4.'}],
-	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE -', 'description': 'Occupancy for TP digis with TTF=4.'},
-	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE +', 'description': 'Occupancy for TP digis with TTF=4.'}])
+	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 Occupancy',      'description': 'Occupancy for TP digis with TT Flag=4 to aid in detecting automasked TTs. A TT Flag=4 is set whenever any of the following errors occur:<br/> - Link error,<br/> - Hamming code error,<br/> - Automasking of unstable link,<br/> - Automasking of a hot TT.'}],
+	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE -', 'description': 'Occupancy for TP digis with TT Flag=4 to aid in detecting automasked TTs. A TT Flag=4 is set whenever any of the following errors occur:<br/> - Link error,<br/> - Hamming code error,<br/> - Automasking of unstable link,<br/> - Automasking of a hot TT.'},
+	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE +', 'description': 'Occupancy for TP digis with TT Flag=4 to aid in detecting automasked TTs. A TT Flag=4 is set whenever any of the following errors occur:<br/> - Link error,<br/> - Hamming code error,<br/> - Automasking of unstable link,<br/> - Automasking of a hot TT.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/11 TTF4 vs Masking Status',
-     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 vs Masking Status',      'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}],
-     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE -', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'},
-      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE +', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}])
+     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 vs Masking Status',      'description': 'Summarizes whether a TT was permanently masked in either the TPG TT or Strips DB record, or had an instance of TT Flag=4 (see TTF4 Occupancy for details).<br/>GRAY: no TTF4, permanently masked in DB,<br/>BLACK: has TTF4, permanently masked in DB,<br/>BLUE: has TTF4, NOT permanently masked in DB.'}],
+     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE -', 'description': 'Summarizes whether a TT was permanently masked in either the TPG TT or Strips DB record, or had an instance of TT Flag=4 (see TTF4 Occupancy for details).<br/>GRAY: no TTF4, permanently masked in DB,<br/>BLACK: has TTF4, permanently masked in DB,<br/>BLUE: has TTF4, NOT permanently masked in DB.'},
+      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE +', 'description': 'Summarizes whether a TT was permanently masked in either the TPG TT or Strips DB record, or had an instance of TT Flag=4 (see TTF4 Occupancy for details).<br/>GRAY: no TTF4, permanently masked in DB,<br/>BLACK: has TTF4, permanently masked in DB,<br/>BLUE: has TTF4, NOT permanently masked in DB.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/12 TT Masking Status',
-     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TT Masking Status',      'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'}],
-     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE -', 'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'},
-      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE +', 'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'}])
+     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TT Masking Status',      'description': 'Trigger tower masking status: a TT or strip is red if it is permanently masked in either the TPG TT or Strips DB record.'}],
+     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE -', 'description': 'Trigger tower masking status: a TT or strip is red if it is permanently masked in either the TPG TT or Strips DB record.'},
+      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE +', 'description': 'Trigger tower masking status: a TT or strip is red if it is permanently masked in either the TPG TT or Strips DB record.'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
@@ -590,7 +590,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       fedNo = 'FED%3d TCC%2d' % (fed0+channel,tcc0+channel) if detector == 'Barrel' else 'FED%3d' % (fed0+channel) # e.g. EB:'TCC610 TCC37' / EE:'TCC604'
       ecallayout(dqmitems,'Ecal/Layouts/06 Trigger Primitives/By SuperModule/EmulMatching/Match %s' % channellabel,
                  [{'path': 'Ecal%s/%sTriggerTowerTask/%sTTT EmulMatch %s' % (detector, label, label, channellabel),
-                   'description': 'Counter for TP "timing" (= index withing the emulated TP whose Et matched that of the real TP).'}])
+                   'description': 'BX timing comparison between emulated TP and real TP produced in an event. A match is declared for the emulated TP index whose Et agrees with that of the real TP. If the real TP exists, the following timing comparisons are possible:<br/>NO EMUL: No match to an emulated TP was found,<br/>0: Matched to BX-2 emulated TP,<br/>1: Matched to BX-1 emulated TP,<br/>2: Matched to in-time emulated TP,<br/>3: Matched to BX+1 emulated TP,<br/>4: Matched to BX+2 emulated TP.<br/>An empty/missing TP indicates no real TPs were produced for the event.'}])
       ecallayout(dqmitems,'Ecal/Layouts/06 Trigger Primitives/By SuperModule/Et/TP Et %s %s' % (channellabel, fedNo),
                  [{'path': 'Ecal%s/%sTriggerTowerTask/%sTTT Et map Real Digis %s' % (detector, label, label, channellabel),
                    'description': '2D distribution of the trigger primitive Et.'}])
