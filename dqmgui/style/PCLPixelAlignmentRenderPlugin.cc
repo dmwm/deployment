@@ -100,7 +100,7 @@ private:
     c->SetLeftMargin(0.11);
     c->SetRightMargin(0.09);
 
-    sig_ = obj->GetBinContent(8);
+    cut_ = obj->GetBinContent(8);
     sigCut_ = obj->GetBinContent(9);
     maxMoveCut_ = obj->GetBinContent(10);
     maxErrorCut_ = obj->GetBinContent(11);
