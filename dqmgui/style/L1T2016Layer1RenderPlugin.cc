@@ -19,6 +19,7 @@
 class L1T2016Layer1RenderPlugin : public DQMRenderPlugin
 {
   TBox *exclusionBox_;
+  TLine * correlation_;
   TText tlabels_;
   int palette_kry[256];
 
@@ -29,6 +30,10 @@ public:
       exclusionBox_ = new TBox();
       exclusionBox_->SetFillColor(kGray+2);
       exclusionBox_->SetFillStyle(3002);
+
+      // For correlation eye guide
+      correlation_ = new TLine();
+      correlation_->SetLineStyle(kDashed);
 
       // For tower ieta,iphi labels
       tlabels_.SetTextFont(40);
@@ -50,13 +55,19 @@ public:
 
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
     {
+      if( o.name.find( "L1TStage2CaloLayer1" ) != std::string::npos )
+        return true;
+      // For a brief time (March-April 2016) this module was in different location
       if( o.name.find( "L1T2016/L1TLayer1" ) != std::string::npos )
+        return true;
+      // Also process data/emulator
+      if( o.name.find( "L1TdeStage2CaloLayer1" ) != std::string::npos )
         return true;
 
       return false;
     }
 
-  virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo &r )
+  virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &i, VisDQMRenderInfo &r )
     {
       c->cd();
 
@@ -84,11 +95,11 @@ public:
       }
       else if( dynamic_cast<TH1F*>( o.object ) )
       {
-        preDrawTH1F( c, o );
+        preDrawTH1F( c, o, i, r );
       }
     }
 
-  virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & )
+  virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &i )
     {
       c->cd();
 
@@ -102,7 +113,7 @@ public:
       }
       else if( dynamic_cast<TH1F*>( o.object ) )
       {
-        postDrawTH1F( c, o );
+        postDrawTH1F( c, o, i);
       }
     }
 
@@ -157,7 +168,10 @@ private:
       }
 
       std::string name = o.name.substr(o.name.rfind("/")+1);
-      if( name.find( "calOcc" ) != std::string::npos )
+      if( name.find( "calOcc" ) != std::string::npos
+          || name.find( "calDiscrepancy" ) != std::string::npos
+          || name.find( "calLinkError" ) != std::string::npos
+        )
       {
         // Set one level of divisions for axes
         obj->GetXaxis()->SetNdivisions(10);
@@ -180,12 +194,24 @@ private:
       }
     }
 
-  void preDrawTH1F( TCanvas *, const VisDQMObject &o )
+  void preDrawTH1F( TCanvas *, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo &r )
     {
       TH1F* obj = dynamic_cast<TH1F*>( o.object );
       assert( obj );
 
       std::string name = o.name.substr(o.name.rfind("/")+1);
+
+      if( name.find( "ByLumi" ) != std::string::npos )
+      {
+        obj->SetFillColor(kRed);
+      }
+      else if ( name.find( "PerBx" ) != std::string::npos )
+      {
+        obj->SetFillColor(kRed);
+      }
+      if ( r.drawOptions.length() == 0 ) {
+        obj->SetOption("hist");
+      }
     }
 
   void postDrawTH2F( TCanvas * c, const VisDQMObject &o, std::string &drawOptions )
@@ -217,6 +243,8 @@ private:
       else if( name.find( "hcalOcc" ) != std::string::npos )
       {
         drawExclusionBox(-.5, 0.5, .5, 72.5);
+        drawExclusionBox(-29.5, 0.5, -28.5, 72.5);
+        drawExclusionBox(28.5, 0.5, 29.5, 72.5);
         // HF granularity reduction
         for (int i=2; i<=72; i+=2) {
           drawExclusionBox(28.5, i-0.5, 41.5, i+0.5);
@@ -232,7 +260,7 @@ private:
           for (int ieta=-42; ieta<42; ++ieta) {
             if ( ieta == 0 ) continue;
             for (int iphi=1; iphi<=72; ++iphi) {
-              if ( abs(ieta) > 28 && iphi%2==0 ) continue;
+              if ( abs(ieta) > 29 && iphi%2==0 ) continue;
               if ( abs(ieta) > 39 && iphi%4!=3 ) continue;
               if ( ieta < c->GetFrame()->GetX1() || ieta > c->GetFrame()->GetX2() || iphi < c->GetFrame()->GetY1() || iphi > c->GetFrame()->GetY2() ) continue;
               sprintf(text, "% d,%d", ieta, iphi);
@@ -241,6 +269,10 @@ private:
           }
         }
       }
+      else if ( name.find( "Correlation" ) != std::string::npos )
+      {
+        correlation_->DrawLine(0.,0.,255.,255.);
+      }
       else if ( name.find( "Mismatches" ) != std::string::npos )
       {
         gStyle->SetOptStat(0);
@@ -248,8 +280,39 @@ private:
 
     }
 
-  void postDrawTH1F( TCanvas *, const VisDQMObject & )
+  void postDrawTH1F( TCanvas *, const VisDQMObject &o, const VisDQMImgInfo &i )
     {
+      TH1F* obj = dynamic_cast<TH1F*>( o.object );
+      assert( obj );
+
+      std::string name = o.name.substr(o.name.rfind("/")+1);
+
+      if( name.find( "ByLumi" ) != std::string::npos )
+      {
+        if ( isnan(i.xaxis.min) && isnan(i.xaxis.max) )
+        {
+          double currentLumi = obj->GetBinContent(0);
+          if ( currentLumi != 0. ) obj->GetXaxis()->SetRangeUser(1, currentLumi+2);
+        }
+        // (if NaN, compares false anyway)
+        else if ( i.xaxis.min < 1. ) {
+          obj->GetXaxis()->SetRangeUser(1., i.xaxis.max);
+        }
+        // To account for our underflow bin hack
+        double currentLumi = obj->GetBinContent(0);
+        obj->SetEntries(obj->GetEntries()-currentLumi);
+        gStyle->SetOptStat(11);
+      }
+      if( o.name.find( "maxEvt" ) != std::string::npos && o.name.find("MismatchDetail") == std::string::npos )
+      {
+        if ( isnan(i.yaxis.max) )
+        {
+          // Setting min to 0 breaks log scale unless user sets min>0
+          // Not sure how to let ROOT choose min
+          auto miny = (isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
+          obj->GetYaxis()->SetRangeUser(miny, 8856);
+        }
+      }
     }
 };
 
