@@ -2706,7 +2706,10 @@ public:
   reMatch(".*/CSCOfflineMonitor/recHits/hRHTiming.*", o.name) ||
   reMatch(".*/CSCOfflineMonitor/recHits/hRHstpos.*", o.name) ||
         reMatch(".*/CSCOfflineMonitor/Segments/hSTimeCathode$", o.name) ||
-        reMatch(".*/CSCOfflineMonitor/Segments/hSTimeCombined$", o.name))
+        reMatch(".*/CSCOfflineMonitor/Segments/hSTimeCombined$", o.name) ||
+        reMatch(".*/CSCOfflineMonitor/Segments/hSTimeAnode$", o.name) ||
+        reMatch(".*/CSCOfflineMonitor/Segments/hSTimeDiff$", o.name))
+        
       {
         obj->SetStats(true);
         gStyle->SetOptStat("euomr");
@@ -2755,7 +2758,11 @@ public:
       }
 
     if (reMatch(".*/CSCOfflineMonitor/Segments/hSTimeVsTOF$", o.name) ||
-  reMatch(".*/CSCOfflineMonitor/Segments/hSTimeVsZ$", o.name))
+  reMatch(".*/CSCOfflineMonitor/Segments/hSTimeVsZ$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSTimeAnodeSerial$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSTimeCathodeSerial$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSTimeCombinedSerial$", o.name) ||
+  reMatch(".*/CSCOfflineMonitor/Segments/hSTimeDiffSerial$", o.name))
       {
         obj->SetStats(true);
         gStyle->SetOptStat("eou");
