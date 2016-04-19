@@ -1,37 +1,65 @@
 def l1tlayout(i, p, *rows): i["L1T/Layouts/" + p] = DQMItem(layout=rows)
 
+# The quick collection is defined in ../workspaces-online.py
+# for Online DQM, but we want to also include descriptions
+# So we reference the 'QuickCollection' layout created here
+def l1t_quickCollection(i, name, *rows):
+  i["L1T/Layouts/Stage2-QuickCollection/%s" % name] = DQMItem(layout=rows)
+
+# If you add a plot here, remember to add the reference to ../workspaces-online.py
+l1t_quickCollection(dqmitems, "00 - Calo Layer1 ECAL Input Occupancy",
+  [{
+    'path': "L1T2016/L1TStage2CaloLayer1/ecalOccupancy",
+    'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower"
+  }])
+l1t_quickCollection(dqmitems, "01 - Calo Layer1 HCAL Input Occupancy",
+  [{
+    'path': "L1T2016/L1TStage2CaloLayer1/hcalOccupancy",
+    'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower"
+  }])
+l1t_quickCollection(dqmitems, "02 - Calo Layer1 Input Link Errors",
+  [{
+    'path': "L1T2016/L1TStage2CaloLayer1/maxEvtLinkErrorsByLumi",
+    'description': "This should be empty at all times."
+  }])
+
+###############################################
+### From here down is legacy/stage1 trigger ###
+###           All in Legacy folder          ###
+###############################################
+
 def l1t_gt_single(i, dir, name):
-  i["L1T/Layouts/00-GT-Summary/%s" % name] = \
+  i["L1T/Layouts/Legacy/00-GT-Summary/%s" % name] = \
     DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
 
 def l1t_gmt_single(i, dir, name):
-  i["L1T/Layouts/01-GMT-Summary/%s" % name] = \
+  i["L1T/Layouts/Legacy/01-GMT-Summary/%s" % name] = \
     DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
 
 def l1t_gct_single(i, dir, name):
-  i["L1T/Layouts/02-Stage1Layer2-Summary/%s" % name] = \
+  i["L1T/Layouts/Legacy/02-Stage1Layer2-Summary/%s" % name] = \
     DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
 
 #def l1t_rct_single(i, dir, name):
-#  i["L1T/Layouts/03-RCT-Summary/%s" % name] = \
+#  i["L1T/Layouts/Legacy/03-RCT-Summary/%s" % name] = \
 #    DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
 
 def l1t_csctf_single(i, dir, name):
-  i["L1T/Layouts/04-CSCTF-Summary/%s" % name] = \
+  i["L1T/Layouts/Legacy/04-CSCTF-Summary/%s" % name] = \
     DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
 
 #def l1t_dttf_single(i, dir, name):
-#  i["L1T/Layouts/05-DTTF-Summary/%s" % name] = DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
+#  i["L1T/Layouts/Legacy/05-DTTF-Summary/%s" % name] = DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
 def l1t_dttf_single(i, p, *rows):
-  i["L1T/Layouts/05-DTTF-Summary/" + p] = DQMItem(layout=rows)
+  i["L1T/Layouts/Legacy/05-DTTF-Summary/" + p] = DQMItem(layout=rows)
 
 def l1t_rpctf_single(i, dir, name):
-  i["L1T/Layouts/06-RPCTF-Summary/%s" % name] = \
+  i["L1T/Layouts/Legacy/06-RPCTF-Summary/%s" % name] = \
     DQMItem(layout=[["L1T/%s/%s" % (dir, name)]])
 
-def l1t_scal_single(i, p, *rows): i["L1T/Layouts/07-SCAL4Cosmics-Summary/" + p] = DQMItem(layout=rows)
+def l1t_scal_single(i, p, *rows): i["L1T/Layouts/Legacy/07-SCAL4Cosmics-Summary/" + p] = DQMItem(layout=rows)
 
-def l1t_rct_expert(i, p, *rows): i["L1T/Layouts/03-RCT-Summary/" + p] = DQMItem(layout=rows)
+def l1t_rct_expert(i, p, *rows): i["L1T/Layouts/Legacy/03-RCT-Summary/" + p] = DQMItem(layout=rows)
 l1t_rct_expert(dqmitems, "RctEmIsoEmEtEtaPhi",
   [{ 'path': "L1T/L1TRCT/RctEmIsoEmEtEtaPhi", 'description': "For details see - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/RCTDataQualityMonitoring>RCTDQM</a> CAL/RCT/GCT mapping is here <a href=https://twiki.cern.ch/twiki/pub/CMS/RCTDataQualityMonitoring/RCTGCTCAL.jpeg> mapping </a>" }])
 
@@ -41,7 +69,7 @@ l1t_rct_expert(dqmitems, "RctEmNonIsoEmEtEtaPhi",
 l1t_rct_expert(dqmitems, "RctRegionsEtEtaPhi",
   [{ 'path': "L1T/L1TRCT/RctRegionsEtEtaPhi", 'description': "For description see - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/RCTDataQualityMonitoring>RCTDQM</a> CAL/RCT/GCT mapping is here <a href=https://twiki.cern.ch/twiki/pub/CMS/RCTDataQualityMonitoring/RCTGCTCAL.jpeg> mapping </a>" }])
 
-def l1t_summary(i, p, *rows): i["L1T/Layouts/08-L1T-Summary/" + p] = DQMItem(layout=rows)
+def l1t_summary(i, p, *rows): i["L1T/Layouts/Legacy/08-L1T-Summary/" + p] = DQMItem(layout=rows)
 
 l1t_summary(dqmitems,"00 Physics Trigger Rate",
     [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/Physics Trigger Rate", 'description': "Physics Trigger Rate. x-axis: Time(lumisection); y-axis: Rate (Hz).  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTrigger\">here</a>."}])
