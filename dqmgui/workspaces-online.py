@@ -113,7 +113,7 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'Castor', '^Castor/', '',
                 )
 
 # Trigger/Lumi workspaces:
-server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1T', '^(L1T|L1TEMU)/', '',
+server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1T', '^(L1T|L1TEMU|L1T2016)/', '',
                  'L1T/L1TGT/algo_bits',
                  'L1T/L1TGT/tt_bits',
                  'L1T/L1TGT/gtfe_bx',
