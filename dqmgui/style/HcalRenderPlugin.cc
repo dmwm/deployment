@@ -13,7 +13,6 @@
 #include "TCanvas.h"
 #include "TText.h"
 #include "TColor.h"
-
 //	std includes
 #include <cstring>
 
@@ -134,7 +133,6 @@ class HcalRenderPlugin : public DQMRenderPlugin
 				return;
 			else 
 				return;
-
 			return;
 		}
 	protected:
