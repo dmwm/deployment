@@ -94,7 +94,7 @@ namespace hcaldqm
 	class HcalObjectCustomizer
 	{
 		public: 
-			HcalObjectCustomizer():_type(kHcal), _verbosity(10)
+			HcalObjectCustomizer():_type(kHcal), _verbosity(0)
 			{}
 			~HcalObjectCustomizer() {}
 
