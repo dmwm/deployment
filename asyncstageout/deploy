@@ -74,6 +74,10 @@ deploy_asyncstageout_post()
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/ftscp" \
              "http://localhost:${couch##*:}/asynctransfer1" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/AsyncTransferErl" \
+             "http://localhost:${couch##*:}/asynctransfer1" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
       done
       ;;
   esac
