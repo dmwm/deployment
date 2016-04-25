@@ -52,49 +52,45 @@ public:
     for(int i=0; i<22; i++)
       {
         for(int j=0; j<18; j++)
-	  {
-	    dummybox->Fill(i,j,0.1);
-	  }
+          {
+            dummybox->Fill(i,j,0.1);
+          }
       }
 
     for( int i=0; i<60; i++ ){
 
       if ( i < 15 ){
-	l1t_rgb[i][0] = 1.00;
-	l1t_rgb[i][1] = 1.00;
-	l1t_rgb[i][2] = 1.00;
+        l1t_rgb[i][0] = 1.00;
+        l1t_rgb[i][1] = 1.00;
+        l1t_rgb[i][2] = 1.00;
       }
       else if ( i < 30 ){
-	l1t_rgb[i][0] = 0.50;
-	l1t_rgb[i][1] = 0.80;
-	l1t_rgb[i][2] = 1.00;
+        l1t_rgb[i][0] = 0.50;
+        l1t_rgb[i][1] = 0.80;
+        l1t_rgb[i][2] = 1.00;
       }
       else if ( i < 40 ){
-	l1t_rgb[i][0] = 1.00;
-	l1t_rgb[i][1] = 1.00;
-	l1t_rgb[i][2] = 1.00;
+        l1t_rgb[i][0] = 1.00;
+        l1t_rgb[i][1] = 1.00;
+        l1t_rgb[i][2] = 1.00;
       }
       else if ( i < 57 ){
-	l1t_rgb[i][0] = 0.80+0.01*(i-40);
-	l1t_rgb[i][1] = 0.00+0.03*(i-40);
-	l1t_rgb[i][2] = 0.00;
+        l1t_rgb[i][0] = 0.80+0.01*(i-40);
+        l1t_rgb[i][1] = 0.00+0.03*(i-40);
+        l1t_rgb[i][2] = 0.00;
       }
       else if ( i < 59 ){
-	l1t_rgb[i][0] = 0.80+0.01*(i-40);
-	l1t_rgb[i][1] = 0.00+0.03*(i-40)+0.15+0.10*(i-17-40);
-	l1t_rgb[i][2] = 0.00;
+        l1t_rgb[i][0] = 0.80+0.01*(i-40);
+        l1t_rgb[i][1] = 0.00+0.03*(i-40)+0.15+0.10*(i-17-40);
+        l1t_rgb[i][2] = 0.00;
       }
       else if ( i == 59 ){
-	l1t_rgb[i][0] = 0.00;
-	l1t_rgb[i][1] = 0.80;
-	l1t_rgb[i][2] = 0.00;
+        l1t_rgb[i][0] = 0.00;
+        l1t_rgb[i][1] = 0.80;
+        l1t_rgb[i][2] = 0.00;
       }
 
-      l1t_pcol[i] = 1901+i;
-
-      TColor* color = gROOT->GetColor( 1901+i );
-      if( ! color ) color = new TColor( 1901+i, 0, 0, 0, "" );
-      color->SetRGB( l1t_rgb[i][0], l1t_rgb[i][1], l1t_rgb[i][2] );
+      l1t_pcol[i] = TColor::GetColor(l1t_rgb[i][0], l1t_rgb[i][1], l1t_rgb[i][2]);
     }
 
     b_box_w = new TBox();
@@ -103,11 +99,11 @@ public:
     b_box_g = new TBox();
     b_box_b = new TBox();
 
-    b_box_g->SetFillColor(1960);
-    b_box_y->SetFillColor(1959);
-    b_box_r->SetFillColor(1941);
+    b_box_g->SetFillColor(l1t_pcol[59]);
+    b_box_y->SetFillColor(l1t_pcol[58]);
+    b_box_r->SetFillColor(l1t_pcol[40]);
     b_box_w->SetFillColor(0);
-    b_box_b->SetFillColor(1923);
+    b_box_b->SetFillColor(l1t_pcol[22]);
 
   }
 
