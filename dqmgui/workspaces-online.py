@@ -150,33 +150,17 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'Castor', '^Castor/', '',
                 )
 
 # Trigger/Lumi workspaces:
-server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1T', '^(L1T|L1TEMU|L1T2016)/', '',
-                 'L1T/L1TGT/algo_bits',
-                 'L1T/L1TGT/tt_bits',
-                 'L1T/L1TGT/gtfe_bx',
-                 'L1TEMU/L1TdeRCT/rctInputTPGEcalOcc',
-                 'L1TEMU/L1TdeRCT/rctInputTPGHcalOcc',
-                 'L1T/L1TGMT/Regional_trigger',
-                 'L1T/L1TGMT/GMT_etaphi',
-                 'L1T/L1TStage1Layer2/IsoEmRankEtaPhi',
-                 'L1T/L1TStage1Layer2/NonIsoEmRankEtaPhi',
-                 'L1T/L1TStage1Layer2/AllJetsEtEtaPhi',
-                 'L1T/L1TStage1Layer2/TauJetsEtEtaPhi',
-                 'L1T/Layouts/03-RCT-Summary/RctEmNonIsoEmEtEtaPhi',
-                 'L1T/Layouts/03-RCT-Summary/RctEmIsoEmEtEtaPhi',
-                 'L1T/Layouts/03-RCT-Summary/RctRegionsEtEtaPhi',
-                 'L1T/Layouts/05-DTTF-Summary/03 - DTTF Tracks Occupancy',
-                 'L1T/L1TCSCTF/CSCTF_Chamber_Occupancies',
-                 'L1T/L1TCSCTF/CSCTF_occupancies',
-                 'L1T/L1TRPCTF/RPCTF_muons_eta_phi_bx0',
+server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1T', '^(L1T|L1T2016)/', '',
+                # Please add plots to Stage2-QuickCollection layout in layouts/l1t-layouts.py
+                # with a useful name and description, then reference them here
+                 'L1T/Layouts/Stage2-QuickCollection/00 - Calo Layer1 ECAL Input Occupancy',
+                 'L1T/Layouts/Stage2-QuickCollection/01 - Calo Layer1 HCAL Input Occupancy',
+                 'L1T/Layouts/Stage2-QuickCollection/02 - Calo Layer1 Input Link Errors',
                 )
-server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1TEMU', '^L1TEMU/', '',
-                 'L1TEMU/GTexpert/GTErrorFlag',
-                 'L1TEMU/Stage1Layer2expert/sysrates',
-                 'L1TEMU/GMT/GMTErrorFlag',
-                 'L1TEMU/RCT/RCTErrorFlag',
-                 'L1TEMU/DTTF/DTFErrorFlag',
-                 'L1TEMU/RPC/RPCErrorFlag',
+server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1TEMU', '^(L1TEMU|L1T2016EMU)/', '',
+                # Please add plots to Stage2-QuickCollection layout in layouts/l1temulator-layouts.py
+                # with a useful name and description, then reference them here
+                 #'L1TEMU/Layouts/Stage2-QuickCollection/',
                 )
 server.workspace('DQMContent', 40, 'Trigger/Lumi', 'HLT', '^HLT/', '',
                  'HLT/ObjectMonitor/MainShifter/Photon_pT',

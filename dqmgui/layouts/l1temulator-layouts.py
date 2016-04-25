@@ -1,5 +1,24 @@
 def l1temulayout(i, p, *rows): i["L1TEMU/Layouts/" + p] = DQMItem(layout=rows)
 
+# The quick collection is defined in ../workspaces-online.py
+# for Online DQM, but we want to also include descriptions
+# So we reference the 'QuickCollection' layout created here
+def l1t_quickCollection(i, name, *rows):
+  i["L1TEMU/Layouts/Stage2-QuickCollection/%s" % name] = DQMItem(layout=rows)
+
+# If you add a plot here, remember to add the reference to ../workspaces-online.py
+l1t_quickCollection(dqmitems, "00 - CaloTower Data-Emulator Mismatch Status",
+  [{
+    'path': "L1T2016EMU/L1TdeStage2CaloLayer1/ecalOccupancy",
+    'description': "This should be empty"
+  }])
+
+
+###############################################
+### From here down is legacy/stage1 trigger ###
+###           All in Legacy folder          ###
+###############################################
+
 def l1temucommon(i, dir, name):i["L1TEMU/Layouts/00-Global-Summary/%s" % name] = \
     DQMItem(layout=[["L1TEMU/%s/%s" % (dir, name)]])
 
