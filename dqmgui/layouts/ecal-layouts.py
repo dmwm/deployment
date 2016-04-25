@@ -15,6 +15,8 @@ ecallayout(dqmitems, 'Ecal/Layouts/02 Calibration Summary',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EB global calibration quality', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, and Pedestal gain 12 quality summaries.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EE global calibration quality EE -', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, and Pedestal gain 12 quality summaries.'},
 	    {'path': 'EcalEndcap/EESummaryClient/EE global calibration quality EE +', 'description': 'Summary of the calibration data quality. Channel is red if it is red in any of the Laser 3, Led 1 and 2, and Pedestal gain 12 quality summaries.'}])
+
+#____________________ Layouts / 00 Overview ____________________
 ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/00 Summary',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EB global summary', 'description': 'Summary of the data quality. A channel is red if it is red in any one of RawData, Integrity, Timing, TriggerPrimitives, and HotCells task. A cluster of bad towers in this plot will cause the ReportSummary for the FED to go to 0 in online DQM.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EE global summary EE -', 'description': 'Summary of the data quality. A channel is red if it is red in any one of RawData, Integrity, Timing, TriggerPrimitives, and HotCells task. A cluster of bad towers in this plot will cause the ReportSummary for the FED to go to 0 in online DQM.'},
@@ -665,10 +667,10 @@ ecallayout(dqmitems, 'Ecal/Layouts/07 Selective Readout/16 ZS Flag Readout',
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT ZS Flagged Fully Readout', 'description': 'Occurrence rate of full readout when unit is flagged as zero-suppressed.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT ZS Flagged Fully Readout EE -', 'description': 'Occurrence rate of full readout when unit is flagged as zero-suppressed.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT ZS Flagged Fully Readout EE +', 'description': 'Occurrence rate of full readout when unit is flagged as zero-suppressed.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/00 Calibration Event Rate',
-	   [{'path': 'EcalCalibration/EventInfo/Calibration event rate', 'description': 'Status of each element of the calibration sequence. This histogram shows the fraction of a calibration element being triggered in the laser or LED sequence. Green laser + Blue laser + IR laser = 1. LED 1+ LED 2 = 1.'}])
 
 #____________________ Layouts / 08 Laser ____________________
+ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/00 Calibration Event Rate',
+	   [{'path': 'EcalCalibration/EventInfo/Calibration event rate', 'description': 'Status of each element of the calibration sequence. This histogram shows the fraction of a calibration element being triggered in the laser or LED sequence. Green laser + Blue laser + IR laser = 1. LED 1+ LED 2 = 1.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/01 Quality Summary L2 (Green)',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBLT laser quality summary L2', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1, or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 0.5. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 4.2, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1, or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 0.5. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 4.2, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'},
@@ -835,7 +837,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9)]: # Loop over EE
                    'description': '2D distribution of the mean led timing. Z scale is in LHC clocks. Due to the difference in pulse shape between led and physics events, fit-based reconstruction is not completely reliable in extracting the timing. In general, a channel is filled only when a led pulse was observed in it. When no led signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the timing to spread randomly.'}],
                  [{'path': 'Ecal%s/%sLedClient/%sLDT led timing L1 %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of the timing in each crystal channel. Z scale is in LHC clocks. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/09 Led/Led1(Blue)/APD Over PN/APD %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/09 Led/Led1(Blue)/APD Over PN/APD Over PN %s' % channellabel,
                  [{'path': 'Ecal%s/%sLedTask/Led1/%sLDT amplitude over PN %s L1' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean APD/PN value (event mean of per-event ratio).'}])
       ecallayout(dqmitems,'Ecal/Layouts/09 Led/Led1(Blue)/Shape/Shape %s' % channellabel,
@@ -855,7 +857,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9)]: # Loop over EE
                    'description': '2D distribution of the mean led timing. Z scale is in LHC clocks. Due to the difference in pulse shape between led and physics events, fit-based reconstruction is not completely reliable in extracting the timing. In general, a channel is filled only when a led pulse was observed in it. When no led signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the timing to spread randomly.'}],
                  [{'path': 'Ecal%s/%sLedClient/%sLDT led timing L2 %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of the timing in each crystal channel. Z scale is in LHC clocks. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/09 Led/Led2(Orange)/APD Over PN/APD %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/09 Led/Led2(Orange)/APD Over PN/APD Over PN %s' % channellabel,
                  [{'path': 'Ecal%s/%sLedTask/Led2/%sLDT amplitude over PN %s L2' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean APD/PN value (event mean of per-event ratio).'}])
       ecallayout(dqmitems,'Ecal/Layouts/09 Led/Led2(Orange)/Shape/Shape %s' % channellabel,
