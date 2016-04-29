@@ -1,18 +1,46 @@
 def totemlayout(i, p, *rows): i["Totem/Layouts/" + p] = DQMItem(layout=rows)
 
+sectors = [ "sector 45", "sector 56" ]
+units = [ "station 210/nr", "station 210/fr", "station 220/nr", "station 220/fr" ]
+rps = [ "tp", "hr", "bt" ]
+
 # layouts with no overlays
 for plot in [ "activity in planes (2D)", "vfats with any problem", "active planes", "track XY profile" ]:
-  for sector in [ "sector 45", "sector 56" ]:
-    totemlayout(dqmitems, sector + "/" + plot,
-        [ "Totem/RP/"+sector+"/station 210/nr_tp/"+plot, "Totem/RP/"+sector+"/station 210/fr_tp/"+plot, "Totem/RP/"+sector+"/station 220/nr_tp/"+plot, "Totem/RP/"+sector+"/station 220/fr_tp/"+plot ],
-        [ "Totem/RP/"+sector+"/station 210/nr_hr/"+plot, "Totem/RP/"+sector+"/station 210/fr_hr/"+plot, "Totem/RP/"+sector+"/station 220/nr_hr/"+plot, "Totem/RP/"+sector+"/station 220/fr_hr/"+plot ],
-        [ "Totem/RP/"+sector+"/station 210/nr_bt/"+plot, "Totem/RP/"+sector+"/station 210/fr_bt/"+plot, "Totem/RP/"+sector+"/station 220/nr_bt/"+plot, "Totem/RP/"+sector+"/station 220/fr_bt/"+plot ]
-    )
+  for sector in sectors:
+    rows = list()
+    for rp in rps:
+      row = list()
+      for unit in units:
+        row.append("Totem/RP/"+sector+"/"+unit+"_"+rp+"/"+plot)
+      rows.append(row)
+
+    totemlayout(dqmitems, sector + "/" + plot, *rows)
 
 # layouts with overlays
-# TODO: this creates an error when server started
-#for plot in [ "active planes projection", "planes contributing to fit", "recognized patterns", "track profile" ]:
-#  for sector in [ "sector 45", "sector 56" ]:
-#    totemlayout(dqmitems, sector + "/" + plot,
-#        [ { "path" : "Totem/RP/"+sector+"/station 210/nr_tp/"+plot+" U", "overlays" : { "Totem/RP/"+sector+"/station 210/nr_tp/"+plot+" V" } } ]
-#    )
+for plot in [ "recognized patterns", "planes contributing to fit" ]:
+  for sector in sectors:
+    rows = list()
+    for rp in rps:
+      row = list()
+      for unit in units:
+        hist_u = "Totem/RP/"+sector+"/"+unit+"_"+rp+"/"+plot + " U"
+        hist_v = "Totem/RP/"+sector+"/"+unit+"_"+rp+"/"+plot + " V"
+        row.append( { "path" : hist_u, "overlays" : [ hist_v ] } )
+      rows.append(row)
+
+    totemlayout(dqmitems, sector + "/" + plot, *rows)
+
+# active planes overlay
+for plot in [ "active planes" ]:
+  for sector in sectors:
+    rows = list()
+    for rp in rps:
+      row = list()
+      for unit in units:
+        hist_g = "Totem/RP/"+sector+"/"+unit+"_"+rp+"/"+plot
+        hist_u = "Totem/RP/"+sector+"/"+unit+"_"+rp+"/"+plot + " U"
+        hist_v = "Totem/RP/"+sector+"/"+unit+"_"+rp+"/"+plot + " V"
+        row.append( { "path" : hist_g, "overlays" : [ hist_u, hist_v ] } )
+      rows.append(row)
+
+    totemlayout(dqmitems, sector + "/" + plot, *rows)
