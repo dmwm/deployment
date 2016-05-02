@@ -1131,6 +1131,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
      !fullpath.Contains("channel status") &&
      !fullpath.Contains("Status Flags") &&
      !fullpath.Contains("Masking Status") &&
+     !fullpath.Contains("Real vs Emulated") &&
      !fullpath.Contains("energy Side")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1161,6 +1162,12 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
   else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT event size vs DCC").MatchB(fullpath)){
     gPad->SetLogy(true);
     obj->GetYaxis()->SetRangeUser(0.1, 0.608*68);
+
+    applyDefaults = false;
+  }
+  else if( TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath) ){
+    if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
+    gPad->SetGrid(false, false);
 
     applyDefaults = false;
   }
@@ -1264,6 +1271,7 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   TString fullpath(dqmObject.name.c_str());
 
   if(!fullpath.Contains("Timing") &&
+     !fullpath.Contains("Real vs Emulated") &&
      !fullpath.Contains("Cluster")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1292,7 +1300,8 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   }
   else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) ||
           TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath) ||
-          TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) )
+          TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) ||
+          TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath) )
     applyDefaults = false;
   else if(!isNewStyle && TPRegexp("EBClusterTask/EBCLT BC (ET|energy|number|size) map").MatchB(fullpath)){
     gStyle->SetPaintTextFormat("+03g");

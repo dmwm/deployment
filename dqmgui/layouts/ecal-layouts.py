@@ -575,6 +575,10 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/12 TT Masking Status',
      [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TT Masking Status',      'description': 'Trigger Tower masking status: a TT appears red if it is permanently masked in either the TPG TT or Strips DB record.'}],
      [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE -', 'description': 'Trigger Tower masking status: a TT appears red if it is permanently masked in either the TPG TT or Strips DB record.'},
       {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE +', 'description': 'Trigger Tower masking status: a TT appears red if it is permanently masked in either the TPG TT or Strips DB record.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/13 Real vs Emulated TP Et',
+     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT Real vs Emulated TP Et', 'description': 'Real data VS emulated TP Et (in-time).'}],
+     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT Real vs Emulated TP Et EE -', 'description': 'Real data VS emulated TP Et (in-time).'},
+      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT Real vs Emulated TP Et EE +', 'description': 'Real data VS emulated TP Et (in-time).'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
