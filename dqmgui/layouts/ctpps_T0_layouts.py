@@ -1,4 +1,4 @@
-def totemlayout(i, p, *rows): i["CTPPS/Layouts/" + p] = DQMItem(layout=rows)
+def CTPPSTrackingStripLayout(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/" + p] = DQMItem(layout=rows)
 
 sectors = [ "sector 45", "sector 56" ]
 units = [ "station 210/nr", "station 210/fr", "station 220/nr", "station 220/fr" ]
@@ -14,7 +14,7 @@ for plot in [ "activity in planes (2D)", "vfats with any problem", "active plane
         row.append("CTPPS/TrackingStrip/"+sector+"/"+unit+"_"+rp+"/"+plot)
       rows.append(row)
 
-    totemlayout(dqmitems, "TrackingStrip/" + sector + "/" + plot, *rows)
+    CTPPSTrackingStripLayout(dqmitems, sector + "/" + plot, *rows)
 
 # layouts with overlays
 for plot in [ "recognized patterns", "planes contributing to fit" ]:
@@ -28,7 +28,7 @@ for plot in [ "recognized patterns", "planes contributing to fit" ]:
         row.append( { "path" : hist_u, "overlays" : [ hist_v ] } )
       rows.append(row)
 
-    totemlayout(dqmitems, "TrackingStrip/" + sector + "/" + plot, *rows)
+    CTPPSTrackingStripLayout(dqmitems, sector + "/" + plot, *rows)
 
 # active planes overlay
 for plot in [ "active planes" ]:
@@ -43,4 +43,4 @@ for plot in [ "active planes" ]:
         row.append( { "path" : hist_g, "overlays" : [ hist_u, hist_v ] } )
       rows.append(row)
 
-    totemlayout(dqmitems, "TrackingStrip/" + sector + "/" + plot, *rows)
+    CTPPSTrackingStripLayout(dqmitems, sector + "/" + plot, *rows)
