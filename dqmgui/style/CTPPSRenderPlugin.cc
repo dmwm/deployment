@@ -8,12 +8,12 @@
 
 //----------------------------------------------------------------------------------------------------
 
-class TotemRenderPlugin : public DQMRenderPlugin
+class CTPPSRenderPlugin : public DQMRenderPlugin
 {
 	public:
 		virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
 		{
-			if ((o.name.find( "Totem/" ) != std::string::npos))
+			if ((o.name.find( "CTPPS/" ) != std::string::npos))
 				return true;
 			return false;
 		}
@@ -73,4 +73,4 @@ class TotemRenderPlugin : public DQMRenderPlugin
 
 //----------------------------------------------------------------------------------------------------
 
-static TotemRenderPlugin instance;
+static CTPPSRenderPlugin instance;
