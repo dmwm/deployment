@@ -776,6 +776,7 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
 
   if(obj->IsA() == TProfile2D::Class()){
     obj->GetZaxis()->SetLimits(0., obj->GetMaximum());
+    if ( obj->GetMaximum() > 0. ) obj->SetMinimum(1.e-08);
     gStyle->SetPalette(1);
   }
   else if(obj->IsA() == TH2F::Class() || obj->IsA() == TH2D::Class()){
