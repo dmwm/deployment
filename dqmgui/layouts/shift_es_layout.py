@@ -23,3 +23,6 @@ shifteslayout(dqmitems, "04-ESTimingTaskSummary-EcalPreshower",
    { 'path': "EcalPreshower/ESTimingTask/ES Timing Z -1 P 1", 'description': "ES Timing Z -1 P 1 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }],
   [{ 'path': "EcalPreshower/ESTimingTask/ES Timing Z 1 P 2", 'description': "ES Timing Z 1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " },
    { 'path': "EcalPreshower/ESTimingTask/ES Timing Z -1 P 2", 'description': "ES Timing Z -1 P 2 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> " }])
+
+shifteslayout(dqmitems, "05-ESGain-EcalPreshower",
+  [{ 'path': "EcalPreshower/ESIntegrityTask/ES Gain used for data taking", 'description': "ES Gain configuration in the front-end electronics"}])

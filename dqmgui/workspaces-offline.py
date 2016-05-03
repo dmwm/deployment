@@ -60,6 +60,7 @@ server.workspace('DQMContent', 22, 'Calorimeter', 'EcalPreshower', '^EcalPreshow
                  'EcalPreshower/Layouts/02-GoodRechitOccupancySummary-EcalPreshower',
                  'EcalPreshower/Layouts/03-GoodRechitEnergySummary-EcalPreshower',
                  'EcalPreshower/Layouts/04-ESTimingTaskSummary-EcalPreshower',
+                 'EcalPreshower/Layouts/05-ESGain-EcalPreshower',
                 )
 
 server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
