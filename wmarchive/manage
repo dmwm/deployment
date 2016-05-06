@@ -55,8 +55,9 @@ export X509_USER_KEY=$X509_USER_PROXY
 export WMARCHIVE_CONFIG=$ROOT/config/$ME/wmarch_config.py
 export MONGO_URI="mongodb://localhost:8230"
 export AVRO_STORAGE=$STATEDIR/avro/data
+export AVRO_STORAGE_MIGRATE=$STATEDIR/avro/migrate
 # area on HDFS where we'll migrate the data
-export HDFS_MIGRATE=/user/valya/data
+export HDFS_MIGRATE=/cms/wmarchive/avro
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
 # we'll clean-up data a one day old if their storage type is avroio
 export CLEANUP_TSTAMP=1d
@@ -110,11 +111,12 @@ cron()
     mongo2avro )
       $WMARCHIVE_ROOT/bin/mongo2avro \
           --mongo=$MONGO_URI --schema=$AVRO_SCHEMA \
-          --odir=$AVRO_STORAGE --verbose &> $LOGDIR/mongo2avro.log
+          --odir=$AVRO_STORAGE --mdir=$AVRO_STORAGE_MIGRATE \
+          --verbose &> $LOGDIR/mongo2avro.log
       ;;
     migrate2hdfs )
       $WMARCHIVE_ROOT/bin/migrate2hdfs \
-          --idir=$AVRO_STORAGE --odir=$HDFS_MIGRATE --check --remove \
+          --idir=$AVRO_STORAGE_MIGRATE --odir=$HDFS_MIGRATE --check --remove \
           --verbose &> $LOGDIR/migrate2hdfs.log
       ;;
     mongocleanup )
