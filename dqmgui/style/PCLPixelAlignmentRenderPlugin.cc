@@ -216,7 +216,7 @@ private:
 	if (fabs(obj->GetBinContent(i)) > maxMoveCut_){
 		hitMax = true;	
 	}		
-	else if (obj->GetBinContent(i) > cut_){
+	else if (fabs(obj->GetBinContent(i)) > cut_){
 		moved = true;
 		if (obj->GetBinError(i) > maxErrorCut_){
 			hitMaxError = true;
