@@ -29,4 +29,9 @@ deploy_wmarchive_post()
      echo "${action##*:} $cmd"
    done
   ) | crontab -
+  # copy release schema into state area
+  if [ -f /data/srv/state/wmarchive/avro/schemas/current.avsc ]; then
+     rm /data/srv/state/wmarchive/avro/schemas/current.avsc
+  fi
+  cp /data/srv/current/apps/wmarchive/data/schemas/fwjr_prod.avsc /data/srv/state/wmarchive/avro/schemas/current.avsc
 }
