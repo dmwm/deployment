@@ -1049,14 +1049,6 @@ hcallayout(dqmitems, 'ADC_TS0/DIGI_VMEvsuTCA/Subdet/HF', [{'path':'Hcal2/DigiCom
 
 hcallayout(dqmitems, 'ADC_TS0/DIGI_VMEvsuTCA/Subdet/HO', [{'path':'Hcal2/DigiComparisonTask/ADC_TS0/Subdet/HO', 'description':"""ADC Correlation for TS0. VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth1', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth1', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth2', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth2', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth3', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth3', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth4', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth4', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'Occupancyvsieta/RECO/Subdet/HB', [{'path':'Hcal2/RecHitTask/Occupancyvsieta/Subdet/HB', 'description':"""Occupancy vs ieta (no cuts applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'Occupancyvsieta/RECO/Subdet/HE', [{'path':'Hcal2/RecHitTask/Occupancyvsieta/Subdet/HE', 'description':"""Occupancy vs ieta (no cuts applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
