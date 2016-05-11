@@ -261,7 +261,8 @@ namespace hcaldqm
 				if (fullpath.Contains("Summary"))
 				{
 					ri.drawOptions = "col";
-					c->SetGrid();
+					if (!fullpath.Contains("runSummary"))
+						c->SetGrid();
 					gStyle->SetPalette(_n_summary,
 						_colors_summary);
 					((TH2*)o.object)->SetContour(_n_summary+1, 
