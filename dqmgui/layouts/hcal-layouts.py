@@ -857,6 +857,14 @@ hcallayout(dqmitems, 'MsnEmul/TP/Electronics/VME', [{'path':'Hcal/TPTask/MsnEmul
 
 hcallayout(dqmitems, 'MsnEmul/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/MsnEmul/Electronics/uTCA', 'description':"""Distribution of channels missing from Emulator w.r.t. Data <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth1', [{'path':'Hcal/RunInfo/KnownBadChannels/depth/depth1', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
+
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth2', [{'path':'Hcal/RunInfo/KnownBadChannels/depth/depth2', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
+
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth3', [{'path':'Hcal/RunInfo/KnownBadChannels/depth/depth3', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
+
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth4', [{'path':'Hcal/RunInfo/KnownBadChannels/depth/depth4', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
+
 hcallayout(dqmitems, 'SummaryvsLS/RAW', [{'path':'Hcal/RawTask/SummaryvsLS/SummaryvsLS', 'description':"""RAW Summary Summary. Anything that is not either WHITE or GREEN or Gray is BAD.<br> Color Scheme:<br><font color='green'>GOOD</font> for GOOD<br><font color='yellow'>PROBLEMATIC</font> for Problematic<br><font color='red'>BAD</font> for BAD<br><font color='black'>RESERVED</font> Not used at the moment <br><font color='gray'>NCDAQ with Gray Font</font> FED is excluded from cDAQ<br>WHITE color stands for INAPPLICABLE flag<br>FED(Y) vs LS(X). All the Monitoring Tasks are summarized. For details...  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'TimingCut/DIGI/FED/FED1100', [{'path':'Hcal/DigiTask/TimingCut/FED/FED1100', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
@@ -1040,6 +1048,14 @@ hcallayout(dqmitems, 'ADC_TS0/DIGI_VMEvsuTCA/Subdet/HE', [{'path':'Hcal2/DigiCom
 hcallayout(dqmitems, 'ADC_TS0/DIGI_VMEvsuTCA/Subdet/HF', [{'path':'Hcal2/DigiComparisonTask/ADC_TS0/Subdet/HF', 'description':"""ADC Correlation for TS0. VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'ADC_TS0/DIGI_VMEvsuTCA/Subdet/HO', [{'path':'Hcal2/DigiComparisonTask/ADC_TS0/Subdet/HO', 'description':"""ADC Correlation for TS0. VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
+
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth1', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth1', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
+
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth2', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth2', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
+
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth3', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth3', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
+
+hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth4', [{'path':'Hcal2/RunInfo/KnownBadChannels/depth/depth4', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'Occupancyvsieta/RECO/Subdet/HB', [{'path':'Hcal2/RecHitTask/Occupancyvsieta/Subdet/HB', 'description':"""Occupancy vs ieta (no cuts applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
