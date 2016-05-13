@@ -92,12 +92,11 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'EcalPreshower', '^EcalPreshow
                  'EcalPreshower/Layouts/04-ESTimingTaskSummary-EcalPreshower',
                  'EcalPreshower/Layouts/05-ESGain-EcalPreshower',
                 )
-server.workspace('DQMContent', 30, 'Calorimeter', 'Ecal', '(^Ecal(|Barrel|Endcap|Calibration)/|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccRecdEtWgt|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSent|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd)', 'Ecal/Layouts',
+server.workspace('DQMContent', 30, 'Calorimeter', 'Ecal', '(^Ecal(|Barrel|Endcap|Calibration)/|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccRecdEtWgt|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSent|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd|^HLT/ObjectMonitor/MainShifter/di-Electron_Mass)', 'Ecal/Layouts',
                  'Ecal/Layouts/00 Summary',
                  'Ecal/Layouts/01 Occupancy Summary',
                  'Ecal/Layouts/02 Calibration Summary',
                 )
-# Ecal workspace modified above to include three L1 Trigger plots as requested by Ecal team
 server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
                  'Hcal/Layouts/00 Current Summary',
                  'Hcal/Layouts/01 RAW Bad Quality',
