@@ -358,7 +358,7 @@ initialize_tier0(){
     tier0-mod-config --input=$CONFIG_TIER0/config-agent.py \
 	             --output=$CONFIG_TIER0/config.py \
                      $optargs
-    wmcore-db-init --config $CONFIG_TIER0/config.py --create --modules=WMCore.WMBS,T0.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
+    wmcore-db-init --config $CONFIG_TIER0/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl,T0.WMBS;
     export WMAGENT_CONFIG=$CONFIG_TIER0/config.py
     wmagent-couchapp-init;
     unset WMAGENT_CONFIG

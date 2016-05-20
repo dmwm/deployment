@@ -11,6 +11,7 @@
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s backup:save
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s sysprep:{image|backend|frontend}
 ### Usage: InstallProd                        [-d DIR] -x PROD -t HOSTS -s sync -v VER
+### Usage: InstallProd                        [-d DIR] -x PROD -t HOSTS -s syncdelete
 ### Usage: InstallProd [-A arch] [-R RELEASE] [-d DIR] -x PROD -t HOSTS -s backup:restore
 ### Usage: InstallProd [-A arch]              [-d DIR] -x PROD -t HOSTS -s deployimage -p PKGS -r A=B -v VER
 ### Usage: InstallProd                        [-d DIR] -x PROD -t HOSTS -s deployauth -v VER -a AUTH 
@@ -143,7 +144,7 @@ case $STAGE in
     [ X"$VER" = X ] && usage
     [ X"$REPO" = X ] && usage
     ;;
-  status | start | stop | shutdown | checkprocs | reboot )
+  status | start | stop | shutdown | checkprocs | reboot | syncdelete )
     [ X"$HOSTS" = X ] && usage
     ;;
   migrate )
@@ -210,8 +211,8 @@ case $STAGE in
         echo "     echo 'WARNING: $PWD/srv does not match srv-$STEM.'"
         echo "  fi"
         echo "fi"
-        echo "$PWD/cfg/Deploy $ARCH -R comp@${VER#*e} $REPO -t $VER -pl $PWD/srv/auth -a -s prep $PWD/srv $PKGS"
-        echo "sudo -H -u _sw bashs -lc \"$PWD/cfg/Deploy $ARCH -R comp@${VER#*e} $REPO -t $VER -pl $PWD/srv/auth -a -s sw $PWD/srv $PKGS\""
+        echo "$PWD/cfg/Deploy $ARCH -R comp@${VER#[bf]e} $REPO -t $VER -pl $PWD/srv/auth -a -s prep $PWD/srv $PKGS"
+        echo "sudo -H -u _sw bashs -lc \"$PWD/cfg/Deploy $ARCH -R comp@${VER#[bf]e} $REPO -t $VER -pl $PWD/srv/auth -a -s sw $PWD/srv $PKGS\""
         echo "exit 0"
        ) | ssh cmsweb@$host bashs -l
       ) &> $errlog.$host &
@@ -291,7 +292,7 @@ case $STAGE in
     set -ex
     for host in $HOSTS; do
        (echo "exec 2>&1; set -ex; hostname -f; cd $PWD; klist -s"
-        echo "$PWD/cfg/Deploy $ARCH -R comp@${VER#*e} $REPO -t $VER -pl $PWD/srv/auth -a -s post $PWD/srv $PKGS"
+        echo "$PWD/cfg/Deploy $ARCH -R comp@${VER#[bf]e} $REPO -t $VER -pl $PWD/srv/auth -a -s post $PWD/srv $PKGS"
         echo "exit 0"
        ) | ssh cmsweb@$host bashs -l &> $errlog.$host &
     done
@@ -424,6 +425,24 @@ case $STAGE in
       (echo "exec 2>&1; set -ex; hostname -f; rm -fr /tmp/foo") |
        ssh cmsweb@$host bashs -l
     done
+    ;;
+
+
+  syncdelete )
+    confirm "WARNING: have you double-checked $PWD/cfg/admin/rsync-delete-releases.rules file is up-to-date"
+    errlog=$(mktemp /tmp/$(basename $0).XXXXXX)
+    trap "rm $errlog*" EXIT
+    echo "Running sync for $HOSTS. This can take a few minutes..."
+    set -ex
+    for host in $HOSTS; do
+      (rsync -av --rsync-path="sudo rsync" --delete \
+             -f ". $PWD/cfg/admin/rsync-delete-releases.rules" \
+             /data/empty/ cmsweb@$host:/data/
+      ) &> $errlog.$host &
+    done
+    wait
+    cat $errlog.*
+    set +x
     ;;
 
   sync )

@@ -245,7 +245,7 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
           gPad->SetRightMargin(0.15);
           obj->SetOption("colz");
           obj->SetMaximum(1.0);
-          obj->SetMinimum(0.75);
+          obj->SetMinimum(0.95);
           return;
         }
       if( o.name.find( "FedChLErr" ) != std::string::npos )
@@ -282,6 +282,8 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
           obj->SetOption("colz");
           obj->SetMinimum(0.00001);
           obj->SetMaximum(0.8);
+	  int currentX = (int) obj->FindLastBinAbove(0.001)+1;
+	  obj->GetXaxis()->SetRange(1,currentX);
           return;
         }
 
@@ -292,10 +294,10 @@ void preDrawTH2( TCanvas *, const VisDQMObject &o )
         gPad->SetGrid();
         if(obj->GetNbinsX()==7) gPad->SetLeftMargin(0.3);
         dqm::utils::reportSummaryMapPalette(obj2);
-	if(obj->GetNbinsX()>2){
+	if(obj->GetNbinsX()>10){
 	  //Look at last filled bin (above -0.99) and use to zoom in on plot
-	  float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(-0.99))+1.;
-	  obj->GetXaxis()->SetRangeUser(0.,currentX);}
+	  int currentX = (int) obj->FindLastBinAbove(-0.99)+1;
+	  obj->GetXaxis()->SetRange(1,currentX);}
         return;
       }
     }

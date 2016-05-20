@@ -163,6 +163,21 @@ private:
       gStyle->SetOptStat(0);
       gStyle->SetPalette(1);
 
+      // Standard palette, high values = green = good, 
+      // low values = red = bad
+/*      int colorTrafficLight[10];
+      colorTrafficLight[0] = 632; // R
+      colorTrafficLight[1] = 632; // R
+      colorTrafficLight[2] = 632; // R
+      colorTrafficLight[3] = 632; // R
+      colorTrafficLight[4] = 632; // R
+      colorTrafficLight[5] = 632; // R
+      colorTrafficLight[6] = 632; // R
+      colorTrafficLight[7] = 807; // O
+      colorTrafficLight[8] = 400; // Y
+      colorTrafficLight[9] = 416; // G
+      gStyle->SetPalette(10, colorTrafficLight);
+*/
       obj->SetStats(kFALSE);
       obj->SetOption("colz");
 
@@ -207,6 +222,23 @@ private:
 
       gStyle->SetOptStat(0);
       gStyle->SetPalette(1);
+    
+      // Standard palette, high values = green = good,
+      // low values = red = bad
+                  
+/*      int colorTrafficLight[10];
+      colorTrafficLight[0] = 632; // R
+      colorTrafficLight[1] = 632; // R
+      colorTrafficLight[2] = 632; // R
+      colorTrafficLight[3] = 632; // R
+      colorTrafficLight[4] = 632; // R
+      colorTrafficLight[5] = 632; // R
+      colorTrafficLight[6] = 632; // R
+      colorTrafficLight[7] = 807; // O
+      colorTrafficLight[8] = 400; // Y
+      colorTrafficLight[9] = 416; // G
+      gStyle->SetPalette(10, colorTrafficLight);
+*/
 
       obj->SetStats(kFALSE);
       obj->SetOption("colz");
@@ -616,7 +648,7 @@ private:
 
           if ( o.name.find( "CorrectBX" ) != std::string::npos )
           {
-            if (o.name.find( "DCC" ) != std::string::npos)
+            if (o.name.find( "TM" ) != std::string::npos)
             {
               obj->SetMinimum(-2.);
               obj->SetMaximum(2.);
@@ -637,7 +669,7 @@ private:
         return;
       }
       else if (o.name.find("QualvsPhi")        != std::string::npos ||
-               o.name.find("QualDDUvsQualDCC") != std::string::npos ||
+               o.name.find("QualDDUvsQualTM") != std::string::npos ||
                o.name.find("PositionvsQual")   != std::string::npos ||
                o.name.find("Flag1stvsQual")    != std::string::npos )
       {
@@ -717,12 +749,12 @@ private:
         c->SetLeftMargin(0.15);
         c->SetRightMargin(0.12);
         obj->SetMinimum(-0.00000001);
-        obj->SetMaximum(3.0);
+        obj->SetMaximum(1.45);
 
         int colorError1[3];
-        colorError1[0] = 416;// kGreen
-        colorError1[1] = 632;// kRed
-        colorError1[2] = 632;// kRed
+        colorError1[0] = 632;// kRed
+        colorError1[1] = 800;// kOrange
+        colorError1[2] = 416;// kGreen
         gStyle->SetPalette(3, colorError1);
         return;
       }
@@ -748,12 +780,12 @@ private:
         c->SetLeftMargin(0.15);
         c->SetRightMargin(0.12);
         obj->SetMinimum(-0.00000001);
-        obj->SetMaximum(3.0);
+        obj->SetMaximum(1.45);
 
         int colorError1[3];
-        colorError1[0] = 416;// kGreen
-        colorError1[1] = 632;// kRed
-        colorError1[2] = 632;// kRed
+        colorError1[0] = 632;// kRed
+        colorError1[1] = 800;// kOrange
+        colorError1[2] = 416;// kGreen
         gStyle->SetPalette(3, colorError1);
         return;
       }
@@ -1090,7 +1122,7 @@ private:
         return;
       }
 
-      if( o.name.find("DCC_ErrorsChamberID") != std::string::npos )
+      if( o.name.find("TM_ErrorsChamberID") != std::string::npos )
       {
         c->SetGrid(1,0);
         //     obj->GetXaxis()->SetLabelSize(0.07);

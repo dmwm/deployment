@@ -40,12 +40,14 @@ deploy_t0_reqmon_sw()
 
 deploy_t0_reqmon_post()
 {
-  case $host in vocms13[89] | vocms013[89] ) disable;;  * ) enable;; esac
+  case $host in vocms013[89] ) disable;;  * ) enable;; esac
   
   # Tell couch to push the t0_reqmon app on the next restart
   for couch in couchdb:5984; do
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/WMStats" \
          "http://localhost:${couch##*:}/tier0_wmstats" > $root/state/${couch%%:*}/stagingarea/t0_reqmon
+    echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/WMStatsErl" \
+         "http://localhost:${couch##*:}/tier0_wmstats" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/T0Request" \
          "http://localhost:${couch##*:}/t0_request" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/WorkloadSummary" \

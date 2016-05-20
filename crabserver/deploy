@@ -38,9 +38,16 @@ deploy_crabserver_sw()
 
 deploy_crabserver_post()
 {
-  case $host in vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] | vocms0140 | vocms0307 | vocms0318 ) disable ;; * ) enable ;; esac
+  (mkcrontab 
+   sysboot
 
-  (mkcrontab; sysboot) | crontab -
+   # Restart crab once every four days to release leaked memory
+   case $host in vocms0161 ) d=2;; vocms0163 ) d=3;; vocms0165 ) d=4;; * ) d=1;; esac
+   local cmd="$project_config/manage start 'I did read documentation'"
+   $nogroups || cmd="sudo -H -u _crabserver bashs -l -c \"${cmd}\""
+   echo "0 9 $d-31/4 * * $cmd &> /dev/null"
+  ) | crontab -
 }
 
 deploy_crabserver_auth()

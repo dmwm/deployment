@@ -17,3 +17,16 @@ csclayout(dqmitems,"03 Chambers without Data (Statistically Significant)",
      {'path': "CSC/Summary/CSC_STATS_wo_clct", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_wo_clct\">here</a>."}],
     [{'path': "CSC/Summary/CSC_STATS_wo_cfeb", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_wo_cfeb\">here</a>."},
      {'path': "CSC/Summary/CSC_STATS_cfeb_bwords", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_cfeb_bwords\">here</a>."}])
+
+csclayout(dqmitems,"04 Physics Efficiency - RecHits Minus",
+    [{'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalm1", 'description': "Histogram shows 2D RecHits distribution in ME-1. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalm2", 'description': "Histogram shows 2D RecHits distribution in ME-2. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalm3", 'description': "Histogram shows 2D RecHits distribution in ME-3. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalm4", 'description': "Histogram shows 2D RecHits distribution in ME-4. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
+
+csclayout(dqmitems,"05 Physics Efficiency - RecHits Plus",
+    [{'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp1", 'description': "Histogram shows 2D RecHits distribution in ME+1. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp2", 'description': "Histogram shows 2D RecHits distribution in ME+2. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp3", 'description': "Histogram shows 2D RecHits distribution in ME+3. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp4", 'description': "Histogram shows 2D RecHits distribution in ME+4. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
+

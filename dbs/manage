@@ -62,7 +62,7 @@ start()
 {
   cd $STATEDIR
   echo "starting $ME"
-  python -u $DBS3_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$CFGFILE \
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so python -u $DBS3_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$CFGFILE \
     </dev/null 2>&1 | rotatelogs $LOGDIR/dbs-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 

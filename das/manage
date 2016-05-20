@@ -118,7 +118,7 @@ start_das_cli() {
     while [  $counter -lt 20 ]; do
         check4das
         if [ "$das_status" == "ok" ]; then
-            DASMAPS_DIR=$STAGEDIR $DAS_ROOT/bin/das_server start_cli \
+            DASMAPS_DIR=$STAGEDIR LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so $DAS_ROOT/bin/das_server start_cli \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_cli-%Y%m%d.log 86400 >/dev/null 2>&1 &
             return
         fi
@@ -137,11 +137,11 @@ start()
 {
   echo "starting $ME"
   # choose correct DAS map file
-  case $host in vocms133 | vocms0133 | vocms0131 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
+  case $host in vocms012[67] | vocms013[12] ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
   local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
   cp -f $mapfile $STAGEDIR/update_mapping_db.js
   # start DAS service (it will load DAS maps into MongoDB and start DAS server)
-  DASMAPS_DIR=$STAGEDIR $DAS_ROOT/bin/das_server start \
+  DASMAPS_DIR=$STAGEDIR LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so $DAS_ROOT/bin/das_server start \
       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
   # start DAS cli server in background since we need to wait for DAS web server/MongoDB
   start_das_cli &

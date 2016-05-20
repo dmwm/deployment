@@ -26,7 +26,7 @@ class PFTauRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      return ((o.name.find( "RecoTauV/" ) != std::string::npos )); // && (o.name.find( "Eff" ) != std::string::npos ) ); //Size and SumPt are already configured
+      return ((o.name.find( "RecoTauV/" ) != std::string::npos ) && (o.name.find( "Eff" ) != std::string::npos ) ); //Size and SumPt are already configured
     }
 
   virtual void preDraw( TCanvas * canvas, const VisDQMObject & o, const VisDQMImgInfo & , VisDQMRenderInfo & renderInfo)

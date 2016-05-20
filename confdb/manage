@@ -36,12 +36,13 @@ STATEDIR=$TOP/state/$ME
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
+DEPLOY_ENV="CMSWEB"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 PYTHONPATH=$AUTHDIR:$CFGDIR:$PYTHONPATH
 export CONFDB_VERSION
 export STATEDIR
-
+export DEPLOY_ENV
 
 # Start service conditionally on crond restart.
 sysboot()

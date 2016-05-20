@@ -221,10 +221,6 @@ compact_views()
       if [ "$db" = wmstats -a "$database" = all_but_wmstats ]; then
         continue
       fi
-      # Hack to temporarily ignore acdcserver view compaction
-      if [ "$db" = acdcserver ]; then
-        continue
-      fi
       curl -s "localhost:5984/$db/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
         awk -F\" '/"id":"_design/ {print $4}' |
         while read dbview; do

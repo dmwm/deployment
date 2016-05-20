@@ -29,7 +29,7 @@ deploy_dmwmmon_sw()
 deploy_dmwmmon_post()
 {
   case $host in
-    vocms013[89] | vocms0140 | vocms030[67] | vocms0318 )
+    vocms013[89] | vocms0140 | vocms0307 | vocms0318 )
       disable
       opts="" ;;
     * )
@@ -67,7 +67,7 @@ deploy_dmwmmon_post()
   (mkcrontab; sysboot
    cmd="$project_config/trim-cache $PWD/cache/dmwmmon-datasvc 1G"
    $nogroups || cmd="sudo -H -u _dmwmmon bashs -c '$cmd'"
-   [ ! -f $root/enabled/$project ] || echo "0 * * * * $cmd") | crontab -
+   [ ! -f $root/enabled/$project ] || echo "30 1-23/3 * * * $cmd") | crontab -
 
   if $nogroups; then
     rm -fr cache/dmwmmon-datasvc/*

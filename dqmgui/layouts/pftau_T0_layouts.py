@@ -70,49 +70,49 @@ pftaulayout(
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02ba - Fake rate from jets vs pileup",
+	"Jet/02ba - Fake rate from jets vs pileup",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_Matched/PFJetMatchingEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'PFJetMatching fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFinding/DecayModeFindingEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'DecayModeFinding fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseChargedIsolation/LooseChargedIsolationEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'LooseChargedIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr/LooseCombinedIsolationDBSumPtCorrEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'LooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02bb - Fake rate from jets vs pileup",
+	"Jet/02bb - Fake rate from jets vs pileup",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseIsolation/LooseIsolationEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'LooseIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr/MediumCombinedIsolationDBSumPtCorrEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'MediumCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr/TightCombinedIsolationDBSumPtCorrEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'TightCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByVLooseCombinedIsolationDBSumPtCorr/VLooseCombinedIsolationDBSumPtCorrEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'VLooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02aa - Fake rate from jets vs pt",
+	"Jet/02aa - Fake rate from jets vs pt",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_Matched/PFJetMatchingEffpt', 'draw': {'drawopts': 'e'}, 'description': 'PFJetMatching fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFinding/DecayModeFindingEffpt', 'draw': {'drawopts': 'e'}, 'description': 'DecayModeFinding fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseChargedIsolation/LooseChargedIsolationEffpt', 'draw': {'drawopts': 'e'}, 'description': 'LooseChargedIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr/LooseCombinedIsolationDBSumPtCorrEffpt', 'draw': {'drawopts': 'e'}, 'description': 'LooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02ab - Fake rate from jets vs pt",
+	"Jet/02ab - Fake rate from jets vs pt",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseIsolation/LooseIsolationEffpt', 'draw': {'drawopts': 'e'}, 'description': 'LooseIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr/MediumCombinedIsolationDBSumPtCorrEffpt', 'draw': {'drawopts': 'e'}, 'description': 'MediumCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr/TightCombinedIsolationDBSumPtCorrEffpt', 'draw': {'drawopts': 'e'}, 'description': 'TightCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByVLooseCombinedIsolationDBSumPtCorr/VLooseCombinedIsolationDBSumPtCorrEffpt', 'draw': {'drawopts': 'e'}, 'description': 'VLooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02da - Fake rate from jets vs phi",
+	"Jet/02da - Fake rate from jets vs phi",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_Matched/PFJetMatchingEffphi', 'draw': {'drawopts': 'e'}, 'description': 'PFJetMatching fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFinding/DecayModeFindingEffphi', 'draw': {'drawopts': 'e'}, 'description': 'DecayModeFinding fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseChargedIsolation/LooseChargedIsolationEffphi', 'draw': {'drawopts': 'e'}, 'description': 'LooseChargedIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr/LooseCombinedIsolationDBSumPtCorrEffphi', 'draw': {'drawopts': 'e'}, 'description': 'LooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02db - Fake rate from jets vs phi",
+	"Jet/02db - Fake rate from jets vs phi",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseIsolation/LooseIsolationEffphi', 'draw': {'drawopts': 'e'}, 'description': 'LooseIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr/MediumCombinedIsolationDBSumPtCorrEffphi', 'draw': {'drawopts': 'e'}, 'description': 'MediumCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr/TightCombinedIsolationDBSumPtCorrEffphi', 'draw': {'drawopts': 'e'}, 'description': 'TightCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByVLooseCombinedIsolationDBSumPtCorr/VLooseCombinedIsolationDBSumPtCorrEffphi', 'draw': {'drawopts': 'e'}, 'description': 'VLooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02ca - Fake rate from jets vs eta",
+	"Jet/02ca - Fake rate from jets vs eta",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_Matched/PFJetMatchingEffeta', 'draw': {'drawopts': 'e'}, 'description': 'PFJetMatching fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFinding/DecayModeFindingEffeta', 'draw': {'drawopts': 'e'}, 'description': 'DecayModeFinding fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseChargedIsolation/LooseChargedIsolationEffeta', 'draw': {'drawopts': 'e'}, 'description': 'LooseChargedIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr/LooseCombinedIsolationDBSumPtCorrEffeta', 'draw': {'drawopts': 'e'}, 'description': 'LooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
 pftaulayout(
 	dqmitems,
-	"SingleMu/02cb - Fake rate from jets vs eta",
+	"Jet/02cb - Fake rate from jets vs eta",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseIsolation/LooseIsolationEffeta', 'draw': {'drawopts': 'e'}, 'description': 'LooseIsolation fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr/MediumCombinedIsolationDBSumPtCorrEffeta', 'draw': {'drawopts': 'e'}, 'description': 'MediumCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr/TightCombinedIsolationDBSumPtCorrEffeta', 'draw': {'drawopts': 'e'}, 'description': 'TightCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByVLooseCombinedIsolationDBSumPtCorr/VLooseCombinedIsolationDBSumPtCorrEffeta', 'draw': {'drawopts': 'e'}, 'description': 'VLooseCombinedIsolationDBSumPtCorr fake rate from QCD Jets'}]
 	)
@@ -238,6 +238,30 @@ pftaulayout(
 	)
 pftaulayout(
 	dqmitems,
+	"Jet/01e - Distributions of size and sumPt for isolation PF Cands, QCD Jets faking taus",
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_Size_isolationPFChargedHadrCands', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus Size of isolationPFChargedHadrCands'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseChargedIsolation/hpsPFTauDiscriminationByLooseChargedIsolation_Size_isolationPFNeutrHadrCands', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus Size of isolationPFNeutrHadrCands'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3Hits/hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3Hits_Size_isolationPFCands', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus Size of isolationPFCands'}],
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_SumPt_isolationPFChargedHadrCands', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus SumPt of isolationPFChargedHadrCands'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseChargedIsolation/hpsPFTauDiscriminationByLooseChargedIsolation_SumPt_isolationPFNeutrHadrCands', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus SumPt of isolationPFNeutrHadrCands'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3Hits/hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3Hits_SumPt_isolationPFCands', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus SumPt of isolationPFCands'}]
+	)
+pftaulayout(
+	dqmitems,
+	"Jet/01f - Distributions of Raw Quantities of Tau Cands, QCD Jets faking taus",
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_vs_ptTauVisible', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus ptTauVisible'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_vs_etaTauVisible', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus etaTauVisible'}],
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_vs_phiTauVisible', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus phiTauVisible'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_TauCandMass', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus Candidate Mass'}]
+	)
+pftaulayout(
+	dqmitems,
+	"Jet/01g - Distributions of Tau Cands Multiplicity, QCD Jets faking taus",
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_nTaus_allHadronic', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus multiplicity nTaus_allHadronic'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_nTaus_oneProng0Pi0', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus multiplicity nTaus_oneProng0Pi0'}],
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_nTaus_twoProng0Pi0', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus multiplicity nTaus_twoProng0Pi0'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_nTaus_threeProng0Pi0', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus multiplicity nTaus_threeProng0Pi0'}]
+	)
+pftaulayout(
+	dqmitems,
+	"Jet/01h - Distributions of Tau Cands pTRatio, QCD Jets faking taus",
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_pTRatio_allHadronic', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus pTRatio_allHadronic'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_pTRatio_oneProng0Pi0', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus pTRatio_oneProng0Pi0'}],
+	[{'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_pTRatio_twoProng0Pi0', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus pTRatio_twoProng0Pi0'}, {'path': 'RecoTauV/hpsPFTauProducerRealData_hpsPFTauDiscriminationByDecayModeFindingNewDMs/hpsPFTauDiscriminationByDecayModeFindingNewDMs_pTRatio_threeProng0Pi0', 'draw': {'drawopts': 'e'}, 'description': 'QCD Jets faking taus pTRatio_threeProng0Pi0'}]
+	)
+pftaulayout(
+	dqmitems,
 	"DoubleElectron_OR_TauPlusX/00ba - Fake rate from electrons vs pileup",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_Matched/PFJetMatchingEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'PFJetMatching fake rate from electrons from Z'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByDecayModeFinding/DecayModeFindingEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'DecayModeFinding fake rate from electrons from Z'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByLooseChargedIsolation/LooseChargedIsolationEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'LooseChargedIsolation fake rate from electrons from Z'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr/LooseCombinedIsolationDBSumPtCorrEffpileup', 'draw': {'drawopts': 'e'}, 'description': 'LooseCombinedIsolationDBSumPtCorr fake rate from electrons from Z'}]
@@ -292,19 +316,19 @@ pftaulayout(
 	)
 pftaulayout(
 	dqmitems,
-	"DoubleElectron_OR_TauPlusX/01a%s - Electron rejection fake rate vs pt",
-	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByLooseElectronRejection/LooseElectronRejectionEffpt', 'draw': {'drawopts': 'e'}, 'description': 'LooseElectronRejection fake rate'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByMVAElectronRejection/MVAElectronRejectionEffpt', 'draw': {'drawopts': 'e'}, 'description': 'MVAElectronRejection fake rate'}],
+	"DoubleElectron_OR_TauPlusX/01a - Electron rejection fake rate vs pt",
+	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByLooseElectronRejection/LooseElectronRejectionEffpt', 'draw': {'drawopts': 'e'}, 'description': 'LooseElectronRejection fake rate'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByMVA5LooseElectronRejection/MVA5LooseElectronRejectionEffpt', 'draw': {'drawopts': 'e'}, 'description': 'MVA5LooseElectronRejection fake rate'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByMediumElectronRejection/MediumElectronRejectionEffpt', 'draw': {'drawopts': 'e'}, 'description': 'MediumElectronRejection fake rate'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByTightElectronRejection/TightElectronRejectionEffpt', 'draw': {'drawopts': 'e'}, 'description': 'TightElectronRejection fake rate'}]
 	)
 pftaulayout(
 	dqmitems,
-	"DoubleElectron_OR_TauPlusX/01d%s - Electron rejection fake rate vs phi",
+	"DoubleElectron_OR_TauPlusX/01d - Electron rejection fake rate vs phi",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByLooseElectronRejection/LooseElectronRejectionEffphi', 'draw': {'drawopts': 'e'}, 'description': 'LooseElectronRejection fake rate'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByMVAElectronRejection/MVAElectronRejectionEffphi', 'draw': {'drawopts': 'e'}, 'description': 'MVAElectronRejection fake rate'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByMediumElectronRejection/MediumElectronRejectionEffphi', 'draw': {'drawopts': 'e'}, 'description': 'MediumElectronRejection fake rate'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByTightElectronRejection/TightElectronRejectionEffphi', 'draw': {'drawopts': 'e'}, 'description': 'TightElectronRejection fake rate'}]
 	)
 pftaulayout(
 	dqmitems,
-	"DoubleElectron_OR_TauPlusX/01c%s - Electron rejection fake rate vs eta",
+	"DoubleElectron_OR_TauPlusX/01c - Electron rejection fake rate vs eta",
 	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByLooseElectronRejection/LooseElectronRejectionEffeta', 'draw': {'drawopts': 'e'}, 'description': 'LooseElectronRejection fake rate'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByMVAElectronRejection/MVAElectronRejectionEffeta', 'draw': {'drawopts': 'e'}, 'description': 'MVAElectronRejection fake rate'}],
 	[{'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByMediumElectronRejection/MediumElectronRejectionEffeta', 'draw': {'drawopts': 'e'}, 'description': 'MediumElectronRejection fake rate'}, {'path': 'RecoTauV/hpsPFTauProducerRealElectronsData_hpsPFTauDiscriminationByTightElectronRejection/TightElectronRejectionEffeta', 'draw': {'drawopts': 'e'}, 'description': 'TightElectronRejection fake rate'}]
 	)

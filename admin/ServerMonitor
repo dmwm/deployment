@@ -390,7 +390,7 @@ class LogMonitor(Monitor):
       else:
         next = file.read(1048576)
         linebuf = linebuf[pos:] + next
-        if linebuf == '': break
+        if next == '': break
         offset += pos
         pos = 0
 

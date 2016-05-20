@@ -44,14 +44,14 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/crabserver-%Y%m%d.log 86400" $CFGFILE
+  start
 }
 
 # Start the service.
 start()
 {
   echo "starting $ME"
-  wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/crabserver-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/crabserver-%Y%m%d.log 86400" $CFGFILE
 }
 
 # Stop the service.

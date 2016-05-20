@@ -32,19 +32,19 @@ class ESRenderPlugin : public DQMRenderPlugin {
 
   virtual void initialise( int, char ** ) {
     float rgb[10][3] = {{0.87, 0.00, 0.00}, {0.91, 0.27, 0.00},
-			{0.95, 0.54, 0.00}, {1.00, 0.81, 0.00},
-			{0.56, 0.91, 0.00}, {0.12, 1.00, 0.00},
-			{0.06, 0.60, 0.50}, {0.00, 0.20, 1.00},
-			{0.00, 0.10, 0.94}, {0.00, 0.00, 0.87}};
+                        {0.95, 0.54, 0.00}, {1.00, 0.81, 0.00},
+                        {0.56, 0.91, 0.00}, {0.12, 1.00, 0.00},
+                        {0.06, 0.60, 0.50}, {0.00, 0.20, 1.00},
+                        {0.00, 0.10, 0.94}, {0.00, 0.00, 0.87}};
+
 
     for (int i=0; i<10; ++i) {
-      TColor* color = gROOT->GetColor( 951+i );
-      if ( ! color ) color = new TColor( 951+i, 0, 0, 0, "");
-      color->SetRGB( rgb[i][0], rgb[i][1], rgb[i][2] );
+      colorbar1[i] = TColor::GetColor(rgb[i][0], rgb[i][1], rgb[i][2]);
     }
 
-    for (int i=0; i<10; ++i) colorbar1[i] = i+951;
-    for (int i=0; i<8; ++i) colorbar2[i] = i+1;
+    for (int i=0; i<8; ++i) {
+      colorbar2[i] = i+1;
+    }
     colorbar2[0] = 0;
     colorbar2[7] = 800;
   }

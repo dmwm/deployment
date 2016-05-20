@@ -24,19 +24,18 @@ deploy_dbsmigration_sw()
 
 deploy_dbsmigration_post()
 {
-  case $host in vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
-
-  local cmd="$project_config/manage setinstances 'I did read documentation'"
-  $nogroups || cmd="sudo -H -u _dbsmigration bashs -l -c \"${cmd}\" 2> /dev/null"
-
-  (mkcrontab; sysboot
-   case $host in
-     vocms013[89] | vocms0140 | vocms030[67] | vocms0318 ) ;;
-     * ) echo "*/30 * * * * $cmd" ;;
-   esac) | crontab -
-
-   # Force fetching of view instances during deployment
-   eval $cmd
+  case $host in
+    vocms013[89] | vocms0140 | vocms0307 | vocms0318 )
+      disable
+      ;;
+    * )
+      enable
+      local cmd="$project_config/manage setinstances 'I did read documentation'"
+      $nogroups || cmd="sudo -H -u _dbsmigration bashs -l -c \"${cmd}\" 2> /dev/null"
+      (mkcrontab; sysboot; echo "*/30 * * * * $cmd") | crontab -
+      eval $cmd # Force fetching of view instances during deployment
+      ;;
+  esac
 }
 
 deploy_dbsmigration_auth()

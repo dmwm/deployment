@@ -34,7 +34,7 @@ deploy_phedex_sw()
 deploy_phedex_post()
 {
   case $host in
-    vocms013[89] | vocms0140 | vocms030[67] | vocms0318 )
+    vocms013[89] | vocms0140 | vocms0307 | vocms0318 )
       disable
       opts="" ;;
     * )
@@ -76,7 +76,7 @@ deploy_phedex_post()
   (mkcrontab; sysboot
    cmd="$project_config/trim-cache $PWD/cache/phedex-datasvc 1G"
    $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
-   [ ! -f $root/enabled/$project ] || echo "0 * * * * $cmd") | crontab -
+   [ ! -f $root/enabled/$project ] || echo "0 */3 * * * $cmd") | crontab -
 
   if $nogroups; then
     rm -fr cache/phedex-datasvc/*

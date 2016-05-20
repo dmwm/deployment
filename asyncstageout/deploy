@@ -41,34 +41,44 @@ deploy_asyncstageout_post()
       ;;
     default )
       # Tell couch to push the AlertsCollector couchapp on the next restart
-      for couch in couchdb:5984; do
+      couch=couchdb:5984
+      rm -f $root/state/${couch%%:*}/stagingarea/asyncstageout
+      for db in asynctransfer asynctransfer1; do
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/AsyncTransfer" \
-             "http://localhost:${couch##*:}/asynctransfer" \
-             > $root/state/${couch%%:*}/stagingarea/asyncstageout
+             "http://localhost:${couch##*:}/$db" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/DBSPublisher" \
-             "http://localhost:${couch##*:}/asynctransfer" \
+             "http://localhost:${couch##*:}/$db" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/monitor" \
-             "http://localhost:${couch##*:}/asynctransfer" \
+             "http://localhost:${couch##*:}/$db" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/MonitorByDest" \
-             "http://localhost:${couch##*:}/asynctransfer" \
+             "http://localhost:${couch##*:}/$db" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/MonitorBySource" \
-             "http://localhost:${couch##*:}/asynctransfer" \
+             "http://localhost:${couch##*:}/$db" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/MonitorFilesCount" \
-             "http://localhost:${couch##*:}/asynctransfer" \
+             "http://localhost:${couch##*:}/$db" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
         echo "couchapp push " \
              "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/MonitorStartedEnded" \
-             "http://localhost:${couch##*:}/asynctransfer" \
+             "http://localhost:${couch##*:}/$db" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/ftscp" \
+             "http://localhost:${couch##*:}/$db" \
+             >> $root/state/${couch%%:*}/stagingarea/asyncstageout
+        echo "couchapp push " \
+             "$root/$cfgversion/apps.$glabel/asyncstageout/couchapp/AsyncTransferErl" \
+             "http://localhost:${couch##*:}/$db" \
              >> $root/state/${couch%%:*}/stagingarea/asyncstageout
       done
       ;;

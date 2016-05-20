@@ -45,10 +45,7 @@ void utils::reportSummaryMapPalette(TH2* obj)
         rgb[i][1] = 0.80;
         rgb[i][2] = 0.00;
       }
-      pcol[i] = 901+i;
-      TColor* color = gROOT->GetColor( 901+i );
-      if( ! color ) color = new TColor( 901+i, 0, 0, 0, "" );
-      color->SetRGB( rgb[i][0], rgb[i][1], rgb[i][2] );
+      pcol[i] = TColor::GetColor(rgb[i][0], rgb[i][1], rgb[i][2]);
     }
   }
 

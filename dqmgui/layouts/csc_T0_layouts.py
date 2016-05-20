@@ -719,12 +719,22 @@ csclayout(dqmitems,"CSC DQM Shifter/04 Timing/06 Anode RecHit Timing ME+",
          None])
 
 csclayout(dqmitems,"CSC DQM Shifter/04 Timing/07 Segments Timing",
-    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode", 'description': "Histogram shows segment time distribution. Any significant deviation from Gaussian should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode", 'description': "Histogram shows cathode only segment time distribution. Any significant deviation from Gaussian should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+  {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode", 'description': "Histogram shows anode only segment time distribution. Any significant deviation from Gaussian should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
   {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeVsTOF", 'description': "Histogram shows combined segment time distribution (average of cathode times and pruned anode times). Any significant deviation from Gaussian should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
   [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined", 'description': "Histogram shows combined segment time vs the distance from IP. Any significant fraction of out of zero events should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+  {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff", 'description': "Histogram shows difference between anode and cathode segment time distribution. Any significant deviation from Gaussian should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
   {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeVsZ", 'description': "Histogram shows combined segment time vs Z axis. Any significant fraction of out of zero events should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}
   ]
   )
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/08 Segments Timing (Serial)",
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnodeSerial", 'description': "Histogram shows anode only segment time vs chamber ID. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathodeSerial", 'description': "Histogram shows cathode only segment time distribution vs chamber ID. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombinedSerial", 'description': "Histogram shows combined (anode + cathode) segment time vs chamber ID. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiffSerial", 'description': "Histogram shows difference between anode and cathode segment time vs chamber ID.For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}
+    ]
+    )
 
 csclayout(dqmitems,"CSC DQM Shifter/05 Gains/01 Sum 3x3 RecHit Charge ME-",
         [None,
