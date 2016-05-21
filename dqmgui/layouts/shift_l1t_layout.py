@@ -7,43 +7,43 @@ l1tlayout(dqmitems,"01 - BMTF HW ETA HW GLOBAL PHI",
     [{'path': "L1T2016/L1TStage2BMTF/bmtf_hwEta_hwGlobalPhi", 'description': "BMTF HW ETA HW GLOBAL PHI. x-axis: BMTF HW ETA; y-axis: BMTF GLOBAL PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"02 - CaloLayer2 CENTRAL JET E_{T} ETA PHI",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/CenJetsEtEtaPhi", 'description': "CaloLayer2 CENTRAL JET E_{T} ETA PHI. x-axis: CaloLayer2 CENTRAL JET E_{T} ETA; y-axis: CaloLayer2 CENTRAL JET E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Central-Jets/CenJetsEtEtaPhi", 'description': "CaloLayer2 CENTRAL JET E_{T} ETA PHI. x-axis: CaloLayer2 CENTRAL JET E_{T} ETA; y-axis: CaloLayer2 CENTRAL JET E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"03 - CaloLayer2 FORWARD JET E_{T} ETA PHI",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/ForJetsEtEtaPhi", 'description': "CaloLayer2 FORWARD JET E_{T} ETA PHI. x-axis: CaloLayer2 FORWARD JET E_{T} ETA; y-axis: CaloLayer2 FORWARD JET E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Forward-Jets/ForJetsEtEtaPhi", 'description': "CaloLayer2 FORWARD JET E_{T} ETA PHI. x-axis: CaloLayer2 FORWARD JET E_{T} ETA; y-axis: CaloLayer2 FORWARD JET E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"04 - CaloLayer2 ISO EG E_{T} ETA PHI",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/IsoEGsEtEtaPhi", 'description': "CaloLayer2 ISO EG E_{T} ETA PHI. x-axis: CaloLayer2 ISO EG E_{T} ETA; y-axis: CaloLayer2 ISO EG E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Isolated-EG/IsoEGsEtEtaPhi", 'description': "CaloLayer2 ISO EG E_{T} ETA PHI. x-axis: CaloLayer2 ISO EG E_{T} ETA; y-axis: CaloLayer2 ISO EG E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"05 - CaloLayer2 NonISO EG E_{T} ETA PHI",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/NonIsoEGsEtEtaPhi", 'description': "CaloLayer2 NonISO EG E_{T} ETA PHI. x-axis: CaloLayer2 NonISO EG E_{T} ETA; y-axis: CaloLayer2 NonISO EG E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsEtEtaPhi", 'description': "CaloLayer2 NonISO EG E_{T} ETA PHI. x-axis: CaloLayer2 NonISO EG E_{T} ETA; y-axis: CaloLayer2 NonISO EG E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"06 - CaloLayer2 ISO TAU E_{T} ETA PHI",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/IsoTausEtEtaPhi", 'description': "CaloLayer2 ISO TAU E_{T} ETA PHI. x-axis: CaloLayer2 ISO TAU E_{T} ETA; y-axis: CaloLayer2 ISO TAU E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Isolated-Tau/IsoTausEtEtaPhi", 'description': "CaloLayer2 ISO TAU E_{T} ETA PHI. x-axis: CaloLayer2 ISO TAU E_{T} ETA; y-axis: CaloLayer2 ISO TAU E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"07 - CaloLayer2 NonISO TAU E_{T} ETA PHI",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/TausEtEtaPhi", 'description': "CaloLayer2 NonISO TAU E_{T} ETA PHI. x-axis: CaloLayer2 NonISO TAU E_{T} ETA; y-axis: CaloLayer2 NonISO TAU E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/NonIsolated-Tau/TausEtEtaPhi", 'description': "CaloLayer2 NonISO TAU E_{T} ETA PHI. x-axis: CaloLayer2 NonISO TAU E_{T} ETA; y-axis: CaloLayer2 NonISO TAU E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"08 - CaloLayer2 CENTRAL JET BX OCCUPANCY",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/CenJetsBxOcc", 'description': "CaloLayer2 CENTRAL JET BX OCCUPANCY. x-axis: CaloLayer2 CENTRAL JET BX; y-axis: CaloLayer2 CENTRAL JET OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Central-Jets/CenJetsBxOcc", 'description': "CaloLayer2 CENTRAL JET BX OCCUPANCY. x-axis: CaloLayer2 CENTRAL JET BX; y-axis: CaloLayer2 CENTRAL JET OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"09 - CaloLayer2 FORWARD JET BX OCCUPANCY",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/ForJetsBxOcc", 'description': "CaloLayer2 FORWARD JET BX OCCUPANCY. x-axis: CaloLayer2 FORWARD JET BX; y-axis: CaloLayer2 FORWARD JET OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Forward-Jets/ForJetsBxOcc", 'description': "CaloLayer2 FORWARD JET BX OCCUPANCY. x-axis: CaloLayer2 FORWARD JET BX; y-axis: CaloLayer2 FORWARD JET OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"10 - CaloLayer2 ISO EG BX OCCUPANCY",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/IsoEGsBxOcc", 'description': "CaloLayer2 ISO EG BX OCCUPANCY. x-axis: CaloLayer2 ISO EG BX; y-axis: CaloLayer2 ISO EG OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Isolated-EG/IsoEGsBxOcc", 'description': "CaloLayer2 ISO EG BX OCCUPANCY. x-axis: CaloLayer2 ISO EG BX; y-axis: CaloLayer2 ISO EG OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"11 - CaloLayer2 NonISO EG BX OCCUPANCY",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/NonIsoEGsBxOcc", 'description': "CaloLayer2 NonISO EG BX OCCUPANCY. x-axis: CaloLayer2 NonISO EG BX; y-axis: CaloLayer2 NonISO EG OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsBxOcc", 'description': "CaloLayer2 NonISO EG BX OCCUPANCY. x-axis: CaloLayer2 NonISO EG BX; y-axis: CaloLayer2 NonISO EG OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"12 - CaloLayer2 ISO TAU BX OCCUPANCY",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/IsoTausBxOcc", 'description': "CaloLayer2 ISO TAU BX OCCUPANCY. x-axis: CaloLayer2 ISO TAU BX; y-axis: CaloLayer2 ISO TAU OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Isolated-Tau/IsoTausBxOcc", 'description': "CaloLayer2 ISO TAU BX OCCUPANCY. x-axis: CaloLayer2 ISO TAU BX; y-axis: CaloLayer2 ISO TAU OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"13 - CaloLayer2 NonISO TAU BX OCCUPANCY",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/TausBxOcc", 'description': "CaloLayer2 NonISO TAU BX OCCUPANCY. x-axis: CaloLayer2 NonISO TAU BX; y-axis: CaloLayer2 NonISO TAU OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/NonIsolated-Tau/TausBxOcc", 'description': "CaloLayer2 NonISO TAU BX OCCUPANCY. x-axis: CaloLayer2 NonISO TAU BX; y-axis: CaloLayer2 NonISO TAU OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"14 - CaloLayer2 EtSum BX OCCUPANCY",
-    [{'path': "L1T2016/L1TStage2CaloLayer2/EtSumBxOcc", 'description': "CaloLayer2 EtSum BX OCCUPANCY. x-axis: CaloLayer2 EtSum BX; y-axis: CaloLayer2 EtSum OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2CaloLayer2/Energy-Sums/EtSumBxOcc", 'description': "CaloLayer2 EtSum BX OCCUPANCY. x-axis: CaloLayer2 EtSum BX; y-axis: CaloLayer2 EtSum OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"15 - uGMT MUON BX",
     [{'path': "L1T2016/L1TStage2uGMT/ugmtMuonBX", 'description': "uGMT Muon BX. x-axis: uGMT Muon BX.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
