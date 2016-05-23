@@ -138,6 +138,9 @@ l1tlayout(dqmitems,"43 - CaloLayer1 MAXIMUM EVENTs LINK ERROR by LUMISECTION",
 l1tlayout(dqmitems,"44 - CaloLayer1 MAXIMUM EVENTs MISMATCHES by LUMISECTION",
   [{'path': "L1T2016/L1TStage2CaloLayer1/maxEvtMismatchByLumi", 'description': "CaloLayer1 MAXIMUM EVENTs MISMATCHES by LUMISECTION. x-axis: CaloLayer1 MAXIMUM EVENTs MISMATCHES by LUMISECTION.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
+l1tlayout(dqmitems,"45 - BMTF HW PT",
+    [{'path': "L1T2016/L1TStage2BMTF/bmtf_hwPt", 'description': "BMTF HW PT. x-axis: BMTF HW PT.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+
 
 
 
