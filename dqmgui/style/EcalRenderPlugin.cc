@@ -1124,6 +1124,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
      !fullpath.Contains("Pedestal") &&
      !fullpath.Contains("pedestal") &&
      !fullpath.Contains("event size") &&
+     !fullpath.Contains("flag mismatch") &&
      !fullpath.Contains("Trigger Primitives") &&
      !fullpath.Contains("Occupancy") &&
      !fullpath.Contains("TestPulse") &&
@@ -1164,6 +1165,15 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     obj->GetYaxis()->SetRangeUser(0.1, 0.608*68);
 
     applyDefaults = false;
+  }
+  else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT TT flag mismatch(| EE [+-])").MatchB(fullpath)){
+    const Int_t Number = 2;
+    Double_t Red[Number]    = {1.00, 1.00};
+    Double_t Green[Number]  = {0.85, 0.00};
+    Double_t Blue[Number]   = {0.85, 0.00};
+    Double_t Length[Number] = {0.00, 1.00 };
+    Int_t nb=50;
+    TColor::CreateGradientColorTable(Number,Length,Red,Green,Blue,nb);
   }
   else if( TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath) ){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
