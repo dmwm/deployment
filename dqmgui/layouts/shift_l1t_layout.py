@@ -63,8 +63,8 @@ l1tlayout(dqmitems,"19 - uGMT MUON HW QUALITY",
 l1tlayout(dqmitems,"20 - uGMT BMTF Input BX",
     [{'path': "L1T2016/L1TStage2uGMT/BMTFInput/ugmtBMTFBX", 'description': "uGMT BMTF Input BX. x-axis: uGMT BMTF Input BX.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"21 - uGMT BMTF Input HW PHI",
-    [{'path': "L1T2016/L1TStage2uGMT/BMTFInput/ugmtBMTFhwPhi", 'description': "uGMT BMTF Input HW PHI. x-axis: uGMT BMTF Input HW PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"21 - uGMT BMTF Input HW Global PHI",
+    [{'path': "L1T2016/L1TStage2uGMT/BMTFInput/ugmtBMTFglbPhi", 'description': "uGMT BMTF Input HW Global PHI. x-axis: uGMT BMTF Input HW Global PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"22 - uGMT BMTF Input HW ETA",
     [{'path': "L1T2016/L1TStage2uGMT/BMTFInput/ugmtBMTFhwEta", 'description': "uGMT BMTF Input HW ETA. x-axis: uGMT BMTF Input HW ETA.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
@@ -78,55 +78,64 @@ l1tlayout(dqmitems,"24 - uGMT BMTF Input SIGN",
 l1tlayout(dqmitems,"25 - uGMT OMTF Input BX",
     [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFBX", 'description': "uGMT OMTF Input BX. x-axis: uGMT OMTF Input BX.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"26 - uGMT OMTF Input HW PHI",
-    [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFhwPhi", 'description': "uGMT OMTF Input HW PHI. x-axis: uGMT OMTF Input HW PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"26 - uGMT OMTF Input HW Global PHI Negative",
+    [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFglbPhiNeg", 'description': "uGMT OMTF Input HW Global PHI Negative. x-axis: uGMT OMTF Input HW Global PHI Negative.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"27 - uGMT OMTF Input HW ETA",
+l1tlayout(dqmitems,"27 - uGMT OMTF Input HW Global PHI Positive",
+    [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFglbPhiPos", 'description': "uGMT OMTF Input HW Global PHI Positive. x-axis: uGMT OMTF Input HW Global
+PHI Positive.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+
+l1tlayout(dqmitems,"28 - uGMT OMTF Input HW ETA",
     [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFhwEta", 'description': "uGMT OMTF Input HW ETA. x-axis: uGMT OMTF Input HW ETA.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"28 - uGMT OMTF Input P_{T}",
+l1tlayout(dqmitems,"29 - uGMT OMTF Input P_{T}",
     [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFhwPt", 'description': "uGMT OMTF Input P_{T}. x-axis: uGMT OMTF Input P_{T}.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"29 - uGMT OMTF Input SIGN",
+l1tlayout(dqmitems,"30 - uGMT OMTF Input SIGN",
     [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFhwSign", 'description': "uGMT OMTF Input SIGN. x-axis: uGMT OMTF Input SIGN.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"30 - uGMT EMTF Input BX",
-    [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFBX", 'description': "uGMT EMTF Input BX. x-axis: uGMT EMTF Input BX.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"31 - uGMT EMTF Input BX",
+    [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFBX", 'description': "uGMT EMTF Input BX. x-axis: uGMT EMTF Input BX.  For more information please clic
+k <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"31 - uGMT EMTF Input HW PHI",
-    [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFhwPhi", 'description': "uGMT EMTF Input HW PHI. x-axis: uGMT EMTF Input HW PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"32 - uGMT EMTF Input HW Global PHI Negative",
+    [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFglbPhiNeg", 'description': "uGMT EMTF Input HW Global PHI Negative. x-axis: uGMT EMTF Input HW Global PHI Negative.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"32 - uGMT EMTF Input HW ETA",
+l1tlayout(dqmitems,"33 - uGMT EMTF Input HW Global PHI Positive",
+    [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFglbPhiPos", 'description': "uGMT EMTF Input HW Global PHI Positive. x-axis: uGMT EMTF Input HW Global
+PHI Positive.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+
+l1tlayout(dqmitems,"34 - uGMT EMTF Input HW ETA",
     [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFhwEta", 'description': "uGMT EMTF Input HW ETA. x-axis: uGMT EMTF Input HW ETA.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"33 - uGMT EMTF Input P_{T}",
+l1tlayout(dqmitems,"35 - uGMT EMTF Input P_{T}",
     [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFhwPt", 'description': "uGMT EMTF Input P_{T}. x-axis: uGMT EMTF Input P_{T}.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"34 - uGMT EMTF Input SIGN",
+l1tlayout(dqmitems,"36 - uGMT EMTF Input SIGN",
     [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFhwSign", 'description': "uGMT EMTF Input SIGN. x-axis: uGMT EMTF Input SIGN.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"35 - CaloLayer1 ECAL DISCREOANCY",
+l1tlayout(dqmitems,"37 - CaloLayer1 ECAL DISCREOANCY",
   [{'path': "L1T2016/L1TStage2CaloLayer1/ecalDiscrepancy", 'description': "CaloLayer1 ECAL DISCREOANCY. x-axis: CaloLayer1 ECAL DISCREOANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"36 - CaloLayer1 ECAL LINK ERROR",
+l1tlayout(dqmitems,"38 - CaloLayer1 ECAL LINK ERROR",
   [{'path': "L1T2016/L1TStage2CaloLayer1/ecalLinkError", 'description': "CaloLayer1 ECAL LINK Error. x-axis: CaloLayer1 ECAL LINK Error.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"37 - CaloLayer1 ECAL OCCUPANCY",
+l1tlayout(dqmitems,"39 - CaloLayer1 ECAL OCCUPANCY",
   [{'path': "L1T2016/L1TStage2CaloLayer1/ecalOccupancy", 'description': "CaloLayer1 ECAL OCCUPANCY. x-axis: CaloLayer1 ECAL OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"38 - CaloLayer1 HCAL DISCREOANCY",
+l1tlayout(dqmitems,"40 - CaloLayer1 HCAL DISCREOANCY",
   [{'path': "L1T2016/L1TStage2CaloLayer1/hcalDiscrepancy", 'description': "CaloLayer1 HCAL DISCREOANCY. x-axis: CaloLayer1 HCAL DISCREOANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"39 - CaloLayer1 HCAL LINK ERROR",
+l1tlayout(dqmitems,"41 - CaloLayer1 HCAL LINK ERROR",
   [{'path': "L1T2016/L1TStage2CaloLayer1/hcalLinkError", 'description': "CaloLayer1 HCAL LINK Error. x-axis: CaloLayer1 HCAL LINK Error.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"40 - CaloLayer1 HCAL OCCUPANCY",
+l1tlayout(dqmitems,"42 - CaloLayer1 HCAL OCCUPANCY",
   [{'path': "L1T2016/L1TStage2CaloLayer1/hcalOccupancy", 'description': "CaloLayer1 HCAL OCCUPANCY. x-axis: CaloLayer1 HCAL OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"41 - CaloLayer1 MAXIMUM EVENTs LINK ERROR by LUMISECTION",
+l1tlayout(dqmitems,"43 - CaloLayer1 MAXIMUM EVENTs LINK ERROR by LUMISECTION",
   [{'path': "L1T2016/L1TStage2CaloLayer1/maxEvtLinkErrorsByLumi", 'description': "CaloLayer1 MAXIMUM EVENTs LINK ERROR by LUMISECTION. x-axis: CaloLayer1 MAXIMUM EVENTs LINK ERROR by LUMISECTION.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
-l1tlayout(dqmitems,"42 - CaloLayer1 MAXIMUM EVENTs MISMATCHES by LUMISECTION",
+l1tlayout(dqmitems,"44 - CaloLayer1 MAXIMUM EVENTs MISMATCHES by LUMISECTION",
   [{'path': "L1T2016/L1TStage2CaloLayer1/maxEvtMismatchByLumi", 'description': "CaloLayer1 MAXIMUM EVENTs MISMATCHES by LUMISECTION. x-axis: CaloLayer1 MAXIMUM EVENTs MISMATCHES by LUMISECTION.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 
