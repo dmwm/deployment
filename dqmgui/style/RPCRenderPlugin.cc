@@ -136,10 +136,7 @@ private:
       obj->SetBinContent(11,17,-1);
     }
 
-    if(o.name.find("Occupancy_W") != std::string::npos) {
-      obj->GetXaxis()->SetNdivisions(510);
-    }
-
+    
     if(o.name.find("SummaryMap") != std::string::npos)
       {//report summary map
 
