@@ -82,7 +82,7 @@ l1tlayout(dqmitems,"26 - uGMT OMTF Input HW Global PHI Negative",
     [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFglbhwPhiNeg", 'description': "uGMT OMTF Input HW Global PHI Negative. x-axis: uGMT OMTF Input HW Global PHI Negative.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"27 - uGMT OMTF Input HW Global PHI Positive",
-    [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFglbhwPhiNeg", 'description': "uGMT OMTF Input HW Global PHI Positive. x-axis: uGMT OMTF Input HW Global PHI Positive.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+    [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFglbhwPhiPos", 'description': "uGMT OMTF Input HW Global PHI Positive. x-axis: uGMT OMTF Input HW Global PHI Positive.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
 l1tlayout(dqmitems,"28 - uGMT OMTF Input HW ETA",
     [{'path': "L1T2016/L1TStage2uGMT/OMTFInput/ugmtOMTFhwEta", 'description': "uGMT OMTF Input HW ETA. x-axis: uGMT OMTF Input HW ETA.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
