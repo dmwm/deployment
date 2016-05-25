@@ -403,7 +403,7 @@ EcalRenderPlugin::initialise(int, char **)
 
   MEMLabels->SetMinimum(68.1);
 
-  for(int i = 0; i < 68; i++)
+  for(int i = 1; i < 69; i++)
     ebTTLabels->SetBinContent(i/4 + 1, i%4 + 1, i+1);
 
   // 36 entries
