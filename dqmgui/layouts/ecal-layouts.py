@@ -587,6 +587,11 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/15 ecalOccSent',
            [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSent', 'description': 'ECAL TP Occupancy at TCC; from L1 Trigger DQM.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/16 ecalOccSentAndRecd',
            [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd', 'description': 'ECAL TP Occupancy FULL MATCH; from L1 Trigger DQM.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/17 TT Flag Mismatch',
+	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT flag mismatch', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}],
+	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE +', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
+	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}])
+
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
@@ -679,10 +684,6 @@ ecallayout(dqmitems, 'Ecal/Layouts/07 Selective Readout/16 ZS Flag Readout',
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT ZS Flagged Fully Readout', 'description': 'Occurrence rate of full readout when unit is flagged as zero-suppressed.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT ZS Flagged Fully Readout EE -', 'description': 'Occurrence rate of full readout when unit is flagged as zero-suppressed.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT ZS Flagged Fully Readout EE +', 'description': 'Occurrence rate of full readout when unit is flagged as zero-suppressed.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/07 Selective Readout/17 TT Flag Mismatch',
-	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT flag mismatch', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}],
-	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE +', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
-	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}])
 
 #____________________ Layouts / 08 Laser ____________________
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/00 Calibration Event Rate',
