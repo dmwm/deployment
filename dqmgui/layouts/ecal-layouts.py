@@ -121,6 +121,16 @@ ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/09 Channel Status Map',
 	   [{'path': 'EcalBarrel/EBIntegrityClient/EBIT channel status map', 'description': 'Map of channel status as given by the Ecal Channel Status Record. LEGEND:<br/>0: Channel ok,<br/>1: DAC settings problem, pedestal not in the design range,<br/>2: Channel with no laser, ok elsewhere,<br/>3: Noisy,<br/>4: Very noisy,<br/>5-7: Reserved for more categories of noisy channels,<br/>8: Channel at fixed gain 6 (or 6 and 1),<br/>9: Channel at fixed gain 1,<br/>10: Channel at fixed gain 0 (dead of type this),<br/>11: Non-responding isolated channel (dead of type other),<br/>12: Channel and one or more neigbors not responding (e.g.: in a dead VFE 5x1 channel),<br/>13: Channel in TT with no data link, TP data ok,<br/>14: Channel in TT with no data link and no TP data.'}],
 	   [{'path': 'EcalEndcap/EEIntegrityClient/EEIT EE - channel status map', 'description': 'Map of channel status as given by the Ecal Channel Status Record. LEGEND:<br/>0: Channel ok,<br/>1: DAC settings problem, pedestal not in the design range,<br/>2: Channel with no laser, ok elsewhere,<br/>3: Noisy,<br/>4: Very noisy,<br/>5-7: Reserved for more categories of noisy channels,<br/>8: Channel at fixed gain 6 (or 6 and 1),<br/>9: Channel at fixed gain 1,<br/>10: Channel at fixed gain 0 (dead of type this),<br/>11: Non-responding isolated channel (dead of type other),<br/>12: Channel and one or more neigbors not responding (e.g.: in a dead VFE 5x1 channel),<br/>13: Channel in TT with no data link, TP data ok,<br/>14: Channel in TT with no data link and no TP data.'},
 	    {'path': 'EcalEndcap/EEIntegrityClient/EEIT EE + channel status map', 'description': 'Map of channel status as given by the Ecal Channel Status Record. LEGEND:<br/>0: Channel ok,<br/>1: DAC settings problem, pedestal not in the design range,<br/>2: Channel with no laser, ok elsewhere,<br/>3: Noisy,<br/>4: Very noisy,<br/>5-7: Reserved for more categories of noisy channels,<br/>8: Channel at fixed gain 6 (or 6 and 1),<br/>9: Channel at fixed gain 1,<br/>10: Channel at fixed gain 0 (dead of type this),<br/>11: Non-responding isolated channel (dead of type other),<br/>12: Channel and one or more neigbors not responding (e.g.: in a dead VFE 5x1 channel),<br/>13: Channel in TT with no data link, TP data ok,<br/>14: Channel in TT with no data link and no TP data.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/10 DCC-TCC Mismatch',
+	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT bunch crossing TCC errors', 'description': 'Number of bunch corssing value mismatches between DCC and TCC.'},
+	    {'path': 'EcalBarrel/EBRawDataTask/EBRDT L1A TCC errors', 'description': 'Number of L1A value mismatches between DCC and TCC.'}],
+	   [{'path': 'EcalEndcap/EERawDataTask/EERDT bunch crossing TCC errors', 'description': 'Number of bunch corssing value mismatches between DCC and TCC.'},
+	    {'path': 'EcalEndcap/EERawDataTask/EERDT L1A TCC errors', 'description': 'Number of L1A value mismatches between DCC and TCC.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/11 DCC-SRP Mismatch',
+	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT bunch crossing SRP errors', 'description': 'Number of bunch crossing value mismatches between DCC and SRP.'},
+	    {'path': 'EcalBarrel/EBRawDataTask/EBRDT L1A SRP errors', 'description': 'Number of L1A value mismatches between DCC and SRP.'}],
+	   [{'path': 'EcalEndcap/EERawDataTask/EERDT bunch crossing SRP errors', 'description': 'Number of bunch crossing value mismatches between DCC and SRP.'},
+	    {'path': 'EcalEndcap/EERawDataTask/EERDT L1A SRP errors', 'description': 'Number of L1A value mismatches between DCC and SRP.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/00 CRC',
 	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT CRC errors', 'description': 'Number of CRC errors.'}],
 	   [{'path': 'EcalEndcap/EERawDataTask/EERDT CRC errors', 'description': 'Number of CRC errors.'}])
@@ -136,17 +146,7 @@ ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/02 DCC-GT Mismatch'
 	   [{'path': 'EcalEndcap/EERawDataTask/EERDT bunch crossing DCC errors', 'description': 'Number of discrepancies between bunch crossing numbers recorded in the DCC and that in CMS Event.'},
 	    {'path': 'EcalEndcap/EERawDataTask/EERDT L1A DCC errors', 'description': 'Number of discrepancies between L1A recorded in the DCC and that in CMS Event.'},
 	    {'path': 'EcalEndcap/EERawDataTask/EERDT trigger type errors', 'description': 'Number of discrepancies between trigger type recorded in the DCC and that in CMS Event.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/03 DCC-TCC Mismatch',
-	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT bunch crossing TCC errors', 'description': 'Number of bunch corssing value mismatches between DCC and TCC.'},
-	    {'path': 'EcalBarrel/EBRawDataTask/EBRDT L1A TCC errors', 'description': 'Number of L1A value mismatches between DCC and TCC.'}],
-	   [{'path': 'EcalEndcap/EERawDataTask/EERDT bunch crossing TCC errors', 'description': 'Number of bunch corssing value mismatches between DCC and TCC.'},
-	    {'path': 'EcalEndcap/EERawDataTask/EERDT L1A TCC errors', 'description': 'Number of L1A value mismatches between DCC and TCC.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/04 DCC-SRP Mismatch',
-	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT bunch crossing SRP errors', 'description': 'Number of bunch crossing value mismatches between DCC and SRP.'},
-	    {'path': 'EcalBarrel/EBRawDataTask/EBRDT L1A SRP errors', 'description': 'Number of L1A value mismatches between DCC and SRP.'}],
-	   [{'path': 'EcalEndcap/EERawDataTask/EERDT bunch crossing SRP errors', 'description': 'Number of bunch crossing value mismatches between DCC and SRP.'},
-	    {'path': 'EcalEndcap/EERawDataTask/EERDT L1A SRP errors', 'description': 'Number of L1A value mismatches between DCC and SRP.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/05 DCC-FE Mismatch',
+ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/03 DCC-FE Mismatch',
 	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT bunch crossing FE errors', 'description': 'Number of bunch crossing value mismatches between DCC and FE.'},
 	    {'path': 'EcalBarrel/EBRawDataTask/EBRDT L1A FE errors', 'description': 'Number of L1A value mismatches between DCC and FE.'}],
 	   [{'path': 'EcalEndcap/EERawDataTask/EERDT bunch crossing FE errors', 'description': 'Number of bunch crossing value mismatches between DCC and FE.'},
