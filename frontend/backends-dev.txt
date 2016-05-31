@@ -9,4 +9,5 @@
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
 ^/auth/complete/scheddmon/066/ vocms066.cern.ch
 ^/auth/complete/scheddmon/059/ vocms059.cern.ch
+^/auth/complete/wmarchive(?:/|$) vocms013.cern.ch
 ^ localhost
