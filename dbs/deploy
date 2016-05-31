@@ -25,7 +25,7 @@ deploy_dbs_sw()
 deploy_dbs_post()
 {
   case $host in
-    vocms013[89] | vocms0140 | vocms0307 | vocms0318 )
+    vocms013[89] | vocms014[01] | vocms0307 | vocms0318 )
       disable
       ;;
     * )
