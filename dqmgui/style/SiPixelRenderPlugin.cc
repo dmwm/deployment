@@ -64,10 +64,13 @@ public:
 
 private:
 
+  // simple recursive descent parser for the "Column(0,30,50,)/Other(0,3,5,)/Last"
+  // format used to carry the positions where histograms where concatenated by 
+  // EXTEND to this plugin.
   template<typename Iterator>
   struct LabelMarkerParser {
-    std::vector<std::vector<int>> markers;
-    std::string text;
+    std::vector<std::vector<int>> markers; // output 
+    std::string text; // cleaned-up label
 
     static std::pair<bool, int> parse_int(Iterator& start, Iterator end) {
       int out = 0;
@@ -104,8 +107,8 @@ private:
       for(;;) {
         text += parse_text(start, end);
         auto list = parse_list(start, end);
-        // we might fail parsing here but consume input, but this is fine.
-        if (list.first) out.push_back(list.second);
+        // we might fail parsing here but consume input, but this is acceptable.
+        if (list.first) out.emplace_back(list.second);
         if (start == end)  return std::make_pair(true, LabelMarkerParser{out, text});
         if (*start != '/') return std::make_pair(false, LabelMarkerParser{out, text});
         ++start;
@@ -121,27 +124,32 @@ private:
       TAxis* ax = obj->GetXaxis();
       auto label = std::string(ax->GetTitle());
       auto res = LabelMarkerParser<std::string::iterator>::parse_label(label.begin(), label.end());
-      if (!res.first || res.second.markers.size() == 0)  {
+      if (!res.first || res.second.markers.size() == 0)
         return; // parse failed, probably no markers
-      }
 
       std::string newlabel = res.second.text;
+      std::vector<std::vector<int>>& markers = res.second.markers;
 
-      auto ymin = obj->GetMinimum();
-      auto ymax = obj->GetMaximum();
-      auto step = (ymax-ymin)*0.5 / res.second.markers.size();
-      for (auto& markers : res.second.markers) {
-        for (int mark : markers) {
-          auto pos = double(mark) + 0.5;
-          TLine tl; 
-          tl.SetLineColor(4); 
-          tl.DrawLine(pos, ymin, pos, ymax);
-        }
-        ymax = ymax - step;
-      }
+      auto ymax = obj->GetMaximum() * 0.5;
+      auto ymin = 0; // TODO: we actually want the y axis range here. 
+      auto step = (ymax-ymin)*0.5 / markers.size();
+      // we only get one set of values each, but have to draw a full hierarchy
+      putMarkersRecursive(markers.begin(), markers.end(), 0, ymin, ymax, step);
+      
       ax->SetTitle(newlabel.c_str());
     }
 
+  template<typename Iterator> // Iterator into vector of vectors
+  void putMarkersRecursive(Iterator begin, Iterator end, int offset, double ymin, double ymax, double step) {
+    if (begin == end) return;
+    for (auto mark : *begin) {
+      auto pos = double(mark) + 0.5 + double(offset);
+      TLine tl; 
+      tl.SetLineColor(4); 
+      tl.DrawLine(pos, ymin, pos, ymax);
+      putMarkersRecursive(begin+1, end, offset + mark, ymin, ymax - step, step);
+    }
+  }
 
   void preDrawTH2( TCanvas *, const VisDQMObject &o )
     {
@@ -160,16 +168,6 @@ private:
       gPad->SetRightMargin(0.15);
       obj->SetOption("colz");
 
-      TH1* th1 = dynamic_cast<TH1*>(obj);
-      TAxis* xa = th1->GetXaxis();
-      TAxis* ya = th1->GetYaxis();
-      xa->SetTitleSize(0.04);
-      xa->SetLabelSize(0.03);
-      ya->SetTitleSize(0.04);
-      ya->SetLabelSize(0.03);
-      TGaxis::SetMaxDigits(3);
-
-
       // TODO: content-based zooming might be useful.
       // (maybe as a function, could be useful for TH1 as well)
 
@@ -182,6 +180,8 @@ private:
       }
 
       if (o.name.find( "reportSummaryMap" ) == std::string::npos) {
+        TAxis* xa = obj->GetXaxis();
+        TAxis* ya = obj->GetYaxis();
         xa->SetTitleOffset(0.7);
         xa->SetTitleSize(0.065);
         xa->SetLabelSize(0.065);
@@ -257,7 +257,17 @@ private:
       TH2* obj = dynamic_cast<TH2*>( o.object );
       assert( obj );
       // Add Th2 post-draw code here.
-    }
+
+      // WTH in postdraw? works in pre for TH1.
+      TAxis* xa = obj->GetXaxis();
+      TAxis* ya = obj->GetYaxis();
+      xa->SetTitleSize(0.04);
+      xa->SetLabelSize(0.03);
+      ya->SetTitleSize(0.04);
+      ya->SetLabelSize(0.03);
+      TGaxis::SetMaxDigits(3);
+
+   }
 
 
   void preDrawTH1( TCanvas *, const VisDQMObject &o )
