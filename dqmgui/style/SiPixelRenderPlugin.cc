@@ -117,16 +117,28 @@ private:
 
   void putMarkers(TH1* obj) 
     {
+      // TODO: Y-Axis as well?
       TAxis* ax = obj->GetXaxis();
       auto label = std::string(ax->GetTitle());
       auto res = LabelMarkerParser<std::string::iterator>::parse_label(label.begin(), label.end());
-      if (!res.first ||  res.second.markers.size() == 0)  {
+      if (!res.first || res.second.markers.size() == 0)  {
         return; // parse failed, probably no markers
       }
 
       std::string newlabel = res.second.text;
-      // TODO: really put markers here, might need the canvas
-      newlabel +=  " " + std::to_string(res.second.markers.size()) + "+" + std::to_string(res.second.markers[0].size());
+
+      auto ymin = obj->GetMinimum();
+      auto ymax = obj->GetMaximum();
+      auto step = (ymax-ymin)*0.5 / res.second.markers.size();
+      for (auto& markers : res.second.markers) {
+        for (int mark : markers) {
+          auto pos = double(mark) + 0.5;
+          TLine tl; 
+          tl.SetLineColor(4); 
+          tl.DrawLine(pos, ymin, pos, ymax);
+        }
+        ymax = ymax - step;
+      }
       ax->SetTitle(newlabel.c_str());
     }
 
@@ -265,10 +277,6 @@ private:
       ya->SetLabelSize(0.03);
       TGaxis::SetMaxDigits(3);
 
-      // TODO: add EXTEND_* decorations for Phase1 here. 
-      // (maybe as a function, TH2 could use it as well)
-      putMarkers(obj);
-
       // Always include 0.
       if( obj->GetMinimum() > 0.) obj->SetMinimum(0.);
 
@@ -321,6 +329,9 @@ private:
       
       TH1* obj = dynamic_cast<TH1*>( o.object );
       assert( obj );
+      
+      // put EXTEND marker for phase1 
+      putMarkers(obj);
 
       // Upper/Lower limit decoration for SUMOFFs.
       if( o.name.find( "SUMOFF_adc_Barrel" ) != std::string::npos ){
