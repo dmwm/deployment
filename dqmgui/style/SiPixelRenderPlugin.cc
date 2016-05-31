@@ -18,6 +18,9 @@
 #include "TLine.h"
 #include "TGaxis.h"
 #include <cassert>
+#include <cctype>
+#include <map>
+#include <vector>
 
 class SiPixelRenderPlugin : public DQMRenderPlugin
 {
@@ -60,6 +63,73 @@ public:
     }
 
 private:
+
+  template<typename Iterator>
+  struct LabelMarkerParser {
+    std::vector<std::vector<int>> markers;
+    std::string text;
+
+    static std::pair<bool, int> parse_int(Iterator& start, Iterator end) {
+      int out = 0;
+      if (start == end || !std::isdigit(*start)) return std::make_pair(false, out); 
+      while (start != end && std::isdigit(*start))
+        out = out * 10 + (*start++ - '0');
+      return std::make_pair(true, out);
+    }
+
+    static std::string parse_text(Iterator& start, Iterator end) {
+      std::string out;
+      while (start != end && *start != '(' && *start != '/') out.push_back(*start++);
+      return out;
+    }
+
+    static std::pair<bool, std::vector<int>> parse_list(Iterator& start, Iterator end) {
+      std::vector<int> out;
+      if (start == end || *start != '(') return std::make_pair(false, out);
+      ++start;
+      for(;;) {
+        auto num = parse_int(start, end);
+        if (num.first) out.push_back(num.second);
+        else break;
+        if (start != end && *start == ',') ++start;
+      }
+      if (start == end || *start != ')') return std::make_pair(false, out);
+      ++start;
+      return std::make_pair(true, out);
+    }
+
+    static std::pair<bool, LabelMarkerParser> parse_label(Iterator start, Iterator end) {
+      std::vector<std::vector<int>> out;
+      std::string text;
+      for(;;) {
+        text += parse_text(start, end);
+        auto list = parse_list(start, end);
+        // we might fail parsing here but consume input, but this is fine.
+        if (list.first) out.push_back(list.second);
+        if (start == end)  return std::make_pair(true, LabelMarkerParser{out, text});
+        if (*start != '/') return std::make_pair(false, LabelMarkerParser{out, text});
+        ++start;
+        text += "/";
+        if (start == end)  return std::make_pair(true, LabelMarkerParser{out, text});
+      }
+    }
+  };
+
+  void putMarkers(TH1* obj) 
+    {
+      TAxis* ax = obj->GetXaxis();
+      auto label = std::string(ax->GetTitle());
+      auto res = LabelMarkerParser<std::string::iterator>::parse_label(label.begin(), label.end());
+      if (!res.first ||  res.second.markers.size() == 0)  {
+        return; // parse failed, probably no markers
+      }
+
+      std::string newlabel = res.second.text;
+      // TODO: really put markers here, might need the canvas
+      newlabel +=  " " + std::to_string(res.second.markers.size()) + "+" + std::to_string(res.second.markers[0].size());
+      ax->SetTitle(newlabel.c_str());
+    }
+
 
   void preDrawTH2( TCanvas *, const VisDQMObject &o )
     {
@@ -170,6 +240,14 @@ private:
         }
     }
 
+  void postDrawTH2( TCanvas * /*c*/, const VisDQMObject &o )
+    {
+      TH2* obj = dynamic_cast<TH2*>( o.object );
+      assert( obj );
+      // Add Th2 post-draw code here.
+    }
+
+
   void preDrawTH1( TCanvas *, const VisDQMObject &o )
     {
       TH1* obj = dynamic_cast<TH1*>( o.object );
@@ -186,6 +264,10 @@ private:
       ya->SetTitleSize(0.04);
       ya->SetLabelSize(0.03);
       TGaxis::SetMaxDigits(3);
+
+      // TODO: add EXTEND_* decorations for Phase1 here. 
+      // (maybe as a function, TH2 could use it as well)
+      putMarkers(obj);
 
       // Always include 0.
       if( obj->GetMinimum() > 0.) obj->SetMinimum(0.);
@@ -239,9 +321,6 @@ private:
       
       TH1* obj = dynamic_cast<TH1*>( o.object );
       assert( obj );
-
-      // TODO: add EXTEND_* decorations for Phase1 here. 
-      // (maybe as a function, TH2 could use it as well)
 
       // Upper/Lower limit decoration for SUMOFFs.
       if( o.name.find( "SUMOFF_adc_Barrel" ) != std::string::npos ){
@@ -342,13 +421,6 @@ private:
         float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.;
         TLine tl; tl.SetLineColor(4); tl.SetLineStyle(2); tl.DrawLine(0.0,314.0,currentX,314.0);
       }
-    }
-
-  void postDrawTH2( TCanvas * /*c*/, const VisDQMObject &o )
-    {
-      TH2* obj = dynamic_cast<TH2*>( o.object );
-      assert( obj );
-      // Add Th2 post-draw code here.
     }
 
 };
