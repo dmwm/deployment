@@ -16,11 +16,8 @@
 #include "TColor.h"
 #include "TText.h"
 #include "TLine.h"
+#include "TGaxis.h"
 #include <cassert>
-
-#define PI_12 0.261799
-#define PI    3.141592
-#define PI_2  1.570796
 
 class SiPixelRenderPlugin : public DQMRenderPlugin
 {
@@ -81,8 +78,18 @@ private:
       gPad->SetRightMargin(0.15);
       obj->SetOption("colz");
 
+      TH1* th1 = dynamic_cast<TH1*>(obj);
+      TAxis* xa = th1->GetXaxis();
+      TAxis* ya = th1->GetYaxis();
+      xa->SetTitleSize(0.04);
+      xa->SetLabelSize(0.03);
+      ya->SetTitleSize(0.04);
+      ya->SetLabelSize(0.03);
+      TGaxis::SetMaxDigits(3);
+
+
       // TODO: content-based zooming might be useful.
-      // (maybe as a function, cud be useful for TH1 as well(
+      // (maybe as a function, could be useful for TH1 as well)
 
       // case-insensitive find is not easy...
       if (o.name.find( "sizeYvsEta" ) != std::string::npos
@@ -93,8 +100,6 @@ private:
       }
 
       if (o.name.find( "reportSummaryMap" ) == std::string::npos) {
-        TAxis* xa = obj->GetXaxis();
-        TAxis* ya = obj->GetYaxis();
         xa->SetTitleOffset(0.7);
         xa->SetTitleSize(0.065);
         xa->SetLabelSize(0.065);
@@ -175,11 +180,12 @@ private:
       TAxis* xa = obj->GetXaxis();
       TAxis* ya = obj->GetYaxis();
       xa->SetTitleOffset(0.7);
-      xa->SetTitleSize(0.065);
-      xa->SetLabelSize(0.065);
+      xa->SetTitleSize(0.04);
+      xa->SetLabelSize(0.03);
       ya->SetTitleOffset(0.75);
-      ya->SetTitleSize(0.065);
-      ya->SetLabelSize(0.065);
+      ya->SetTitleSize(0.04);
+      ya->SetLabelSize(0.03);
+      TGaxis::SetMaxDigits(3);
 
       // Always include 0.
       if( obj->GetMinimum() > 0.) obj->SetMinimum(0.);
