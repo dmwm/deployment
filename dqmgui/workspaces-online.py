@@ -97,6 +97,7 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'Ecal', '(^Ecal(|Barrel|Endcap
                  'Ecal/Layouts/01 Occupancy Summary',
                  'Ecal/Layouts/02 Calibration Summary',
                 )
+# Ecal workspace modified above to include three L1 Trigger plots and one HLT plot as requested by Ecal team
 server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
                  'Hcal/Layouts/00 Current Summary',
                  'Hcal/Layouts/01 RAW Bad Quality',
