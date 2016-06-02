@@ -1166,6 +1166,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
 
     applyDefaults = false;
   }
+  /*
   else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT TT flag mismatch(| EE [+-])").MatchB(fullpath)){
     const Int_t Number = 2;
     Double_t Red[Number]    = {1.00, 1.00};
@@ -1175,6 +1176,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     Int_t nb=50;
     TColor::CreateGradientColorTable(Number,Length,Red,Green,Blue,nb);
   }
+  */
   else if( TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath) ){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetGrid(false, false);
