@@ -188,10 +188,25 @@ private:
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
-		c->SetLogz(1);
+				c->SetLogz(1);
         obj->SetOption("colz");
 	return;
       }
+
+	  if( o.name.find( "TrackEtaPhi" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+				c->SetLogz(1);
+        obj->SetOption("colz");
+	return;
+      }
+
+
+		if( o.name.find( "ClusterMultiplicityRegions" ) != std::string::npos)
+			{
+				c->SetLogy(1);
+			}
 
 	  if( o.name.find( "SeedPhiVsEta" )  != std::string::npos)
       {
@@ -216,6 +231,15 @@ private:
         obj->SetOption("colz");
 	return;
       }
+
+      if( o.name.find( "StoppingSourceVSeta_" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+	return;
+      }
+
 
       if( o.name.find( "TracksVs" )  != std::string::npos)
       {
