@@ -8,8 +8,10 @@
 ^/auth/complete/das(?:/|$) vocms0306.cern.ch|vocms0307.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) vocms0306.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0307.cern.ch
+^/auth/complete/scheddmon/021/ vocms021.cern.ch
 ^/auth/complete/scheddmon/095/ vocms095.cern.ch
 ^/auth/complete/scheddmon/096/ vocms096.cern.ch
+^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
 ^/auth/complete/scheddmon/066/ vocms066.cern.ch

@@ -3,8 +3,10 @@
 ^/auth/complete/dqm/relval(?:/|$) vocms0139.cern.ch
 ^/auth/complete/dqm/(?:offline-test|relval-test)(?:/|$) vocms0131.cern.ch
 ^/auth/complete/(?:c?)(?:couchdb|workqueue|wmstats|workloadsummary|alertscollector|tier0_wmstats|t0_workloadsummary|acdcserver|aso-monitor)(?:/|$) localhost :affinity
+^/auth/complete/scheddmon/021/ vocms021.cern.ch
 ^/auth/complete/scheddmon/095/ vocms095.cern.ch
 ^/auth/complete/scheddmon/096/ vocms096.cern.ch
+^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
 ^/auth/complete/scheddmon/066/ vocms066.cern.ch
