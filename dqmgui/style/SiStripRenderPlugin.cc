@@ -226,7 +226,7 @@ private:
 	return;
       }
 
-      if( o.name.find( "StoppingSourceVSeta_" )  != std::string::npos)
+      if( o.name.find( "toppingSourceVS" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
