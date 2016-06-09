@@ -167,6 +167,27 @@ status()
   fi
 }
 
+
+# Runs actions to be done through cronjobs
+cron()
+{
+  local action=$1
+  case $action in
+    das_cleanup )
+      $DAS_ROOT/bin/das_cleanup --verbose \
+          </dev/null 2>&1 | rotatelogs $LOGDIR/das_cleanup-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+    das_dbs_update )
+      $DAS_ROOT/bin/das_dbs_update --verbose \
+          </dev/null 2>&1 | rotatelogs $LOGDIR/das_dbs_update-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+    * )
+      echo "You must specify the cron action to run: das_dbs_update|das_cleanup "
+      exit 1
+      ;;
+  esac
+}
+
 # Verify the security string.
 check()
 {
@@ -201,6 +222,11 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  cron )
+    check "$3"
+    cron $2
     ;;
 
   help )
