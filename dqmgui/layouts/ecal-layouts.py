@@ -589,8 +589,8 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/16 ecalOccSentAndRecd',
            [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd', 'description': 'ECAL TP Occupancy FULL MATCH; from L1 Trigger DQM.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/17 TT Flag-Readout Mismatch',
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT flag mismatch', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}],
-	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE +', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
-	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}])
+	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
+	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE +', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}])
 
 
 # By SuperModule _______________
