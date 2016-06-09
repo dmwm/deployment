@@ -129,12 +129,12 @@ pixellayout(dqmitems, "21b - Pixel_Noise_Summary",
 pixellayout(dqmitems, "30a - Pixel event rates",
   [{ 'path': "Pixel/pixEventRate",
      'description': "Rate of events with Pixel activity above noise level (at least 4 modules with digis)",
-     'draw': { 'withref': "yes" }}]
+     'draw': { 'withref': "no" }}]
   )
 pixellayout(dqmitems, "30b - Pixel event BX distribution",
   [{ 'path': "Pixel/pixEvtsPerBX",
      'description': "Distribution of Pixel events (at least 4 modules with digis) versus bucket number",
-     'draw': { 'withref': "yes" }}]
+     'draw': { 'withref': "no" }}]
   )
 pixellayout(dqmitems, "31 - Cluster_y_width_vs_cluster_eta",
   [{ 'path': "Pixel/Barrel/sizeYvsEta_siPixelClusters_Barrel",
