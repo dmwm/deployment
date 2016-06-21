@@ -11,14 +11,15 @@
 class CTPPSRenderPlugin : public DQMRenderPlugin
 {
 	public:
-		virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
+		virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &) override
 		{
 			if ((o.name.find( "CTPPS/" ) != std::string::npos))
 				return true;
+
 			return false;
 		}
 
-		virtual void preDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
+		virtual void preDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & ) override
 		{
 			c->cd();
 
@@ -29,7 +30,7 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 				preDrawTH2F(c, o);
 		}
 
-		virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & )
+		virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & ) override
 		{
 			c->cd();
 			
@@ -43,10 +44,18 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 	private:
 		void preDrawTH1F(TCanvas *, const VisDQMObject &o)
 		{
+			bool setColor = true;
+			if (o.name.rfind(" U") == o.name.size() - 2)
+				setColor = false;
+			if (o.name.rfind(" V") == o.name.size() - 2)
+				setColor = false;
+
 			TH1F* obj = dynamic_cast<TH1F*>(o.object);
 			assert(obj);
 
-			obj->SetLineColor(2);
+			if (setColor)
+				obj->SetLineColor(2);
+
 			obj->SetLineWidth(2);
 		}
 
