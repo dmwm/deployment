@@ -1,46 +1,41 @@
 def CTPPSTrackingStripLayout(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/" + p] = DQMItem(layout=rows)
 
-sectors = [ "sector 45", "sector 56" ]
-units = [ "station 210/nr", "station 210/fr", "station 220/nr", "station 220/fr" ]
-rps = [ "tp", "hr", "bt" ]
+stations = [ "sector 45/station 210", "sector 56/station 210" ]
+units = [ "nr", "fr" ]
+
 
 # layouts with no overlays
-for plot in [ "activity in planes (2D)", "vfats with any problem", "active planes", "track XY profile" ]:
-  for sector in sectors:
-    rows = list()
-    for rp in rps:
-      row = list()
-      for unit in units:
-        row.append("CTPPS/TrackingStrip/"+sector+"/"+unit+"_"+rp+"/"+plot)
-      rows.append(row)
+for plot in [ "active planes", "activity in planes (2D)", "vfats with any problem", "active planes", "track XY profile" ]:
+  rows = list()
+  for station in stations:
+    row = list()
+    for unit in units:
+      row.append("CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/"+plot)
+    rows.append(row)
 
-    CTPPSTrackingStripLayout(dqmitems, sector + "/" + plot, *rows)
+  CTPPSTrackingStripLayout(dqmitems, plot, *rows)
+
 
 # layouts with overlays
-for plot in [ "recognized patterns", "planes contributing to fit" ]:
-  for sector in sectors:
-    rows = list()
-    for rp in rps:
-      row = list()
-      for unit in units:
-        hist_u = "CTPPS/TrackingStrip/"+sector+"/"+unit+"_"+rp+"/"+plot + " U"
-        hist_v = "CTPPS/TrackingStrip/"+sector+"/"+unit+"_"+rp+"/"+plot + " V"
-        row.append( { "path" : hist_u, "overlays" : [ hist_v ] } )
-      rows.append(row)
+for plot in [ "active planes", "recognized patterns", "planes contributing to fit" ]:
+  rows = list()
+  for station in stations:
+    row = list()
+    for unit in units:
+      hist_u = "CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/"+plot + " U"
+      hist_v = "CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/"+plot + " V"
+      row.append( { "path" : hist_u, "overlays" : [ hist_v ] } )
+    rows.append(row)
 
-    CTPPSTrackingStripLayout(dqmitems, sector + "/" + plot, *rows)
+  CTPPSTrackingStripLayout(dqmitems, plot + " UV", *rows)
 
-# active planes overlay
-for plot in [ "active planes" ]:
-  for sector in sectors:
-    rows = list()
-    for rp in rps:
-      row = list()
-      for unit in units:
-        hist_g = "CTPPS/TrackingStrip/"+sector+"/"+unit+"_"+rp+"/"+plot
-        hist_u = "CTPPS/TrackingStrip/"+sector+"/"+unit+"_"+rp+"/"+plot + " U"
-        hist_v = "CTPPS/TrackingStrip/"+sector+"/"+unit+"_"+rp+"/"+plot + " V"
-        row.append( { "path" : hist_g, "overlays" : [ hist_u, hist_v ] } )
-      rows.append(row)
 
-    CTPPSTrackingStripLayout(dqmitems, sector + "/" + plot, *rows)
+###   # per-BX plots
+###   for suffix in [ "", " (short)" ]:
+###     plot_list = list()
+###     for station in stations:
+###       for unit in units:
+###         plot_list.append("CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/activity per BX" + suffix)
+###   
+###     base_plot = "CTPPS/events per BX" + suffix
+###     CTPPSTrackingStripLayout(dqmitems, "activity per BX" + suffix, [ { "path" : base_plot, "overlays" : plot_list } ])
