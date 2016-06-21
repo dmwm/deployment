@@ -5,7 +5,7 @@ units = [ "nr", "fr" ]
 
 
 # layouts with no overlays
-for plot in [ "active planes", "activity in planes (2D)", "vfats with any problem", "active planes", "track XY profile" ]:
+for plot in [ "active planes", "activity in planes (2D)", "vfats with any problem", "track XY profile" ]:
   rows = list()
   for station in stations:
     row = list()
@@ -30,12 +30,15 @@ for plot in [ "active planes", "recognized patterns", "planes contributing to fi
   CTPPSTrackingStripLayout(dqmitems, plot + " UV", *rows)
 
 
-###   # per-BX plots
-###   for suffix in [ "", " (short)" ]:
-###     plot_list = list()
-###     for station in stations:
-###       for unit in units:
-###         plot_list.append("CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/activity per BX" + suffix)
-###   
-###     base_plot = "CTPPS/events per BX" + suffix
-###     CTPPSTrackingStripLayout(dqmitems, "activity per BX" + suffix, [ { "path" : base_plot, "overlays" : plot_list } ])
+# per-BX plots
+for suffix in [ "", " (short)" ]:
+  plot_list = list()
+  for station in stations:
+    for unit in units:
+      plot_list.append("CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/activity per BX" + suffix)
+
+  base_plot = "CTPPS/events per BX" + suffix
+  CTPPSTrackingStripLayout(dqmitems, "activity per BX" + suffix, [ { "path" : base_plot, "overlays" : plot_list } ])
+
+# TODO: remove the test below
+CTPPSTrackingStripLayout(dqmitems, "BLA", [ "CTPPS/events per BX" ])
