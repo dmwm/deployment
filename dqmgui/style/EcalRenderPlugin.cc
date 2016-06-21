@@ -764,8 +764,7 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
 
   bool isTH2Derived(obj->InheritsFrom(TH2::Class()));
   if(isTH2Derived){
-    //gStyle->SetOptStat(0);
-    gStyle->SetOptStat("ourme");
+    gStyle->SetOptStat(0);
     gPad->SetLogy(false);
     gPad->SetRightMargin(0.15);
     gPad->SetGrid(true, true);
@@ -949,7 +948,7 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
 
   canvas->cd();
 
-  if(obj->IsA() == TH1F::Class() || obj->IsA() == TH1D::Class() || obj->IsA() == TH2F::Class() || obj->IsA() == TH2D::Class() ){
+  if(obj->IsA() == TH1F::Class() || obj->IsA() == TH1D::Class()){
     gStyle->SetOptStat("ourme");
   }
 
@@ -1231,11 +1230,12 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
 
     applyDefaults = false;
   }
-  else if(TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy z- vs z+").MatchB(fullpath) || 
-          TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy z+ - z-").MatchB(fullpath) ) {
+  else if(TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy correlation").MatchB(fullpath) || 
+          TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy difference").MatchB(fullpath) ) {
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetGrid(false, false);
-    gStyle->SetOptStat("ourme");
+    //obj->SetStats(true);
+    //gStyle->SetOptStat("ourme");
 
     applyDefaults = false;
   }
@@ -1345,8 +1345,9 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   }
   else if(TPRegexp("E[BE]ClusterTask/E[BE]CLT SC energy vs seed crystal energy").MatchB(fullpath))
     applyDefaults = false;
-  else if(TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy z- vs z+").MatchB(fullpath) || 
-          TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy z+ - z-").MatchB(fullpath) ) {
+  else if(TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy correlation").MatchB(fullpath) || 
+          TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy difference").MatchB(fullpath) ) {
+    obj->SetStats(true);
     gStyle->SetOptStat("ourme");
     applyDefaults = false;
   }
