@@ -143,17 +143,17 @@ private:
     obj->SetMarkerStyle(20);
     obj->SetMarkerColor(4);
     
-    if ((o.name.find("K - app status vs lumi") != std::string::npos) ||
+    if ((o.name.find("K - status vs lumi") != std::string::npos) ||
 	(o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
 	(o.name.find("H - vertex x cum") != std::string::npos) || (o.name.find("H - vertex y cum") != std::string::npos) || (o.name.find("H - vertex z cum") != std::string::npos) ||
 	(o.name.find("I - good vertices vs lumi") != std::string::npos) || (o.name.find("J - pixelHits vs lumi") != std::string::npos))
       c->SetGrid(false, false);
-    
+
     if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
 	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
 	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
 	(o.name.find("I - good vertices vs lumi") != std::string::npos) || (o.name.find("J - pixelHits vs lumi") != std::string::npos) ||
-	(o.name.find("K - app status vs lumi") != std::string::npos))
+	(o.name.find("K - status vs lumi") != std::string::npos))
       {
 	obj->SetMarkerSize(0.5);
 
@@ -253,11 +253,11 @@ private:
     xa->SetLabelSize(0.04);
     ya->SetLabelSize(0.04);
 
-    if (o.name.find("K - app status vs lumi") != std::string::npos)
+    if (o.name.find("K - status vs lumi") != std::string::npos)
       {
 	c->SetGrid(false, false);
 
-	ya->SetRangeUser(-6,6);
+	ya->SetRangeUser(-5.5,5.5);
 
 	gStyle->SetOptStat(10);
 	gStyle->SetEndErrorSize(0.);
