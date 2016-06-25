@@ -22,12 +22,12 @@ pixellayout(dqmitems, "00c - Pixel_Error_Summary",
 pixellayout(dqmitems, "01a - Pixel_zeroOccupancy_BarrelROCs",
   [{ 'path': "Pixel/noOccROCsBarrel",
      'description': "Total number of zero occupancy barrel ROCs vs every 10 LS",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "01b - Pixel_zeroOccupancy_EndcapROCs",
   [{ 'path': "Pixel/noOccROCsEndcap",
      'description': "Total number of zero occupancy endcap ROCs vs every 10 LS",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "02 - Pixel_Charge_Summary",
   [{ 'path': "Pixel/Barrel/ALLMODS_adcCOMB_Barrel",
@@ -46,40 +46,40 @@ pixellayout(dqmitems, "02 - Pixel_Charge_Summary",
 pixellayout(dqmitems, "03 - Pixel_Digi_Barrel_Summary",
   [{ 'path': "Pixel/Barrel/SUMDIG_adc_Barrel",
      'description': "Mean digi charge in ADC counts per barrel module",
-     'draw': { 'withref': "no" }}],
+     'draw': { 'withref': "yes" }}],
   [{ 'path': "Pixel/Barrel/SUMDIG_ndigis_Barrel",
      'description': "Mean number of digis per event per barrel module",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "04 - Pixel_Digi_Endcap_Summary",
   [{ 'path': "Pixel/Endcap/SUMDIG_adc_Endcap",
      'description': "Mean digi charge in ADC counts per endcap module",
-     'draw': { 'withref': "no" }}],
+     'draw': { 'withref': "yes" }}],
   [{ 'path': "Pixel/Endcap/SUMDIG_ndigis_Endcap",
      'description': "Mean number of digis per event per endcap module",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "05 - Pixel_Cluster_Barrel_Summary",
   [{ 'path': "Pixel/Barrel/SUMCLU_charge_Barrel",
      'description': "Mean cluster charge in kilo electrons per barrel module",
-     'draw': { 'withref': "no" }}],
+     'draw': { 'withref': "yes" }}],
   [{ 'path': "Pixel/Barrel/SUMCLU_nclusters_Barrel",
      'description': "Mean number of clusters per event per barrel module",
-     'draw': { 'withref': "no" }}],
+     'draw': { 'withref': "yes" }}],
   [{ 'path': "Pixel/Barrel/SUMCLU_size_Barrel",
      'description': "Mean cluster size in number of pixels per barrel module",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "06 - Pixel_Cluster_Endcap_Summary",
   [{ 'path': "Pixel/Endcap/SUMCLU_charge_Endcap",
      'description': "Mean cluster charge in kilo electrons per endcap module",
-'draw': { 'withref': "no" }}],
+     'draw': { 'withref': "yes" }}],
 [{ 'path': "Pixel/Endcap/SUMCLU_nclusters_Endcap",
      'description': "Mean number of clusters per event per endcap module",
-     'draw': { 'withref': "no" }}],
+     'draw': { 'withref': "yes" }}],
   [{ 'path': "Pixel/Endcap/SUMCLU_size_Endcap",
      'description': "Mean cluster size in number of pixels per barrel module",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "20a - Cluster occupancy Barrel Layer 1",
   [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_Layer_1",
@@ -119,12 +119,12 @@ pixellayout(dqmitems, "20g - Cluster occupancy Endcap +z Disk 2",
 pixellayout(dqmitems, "21a - Pixel_Noise_Summary",
   [{ 'path': "Pixel/Barrel/SUMDIG_ndigisFREQ_Barrel",
      'description': "Total number of events with at least one digi per event per barrel module - spikes show noisy modules or pixels!",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "21b - Pixel_Noise_Summary",
   [{ 'path': "Pixel/Endcap/SUMDIG_ndigisFREQ_Endcap",
      'description': "Total number of events with at least one digi per event per endcap module - spikes show noisy modules or pixels!",
-     'draw': { 'withref': "no" }}]
+     'draw': { 'withref': "yes" }}]
   )
 pixellayout(dqmitems, "30a - Pixel event rates",
   [{ 'path': "Pixel/pixEventRate",

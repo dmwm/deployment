@@ -188,11 +188,20 @@ private:
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
-		c->SetLogz(1);
+				c->SetLogz(1);
         obj->SetOption("colz");
 	return;
       }
 
+	  if( o.name.find( "TrackEtaPhi" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+				c->SetLogz(1);
+        obj->SetOption("colz");
+	return;
+      }
+		
 	  if( o.name.find( "SeedPhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
@@ -216,6 +225,15 @@ private:
         obj->SetOption("colz");
 	return;
       }
+
+      if( o.name.find( "toppingSourceVS" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+	return;
+      }
+
 
       if( o.name.find( "TracksVs" )  != std::string::npos)
       {
@@ -330,6 +348,7 @@ private:
         obj->SetMinimum(-0.001);
         return;
       }
+
       if( o.name.find( "Summary_MeanClusterWidth" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
@@ -552,7 +571,8 @@ private:
     if ( name.find( "Summary_ClusterCharge_OffTrack__" )!= std::string::npos or
 	 (name.find( "Track" )!= std::string::npos and
 	  name.find( "Err" )!= std::string::npos) or
-	 name.find( "NumberOfRecHitsLostPerTrack_") != std::string::npos
+	 name.find( "NumberOfRecHitsLostPerTrack_") != std::string::npos or
+	name.find( "ClusterMultiplicityRegions") != std::string::npos
 	 ) {
       if (obj->GetEntries() > 10.0) c->SetLogy(1);
     }
