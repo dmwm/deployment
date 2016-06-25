@@ -22,7 +22,14 @@ deploy_das_sw()
 deploy_das_post()
 {
   case $host in vocms013[689] | vocms016[135] ) disable ;; * ) enable ;; esac
-  (mkcrontab; sysboot) | crontab -
+  (mkcrontab
+   sysboot
+   for action in das_cleanup:'0 0-23/2 * * *' das_dbs_update:'0-59/20 * * * *'; do
+     local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
+     $nogroups || cmd="sudo -H -u _das bashs -l -c \"${cmd}\""
+     echo "${action##*:} $cmd"
+   done
+  ) | crontab -
 
   # Clean-up DB maps schema
   rm -f $project_state/stagingarea/{clean,update}_mapping_db.js
