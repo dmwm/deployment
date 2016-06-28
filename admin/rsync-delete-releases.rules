@@ -8,8 +8,8 @@
 
 # Include older releases for deletion
 +r /srv*/
-+r /srv*/HG160[2-4][a-z]***
-+r /srv*/[bf]eHG160[2-4][a-z]***
++r /srv*/HG160[2-5][a-z]***
++r /srv*/[bf]eHG160[2-5][a-z]***
 +r /srv*/HG15***
 +r /srv*/[bf]eHG15***
 
@@ -17,7 +17,7 @@
 +r /.deploy/***
 +r /cfg*/***
 +r /srv*/.deploy/
-+r /srv*/.deploy/20160[1-4]*.log
++r /srv*/.deploy/20160[1-5]*.log
 +r /srv*/.deploy/2015*.log
 
 # Do not delete anything else
