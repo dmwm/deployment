@@ -345,12 +345,12 @@ ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/03 Trend',
 	   [{'path': 'Ecal/Trends/PresampleClient EE pedestal mean max - min', 'description': 'Trend of presample spread in EB / EE. Y value indicates the difference between maximum and minimum presample mean values within the subdetector.'},
 	    {'path': 'Ecal/Trends/PresampleClient EE pedestal rms max', 'description': 'Trend of presample RMS averaged over all channels in EB / EE.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 EB Rechit Occupancy Near vs Far',
-     [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: near vs far barrel.'}])
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: near vs far barrel.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 EE Rechit Occupancy z- vs z+',
-     [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: z- vs z+.'}])
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: z- vs z+.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/05 Rechit Occupancy difference',
-     [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: far - near.'}],
-     [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: z+ - z-.'}])
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: far - near.'}],
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: z+ - z-.'}])
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
   for sign in ['-', '+']: # Loop over z-side
