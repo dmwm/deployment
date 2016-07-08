@@ -100,8 +100,8 @@ config.das.main_dbs = 'dbs3'
 
 # keyword search configuration
 config.component_('keyword_search')
-config.keyword_search.kws_on = True # ajax client
-config.keyword_search.kws_service_on = True # ajax server
+config.keyword_search.kws_on = False # ajax client
+config.keyword_search.kws_service_on = False # ajax server
 config.keyword_search.timeout = 7 # timeout in seconds
 
 # load balancing configuration
