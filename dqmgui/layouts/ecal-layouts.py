@@ -589,11 +589,11 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/13 Real vs Emulated TP 
 	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT Real vs Emulated TP Et EE -', 'description': 'Real data VS emulated TP Et (in-time).'},
 	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT Real vs Emulated TP Et EE +', 'description': 'Real data VS emulated TP Et (in-time).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/14 ecalOccRecdEtWgt',
-           [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccRecdEtWgt', 'description': 'ECAL TP Et-weighted Occupancy at L1; from L1 Trigger DQM.'}])
+           [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccRecdEtWgt', 'description': 'The 2D plot shows Et-weighted ECAL TP occupancy received at Layer-1 in iEta and iPhi coordinate of the ECAL trigger tower. Each entry represents the energy of the ECAL TP in (iEta, iPhi).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/15 ecalOccSent',
-           [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSent', 'description': 'ECAL TP Occupancy at TCC; from L1 Trigger DQM.'}])
+           [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSent', 'description': 'The 2D plot shows ECAL TP occupancy sent by ECAL in iEta and iPhi coordinate of the ECAL trigger tower. Each entry represents the occupancy (multiplicity) of ECAL TP in (iEta, iPhi).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/16 ecalOccSentAndRecd',
-           [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd', 'description': 'ECAL TP Occupancy FULL MATCH; from L1 Trigger DQM.'}])
+           [{'path': 'L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd', 'description': 'The 2D plot shows ECAL TP occupancy "sent" by ECAL and "received" at Layer-1 (fully matched), in iEta and iPhi coordinate of the ECAL trigger tower. Each entry represents the occupancy (multiplicity) of ECAL TPs in (iEta, iPhi). One can investigate the number of entries in 14 to 15 and 16 and check if the ECAL TP sent by ECAL is received at Layer-1.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/17 TT Flag-Readout Mismatch',
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT flag mismatch', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
