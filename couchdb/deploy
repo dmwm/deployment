@@ -66,6 +66,7 @@ deploy_couchdb_post()
          vocms0140 ) tohost=vocms0131 hour=3;;
          vocms0141 ) tohost=vocms0141 hour=4;;
          vocms0318 ) tohost=vocms0140 hour=4;;
+         vocms0306 ) tohost=vocms0140 hour=4;;
          vocms0307 ) tohost=vocms0140 hour=5;;
                  * ) tohost=;;
        esac
