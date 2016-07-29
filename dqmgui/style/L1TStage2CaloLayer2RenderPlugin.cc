@@ -9,12 +9,12 @@
 #include "TH2F.h"
 #include "TStyle.h"
 
-class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
+class L1TStage2CaloLayer2RenderPlugin : public DQMRenderPlugin {
 
  public:
 
   virtual bool applies(const VisDQMObject& o, const VisDQMImgInfo&) {
-    if (o.name.find("L1T2016/L1TStage2uGMT/") != std::string::npos)
+    if (o.name.find("L1T2016/L1TStage2CaloLayer2/") != std::string::npos)
       return true;
 
     return false;
@@ -42,25 +42,28 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
     assert(obj);
 
-    if (o.name.find("ugmtBMTFhwPt") != std::string::npos) {
+    if (o.name.find("Energy-Sums/EtSumBxOcc") != std::string::npos) {
+      gPad->SetLogy(1);
+    }
+    if (o.name.find("Energy-Sums/METRank") != std::string::npos) {
+      gPad->SetLogy(1);
+    }
+    if (o.name.find("Energy-Sums/METPhi") != std::string::npos) {
+      gPad->SetLogy(1);
+    }
+    if (o.name.find("Energy-Sums/ETTRank") != std::string::npos) {
+      gPad->SetLogy(1);
+    }
+    if (o.name.find("Energy-Sums/MHTRank") != std::string::npos) {
+      gPad->SetLogy(1);
+    }
+    if (o.name.find("Energy-Sums/MHTPhi") != std::string::npos) {
+      gPad->SetLogy(1);
+    }
+    if (o.name.find("Energy-Sums/HTTRank") != std::string::npos) {
       gPad->SetLogy(1);
     }
 
-    if (o.name.find("ugmtOMTFhwPt") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-
-    if (o.name.find("ugmtEMTFhwPt") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-
-    if (o.name.find("ugmtMuonhwPt") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-
-    if (o.name.find("ugmtMuonPt") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
   }
 
   void preDrawTH2F(TCanvas*, const VisDQMObject& o) {
@@ -68,22 +71,14 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
     assert(obj);
 
     obj->SetOption("colz");
-
-    if (o.name.find("ugmtMuonBXvshwCharge") != std::string::npos) {
-      obj->SetOption("text colz");
-    }
-
-    if (o.name.find("ugmtMuonBXvshwChargeValid") != std::string::npos) {
-      obj->SetOption("text colz");
-    }
-
-    if (o.name.find("ugmtMuonBXvshwIso") != std::string::npos) {
-      obj->SetOption("text colz");
-    }
-
   }
 
-  void postDrawTH1F(TCanvas*, const VisDQMObject&) {}
+  void postDrawTH1F(TCanvas*, const VisDQMObject& o) {
+    TH1F* obj = dynamic_cast<TH1F*>(o.object);
+    assert(obj);
+
+    gStyle->SetOptStat(111110);
+  }
 
   void postDrawTH2F(TCanvas*, const VisDQMObject& o) {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
@@ -93,4 +88,4 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
   }
 };
 
-static L1TStage2uGMTRenderPlugin instance;
+static L1TStage2CaloLayer2RenderPlugin instance;

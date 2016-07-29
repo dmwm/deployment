@@ -64,7 +64,7 @@ print "# General repository permissions:"
 print "#   The http group can do anything, cms registered users and cmsweb can read anything,"
 print "#   cms registered users can only push to the master branch"
 print "\tRW+ = @cms-http-group"
-print "\tRW = @cms-authorized-users"
+print "\tR = @cms-authorized-users"
 print "\tR = cmsweb"
 print
 print "# Additional per-path restrictions that are _additionally_ checked:"

@@ -45,6 +45,15 @@
       <attribute name="column_units"> TB </attribute>
     </query>
 
+    <query name="missing" base="GenericQuery.dest_query">
+      <sql>
+        <filler name="column"> nvl(sum(miss_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>
+      </sql>
+      <attribute name="title"> CMS PhEDEx - Volume of Missing Data  </attribute>
+      <attribute name="column_names"> Data Missing  </attribute>
+      <attribute name="column_units"> TB </attribute>
+    </query>
+
     <query name="resident" base="GenericQuery.dest_query">
       <sql>
         <filler name="column"> nvl(sum(node_bytes) keep (dense_rank last order by timebin asc),0)/1099511627776 </filler>

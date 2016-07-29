@@ -8,14 +8,14 @@ for h in vocms0{127,134,135,160,162,164}; do
 done
 
 # Back-ends in the AI infrastructure
-for h in vocms0{132,133,136,161,163,165,140,306,307}; do
-  rsync -rm -e "ssh -c arcfour256 -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
+for h in vocms0{131,132,136,138,139,140,141,161,163,165,306,307,318}; do
+  rsync -rm -e "ssh -c arcfour256 -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log*' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
 # Machines in the old infrastructure
-for h in vocms{13{3,8,9},140}; do
-  rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 
-done
+#for h in vocms139; do
+#  rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 
+#done
 
 # Delete files not modified in the last 7 days
 find /build/srv-logs/ -type f -mtime +6 -exec rm -f '{}' \;

@@ -90,12 +90,14 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'EcalPreshower', '^EcalPreshow
                  'EcalPreshower/Layouts/02-GoodRechitOccupancySummary-EcalPreshower',
                  'EcalPreshower/Layouts/03-GoodRechitEnergySummary-EcalPreshower',
                  'EcalPreshower/Layouts/04-ESTimingTaskSummary-EcalPreshower',
+                 'EcalPreshower/Layouts/05-ESGain-EcalPreshower',
                 )
-server.workspace('DQMContent', 30, 'Calorimeter', 'Ecal', '^Ecal(|Barrel|Endcap|Calibration)/', 'Ecal/Layouts',
+server.workspace('DQMContent', 30, 'Calorimeter', 'Ecal', '(^Ecal(|Barrel|Endcap|Calibration)/|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccRecdEtWgt|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSent|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd|^HLT/ObjectMonitor/MainShifter/di-Electron_Mass)', 'Ecal/Layouts',
                  'Ecal/Layouts/00 Summary',
                  'Ecal/Layouts/01 Occupancy Summary',
                  'Ecal/Layouts/02 Calibration Summary',
                 )
+# Ecal workspace modified above to include three L1 Trigger plots and one HLT plot as requested by Ecal team
 server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
                  'Hcal/Layouts/00 Current Summary',
                  'Hcal/Layouts/01 RAW Bad Quality',
@@ -201,10 +203,7 @@ server.workspace('DQMContent', 51, 'FeedBack for Collisions', 'Tracking FeedBack
                  'Collisions/TrackingFeedBack/01 - Track Pt',
                  'Collisions/TrackingFeedBack/02 - Track Phi',
                  'Collisions/TrackingFeedBack/03 - Track Eta',
-                 'Collisions/TrackingFeedBack/04 - X-Position Of Closest Approach',
-                 'Collisions/TrackingFeedBack/05 - Y-Position Of Closest Approach',
-                 'Collisions/TrackingFeedBack/06 - Z-Position Of Closest Approach',
-                 'Collisions/TrackingFeedBack/07 - Cluster y width vs. cluster eta',
+                 'Collisions/TrackingFeedBack/04 - Cluster y width vs. cluster eta',
                 )
 server.workspace('DQMContent', 52, 'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|Ecal[^/]*)/', 'Collisions/EcalFeedBack',
                  'Collisions/EcalFeedBack/00 Single Event Timing',

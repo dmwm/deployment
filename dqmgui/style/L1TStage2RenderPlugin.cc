@@ -37,6 +37,8 @@ public:
           return false;
         if( o.name.find( "L1TStage2EMTF" ) != std::string::npos )
           return false;
+        if( o.name.find( "L1TStage2CaloLayer2" ) != std::string::npos )
+          return false;
 
         return true;
       }

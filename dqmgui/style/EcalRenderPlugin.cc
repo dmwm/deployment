@@ -403,7 +403,7 @@ EcalRenderPlugin::initialise(int, char **)
 
   MEMLabels->SetMinimum(68.1);
 
-  for(int i = 0; i < 68; i++)
+  for(int i = 1; i < 69; i++)
     ebTTLabels->SetBinContent(i/4 + 1, i%4 + 1, i+1);
 
   // 36 entries
@@ -776,6 +776,7 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
 
   if(obj->IsA() == TProfile2D::Class()){
     obj->GetZaxis()->SetLimits(0., obj->GetMaximum());
+    if ( obj->GetMaximum() > 0. ) obj->SetMinimum(1.e-08);
     gStyle->SetPalette(1);
   }
   else if(obj->IsA() == TH2F::Class() || obj->IsA() == TH2D::Class()){
@@ -1123,6 +1124,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
      !fullpath.Contains("Pedestal") &&
      !fullpath.Contains("pedestal") &&
      !fullpath.Contains("event size") &&
+     !fullpath.Contains("flag mismatch") &&
      !fullpath.Contains("Trigger Primitives") &&
      !fullpath.Contains("Occupancy") &&
      !fullpath.Contains("TestPulse") &&
@@ -1130,6 +1132,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
      !fullpath.Contains("channel status") &&
      !fullpath.Contains("Status Flags") &&
      !fullpath.Contains("Masking Status") &&
+     !fullpath.Contains("Real vs Emulated") &&
      !fullpath.Contains("energy Side")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1160,6 +1163,23 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
   else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT event size vs DCC").MatchB(fullpath)){
     gPad->SetLogy(true);
     obj->GetYaxis()->SetRangeUser(0.1, 0.608*68);
+
+    applyDefaults = false;
+  }
+  /*
+  else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT TT flag mismatch(| EE [+-])").MatchB(fullpath)){
+    const Int_t Number = 2;
+    Double_t Red[Number]    = {1.00, 1.00};
+    Double_t Green[Number]  = {0.85, 0.00};
+    Double_t Blue[Number]   = {0.85, 0.00};
+    Double_t Length[Number] = {0.00, 1.00 };
+    Int_t nb=50;
+    TColor::CreateGradientColorTable(Number,Length,Red,Green,Blue,nb);
+  }
+  */
+  else if( TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath) ){
+    if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
+    gPad->SetGrid(false, false);
 
     applyDefaults = false;
   }
@@ -1207,6 +1227,15 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
   else if(TPRegexp("E[BE]ClusterTask/E[BE]CLT SC energy vs seed crystal energy").MatchB(fullpath)){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetGrid(false, false);
+
+    applyDefaults = false;
+  }
+  else if(TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy correlation").MatchB(fullpath) || 
+          TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy difference").MatchB(fullpath) ) {
+    if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
+    gPad->SetGrid(false, false);
+    //obj->SetStats(true);
+    //gStyle->SetOptStat("ourme");
 
     applyDefaults = false;
   }
@@ -1263,6 +1292,8 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   TString fullpath(dqmObject.name.c_str());
 
   if(!fullpath.Contains("Timing") &&
+     !fullpath.Contains("Real vs Emulated") &&
+     !fullpath.Contains("Occupancy") &&
      !fullpath.Contains("Cluster")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1291,7 +1322,8 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   }
   else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) ||
           TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath) ||
-          TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) )
+          TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) ||
+          TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath) )
     applyDefaults = false;
   else if(!isNewStyle && TPRegexp("EBClusterTask/EBCLT BC (ET|energy|number|size) map").MatchB(fullpath)){
     gStyle->SetPaintTextFormat("+03g");
@@ -1313,6 +1345,12 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   }
   else if(TPRegexp("E[BE]ClusterTask/E[BE]CLT SC energy vs seed crystal energy").MatchB(fullpath))
     applyDefaults = false;
+  else if(TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy correlation").MatchB(fullpath) || 
+          TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy difference").MatchB(fullpath) ) {
+    obj->SetStats(true);
+    gStyle->SetOptStat("ourme");
+    applyDefaults = false;
+  }
 }
 
 inline

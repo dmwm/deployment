@@ -95,3 +95,9 @@ config.keyword_search.kws_service_on = False # disable ajax server
 # query rewriting configuration
 config.component_('query_rewrite')
 config.query_rewrite.pk_rewrite_on = False
+
+# DAS security section
+config.component_('security')
+config.security.module = 'frontend' # put frontend to enable frontend security
+config.security.key_file = '/data/srv/current/auth/wmcore-auth/header-auth-key'
+config.security.mount_point = 'auth'

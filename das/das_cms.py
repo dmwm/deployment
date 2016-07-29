@@ -100,8 +100,8 @@ config.das.main_dbs = 'dbs3'
 
 # keyword search configuration
 config.component_('keyword_search')
-config.keyword_search.kws_on = True # ajax client
-config.keyword_search.kws_service_on = True # ajax server
+config.keyword_search.kws_on = False # ajax client
+config.keyword_search.kws_service_on = False # ajax server
 config.keyword_search.timeout = 7 # timeout in seconds
 
 # load balancing configuration
@@ -113,3 +113,8 @@ config.component_('query_rewrite')
 config.query_rewrite.pk_rewrite_on = True
 config.query_rewrite.dasclient_doc_url = 'https://cms-http-group.web.cern.ch/cms-http-group/apidoc/das/current/das_client.html'
 
+# DAS security section
+config.component_('security')
+config.security.module = 'frontend' # put frontend to enable frontend security
+config.security.key_file = '/data/srv/current/auth/wmcore-auth/header-auth-key'
+config.security.mount_point = 'auth'

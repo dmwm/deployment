@@ -55,8 +55,9 @@ export X509_USER_KEY=$X509_USER_PROXY
 export WMARCHIVE_CONFIG=$ROOT/config/$ME/wmarch_config.py
 export MONGO_URI="mongodb://localhost:8230"
 export AVRO_STORAGE=$STATEDIR/avro/data
+export AVRO_STORAGE_MIGRATE=$STATEDIR/avro/migrate
 # area on HDFS where we'll migrate the data
-export HDFS_MIGRATE=/user/valya/data
+export HDFS_MIGRATE=/cms/wmarchive/avro
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
 # we'll clean-up data a one day old if their storage type is avroio
 export CLEANUP_TSTAMP=1d
@@ -75,11 +76,22 @@ sysboot()
   $dostart && start
 }
 
+createindex()
+{
+    mport=`echo $MONGO_URI | awk -F: '{print $3}'`
+    mongo --port $mport < $WMARCHIVE_ROOT/data/js/create_wma_indexes.js
+}
+
 start()
 {
   echo "starting $ME"
   # start service
   $WMARCHIVE_ROOT/bin/wmc-httpd -r -d $LOGDIR $WMARCHIVE_CONFIG &
+  $WMARCHIVE_ROOT/bin/mongo2avro \
+      --mongo=$MONGO_URI --schema=$AVRO_SCHEMA \
+      --odir=$AVRO_STORAGE --mdir=$AVRO_STORAGE_MIGRATE \
+      --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE \
+      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.
@@ -87,6 +99,9 @@ stop()
 {
   echo "stopping $ME"
   for pid in $(pgrep -u $(id -u) -f "[/]wmarch_config.py"); do
+      kill -9 $pid
+  done
+  for pid in $(pgrep -u $(id -u) -f "[/]mongo2avro"); do
       kill -9 $pid
   done
 }
@@ -107,20 +122,10 @@ cron()
 {
   local action=$1
   case $action in
-    mongo2avro )
-      $WMARCHIVE_ROOT/bin/mongo2avro \
-          --mongo=$MONGO_URI --schema=$AVRO_SCHEMA \
-          --odir=$AVRO_STORAGE --verbose &> $LOGDIR/mongo2avro.log
-      ;;
     migrate2hdfs )
       $WMARCHIVE_ROOT/bin/migrate2hdfs \
-          --idir=$AVRO_STORAGE --odir=$HDFS_MIGRATE --check --remove \
+          --idir=$AVRO_STORAGE_MIGRATE --odir=$HDFS_MIGRATE --check --remove \
           --verbose &> $LOGDIR/migrate2hdfs.log
-      ;;
-    mongocleanup )
-      $WMARCHIVE_ROOT/bin/mongocleanup \
-          --mongo=$MONGO_URI --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE \
-          --verbose &> $LOGDIR/mongocleanup.log
       ;;
     * )
       echo "You must specify the cron action to run: mongo2avro|mongocleanup "
@@ -149,6 +154,7 @@ case ${1:-status} in
     check "$2"
     stop
     start
+    createindex
     ;;
 
   status )

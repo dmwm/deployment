@@ -51,7 +51,7 @@ deploy_couchdb_post()
        # Set cronjobs to compact databases and views at selected times
        for task in "0:compact wmstats" "6:compact all_but_wmstats" \
                    "12:compactviews wmstats WMStats" "12:compactviews wmstats WMStatsErl" \
-                   "18:compactviews all_but_wmstats all"; do
+                   "15:compactviews all_but_wmstats all"; do
          local cmd="$project_config/manage ${task#*:} 'I did read documentation'"
          $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
          echo "1 ${task%%:*} * * * $cmd"
@@ -64,7 +64,9 @@ deploy_couchdb_post()
          vocms0132 ) tohost=vocms0131 hour=1;;
          vocms0131 ) tohost=vocms0132 hour=2;;
          vocms0140 ) tohost=vocms0131 hour=3;;
+         vocms0141 ) tohost=vocms0141 hour=4;;
          vocms0318 ) tohost=vocms0140 hour=4;;
+         vocms0306 ) tohost=vocms0140 hour=4;;
          vocms0307 ) tohost=vocms0140 hour=5;;
                  * ) tohost=;;
        esac
@@ -75,7 +77,7 @@ deploy_couchdb_post()
 
   # Weekly archive backups to castor
   case $host in
-    vocms012[67] | vocms013[12] | vocms0140 | vocms0307 | vocms0318 )
+    vocms012[67] | vocms013[12] | vocms014[01] | vocms0307 | vocms0318 )
       klist -s # must have afs kerberos token
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; }
        echo "#30 4 * * 0 $host $project_config/manage archive /castor/cern.ch/cms/archive/cmsweb/backups 'I did read documentation'") | acrontab

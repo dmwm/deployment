@@ -4,16 +4,64 @@ from os import path
 import sys
 import time
 import re
+import json
 import urllib2
 import subprocess
 from xml.sax.saxutils import escape
-from collections import defaultdict
 
 TPL_URL = "https://metricmgr.cern.ch/api/v2/mix/production/yaml/"
-HOSTSCMD = "curl -s -u : --negotiate -H 'Accept: application/json' -k 'https://judy.cern.ch:9081//v3/facts/hostgroup?query=%5B%22%7E%22%2C+%22value%22%2C+%22vocms%2Fcmsweb%22%5D'" #query=["~","value","vocms/cmsweb"]
-ALARMCMD = "curl -s -u : --negotiate -H 'Accept: application/json' -k 'https://judy.cern.ch:9081//v3/nodes/%s.cern.ch/facts?query=%%5B%%22%%7E%%22%%2C+%%22name%%22%%2C+%%22alarmed%%22%%5D' | grep -1 app_alarmed" #query=["~","name","alarmed"]
-LEMONCMD = 'lemon-cli --script-mode -s -n "%s" -m "%s"'
-LEMON_EXPIRED = 86400 # time in seconds to consider lemon feeds as expired
+
+EXCQUERY = """\
+curl -s -XGET -k --negotiate -u : https://meter-proxy.cern.ch/gni-%(index)s/_search?pretty -d '{
+  "query": {
+    "filtered": {
+      "query": {
+        "bool": {
+          "should": [
+            {
+              "query_string": {
+                "query": "*"
+              }
+            }
+          ]
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "from": %(from)s,
+                  "to": %(to)s
+                }
+              }
+            },
+            {
+              "fquery": {
+                "query": {
+                  "query_string": {
+                    "query": "body.metadata.hostgroup: vocms\\\/cmsweb\\\/backend vocms\\\/cmsweb\\\/backend_plus_frontend"
+                  }
+                },
+                "_cache": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sort": [
+    {
+      "@timestamp": {
+        "order": "desc"
+      }
+    }
+  ],
+  "size": 1000
+}'
+"""
 
 XML_TEMPLATE = """\
 <?xml version="1.0" encoding="utf-8" ?>
@@ -36,30 +84,21 @@ XML_TEMPLATE = """\
   </serviceupdate>
 """
 
-def spit_xml(feedname, lemonfeeds, isexcept, xml_out_dir):
-  nexceptions = 0
-  hosts = []
-
-  for f in lemonfeeds:
-    host,id,v = f.split(" ",2)
-
-    if isexcept[id]:
-      state, code = v.split(" ",3)[1:3]
-      if int(state) == 1 and code in ['000', '005', '135']:
-        nexceptions += 1
-        if host not in hosts:
-          hosts.append(host)
-
-  if nexceptions > 0:
+def spit_xml(servicename, exceptions, xml_out_dir):
+  if len(exceptions) > 0:
     status = "unavailable"
-    availinfo = "Found " + str(nexceptions) + " exception(s) in following server(s):\n      " + str("\n      ").join(hosts)
+    hosts = []
+    for item in exceptions:
+      if item['entity'] not in hosts:
+        hosts.append(item['entity'])
+    availinfo = "Found " + str(len(exceptions)) + " exception(s) in following server(s):\n      " + str("\n      ").join(hosts)
   else:
     status = "available"
     availinfo = "This service is running well."
 
-  f=open(path.join(xml_out_dir,"sls_cmsweb_"+feedname+".xml"),"wt")
+  f=open(path.join(xml_out_dir,"sls_cmsweb_"+servicename+".xml"),"wt")
   f.write(XML_TEMPLATE % {
-    'slsid': "cmsweb_"+feedname,
+    'slsid': "cmsweb_"+servicename,
     'tstamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime()),
     'status': status,
     'availdesc': "This service becomes \"unavailable\" if there exist a lemon alarm in any of the CMSWEB machines running it.",
@@ -69,13 +108,13 @@ def spit_xml(feedname, lemonfeeds, isexcept, xml_out_dir):
   })
   f.close()
 
-  return (feedname, status)
+  return (servicename, status)
 
-def aggregate_xml(feeds_availability, xml_out_dir):
+def aggregate_xml(services_availability, xml_out_dir):
   nworkingservices = 0
   failedservices = []
 
-  for (n, a) in feeds_availability:
+  for (n, a) in services_availability:
     if a == "available":
       nworkingservices += 1
     else:
@@ -83,7 +122,7 @@ def aggregate_xml(feeds_availability, xml_out_dir):
 
   if nworkingservices == 0:
     status = "unavailable"
-  elif nworkingservices < len(feeds_availability):
+  elif nworkingservices < len(services_availability):
     status = "degraded"
   else:
     status = "available"
@@ -105,19 +144,21 @@ def aggregate_xml(feeds_availability, xml_out_dir):
   })
   f.close()
 
-def build_metric_ids():
-  name_ids = {}
-  isexcept = {}
+def build_metric_service():
+  metric_service = {}
   metrics_page = urllib2.urlopen(TPL_URL).read()
+  excludemetrics = ['33576', '32114', '32214', '32104', '32204', '32107', '32207', '32109', '32209']
   
   # Exceptions and DQM special metrics
-  x = re.findall('lemon_([0-9]+):\n.*exception.cmsweb_(.*)\n',metrics_page)
-  y = re.findall('lemon_([0-9]+):\n.*cmsweb_(dqm_[^_]*_agents_import_queue)\n',metrics_page)
-  for (id,name) in x+y:
-    name_ids[id] = name
-    isexcept[id] = (id,name) in x
+  x = re.findall('lemon_([0-9]+):\n.*exception.cmsweb_([^_]*)_.*\n',metrics_page)
+  y = re.findall('lemon_([0-9]+):\n.*cmsweb_(dqm)_[^_]*_agents_import_queue\n',metrics_page)
+  for (metric_id,service) in x+y:
+    metric_service[metric_id] = service
+
+  for i in excludemetrics:
+    del metric_service[i]
   
-  return (name_ids,isexcept)
+  return metric_service
 
 if __name__ == "__main__":
   if len(sys.argv) != 2:
@@ -125,35 +166,26 @@ if __name__ == "__main__":
     sys.exit(1)
   xml_out_dir = sys.argv[1]
 
-  HOSTS = []
-  hosts = subprocess.Popen(HOSTSCMD,stdout=subprocess.PIPE,shell=True).stdout.read()
-  hosts = re.findall('vocms[0-9]+',hosts)
+  mtrsvc = build_metric_service()
+  exceptions = {}
+  for id in mtrsvc:
+    exceptions[mtrsvc[id]] = []
 
-  for host in hosts:
-    if not "false" in subprocess.Popen(ALARMCMD % host,stdout=subprocess.PIPE,shell=True).stdout.read(): # ignore production machines in maintenance
-      HOSTS.append(host)
-
-  (name_id,isexcept) = build_metric_ids()
-
-  feeds = defaultdict(list)
-  cmd = LEMONCMD % (str(" ").join(HOSTS), str(" ").join(name_id.keys()))
+  cmd = EXCQUERY % {'index': time.strftime('%Y-%m', time.gmtime()), 'from': int(time.time() * 1000 - 10 * 60000), 'to': int(time.time() * 1000)}
   p=subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
-  for line in p.stdout:
-    id,tstamp = line.split(" ",3)[1:3]
-
-    # lemonfeeds older then LEMON_EXPIRED seconds are considered
-    # feeds from deactivated exceptions, so ignore
-    if int(tstamp) + LEMON_EXPIRED > int(time.time()):
-       feedname = re.search('(.*?)_',name_id[id]).group(1)
-       feeds[feedname].append(line)
+  output = json.loads(p.stdout.read())
+  for item in output['hits']['hits']:
+    item = item['_source']['body']['metadata']
+    if item['roger_app_alarmed'] == 'true' and str(item['metric_id']) in mtrsvc:
+      exceptions[mtrsvc[str(item['metric_id'])]].append(item)
 
   err = p.stderr.read()
   if err:
     print err
 
   aggregate = []
-  for (k,v) in feeds.items():
-    aggregate.append(spit_xml(k,v,isexcept,xml_out_dir))
+  for (k,v) in exceptions.items():
+    aggregate.append(spit_xml(k,v,xml_out_dir))
 
   aggregate_xml(aggregate, xml_out_dir)
 
