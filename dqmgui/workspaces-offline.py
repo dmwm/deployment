@@ -161,15 +161,18 @@ server.workspace('DQMContent', 46, 'POG', 'Tau', '^RecoTauV/', '',
                  'RecoTauV/Layouts/DoubleElectron_OR_TauPlusX/00bb - Fake rate from electrons vs pileup',
                 )
 
+# CTPPS workspaces:
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+
 # FeedBack for Collisions workspaces:
-server.workspace('DQMContent', 51,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/', 'Collisions/TrackingFeedBack',
+server.workspace('DQMContent', 61,'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel|AlcaBeamMonitor|OfflinePV)/', 'Collisions/TrackingFeedBack',
                  'Collisions/TrackingFeedBack/00 - Number Of Tracks',
                  'Collisions/TrackingFeedBack/01 - Track Pt',
                  'Collisions/TrackingFeedBack/02 - Track Phi',
                  'Collisions/TrackingFeedBack/03 - Track Eta',
                  'Collisions/TrackingFeedBack/04 - Cluster y width vs. cluster eta',
                 )
-server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|Ecal[^/]*)/', 'Collisions/EcalFeedBack',
+server.workspace('DQMContent', 62,'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|Ecal[^/]*)/', 'Collisions/EcalFeedBack',
                  'Collisions/EcalFeedBack/00 Single Event Timing EB',
                  'Collisions/EcalFeedBack/01 Single Event Timing EE',
                  'Collisions/EcalFeedBack/02 Timing Map EB',
@@ -184,7 +187,7 @@ server.workspace('DQMContent', 52,'FeedBack for Collisions', 'Ecal FeedBack', '^
                  'Collisions/EcalFeedBack/11 RecHit Energy EE',
                  'Collisions/EcalFeedBack/12 RecHit Energy ES',
                 )
-server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', 'Collisions/HcalFeedBack',
+server.workspace('DQMContent', 63,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', 'Collisions/HcalFeedBack',
                  'Collisions/HcalFeedBack/01 - HF+,HF- coincidences (with BPTX)',
                  'Collisions/HcalFeedBack/02 - HF+,HF- coincidences (without BPTX)',
                  'Collisions/HcalFeedBack/03 - Digi Shapes for Total Digi Signals > N counts',
@@ -192,7 +195,7 @@ server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^
                  'Collisions/HcalFeedBack/05 - Events Per Lumi Section',
                  'Collisions/HcalFeedBack/06 - Lumi Distributions',
                 )
-server.workspace('DQMContent', 54,'FeedBack for Collisions', 'L1T FeedBack','^(Collisions|L1T)/', 'Collisions/L1TFeedBack',
+server.workspace('DQMContent', 64,'FeedBack for Collisions', 'L1T FeedBack','^(Collisions|L1T)/', 'Collisions/L1TFeedBack',
                  'Collisions/L1TFeedBack/00 Rate BSCL.BSCR',
                  'Collisions/L1TFeedBack/01 Rate BSC splash right',
                  'Collisions/L1TFeedBack/02 Rate BSC splash left',
@@ -200,14 +203,14 @@ server.workspace('DQMContent', 54,'FeedBack for Collisions', 'L1T FeedBack','^(C
                  'Collisions/L1TFeedBack/04 Integ BSCL or BSCR Triggers vs LS',
                  'Collisions/L1TFeedBack/05 Integ HF Triggers vs LS',
                 )
-server.workspace('DQMContent', 55,'FeedBack for Collisions', 'HLT FeedBack','^(Collisions|HLT)/', 'Collisions/HLTFeedBack',
+server.workspace('DQMContent', 65,'FeedBack for Collisions', 'HLT FeedBack','^(Collisions|HLT)/', 'Collisions/HLTFeedBack',
                  'Collisions/HLTFeedBack/00 HLT_Egamma_Pass_Any',
                  'Collisions/HLTFeedBack/01 HLT_JetMet_Pass_Any',
                  'Collisions/HLTFeedBack/02 HLT_Muon_Pass_Any',
                  'Collisions/HLTFeedBack/03 HLT_Rest_Pass_Any',
                  'Collisions/HLTFeedBack/04 HLT_Special_Pass_Any',
                 )
-server.workspace('DQMContent', 56, 'FeedBack for Collisions', 'CSC FeedBack', '^(Collisions|CSC)/', '',
+server.workspace('DQMContent', 66, 'FeedBack for Collisions', 'CSC FeedBack', '^(Collisions|CSC)/', '',
                  'CSC/Layouts/04 Timing/00 ALCT Timing',
                  'CSC/Layouts/04 Timing/01 CLCT Timing',
                 )

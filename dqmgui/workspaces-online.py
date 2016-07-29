@@ -197,15 +197,18 @@ server.workspace('DQMContent', 40, 'Trigger/Lumi', 'HLT', '^HLT/', '',
                  'HLT/Layouts/highestRate Summary',
                 )
 
+# CTPPS workspaces:
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+
 # FeedBack for Collisions workspaces:
-server.workspace('DQMContent', 51, 'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel)/', 'Collisions/TrackingFeedBack',
+server.workspace('DQMContent', 61, 'FeedBack for Collisions', 'Tracking FeedBack', '^(Collisions|SiStrip|Tracking|Pixel)/', 'Collisions/TrackingFeedBack',
                  'Collisions/TrackingFeedBack/00 - Number Of Tracks',
                  'Collisions/TrackingFeedBack/01 - Track Pt',
                  'Collisions/TrackingFeedBack/02 - Track Phi',
                  'Collisions/TrackingFeedBack/03 - Track Eta',
                  'Collisions/TrackingFeedBack/04 - Cluster y width vs. cluster eta',
                 )
-server.workspace('DQMContent', 52, 'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|Ecal[^/]*)/', 'Collisions/EcalFeedBack',
+server.workspace('DQMContent', 62, 'FeedBack for Collisions', 'Ecal FeedBack', '^(Collisions|Ecal[^/]*)/', 'Collisions/EcalFeedBack',
                  'Collisions/EcalFeedBack/00 Single Event Timing',
                  'Collisions/EcalFeedBack/01 Forward-Backward EB',
                  'Collisions/EcalFeedBack/02 Forward-Backward EE',
@@ -221,7 +224,7 @@ server.workspace('DQMContent', 52, 'FeedBack for Collisions', 'Ecal FeedBack', '
                  'Collisions/EcalFeedBack/12 RecHit Energy EE',
                  'Collisions/EcalFeedBack/13 RecHit Energy ES',
                 )
-server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', 'Collisions/HcalFeedBack',
+server.workspace('DQMContent', 63,'FeedBack for Collisions', 'Hcal FeedBack', '^(Collisions|Hcal)/', 'Collisions/HcalFeedBack',
                  'Collisions/HcalFeedBack/01 - HF+,HF- distributions for MinBias',
                  'Collisions/HcalFeedBack/02 - HF+,HF- distributions for Hcal HLT',
                  'Collisions/HcalFeedBack/03 - HE+,HE- distributions for MinBias',
@@ -236,7 +239,7 @@ server.workspace('DQMContent', 53,'FeedBack for Collisions', 'Hcal FeedBack', '^
                  'Collisions/HcalFeedBack/12 - HFPlus VS HFMinus Energy',
                  'Collisions/HcalFeedBack/1729 - Temporary HF Timing Study Plots',
                  )
-server.workspace('DQMContent', 50,'FeedBack for Collisions', 'BeamMonitor FeedBack', '^(Collisions|BeamMonitor|BeamPixel)/', 'Collisions/BeamMonitorFeedBack',
+server.workspace('DQMContent', 60,'FeedBack for Collisions', 'BeamMonitor FeedBack', '^(Collisions|BeamMonitor|BeamPixel)/', 'Collisions/BeamMonitorFeedBack',
                  'Collisions/BeamMonitorFeedBack/00 - d0-phi0 of selected tracks',
                  'Collisions/BeamMonitorFeedBack/01 - z0 of selected tracks',
                  'Collisions/BeamMonitorFeedBack/02 - x position of beam spot',
@@ -249,7 +252,7 @@ server.workspace('DQMContent', 50,'FeedBack for Collisions', 'BeamMonitor FeedBa
                  'Collisions/BeamMonitorFeedBack/09 - Pixel-Vertices: Y0 vs. Lumisection',
                  'Collisions/BeamMonitorFeedBack/10 - Pixel-Vertices: Z0 vs. Lumisection',
                  )
-server.workspace('DQMContent', 54,'FeedBack for Collisions', 'L1T FeedBack','^(Collisions|L1T|EcalBarrel|EcalEndcap)/', 'Collisions/L1TFeedBack',
+server.workspace('DQMContent', 64,'FeedBack for Collisions', 'L1T FeedBack','^(Collisions|L1T|EcalBarrel|EcalEndcap)/', 'Collisions/L1TFeedBack',
                  'Collisions/L1TFeedBack/00 ECAL TP Spectra',
                  'Collisions/L1TFeedBack/01 ECAL TP Occupancy',
                  'Collisions/L1TFeedBack/02 ECAL TP Emulator Comparison',
@@ -264,7 +267,7 @@ server.workspace('DQMContent', 54,'FeedBack for Collisions', 'L1T FeedBack','^(C
                  'Collisions/L1TFeedBack/11 Integ HF Triggers vs LS',
                  'Collisions/L1TFeedBack/12 Integ BSCOR and BPTX',
                 )
-server.workspace('DQMContent', 55,'FeedBack for Collisions', 'HLT FeedBack','^(Collisions|HLT)/', 'Collisions/HLTFeedBack',
+server.workspace('DQMContent', 65,'FeedBack for Collisions', 'HLT FeedBack','^(Collisions|HLT)/', 'Collisions/HLTFeedBack',
                  'Collisions/HLTFeedBack/00 HLT_Egamma_Pass_Any',
                  'Collisions/HLTFeedBack/01 HLT_JetMet_Pass_Any',
                  'Collisions/HLTFeedBack/02 HLT_Muon_Pass_Any',
@@ -278,7 +281,7 @@ server.workspace('DQMContent', 55,'FeedBack for Collisions', 'HLT FeedBack','^(C
                  'Collisions/HLTFeedBack/10 Group_4_paths_count_LS',
                  'Collisions/HLTFeedBack/11 Group_-1_paths_count_LS',
                 )
-server.workspace('DQMContent', 56, 'FeedBack for Collisions', 'CSC FeedBack', '^(Collisions|CSC)/', '',
+server.workspace('DQMContent', 66, 'FeedBack for Collisions', 'CSC FeedBack', '^(Collisions|CSC)/', '',
                  'CSC/Layouts/04 Timing/00 ALCT Timing',
                  'CSC/Layouts/04 Timing/01 CLCT Timing',
                 )
