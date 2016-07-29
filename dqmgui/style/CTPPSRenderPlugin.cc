@@ -49,6 +49,8 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 				setColor = false;
 			if (o.name.rfind(" V") == o.name.size() - 2)
 				setColor = false;
+			if (o.name.find("events per BX") != std::string::npos)
+				setColor = false;
 
 			TH1F* obj = dynamic_cast<TH1F*>(o.object);
 			assert(obj);
