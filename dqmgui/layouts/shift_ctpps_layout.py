@@ -1,11 +1,11 @@
-def CTPPSTrackingStripLayout(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/" + p] = DQMItem(layout=rows)
+def CTPPSTrackingStripLayout(i, p, *rows): i["00 Shift/CTPPS/TrackingStrip/" + p] = DQMItem(layout=rows)
 
 stations = [ "sector 45/station 210", "sector 56/station 210" ]
 units = [ "nr", "fr" ]
 
 
 # layouts with no overlays
-for plot in [ "active planes", "activity in planes (2D)", "vfats with any problem", "track XY profile" ]:
+for plot in [ "active planes", "vfats with any problem", "track XY profile" ]:
   rows = list()
   for station in stations:
     row = list()
@@ -17,7 +17,7 @@ for plot in [ "active planes", "activity in planes (2D)", "vfats with any proble
 
 
 # layouts with overlays
-for plot in [ "active planes", "recognized patterns", "planes contributing to fit" ]:
+for plot in [ "planes contributing to fit" ]:
   rows = list()
   for station in stations:
     row = list()
@@ -31,7 +31,7 @@ for plot in [ "active planes", "recognized patterns", "planes contributing to fi
 
 
 # per-BX plots
-for suffix in [ "", " (short)" ]:
+for suffix in [ " (short)" ]:
   plot_list = list()
   for station in stations:
     for unit in units:
