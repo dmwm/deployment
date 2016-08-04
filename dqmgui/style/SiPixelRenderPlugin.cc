@@ -65,16 +65,16 @@ public:
 private:
 
   // simple recursive descent parser for the "Column(0,30,50,)/Other(0,3,5,)/Last"
-  // format used to carry the positions where histograms where concatenated by 
+  // format used to carry the positions where histograms where concatenated by
   // EXTEND to this plugin.
   template<typename Iterator>
   struct LabelMarkerParser {
-    std::vector<std::vector<int>> markers; // output 
+    std::vector<std::vector<int>> markers; // output
     std::string text; // cleaned-up label
 
     static std::pair<bool, int> parse_int(Iterator& start, Iterator end) {
       int out = 0;
-      if (start == end || !std::isdigit(*start)) return std::make_pair(false, out); 
+      if (start == end || !std::isdigit(*start)) return std::make_pair(false, out);
       while (start != end && std::isdigit(*start))
         out = out * 10 + (*start++ - '0');
       return std::make_pair(true, out);
@@ -118,7 +118,7 @@ private:
     }
   };
 
-  void putMarkers(TH1* obj) 
+  void putMarkers(TH1* obj)
     {
       // TODO: Y-Axis as well?
       TAxis* ax = obj->GetXaxis();
@@ -131,11 +131,11 @@ private:
       std::vector<std::vector<int>>& markers = res.second.markers;
 
       auto ymax = obj->GetMaximum() * 0.5;
-      auto ymin = 0; // TODO: we actually want the y axis range here. 
+      auto ymin = 0; // TODO: we actually want the y axis range here.
       auto step = (ymax-ymin)*0.5 / markers.size();
       // we only get one set of values each, but have to draw a full hierarchy
       putMarkersRecursive(markers.begin(), markers.end(), 0, ymin, ymax, step);
-      
+
       ax->SetTitle(newlabel.c_str());
     }
 
@@ -144,8 +144,8 @@ private:
     if (begin == end) return;
     for (auto mark : *begin) {
       auto pos = double(mark) + 0.5 + double(offset);
-      TLine tl; 
-      tl.SetLineColor(4); 
+      TLine tl;
+      tl.SetLineColor(4);
       tl.DrawLine(pos, ymin, pos, ymax);
       putMarkersRecursive(begin+1, end, offset + mark, ymin, ymax - step, step);
     }
@@ -192,7 +192,7 @@ private:
 
       // TODO: fix this in the right place?
       if( o.name.find( "endcapOccupancyMap" ) != std::string::npos ) obj->SetTitle("Endcap Digi Occupancy Map");
-       
+
       //Separated out HitEfficiency maps to set scale
       if( o.name.find( "fficiency" ) != std::string::npos)
         {
@@ -336,11 +336,11 @@ private:
   void postDrawTH1( TCanvas *, const VisDQMObject &o )
     {
       if (o.flags == 0) return;
-      
+
       TH1* obj = dynamic_cast<TH1*>( o.object );
       assert( obj );
-      
-      // put EXTEND marker for phase1 
+
+      // put EXTEND marker for phase1
       putMarkers(obj);
 
       // Upper/Lower limit decoration for SUMOFFs.
