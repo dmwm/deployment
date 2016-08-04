@@ -304,16 +304,17 @@ private:
       if( obj->GetMinimum() > 0.) obj->SetMinimum(0.);
 
       // Ranges for specific histograms.
-      // TODO: maybe fix these in CMSSW?
-      if( o.name.find( "adcCOMB" ) != std::string::npos && obj->GetEntries() > 0. ){ gPad->SetLogy(1); gPad->SetTopMargin(0.15); }
-      if( o.name.find( "chargeCOMB" ) != std::string::npos && obj->GetEntries() > 0. ){ obj->GetXaxis()->SetRange(1,51); gPad->SetLogy(1); gPad->SetTopMargin(0.15); }
+      if( o.name.find( "adcCOMB" ) != std::string::npos && obj->GetEntries() > 0. ){ obj->SetMinimum(1.0); gPad->SetLogy(1); }
+      if( o.name.find( "chargeCOMB" ) != std::string::npos && obj->GetEntries() > 0. ){ obj->SetMinimum(1.0); obj->GetXaxis()->SetRange(1,51); gPad->SetLogy(1); }
       if( o.name.find( "OnTrack/charge_siPixelClusters" ) != std::string::npos ){ obj->GetXaxis()->SetRange(1,51); }
       if( o.name.find( "OffTrack/charge_siPixelClusters" ) != std::string::npos ){ obj->GetXaxis()->SetRange(1,51); }
       if( o.name.find( "OnTrack/size_siPixelClusters" ) != std::string::npos ){ obj->GetXaxis()->SetRange(1,41); }
       if( o.name.find( "OffTrack/size_siPixelClusters" ) != std::string::npos ){ obj->GetXaxis()->SetRange(1,41); }
+
+      // TODO: With SetLogy the minimum should always be forced non-0. Probably broken here.
       if( o.name.find( "barrelEventRate" ) != std::string::npos && obj->GetEntries() > 0. ) {gPad->SetLogx(1); gPad->SetLogy(1); gPad->SetTopMargin(0.15); gPad->SetRightMargin(0.15); }
       if( o.name.find( "endcapEventRate" ) != std::string::npos && obj->GetEntries() > 0. ) {gPad->SetLogx(1); gPad->SetLogy(1); gPad->SetTopMargin(0.15); gPad->SetRightMargin(0.15); }
-      if( o.name.find( "ALLMODS_chargeCOMB" ) != std::string::npos ) obj->GetXaxis()->SetRange(1,51);
+
       if( o.name.find( "noOccROCsBarrel" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);
         obj->GetYaxis()->SetRangeUser(250,350);}
       if( o.name.find( "noOccROCsEndcap" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);
