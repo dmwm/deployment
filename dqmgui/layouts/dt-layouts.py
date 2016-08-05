@@ -137,7 +137,7 @@ for wheel in range(-2, 3):
     for station in range (1, 5):
         for sector in range (1, 13):
             name = "11-QualityPhi/Wheel" + str(wheel) + "/Sector" + str(sector) + "_Station" + str(station)
-            histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel)+ "/Sector" + str(sector) + "/Station" + str(station) + "/LocalTriggerPhi/TM_QualvsPhirad_W" + str(wheel) + "_Sec" + str(sector) + "_St" + str(station)
+            histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel)+ "/Sector" + str(sector) + "/Station" + str(station) + "/LocalTriggerPhiIn/TM_QualvsPhirad_In_W" + str(wheel) + "_Sec" + str(sector) + "_St" + str(station)
             dtlayout(dqmitems, name,[{ 'path': histoname}])
 
 #
