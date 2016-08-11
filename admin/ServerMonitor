@@ -482,10 +482,10 @@ class LogMonitor(Monitor):
 	if can_talk:
 	  trace = StringIO()
           traceback.print_exc(file=trace)
-          logmsg(svc, "ERROR", "file:<%s>:0" % fname,
+          logmsg("ADMIN", "ERROR", "file:<%s>:0" % fname,
                  "failed to read file: %s" % str(e))
 	  for line in trace.getvalue().rstrip().split("\n"):
-            logmsg(svc, "FAILURE", line)
+            logmsg("ADMIN", "FAILURE", line)
 
 
 class LogErrorMonitor(LogMonitor):
