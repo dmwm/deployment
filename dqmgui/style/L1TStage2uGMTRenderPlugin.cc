@@ -14,7 +14,7 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
  public:
 
   virtual bool applies(const VisDQMObject& o, const VisDQMImgInfo&) {
-    if (o.name.find("L1T2016/L1TStage2uGMT/") != std::string::npos)
+    if (o.name.find("L1T2016/L1TStage2uGMT/") != std::string::npos || o.name.find("L1T2016EMU/L1TdeStage2uGMT/") != std::string::npos)
       return true;
 
     return false;
@@ -68,6 +68,7 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
     assert(obj);
 
     obj->SetOption("colz");
+    //gStyle->SetPalette(kDarkBodyRadiator);
 
     if (o.name.find("ugmtMuonBXvshwCharge") != std::string::npos) {
       obj->SetOption("text colz");
@@ -78,6 +79,10 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
     }
 
     if (o.name.find("ugmtMuonBXvshwIso") != std::string::npos) {
+      obj->SetOption("text colz");
+    }
+
+    if (o.name.find("muColl1TrkAddr") != std::string::npos || o.name.find("muColl2TrkAddr") != std::string::npos) {
       obj->SetOption("text colz");
     }
 
