@@ -82,10 +82,6 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
       obj->SetOption("text colz");
     }
 
-    if (o.name.find("muColl1TrkAddr") != std::string::npos || o.name.find("muColl2TrkAddr") != std::string::npos) {
-      obj->SetOption("text colz");
-    }
-
   }
 
   void postDrawTH1F(TCanvas*, const VisDQMObject&) {}
