@@ -14,7 +14,7 @@ class L1TStage2EMTFRenderPlugin : public DQMRenderPlugin {
  public:
 
   virtual bool applies(const VisDQMObject& o, const VisDQMImgInfo&) {
-    if (o.name.find("L1T2016/L1TStage2EMTF/") != std::string::npos)
+    if (o.name.find("L1T2016/L1TStage2EMTF/") != std::string::npos || o.name.find("L1T2016EMU/L1TdeStage2EMTF/") != std::string::npos)
       return true;
 
     return false;
