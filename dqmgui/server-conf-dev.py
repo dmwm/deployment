@@ -24,7 +24,7 @@ server.baseUrl     = '/dqm/dev'
 server.title       = 'CMS data quality'
 server.serviceName = 'CERN Development'
 
-server.plugin('render', "%s/style/*.cc" % CONFIGDIR)
+server.plugin('render', "%s/style/*.cc" % CONFIGDIR, "%s/style/*.h" % CONFIGDIR)
 server.extend('DQMRenderLink', server.pathOfPlugin('render'))
 server.extend('DQMToJSON')
 server.extend('DQMFileAccess', "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0],
