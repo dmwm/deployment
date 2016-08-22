@@ -91,18 +91,22 @@ status()
 cron()
 {
   local action=$1
+  local fromdate=`date +%Y-%m-%d -d "yesterday"` # GNU date utility
+  local todate=`date +%Y-%m-%d`
+  local keys=now,br_user_group,data_tier,acquisition_era,node_kind
+  local results=br_dest_bytes,br_node_bytes
+  local fout=hdfs:///cms/phedex-monitoring-test
   case $action in
     prmonitor )
       $PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh \
         --basedir hdfs:///project/awg/cms/phedex/block-replicas-snapshots/csv/ \
-        --fromdate 2015-08-04 \
-        --todate 2015-08-09 \
-        --keys data_tier,acquisition_era \
-        --results br_node_files,br_dest_files \
-        --aggregations min,sum \
-        --order data_tier,br_dest_files \
-        --asc 0,1 \
-        --fname hdfs:///project/awg/cms/phedex/block-replicas-snapshots/csv/time=2016-07-09_03h07m28s \
+        --fromdate $fromdate \
+        --todate $todate \
+        --keys $keys
+        --results $results \
+        --aggregations sum \
+        --order br_node_bytes \
+        --asc 0 \
         --fout hdfs:///cms/phedex-monitoring-test \
 	    --verbose &> $LOGDIR/prmonitor.log
       ;;
