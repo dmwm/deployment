@@ -618,6 +618,9 @@ start_collector()
     # Playback server: Gets its own collector:
     online:srv-c2f11-29-03:*collector* )
       DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+    # Hcal server: Gets its own collector:
+    online:fu-c2f11-21-03:*collector* )
+      DQMCollector --listen 9091 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
     # Rest/default: Standard collector:
     online:*:*collector* )
       DQMCollector --listen 9190 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
