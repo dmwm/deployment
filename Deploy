@@ -246,7 +246,7 @@ inrepo()
      rm -fr $swarea
      mkdir -p $swarea
      cd $swarea
-     curl -sO http://$rpmhost/cmssw/$repo/bootstrap.sh
+     curl -sO http://$rpmhost/cmssw/repos/bootstrap.sh
      sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
        -server $rpmhost setup > $PWD/bootstrap-$arch.log 2>&1
      touch .bootstrapped)
@@ -257,7 +257,6 @@ inrepo()
       exit 3
     fi
   fi
-  . $swarea/$arch/external/apt/*/etc/profile.d/init.sh
 }
 
 # Deploy stage of some component.
@@ -346,11 +345,11 @@ deploy_pkg()
     (set -e
      inrepo $repo $swarea
      [ X"$ver" != Xauto ] ||
-       ver=$(apt-cache depends "$release" |
+       ver=$($swarea/common/cmspkg -a $arch depends "$release" |
              fgrep "Depends: $pkg+" | awk -F+ '{print $NF}')
-     apt-get update
-     apt-get -y install $(apt-cache pkgnames | grep fake)
-     apt-get -y install $pkg+$ver
+     $swarea/common/cmspkg -a $arch update
+     $swarea/common/cmspkg -a $arch -y install $($swarea/common/cmspkg -a $arch search fake | awk -F' ' '{print $1}')
+     $swarea/common/cmspkg -a $arch -y install $pkg+$ver
 
      # Create application link.
      [ X"$link" != X ] || link=${pkg#*+}
@@ -360,10 +359,10 @@ deploy_pkg()
 
     (set -e
      inrepo $repo $swarea
-     apt-get clean)
+     $swarea/common/cmspkg -a $arch clean)
     [ $? = 0 ]
 
-    # Fix privs dropped by apt/rpm
+    # Fix privs dropped by cmspkg/rpm
     setgroup ug+rw,o-w _sw $swarea
     if $nogroups; then :; else
       BADFILES=$(find $swarea/$arch -type f ! -group _sw -print)
