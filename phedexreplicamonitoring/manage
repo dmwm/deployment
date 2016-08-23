@@ -98,7 +98,7 @@ cron()
   local results=br_dest_bytes,br_node_bytes
   case $action in
     prmonitor )
-      $PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh \
+      $PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh --yarn \
         --basedir hdfs:///project/awg/cms/phedex/block-replicas-snapshots/csv/ \
         --fromdate $fromdate \
         --todate $todate \
