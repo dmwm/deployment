@@ -102,7 +102,7 @@ cron()
         --basedir hdfs:///project/awg/cms/phedex/block-replicas-snapshots/csv/ \
         --fromdate $fromdate \
         --todate $todate \
-        --keys $keys
+        --keys $keys \
         --results $results \
         --aggregations sum \
         --order br_node_bytes \
