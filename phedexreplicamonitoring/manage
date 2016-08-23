@@ -108,7 +108,7 @@ cron()
         --order br_node_bytes \
         --asc 0 \
         --fout $HDFS_MIGRATE \
-	    --verbose &> $LOGDIR/prmonitor.log
+	    --verbose 2>&1 1>& $LOGDIR/prmonitor.log
       ;;
     * )
       echo "You must specify the cron action to run"
