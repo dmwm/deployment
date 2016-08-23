@@ -42,7 +42,7 @@ export JAVA_JDK_ROOT
 export JAVA_HOME=$JAVA_JDK_ROOT
 
 # kerberos
-export PRMKEYTAB=$STATEDIR/wma.keytab
+export PRMKEYTAB=$STATEDIR/prm.keytab
 principal=`klist -k $PRMKEYTAB | tail -1 | awk '{print $2}'`
 kinit $principal -k -t $PRMKEYTAB
 
