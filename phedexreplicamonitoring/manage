@@ -92,7 +92,8 @@ cron()
 {
   local action=$1
   local fromdate=`date +%Y-%m-%d -d "yesterday"` # GNU date utility
-  local todate=`date +%Y-%m-%d`
+  local todate=$fromdate # make daily snapshots
+#  local todate=`date +%Y-%m-%d`
   local keys=now,br_user_group,data_tier,acquisition_era,node_kind
   local results=br_dest_bytes,br_node_bytes
   local fout=hdfs:///cms/phedex-monitoring-test
