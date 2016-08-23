@@ -65,7 +65,12 @@ sistriplayout(dqmitems, "05 - OffTrackCluster (Total Number)",
    { 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_TotalNumberOfClusters_OffTrack__TEC__PLUS",
      'description': "TotalNumberOf Off-Track clusters in TEC +ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
 
-sistriplayout(dqmitems, "06 - Detailed FED-Detected Errors",
+sistriplayout(dqmitems, "06a - FED Errors vs FED ID",
+ [{ 'path': "SiStrip/ReadoutView/FEDErrorsVsId",
+    'description': "Type of FED errors vs FED ID",
+    'draw': {'withref': "no" }}])
+
+sistriplayout(dqmitems, "06b - Detailed FED-Detected Errors",
  [{ 'path': "SiStrip/ReadoutView/FED/VsId/AnyDAQProblems",
     'description': "FED IDs having DAQ problem - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
   { 'path': "SiStrip/ReadoutView/FED/VsId/CorruptBuffers",

@@ -27,9 +27,9 @@ class SiPixelRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
     {
-      if( o.name.find( "Pixel/" ) != std::string::npos )
+      if( o.name.find( "Pixel/" ) == 0 )
         return true;
-      if( o.name.find( "PixelPhase1/" ) != std::string::npos )
+      if( o.name.find( "PixelPhase1/" ) == 0 )
         return true;
 
       return false;
@@ -239,7 +239,7 @@ private:
           obj->SetOption("colztext");
           if( obj->GetEntries() > 0. ) gPad->SetLogz(1);
         }
-
+      
       if( o.name.find( "avgfedDigiOccvsLumi" ) != std::string::npos )
         {
           obj->SetOption("colz");
@@ -338,7 +338,7 @@ private:
       if( o.name.find( "SUMOFF_adc_Barrel" ) != std::string::npos ){ obj->SetMinimum(-5.0); obj->SetMaximum(150.); }
       if( o.name.find( "SUMOFF_ndigis_Barrel" ) != std::string::npos ){ obj->SetMinimum(-5.0); obj->SetMaximum(60.0); }
       if( o.name.find( "SUMOFF_adc_Endcap" ) != std::string::npos ){ obj->SetMinimum(-10.0); obj->SetMaximum(150.); }
-      if( o.name.find( "SUMOFF_ndigis_Endcap" ) != std::string::npos ){ obj->SetMinimum(-1.0); obj->SetMaximum(8.); }
+      if( o.name.find( "SUMOFF_ndigis_Endcap" ) != std::string::npos ){ obj->SetMinimum(-1.0); obj->SetMaximum(12.); }
       if( o.name.find( "SUMOFF_charge_OnTrack_Barrel" ) != std::string::npos ){ obj->SetMinimum(-5.); obj->SetMaximum(40.); }
       if( o.name.find( "SUMOFF_nclusters_OnTrack_Barrel" ) != std::string::npos ){ obj->SetMinimum(-1.0); obj->SetMaximum(6.0); }
       if( o.name.find( "SUMOFF_size_OnTrack_Barrel" ) != std::string::npos ){ obj->SetMinimum(-1.); obj->SetMaximum(8.); }
@@ -368,7 +368,7 @@ private:
       }
       else if( o.name.find( "SUMOFF_adc_Endcap" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,95.,97.,95.);
-        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,115.,97.,115.);
+        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,130.,97.,130.);
       }
       else if( o.name.find( "SUMDIG_adc_Endcap" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,85.,673.,85.);
@@ -385,18 +385,18 @@ private:
       else if( o.name.find( "SUMOFF_ndigis_Endcap" ) != std::string::npos ){
         obj->SetMaximum(8.);
         TLine tl; tl.SetLineColor(4); tl.DrawLine(1.,3.5,97.,3.5);
-        TLine t2; t2.SetLineColor(4); t2.DrawLine(1.,6.,97.,6.);
+        TLine t2; t2.SetLineColor(4); t2.DrawLine(1.,8.0,97.,8.0);
       }
       else if( o.name.find( "SUMDIG_ndigis_Endcap" ) != std::string::npos ){
         TLine tl; tl.SetLineColor(4); tl.DrawLine(1.,3.2,673.,3.2);
         TLine t2; t2.SetLineColor(4); t2.DrawLine(1.,7.0,673.,7.0);
       }
       else if( o.name.find( "SUMOFF_charge_OnTrack_Barrel" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,22.5,193.,22.5);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,18.0,193.,18.0);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,35.0,193.,35.0);
       }
       else if( o.name.find( "SUMOFF_nclusters_OnTrack_Barrel" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,1.2,193.,1.2);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,1.0,193.,1.0);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,5.0,193.,5.0);
       }
       else if( o.name.find( "SUMOFF_size_OnTrack_Barrel" ) != std::string::npos ){
@@ -416,7 +416,7 @@ private:
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,8.5,769.,8.5);
       }
       else if( o.name.find( "SUMOFF_charge_OnTrack_Endcap" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,19.,97.,19.);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,15.,97.,15.);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,27.,97.,27.);
       }
       else if( o.name.find( "SUMOFF_nclusters_OnTrack_Endcap" ) != std::string::npos ){
@@ -424,7 +424,7 @@ private:
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,1.65,97.,1.65);
       }
       else if( o.name.find( "SUMOFF_size_OnTrack_Endcap" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,1.7,97.,1.7);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,1.3,97.,1.3);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,2.2,97.,2.2);
       }
       else if( o.name.find( "SUMCLU_charge_Endcap" ) != std::string::npos ){
@@ -442,7 +442,7 @@ private:
       else if( o.name.find( "OnTrack/charge_siPixelClusters" ) != std::string::npos ){
         Int_t ibin = obj->GetMaximumBin();
         Double_t val = obj->GetBinContent(ibin);
-        TLine tl; tl.SetLineColor(4); tl.DrawLine(21.,0.,21.,val);
+        TLine tl; tl.SetLineColor(4); tl.DrawLine(17.5,0.,17.5,val);
       }
       else if( o.name.find( "averageDigiOccupancy" ) != std::string::npos ){
         TLine tl; tl.SetLineColor(4); tl.DrawLine(-0.5,0.6,39.5,0.6);
