@@ -51,7 +51,7 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 # area on HDFS where we'll migrate the data
-export HDFS_MIGRATE=/cms/phedex-monitoring
+export HDFS_MIGRATE=hdfs:///cms/phedex-monitoring
 
 # PBR settings
 export PYTHONPATH=/usr/lib/spark/python:$PYTHONPATH
@@ -96,7 +96,6 @@ cron()
 #  local todate=`date +%Y-%m-%d`
   local keys=now,br_user_group,data_tier,acquisition_era,node_kind
   local results=br_dest_bytes,br_node_bytes
-  local fout=hdfs:///cms/phedex-monitoring-test
   case $action in
     prmonitor )
       $PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh \
@@ -108,7 +107,7 @@ cron()
         --aggregations sum \
         --order br_node_bytes \
         --asc 0 \
-        --fout hdfs:///cms/phedex-monitoring-test \
+        --fout $HDFS_MIGRATE \
 	    --verbose &> $LOGDIR/prmonitor.log
       ;;
     * )
