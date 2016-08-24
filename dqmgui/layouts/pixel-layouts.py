@@ -91,6 +91,7 @@ pixellayout(dqmitems, "09 - Pixel Clusters vs LS",
    { 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX-",
      'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
      'draw': {'withref' : "no" }}]
+  )
 pixellayout(dqmitems, "20a - Cluster occupancy Barrel Layer 1",
   [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_Layer_1",
      'description': "Cluster occupancy of Barrel Layer 1",
