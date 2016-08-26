@@ -20,7 +20,7 @@ LAYOUTS += reglob("%s/layouts/shift_[^-_]*_layout.py" % CONFIGDIR)
 LAYOUTS += reglob("%s/layouts/.*_overview_layouts.py" % CONFIGDIR)
 
 # Do not modify configuration below this line.
-DQMSERVERS  = ["dqm-prod-local", "dqm-prod-offsite", "dqm-integration", "dqm-test"]
+DQMSERVERS  = ["dqm-prod-local", "dqm-prod-offsite", "dqm-integration", "dqm-test", "hcal-dqm-fu"]
 HOST        = socket.gethostname().lower()
 DOMAIN      = socket.getfqdn().split('.',1)[-1].lower()
 HOSTADDR    = socket.getaddrinfo(HOST, None)[0][4][0]
@@ -76,6 +76,12 @@ elif HOSTALIAS == 'dqm-test':
   UPLOADDIR   = '/dqmdata/dqm/uploads'
   FILEREPO    = {'Original': '/dqmdata/dqm/repository/original/OnlineData'}
   COLLHOST    = 'dqm-prod-local.cms'
+
+elif HOSTALIAS == 'hcal-dqm-fu':
+  COLLPORT    = 9091
+  SERVERPORT  = 8071
+  SERVICENAME = 'Online Hcal'
+  BASEURL     = '/dqm/hcal-online'
 
 # Server configuration.
 modules = ("Monitoring.DQM.GUI",)
