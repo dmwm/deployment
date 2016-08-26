@@ -81,6 +81,17 @@ pixellayout(dqmitems, "06 - Pixel_Cluster_Endcap_Summary",
      'description': "Mean cluster size in number of pixels per barrel module",
      'draw': { 'withref': "yes" }}]
   )
+pixellayout(dqmitems, "09 - Pixel Clusters vs LS",
+  [{ 'path': "Pixel/Barrel/totalNumberOfClustersProfile_siPixelClusters_Barrel",
+     'description': "Total # of CLusters in BPIX with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }}],
+  [{ 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX+",
+     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }},
+   { 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX-",
+     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }}]
+  )
 pixellayout(dqmitems, "20a - Cluster occupancy Barrel Layer 1",
   [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_Layer_1",
      'description': "Cluster occupancy of Barrel Layer 1",

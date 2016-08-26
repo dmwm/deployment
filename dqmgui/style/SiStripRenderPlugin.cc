@@ -265,7 +265,14 @@ private:
 	  obj->SetOption("colz");
 	return;
 	}
-      if( o.name.find( "DataPresentInLS" )  != std::string::npos)
+      if( o.name.find( "FEDErrorsVsId" )  != std::string::npos)
+	{
+	  obj->SetStats( kFALSE );
+	  gStyle->SetPalette(1,0);
+	  obj->SetOption("colz");
+	return;
+	}
+			if( o.name.find( "DataPresentInLS" )  != std::string::npos)
 	{
 	  obj->SetStats( kFALSE );
 	  dqm::utils::reportSummaryMapPalette(obj);
@@ -528,10 +535,10 @@ private:
 
       if( o.name.find( "TotalNumberOfClusterProfile__" ) != std::string::npos )
 	{
-	  float TIBLimit2 = 4000.0;
-	  float TOBLimit2 = 4000.0;
-	  float TIDLimit2 = 1200.0;
-	  float TECLimit2 = 4800.0;
+	  float TIBLimit2 = 10000.0;
+	  float TOBLimit2 = 10000.0;
+	  float TIDLimit2 = 2500.0;
+	  float TECLimit2 = 13000.0;
 	  obj->SetMinimum(1);
 	  float ymax = obj->GetMaximum()*1.2;
 
@@ -688,15 +695,15 @@ private:
     float TIDLimit2 = 600.0;
     float TECLimit2 = 2400.0;
     */
-    float TIBLimit1 = 20000.0;
-    float TOBLimit1 = 20000.0;
-    float TIDLimit1 = 4000.0;
-    float TECLimit1 = 20000.0;
+    float TIBLimit1 = 45000.0;
+    float TOBLimit1 = 53000.0;
+    float TIDLimit1 = 9500.0;
+    float TECLimit1 = 48500.0;
 
-    float TIBLimit2 = 4000.0;
-    float TOBLimit2 = 4000.0;
-    float TIDLimit2 = 1200.0;
-    float TECLimit2 = 4800.0;
+    float TIBLimit2 = 10000.0;
+    float TOBLimit2 = 10000.0;
+    float TIDLimit2 = 2500.0;
+    float TECLimit2 = 13000.0;
     /*
     //FOR HI
     float TIBLimit1 = 70000.0;

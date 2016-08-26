@@ -82,3 +82,28 @@ pixellayout(dqmitems, "07 - Pixel_Digi_Summary",
      'description': "Mean number of digis per event per endcap Blade",
      'draw': { 'withref': "yes" }}]
   )
+pixellayout(dqmitems, "08 - ROC occupancies",
+  [{ 'path': "Pixel/Clusters/OnTrack/pix_bar Occ_roc_ontracksiPixelDigis_layer_1",
+     'description': "Pixel Barrel Occupancy for layer 1 at the ROC level (On Track)",
+     'draw': { 'withref' : "no" }},
+   { 'path': "Pixel/Clusters/OnTrack/pix_bar Occ_roc_ontracksiPixelDigis_layer_2",
+     'description': "Pixel Barrel Occupancy for layer 2 at the ROC level (On Track)",
+     'draw': { 'withref' : "no" }},
+   { 'path': "Pixel/Clusters/OnTrack/pix_bar Occ_roc_ontracksiPixelDigis_layer_3",
+     'description': "Pixel Barrel Occupancy for layer 3 at the ROC level (On Track)",
+     'draw': { 'withref' : "no" }}],
+  [{ 'path': "Pixel/Clusters/OnTrack/ROC_endcap_occupancy",
+     'description': "Pixel Endcap occupancy at the ROC level (On Track)",
+     'draw': { 'withref' : "no" }}]
+  )
+pixellayout(dqmitems, "09 - Pixel Clusters vs LS",
+  [{ 'path': "Pixel/Barrel/totalNumberOfClustersProfile_siPixelClusters_Barrel",
+     'description': "Total # of CLusters in BPIX with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }}],
+  [{ 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX+",
+     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }},
+   { 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX-",
+     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }}]
+  )
