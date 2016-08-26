@@ -1,0 +1,168 @@
+#!/bin/sh
+
+##H Usage: manage ACTION [ARG] [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H   cron ARG    run cronjob named ARG (dataframe|models|verify)
+##H
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+echo_e=-e
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e=
+  ;;
+esac
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
+. $ROOT/apps/PhedexReplicaMonitoring/etc/profile.d/init.sh
+
+export PHEDEXREPLICAMONITORING_ROOT
+export PYTHONUNBUFFERED=1
+export JAVA_JDK_ROOT
+export JAVA_HOME=$JAVA_JDK_ROOT
+
+# kerberos
+export PRMKEYTAB=$STATEDIR/prm.keytab
+principal=`klist -k $PRMKEYTAB | tail -1 | awk '{print $2}'`
+kinit $principal -k -t $PRMKEYTAB
+
+# GRID
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
+# area on HDFS where we'll migrate the data
+export HDFS_MIGRATE=hdfs:///cms/phedex-monitoring
+
+# PBR settings
+export PYTHONPATH=/usr/lib/spark/python:$PYTHONPATH
+export PBR_DATA=$PHEDEXREPLICAMONITORING_ROOT/data/
+
+cd $STATEDIR
+host=`hostname -s`
+
+# Start service conditionally on crond restart.
+sysboot()
+{
+  dostart=false
+  if [ $(pgrep -u $(id -u) -f "[/]wmarch" | wc -l) = 0 ]; then
+      dostart=true
+  fi
+  $dostart && start
+}
+
+start()
+{
+  echo "starting $ME"
+}
+
+# Stop the service.
+stop()
+{
+  echo "stopping $ME"
+}
+
+# Check if the server is running.
+status()
+{
+  echo "status $ME"
+}
+
+# Runs actions to be done through cronjobs
+cron()
+{
+  local action=$1
+  local fromdate=`date +%Y-%m-%d -d "yesterday"` # GNU date utility
+  local todate=$fromdate # make daily snapshots
+#  local todate=`date +%Y-%m-%d`
+  local keys=now,br_user_group,data_tier,acquisition_era,node_kind
+  local results=br_dest_bytes,br_node_bytes
+  case $action in
+    prmonitor )
+      $PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh --yarn \
+        --basedir hdfs:///project/awg/cms/phedex/block-replicas-snapshots/csv/ \
+        --fromdate $fromdate \
+        --todate $todate \
+        --keys $keys \
+        --results $results \
+        --aggregations sum \
+        --order br_node_bytes \
+        --asc 0 \
+        --fout $HDFS_MIGRATE \
+	    --verbose 2>&1 1>& $LOGDIR/prmonitor.log
+      ;;
+    * )
+      echo "You must specify the cron action to run"
+      exit 1
+      ;;
+  esac
+}
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    sysboot
+    ;;
+
+  start | restart )
+    check "$2"
+    stop
+    start
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$2"
+    stop
+    ;;
+
+  cron )
+    check "$3"
+    cron $2
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$PHEDEXREPLICAMONITORING_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac
