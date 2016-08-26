@@ -190,3 +190,6 @@ server.workspace('DQMContent', 42, 'Trigger/Lumi', 'HLT', '^HLT/', '',
                  'HLT/SiStrip/MechanicalView/TIB/TotalNumberOfClusterProfile__TIB',
                  'HLT/Layouts/highestRate Summary',
                 )
+
+# CTPPS workspaces:
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')

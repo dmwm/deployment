@@ -44,3 +44,6 @@ server.workspace('DQMContent', 33, 'Trigger/Lumi', 'HLT', '^HLT/', '')
 server.workspace('DQMContent', 41, 'POG', 'Muons', '^Muons/', '')
 server.workspace('DQMContent', 42, 'POG', 'JetMet', '^JetMET/', '')
 server.workspace('DQMContent', 43, 'POG', 'EGamma', '^Egamma/', '')
+
+# CTPPS workspaces:
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
