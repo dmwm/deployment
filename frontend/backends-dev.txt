@@ -1,4 +1,5 @@
 ^/auth/complete/dqm/(?:online|online-playback|online-test)(?:/|$) cmsdqm.cern.ch
+^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
 ^/auth/complete/dqm/offline(?:/|$) vocms0138.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0139.cern.ch
 ^/auth/complete/dqm/(?:offline-test|relval-test)(?:/|$) vocms0131.cern.ch
