@@ -56,6 +56,7 @@ export WMARCHIVE_CONFIG=$ROOT/config/$ME/wmarch_config.py
 export MONGO_URI="mongodb://localhost:8230"
 export AVRO_STORAGE=$STATEDIR/avro/data
 export AVRO_STORAGE_MIGRATE=$STATEDIR/avro/migrate
+export WMARCHIVE_EDICT=$WMA_STATIC_ROOT/wmexceptions.json
 # area on HDFS where we'll migrate the data
 export HDFS_MIGRATE=/cms/wmarchive/avro
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
