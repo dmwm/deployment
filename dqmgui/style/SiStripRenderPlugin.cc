@@ -615,6 +615,16 @@ private:
 
       std::string name = o.name.substr(o.name.rfind("/")+1);
 
+      TLine tl1;
+      tl1.SetLineColor(2);
+      tl1.SetLineWidth(3);
+      float ymin = 0.0;
+      float ymax = obj->GetYaxis()->GetXmax();
+      float mask1min = 26.5;
+      float mask1max = 29.5;
+      float mask2min = 37.5;
+      float mask2max = 39.5;
+
       TText tt;
       tt.SetTextSize(0.12);
       if (o.flags != 0)
@@ -660,6 +670,14 @@ private:
       {
         c->SetGridx();
         c->SetGridy();
+        return;
+      }
+      if( name.find( "DeltaBx_vs_ApvCycle" )  != std::string::npos)
+      {
+        tl1.DrawLine(mask1min, ymin, mask1min, ymax);
+        tl1.DrawLine(mask2min, ymin, mask2min, ymax);        
+        tl1.DrawLine(mask1max, ymin, mask1max, ymax);
+        tl1.DrawLine(mask2max, ymin, mask2max, ymax);
         return;
       }
     }
