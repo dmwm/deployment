@@ -18,6 +18,7 @@
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/0112/ vocms0112.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
+^/auth/complete/scheddmon/0121/ vocms0121.cern.ch
 ^/auth/complete/scheddmon/0122/ vocms0122.cern.ch
 ^/auth/complete/scheddmon/066/ vocms066.cern.ch
 ^/auth/complete/scheddmon/059/ vocms059.cern.ch
