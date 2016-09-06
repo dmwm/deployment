@@ -32,6 +32,7 @@
 128.141.185.242 cmscc36.cern.ch
 128.141.184.242 cmscc37.cern.ch
 128.141.185.234 cmscc38.cern.ch
+128.141.184.233 cmscc39.cern.ch
 128.141.185.233 cmscc40.cern.ch
 128.141.185.232 cmscc41.cern.ch
 128.141.185.231 cmscc42.cern.ch
