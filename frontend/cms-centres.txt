@@ -9,7 +9,7 @@
 128.141.185.247 cmscc10.cern.ch
 128.141.185.225 cmscc11.cern.ch
 128.141.185.224 cmscc12.cern.ch
-128.141.185.224 cmscc13.cern.ch
+128.141.185.223 cmscc13.cern.ch
 128.141.185.222 cmscc14.cern.ch
 128.141.185.221 cmscc15.cern.ch
 128.141.185.220 cmscc16.cern.ch
