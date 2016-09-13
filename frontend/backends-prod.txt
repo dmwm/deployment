@@ -3,13 +3,12 @@
 ^/auth/complete/dqm/offline(?:/|$) vocms0138.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0139.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|relval-test)(?:/|$) vocms0131.cern.ch
-^/auth/complete/couchdb2/asynctransfer1(?:/|$) vocms0306.cern.ch  :affinity
 ^/auth/complete/(?:aso-monitor|couchdb2)(?:/|$) vocms0141.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0307.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0142.cern.ch :affinity
 ^/auth/complete/(?:c?)(?:couchdb|workqueue|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0140.cern.ch :affinity
-^/auth/complete/das(?:/|$) vocms0141.cern.ch|vocms0307.cern.ch :affinity
+^/auth/complete/das(?:/|$) vocms0141.cern.ch|vocms0142.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) vocms0141.cern.ch
-^/auth/complete/confdb(?:/|$) vocms0307.cern.ch
+^/auth/complete/confdb(?:/|$) vocms0142.cern.ch
 ^/auth/complete/wmarchive(?:/|$) vocms071.cern.ch
 ^/auth/complete/scheddmon/021/ vocms021.cern.ch
 ^/auth/complete/scheddmon/095/ vocms095.cern.ch
