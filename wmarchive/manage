@@ -53,6 +53,7 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export WMARCHIVE_CONFIG=$ROOT/config/$ME/wmarch_config.py
+export WMARCHIVE_PERF_METRICS=$WMA_STATIC_ROOT/maps/metrics.json
 export MONGO_URI="mongodb://localhost:8230"
 export AVRO_STORAGE=$STATEDIR/avro/data
 export AVRO_STORAGE_MIGRATE=$STATEDIR/avro/migrate
