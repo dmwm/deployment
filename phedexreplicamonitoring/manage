@@ -37,6 +37,10 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/PhedexReplicaMonitoring/etc/profile.d/init.sh
 
 export PHEDEXREPLICAMONITORING_ROOT
+export ELASTICSEARCH_ROOT
+export KIBANA_ROOT
+export ELASTICSEARCH_HADOOP_ROOT
+export ELASTICSEARCH_HADOOP_VERSION
 export PYTHONUNBUFFERED=1
 export JAVA_JDK_ROOT
 export JAVA_HOME=$JAVA_JDK_ROOT
@@ -50,12 +54,17 @@ kinit $principal -k -t $PRMKEYTAB
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
+
+export SPARK_CSV_ASSEMBLY_JAR=/afs/cern.ch/user/l/lmeniche/public/spark-csv-assembly-1.4.0.jar
+export ES_HADOOP_JAR=${ELASTICSEARCH_HADOOP_ROOT}/dist/elasticsearch-hadoop-${ELASTICSEARCH_HADOOP_VERSION}.jar
+
 # area on HDFS where we'll migrate the data
 export HDFS_MIGRATE=hdfs:///cms/phedex-monitoring
 
 # PBR settings
 export PYTHONPATH=/usr/lib/spark/python:$PYTHONPATH
 export PBR_DATA=$PHEDEXREPLICAMONITORING_ROOT/data/
+export PBR_CONFIG=$PHEDEXREPLICAMONITORING_ROOT/etc
 
 cd $STATEDIR
 host=`hostname -s`
@@ -72,6 +81,13 @@ sysboot()
 
 start()
 {
+  # start ElasticSearch and Kibana services
+#  echo "starting $ELASTICSEARCH_ROOT/bin/elasticsearch"
+#  $ELASTICSEARCH_ROOT/bin/elasticsearch \
+#      </dev/null 2>&1 | rotatelogs $LOGDIR/elasticsearch-%Y%m%d.log 86400 >/dev/null 2>&1 &
+#  echo "starting $KIBANA_ROOT/bin/kibana"
+#  $KIBANA_ROOT/bin/kibana \
+#      </dev/null 2>&1 | rotatelogs $LOGDIR/kibana-%Y%m%d.log 86400 >/dev/null 2>&1 &
   echo "starting $ME"
 }
 
@@ -85,6 +101,8 @@ stop()
 status()
 {
   echo "status $ME"
+  echo "SPARK_CSV_ASSEMBLY_JAR=$SPARK_CSV_ASSEMBLY_JAR"
+  echo "ES_HADOOP_JAR=$ES_HADOOP_JAR"
 }
 
 # Runs actions to be done through cronjobs
