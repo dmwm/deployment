@@ -293,7 +293,8 @@ private:
         TString label = TString(myClonedPlot->GetYaxis()->GetBinLabel(binYOrig));
         // This is where we do the filtering: We skip the lines with the
         // following labels
-        if (label != "CASTOR" && label != "ZDC") {
+        ////if (label != "CASTOR" && label != "ZDC") { // enable this line to filter CASTOR and ZDC away
+        if (true) {
           binYNew++;
           for ( int binX = 1; binX < maxBinX; binX++ ) {
             // Just copy the data, with possible offset in Y
