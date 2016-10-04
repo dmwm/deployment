@@ -352,8 +352,8 @@ sub auth_trouble_handler : method
   {
     # FIXME: Browser-specific advice?
     $message .= "<p>Your browser did not offer any certificate."
-              . " Check that you have installed a grid certificate "
-	      . " by suitable certificate authority and your browser "
+              . " Check that you have installed a valid grid certificate, "
+	      . " that it is not expired and that your browser "
 	      . " trust settings offer that certificate to this site.</p>";
   }
   elsif (! utf8::is_utf8($dn))
