@@ -2,7 +2,6 @@
  *	file:			        HcalrelvalObjectCustomizer.h
  *	original author:		Viktor Khristenko
  *	modified by:			Shubham Pandey (shubham.pandey@cern.ch)
- *      Description:                    Header file for HcalrelvalRenderPlugin.cc
  */
 
 //	ROOT Includes
@@ -237,23 +236,8 @@ namespace hcaldqm
 	{
 
 	  TProfile *obj = dynamic_cast<TProfile*>(o.object);
-	  bool foundfirst = false;
-	  int first = 1;
-	  int last = 1;
-	  for (int i=first; i<=obj->GetNbinsX(); i++)
-	    {
-	      if (!foundfirst && obj->GetBinContent(i)!=0)
-		{
-		  first = i;
-		  foundfirst = true;
-		}
-	      if (obj->GetBinContent(i)!=0)
-		last = i+1;
-	    }
-	  if (last-first>=1)
-	    obj->GetXaxis()->SetRange(first, last);
-	  
 	  //cosmetics
+
 	  obj->SetErrorOption("");
 	  obj->SetMarkerStyle(20);
 	  obj->SetLineColor(kGreen+2);
