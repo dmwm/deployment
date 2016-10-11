@@ -108,19 +108,42 @@ status()
   echo "ES_HADOOP_JAR=$ES_HADOOP_JAR"
 }
 
+# prepare hdfs area for a given argument, e.g. 3 means 3 months
+# then run a script to produce avg-day snapshot
+runPBR()
+{
+  local mm=${1}m
+  local fromdate=`date +%Y-%m-%d -d "$1 months ago"` # GNU date utility
+  local todate=`date +%Y-%m-%d -d "yesterday"` # GNU date utility
+#  local script="$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh --yarn"
+  local script=$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh
+  local hdir=${HDFS_MIGRATE}-avg
+  local akeys=node_kind,node_tier,dataset_name,br_user_group
+  local results=br_node_bytes
+  hadoop fs -mkdir $hdir
+  hadoop fs -mkdir $hdir/$mm
+  hadoop fs -rm $hdir/$mm/*
+  $script --fromdate $fromdate --todate $todate --keys $akeys \
+      --results $results --aggregations avg-day --fout $hdir/$mm \
+      --verbose 2>&1 1>& $LOGDIR/prmonitor${mm}.log
+}
+
 # Runs actions to be done through cronjobs
 cron()
 {
   local action=$1
   local fromdate=`date +%Y-%m-%d -d "yesterday"` # GNU date utility
   local todate=$fromdate # make daily snapshots
-#  local todate=`date +%Y-%m-%d`
   local keys=now,br_user_group,data_tier,acquisition_era,node_kind
   local results=br_dest_bytes,br_node_bytes
+#  local script="$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh --yarn"
+  local script=$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh
+  local hdir=${HDFS_MIGRATE}-avg
+  local akeys=node_kind,node_tier,dataset_name,br_user_group
+  local results=br_node_bytes
   case $action in
     prmonitor )
-      #$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh --yarn \
-      $PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh \
+      $script \
         --basedir hdfs:///project/awg/cms/phedex/block-replicas-snapshots/csv/ \
         --fromdate $fromdate \
         --todate $todate \
@@ -130,7 +153,19 @@ cron()
         --order br_node_bytes \
         --asc 0 \
         --fout $HDFS_MIGRATE \
-	    --verbose 2>&1 1>& $LOGDIR/prmonitor.log
+        --verbose 2>&1 1>& $LOGDIR/prmonitor.log
+      ;;
+    prmonitor3 )
+      runPBR 3
+      ;;
+    prmonitor6 )
+      runPBR 6
+      ;;
+    prmonitor9 )
+      runPBR 9
+      ;;
+    prmonitor12 )
+      runPBR 12
       ;;
     * )
       echo "You must specify the cron action to run"
