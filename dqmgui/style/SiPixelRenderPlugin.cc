@@ -315,8 +315,8 @@ private:
       if( o.name.find( "barrelEventRate" ) != std::string::npos && obj->GetEntries() > 0. ) {gPad->SetLogx(1); gPad->SetLogy(1); gPad->SetTopMargin(0.15); gPad->SetRightMargin(0.15); }
       if( o.name.find( "endcapEventRate" ) != std::string::npos && obj->GetEntries() > 0. ) {gPad->SetLogx(1); gPad->SetLogy(1); gPad->SetTopMargin(0.15); gPad->SetRightMargin(0.15); }
 
-      if( o.name.find( "noOccROCsBarrel" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);obj->GetYaxis()->SetRangeUser(100.,300.)}
-      if( o.name.find( "noOccROCsEndcap" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);obj->GetYaxis()->SetRangeUser(0.,50.)}
+      if( o.name.find( "noOccROCsBarrel" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);obj->GetYaxis()->SetRangeUser(100.,300.);}
+      if( o.name.find( "noOccROCsEndcap" ) != std::string::npos ){ float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.; obj->GetXaxis()->SetRangeUser(0.,currentX);obj->GetYaxis()->SetRangeUser(0.,50.);}
       if( o.name.find( "FEDEntries" ) != std::string::npos ) gStyle->SetOptStat(0);
 //       if( o.name.find( "size_siPixelClusters" ) != std::string::npos && obj->GetEntries() > 0. ) gPad->SetLogx(1);
       if( o.name.find( "OnTrack" ) != std::string::npos && o.name.find( "charge" ) != std::string::npos ) obj->SetTitle("ClusterCharge_OnTrack");
