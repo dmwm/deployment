@@ -598,6 +598,11 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/17 TT Flag-Readout Mism
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT flag mismatch', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE +', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/18 TT Flags vs Et',
+	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT Flags vs Et', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}],
+	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE -', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'},
+	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE +', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}])
+
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
   for sign in ['-', '+']: # Loop over z-side
