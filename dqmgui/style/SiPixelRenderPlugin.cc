@@ -361,7 +361,7 @@ private:
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,115.,193.,115.);
       }
       else if( o.name.find( "SUMDIG_adc_Barrel" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,85.,769.,85.);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,70.,769.,70.);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,120.,769.,120.);
       }
       else if( o.name.find( "SUMOFF_adc_Endcap" ) != std::string::npos ){
@@ -390,7 +390,7 @@ private:
         TLine t2; t2.SetLineColor(4); t2.DrawLine(1.,7.0,673.,7.0);
       }
       else if( o.name.find( "SUMOFF_charge_OnTrack_Barrel" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,18.0,193.,18.0);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,12.0,193.,12.0);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,35.0,193.,35.0);
       }
       else if( o.name.find( "SUMOFF_nclusters_OnTrack_Barrel" ) != std::string::npos ){
@@ -398,7 +398,7 @@ private:
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,5.0,193.,5.0);
       }
       else if( o.name.find( "SUMOFF_size_OnTrack_Barrel" ) != std::string::npos ){
-        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,2.9,193.,2.9);
+        TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,2.5,193.,2.5);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,6.1,193.,6.1);
       }
       else if( o.name.find( "SUMCLU_charge_Barrel" ) != std::string::npos ){
@@ -419,7 +419,7 @@ private:
       }
       else if( o.name.find( "SUMOFF_nclusters_OnTrack_Endcap" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,1.15,97.,1.15);
-        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,1.65,97.,1.65);
+        TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,1.8,97.,1.8);
       }
       else if( o.name.find( "SUMOFF_size_OnTrack_Endcap" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,1.3,97.,1.3);
@@ -436,23 +436,6 @@ private:
       else if( o.name.find( "SUMCLU_size_Endcap" ) != std::string::npos ){
         TLine tl1; tl1.SetLineColor(4); tl1.DrawLine(1.,1.9,673.,1.9);
         TLine tl2; tl2.SetLineColor(4); tl2.DrawLine(1.,3.0,673.,3.0);
-      }
-      else if( o.name.find( "OnTrack/charge_siPixelClusters" ) != std::string::npos ){
-        Int_t ibin = obj->GetMaximumBin();
-        Double_t val = obj->GetBinContent(ibin);
-        TLine tl; tl.SetLineColor(4); tl.DrawLine(17.5,0.,17.5,val);
-      }
-      else if( o.name.find( "averageDigiOccupancy" ) != std::string::npos ){
-        TLine tl; tl.SetLineColor(4); tl.DrawLine(-0.5,0.6,39.5,0.6);
-        TLine t2; t2.SetLineColor(4); t2.DrawLine(-0.5,1.6,39.5,1.6);
-      }
-      else if( o.name.find( "noOccROCsBarrel" ) != std::string::npos ){
-        float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.;
-        TLine tl; tl.SetLineColor(4); tl.SetLineStyle(2); tl.DrawLine(0.0,267.0,currentX,267.0);
-      }
-      else if( o.name.find( "noOccROCsEndcap" ) != std::string::npos ){
-        float currentX = (float) obj->GetBinCenter(obj->FindLastBinAbove(1.0))+5.;
-        TLine tl; tl.SetLineColor(4); tl.SetLineStyle(2); tl.DrawLine(0.0,314.0,currentX,314.0);
       }
     }
 
