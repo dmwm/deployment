@@ -61,6 +61,7 @@ export AVRO_STORAGE_MIGRATE=$STATEDIR/avro/migrate
 # area on HDFS where we'll migrate the data
 export HDFS_MIGRATE=/cms/wmarchive/avro
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
+export AVRO_SCHEMA_HDFS=`cat $WMARCHIVE_CONFIG | grep long_storage_uri | awk '{split($0,a,"="); print a[2]}' | sed -e 's/^[[:space:]]*//' -e "s,',,g"`
 # we'll clean-up data a one day old if their storage type is avroio
 export CLEANUP_TSTAMP=1d
 export CLEANUP_STYPE="avroio"
@@ -131,12 +132,12 @@ cron()
       ;;
     aggregate )
       $WMARCHIVE_ROOT/bin/aggregate_performance 1 --precision=hour \
-          --schema $AVRO_SCHEMA \
+          --schema $AVRO_SCHEMA_HDFS \
           --use_myspark &> $LOGDIR/aggregate_performace.log
 
       ;;
     cleanup )
-      $WMARCHIVE_ROOT/bin/clean_performance &> $LOGDIR/cleanup.log
+      $WMARCHIVE_ROOT/bin/clean_performance --interval=3m &> $LOGDIR/cleanup.log
       ;;
     * )
       echo "You must specify the cron action to run: mongo2avro|mongocleanup "
