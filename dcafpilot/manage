@@ -95,6 +95,16 @@ cron()
       $DCAFPILOT_ROOT/bin/cron4dataframe.sh $DCAFPILOT_CONFIG \
                  $STATEDIR/analytics $STATEDIR/analytics/data \
                  &> $LOGDIR/cron4dataframe.log
+      $DCAFPILOT_ROOT/bin/dataframe2go -datamap dataset -fout $STATEDIR/analytics/data/datasets.txt
+      if [ -f $STATEDIR/analytics/data/datasets.txt.gz ]; then
+          rm $STATEDIR/analytics/data/datasets.txt.gz
+      fi
+      gzip $STATEDIR/analytics/data/datasets.txt
+      $DCAFPILOT_ROOT/bin/dataframe2go -datamap tier -fout $STATEDIR/analytics/data/tiers.txt
+      if [ -f $STATEDIR/analytics/data/tiers.txt.gz ]; then
+          rm $STATEDIR/analytics/data/tiers.txt.gz
+      fi
+      gzip $STATEDIR/analytics/data/tiers.txt
       ;;
     models )
       $DCAFPILOT_ROOT/bin/cron4models.sh                      \
