@@ -98,6 +98,10 @@ config.das.parserdir = '%s/state/das' % __file__.rsplit('/', 4)[0] # area owned 
 config.das.services = ['dbs3','phedex','dashboard','monitor','runregistry','sitedb2','combined','conddb','reqmgr2','mcm']
 config.das.main_dbs = 'dbs3'
 
+# dbs configuration
+config.component_('dbs')
+config.dbs.instances=['prod/global', 'prod/phys01', 'prod/phys02', 'prod/phys03']
+
 # keyword search configuration
 config.component_('keyword_search')
 config.keyword_search.kws_on = False # ajax client
