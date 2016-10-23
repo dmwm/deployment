@@ -383,7 +383,6 @@ private:
         TLine t2; t2.SetLineColor(4); t2.DrawLine(1.,16.5,769.,16.5);
       }
       else if( o.name.find( "SUMOFF_ndigis_Endcap" ) != std::string::npos ){
-        obj->SetMaximum(8.);
         TLine tl; tl.SetLineColor(4); tl.DrawLine(1.,3.5,97.,3.5);
         TLine t2; t2.SetLineColor(4); t2.DrawLine(1.,8.0,97.,8.0);
       }
