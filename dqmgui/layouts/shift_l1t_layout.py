@@ -58,9 +58,4 @@ l1tlayout(dqmitems,"27 - uGT Algorithm Trigger Bits (after prescale) vs. Global 
     [{'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_global", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 l1tlayout(dqmitems,"28 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
     [{'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"29 - uGT Algorithm Trigger Bits (after prescale)",
-    [{'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler", 'description': "uGT Algorithm Trigger Bits (after prescale). For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"30 - uGT Algorithm Trigger Bits (after BX mask) vs. BX Number in Event",
-    [{'path': "L1T2016/L1TStage2uGT/algoBits_after_bxomask_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after BX mask) vs. BX Number in Event. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-
 
