@@ -54,9 +54,8 @@ l1tlayout(dqmitems,"25 - uGMT EMTF Input HW Global PHI Negative",
     [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFglbhwPhiNeg", 'description': "uGMT EMTF Input HW Global PHI Negative. x-axis: uGMT EMTF Input HW Global PHI Negative.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 l1tlayout(dqmitems,"26 - uGMT EMTF Input HW Global PHI Positive",
     [{'path': "L1T2016/L1TStage2uGMT/EMTFInput/ugmtEMTFglbhwPhiPos", 'description': "uGMT EMTF Input HW Global PHI Positive. x-axis: uGMT EMTF Input HW Global PHI Positive.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-
-
-
-
-
+l1tlayout(dqmitems,"27 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
+    [{'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_global", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"28 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
+    [{'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
