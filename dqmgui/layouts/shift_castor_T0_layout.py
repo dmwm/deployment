@@ -1,22 +1,39 @@
 def shiftcastorlayout(i, p, *rows):
     i["00 Shift/Castor/" + p] = DQMItem(layout=rows)
 
-# BVB 20160316: Removed Castor from the shift layouts (there are no instructions
-#               and as far as we know Castor will not be in before the HI run at
-#               the end of the year). We leave the expert workspace for what it
-#               is.
+shiftcastorlayout(dqmitems, "01 - Map of frontend and readout errors",
+           [{ 'path': "Castor/CastorDigiMonitor/CASTOR QIE_capID+er+dv",
+             'description':"Frontend and readout errors"}]
+           )
 
-##shiftcastorlayout(dqmitems, "01 - Map of frontend and readout errors",
-##           [{ 'path': "Castor/CastorDigiMonitor/QIE_capID+er+dv",
-##             'description':"Frontend and readout errors"}]
-##           )
-##
-##shiftcastorlayout(dqmitems, "02 - Channel-wise timing",
-##           [{ 'path': "Castor/CastorDigiMonitor/QfC=f(Tile TS) (cumulative)",
-##             'description':"Channel-wise timing"}]
-##           )
-##
-##shiftcastorlayout(dqmitems, "03 - Map of rechit occupancies",
-##           [{ 'path': "Castor/CastorRecHitMonitor/CastorRecHitOccMap",
-##             'description':"Map of rechit occupancies"}]
-##           )
+shiftcastorlayout(dqmitems, "02 - Channel-wise timing",
+           [{ 'path': "Castor/CastorDigiMonitor/QfC=f(x=Tile y=TS) (cumulative)",
+             'description':"Channel-wise timing"}]
+           )
+shiftcastorlayout(dqmitems, "02b - Channel-wise timing (rms)",
+           [{ 'path': "Castor/CastorDigiMonitor/QrmsfC=f(Tile TS)",
+             'description':"Channel-wise timing (rms)"}]
+           )
+
+shiftcastorlayout(dqmitems, "03 - CASTOR DeadChannelsMap",
+           [{ 'path': "Castor/CastorDigiMonitor/CASTOR DeadChannelsMap",
+             'description':"CASTOR DeadChannelsMap"}]
+           )
+
+shiftcastorlayout(dqmitems, "04 - DigiSize",
+           [{ 'path': "Castor/CastorDigiMonitor/DigiSize",
+             'description':"CASTOR DigiSize",
+		'draw': { 'ytype':'log' } }]
+           )
+
+shiftcastorlayout(dqmitems, "05 - CASTOR Tower Depth",
+           [{ 'path': "Castor/CastorRecHitMonitor/CASTORTowerDepth",
+             'description':"CASTORTowerDepth"}]
+           )
+
+shiftcastorlayout(dqmitems, "06 - Tower EM vs HAD",
+           [{ 'path': "Castor/CastorRecHitMonitor/CASTORTowerEMvsEhad",
+             'description':"CASTOR Tower EM vs Ehad",
+ 'draw': { 'xtype': 'log', 'ytype':'log', 'drawopts': "COLZ" } }]
+           )
+

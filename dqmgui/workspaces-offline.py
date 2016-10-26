@@ -66,7 +66,7 @@ server.workspace('DQMContent', 22, 'Calorimeter', 'EcalPreshower', '^EcalPreshow
                  'EcalPreshower/Layouts/05-ESGain-EcalPreshower',
                 )
 
-server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
+server.workspace('DQMContent', 23, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
                  'Hcal/Layouts/00 Current Summary',
                  'Hcal/Layouts/01 RAW Bad Quality',
                  'Hcal/Layouts/02 RAW Bad Quality depth',
@@ -92,7 +92,7 @@ server.workspace('DQMContent', 30, 'Calorimeter', 'HCAL', '^(Hcal|Hcal2)/', '',
                  'Hcal/Layouts/22 TP Et Missing',
                  'Hcal/Layouts/23 TP Et Occupancy'
                 )
-server.workspace('DQMContent',30,'Calorimeter','HCALcalib', '^HcalCalib/', '',
+server.workspace('DQMContent',24,'Calorimeter','HCALcalib', '^HcalCalib/', '',
                  'HcalCalib/Layouts/00 Current Summary',
                  'HcalCalib/Layouts/01 Pedestal Mean',
                  'HcalCalib/Layouts/02 Pedestal Mean by FED',
@@ -112,6 +112,13 @@ server.workspace('DQMContent',30,'Calorimeter','HCALcalib', '^HcalCalib/', '',
                  'HcalCalib/Layouts/16 Missing vs LS',
                  'HcalCalib/Layouts/17 Number of Bad Mean vs LS',
                  'HcalCalib/Layouts/18 Number of Bad RMS vs LS'
+                )
+
+server.workspace('DQMContent', 25, 'Calorimeter', 'Castor', '^Castor/', '',
+                 'Castor/Layouts/01 - Map of frontend and readout errors',
+                 'Castor/Layouts/02 - Channel-wise timing',
+                 'Castor/Layouts/02b - Channel-wise timing (rms)',
+                 'Castor/Layouts/Digi/05 - DigiSize',
                 )
 
 # Trigger/Lumi workspaces:
