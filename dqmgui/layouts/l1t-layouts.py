@@ -22,6 +22,46 @@ l1t_quickCollection(dqmitems, "02 - Calo Layer1 Input Link Errors",
     'path': "L1T2016/L1TStage2CaloLayer1/maxEvtLinkErrorsByLumi",
     'description': "This should be empty at all times."
   }])
+l1t_quickCollection(dqmitems, "03 - uGMT MUON BX",
+  [{
+    'path': "L1T2016/L1TStage2uGMT/ugmtMuonBX",
+    'description': "This should have a peak at BX=0."
+  }])
+l1t_quickCollection(dqmitems, "04 - uGMT MUON ETA",
+  [{
+    'path': "L1T2016/L1TStage2uGMT/ugmtMuonEta",
+    'description': "This should have no spikes."
+  }])
+l1t_quickCollection(dqmitems, "05 - uGMT MUON P_{T}",
+  [{
+    'path': "L1T2016/L1TStage2uGMT/ugmtMuonPt",
+    'description': "This should show normal pT spectrum (spikes at 140 GeV and 200 GeV expected from max TF pT assigned)"
+  }])
+l1t_quickCollection(dqmitems, "06 - uGMT MUON PHI ETA",
+  [{
+    'path': "L1T2016/L1TStage2uGMT/ugmtMuonPhivsEta",
+    'description': "This should have no big holes."
+  }])
+l1t_quickCollection(dqmitems, "07 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
+  [{
+    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_global",
+    'description': ""
+  }])
+l1t_quickCollection(dqmitems, "08 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
+  [{
+    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_inEvt",
+    'description': ""
+  }])
+l1t_quickCollection(dqmitems, "09 - uGT Algorithm Trigger Bits (after prescale)",
+  [{
+    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler",
+    'description': ""
+  }])
+l1t_quickCollection(dqmitems, "10 - uGT Algorithm Trigger Bits (after BX mask) vs. BX Number in Event",
+  [{
+    'path': "L1T2016/L1TStage2uGT/algoBits_after_bxomask_bx_inEvt",
+    'description': ""
+  }])
 
 ###############################################
 ### From here down is legacy/stage1 trigger ###
