@@ -193,6 +193,7 @@ private:
 	return;
       }
 
+
 	  if( o.name.find( "TrackEtaPhi" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
@@ -267,9 +268,13 @@ private:
 	}
       if( o.name.find( "FEDErrorsVsId" )  != std::string::npos)
 	{
+	  gPad->SetGrid();
+          gPad->SetLeftMargin(0.2);
 	  obj->SetStats( kFALSE );
 	  gStyle->SetPalette(1,0);
 	  obj->SetOption("colz");
+	  obj->GetYaxis()->SetTitle("");
+
 	return;
 	}
 			if( o.name.find( "DataPresentInLS" )  != std::string::npos)
