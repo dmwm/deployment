@@ -598,7 +598,10 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/17 TT Flag-Readout Mism
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT flag mismatch', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE +', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}])
-
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/18 TT Flags vs Et',
+	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT Flags vs Et', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}],
+	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE -', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'},
+	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE +', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
@@ -1195,3 +1198,37 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Led/00 PN Amplitude L2' % channellabel,
                  [{'path': 'Ecal%s/%sLedTask/Led2/PN/Gain16/%sLDT PNs amplitude %s G16 L2' % (detector, label, label, channellabel),
                    'description': 'Mean led pulse amplitude in the PN diodes. In general, a PN channel is filled only when a led pulse was observed in the crystals that are associated to the diode. When no led signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}])
+
+#____________________ Layouts / 13 By SuperModule ____________________
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/00 FE Status Errors',
+           [{'path': 'EcalBarrel/EBStatusFlagsTask/FEStatus/EBSFT front-end status error map by lumi', 'description': 'FE status error occupancy map for this lumisection. Nominal FE status flags such as ENABLED, SUPPRESSED, FIFOFILL, FIFOFULLL1ADESYNC, and FORCEDZS are NOT included.'}],
+           [{'path': 'EcalEndcap/EEStatusFlagsTask/FEStatus/EESFT EE - front-end status error map by lumi', 'description': 'FE status error occupancy map for this lumisection. Nominal FE status flags such as ENABLED, SUPPRESSED, FIFOFILL, FIFOFULLL1ADESYNC, and FORCEDZS are NOT included.'},
+            {'path': 'EcalEndcap/EEStatusFlagsTask/FEStatus/EESFT EE + front-end status error map by lumi', 'description': 'FE status error occupancy map for this lumisection. Nominal FE status flags such as ENABLED, SUPPRESSED, FIFOFILL, FIFOFULLL1ADESYNC, and FORCEDZS are NOT included.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/01 Integrity Errors',
+           [{'path': 'EcalBarrel/EBIntegrityTask/EBIT integrity errors map by lumi', 'description': 'Integrity error occupancy map for this lumisection. Includes Gain, ChId, GainSwitch, TowerId, and BlockSize errors. '}],
+           [{'path': 'EcalEndcap/EEIntegrityTask/EEIT EE - integrity errors map by lumi', 'description': 'Integrity error occupancy map for this lumisection. Includes Gain, ChId, GainSwitch, TowerId, and BlockSize errors.'},
+            {'path': 'EcalEndcap/EEIntegrityTask/EEIT EE + integrity errors map by lumi', 'description': 'Integrity error occupancy map for this lumisection. Includes Gain, ChId, GainSwitch, TowerId, and BlockSize errors.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/02 Digis',
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT digi occupancy by lumi', 'description': 'Digi occupancy for this lumisection.'}],
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT digi occupancy EE - by lumi', 'description': 'Digi occupancy for this lumisection.'},
+            {'path': 'EcalEndcap/EEOccupancyTask/EEOT digi occupancy EE + by lumi', 'description': 'Digi occupancy for this lumisection.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/03 RecHits (Filtered)',
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy by lumi', 'description': 'Filtered rechit occupancy for this lumisection. Only includes rechits with GOOD reconstruction flag and E > 0.5 GeV'}],
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE - by lumi', 'description': 'Filtered rechit occupancy for this lumisection. Only includes rechits with GOOD reconstruction flag and E > 0.5 GeV.'},
+            {'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy EE + by lumi', 'description': 'Filtered rechit occupancy for this lumisection. Only includes rechits with GOOD reconstruction flag and E > 0.5 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/04 Presample RMS',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal G12 RMS map by lumi', 'description': '2D distribution of the presample RMS for this lumisection. Channels with entries less than 6 are not considered.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal G12 RMS map by lumi', 'description': '2D distribution of the presample RMS for this lumisection. Channels with entries less than 6 are not considered.'},
+            {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal G12 RMS map by lumi', 'description': '2D distribution of the presample RMS for this lumisection. Channels with entries less than 6 are not considered.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/05 RecHit Energy',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBOT energy summary by lumi', 'description': '2D distribution of the mean tower rec hit energy for this lumisection. The mean is the total tower rechit energy over the number of rechits in the tower.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EEOT EE - energy summary by lumi', 'description': '2D distribution of the mean tower rec hit energy for this lumisection. The mean is the total tower rechit energy over the number of rechits in the tower.'},
+            {'path': 'EcalEndcap/EESummaryClient/EEOT EE + energy summary by lumi', 'description': '2D distribution of the mean tower rec hit energy for this lumisection. The mean is the total tower rechit energy over the number of rechits in the tower.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/06 TP Digis',
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT TP digi thr occupancy by lumi', 'description': 'TP digi occupancy for this lumisection. Only includes TP digis with Et > 4 GeV.'}],
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT TP digi thr occupancy EE - by lumi', 'description': 'TP digi occupancy for this lumisection. Only includes TP digis with Et > 4 GeV.'},
+            {'path': 'EcalEndcap/EEOccupancyTask/EEOT TP digi thr occupancy EE + by lumi', 'description': 'TP digi occupancy for this lumisection. Only includes TP digis with Et > 4 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/07 TP Et',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBTTT Et trigger tower summary by lumi', 'description': '2D distribution of the Trigger Primitives Et for this lumisection.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EETTT EE - Et trigger tower summary by lumi', 'description': '2D distribution of the Trigger Primitives Et for this lumisection.'},
+            {'path': 'EcalEndcap/EESummaryClient/EETTT EE + Et trigger tower summary by lumi', 'description': '2D distribution of the Trigger Primitives Et for this lumisection.'}])

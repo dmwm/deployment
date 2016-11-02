@@ -1294,7 +1294,8 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   if(!fullpath.Contains("Timing") &&
      !fullpath.Contains("Real vs Emulated") &&
      !fullpath.Contains("Occupancy") &&
-     !fullpath.Contains("Cluster")) return;
+     !fullpath.Contains("Cluster") &&
+     !fullpath.Contains("TT Flags vs Et")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
 
@@ -1323,8 +1324,13 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) ||
           TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath) ||
           TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) ||
-          TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath) )
+          TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath))
     applyDefaults = false;
+  else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT TT Flags vs Et(| EE [+-])").MatchB(fullpath)) {
+    applyDefaults = false;
+    obj->GetXaxis()->SetNdivisions(10);
+    obj->GetYaxis()->SetNdivisions(-8);
+  }
   else if(!isNewStyle && TPRegexp("EBClusterTask/EBCLT BC (ET|energy|number|size) map").MatchB(fullpath)){
     gStyle->SetPaintTextFormat("+03g");
     ebSMShiftedLabels->Draw("text same");
