@@ -623,12 +623,15 @@ private:
       TLine tl1;
       tl1.SetLineColor(2);
       tl1.SetLineWidth(3);
-      float ymin = 0.0;
-      float ymax = obj->GetYaxis()->GetXmax();
-      float mask1min = 26.5;
-      float mask1max = 29.5;
-      float mask2min = 37.5;
-      float mask2max = 39.5;
+      float mask1_xmin = 26.5;
+      float mask1_xmax = 29.5;
+      float mask1_ymin = 166.5;
+      float mask1_ymax = 236.5;
+
+      float mask2_xmin = 37.5;
+      float mask2_xmax = 39.5;
+      float mask2_ymin = 412.5;
+      float mask2_ymax = 427.5;
 
       TText tt;
       tt.SetTextSize(0.12);
@@ -679,10 +682,22 @@ private:
       }
       if( name.find( "DeltaBx_vs_ApvCycle" )  != std::string::npos)
       {
-        tl1.DrawLine(mask1min, ymin, mask1min, ymax);
-        tl1.DrawLine(mask2min, ymin, mask2min, ymax);        
-        tl1.DrawLine(mask1max, ymin, mask1max, ymax);
-        tl1.DrawLine(mask2max, ymin, mask2max, ymax);
+        tl1.DrawLine(mask1_xmin, mask1_ymin, mask1_xmin, mask1_ymax);
+        tl1.DrawLine(mask1_xmax, mask1_ymin+2, mask1_xmax, mask1_ymax+2);
+        for (int i = 0; i<3; i++){
+          tl1.DrawLine(mask1_xmin+i, mask1_ymin+i, mask1_xmin+1+i, mask1_ymin+i);
+          tl1.DrawLine(mask1_xmin+1+i, mask1_ymin+i, mask1_xmin+1+i, mask1_ymin+1+i);
+          tl1.DrawLine(mask1_xmin+i, mask1_ymax-1+i, mask1_xmin+i, mask1_ymax+i);
+          tl1.DrawLine(mask1_xmin+i, mask1_ymax+i, mask1_xmin+1+i, mask1_ymax+i);
+        }
+        tl1.DrawLine(mask2_xmin, mask2_ymin, mask2_xmin, mask2_ymax);
+        tl1.DrawLine(mask2_xmax, mask2_ymin+1, mask2_xmax, mask2_ymax+1);
+        for (int i = 0; i<2; i++){
+          tl1.DrawLine(mask2_xmin+i, mask2_ymin+i, mask2_xmin+1+i, mask2_ymin+i);
+          tl1.DrawLine(mask2_xmin+1+i, mask2_ymin+i, mask2_xmin+1+i, mask2_ymin+1+i);
+          tl1.DrawLine(mask2_xmin+i, mask2_ymax-1+i, mask2_xmin+i, mask2_ymax+i);
+          tl1.DrawLine(mask2_xmin+i, mask2_ymax+i, mask2_xmin+1+i, mask2_ymax+i);
+        }
         return;
       }
     }
