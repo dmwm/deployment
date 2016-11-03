@@ -630,8 +630,8 @@ private:
 
       float mask2_xmin = 37.5;
       float mask2_xmax = 39.5;
-      float mask2_ymin = 412.5;
-      float mask2_ymax = 427.5;
+      float mask2_ymin = 387.5;
+      float mask2_ymax = 458.5;
 
       TText tt;
       tt.SetTextSize(0.12);
