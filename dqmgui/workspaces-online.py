@@ -144,7 +144,8 @@ server.workspace('DQMContent',33,'Calorimeter','HCALcalib', '^HcalCalib/', '',
 server.workspace('DQMContent', 34, 'Calorimeter', 'Castor', '^Castor/', '',
                  'Castor/Layouts/01 - Map of frontend and readout errors',
                  'Castor/Layouts/02 - Channel-wise timing',
-                 'Castor/Layouts/03 - Map of rechit occupancies',
+                 'Castor/Layouts/02b - Channel-wise timing (rms)',
+                 'Castor/Layouts/Digi/05 - DigiSize',
                 )
 
 # Trigger/Lumi workspaces:
