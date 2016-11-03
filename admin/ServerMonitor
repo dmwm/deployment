@@ -349,18 +349,20 @@ class LogMonitor(Monitor):
   shrinks, or files are removed, memory of scanning the files is reset
   and the files are re-evaluated from beginning if/when they reappear.
   """
-  def __init__(self, task_queue, state_dir, state_id):
+  def __init__(self, task_queue, state_dir, state_id, chunk = False):
     """Initialise the log monitor.
 
     @param task_queue -- queue for incoming tasks
     @param state_dir -- directory in which to keep log scan state.
-    @param state_id -- file name for log scan state."""
+    @param state_id -- file name for log scan state.
+    @param chunk -- operates over log chunks insteed of lines"""
     Monitor.__init__(self, task_queue)
     self.state_dir = state_dir
     self.state_id = state_id
     self.state = self._load_state()
     self.modified = False
     self.last_save = 0
+    self.chunk = chunk
 
   def _read_lines(self, file):
     """Generator to read a log file breaking it to lines. This is vastly
@@ -444,7 +446,7 @@ class LogMonitor(Monitor):
   def _do(self, svc, can_talk, dir, files, rxlist):
     """Perform log scan task.
 
-    For each match found invokes derived class method _match().
+    For each match found invokes derived class method _match() or _chunk().    
 
     @param svc -- service name
     @param can_talk -- can talk about problems
@@ -466,12 +468,21 @@ class LogMonitor(Monitor):
             s.lastpos = 0
           file = open(fname, "r")
           file.seek(s.lastpos)
-          for start, end, line in self._read_lines(file):
-            s.lastpos = end
-	    for rx in rxlist:
-	      match = re.search(rx, line)
-	      if match:
-	        self._match(svc, fname, start, line.rstrip(), rx, match)
+          if not self.chunk:
+            for start, end, line in self._read_lines(file):
+              s.lastpos = end
+	      for rx in rxlist:
+	        match = re.search(rx, line)
+	        if match:
+	          self._match(svc, fname, start, line.rstrip(), rx, match)
+          else:
+            chunk = []
+            for start, end, line in self._read_lines(file):
+              s.lastpos = end
+              for rx in rxlist:
+                chunk.append(re.search(rx, line))
+            if len(chunk) > 0:
+              self._chunk(svc, fname, start, line.rstrip(), rx, chunk)
 
           s.size = st.st_size
           s.mtime = st.st_mtime
@@ -529,6 +540,44 @@ class LogValueMonitor(LogMonitor):
     @param match -- match object"""
     logmsg(svc, "REPORT", " ".join(["%s=%s" % (k, v) for k, v in
                                     sorted(match.groupdict().items())]))
+
+class LogAverageValue(LogMonitor):
+  """LogMonitor which reports the avarage VALUE of matches as NAME=VALUE
+  pairs where NAMEs are named regexp match groups."""
+  def __init__(self, task_queue, state_dir):
+    """Initialise the log monitor.
+
+    @param task_queue -- queue for incoming tasks
+    @param state_dir -- directory in which to keep log scan state.
+    @param chunk -- operates over log chunks insteed of lines."""
+    LogMonitor.__init__(self, task_queue, state_dir, "avg-state", True)
+
+  def _chunk(self, svc, fname, start, line, rx, chunk):
+    """Report log match.
+
+    @param svc -- service name
+    @param fname -- log file in which match was found
+    @param start -- line starting byte position
+    @param line -- log line
+    @param rx -- regular expression that matched
+    @param match -- match object"""
+
+    value = {}
+    count = {}
+    for line in chunk:
+      for item in line.groupdict().items():
+        try:
+          value[item[0]] += float(item[1])
+          count[item[0]] += 1
+        except:
+          value[item[0]] = float(item[1])
+          count[item[0]] = 1
+
+    average = []
+    for key in value:
+      average.append((key, value[key]/count[key]))
+
+    logmsg(svc, "AVG", " ".join(["%s=%s" % (k, v) for k, v in sorted(average)]))
 
 class MonitorDaemon:
   """Master monitor daemon.
@@ -728,6 +777,16 @@ class MonitorDaemon:
       m = re.match(r'^REPORT_REGEX="(.*)"$', line)
       if m: s.log_val_regex.append(m.group(1)); continue
 
+      m = re.match(r"^AVG_FILES='(.*)'$", line)
+      if m: s.log_avg_files += re.split(r"\s+", m.group(1)); continue
+      m = re.match(r'^AVG_FILES="(.*)"$', line)
+      if m: s.log_avg_files += re.split(r"\s+", m.group(1)); continue
+
+      m = re.match(r"^AVG_REGEX='(.*)'$", line)
+      if m: s.log_avg_regex.append(m.group(1)); continue
+      m = re.match(r'^AVG_REGEX="(.*)"$', line)
+      if m: s.log_avg_regex.append(m.group(1)); continue
+
       m = re.match(r"^PS_REGEX='(.*)'$", line)
       if m: s.ps_regex = m.group(1); continue
       m = re.match(r'^PS_REGEX="(.*)"$', line)
@@ -793,10 +852,12 @@ class MonitorDaemon:
     qurtask = Queue()
     qletask = Queue()
     qlvtask = Queue()
+    qlatask = Queue()
     queues = [qptask, qstask, qletask, qlvtask, quptask, qurtask]
     mon = [[ProcessMonitor(qptask)], [SystemMonitor(qstask)],
            [LogErrorMonitor(qletask, self.feeddir)],
            [LogValueMonitor(qlvtask, self.feeddir)],
+           [LogAverageValue(qlatask, self.feeddir)],
            [URLPingMonitor(quptask) for i in xrange(0, 10)],
            [URLReportMonitor(qurtask) for i in xrange(0, 10)]]
     for m in mon:
@@ -864,6 +925,8 @@ class MonitorDaemon:
           s.log_err_regex = []
           s.log_val_files = []
           s.log_val_regex = []
+          s.log_avg_files = []
+          s.log_avg_regex = []
           s.ps_regex = None
           s.url_ping = None
           s.url_ping_regex = None
@@ -904,6 +967,8 @@ class MonitorDaemon:
           qletask.put((s.svcname, s.can_talk, s.log_dir, s.log_err_files, s.log_err_regex))
         if s.log_val_files and s.log_val_regex:
           qlvtask.put((s.svcname, s.can_talk, s.log_dir, s.log_val_files, s.log_val_regex))
+        if s.log_avg_files and s.log_avg_regex:
+          qlatask.put((s.svcname, s.can_talk, s.log_dir, s.log_avg_files, s.log_avg_regex))
         if s.ps_regex:
           qptask.put((s.svcname, s.can_talk, s.ps_regex))
         if s.url_ping and s.url_ping_regex:
