@@ -49,9 +49,9 @@ deploy_couchdb_post()
        enable
        sysboot
        # Set cronjobs to compact databases and views at selected times
-       for task in "0:compact wmstats" "6:compact all_but_wmstats" \
+       for task in "0:compact wmstats" "18:compact all_but_wmstats" \
                    "12:compactviews wmstats WMStats" "12:compactviews wmstats WMStatsErl" \
-                   "15:compactviews all_but_wmstats all"; do
+                   "3:compactviews all_but_wmstats all"; do
          local cmd="$project_config/manage ${task#*:} 'I did read documentation'"
          $nogroups || cmd="sudo -H -u _couchdb bashs -l -c \"${cmd}\""
          echo "1 ${task%%:*} * * * $cmd"
