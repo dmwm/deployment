@@ -468,20 +468,18 @@ class LogMonitor(Monitor):
             s.lastpos = 0
           file = open(fname, "r")
           file.seek(s.lastpos)
-          if not self.chunk:
-            for start, end, line in self._read_lines(file):
-              s.lastpos = end
-	      for rx in rxlist:
-	        match = re.search(rx, line)
-	        if match:
+
+          chunk = []
+          for start, end, line in self._read_lines(file):
+            s.lastpos = end
+	    for rx in rxlist:
+	      match = re.search(rx, line)
+	      if match:
+                if not self.chunk:
 	          self._match(svc, fname, start, line.rstrip(), rx, match)
-          else:
-            chunk = []
-            for start, end, line in self._read_lines(file):
-              s.lastpos = end
-              for rx in rxlist:
-                chunk.append(re.search(rx, line))
-            if len(chunk) > 0:
+                else:
+                  chunk.append(match)
+          if len(chunk) > 0:
               self._chunk(svc, fname, start, line.rstrip(), rx, chunk)
 
           s.size = st.st_size
@@ -548,8 +546,7 @@ class LogAverageValue(LogMonitor):
     """Initialise the log monitor.
 
     @param task_queue -- queue for incoming tasks
-    @param state_dir -- directory in which to keep log scan state.
-    @param chunk -- operates over log chunks insteed of lines."""
+    @param state_dir -- directory in which to keep log scan state."""
     LogMonitor.__init__(self, task_queue, state_dir, "avg-state", True)
 
   def _chunk(self, svc, fname, start, line, rx, chunk):
@@ -560,7 +557,7 @@ class LogAverageValue(LogMonitor):
     @param start -- line starting byte position
     @param line -- log line
     @param rx -- regular expression that matched
-    @param match -- match object"""
+    @param chunk -- list of match objects."""
 
     value = {}
     count = {}
