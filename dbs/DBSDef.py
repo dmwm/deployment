@@ -14,7 +14,7 @@ sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
 from DBSSecrets import *
 
 # get viewnames -> instance names list
-with open(os.path.join(TOPDIR, 'state/dbs/view_instances.json'), 'r') as f:
+with open(os.path.join(TOPDIR, 'state/dbs/view_instances_def.json'), 'r') as f:
   view_mapping = json.load(f)
 
 # instance name : connecturls, {reader needed roles, writer needed roles}
@@ -22,23 +22,18 @@ if VARIANT == 'prod':
   db_mapping = {
                 'prod/phys01': [dbs3_pp1_r, {'reader':{},'writer':{}}],
                 'prod/phys02': [dbs3_pp2_r, {'reader':{},'writer':{}}],
-                'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}],
                 'prod/caf':    [dbs3_pc_r, {'reader':{},'writer':{}}],
                 'prod/test':   [dbs3_pt_i2, {'reader':{},'writer':{}}]}
 
 elif VARIANT == 'preprod':
-  db_mapping = {'int/global': [dbs3_ig_i2,  {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
-                'int/phys01': [dbs3_ip1_i2, {'reader':{},'writer':{}}],
-                'int/phys02': [dbs3_ip2_i2, {'reader':{},'writer':{}}],
-                'int/phys03': [dbs3_ip3_i2,{'reader':{},'writer':{}}]}
+  db_mapping = {'int/phys01': [dbs3_ip1_i2, {'reader':{},'writer':{}}],
+                'int/phys02': [dbs3_ip2_i2, {'reader':{},'writer':{}}]}
 elif VARIANT == 'dev':
-  db_mapping = {'dev/global': [dbs3_dg_i2, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
-                'dev/phys01': [dbs3_dp1_i2, {'reader':{},'writer':{}}],
-                'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}],
-                'dev/phys03': [dbs3_dp3_i2, {'reader':{},'writer':{}}]}
+  db_mapping = {'dev/phys01': [dbs3_dp1_i2, {'reader':{},'writer':{}}],
+                'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}]}
 else:
-  db_mapping = {'dev/global': [dbs3_l2_i2,{'reader':{},'writer':{}}],
-                'dev/phys03': [dbs3_p_i2, {'reader':{},'writer':{}}]}
+  db_mapping = {'dev/phys01': [dbs3_dp1_i2, {'reader':{},'writer':{}}],
+                'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}]}   
 
 config = Configuration()
 config.component_('SecurityModule')
@@ -63,7 +58,7 @@ config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i
 
 ### Create views for DBSReader, DBSWriter and DBSMigrate
 active = config.dbs.views.section_('active')
-for viewname, access in [('DBSReader','reader'),('DBSWriter','writer'),('DBSMigrate','writer')]:
+for viewname, access in [('DBSReader','reader'),('DBSWriter','writer')]:
   if view_mapping[VARIANT][viewname]:
     active.section_(viewname)
     view = getattr(active, viewname)

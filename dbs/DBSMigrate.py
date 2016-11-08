@@ -19,10 +19,10 @@ with open(os.path.join(TOPDIR, 'state/dbs/view_instances.json'), 'r') as f:
 
 # instance name : connecturls, {reader needed roles, writer needed roles}
 if VARIANT == 'prod':
-  db_mapping = {
-                'prod/phys01': [dbs3_pp1_r, {'reader':{},'writer':{}}],
-                'prod/phys02': [dbs3_pp2_r, {'reader':{},'writer':{}}],
-                'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}],
+  db_mapping = {'prod/global': [dbs3_ig_r, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
+                'prod/phys01': [dbs3_ip1_r, {'reader':{},'writer':{}}],
+                'prod/phys02': [dbs3_ip2_r, {'reader':{},'writer':{}}],
+                'prod/phys03': [dbs3_ip3_r, {'reader':{},'writer':{}}],
                 'prod/caf':    [dbs3_pc_r, {'reader':{},'writer':{}}],
                 'prod/test':   [dbs3_pt_i2, {'reader':{},'writer':{}}]}
 
@@ -45,7 +45,7 @@ config.component_('SecurityModule')
 config.SecurityModule.key_file = os.path.join(ROOTDIR, 'auth/wmcore-auth/header-auth-key')
 
 config.component_('Webtools')
-config.Webtools.port = 8250
+config.Webtools.port = 8257
 config.Webtools.thread_pool = 15
 config.Webtools.log_screen = False
 config.Webtools.proxy_base = 'True'
@@ -63,7 +63,7 @@ config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i
 
 ### Create views for DBSReader, DBSWriter and DBSMigrate
 active = config.dbs.views.section_('active')
-for viewname, access in [('DBSReader','reader'),('DBSWriter','writer'),('DBSMigrate','writer')]:
+for viewname, access in [('DBSMigrate','writer')]:
   if view_mapping[VARIANT][viewname]:
     active.section_(viewname)
     view = getattr(active, viewname)

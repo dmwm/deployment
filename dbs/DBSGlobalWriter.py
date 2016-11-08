@@ -8,44 +8,29 @@ ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
 TOPDIR = ROOTDIR.rsplit('/', 1)[0]
 DBSVERSION = os.getenv('DBS3_VERSION')
 VARIANT="@@VARIANT@@"
-
 # load secrets
 sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
 from DBSSecrets import *
 
 # get viewnames -> instance names list
-with open(os.path.join(TOPDIR, 'state/dbs/view_instances.json'), 'r') as f:
+with open(os.path.join(TOPDIR, 'state/dbs/view_instances_gw.json'), 'r') as f:
   view_mapping = json.load(f)
 
 # instance name : connecturls, {reader needed roles, writer needed roles}
 if VARIANT == 'prod':
-  db_mapping = {
-                'prod/phys01': [dbs3_pp1_r, {'reader':{},'writer':{}}],
-                'prod/phys02': [dbs3_pp2_r, {'reader':{},'writer':{}}],
-                'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}],
-                'prod/caf':    [dbs3_pc_r, {'reader':{},'writer':{}}],
-                'prod/test':   [dbs3_pt_i2, {'reader':{},'writer':{}}]}
-
+  db_mapping = {'prod/global': [dbs3_pg_r, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
 elif VARIANT == 'preprod':
-  db_mapping = {'int/global': [dbs3_ig_i2,  {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
-                'int/phys01': [dbs3_ip1_i2, {'reader':{},'writer':{}}],
-                'int/phys02': [dbs3_ip2_i2, {'reader':{},'writer':{}}],
-                'int/phys03': [dbs3_ip3_i2,{'reader':{},'writer':{}}]}
+  db_mapping = {'int/global': [dbs3_ig_i2,  {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
 elif VARIANT == 'dev':
-  db_mapping = {'dev/global': [dbs3_dg_i2, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
-                'dev/phys01': [dbs3_dp1_i2, {'reader':{},'writer':{}}],
-                'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}],
-                'dev/phys03': [dbs3_dp3_i2, {'reader':{},'writer':{}}]}
+  db_mapping = {'dev/global': [dbs3_dg_i2, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
 else:
-  db_mapping = {'dev/global': [dbs3_l2_i2,{'reader':{},'writer':{}}],
-                'dev/phys03': [dbs3_p_i2, {'reader':{},'writer':{}}]}
-
+  db_mapping = {'dev/global': [dbs3_l2_i2,{'reader':{},'writer':{}}]}
 config = Configuration()
 config.component_('SecurityModule')
 config.SecurityModule.key_file = os.path.join(ROOTDIR, 'auth/wmcore-auth/header-auth-key')
 
 config.component_('Webtools')
-config.Webtools.port = 8250
+config.Webtools.port = 8253
 config.Webtools.thread_pool = 15
 config.Webtools.log_screen = False
 config.Webtools.proxy_base = 'True'
@@ -61,9 +46,9 @@ config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 900
 config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i in r]))
 
-### Create views for DBSReader, DBSWriter and DBSMigrate
+### Create views for DBSReader
 active = config.dbs.views.section_('active')
-for viewname, access in [('DBSReader','reader'),('DBSWriter','writer'),('DBSMigrate','writer')]:
+for viewname, access in [('DBSWriter','writer')]:
   if view_mapping[VARIANT][viewname]:
     active.section_(viewname)
     view = getattr(active, viewname)
