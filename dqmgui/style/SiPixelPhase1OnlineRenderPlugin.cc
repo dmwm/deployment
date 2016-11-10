@@ -11,6 +11,7 @@
 #include "TStyle.h"
 #include "TCanvas.h"
 #include "TColor.h"
+#include "TLegend.h"
 #include <cassert>
 #include <string>
 
@@ -46,27 +47,43 @@ public:
       TH2* obj = dynamic_cast<TH2*>( o.object );
       if(!obj) return;
 
+      // Axis range is not shown anywhere, min abused for block size
+      int blocksize = int(obj->GetYaxis()->GetXmin()+0.5);
+
+      TLegend* leg = new TLegend(0.75,0.5,0.9,0.95);
+      leg->SetHeader("LS Range");
+      leg->SetBit(kCanDelete);
+
       double ref = obj->GetEntries();
       double max = 0;
+
+      int n_color = 0;
 
       for (int i = 1; i <= obj->GetNbinsY(); i++) {
         auto name = std::string(obj->GetName()) + "_" + std::to_string(i);
         TH1* h = new TH1F(name.c_str(), "", obj->GetNbinsX(),
                         obj->GetXaxis()->GetXmin(), obj->GetXaxis()->GetXmax());
         h->SetBit(kCanDelete);
-        double entries = 1;
+        double entries = 0;
         for (int x = 1; x < obj->GetNbinsX(); x++) {
           entries += obj->GetBinContent(x, i);
           h->SetBinContent(x, obj->GetBinContent(x, i));
         }
+        if (entries == 0) continue;
         h->Scale(ref/entries);
-        h->SetLineColor(i);
+
+        n_color++;
+        
+        h->SetLineColor(n_color);
         h->Draw("SAME");
+        // i is bins, so 1 is 1st block = 0 to blocksize-1
+        leg->AddEntry(h,(std::to_string((i-1)*blocksize) + "-" + std::to_string((i*blocksize)-1)).c_str(),"l");
         max = std::max(max, h->GetMaximum());
       }
 
       obj->GetYaxis()->Set(1, 0, max*1.05);
       obj->GetYaxis()->SetTitle("");
+      leg->Draw();
     }
 
 private:
