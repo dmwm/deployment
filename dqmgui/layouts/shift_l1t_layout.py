@@ -58,4 +58,10 @@ l1tlayout(dqmitems,"27 - uGT Algorithm Trigger Bits (after prescale) vs. Global 
     [{'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_global", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 l1tlayout(dqmitems,"28 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
     [{'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"29 - uGMT Muon Phi for EMTF Inputs",
+    [{'path': "L1T2016/L1TStage2uGMT/ugmtMuonPhiEmtf", 'description': "uGMT Muon Phi for EMTF Inputs.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"30 - EMTF Chamber Occupancy",
+    [{'path': "L1T2016/L1TStage2EMTF/emtfHitOccupancy", 'description': "EMTF Chamber Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
+l1tlayout(dqmitems,"31 - EMTF Track Bunch Crossing",
+    [{'path': "L1T2016/L1TStage2EMTF/emtfTrackBX", 'description': "EMTF Track Bunch Crossing. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 
