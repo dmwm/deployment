@@ -21,4 +21,10 @@
 ^/auth/complete/scheddmon/0122/ vocms0122.cern.ch
 ^/auth/complete/scheddmon/066/ vocms066.cern.ch
 ^/auth/complete/scheddmon/059/ vocms059.cern.ch
+^/auth/complete/scheddmon/0107/ vocms0107.cern.ch
+^/auth/complete/scheddmon/0137/ vocms0137.cern.ch
+^/auth/complete/scheddmon/0144/ vocms0144.cern.ch
+^/auth/complete/scheddmon/0155/ vocms0155.cern.ch
+^/auth/complete/scheddmon/0119/ vocms0119.cern.ch
+^/auth/complete/scheddmon/0120/ vocms0120.cern.ch
 ^ vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch
