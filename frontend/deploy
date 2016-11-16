@@ -86,7 +86,8 @@ deploy_frontend_post()
    -d $project_config/htdocs                          \
    -e "$APACHE24_SETUP_ROOT/etc/env.d/*.sh"           \
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
-   -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so)
+   -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so\
+   -m evasive20_module:$MOD_EVASIVE24_ROOT/modules/mod_evasive20.so)
   [ $? = 0 ]
   rm -f $PWD/etc/keys/authz-headers
   setgroup -R ugo+r,go-w _config $PWD/{*.conf,htdocs,etc/env.d,etc/keys}
