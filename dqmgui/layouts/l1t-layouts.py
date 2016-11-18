@@ -44,22 +44,17 @@ l1t_quickCollection(dqmitems, "06 - uGMT MUON PHI ETA",
   }])
 l1t_quickCollection(dqmitems, "07 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
   [{
-    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_global",
+    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescale_bx_global",
     'description': ""
   }])
 l1t_quickCollection(dqmitems, "08 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
   [{
-    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler_bx_inEvt",
+    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescale_bx_inEvt",
     'description': ""
   }])
 l1t_quickCollection(dqmitems, "09 - uGT Algorithm Trigger Bits (after prescale)",
   [{
-    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescaler",
-    'description': ""
-  }])
-l1t_quickCollection(dqmitems, "10 - uGT Algorithm Trigger Bits (after BX mask) vs. BX Number in Event",
-  [{
-    'path': "L1T2016/L1TStage2uGT/algoBits_after_bxomask_bx_inEvt",
+    'path': "L1T2016/L1TStage2uGT/algoBits_after_prescale",
     'description': ""
   }])
 
