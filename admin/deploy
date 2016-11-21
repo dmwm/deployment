@@ -64,7 +64,7 @@ deploy_admin_post()
 
   case $host:$root in
     vocms0126:/data/srv | vocms0127:/data/srv | vocms0134:/data/srv | vocms0135:/data/srv | \
-    vocms0160:/data/srv | vocms0162:/data/srv | vocms0164:/data/srv )
+    vocms0158:/data/srv | vocms0160:/data/srv | vocms0162:/data/srv | vocms0164:/data/srv )
       klist -s # must have afs kerberos token
       LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; } | \
