@@ -42,10 +42,10 @@ export DAS_ROOT YUI_ROOT
 export PYTHONUNBUFFERED=1
 PYTHONV=`echo $PYTHON_VERSION | cut -f1,2 -d.`
 export DAS_PYTHONPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages
-export DAS_JSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/js
-export DAS_CSSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/css
-export DAS_TMPLPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/jinja_templates
-export DAS_IMAGESPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/src/images
+export DAS_JSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/js
+export DAS_CSSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/css
+export DAS_TMPLPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/jinja_templates
+export DAS_IMAGESPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/images
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
