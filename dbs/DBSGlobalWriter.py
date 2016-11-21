@@ -8,6 +8,7 @@ ROOTDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 3)[0]
 TOPDIR = ROOTDIR.rsplit('/', 1)[0]
 DBSVERSION = os.getenv('DBS3_VERSION')
 VARIANT="@@VARIANT@@"
+
 # load secrets
 sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
 from DBSSecrets import *
