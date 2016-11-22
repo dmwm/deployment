@@ -19,6 +19,13 @@ deploy_dbs_sw()
 {
   deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3
   perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/dmwm/DBS/raw/master/view_instances.json,g" $root/$cfgversion/config/$project/manage
+  perl -p -i -e "s,\@\@JSONURL_DEF\@\@,https://github.com/dmwm/DBS/raw/master/view_instances_def.json,g" $root/$cfgversion/config/$project/manage
+  perl -p -i -e "s,\@\@JSONURL_GR\@\@,https://github.com/dmwm/DBS/raw/master/view_instances_gr.json,g" $root/$cfgversion/config/$project/manage
+  perl -p -i -e "s,\@\@JSONURL_GW\@\@,https://github.com/dmwm/DBS/raw/master/view_instances_gw.json,g" $root/$cfgversion/config/$project/manage
+  perl -p -i -e "s,\@\@JSONURL_P3R\@\@,https://github.com/dmwm/DBS/raw/master/view_instances_p3r.json,g" $root/$cfgversion/config/$project/manage
+  perl -p -i -e "s,\@\@JSONURL_P3W\@\@,https://github.com/dmwm/DBS/raw/master/view_instances_p3w.json,g" $root/$cfgversion/config/$project/manage  
+  perl -p -i -e "s,\@\@JSONURL_MG\@\@,https://github.com/dmwm/DBS/raw/master/view_instances_mg.json,g" $root/$cfgversion/config/$project/manage
+
   perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBS.py
   perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSDef.py
   perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSGlobalReader.py
