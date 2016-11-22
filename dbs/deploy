@@ -20,6 +20,12 @@ deploy_dbs_sw()
   deploy_pkg -a dbs/DBSSecrets.py -l dbs comp cms+dbs3
   perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/dmwm/DBS/raw/master/view_instances.json,g" $root/$cfgversion/config/$project/manage
   perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBS.py
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSDef.py
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSGlobalReader.py
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSGlobalWriter.py
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSPhys03Reader.py
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSPhys03Writer.py
+  perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/DBSMigrate.py
 }
 
 deploy_dbs_post()
