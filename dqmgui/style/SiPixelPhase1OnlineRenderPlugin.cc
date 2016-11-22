@@ -1,6 +1,40 @@
 /*!
   \file SiPixelPhase1OnlineRenderPlugin
   \brief RenderPlugin for histograms showing some history in online
+
+This Render Plugin was originally desinged for Pixel timing scans. It
+operates on plots that have a time dimension (in a unit called OnlineBlocks,
+a configurable amount of Lumisections, usually around 10).
+
+The output is a set of overlaid, normalized histograms, that can be compared to
+each other to figure which setting gives the best distribution.
+
+The input is a 2D histogram, that has the distribution to be monitored on the 
+x-axis and time on the y-axis. As a 2D plot this is not really readable, that
+is why this renderplugin turns each (non-0) bin on the y-axis into a 1D 
+histogram.
+
+Usage: 
+  1. Make sure the 2D plot has time on the y-axis and contains "OnlineBlock" in
+     the name.
+     A non-trivial detail is that the block size of the OnlineBlocks (which is
+     configurable on the CMSSW side) is passed as the min-value of the y-axis.
+
+  2. This Render Plugin applies and shows lines for all non-0 time slices. This
+     is very hard to read for more than 10 lines, since the color coding gets
+     ambiguous then.
+
+  3. Set a range on the z-Axis (!) using the "customize" box. You can limit the
+     plot to some LS range there. x- and y-axis ranges work as well.
+
+  4. Comparison to a reference is not possible for now (except "on side"), but
+     by design, this plot is its own reference (comparison over time).
+
+Future possibilities: This style of rendering could also be useful for other
+purposes, e.g. to overlay trend plots (time on x-axis) for different partitions
+(layer/disk on y-axis). This requieres a smarter applies-check and more fancy
+logic for the Legend.
+
   \author Marcel Schneider
 */
 
@@ -30,6 +64,7 @@ public:
       }
     }
 
+  // Here, we disable the rendering of the DQM GUI, using the AXIS draw option.
   virtual void preDraw( TCanvas * canvas, const VisDQMObject & o, const VisDQMImgInfo & , VisDQMRenderInfo & renderInfo)
     {
       canvas->cd();
@@ -41,6 +76,8 @@ public:
       renderInfo.drawOptions = "AXIS";
     }
 
+  // Here, we render our own 1D-view. Some tricks are needed to undo settings that the GUI did.
+  // We also at a Legend, for which the LS ranges of the OnlineBlocks are reconstructed.
   virtual void postDraw( TCanvas *canvas, const VisDQMObject &o, const VisDQMImgInfo &ri )
     {
       canvas->cd();
