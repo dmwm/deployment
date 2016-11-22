@@ -11,15 +11,11 @@
 ^/auth/complete/confdb(?:/|$) vocms0141.cern.ch|vocms0142.cern.ch
 ^/auth/complete/wmarchive(?:/|$) vocms071.cern.ch
 ^/auth/complete/scheddmon/021/ vocms021.cern.ch
-^/auth/complete/scheddmon/095/ vocms095.cern.ch
-^/auth/complete/scheddmon/096/ vocms096.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
-^/auth/complete/scheddmon/0112/ vocms0112.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
 ^/auth/complete/scheddmon/0121/ vocms0121.cern.ch
 ^/auth/complete/scheddmon/0122/ vocms0122.cern.ch
-^/auth/complete/scheddmon/066/ vocms066.cern.ch
 ^/auth/complete/scheddmon/059/ vocms059.cern.ch
 ^/auth/complete/scheddmon/0107/ vocms0107.cern.ch
 ^/auth/complete/scheddmon/0137/ vocms0137.cern.ch
