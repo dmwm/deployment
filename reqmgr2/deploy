@@ -8,10 +8,6 @@ deploy_reqmgr2_deps()
   deploy $stage couchdb
   deploy $stage reqmon $variant
   deploy $stage acdcserver $variant
-
-  # Use the couch databases from ReqMgr1. We must make sure ReqMgr1 is
-  # on the same ReqMgr2 tag, otherwise the ReqMgr2's couchapps will be outdated.
-  deploy $stage reqmgr $variant
 }
 
 deploy_reqmgr2_prep()
@@ -45,7 +41,7 @@ deploy_reqmgr2_post()
 {
   case $host in vocms013[89] ) disable;;  * ) enable;; esac
 
-  # ReqMgr2 specific couchdb stuff
+  # ReqMgr2 and old reqmgr specific couchdb stuff
   # Tell couch to pick up reqmgr on the next restart
   local reqmgrapp=$root/current/apps/reqmgr2
   for couch in couchdb:5984; do
@@ -53,12 +49,15 @@ deploy_reqmgr2_post()
          "http://localhost:${couch##*:}/reqmgr_auxiliary" \
          > $root/state/${couch%%:*}/stagingarea/reqmgr2
     echo "couchapp push $reqmgrapp/data/couchapps/WMDataMining" \
-             "http://localhost:${couch##*:}/wmdatamining" \
+         "http://localhost:${couch##*:}/wmdatamining" \
          >> $root/state/${couch%%:*}/stagingarea/reqmgr2
+    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr" \
+         "http://localhost:${couch##*:}/reqmgr_workload_cache" \
+         >> $root/state/${couch%%:*}/stagingarea/reqmgr
+    echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache" \
+         "http://localhost:${couch##*:}/reqmgr_config_cache" \
+         >> $root/state/${couch%%:*}/stagingarea/reqmgr
   done
-
-  # Once we have retired ReqMgr1, we should configure couch
-  # here to push the ReqMgr2 needed databases/couchapps.
 
   # Setup reqmgr2 cronjobs
   (mkcrontab
