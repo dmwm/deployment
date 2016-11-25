@@ -53,10 +53,10 @@ deploy_reqmgr2_post()
          >> $root/state/${couch%%:*}/stagingarea/reqmgr2
     echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr" \
          "http://localhost:${couch##*:}/reqmgr_workload_cache" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr
+         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
     echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache" \
          "http://localhost:${couch##*:}/reqmgr_config_cache" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr
+         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
   done
 
   # Setup reqmgr2 cronjobs
