@@ -162,7 +162,6 @@ server.workspace('DQMContent', 40, 'Trigger/Lumi', 'L1T', '^(L1T|L1T2016)/', '',
                  'L1T/Layouts/Stage2-QuickCollection/07 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number',
                  'L1T/Layouts/Stage2-QuickCollection/08 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event',
                  'L1T/Layouts/Stage2-QuickCollection/09 - uGT Algorithm Trigger Bits (after prescale)',
-                 'L1T/Layouts/Stage2-QuickCollection/10 - uGT Algorithm Trigger Bits (after BX mask) vs. BX Number in Event',
                 )
 
 server.workspace('DQMContent', 41, 'Trigger/Lumi', 'L1TEMU', '^(L1TEMU|L1T2016EMU)/', '',
