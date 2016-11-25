@@ -14,7 +14,7 @@ sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
 from DBSSecrets import *
 
 # get viewnames -> instance names list
-with open(os.path.join(TOPDIR, 'state/dbs/view_instances.json'), 'r') as f:
+with open(os.path.join(TOPDIR, 'state/dbs/view_instances_mg.json'), 'r') as f:
   view_mapping = json.load(f)
 
 # instance name : connecturls, {reader needed roles, writer needed roles}

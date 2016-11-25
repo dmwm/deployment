@@ -40,15 +40,13 @@ CFGFILE_P3R=DBSPhys03Reader.py
 CFGFILE_P3W=DBSPhys03Writer.py
 CFGFILE_MG=DBSMigrate.py
 JSONURL="@@JSONURL@@"
-#JSONURL="https://github.com/dmwm/DBS/raw/master/view_instances.json"
-#FIXME
-#need to fix below and set it in "deploy" as JSONURL
-JSONURL_DEF="https://github.com/dmwm/DBS/raw/master/view_instances_def.json"
-JSONURL_GR="https://github.com/dmwm/DBS/raw/master/view_instances_gr.json"
-JSONURL_GW="https://github.com/dmwm/DBS/raw/master/view_instances_gw.json"
-JSONURL_P3R="https://github.com/dmwm/DBS/raw/master/view_instances_p3r.json"
-JSONURL_P3W="https://github.com/dmwm/DBS/raw/master/view_instances_p3w.json"
-JSONURL_MG="https://github.com/dmwm/DBS/raw/master/view_instances_mg.json"
+JSONURL_DEF="@@JSONURL_DEF@@"
+JSONURL_GR="@@JSONURL_GR@@"
+JSONURL_GW="@@JSONURL_GW@@"
+JSONURL_P3R="@@JSONURL_P3R@@"
+JSONURL_P3W="@@JSONURL_P3W@@"
+JSONURL_MG="@@JSONURL_MG@@"
+
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
@@ -164,7 +162,9 @@ setinstances()
   f_p3w=$(curl -ksL $JSONURL_P3W)
   f_mg=$(curl -ksL $JSONURL_MG)
   if echo "$f" | python $CFGDIR/validate.py; then
-    [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] || {
+   {
+    [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] &&  [ "$(echo $f_def)" == "$(cat $STATEDIR/view_instances_def.json)" ] && [ "$(echo $f_gr)" == "$(cat $STATEDIR/view_instances_gr.json)" ] && [ "$(echo $f_gw)" == "$(cat $STATEDIR/view_instances_gw.json)" ] && [ "$(echo $f_p3r)" == "$(cat $STATEDIR/view_instances_p3r.json)" ] && [ "$(echo $f_p3w)" == "$(cat $STATEDIR/view_instances_p3w.json)" ] && [ "$(echo $f_mg)" == "$(cat $STATEDIR/view_instances_mg.json)" ] 
+   } || {
       echo $f > $STATEDIR/view_instances.json
       echo $f_def > $STATEDIR/view_instances_def.json
       echo $f_gr > $STATEDIR/view_instances_gr.json
