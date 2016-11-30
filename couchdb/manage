@@ -43,6 +43,8 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 export STAGE_HOST=${STAGE_HOST:-castorcms}
 export STAGE_SVCCLASS=archive
 
+EXCEPTIONS="wmstats asodb1 asodb2"
+
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
 # Start service conditionally on crond restart.
@@ -166,7 +168,7 @@ replications()
 
 # Trigger database compaction. 
 # - If "all", then compact ALL databases.
-# - If "all_but_wmstats", then compact all databases but the wmstats one
+# - If "all_but_exceptions", then compact all views but the ones listed in EXCEPTIONS
 # - Otherwise, the database must be provided 
 compact()
 {
@@ -174,12 +176,12 @@ compact()
   [ -n "$database" ] ||
     { echo "You must specify a database to compact"; exit 3; }
 
-  if [ "$database" = all -o "$database" = all_but_wmstats ]; then
+  if [ "$database" = all -o "$database" = all_but_exceptions ]; then
     for db in $STATEDIR/database/[^_]*.couch; do
       [ -f $db ] || continue
       db=${db##*/}
       db=${db%.couch}
-      if [ "$db" = wmstats -a "$database" = all_but_wmstats ]; then
+      if [[ $EXCEPTIONS == *$db* && "$database" = all_but_exceptions ]]; then
         continue
       fi
       compact_database $db
@@ -202,7 +204,7 @@ compact_database()
 
 # Trigger view compaction.
 # - If "all", then compact ALL views
-# - If "all_but_wmstats", then compact all views but the wmstats one
+# - If "all_but_exceptions", then compact all views but the ones listed in EXCEPTIONS
 # - Otherwise, the database and designdoc must be provided
 compact_views()
 {
@@ -213,12 +215,12 @@ compact_views()
   [ -n "$designdoc" ] ||
     { echo "You must specify a design doc to compact its views"; exit 3; }
 
-  if [ "$database" = all -o "$database" = all_but_wmstats ]; then
+  if [ "$database" = all -o "$database" = all_but_exceptions ]; then
     for db in $STATEDIR/database/[^_]*.couch; do
       [ -f $db ] || continue
       db=${db##*/}
       db=${db%.couch}
-      if [ "$db" = wmstats -a "$database" = all_but_wmstats ]; then
+      if [[ $EXCEPTIONS == *$db* && "$database" = all_but_exceptions ]]; then
         continue
       fi
       curl -s "localhost:5984/$db/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
@@ -227,6 +229,12 @@ compact_views()
           compact_view $db ${dbview#*/}
 	done
     done
+  elif [ "$designdoc" = all ]; then
+    curl -s "localhost:5984/$database/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
+      awk -F\" '/"id":"_design/ {print $4}' |
+      while read dbview; do
+        compact_view $database ${dbview#*/}
+      done
   else
     compact_view $database $designdoc
   fi
