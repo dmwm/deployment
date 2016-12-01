@@ -10,7 +10,6 @@
 ^/auth/complete/confdb(?:/|$) vocms0131.cern.ch|vocms0132.cern.ch
 ^/auth/complete/das(?:/|$) vocms0132.cern.ch|vocms0131.cern.ch :affinity
 ^/auth/complete/wmarchive(?:/|$) vocms013.cern.ch
-^/auth/complete/scheddmon/021/ vocms021.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
@@ -21,5 +20,11 @@
 ^/auth/complete/scheddmon/0155/ vocms0155.cern.ch
 ^/auth/complete/scheddmon/0119/ vocms0119.cern.ch
 ^/auth/complete/scheddmon/0120/ vocms0120.cern.ch
+^/auth/complete/scheddmon/0194/ vocms0194.cern.ch
+^/auth/complete/scheddmon/0195/ vocms0195.cern.ch
+^/auth/complete/scheddmon/0196/ vocms0196.cern.ch
+^/auth/complete/scheddmon/0197/ vocms0197.cern.ch
+^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
+^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
 ^/overview(?:/|$) vocms0132.cern.ch
 ^ vocms0132.cern.ch|vocms0131.cern.ch
