@@ -27,14 +27,21 @@ deploy_popdbweb_sw()
 
 deploy_popdbweb_post()
 {
-  case $host in vocms013[89] | vocms014[0123] | vocms0307 | vocms0318 ) disable ;; * ) enable ;; esac
-  (mkcrontab
-   sysboot
-   # Restart it daily to release the leaked memory
-   local cmd="$project_config/manage start 'I did read documentation'"
-   $nogroups || cmd="sudo -H -u _popdbweb bashs -l -c \"${cmd}\""
-   echo "0 9 * * * $cmd &> /dev/null"
-  ) | crontab -
+  case $host in
+    vocms013[89] | vocms014[0123] | vocms0307 | vocms0318 )
+      disable
+      ;;
+    * )
+      enable
+      (mkcrontab
+       sysboot
+       # Restart it daily to release the leaked memory
+       local cmd="$project_config/manage start 'I did read documentation'"
+       $nogroups || cmd="sudo -H -u _popdbweb bashs -l -c \"${cmd}\""
+       echo "0 9 * * * $cmd &> /dev/null"
+      ) | crontab -
+      ;;
+  esac
 
   (set -e
    . $root/current/apps/popdbweb/etc/profile.d/init.sh
