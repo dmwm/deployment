@@ -91,7 +91,7 @@ start()
   # start service
   $WMARCHIVE_ROOT/bin/wmc-httpd -r -d $LOGDIR $WMARCHIVE_CONFIG &
   $WMARCHIVE_ROOT/bin/mongo2avro \
-      --mongo=$MONGO_URI --schema=$AVRO_SCHEMA \
+      --mongo=$MONGO_URI --schema=$AVRO_SCHEMA --thr 240 \
       --odir=$AVRO_STORAGE --mdir=$AVRO_STORAGE_MIGRATE \
       --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE \
       </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-%Y%m%d.log 86400 >/dev/null 2>&1 &
