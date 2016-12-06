@@ -152,7 +152,7 @@ cron()
         --aggregations sum \
         --order br_node_bytes \
         --asc 0 \
-        --fout $HDFS_MIGRATE \
+        --fout $HDFS_MIGRATE/$fromdate \
         --verbose 2>&1 1>& $LOGDIR/prmonitor.log
       ;;
     prmonitor3 )
