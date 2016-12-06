@@ -19,10 +19,10 @@ with open(os.path.join(TOPDIR, 'state/dbs/view_instances_mg.json'), 'r') as f:
 
 # instance name : connecturls, {reader needed roles, writer needed roles}
 if VARIANT == 'prod':
-  db_mapping = {'prod/global': [dbs3_ig_r, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
-                'prod/phys01': [dbs3_ip1_r, {'reader':{},'writer':{}}],
-                'prod/phys02': [dbs3_ip2_r, {'reader':{},'writer':{}}],
-                'prod/phys03': [dbs3_ip3_r, {'reader':{},'writer':{}}],
+  db_mapping = {'prod/global': [dbs3_pg_r, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
+                'prod/phys01': [dbs3_pp1_r, {'reader':{},'writer':{}}],
+                'prod/phys02': [dbs3_pp2_r, {'reader':{},'writer':{}}],
+                'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}],
                 'prod/caf':    [dbs3_pc_r, {'reader':{},'writer':{}}],
                 'prod/test':   [dbs3_pt_i2, {'reader':{},'writer':{}}]}
 

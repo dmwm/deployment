@@ -19,7 +19,7 @@ with open(os.path.join(TOPDIR, 'state/dbs/view_instances_p3r.json'), 'r') as f:
 
 # instance name : connecturls, {reader needed roles, writer needed roles}
 if VARIANT == 'prod':
-  db_mapping = {'prod/phys03': [dbs3_ip3_r, {'reader':{},'writer':{}}]}
+  db_mapping = {'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}]}
 elif VARIANT == 'preprod':
   db_mapping = {'int/phys03': [dbs3_ip3_i2,{'reader':{},'writer':{}}]}
 elif VARIANT == 'dev':
