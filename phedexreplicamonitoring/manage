@@ -65,8 +65,8 @@ export PBR_CONFIG=$PHEDEXREPLICAMONITORING_ROOT/etc
 
 # spark and jars
 export PYSPARK_PYTHON=/afs/cern.ch/user/v/valya/public/python27
-export SPARK_CSV_ASSEMBLY_JAR=/afs/cern.ch/user/l/lmeniche/public/spark-csv-assembly-1.4.0.jar
-#export SPARK_CSV_ASSEMBLY_JAR=$PBR_DATA/spark-csv_2.10-1.4.0.jar
+#export SPARK_CSV_ASSEMBLY_JAR=/afs/cern.ch/user/l/lmeniche/public/spark-csv-assembly-1.4.0.jar
+export SPARK_CSV_ASSEMBLY_JAR=$PBR_DATA/spark-csv-assembly-1.4.0.jar
 export ES_HADOOP_JAR=${ELASTICSEARCH_HADOOP_ROOT}/dist/elasticsearch-hadoop-${ELASTICSEARCH_HADOOP_VERSION}.jar
 
 cd $STATEDIR
@@ -152,7 +152,7 @@ cron()
         --aggregations sum \
         --order br_node_bytes \
         --asc 0 \
-        --fout $HDFS_MIGRATE \
+        --fout $HDFS_MIGRATE/$fromdate \
         --verbose 2>&1 1>& $LOGDIR/prmonitor.log
       ;;
     prmonitor3 )
