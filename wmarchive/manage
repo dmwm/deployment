@@ -61,7 +61,7 @@ export AVRO_STORAGE_MIGRATE=$STATEDIR/avro/migrate
 # area on HDFS where we'll migrate the data
 export HDFS_MIGRATE=/cms/wmarchive/avro
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
-export AVRO_SCHEMA_HDFS=`cat $WMARCHIVE_CONFIG | grep long_storage_uri | awk '{split($0,a,"="); print a[2]}' | sed -e 's/^[[:space:]]*//' -e "s,',,g"`
+export AVRO_SCHEMA_HDFS=`cat $WMARCHIVE_CONFIG | grep ^data.long_storage_uri | awk '{split($0,a,"="); print a[2]}' | sed -e 's/^[[:space:]]*//' -e "s,',,g"`
 # we'll clean-up data a one day old if their storage type is avroio
 export CLEANUP_TSTAMP=1d
 export CLEANUP_STYPE="avroio"
@@ -131,7 +131,7 @@ cron()
           --verbose &> $LOGDIR/migrate2hdfs.log
       ;;
     aggregate )
-      $WMARCHIVE_ROOT/bin/aggregate_performance 1 --precision=hour \
+      $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=hour \
           --schema $AVRO_SCHEMA_HDFS \
           --use_myspark &> $LOGDIR/aggregate_performace.log
 
