@@ -10,7 +10,6 @@ ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
 
 INSTALL_AG="$ROOT_DIR/install/wmagent"
 INSTALL_WQ="$ROOT_DIR/install/workqueue"
-INSTALL_RM="$ROOT_DIR/install/reqmgr"
 INSTALL_MYSQL="$ROOT_DIR/install/mysql"
 INSTALL_COUCH="$ROOT_DIR/install/couchdb"
 
@@ -18,23 +17,18 @@ CONFIG_COUCH="$ROOT_DIR/config/couchdb"
 CONFIG_MYSQL="$ROOT_DIR/config/mysql"
 CONFIG_AG="$ROOT_DIR/config/wmagent"
 CONFIG_WQ="$ROOT_DIR/config/workqueue"
-CONFIG_RM="$ROOT_DIR/config/reqmgr"
 
 USING_AG=0
 USING_WQ=0
-USING_RM=0
-
 
 MYSQL_INIT_DONE=0
 COUCH_INIT_DONE=0
 AG_INIT_DONE=0
 WQ_INIT_DONE=0
-RM_INIT_DONE=0
 
 
 MYSQL_DATABASE_AG=wmagent
 MYSQL_DATABASE_WQ=workqueue
-MYSQL_DATABASE_RM=reqmgr
 
 ORACLE_USER=
 ORACLE_PASS=
@@ -89,15 +83,13 @@ WMARCHIVE_URL=
 #
 # Init checks
 #
-# which of the agent, workqueue and reqmgr are we using
+# which of the agent, workqueue are we using
 if [ -e $INSTALL_AG/.using ]; then USING_AG=1; else USING_AG=0; fi;
 if [ -e $INSTALL_WQ/.using ]; then USING_WQ=1; else USING_WQ=0; fi;
-if [ -e $INSTALL_RM/.using ]; then USING_RM=1; else USING_RM=0; fi;
 
 # Flags to show which tools have been initialised
 if [ -e $INSTALL_AG/.init ]; then AG_INIT_DONE=1; else AG_INIT_DONE=0; fi;
 if [ -e $INSTALL_WQ/.init ]; then WQ_INIT_DONE=1; else WQ_INIT_DONE=0; fi;
-if [ -e $INSTALL_RM/.init ]; then RM_INIT_DONE=1; else RM_INIT_DONE=0; fi;
 if [ -e $INSTALL_MYSQL/.init ]; then MYSQL_INIT_DONE=1; else MYSQL_INIT_DONE=0; fi;
 if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; fi;
 
@@ -116,18 +108,11 @@ activate_workqueue(){
     touch $INSTALL_WQ/.using
     cp $WMCORE_ROOT/etc/GlobalWorkQueueConfig.py $CONFIG_WQ/config-template.py
 }
-activate_reqmgr(){
-    touch $INSTALL_RM/.using
-    cp $WMCORE_ROOT/etc/ReqMgrConfig.py $CONFIG_RM/config-template.py
-}
 inited_agent(){
     touch $INSTALL_AG/.init
 }
 inited_workqueue(){
     touch $INSTALL_WQ/.init
-}
-inited_reqmgr(){
-    touch $INSTALL_RM/.init
 }
 inited_couch(){
     touch $INSTALL_COUCH/.init
@@ -264,15 +249,12 @@ load_secrets_file(){
 print_settings(){
     echo "INSTALL_AG=                $INSTALL_AG                "
     echo "INSTALL_WQ=                $INSTALL_WQ                "
-    echo "INSTALL_RM=                $INSTALL_RM                "
     echo "CONFIG_COUCH=              $CONFIG_COUCH              "
     echo "CONFIG_MYSQL=              $CONFIG_MYSQL              "
     echo "CONFIG_AG=                 $CONFIG_AG                 "
     echo "CONFIG_WQ=                 $CONFIG_WQ                 "
-    echo "CONFIG_RM=                 $CONFIG_RM                 "
     echo "MYSQL_DATABASE_AG=         $MYSQL_DATABASE_AG         "
     echo "MYSQL_DATABASE_WQ=         $MYSQL_DATABASE_WQ         "
-    echo "MYSQL_DATABASE_RM=         $MYSQL_DATABASE_RM         "
     echo "ORACLE_USER=               $ORACLE_USER               "
     echo "ORACLE_PASS=               $ORACLE_PASS               "
     echo "ORACLE_TNS=                $ORACLE_TNS                "
@@ -363,7 +345,7 @@ init_mysql_db_post(){
     mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "$SQLUSER"
     mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "$SQLGRANT"
 
-    # create databases for agent, wq or reqmgr
+    # create databases for agent, wq
     if [ $USING_AG -eq 1 ]; then
         echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
         mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_AG}"
@@ -371,10 +353,6 @@ init_mysql_db_post(){
     if [ $USING_WQ -eq 1 ]; then
         echo "Installing WorkQueue Database: ${MYSQL_DATABASE_WQ}"
         mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_WQ}"
-    fi
-    if [ $USING_RM -eq 1 ]; then
-        echo "Installing ReqMgr Database: ${MYSQL_DATABASE_RM}"
-        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_RM}"
     fi
 }
 
@@ -508,15 +486,13 @@ db_prompt(){
     load_secrets_file;
     if [ "x$MYSQL_USER" != "x" ]; then
 	case "$2" in
-	  "reqmgr")
-	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_RM};;
 	  "workqueue")
 	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_WQ};;
 	  "wmagent")
 	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_AG};;
 	  *)
 	      echo "Unknown arg to db_prompt: $2"
-	      echo "Should be one of reqmgr, workqueue, wmagent"
+	      echo "Should be one of workqueue, wmagent"
 	      exit 1
 	esac
     elif [ "x$ORACLE_USER" != "x" ]; then
@@ -655,7 +631,6 @@ init_wmagent(){
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
                        --wmstats_url=$WMSTATS_URL \
-                       --reqmgr_url=$REQMGR_URL \
                        --reqmgr2_url=$REQMGR2_URL \
 	                   --acdc_url=$ACDC_URL \
 	                   --dbs3_url=$DBS3_URL \
@@ -677,7 +652,6 @@ init_wmagent(){
                        --wmbs_service_port=$WMBS_SERVICE_PORT \
                        --workload_summary_url=$WORKLOAD_SUMMARY_URL \
                        --wmstats_url=$WMSTATS_URL \
-                       --reqmgr_url=$REQMGR_URL \
                        --reqmgr2_url=$REQMGR2_URL \
 	                   --acdc_url=$ACDC_URL \
 	                   --dbs3_url=$DBS3_URL \
@@ -697,45 +671,6 @@ init_wmagent(){
     wmagent-couchapp-init;
     unset WMAGENT_CONFIG
     inited_agent;
-}
-
-
-init_reqmgr(){
-    load_secrets_file;
-    if [ "x$MYSQL_USER" != "x" ]; then
-	wmagent-mod-config --input=$CONFIG_RM/config-template.py \
-                       --output=$CONFIG_RM/config.py \
-                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_RM \
-                       --mysql_socket=$MYSQL_SOCK \
-                       --working_dir=$INSTALL_RM \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --reqmgr_port=$REQMGR_PORT \
-                       --reqmgr_hostname=$REQMGR_HOSTNAME \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --wmstats_url=$WMSTATS_URL \
-                       --requestcouch_url=$REQUESTCOUCH_URL \
-                       --central_logdb_url=$CENTRAL_LOGDB_URL
-   elif [ "x$ORACLE_USER" != "x" ]; then
-	wmagent-mod-config --input=$CONFIG_RM/config-template.py \
-                       --output=$CONFIG_RM/config.py \
-                       --coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS \
-                       --working_dir=$INSTALL_RM \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --reqmgr_port=$REQMGR_PORT \
-                       --reqmgr_hostname=$REQMGR_HOSTNAME \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --wmstats_url=$WMSTATS_URL \
-                       --requestcouch_url=$REQUESTCOUCH_URL \
-                       --central_logdb_url=$CENTRAL_LOGDB_URL
-    else
-	echo "No database configured, should never have reached this point..."
-	exit 1;
-    fi
-    wmcore-db-init --config $CONFIG_RM/config.py --create --modules=WMCore.Agent.Database,WMCore.RequestManager.RequestDB
-    export WMAGENT_CONFIG=$CONFIG_RM/config.py
-    wmagent-couchapp-init;
-    unset WMAGENT_CONFIG
-    inited_reqmgr;
 }
 
 init_workqueue(){
@@ -788,23 +723,10 @@ init_agent(){
             init_workqueue;
         fi
     fi
-
-    if [ $USING_RM -eq 1 ]; then
-        if [ $RM_INIT_DONE -eq 0 ]; then
-            echo "Initialising ReqMgr..."
-            init_reqmgr;
-        fi
-    fi
-
 }
 
 start_agent(){
     init_agent;
-    if [ $USING_RM -eq 1 ]; then
-        echo "Starting ReqMgr..."
-        wmcoreD --start --config=$CONFIG_RM/config.py
-    fi
-
 
     if [ $USING_WQ -eq 1 ]; then
         echo "Starting WorkQueue..."
@@ -818,10 +740,6 @@ start_agent(){
 }
 
 stop_agent(){
-    if [ $USING_RM -eq 1 ]; then
-        echo "Shutting down ReqMgr...";
-        wmcoreD --shutdown --config=$CONFIG_RM/config.py;
-    fi
     if [ $USING_WQ -eq 1 ]; then
         echo "Shutting down WorkQueue...";
         wmcoreD --shutdown --config=$CONFIG_WQ/config.py;
@@ -833,10 +751,6 @@ stop_agent(){
 }
 
 status_of_agent(){
-    if [ $USING_RM -eq 1 ]; then
-        echo "Status of ReqMgr:"
-        wmcoreD --status --config=$CONFIG_RM/config.py
-    fi
     if [ $USING_WQ -eq 1 ]; then
         echo "Status of WorkQueue:"
         wmcoreD --status --config=$CONFIG_WQ/config.py
@@ -854,18 +768,7 @@ status_of_agent(){
 clean_agent(){
     load_secrets_file;
     stop_agent;
-    # Todo: clean couchapps?
-    if [ $USING_RM -eq 1 ]; then
-        echo "Cleaning ReqMgr..."
-        rm -rf $INSTALL_RM/*
-        rm -f $CONFIG_RM/config.py;
-        rm -f $INSTALL_RM/.init
 
-	if [ "x$MYSQL_USER" != "x" ]; then
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "drop database ${MYSQL_DATABASE_RM}"
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_RM}"
-	fi
-    fi
     if [ $USING_WQ -eq 1 ]; then
         echo "Cleaning WorkQueue..."
         rm -rf $INSTALL_WQ/*
@@ -938,20 +841,6 @@ execute_command_wq(){
     echo "Executing $RUNTHIS $@ ..."
     $RUNTHIS $@;
 }
-execute_command_rm(){
-    shift;
-    local RUNTHIS=$1
-    local WMCORE_BIN_DIR=$WMCORE_ROOT/bin
-    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
-        echo "$RUNTHIS is not a binary in WMCore/bin"
-        exit 1
-    fi
-    shift;
-    load_secrets_file;
-    export WMAGENT_CONFIG=$CONFIG_RM/config.py
-    echo "Executing $RUNTHIS $@ ..."
-    $RUNTHIS $@;
-}
 
 
 help(){
@@ -971,8 +860,6 @@ case $1 in
     activate_agent;;
   activate-workqueue)
     activate_workqueue;;
-  activate-reqmgr)
-    activate_reqmgr;;
   activate-crabserver)
     activate_crabserver;;
   start-services)
@@ -997,8 +884,6 @@ case $1 in
      clean_couch;;
   init-agent)
      init_agent;;
-  init-reqmgr)
-     init_reqmgr;;
   init-workqueue)
      init_workqueue;;
   start-agent)
@@ -1013,8 +898,6 @@ case $1 in
      execute_command_agent $@;;
   execute-workqueue)
      execute_command_wq $@;;
-  execute-reqmgr)
-     execute_command_rm $@;;
   help)
     help ;;
   version)
