@@ -55,14 +55,29 @@ public:
       int h = obj->GetNbinsY(), w = obj->GetNbinsX();
 
       // Phase1, Layer 1-4
-      if (w == 72 && h == 26) dress_occup_plot(obj, 1, 1);
-      if (w == 72 && h == 58) dress_occup_plot(obj, 2, 1);
-      if (w == 72 && h == 90) dress_occup_plot(obj, 3, 1);
-      if (w == 72 && h == 130) dress_occup_plot(obj, 4, 1);
+      if (w == 72 && h ==  26) dress_occup_plot(obj, 1, 0, 1);
+      if (w == 72 && h ==  58) dress_occup_plot(obj, 2, 0, 1);
+      if (w == 72 && h ==  90) dress_occup_plot(obj, 3, 0, 1);
+      if (w == 72 && h == 130) dress_occup_plot(obj, 4, 0, 1);
 
-      // Phase1 FPIX TODO
 
-      // Phase0  TODO
+      // Phase1 FPIX Ring 1-2
+      if (w == 56 && h ==  92) dress_occup_plot(obj, 0, 1, 1);
+      if (w == 56 && h == 140) dress_occup_plot(obj, 0, 2, 1);
+
+      // Phase1 full FPIX
+      if (w == 112 && h == 140) dress_occup_plot(obj, 0, 0, 1);
+
+      // Phase0 BPIX  Layer 1-3
+      if (w == 72 && h == 40) dress_occup_plot(obj, 1, 0, 0);
+      if (w == 72 && h == 64) dress_occup_plot(obj, 2, 0, 0);
+      if (w == 72 && h == 88) dress_occup_plot(obj, 3, 0, 0);
+
+      // Phase0 full FPIX
+      // TODO: This binning is incorrect.
+      if (w == 78 && h == 134) dress_occup_plot(obj, 0, 0, 0);
+
+      //std::cout << "+++ if (w == " << w << " && h == " << h << ")\n";
 
     }
 
@@ -77,7 +92,7 @@ private:
     l->Draw();
   }
 
-  void dress_occup_plot(TH2* h, int lay, int phase=0, bool half_shift = 1, bool mark_zero=1) {
+  void dress_occup_plot(TH2* h, int lay, int ring=0, int phase=0, bool half_shift = 1, bool mark_zero=1) {
     // Draw Lines around modules
     if (lay>0) {
       std::vector<std::vector<int> > nladder = { { 10, 16, 22 }, { 6, 14, 22, 32 } };
@@ -130,6 +145,7 @@ private:
         }
       }
     } else {
+      // FPIX
       for (int dsk=1, ndsk=2+(phase==1); dsk<=ndsk; ++dsk) {
         for (int xsign=-1; xsign<=1; xsign+=2) for (int ysign=-1; ysign<=1; ysign+=2) {
           if (phase==0) {
@@ -172,49 +188,95 @@ private:
               }
             }
           } else if (phase==1) {
-            for (int ring=1; ring<=2; ++ring) for (int bld=1, nbld=5+ring*6; bld<=nbld; ++bld) {
-              float scale = (ring==1) ? 1.5 : 1;
-              Color_t p1_color = 1, p2_color = 1;
-              // Horizontal lines
-              // Panel 2 has dashed mid-plane
-              float x1      = xsign * (half_shift*0.5 + dsk - 1 + (ring-1)*0.5);
-              float x2      = xsign * (half_shift*0.5 + dsk - 1 +  ring   *0.5);
-              int sign = ysign;
-              float y1      = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.5);
-              //float yp1_mid = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25);
-              float y2      = ysign * (half_shift*0.5 - 0.5 + scale*bld);
-              float yp2_mid = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25);
-              float y3      = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.5);
-              draw_line(x1, x2, y1,      y1,      1, 1, p1_color);
-              //draw_line(x1, x2, yp1_mid, yp1_mid, 1, 3);
-              draw_line(x1, x2, y2,      y2,      1, 1, p1_color);
-              draw_line(x1, x2, yp2_mid, yp2_mid, 1, 2);
-              draw_line(x1, x2, y3,      y3,      1, 1, p2_color);
-              // Vertical lines
-              float x = xsign * (half_shift*0.5 + dsk - 1 + (ring-1)*0.5);
-              draw_line(x,  x,  y1,  y2, 1, 1, p1_color);
-              draw_line(x,  x,  y2,  y3, 1, 1, p2_color);
-              if (ring==2) {
-                //draw_line(x,  x,  y2,  y3, 1, 1, p1_color);
-                x         = xsign * (half_shift*0.5 + dsk);
+            if (ring == 0) { // both
+              for (int ring=1; ring<=2; ++ring) for (int bld=1, nbld=5+ring*6; bld<=nbld; ++bld) {
+                float scale = (ring==1) ? 1.5 : 1;
+                Color_t p1_color = 1, p2_color = 1;
+                // Horizontal lines
+                // Panel 2 has dashed mid-plane
+                float x1      = xsign * (half_shift*0.5 + dsk - 1 + (ring-1)*0.5);
+                float x2      = xsign * (half_shift*0.5 + dsk - 1 +  ring   *0.5);
+                int sign = ysign;
+                float y1      = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.5);
+                //float yp1_mid = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25);
+                float y2      = ysign * (half_shift*0.5 - 0.5 + scale*bld);
+                float yp2_mid = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25);
+                float y3      = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.5);
+                draw_line(x1, x2, y1,      y1,      1, 1, p1_color);
+                //draw_line(x1, x2, yp1_mid, yp1_mid, 1, 3);
+                draw_line(x1, x2, y2,      y2,      1, 1, p1_color);
+                draw_line(x1, x2, yp2_mid, yp2_mid, 1, 2);
+                draw_line(x1, x2, y3,      y3,      1, 1, p2_color);
+                // Vertical lines
+                float x = xsign * (half_shift*0.5 + dsk - 1 + (ring-1)*0.5);
                 draw_line(x,  x,  y1,  y2, 1, 1, p1_color);
                 draw_line(x,  x,  y2,  y3, 1, 1, p2_color);
+                if (ring==2) {
+                  //draw_line(x,  x,  y2,  y3, 1, 1, p1_color);
+                  x         = xsign * (half_shift*0.5 + dsk);
+                  draw_line(x,  x,  y1,  y2, 1, 1, p1_color);
+                  draw_line(x,  x,  y2,  y3, 1, 1, p2_color);
+                }
+                // Make a BOX around ROC 0
+                x1          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5 - 1/16.);
+                x2          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5);
+                float y1_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25);
+                float y2_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25 + xsign*ysign*0.25);
+                draw_line(x1, x2, y1_p1, y1_p1, 1);
+                //draw_line(x1, x2, y2_p1, y2_p1, 1);
+                draw_line(x1, x1, y1_p1, y2_p1, 1);
+                //draw_line(x2, x2, y1_p1, y2_p1, 1);
+                float y1_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25);
+                float y2_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25 - xsign*ysign*0.25);
+                draw_line(x1, x2, y1_p2, y1_p2, 1);
+                //draw_line(x1, x2, y2_p2, y2_p2, 1);
+                draw_line(x1, x1, y1_p2, y2_p2, 1);
+                //draw_line(x2, x2, y1_p2, y2_p2, 1);
               }
-              // Make a BOX around ROC 0
-              x1          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5 - 1/16.);
-              x2          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5);
-              float y1_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25);
-              float y2_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25 + xsign*ysign*0.25);
-              draw_line(x1, x2, y1_p1, y1_p1, 1);
-              //draw_line(x1, x2, y2_p1, y2_p1, 1);
-              draw_line(x1, x1, y1_p1, y2_p1, 1);
-              //draw_line(x2, x2, y1_p1, y2_p1, 1);
-              float y1_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25);
-              float y2_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25 - xsign*ysign*0.25);
-              draw_line(x1, x2, y1_p2, y1_p2, 1);
-              //draw_line(x1, x2, y2_p2, y2_p2, 1);
-              draw_line(x1, x1, y1_p2, y2_p2, 1);
-              //draw_line(x2, x2, y1_p2, y2_p2, 1);
+            } else { // only one ring, 1 or 2
+              for (int bld=1, nbld=5+ring*6; bld<=nbld; ++bld) {
+                Color_t p1_color = 1, p2_color = 1;
+                // Horizontal lines
+                // Panel 2 has dashed mid-plane
+                float x1      = xsign * (half_shift*0.5 + dsk - 1);
+                float x2      = xsign * (half_shift*0.5 + dsk);
+                int sign = ysign;
+                float y1      = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.5);
+                //float yp1_mid = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.25);
+                float y2      = ysign * (half_shift*0.5 - 0.5 + bld);
+                float yp2_mid = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.25);
+                float y3      = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.5);
+                draw_line(x1, x2, y1,      y1,      1, 1, p1_color);
+                //draw_line(x1, x2, yp1_mid, yp1_mid, 1, 3);
+                draw_line(x1, x2, y2,      y2,      1, 1, p1_color);
+                draw_line(x1, x2, yp2_mid, yp2_mid, 1, 2);
+                draw_line(x1, x2, y3,      y3,      1, 1, p2_color);
+                // Vertical lines
+                float x = xsign * (half_shift*0.5 + dsk - 1);
+                draw_line(x,  x,  y1,  y2, 1, 1, p1_color);
+                draw_line(x,  x,  y2,  y3, 1, 1, p2_color);
+                if (ring==2) {
+                  //draw_line(x,  x,  y2,  y3, 1, 1, p1_color);
+                  x         = xsign * (half_shift*0.5 + dsk);
+                  draw_line(x,  x,  y1,  y2, 1, 1, p1_color);
+                  draw_line(x,  x,  y2,  y3, 1, 1, p2_color);
+                }
+                // Make a BOX around ROC 0
+                x1          = xsign * (half_shift*0.5 + dsk - 1/8.);
+                x2          = xsign * (half_shift*0.5 + dsk);
+                float y1_p1 = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.25);
+                float y2_p1 = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.25 + xsign*ysign*0.25);
+                draw_line(x1, x2, y1_p1, y1_p1, 1);
+                //draw_line(x1, x2, y2_p1, y2_p1, 1);
+                draw_line(x1, x1, y1_p1, y2_p1, 1);
+                //draw_line(x2, x2, y1_p1, y2_p1, 1);
+                float y1_p2 = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.25);
+                float y2_p2 = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.25 - xsign*ysign*0.25);
+                draw_line(x1, x2, y1_p2, y1_p2, 1);
+                //draw_line(x1, x2, y2_p2, y2_p2, 1);
+                draw_line(x1, x1, y1_p2, y2_p2, 1);
+                //draw_line(x2, x2, y1_p2, y2_p2, 1);
+              }
             }
           }
         }
