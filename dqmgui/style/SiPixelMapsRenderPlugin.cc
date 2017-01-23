@@ -74,8 +74,9 @@ public:
       if (w == 72 && h == 88) dress_occup_plot(obj, 3, 0, 0);
 
       // Phase0 full FPIX
-      // TODO: This binning is incorrect.
-      if (w == 78 && h == 134) dress_occup_plot(obj, 0, 0, 0);
+      // TODO: Not sure how Janos got to w=80, which the rebinning code expects
+      // Ignore the rebinning for now, the line overlay seems correct.
+      if (w == 78 && h == 250) dress_occup_plot(obj, 0, 0, 0);
 
       //std::cout << "+++ if (w == " << w << " && h == " << h << ")\n";
 
@@ -286,6 +287,7 @@ private:
       // there are half-ROC size shifts implemented in the coordinates
       // To remove this and show full ROC granularity
       // We merge bin contents in each pair of bins corresponding to one ROC
+      // TODO: make sure this works for Profiles
       if (phase==0&&h->GetNbinsY()==250&&h->GetNbinsX()==80) {
         int nentries = h->GetEntries();
         for (int binx = 1; binx<=80; ++binx) {
