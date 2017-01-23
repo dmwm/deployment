@@ -23,7 +23,7 @@ deploy_wmarchive_post()
   case $host in vocms013[689] | vocms014[0123] | vocms016[135] ) disable ;; * ) enable ;; esac
   (mkcrontab
    sysboot
-   for action in migrate2hdfs:'0 0 * * *' aggregate:'0 1 * * *' cleanup:'0 2 * * *'; do
+   for action in migrate2hdfs:'*/10 0-23 * * *' aggregate:'0 0-23 * * *' cleanup:'0 2 * * *'; do
      local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
      $nogroups || cmd="sudo -H -u _wmarchive bashs -l -c \"${cmd}\""
      echo "${action##*:} $cmd"
