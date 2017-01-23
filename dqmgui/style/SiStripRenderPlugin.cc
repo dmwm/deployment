@@ -151,6 +151,12 @@ private:
       {
         obj->SetStats( kFALSE );
         dqm::utils::reportSummaryMapPalette(obj);
+
+        if ( o.name.find( "_has" )  != std::string::npos)
+        {
+          gStyle->SetPalette(60);
+        }
+
         obj->SetOption("colztext");
         return;
       }
@@ -656,8 +662,17 @@ private:
       float mask2_ymin = 387.5;
       float mask2_ymax = 458.5;
 
+      TLine tl2;
+      tl2.SetLineColor(921); // 15?
+      tl2.SetLineWidth(2);
+      tl2.SetLineStyle(7);
+
       TText tt;
       tt.SetTextSize(0.12);
+      
+      TText tt2;
+      tt2.SetTextSize(0.04);
+      tt2.SetTextColor(15);
       if (o.flags != 0)
 	{
 	  if (o.flags & DQMNet::DQM_PROP_REPORT_ERROR)
@@ -722,6 +737,19 @@ private:
           tl1.DrawLine(mask2_xmin+i, mask2_ymax+i, mask2_xmin+1+i, mask2_ymax+i);
         }
         return;
+      }
+      if( o.name.find( "FEDErrorsVsId" )  != std::string::npos)
+	    {
+        float err_ymin = obj->GetYaxis()->GetXmin();
+        float err_ymax = obj->GetYaxis()->GetXmax();
+        tl2.DrawLine(164.0, err_ymin, 164.0, err_ymax);
+        tl2.DrawLine(260.0, err_ymin, 260.0, err_ymax);
+        tl2.DrawLine(356.0, err_ymin, 356.0, err_ymax);
+
+        tt2.DrawTextNDC(0.28, 0.92, "TIB");
+        tt2.DrawTextNDC(0.43, 0.92, "TEC-");
+        tt2.DrawTextNDC(0.58, 0.92, "TEC+");
+        tt2.DrawTextNDC(0.77, 0.92, "TOB");
       }
     }
 
