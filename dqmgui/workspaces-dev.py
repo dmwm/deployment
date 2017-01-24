@@ -21,6 +21,7 @@ server.workspace('DQMCertification', 3, 'Summaries', 'Certification')
 server.workspace('DQMContent', 4, 'Summaries', 'Everything', '^', '^')
 
 # Tracker/Muons workspaces:
+server.workspace('DQMContent', 10, 'Tracker/Muons', 'PixelPhase1', '^PixelPhase1/', '')
 server.workspace('DQMContent', 10, 'Tracker/Muons', 'Pixel', '^Pixel/', '')
 server.workspace('DQMContent', 11, 'Tracker/Muons', 'SiStrip', '^SiStrip/', '')
 server.workspace('DQMContent', 12, 'Tracker/Muons', 'CSC', '^CSC/', '')

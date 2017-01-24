@@ -41,6 +41,20 @@ server.workspace('DQMContent', 12, 'Trigger', 'L1TEMU', '^L1TEMU/', '')
 server.workspace('DQMContent', 13, 'Trigger', 'HLT', '^HLT/', '')
 
 # Tracker workspaces:
+
+server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', '',
+                 #'Pixel/Layouts/00b - Pixel_Error_Summary',
+                 #'Pixel/Layouts/01 - Pixel_FEDOccupancy_Summary',
+                 #'Pixel/Layouts/02 - Pixel_Cluster_Summary',
+                 #'Pixel/Layouts/03 - Pixel_Track_Summary',
+                 #'Pixel/Layouts/05 - Barrel OnTrack cluster positions',
+                 #'Pixel/Layouts/06 - Endcap OnTrack cluster positions',
+                 #'Pixel/Layouts/07 - Pixel_Digi_Summary',
+                 #'Pixel/Layouts/08 - ROC occupancies',
+                 #'Pixel/Layouts/09 - Pixel Clusters vs LS',
+                )
+
+
 server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
                  'Pixel/Layouts/00b - Pixel_Error_Summary',
                  'Pixel/Layouts/01 - Pixel_FEDOccupancy_Summary',
