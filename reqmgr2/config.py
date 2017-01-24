@@ -111,7 +111,7 @@ ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
 # Production instance of wmdatamining, must be a production back-end
-if  HOST.startswith("vocms0136") or HOST.startswith("vocms0131"):
+if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswith("vocms0127"):
     extentions = config.section_("extensions")
     wmdatamining = extentions.section_("wmdatamining")
     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
@@ -141,6 +141,7 @@ if  HOST.startswith("vocms0136") or HOST.startswith("vocms0131"):
     statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
     statusChangeTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
     statusChangeTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
-    statusChangeTasks.checkStatusDuration = 60 * 30  # every 30 min
+    statusChangeTasks.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
+    statusChangeTasks.checkStatusDuration = 60 * 10  # every 10 min
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     

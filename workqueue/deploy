@@ -3,7 +3,10 @@ deploy_workqueue_variants="default prod preprod dev"
 
 deploy_workqueue_deps()
 {
+  deploy $stage backend
+  deploy $stage wmcore-auth
   deploy $stage couchdb
+  deploy $stage reqmgr2 $variant
 }
 
 deploy_workqueue_prep()
@@ -22,11 +25,20 @@ deploy_workqueue_sw()
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
 
-  cp -p $root/$cfgversion/config/$project/{GlobalWorkQueueConfig-${variant}.py,GlobalWorkQueueConfig.py}
+  case $variant in
+    prod )    base_url="https://cmsweb.cern.ch"         ;;
+    preprod ) base_url="https://cmsweb-testbed.cern.ch" ;;
+    dev )     base_url="https://cmsweb-dev.cern.ch"     ;;
+    * )       base_url="https://`hostname -f`"          ;;
+  esac
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g;" \
+       $root/$cfgversion/config/$project/config.py
 }
 
 deploy_workqueue_post()
 {
+  case $host in vocms013[2689] vocms014[12] vocms016[135] ) disable;; * ) enable;; esac
+  
   # Do cache cleanup
   local cmd="rm -rf $root/state/workqueue/cache/*"
   $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
@@ -34,35 +46,11 @@ deploy_workqueue_post()
 
   # Tell couch to push workqueue apps on the next restart
   for couch in couchdb:5984; do
-    echo "$project_config/workqueue_task pushcouchapp http://localhost:${couch##*:}" \
+    echo "$project_config/manage pushcouchapp http://localhost:${couch##*:}" \
       > $root/state/${couch%%:*}/stagingarea/workqueue
   done
-
-  # Setup workqueue cronjobs
-  local manage=$project_config/workqueue_task
-
-  local cmd="$manage reqmgr_sync"
-  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
-  local req_sync="5-45/20 * * * * $cmd"
-
-  local cmd="$manage location_refresh"
-  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
-  local locations="30 * * * * $cmd"
-
-  local cmd="$manage housekeep"
-  $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
-  local housekeep="15-55/20 * * * * $cmd"
-
-  (mkcrontab;
-   case $variant:$host in
-     prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | dev:vocms0126 | default:* )
-       echo "${req_sync}"
-       echo "${locations}"
-       echo "${housekeep}"
-       ;;
-     * )
-       ;;
-   esac) | crontab -
+  
+  (mkcrontab; sysboot) | crontab -
 }
 
 deploy_workqueue_auth()
