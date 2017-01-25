@@ -12,7 +12,8 @@
  */
 
 
-
+#ifndef _HCAL_RELVAL_MAPS_H
+#define _HCAL_RELVAL_MAPS_H
 
 #include <dirent.h>
 #include <iostream>
@@ -1174,3 +1175,5 @@ std::map<std::string, hist_range> map3() {
     
     return rangeHigh;
 }
+
+#endif

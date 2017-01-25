@@ -4,6 +4,9 @@
  *	modified by:			Shubham Pandey (shubham.pandey@cern.ch)
  */
 
+#ifndef _HCAL_RELVAL_OBJECTCUSTOMIZER_H
+#define _HCAL_RELVAL_OBJECTCUSTOMIZER_H
+
 //	ROOT Includes
 #include "TCanvas.h"
 #include "TText.h"
@@ -96,16 +99,7 @@ namespace hcaldqm
 
 
 
-  //To be used for weblogs
-  struct logs {
-    std::string name;
-    int y;
-    int m;
-    int d;
-  };
-
-
-  
+    
   //	Class HcalrelvalObjectCustomizer
   class HcalrelvalObjectCustomizer
   {
@@ -394,141 +388,10 @@ namespace hcaldqm
 
 
 
-
-
-
-    /*
-     *  Following functions are written by: Shubham Pandey (shubham.pandey@cern.ch)
-     *
-     */
-
-
-    //Funtion to sort weblogs according to date
-    logs sorts(std::vector<logs> ll) {
-      //Sort according to year -> month -> date
-      for(int i=0; i<(int)ll.size()-1; i++){
-	for(int j=i+1; j<(int)ll.size(); j++){
-	  if( ll[i].y < ll[j].y ) {
-	    swap(ll.at(i),ll.at(j));
-	  }
-	  else if ( ll[i].y == ll[j].y ) {
-	    if( ll[i].m < ll[j].m )
-	      swap(ll.at(i),ll.at(j));
-	    else if ( ll[i].m == ll[j].m ) {
-	      if( ll[i].d < ll[j].d )
-		swap(ll.at(i),ll.at(j));
-	      else
-		continue;
-	    }
-	    else
-	      continue;
-	  }
-	  else
-	    continue;
-	             
-	}
-      }
-
-      return ll.at(0); //return latest weblog
-    }
-
-
-
-    //Latest weblog contains name of loaded sample
-    //Function to get the name of sample loaded
-    int get_sample(char *f)
-    {
-      FILE * fp;
-      char * line = NULL;
-      size_t len = 0;
-      ssize_t read;
-  
-      std::string sample;
-      int range_code = -1;  //rangeMediumData = 0, rangeLow = 1, rangeMedium = 2, rangeHigh = 3
-  
-      fp = std::fopen(f, "r");
-      if (fp == NULL)
-	exit(EXIT_FAILURE);
-  
-      while ((read = getline(&line, &len, fp)) != -1) {
-	std::string tmp = (std::string)line;
-	if (tmp.find("/dqm/relval/plotfairy/archive/") != std::string::npos) {
-	  if (tmp.find("/RelValTTbar_13/") != std::string::npos)  range_code = 2;   //sample = "TTbar"
-	  else if (tmp.find("/RelValQCD_Pt_80_120_13/") != std::string::npos)   range_code = 2; //sample = "LowPtQCD"
-	  else if (tmp.find("/RelValQCD_Pt_3000_3500_13/") != std::string::npos) range_code = 3; //sample = "HighPtQCD"
-	  else if (tmp.find("/RelValMinBias_13/") != std::string::npos)   range_code = 1; //sample = "MinBias"
-	  else if (tmp.find("/JetHT/") != std::string::npos) range_code = 0; //sample = "JetHT"
-	  else if (tmp.find("/ZeroBias/") != std::string::npos) range_code = 0; //sample = "ZeroBias"
-	  else  range_code = 0; //sample = "Other than standard samples" //Default case, range = rangeMediumData
-	}
-      }
-  
-      fclose(fp);
-      if (line)
-	free(line);
-  
-      return range_code;
-
-    }
-
     //This is the driver function
     // This function calls sorts(), get_sample() function
     hist_range driver(std::string hist_name) {
-      DIR *dir;
-      struct dirent *ent;
-      bool flag = false;
-      std::vector<std::string> f_name;
-      std::vector<logs> weblogs;
-      char year[5], month[3], day[3];
-      char directory[] = "/tmp/spandey/testGui/logs/dqmgui/relval/";   //This path of "weblog Directory" has to be changed when implemented on central server
 
-      /* Get all the files and directories within directory */
-      if ((dir = opendir (directory)) != NULL) {
-	while ((ent = readdir (dir)) != NULL) {
-	  std::string f = (std::string)ent->d_name;
-	  if (f.find("weblog") != std::string::npos) {
-	    for (int i = 7, j = 0; i <= 14; i++, j++) {   //loop to separate out year, date  and month from the weblog name
-	      if(i <= 10)
-		year[j] = f[i];
-	      if((i == 11) || (i == 12))
-		month[j-4] = f[i];
-	      if( i > 12)
-		day[j-6] = f[i];
-	    }
-	    flag = true;
-	    logs tmp;
-	    tmp.name = f;
-	    tmp.y = atoi(year);
-	    tmp.m = atoi(month);
-	    tmp.d = atoi(day);
-	    weblogs.push_back(tmp);  //contains full name of weblog along with year, date and month separately
-	  }
-	}
-
-	closedir (dir);
-      }
-      else {
-	/* could not open directory */
-	perror ("");
-	//return EXIT_FAILURE;
-	exit(EXIT_FAILURE);
-
-      }
-      if(!flag)
-	printf("\n Directory Not found");
-
-      logs recent = this->sorts(weblogs);
-      char file_name[100];
-      int i1;
-      for(i1 = 0; i1 < (int)recent.name.size(); i1++) {
-	file_name[i1] = recent.name[i1];
-      }
-      file_name[i1] = '\0';
-
-      char strtmp[100] = "";
-      strcat(strtmp,directory);
-      char* full_path = strcat(strtmp,file_name);
-      int ii = this->get_sample(full_path);
       std::vector< std::map<std::string, hist_range> > vec ;
 
       //initializes all maps from HcalrelvalMaps.h file
@@ -536,10 +399,15 @@ namespace hcaldqm
       vec.push_back(map1());
       vec.push_back(map2());
       vec.push_back(map3());
+      int ii = 2;  //Using standard value i.e. rangeMedium
       std::map<std::string, hist_range>::iterator search = vec[ii].find(hist_name);
       hist_range foobar;
       if (search != vec[ii].end()) {
-	foobar = search->second;
+		foobar = search->second;
+		//std::cout<<"Key found!!"<<std::endl;	
+		//std::cout<<"hist_name:"<<hist_name<<", xmin:"<<foobar.xmin<<", xmax:"<<foobar.xmax
+		//<<", ymin:"<<foobar.ymin<<", ymax:"<<foobar.ymax<<", log_flag"<<foobar.log_flag
+		//<<", chi2:"<<foobar.chi2_flag<<std::endl;	
       }
       else {
 	std::cout<<"Key:"<<hist_name<<" Not Found!!\n";
@@ -581,3 +449,5 @@ namespace hcaldqm
     Double_t _contours_summary[10];
   };
 }
+
+#endif
