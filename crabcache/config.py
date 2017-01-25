@@ -22,4 +22,4 @@ data = views.section_('data')
 data.object = 'UserFileCache.RESTBaseAPI.RESTBaseAPI'
 data.cachedir = "%s/state/crabcache/files" % __file__.rsplit('/', 4)[0]
 data.quota_user_limit = 5000 #megabytes
-data.powerusers = ['mmascher','bbockelm','hernan','arizzi'] #their quota is 10*data.quota_user_limit
+data.powerusers = ['mmascher','bbockelm','hernan','arizzi','sethzenz'] #their quota is 10*data.quota_user_limit
