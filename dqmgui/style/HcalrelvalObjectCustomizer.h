@@ -185,37 +185,38 @@ namespace hcaldqm
       //Get appropriate ranges according to the last loaded sample
       hist_range values = driver(o.object->GetName());
       
-      if (values.xmax > 0 || values.xmin != 0)  //change xAxis range
-        ((TH1F*)o.object)->GetXaxis()->SetRangeUser(values.xmin, values.xmax);
+      if(values.rebin != -1) { 
+	if (values.xmax > 0 || values.xmin != 0)  //change xAxis range
+	  ((TH1F*)o.object)->GetXaxis()->SetRangeUser(values.xmin, values.xmax);
+	
+	
+	//yAxis range, log_flag etc                                                                                                                                       
+	if (values.ymin != 0) ((TH1F*)o.object)->SetMinimum(values.ymin);
+	if (values.ymax > 0) ((TH1F*)o.object)->SetMaximum(values.ymax); 
+	if (values.log_flag) {
+	  c->GetPad(0)->SetLogy();
+	  if (values.ymax < 0)
+	    ((TH1F*)o.object)->SetMaximum((((TH1F*)o.object)->GetMaximum())*5);
+	  
+	}
 
-
-      //yAxis range, log_flag etc                                                                                                                                       
-      if (values.ymin != 0) ((TH1F*)o.object)->SetMinimum(values.ymin);
-      if (values.ymax > 0) ((TH1F*)o.object)->SetMaximum(values.ymax); 
-      if (values.log_flag) {
-	c->GetPad(0)->SetLogy();
-	if (values.ymax < 0)
-	  ((TH1F*)o.object)->SetMaximum((((TH1F*)o.object)->GetMaximum())*5);
+	//cosmetics      
+	if ((type == kTH1F) || (type == kTH1D)) {
+	  ((TH1F*)o.object)->SetLineStyle(2);
+	  ((TH1F*)o.object)->SetLineWidth(2);
+	  if (values.chi2_flag) {
+	    ((TH1F*)o.object)->SetFillColor(42);
+	    ((TH1F*)o.object)->SetLineColor(kBlack);
+	  }
+	  else
+	    ((TH1F*)o.object)->SetLineColor(kPink);
+	  
+	  ri.drawOptions = "hist";
+	  c->Modified();
+	}
+	
 	
       }
-
-      //cosmetics      
-      if ((type == kTH1F) || (type == kTH1D)) {
-	((TH1F*)o.object)->SetLineStyle(2);
-	((TH1F*)o.object)->SetLineWidth(2);
-	if (values.chi2_flag) {
-	  ((TH1F*)o.object)->SetFillColor(42);
-	  ((TH1F*)o.object)->SetLineColor(kBlack);
-	}
-	else
-	  ((TH1F*)o.object)->SetLineColor(kPink);
-
-	ri.drawOptions = "hist";
-	c->Modified();
-      }
-      
-      
-
       //	by default
       
       
@@ -389,7 +390,7 @@ namespace hcaldqm
 
 
     //This is the driver function
-    // This function calls sorts(), get_sample() function
+    // This function returns ranges according to histogram name
     hist_range driver(std::string hist_name) {
 
       std::vector< std::map<std::string, hist_range> > vec ;
@@ -401,16 +402,18 @@ namespace hcaldqm
       vec.push_back(map3());
       int ii = 2;  //Using standard value i.e. rangeMedium
       std::map<std::string, hist_range>::iterator search = vec[ii].find(hist_name);
+      //hist_range foobar= NULL;
       hist_range foobar;
       if (search != vec[ii].end()) {
 		foobar = search->second;
 		//std::cout<<"Key found!!"<<std::endl;	
 		//std::cout<<"hist_name:"<<hist_name<<", xmin:"<<foobar.xmin<<", xmax:"<<foobar.xmax
-		//<<", ymin:"<<foobar.ymin<<", ymax:"<<foobar.ymax<<", log_flag"<<foobar.log_flag
-		//<<", chi2:"<<foobar.chi2_flag<<std::endl;	
+		//<<", ymin:"<<foobar.ymin<<", ymax:"<<foobar.ymax<<", log_flag:"<<foobar.log_flag
+		//<<", chi2:"<<foobar.chi2_flag<<", (search->second.chi2_flag):"<<(search->second.chi2_flag)<<std::endl;	
       }
       else {
-	std::cout<<"Key:"<<hist_name<<" Not Found!!\n";
+	foobar.xmin = -1.0; foobar.xmax =  -1.0; foobar.ymin =-1.0; foobar.ymax = -1.0; foobar.rebin =-1; foobar.log_flag =false; foobar.chi2_flag =false;
+	//std::cout<<"Key:"<<hist_name<<" Not Found!!\n";
       }
 
       return foobar;
@@ -420,7 +423,7 @@ namespace hcaldqm
 
 
     /*
-     *  End of functions
+     *  End of function
      *
      */
 

@@ -45,7 +45,7 @@ public:
 	     o.name.find("CaloTowersD/")!=std::string::npos ||
 	     o.name.find("HcalDigisV/")!=std::string::npos ||
 	     o.name.find("HcalHitsV/")!=std::string::npos ||
-	     o.name.find("HcalRecHitsV/")!=std::string::npos) && (flavour == "relval")) ;
+	     o.name.find("HcalRecHitsV/")!=std::string::npos) && (flavour == "relval")) ;      //makes sure changes are made only in relval flavour
        
   }
   
