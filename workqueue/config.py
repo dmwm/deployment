@@ -87,7 +87,8 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     setWorkQueueCommonConfig(reqmgrInteraction)
     reqmgrInteraction.interactDuration = 60 * 5 # every 5 minutes
     reqmgrInteraction.log_file = '%s/logs/workqueue/reqmgrInteractionTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
-    
+    reqmgrInteraction.central_logdb_url = LOG_DB_URL
+    reqmgrInteraction.log_reporter = LOG_REPORTER
     
     # location update
     locationUpdateTask = extentions.section_("locationUpdateTask")
@@ -95,6 +96,8 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     setWorkQueueCommonConfig(locationUpdateTask)
     locationUpdateTask.locationUpdateDuration = 60 * 20 # every 20 minutes
     locationUpdateTask.log_file = '%s/logs/workqueue/locationUpdateTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    locationUpdateTask.central_logdb_url = LOG_DB_URL
+    locationUpdateTask.log_reporter = LOG_REPORTER
     
     # workqueue cleanup threads
     cleanUpTask = extentions.section_("cleanUpTask")
@@ -102,6 +105,8 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     setWorkQueueCommonConfig(cleanUpTask)
     cleanUpTask.cleanUpDuration = 60 * 10 # every 10 minutes
     cleanUpTask.log_file = '%s/logs/workqueue/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    cleanUpTask.central_logdb_url = LOG_DB_URL
+    cleanUpTask.log_reporter = LOG_REPORTER
     
     # workqueue monitoring thread
     monitTask = extentions.section_("monitTask")
@@ -109,3 +114,5 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     setWorkQueueCommonConfig(monitTask)
     monitTask.monitDuration = 60 * 30 # every 30 minutes
     monitTask.log_file = '%s/logs/workqueue/monitTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    monitTask.central_logdb_url = LOG_DB_URL
+    monitTask.log_reporter = LOG_REPORTER

@@ -13,6 +13,7 @@ HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/t0_logdb" % COUCH_URL
+LOG_REPORTER = "tier0_wmstats"
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
@@ -55,7 +56,7 @@ data.couch_reqmgr_db = "t0_request"
 data.couch_workload_summary_db = "t0_workloadsummary"
 data.couch_wmstats_db = "tier0_wmstats"
 data.central_logdb_url = LOG_DB_URL
-data.log_reporter = "tier0_wmstats"
+data.log_reporter = LOG_REPORTER
 
 extentions = config.section_("extensions")
 
@@ -73,8 +74,8 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     # LogDB task (update and clean up)
     logDBTasks = extentions.section_("logDBTasks")
     logDBTasks.object = "WMCore.WMStats.CherryPyThreads.LogDBTasks.LogDBTasks"
-    logDBTasks.central_logdb_url = data.central_logdb_url
-    logDBTasks.log_reporter = data.log_reporter
+    logDBTasks.central_logdb_url = LOG_DB_URL
+    logDBTasks.log_reporter = LOG_REPORTER
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
     logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min
     logDBTasks.log_file = '%s/logs/t0_reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
@@ -85,8 +86,9 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     cleanUpTask.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     cleanUpTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
     cleanUpTask.reqdb_couch_app = "T0Request"
-    cleanUpTask.central_logdb_url = data.central_logdb_url
-    cleanUpTask.log_reporter = data.log_reporter
+    cleanUpTask.central_logdb_url = LOG_DB_URL
+    cleanUpTask.log_reporter = LOG_REPORTER
     cleanUpTask.DataKeepDays = 0.125 # 3 hours - unit is a day
     cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12 # every 12 hours
     cleanUpTask.log_file = '%s/logs/t0_reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    

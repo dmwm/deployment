@@ -14,6 +14,7 @@ BASE_URL = "@@BASE_URL@@"
 DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
+LOG_REPORTER = "reqmgr"
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
@@ -125,6 +126,8 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswi
     wmdatamining.activeDuration = 60 * 15  # every 15 min
     wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
     wmdatamining.log_file = '%s/logs/reqmgr2/wmdataminig-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    wmdatamining.central_logdb_url = LOG_DB_URL
+    wmdatamining.log_reporter = LOG_REPORTER
     
     # ACDC/workqueue cleanup threads
     couchCleanup = extentions.section_("couchCleanup")
@@ -135,6 +138,8 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswi
     couchCleanup.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     couchCleanup.workqueueCleanDuration = 60 * 60 * 12 # every 12 hours
     couchCleanup.log_file = '%s/logs/reqmgr2/couchCleanup-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    couchCleanup.central_logdb_url = LOG_DB_URL
+    couchCleanup.log_reporter = LOG_REPORTER
     
     # status change task 
     statusChangeTasks = extentions.section_("statusChangeTasks")
@@ -144,4 +149,5 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswi
     statusChangeTasks.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     statusChangeTasks.checkStatusDuration = 60 * 10  # every 10 min
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
-    
+    statusChangeTasks.central_logdb_url = LOG_DB_URL
+    statusChangeTasks.log_reporter = LOG_REPORTER
