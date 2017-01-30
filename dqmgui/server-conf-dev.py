@@ -39,7 +39,7 @@ server.source('DQMUnknown')
 server.source('DQMOverlay')
 server.source('DQMStripChart')
 server.source('DQMCertification')
-server.source('DQMLive', "localhost:8061")
+server.source('DQMLive', "127.0.0.1:8061")
 server.source('DQMArchive', "%s/ix128" % STATEDIR, '^/Global/')
 server.source('DQMLayout')
 
