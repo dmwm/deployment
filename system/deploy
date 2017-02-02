@@ -1,5 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_system_variants="frontend backend image devvm devmac"
+deploy_system_variants="frontend backend image dmwmbld devvm devmac"
 system_arch=$(uname)
 : ${CMS_DEV_ROOT:=/data}
 
@@ -303,7 +303,7 @@ deploy_system_post()
   # FIXME: Check the cmsweb account can *not* write files anywhere on AFS, including cmsweb-owned directories.
   # FIXME: Check lemon-host-check has no warnings other than the machine being in maintenance mode.
   case $variant in
-    frontend | backend | image )
+    frontend | backend | image | dmwmbld )
       [ $USER = cmsweb ]
       [ $HOME = /home/cmsweb ]
       cd $HOME
