@@ -67,7 +67,7 @@ data.log_reporter = "request_manager"
 # number of past days since when to display requests in the default view
 data.default_view_requests_since_num_days = 30 # days
 # resource to fetch CMS software versions and scramarch info from
-data.tag_collector_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML?anytype=1"
+data.tag_collector_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML?anytype=1&anyarch=1"
 # another source at TC, returns directly JSON, but strangely formatted (e.g.
 # keys are not present at easy item but defined in a dedicated item ...)
 # https://cmssdt.cern.ch/tc/getReleasesInformation?release_state=Announced
