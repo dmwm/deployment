@@ -14,6 +14,7 @@ BASE_URL = "@@BASE_URL@@"
 DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
+LOG_REPORTER = "wmstats"
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
@@ -57,7 +58,7 @@ data.couch_config_cache_db = "reqmgr_config_cache"
 data.couch_workload_summary_db = "workloadsummary"
 data.couch_wmstats_db = "wmstats"
 data.central_logdb_url = LOG_DB_URL
-data.log_reporter = "wmstats"
+data.log_reporter = LOG_REPORTER
 
 if DBS_INS == "private_vm":
     data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
@@ -81,6 +82,8 @@ dataCacheTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 dataCacheTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
 dataCacheTasks.dataCacheUpdateDuration = 60 * 5 # every 5 min
 dataCacheTasks.log_file = '%s/logs/reqmon/dataCacheTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+dataCacheTasks.central_logdb_url = LOG_DB_URL
+dataCacheTasks.log_reporter = "%s-%s" % (LOG_REPORTER, HOST)
 
 # Production/testbed instance of logdb, must be a production/testbed back-end
 if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswith("vocms0127"):
@@ -88,8 +91,8 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     # LogDB task (update and clean up)
     logDBTasks = extentions.section_("logDBTasks")
     logDBTasks.object = "WMCore.WMStats.CherryPyThreads.LogDBTasks.LogDBTasks"
-    logDBTasks.central_logdb_url = data.central_logdb_url
-    logDBTasks.log_reporter = data.log_reporter
+    logDBTasks.central_logdb_url = LOG_DB_URL
+    logDBTasks.log_reporter = LOG_REPORTER
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
     logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min
     logDBTasks.log_file = '%s/logs/reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
@@ -100,8 +103,8 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     cleanUpTask.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     cleanUpTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
     cleanUpTask.reqdb_couch_app = "ReqMgr"
-    cleanUpTask.central_logdb_url = data.central_logdb_url
-    cleanUpTask.log_reporter = data.log_reporter
+    cleanUpTask.central_logdb_url = LOG_DB_URL
+    cleanUpTask.log_reporter = LOG_REPORTER
     cleanUpTask.DataKeepDays = 0.125 # 3 hours - unit is day
     cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12  # every 12 hours
     cleanUpTask.log_file = '%s/logs/reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
