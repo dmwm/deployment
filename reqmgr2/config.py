@@ -151,3 +151,14 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswi
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     statusChangeTasks.central_logdb_url = LOG_DB_URL
     statusChangeTasks.log_reporter = LOG_REPORTER
+
+    # heartbeat monitor task
+    heartbeatMonitor = extentions.section_("heartbeatMonitor")
+    heartbeatMonitor.object = "WMCore.ReqMgr.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
+    heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
+    heartbeatMonitor.log_file = '%s/logs/reqmgr2/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    heartbeatMonitor.central_logdb_url = LOG_DB_URL
+    heartbeatMonitor.log_reporter = LOG_REPORTER
+    #list all the thread need to be monitored
+    heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]
