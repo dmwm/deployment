@@ -70,7 +70,7 @@ deploy_admin_post()
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; } | \
         { grep -v " $host .*/archive-log-files" || true; }
        echo "0 3 * * * $host $project_config/LogSave $root $LOGDIR/$host") | acrontab
-      acrontab -l | fgrep " $host $project_config/" | sed "s|^[/*0-9 ]* $host ||" | sh -x
+      acrontab -l | fgrep " $host $project_config/" | sed "s|^[/*0-9 ]* $host ||" #| sh -x
       ;;
   esac
 
