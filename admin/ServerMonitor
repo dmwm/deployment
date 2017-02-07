@@ -236,7 +236,8 @@ class ProcessMonitor(Monitor):
       except IOError:
 	pass
     if pids:
-      logmsg(svc, "PROCESS", "pid:%s" % ",".join(pids))
+      for pid in pids:
+        logmsg(svc, "PROCESS", "pid:%s" % pid)
 
 class URLMonitor(Monitor):
   """Monitor which matches HTTP server response to a regexp.
