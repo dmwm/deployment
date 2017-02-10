@@ -161,7 +161,13 @@ setinstances()
   f_p3r=$(curl -ksL $JSONURL_P3R)
   f_p3w=$(curl -ksL $JSONURL_P3W)
   f_mg=$(curl -ksL $JSONURL_MG)
-  if echo "$f" | python $CFGDIR/validate.py; then
+  if echo "$f" | python $CFGDIR/validate.py "def" &&
+     echo "$f_gr" | python $CFGDIR/validate.py "reader"  &&
+     echo "$f_gw" | python $CFGDIR/validate.py "writer" &&
+     echo "$f_p3r" | python $CFGDIR/validate.py "reader"  &&
+     echo "$f_p3w" | python $CFGDIR/validate.py "writer" &&
+     echo "$f_mg" | python $CFGDIR/validate.py "def" &&
+     echo "$f_def" | python $CFGDIR/validate.py "reader&writer" ; then
    {
     [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] &&  [ "$(echo $f_def)" == "$(cat $STATEDIR/view_instances_def.json)" ] && [ "$(echo $f_gr)" == "$(cat $STATEDIR/view_instances_gr.json)" ] && [ "$(echo $f_gw)" == "$(cat $STATEDIR/view_instances_gw.json)" ] && [ "$(echo $f_p3r)" == "$(cat $STATEDIR/view_instances_p3r.json)" ] && [ "$(echo $f_p3w)" == "$(cat $STATEDIR/view_instances_p3w.json)" ] && [ "$(echo $f_mg)" == "$(cat $STATEDIR/view_instances_mg.json)" ] 
    } || {
