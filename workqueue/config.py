@@ -109,10 +109,13 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     cleanUpTask.log_reporter = LOG_REPORTER
     
     # workqueue monitoring thread
-    monitTask = extentions.section_("monitTask")
-    monitTask.object = "WMCore.GlobalWorkQueue.CherryPyThreads.MonitoringTask.MonitoringTask"
-    setWorkQueueCommonConfig(monitTask)
-    monitTask.monitDuration = 60 * 30 # every 30 minutes
-    monitTask.log_file = '%s/logs/workqueue/monitTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
-    monitTask.central_logdb_url = LOG_DB_URL
-    monitTask.log_reporter = LOG_REPORTER
+    heartbeatMonitor = extentions.section_("heartbeatMonitor")
+    heartbeatMonitor.object = "WMCore.GlobalWorkQueue.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
+    setWorkQueueCommonConfig(heartbeatMonitor)
+    heartbeatMonitor.heartbeatCheckDuration = 60 * 10 # every 10 minutes
+    heartbeatMonitor.log_file = '%s/logs/workqueue/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    heartbeatMonitor.wmstats_url = "%s/%s" % (COUCH_URL, wmstatDBName)
+    heartbeatMonitor.central_logdb_url = LOG_DB_URL
+    heartbeatMonitor.log_reporter = LOG_REPORTER
+    #list all the thread need to be monitored
+    heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]

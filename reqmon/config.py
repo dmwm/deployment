@@ -108,3 +108,14 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     cleanUpTask.DataKeepDays = 0.125 # 3 hours - unit is day
     cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12  # every 12 hours
     cleanUpTask.log_file = '%s/logs/reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    
+    # heartbeat monitor task
+    heartbeatMonitor = extentions.section_("heartbeatMonitor")
+    heartbeatMonitor.object = "WMCore.WMStats.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
+    heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
+    heartbeatMonitor.log_file = '%s/logs/reqmon/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    heartbeatMonitor.central_logdb_url = LOG_DB_URL
+    heartbeatMonitor.log_reporter = LOG_REPORTER
+    #list all the thread need to be monitored
+    heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]

@@ -114,20 +114,20 @@ ui_main.application = ui.index
 # Production instance of wmdatamining, must be a production back-end
 if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswith("vocms0127"):
     extentions = config.section_("extensions")
-    wmdatamining = extentions.section_("wmdatamining")
-    wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
-    wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
-    wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
-    wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
-    wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
-    wmdatamining.mcm_cert = "%s/auth/reqmgr2/dmwm-service-cert.pem" % ROOTDIR
-    wmdatamining.mcm_key = "%s/auth/reqmgr2/dmwm-service-key.pem" % ROOTDIR
-    wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
-    wmdatamining.activeDuration = 60 * 15  # every 15 min
-    wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
-    wmdatamining.log_file = '%s/logs/reqmgr2/wmdataminig-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
-    wmdatamining.central_logdb_url = LOG_DB_URL
-    wmdatamining.log_reporter = LOG_REPORTER
+#     wmdatamining = extentions.section_("wmdatamining")
+#     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
+#     wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+#     wmdatamining.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+#     wmdatamining.wmdatamining_url = "%s/%s" % (data.couch_host, data.couch_wmdatamining_db)
+#     wmdatamining.mcm_url = "https://cms-pdmv.cern.ch/mcm"
+#     wmdatamining.mcm_cert = "%s/auth/reqmgr2/dmwm-service-cert.pem" % ROOTDIR
+#     wmdatamining.mcm_key = "%s/auth/reqmgr2/dmwm-service-key.pem" % ROOTDIR
+#     wmdatamining.mcm_tmp_dir = "%s/state/reqmgr2/tmp" % __file__.rsplit('/', 4)[0]
+#     wmdatamining.activeDuration = 60 * 15  # every 15 min
+#     wmdatamining.archiveDuration = 60 * 60 * 4 # every 4 hours
+#     wmdatamining.log_file = '%s/logs/reqmgr2/wmdataminig-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+#     wmdatamining.central_logdb_url = LOG_DB_URL
+#     wmdatamining.log_reporter = LOG_REPORTER
     
     # ACDC/workqueue cleanup threads
     couchCleanup = extentions.section_("couchCleanup")
@@ -151,3 +151,14 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswi
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     statusChangeTasks.central_logdb_url = LOG_DB_URL
     statusChangeTasks.log_reporter = LOG_REPORTER
+
+    # heartbeat monitor task
+    heartbeatMonitor = extentions.section_("heartbeatMonitor")
+    heartbeatMonitor.object = "WMCore.ReqMgr.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
+    heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
+    heartbeatMonitor.log_file = '%s/logs/reqmgr2/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    heartbeatMonitor.central_logdb_url = LOG_DB_URL
+    heartbeatMonitor.log_reporter = LOG_REPORTER
+    #list all the thread need to be monitored
+    heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]
