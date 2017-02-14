@@ -43,7 +43,7 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
 export STAGE_HOST=${STAGE_HOST:-castorcms}
 export STAGE_SVCCLASS=archive
 
-EXCEPTIONS="wmstats asodb1 asodb2"
+EXCEPTIONS="wmstats asodb1 asodb2 asodb3 asodb4"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
