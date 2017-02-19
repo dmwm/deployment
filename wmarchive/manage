@@ -65,7 +65,6 @@ export AVRO_SCHEMA_HDFS=`cat $WMARCHIVE_CONFIG | grep ^data.long_storage_uri | a
 # we'll clean-up data a one day old if their storage type is avroio
 export CLEANUP_TSTAMP=1d
 export CLEANUP_STYPE="avroio"
-export AMQ_BROKER=$WMA_STATIC_ROOT/wma_broker.json
 
 cd $STATEDIR
 host=`hostname -s`
@@ -133,9 +132,9 @@ cron()
       ;;
     aggregate )
       # run hourly aggregation, results will appear in aggregated.hour MongoDB collection
-      WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="hour" \
+      WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="hour" WMARCHIVE_AMQ_BROKER=$STATEDIR/wma_broker.json \
       $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=hour \
-          --schema $AVRO_SCHEMA_HDFS --amq $AMQ_BROKER \
+          --schema $AVRO_SCHEMA_HDFS \
           --use_myspark &> $LOGDIR/aggregate_perf_hour.log
       # run daily aggregation, results will appear in aggregated.day MongoDB collection
       WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="day" \
