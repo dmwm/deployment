@@ -65,7 +65,7 @@ export AVRO_SCHEMA_HDFS=`cat $WMARCHIVE_CONFIG | grep ^data.long_storage_uri | a
 # we'll clean-up data a one day old if their storage type is avroio
 export CLEANUP_TSTAMP=1d
 export CLEANUP_STYPE="avroio"
-export AMQ_BROKER=$WMA_STAIC_ROOT/wma_broker.json
+export AMQ_BROKER=$WMA_STATIC_ROOT/wma_broker.json
 
 cd $STATEDIR
 host=`hostname -s`
