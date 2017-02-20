@@ -131,9 +131,16 @@ cron()
           --verbose &> $LOGDIR/migrate2hdfs.log
       ;;
     aggregate )
+      # run hourly aggregation, results will appear in aggregated.hour MongoDB collection
+      WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="hour" WMARCHIVE_AMQ_BROKER=$STATEDIR/wma_broker.json \
       $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=hour \
           --schema $AVRO_SCHEMA_HDFS \
-          --use_myspark &> $LOGDIR/aggregate_performace.log
+          --use_myspark &> $LOGDIR/aggregate_perf_hour.log
+      # run daily aggregation, results will appear in aggregated.day MongoDB collection
+      WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="day" \
+      $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=day \
+          --schema $AVRO_SCHEMA_HDFS \
+          --use_myspark &> $LOGDIR/aggregate_perf_day.log
 
       ;;
     cleanup )
