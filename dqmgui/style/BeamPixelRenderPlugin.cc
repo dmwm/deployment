@@ -1,4 +1,4 @@
-/*!
+/*
   \File BeamPixelRenderPlugin
   \Display Plugin for BeamSpot from Pixel-Vertices
   \author Mauro Dinardo
@@ -221,9 +221,7 @@ private:
     if (o.name.find("reportSummaryMap") != std::string::npos)
       {
         c->SetGrid(false, false);
-        // Give the report summary map the standard CMS DQM colors:
-        // (standard code, transferred from the SiPixel render plugin)
-        TH2F* obj2 = dynamic_cast<TH2F*>( o.object );
+        TH2F* obj2 = dynamic_cast<TH2F*>(o.object);
         dqm::utils::reportSummaryMapPalette(obj2);
         return;
       }
