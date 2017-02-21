@@ -77,7 +77,6 @@ if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswi
     logDBTasks.central_logdb_url = LOG_DB_URL
     logDBTasks.log_reporter = LOG_REPORTER
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
-    logDBTasks.logDBUpdateDuration = 60 * 10 # every 10 min
     logDBTasks.log_file = '%s/logs/t0_reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
         
     # Cleaning up wmstats db
