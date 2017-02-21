@@ -28,6 +28,7 @@ LOG_REPORTER = "global_workqueue"
 root = __file__.rsplit('/', 4)[0]
 cache_dir = os.path.join(root, 'state', 'workqueue', 'cache')
 os.environ['WMCORE_CACHE_DIR'] = cache_dir
+os.environ['MAX_LUMIS_PER_WQE'] = '200000'
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
