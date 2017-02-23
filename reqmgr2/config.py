@@ -144,7 +144,7 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswi
     # status change task 
     statusChangeTasks = extentions.section_("statusChangeTasks")
     statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
-    statusChangeTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    statusChangeTasks.reqmgr2_url = "%s/reqmgr2" % BASE_URL
     statusChangeTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     statusChangeTasks.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     statusChangeTasks.checkStatusDuration = 60 * 10  # every 10 min
