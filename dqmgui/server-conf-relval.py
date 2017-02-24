@@ -1,5 +1,6 @@
 import os.path, socket; global CONFIGDIR
 from glob import glob
+
 CONFIGDIR = os.path.normcase(os.path.abspath(__file__)).rsplit('/', 1)[0]
 BASEDIR   = __file__.rsplit('/', 4)[0]
 STATEDIR  = "%s/state/dqmgui/relval" % BASEDIR
@@ -13,8 +14,14 @@ LAYOUTS += glob("%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, "tk"))
 LAYOUTS += glob("%s/layouts/%smc_relval-layouts.py" % (CONFIGDIR, "pflow"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "hlt"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "ecal"))
+LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "hcal")) 
+LAYOUTS += glob("%s/layouts/%sMC_relval-layouts.py" % (CONFIGDIR, "hcal")) 
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "tk"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "smp"))
+
+
+
+
 
 modules = ("Monitoring.DQM.GUI",)
 
