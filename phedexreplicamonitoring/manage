@@ -125,6 +125,7 @@ runPBR()
   hadoop fs -rm $hdir/$mm/*
   $script --fromdate $fromdate --todate $todate --keys $akeys \
       --results $results --aggregations avg-day --fout $hdir/$mm \
+      --amq $STATEDIR/pbr_broker.json \
       --verbose 2>&1 1>& $LOGDIR/prmonitor${mm}.log
 }
 
@@ -136,8 +137,8 @@ cron()
   local todate=$fromdate # make daily snapshots
   local keys=now,br_user_group,data_tier,acquisition_era,node_kind
   local results=br_dest_bytes,br_node_bytes
-#  local script="$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh --yarn"
-  local script=$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh
+#  local script=$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh
+  local script="$PHEDEXREPLICAMONITORING_ROOT/bin/pbr.sh --yarn"
   local hdir=${HDFS_MIGRATE}-avg
   local akeys=node_kind,node_tier,dataset_name,br_user_group
   local results=br_node_bytes
@@ -152,6 +153,7 @@ cron()
         --aggregations sum \
         --order br_node_bytes \
         --asc 0 \
+        --amq $STATEDIR/pbr_broker.json \
         --fout $HDFS_MIGRATE/$fromdate \
         --verbose 2>&1 1>& $LOGDIR/prmonitor.log
       ;;
