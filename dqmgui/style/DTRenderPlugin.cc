@@ -278,7 +278,8 @@ private:
         c->SetGrid(1,1);
         return;
       }
-      if( o.name.find( "GlbSummary" ) != std::string::npos )
+      if( o.name.find( "GlbSummary" ) != std::string::npos  ||
+	o.name.find("DataIntegritySummary") != std::string::npos )
       {
         dqm::utils::reportSummaryMapPalette(obj);
         obj->GetXaxis()->SetNdivisions(13,true);
@@ -352,8 +353,8 @@ private:
 
         return;
       }
-      if(o.name.find("DataIntegritySummary") != std::string::npos ||
-	 o.name.find("DataIntegrityTDCSummary") != std::string::npos)
+//      if(o.name.find("DataIntegritySummary") != std::string::npos ||
+	if (o.name.find("DataIntegrityTDCSummary") != std::string::npos)
       {
         obj->GetXaxis()->SetNdivisions(13,true);
         obj->GetYaxis()->SetNdivisions(6,true);
@@ -879,6 +880,7 @@ private:
 
         return;
       }
+
       if( o.name.find( "ROChannel" ) != std::string::npos )
       {
         dqm::utils::reportSummaryMapPalette(obj);
@@ -886,13 +888,14 @@ private:
         obj->GetYaxis()->SetNdivisions(6,true);
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
-        //     obj->SetOption("text,colz");
+        //obj->SetOption("text,colz");
         obj->SetMarkerSize( 2 );
-        //     gStyle->SetPaintTextFormat("2.0f");
+        //   gStyle->SetPaintTextFormat("2.0f");
         c->SetGrid(1,1);
+	obj->SetMaximum(1.0);
         return;
       }
-
+       
       if( o.name.find( "TimeBoxSummary" ) != std::string::npos )
       {
         dqm::utils::reportSummaryMapPalette(obj);
@@ -1348,7 +1351,9 @@ private:
         }
       }
 
-      if(o.name.find("Summary_W") != std::string::npos)
+      if(o.name.find("Summary_W") != std::string::npos ||
+	 o.name.find("SummaryIn_W") != std::string::npos ||
+	 o.name.find("SummaryOut_W") != std::string::npos)
       {
         labelMB4Sect4and13_wheel->Draw("same");
         labelMB4Sect10and14_wheel->Draw("same");
