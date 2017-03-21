@@ -15,6 +15,23 @@ pixellayout(dqmitems, "00b - PixelPhase1_Error_Summary",
       'draw': { 'withref': "no" }}]
    )
 
+pixellayout(dqmitems, "00c - PixelPhase1_Cluster_Size_Eta",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/sizeyvseta_PXBarrel",
+      'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis)",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
+   )
+
+pixellayout(dqmitems, "01a - Event_Rate_per_BX",
+  [{ 'path': "PixelPhase1/Phase1_MechanicalView/eventrate_per_BX",
+     'description': "Event rate per bunch crossing",
+     'draw': { 'withref': "no" }}]
+  )
+pixellayout(dqmitems, "01b - Cluster_Event_Rate_per_BX",
+  [{ 'path': "PixelPhase1/Phase1_MechanicalView/clustereventrate_per_BX",
+     'description': "Cluster event rate per bunch crossing",
+     'draw': { 'withref': "no" }}]
+  )
+
 #pixellayout(dqmitems, "01a - Pixel_zeroOccupancy_BarrelROCs", ##TO BE ADDED LATER 
 #  [{ 'path': "Pixel/noOccROCsBarrel",
 #     'description': "Total number of zero occupancy barrel ROCs vs every 10 LS",
@@ -26,52 +43,80 @@ pixellayout(dqmitems, "00b - PixelPhase1_Error_Summary",
 #     'draw': { 'withref': "yes" }}]
 #  )
 
-pixellayout(dqmitems, "01 - Pixel_Digi_Barrel_Summary",
+pixellayout(dqmitems, "02 - Pixel_Digi_Barrel_Summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_PXBarrel",
       'description': "Number of digis per event in PXBarrel",
-      'draw': { 'withref': "yes" }},
+      'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/adc_PXBarrel",
       'description': "Adc distribution of digis per event per barrel module",
-      'draw': { 'withref': "yes" }}],
+      'draw': { 'withref': "no" }}],
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_per_Lumisection_PXBarrel",
       'description': "Mean adc value per lumisection",
-      'draw': { 'withref': "yes" }},
+      'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/adc_per_Lumisection_PXBarrel",
       'description': "Mean adc value per lumisection",
-      'draw': { 'withref': "yes" }}]
+      'draw': { 'withref': "no" }}]
    )
 
-pixellayout(dqmitems, "02 - Pixel_Digi_Endcap_Summary",
+pixellayout(dqmitems, "03 - Pixel_Digi_Endcap_Summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_PXForward",
       'description': "Number of digis per event in Forward",
-      'draw': { 'withref': "yes" }},
+      'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/adc_PXForward",
       'description': "Adc distribution of digis per event per forward module",
-      'draw': { 'withref': "yes" }}],
+      'draw': { 'withref': "no" }}],
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_per_Lumisection_PXForward",
       'description': "Mean adc value per lumisection",
-      'draw': { 'withref': "yes" }},
+      'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/adc_per_Lumisection_PXForward",
       'description': "Mean adc value per lumisection",
-      'draw': { 'withref': "yes" }}]
+      'draw': { 'withref': "no" }}]
    )
 
+pixellayout(dqmitems, "04 - Pixel_Cluster_Number_Summary",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_clusters_PXBarrel",
+      'description': "Number of cluster per event in Barrel",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/num_clusters_PXForward",
+      'description': "Number of cluster per event in Forward",
+      'draw': { 'withref': "no" }}],
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_clusters_per_Lumisection_PXBarrel",
+      'description': "Mean cluster value per lumisection in barrel",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/num_clusters_per_Lumisection_PXForward",
+      'description': "Mean cluster value per lumisection in endcap",
+      'draw': { 'withref': "no" }}]
+   )
 
-pixellayout(dqmitems, "03 - Pixel_Cluster_Charge_Summary",
-   [{ 'path': "PixelPhase1/Phase1MechanicalView/charge_PXBarrel",
+pixellayout(dqmitems, "05 - Pixel_Cluster_Charge_Summary",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/charge_PXBarrel",
       'description': "Cluster charge in the barrel modules",
-      'draw': { 'withref': "yes" }},
-    { 'path': "PixelPhase1/Phase1MechanicalView/charge_PXForward",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/charge_PXForward",
       'description': "Distribution of raw charge for all digis recorded in the Endcap modules - dominant peak should be around 90-100 ADC",
-      'draw': { 'withref': "yes" }}],
-   [{ 'path': "PixelPhase1/Phase1MechanicalView/charge_per_Lumisection_PXBarrel",
+      'draw': { 'withref': "no" }}],
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/charge_per_Lumisection_PXBarrel",
       'description': "Mean cluster charge per lumisection in barrel",
-      'draw': { 'withref': "yes" }},
-    { 'path': "PixelPhase1/Phase1MechanicalView/charge_per_Lumisection_PXForward",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/charge_per_Lumisection_PXForward",
       'description': "Mean cluster charge per lumisection in barrel",
-      'draw': { 'withref': "yes" }}]
+      'draw': { 'withref': "no" }}]
    )
 
+pixellayout(dqmitems, "06 - Pixel_Cluster_Size_Summary",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/size_PXBarrel",
+      'description': "Total cluster size in the barrel modules",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/size_PXForward",
+      'description': "Total cluster size in the Endcap modules",
+      'draw': { 'withref': "no" }}],
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/size_per_Lumisection_PXBarrel",
+      'description': "Mean cluster size per lumisection in barrel",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/size_per_Lumisection_PXForward",
+      'description': "Mean cluster size per lumisection in barrel",
+      'draw': { 'withref': "no" }}]
+   )
 
 #pixellayout(dqmitems, "05 - Pixel_Cluster_Barrel_Summary",
 #  [{ 'path': "Pixel/Barrel/SUMCLU_charge_Barrel",

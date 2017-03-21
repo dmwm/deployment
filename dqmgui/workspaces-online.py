@@ -87,6 +87,9 @@ server.workspace('DQMContent', 12, 'Trigger', 'HLT', '^HLT/', '',
 
 # Tracker workspaces:
 server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', '',
+                  'Pixel/Layouts/01a - Event_Rate_per_BX',
+                  'Pixel/Layouts/02 - Pixel_Digi_Barrel_Summary',
+                  'Pixel/Layouts/03 - Pixel_Digi_Endcap_Summary',
                  #'Pixel/Layouts/00b - Pixel_Error_Summary',
                  #'Pixel/Layouts/01 - Pixel_FEDOccupancy_Summary',
                  #'Pixel/Layouts/02 - Pixel_Cluster_Summary',
