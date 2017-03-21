@@ -151,12 +151,12 @@ private:
       {
         obj->SetStats( kFALSE );
         dqm::utils::reportSummaryMapPalette(obj);
-
+	/*
         if ( o.name.find( "_has" )  != std::string::npos)
         {
           gStyle->SetPalette(60);
         }
-
+	*/
         obj->SetOption("colztext");
         return;
       }
