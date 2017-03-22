@@ -31,7 +31,7 @@ public:
     }
 
   virtual bool applies(const VisDQMObject& o, const VisDQMImgInfo&) {
-    if (o.name.find("L1T2016/L1TStage2uGMT/") != std::string::npos || o.name.find("L1T2016EMU/L1TdeStage2uGMT/") != std::string::npos)
+    if (o.name.find("L1T/L1TStage2uGMT/") != std::string::npos || o.name.find("L1TEMU/L1TdeStage2uGMT/") != std::string::npos)
       return true;
 
     return false;
