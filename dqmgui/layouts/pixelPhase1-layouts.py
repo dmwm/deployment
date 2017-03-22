@@ -1,19 +1,25 @@
 def pixellayout(i, p, *rows): i["PixelPhase1/Layouts/" + p] = DQMItem(layout=rows)
-pixellayout(dqmitems, "000 - PixelPhase1 FED Occupancy vs Lumi Sections",
+pixellayout(dqmitems, "000 - PixelPhase1 Layer or Disk vs subdet",
+   [{ 'path': "PixelPhase1/Summary/pixelGrandSumary",
+      'description': "Summary results of qulity tests: Layer/Disk (y-axis) vs. Subdetectors (x-axis). See the PixelPhase1/Summary/ directory for more details.",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
+   )
+pixellayout(dqmitems, "00a - PixelPhase1 FED Occupancy vs Lumi Sections",
             [{ 'path': "PixelPhase1/num_feddigistrend_per_Lumisection_per_FED",
                'description': "Number of digis per FED and Lumisection",
                'draw': { 'withref': "no" }}]
               )
-pixellayout(dqmitems, "00a - PixelPhase1_Error_Summary",
+pixellayout(dqmitems, "00b - PixelPhase1_Error_Summary",
    [{ 'path': "PixelPhase1/FED/nerrors_per_type_per_FED",
       'description': "Number of Errors of each type per FED. Channel 0 is assigned for errors where the channel number is not known.",
       'draw': { 'withref': "no" }}]
    )
-pixellayout(dqmitems, "00b - PixelPhase1_Error_Summary",
+pixellayout(dqmitems, "00c - PixelPhase1_Error_Summary",
    [{ 'path': "PixelPhase1/FED/errors_per_LinkInFed_per_FED",
       'description': "Total number of errors in a map of FED channels (y-axis) vs. FED (x-axis). Channel 0 is assigned for errors where the channel number is not known.",
       'draw': { 'withref': "no" }}]
    )
+
 pixellayout(dqmitems, "01a - PixelPhase1_Event_Rate",
   [{ 'path': "PixelPhase1/Phase1_MechanicalView/eventrate_per_BX",
      'description': "Event rate per bunch crossing",
@@ -29,16 +35,6 @@ pixellayout(dqmitems, "01c - PixelPhase1 Cluster Size vs Cluster Eta",
       'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis)",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
-#pixellayout(dqmitems, "01a - Pixel_zeroOccupancy_BarrelROCs", ##TO BE ADDED LATER 
-#  [{ 'path': "Pixel/noOccROCsBarrel",
-#     'description': "Total number of zero occupancy barrel ROCs vs every 10 LS",
-#     'draw': { 'withref': "yes" }}]
-#  )
-#pixellayout(dqmitems, "01b - Pixel_zeroOccupancy_EndcapROCs",  ##TO BE ADDED LATER 
-#  [{ 'path': "Pixel/noOccROCsEndcap",
-#     'description': "Total number of zero occupancy endcap ROCs vs every 10 LS",
-#     'draw': { 'withref': "yes" }}]
-#  )
 
 pixellayout(dqmitems, "02 - PixelPhase1_Digi_ADC_Barrel",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_PXBarrel",
@@ -400,7 +396,22 @@ pixellayout(dqmitems, "23 - PixelPhase1 Cluster Occupancy: Ladder vs Module barr
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "24 - PixelPhase1 Charge: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "24 - PixelPhase1 Cluster Position: Z vs Phi barrel summary",
+   [{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_1",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 1 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_2",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 2 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   [{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_3",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 3 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_4",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 4 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   )
+
+pixellayout(dqmitems, "25 - PixelPhase1 Charge: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
       'description': "Profile of cluster charge per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -409,7 +420,7 @@ pixellayout(dqmitems, "24 - PixelPhase1 Charge: BladePannel vs Disk endcap summa
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "25 - PixelPhase1 ADC: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "26 - PixelPhase1 ADC: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
       'description': "Profile of raw charge for all digis by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -418,7 +429,7 @@ pixellayout(dqmitems, "25 - PixelPhase1 ADC: BladePannel vs Disk endcap summary"
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
     )  
 
-pixellayout(dqmitems, "26 - PixelPhase1 Digis: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "27 - PixelPhase1 Digis: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_per_PXDisk_per_SignedBladePanel_PXRing_1",
       'description': "Profile of number of digis per event and detId by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -427,7 +438,7 @@ pixellayout(dqmitems, "26 - PixelPhase1 Digis: BladePannel vs Disk endcap summar
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "27 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "28 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_per_PXDisk_per_SignedBladePanel_PXRing_1",
       'description': "Profile of number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -435,276 +446,33 @@ pixellayout(dqmitems, "27 - PixelPhase1 Clusters: BladePannel vs Disk endcap sum
       'description': "Profile of number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
-#pixellayout(dqmitems, "07 - Pixel_Barrel_Layer_1_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/charge_PXLayer_1",
-#      'description': "Cluster charge in layer 1 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/adc_PXLayer_1",
-#      'description': "Distribution of raw charge for all digis recorded in layer 1 of pixel barrel - dominant peak should be around 90-100 ADC",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_digis_PXLayer_1",
-#      'description': "Number of Digis in layer 1 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_clusters_PXLayer_1",
-#      'description': "Number of cluster in layer 1 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/size_PXLayer_1",
-#      'description': "Total cluster size in layer 1 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   )
 
-#pixellayout(dqmitems, "08 - Pixel_Barrel_Layer_2_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/charge_PXLayer_2",
-#      'description': "Cluster charge in layer 2 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/adc_PXLayer_2",
-#      'description': "Distribution of raw charge for all digis recorded in layer 2 of pixel barrel - dominant peak should be around 90-100 ADC",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_digis_PXLayer_2",
-#      'description': "Number of Digis in layer 2 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_clusters_PXLayer_2",
-#      'description': "Number of cluster in layer 2 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/size_PXLayer_2",
-#      'description': "Total cluster size in layer 2 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   )
+pixellayout(dqmitems, "29 - PixelPhase1 Cluster Occupancy: BladePannel vs Disk endcap summary",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusters_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
+      'description': "Number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusters_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_2",
+      'description': "Number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   )
 
-#pixellayout(dqmitems, "09 - Pixel_Barrel_Layer_3_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/charge_PXLayer_3",
-#      'description': "Cluster charge in layer 3 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/adc_PXLayer_3",
-#      'description': "Distribution of raw charge for all digis recorded in layer 3 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_digis_PXLayer_3",
-#      'description': "Number of Digis in layer 3 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_clusters_PXLayer_3",
-#      'description': "Number of cluster in layer 3 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/size_PXLayer_3",
-#      'description': "Total cluster size in layer 3 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "10 - Pixel_Barrel_Layer_4_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/charge_PXLayer_4",
-#      'description': "Cluster charge in layer 4 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/adc_PXLayer_4",
-#      'description': "Distribution of raw charge for all digis recorded in layer 4 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_digis_PXLayer_4",
-#      'description': "Number of Digis in layer 4 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_clusters_PXLayer_4",
-#      'description': "Number of cluster in layer 4 of pixel barrel",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/size_PXLayer_4",
-#      'description': "Total cluster size in layer 4 of pixel barrel",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "11 - Pixel_Endcap_Disk_+1_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_PXDisk_+1",
-#      'description': "Cluster charge in disk +1 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_PXDisk_+1",
-#      'description': "Distribution of raw charge for all digis recorded in disk +1 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_PXDisk_+1",
-#      'description': "Number of Digis in disk +1 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_PXDisk_+1",
-#      'description': "Number of cluster in disk +1 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/size_PXDisk_+1",
-#      'description': "Total cluster size in disk +1 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "12 - Pixel_Endcap_Disk_+2_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_PXDisk_+2",
-#      'description': "Cluster charge in disk +2 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_PXDisk_+2",
-#      'description': "Distribution of raw charge for all digis recorded in disk +2 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_PXDisk_+2",
-#      'description': "Number of Digis in disk +2 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_PXDisk_+2",
-#      'description': "Number of cluster in disk +2 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/size_PXDisk_+2",
-#      'description': "Total cluster size in disk +2 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "13 - Pixel_Endcap_Disk_+3_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_PXDisk_+3",
-#      'description': "Cluster charge in disk +3 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_PXDisk_+3",
-#      'description': "Distribution of raw charge for all digis recorded in disk +3 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_PXDisk_+3",
-#      'description': "Number of Digis in disk +3 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_PXDisk_+3",
-#      'description': "Number of cluster in disk +3 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/size_PXDisk_+3",
-#      'description': "Total cluster size in disk +3 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "14 - Pixel_Endcap_Disk_-1_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_PXDisk_-1",
-#      'description': "Cluster charge in disk -1 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_PXDisk_-1",
-#      'description': "Distribution of raw charge for all digis recorded in disk -1 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_PXDisk_-1",
-#      'description': "Number of Digis in disk -1 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_PXDisk_-1",
-#      'description': "Number of cluster in disk -1 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/size_PXDisk_-1",
-#      'description': "Total cluster size in disk -1 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "15 - Pixel_Endcap_Disk_-2_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_PXDisk_-2",
-#      'description': "Cluster charge in disk -2 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_PXDisk_-2",
-#      'description': "Distribution of raw charge for all digis recorded in disk -2 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_PXDisk_-2",
-#      'description': "Number of Digis in disk -2 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_PXDisk_-2",
-#      'description': "Number of cluster in disk -2 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/size_PXDisk_-2",
-#      'description': "Total cluster size in disk -2 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "16 - Pixel_Endcap_Disk_-3_Summary",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_PXDisk_-3",
-#      'description': "Cluster charge in disk -3 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_PXDisk_-3",
-#      'description': "Distribution of raw charge for all digis recorded in disk -3 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_PXDisk_-3",
-#      'description': "Number of Digis in disk -3 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_PXDisk_-3",
-#      'description': "Number of cluster in disk -3 of pixel endcap",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/size_PXDisk_-3",
-#      'description': "Total cluster size in disk -3 of pixel endcap",
-#      'draw': { 'withref': "no" }}],
-#   )
-
-#pixellayout(dqmitems, "05 - Pixel_Cluster_Barrel_Summary",
-#  [{ 'path': "Pixel/Barrel/SUMCLU_charge_Barrel",
-#     'description': "Mean cluster charge in kilo electrons per barrel module",
-#     'draw': { 'withref': "yes" }}],
-#  [{ 'path': "Pixel/Barrel/SUMCLU_nclusters_Barrel",
-#     'description': "Mean number of clusters per event per barrel module",
-#     'draw': { 'withref': "yes" }}],
-#  [{ 'path': "Pixel/Barrel/SUMCLU_size_Barrel",
-#     'description': "Mean cluster size in number of pixels per barrel module",
-#     'draw': { 'withref': "yes" }}]
-#  )
-#pixellayout(dqmitems, "06 - Pixel_Cluster_Endcap_Summary",
-#  [{ 'path': "Pixel/Endcap/SUMCLU_charge_Endcap",
-#     'description': "Mean cluster charge in kilo electrons per endcap module",
-#     'draw': { 'withref': "yes" }}],
-#[{ 'path': "Pixel/Endcap/SUMCLU_nclusters_Endcap",
-#     'description': "Mean number of clusters per event per endcap module",
-#     'draw': { 'withref': "yes" }}],
-#  [{ 'path': "Pixel/Endcap/SUMCLU_size_Endcap",
-#     'description': "Mean cluster size in number of pixels per barrel module",
-#     'draw': { 'withref': "yes" }}]
-#  )
-#pixellayout(dqmitems, "09 - Pixel Clusters vs LS",
-#  [{ 'path': "Pixel/Barrel/totalNumberOfClustersProfile_siPixelClusters_Barrel",
-#     'description': "Total # of CLusters in BPIX with event time in Seconds (LS)",
-#     'draw': {'withref' : "no" }}],
-#  [{ 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX+",
-#     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
-#     'draw': {'withref' : "no" }},
-#   { 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX-",
-#     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
-#     'draw': {'withref' : "no" }}]
-#  )
-#pixellayout(dqmitems, "20a - Cluster occupancy Barrel Layer 1",
-#  [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_Layer_1",
-#     'description': "Cluster occupancy of Barrel Layer 1",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "20b - Cluster occupancy Barrel Layer 2",
-#  [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_Layer_2",
-#     'description': "Cluster occupancy of Barrel Layer 2",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "20c - Cluster occupancy Barrel Layer 3",
-#  [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_Layer_3",
-#     'description': "Cluster occupancy of Barrel Layer 3",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "20d - Cluster occupancy Endcap -z Disk 1",
-#  [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_mz_Disk_1",
-#     'description': "Cluster occupancy of Endcap -z Disk 1",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "20e - Cluster occupancy Endcap -z Disk 2",
-#  [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_mz_Disk_2",
-#     'description': "Cluster occupancy of Endcap -z Disk 2",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "20f - Cluster occupancy Endcap +z Disk 1",
-#  [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_pz_Disk_1",
-#     'description': "Cluster occupancy of Endcap +z Disk 1",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "20g - Cluster occupancy Endcap +z Disk 2",
-#  [{ 'path': "Pixel/Clusters/OffTrack/position_siPixelClusters_pz_Disk_2",
-#     'description': "Cluster occupancy of Endcap +z Disk 2",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "21a - Pixel_Noise_Summary",
-#  [{ 'path': "Pixel/Barrel/SUMDIG_ndigisFREQ_Barrel",
-#     'description': "Total number of events with at least one digi per event per barrel module - spikes show noisy modules or pixels!",
-#     'draw': { 'withref': "yes" }}]
-#  )
-#pixellayout(dqmitems, "21b - Pixel_Noise_Summary",
-#  [{ 'path': "Pixel/Endcap/SUMDIG_ndigisFREQ_Endcap",
-#     'description': "Total number of events with at least one digi per event per endcap module - spikes show noisy modules or pixels!",
-#     'draw': { 'withref': "yes" }}]
-#  )
-#pixellayout(dqmitems, "30a - Pixel event rates",
-#  [{ 'path': "Pixel/pixEventRate",
-#     'description': "Rate of events with Pixel activity above noise level (at least 4 modules with digis)",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "30b - Pixel event BX distribution",
-#  [{ 'path': "Pixel/pixEvtsPerBX",
-#     'description': "Distribution of Pixel events (at least 4 modules with digis) versus bucket number",
-#     'draw': { 'withref': "no" }}]
-#  )
-#pixellayout(dqmitems, "31 - Cluster_y_width_vs_cluster_eta",
-#  [{ 'path': "Pixel/Barrel/sizeYvsEta_siPixelClusters_Barrel",
-#     'description': "Cluster y width as function of cluster eta",
-#     'draw': { 'withref': "no" }}]
-#  )
+pixellayout(dqmitems, "30 - PixelPhase1 Cluster Position: X vs Y endcap summary",
+   [{'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+1",
+     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+2",
+     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +2 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+3",
+     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +3 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   [{'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-1",
+     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -1 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-2",
+     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-3",
+     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }}], 
+   )
