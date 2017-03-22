@@ -368,7 +368,7 @@ pixellayout(dqmitems, "21 - PixelPhase1 Cluster Size: Ladder vs Module barrel su
    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/size_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_4",
       'description': "Total cluster size by signed ladder (y-axis) vs signed module (x-axis) in layer 4 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-)
+  )
 
 pixellayout(dqmitems, "22 - PixelPhase1 Digi Occupancy: Ladder vs Module barrel summary",
   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/digi_occupancy_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_1",
@@ -383,7 +383,7 @@ pixellayout(dqmitems, "22 - PixelPhase1 Digi Occupancy: Ladder vs Module barrel 
    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/digi_occupancy_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_4",
       'description': "Digi Occupancy by signed ladder (y-axis) vs signed module (x-axis) in layer 2 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-)
+  )
 
 pixellayout(dqmitems, "23 - PixelPhase1 Cluster Occupancy: Ladder vs Module barrel summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusters_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_1",
@@ -425,6 +425,7 @@ pixellayout(dqmitems, "26 - PixelPhase1 Digis: BladePannel vs Disk endcap summar
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_per_PXDisk_per_SignedBladePanel_PXRing_2",
       'description': "Profile of number of digis per event and detId by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   )
 
 pixellayout(dqmitems, "27 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_per_PXDisk_per_SignedBladePanel_PXRing_1",
@@ -433,7 +434,7 @@ pixellayout(dqmitems, "27 - PixelPhase1 Clusters: BladePannel vs Disk endcap sum
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_per_PXDisk_per_SignedBladePanel_PXRing_2",
       'description': "Profile of number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-
+   )
 #pixellayout(dqmitems, "07 - Pixel_Barrel_Layer_1_Summary",
 #   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/charge_PXLayer_1",
 #      'description': "Cluster charge in layer 1 of pixel barrel",
