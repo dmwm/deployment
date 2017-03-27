@@ -34,6 +34,7 @@ public:
 
       return false;
     }
+    
   virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
     {
       c->cd();
