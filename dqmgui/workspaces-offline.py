@@ -43,15 +43,20 @@ server.workspace('DQMContent', 13, 'Trigger', 'HLT', '^HLT/', '')
 # Tracker workspaces:
 
 server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', '',
-                 #'Pixel/Layouts/00b - Pixel_Error_Summary',
-                 #'Pixel/Layouts/01 - Pixel_FEDOccupancy_Summary',
-                 #'Pixel/Layouts/02 - Pixel_Cluster_Summary',
-                 #'Pixel/Layouts/03 - Pixel_Track_Summary',
-                 #'Pixel/Layouts/05 - Barrel OnTrack cluster positions',
-                 #'Pixel/Layouts/06 - Endcap OnTrack cluster positions',
-                 #'Pixel/Layouts/07 - Pixel_Digi_Summary',
-                 #'Pixel/Layouts/08 - ROC occupancies',
-                 #'Pixel/Layouts/09 - Pixel Clusters vs LS',
+                  'PixelPhase1/Layouts/000 - PixelPhase1 Layer or Disk vs subdet',
+                  'PixelPhase1/Layouts/01a - PixelPhase1_Event_Rate',
+                  'PixelPhase1/Layouts/01c - PixelPhase1 Cluster Size vs Cluster Eta',
+                  'PixelPhase1/Layouts/02 - PixelPhase1_Digi_ADC_Barrel',
+                  'PixelPhase1/Layouts/03 - PixelPhase1_Digi_ADC_Endcap',
+                  'PixelPhase1/Layouts/04 - PixelPhase1_Cluster_Number',
+                  'PixelPhase1/Layouts/05 - PixelPhase1_Cluster_Charge',
+                  'PixelPhase1/Layouts/06 - PixelPhase1_Cluster_Size',
+                  'PixelPhase1/Layouts/19 - PixelPhase1 Digis: Ladder vs Module barrel summary',
+                  'PixelPhase1/Layouts/20 - PixelPhase1 Clusters: Ladder vs Module barrel summary',
+                  'PixelPhase1/Layouts/24 - PixelPhase1 Cluster Position: Z vs Phi barrel summary',
+                  'PixelPhase1/Layouts/27 - PixelPhase1 Digis: BladePannel vs Disk endcap summary',
+                  'PixelPhase1/Layouts/28 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary',
+                  'PixelPhase1/Layouts/30 - PixelPhase1 Cluster Position: X vs Y endcap summary', 
                 )
 
 
