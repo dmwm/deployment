@@ -1,5 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_dmwmbld_variants="default sl5 sl6 osx"
+deploy_dmwmbld_variants="default sl5 sl6 sl7 osx"
 
 deploy_dmwmbld_prep()
 {
@@ -34,8 +34,12 @@ deploy_dmwmbld_sw()
           pkgtools="V00-21-XX:b174441c2295f1b30c5ff6494"
           ;;
     sl6 ) archs="comp_gcc481:slc6_amd64_gcc481 comp_gcc493:slc6_amd64_gcc493"
-          all_archs="slc6_amd64_gcc481,slc6_amd64_gcc493,osx108_amd64_gcc481 "
-          pkgtools="V00-22-XX:434bf060200793b0120e0027f"
+          all_archs="slc6_amd64_gcc493,slc7_amd64_gcc630"
+          pkgtools="V00-30-XX:b23782a8daff83f5803e9a24001879f21af0c304"
+          ;;
+    sl7 ) archs="comp_gcc630:slc7_amd64_gcc630"
+          all_archs="slc6_amd64_gcc493,slc7_amd64_gcc630"
+          pkgtools="V00-30-XX:b23782a8daff83f5803e9a24001879f21af0c304"
           ;;
     osx ) archs="comp_gcc481:osx108_amd64_gcc481"
           all_archs="slc6_amd64_gcc481,slc6_amd64_gcc493,osx108_amd64_gcc481"
@@ -62,7 +66,7 @@ deploy_dmwmbld_sw()
 
 deploy_dmwmbld_post()
 {
-  case $variant in sl6 ) h="05-55/10" ;; * ) h="*/10" ;; esac
+  case $variant in sl6 | sl7 ) h="05-55/10" ;; * ) h="*/10" ;; esac
   (mkcrontab
    echo "$h * * * * $project_config/dmwmbld_task build"
    echo "0 0 * * * $project_config/dmwmbld_task logclean"
