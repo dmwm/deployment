@@ -260,7 +260,7 @@ private:
           return;
         }
 
-      if( o.name.find("zphi") != std::string::npos)
+      if( o.name.find("zphi") != std::string::npos && o.name.find("PixelPhase1/") != std::string::npos)
         {
           int min_x = (int) obj->FindFirstBinAbove(0.001);
           int max_x = (int) obj->FindLastBinAbove(0.001)+1;
@@ -269,7 +269,9 @@ private:
 
       TH2F* obj2 = dynamic_cast<TH2F*>( o.object );
 
-      if( o.name.find("Summary") != std::string::npos && o.name.find("_Error_") == std::string::npos) 
+      if( o.name.find("Summary") != std::string::npos && 
+      	  o.name.find("_Error_") == std::string::npos && 
+      	  o.name.find("PixelPhase1/") != std::string::npos) 
         {
            dqm::utils::reportSummaryMapPalette(obj2);
         }
