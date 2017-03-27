@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 ##H Usage: build.sh [-u] [-p DIFFURL] [-l LOGFILE] AREANAME GHOWNER GHBRANCH GHREF ARCH
 ##H
@@ -56,7 +56,7 @@ env > $OUT/$logfile
 
 echo
 echo "Building RPMs..."
-case $arch in slc6_amd64_gcc493) repo=comp;; *) repo=comp.pre ;; esac
+case $arch in slc6_amd64_gcc493 | slc7_amd64_gcc630) repo=comp;; *) repo=comp.pre ;; esac
 cmd="$PKGTOOLS/cmsBuild -c cmsdist --repository $repo -a $arch --builders 8 -j 4 --work-dir w build comp"
 # Try to build it two times in the same area to workaround some build problems
 $cmd >> $OUT/$logfile || $cmd >> $OUT/$logfile
