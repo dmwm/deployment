@@ -34,11 +34,9 @@ public:
 
       return false;
     }
-
   virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
     {
       c->cd();
-      
       if( dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object))
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
@@ -269,9 +267,9 @@ private:
 
       TH2F* obj2 = dynamic_cast<TH2F*>( o.object );
 
-      if( o.name.find("Summary") != std::string::npos && 
-      	  o.name.find("_Error_") == std::string::npos && 
-      	  o.name.find("PixelPhase1/") != std::string::npos) 
+      if( o.name.find("Summary") != std::string::npos &&
+          o.name.find("_Error_") == std::string::npos &&
+          o.name.find("PixelPhase1/") != std::string::npos)
         {
            dqm::utils::reportSummaryMapPalette(obj2);
         }
