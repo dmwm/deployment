@@ -12,11 +12,11 @@ dtlayout(dqmitems, "00-Summary/01-OccupancySummary",
 dtlayout(dqmitems, "00-Summary/02-SegmentSummary",
   [{ 'path': "DT/02-Segments/segmentSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
 
-dtlayout(dqmitems, "00-Summary/03-TM_TriggerCorrFractionSummary",
-  [{ 'path': "DT/03-LocalTrigger-TM/TM_CorrFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
+dtlayout(dqmitems, "00-Summary/03-TM_TriggerCorrFractionSummaryIn",
+  [{ 'path': "DT/03-LocalTrigger-TM/TM_CorrFractionSummaryIn", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
 
-dtlayout(dqmitems, "00-Summary/04-TM_Trigger2ndFractionSummary",
-  [{ 'path': "DT/03-LocalTrigger-TM/TM_2ndFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
+dtlayout(dqmitems, "00-Summary/04-TM_Trigger2ndFractionSummaryIn",
+  [{ 'path': "DT/03-LocalTrigger-TM/TM_2ndFractionSummaryIn", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
 
 dtlayout(dqmitems, "00-Summary/05-NoiseChannelsSummary",
   [{ 'path': "DT/05-Noise/NoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DTDQMPlots>Description and Instructions</a>" }])
@@ -72,42 +72,69 @@ for fed in range(770, 775):
 #### TRIGGER SYNCH ##############################################################################
 
 for wheel in range(-2, 3):
-    name = "05-TriggerSynch/01-CorrectBX_Wh" + str(wheel) + "_TM"
-    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_CorrectBXPhi_W" + str(wheel)
+    name = "05-TriggerSynch/01-CorrectBX_In_Wh" + str(wheel) + "_TM"
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_CorrectBXPhiIn_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
-    name = "05-TriggerSynch/Peak-Mean/01-Peak-Mean_Wh" + str(wheel) + "_TM"
-    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_ResidualBXPhi_W" + str(wheel)
+    name = "05-TriggerSynch/Peak-Mean/01-Peak-Mean_In_Wh" + str(wheel) + "_TM"
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_ResidualBXPhiIn_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+    name = "05-TriggerSynch/01-CorrectBX_Out_Wh" + str(wheel) + "_TM"
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_CorrectBXPhiOut_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+    name = "05-TriggerSynch/Peak-Mean/01-Peak-Mean_Out_Wh" + str(wheel) + "_TM"
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_ResidualBXPhiOut_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
 
 #### TRIGGER BASICS ##############################################################################
 
 for wheel in range(-2, 3):
-    name = "06-TriggerBasics/01-CorrFraction_Wh" + str(wheel) + "_TM"
-    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_CorrFractionPhi_W" + str(wheel)
+    name = "06-TriggerBasics/01-CorrFraction_In_Wh" + str(wheel) + "_TM"
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_CorrFractionPhiIn_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
-    name = "06-TriggerBasics/03-2ndFractionPhi_Wh" + str(wheel)
-    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_2ndFractionPhi_W" + str(wheel)
+    name = "06-TriggerBasics/03-2ndFractionPhi_In_Wh" + str(wheel)
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_2ndFractionPhiIn_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+    name = "06-TriggerBasics/01-CorrFraction_Out_Wh" + str(wheel) + "_TM"
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_CorrFractionPhiOut_W" + str(wheel)
+    dtlayout(dqmitems, name,[{ 'path': histoname}])
+    name = "06-TriggerBasics/03-2ndFractionPhi_Out_Wh" + str(wheel)
+    histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/TM_2ndFractionPhiOut_W" + str(wheel)
     dtlayout(dqmitems, name,[{ 'path': histoname}])
 
 #### TRIGGER POS LUTs ###########################################################################
 for wheel in range(-2, 3):
     for sector in range (1, 13):
-        name = "07-TriggerPosLUTs/Wheel" + str(wheel) + "/Sec" + str(sector)
-        histoname1 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/TM_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
-        histoname2 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/TM_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
-        histoname3 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station3/Segment/TM_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St3"
-        histoname4 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/TM_PhiResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
+        name = "07-TriggerPosLUTs/Wheel" + str(wheel) + "/Sec" + str(sector) + " In"
+        histoname1 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/TM_PhiResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
+        histoname2 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/TM_PhiResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
+        histoname3 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station3/Segment/TM_PhiResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St3"
+        histoname4 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/TM_PhiResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
         dtlayout(dqmitems, name,[{ 'path': histoname1},{ 'path': histoname2}],
                  [{ 'path': histoname3},{ 'path': histoname4}])
+	name = "07-TriggerPosLUTs/Wheel" + str(wheel) + "/Sec" + str(sector) + " Out"
+        histoname5 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/TM_PhiResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
+        histoname6 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/TM_PhiResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
+        histoname7 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station3/Segment/TM_PhiResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St3"
+        histoname8 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/TM_PhiResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
+	dtlayout(dqmitems, name,[{ 'path': histoname5},{ 'path': histoname6}],
+		 [{ 'path': histoname7},{ 'path': histoname8}])
 
 #### TRIGGER POS LUTs ###########################################################################
 for wheel in range(-2, 3):
     for sector in range (1, 13):
-        name = "08-TriggerDirLUTs/Wheel" + str(wheel) + "/Sec" + str(sector)
-        histoname1 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/TM_PhibResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
-        histoname2 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/TM_PhibResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
-        histoname4 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/TM_PhibResidual_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
-        dtlayout(dqmitems, name,[{ 'path': histoname1},{ 'path': histoname2},{ 'path': histoname4}])
+        name = "08-TriggerDirLUTs/Wheel" + str(wheel) + "/Sec" + str(sector) + " In"
+        histoname1 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/TM_PhibResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
+        histoname2 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/TM_PhibResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
+        histoname3 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station3/Segment/TM_PhibResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St3"
+        histoname4 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/TM_PhibResidualIn_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
+        dtlayout(dqmitems, name,[{ 'path': histoname1},{ 'path': histoname2},{ 'path': histoname3},{ 'path': histoname4}])
+        name = "08-TriggerDirLUTs/Wheel" + str(wheel) + "/Sec" + str(sector) + " Out"
+        histoname5 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station1/Segment/TM_PhibResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St1"
+        histoname6 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/TM_PhibResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
+        histoname7 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station3/Segment/TM_PhibResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St3"
+        histoname8 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/TM_PhibResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
+        dtlayout(dqmitems, name,[{ 'path': histoname5},{ 'path': histoname6},{ 'path': histoname7},{ 'path': histoname8}])
+
 
 #### HITS RESIDUALS ###########################################################################
 for wheel in range(-2, 3):

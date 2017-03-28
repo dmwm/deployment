@@ -58,7 +58,7 @@ public:
       if( o.name.find( "L1TStage2CaloLayer1" ) != std::string::npos )
         return true;
       // For a brief time (March-April 2016) this module was in different location
-      if( o.name.find( "L1T2016/L1TLayer1" ) != std::string::npos )
+      if( o.name.find( "L1T/L1TLayer1" ) != std::string::npos )
         return true;
       // Also process data/emulator
       if( o.name.find( "L1TdeStage2CaloLayer1" ) != std::string::npos )

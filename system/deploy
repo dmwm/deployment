@@ -437,7 +437,7 @@ deploy_system_post()
         slc5*) sudo rpm -ivh --force \
                  http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
                ;;
-        * ) sudo rpm -ivh --force \
+        slc6* ) sudo rpm -ivh --force \
               http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm      
             ;;
       esac

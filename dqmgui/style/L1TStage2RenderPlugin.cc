@@ -30,7 +30,7 @@ public:
 
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
     {
-      if( o.name.find( "L1T2016" ) != std::string::npos || o.name.find( "L1T2016EMU" ) != std::string::npos )
+      if( o.name.find( "L1T" ) != std::string::npos || o.name.find( "L1TEMU" ) != std::string::npos )
       {
         // Put here the Stage2 subsystems who provide their own plugin:
         if( o.name.find( "L1TStage2CaloLayer1" ) != std::string::npos )
