@@ -31,7 +31,7 @@ class SiPixelMapsRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if (o.name.find( "PixelPhase1/Phase1_MechanicalView" ) != std::string::npos || o.name.find( "PixelPilot/" ) != std::string::npos ){
+      if (o.name.find( "PixelPhase1/Phase1_MechanicalView" ) != std::string::npos || o.name.find( "PixelPhase1/Tracks" ) != std::string::npos || o.name.find( "PixelPilot/" ) != std::string::npos ){
 	  if (o.object && o.name.find( "Coord" ) != std::string::npos ) return true;
 	  return false;
 	}
