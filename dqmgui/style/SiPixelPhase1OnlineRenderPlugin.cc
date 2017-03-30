@@ -128,8 +128,8 @@ public:
           h->SetBinContent(x, obj->GetBinContent(x, i));
         }
 
-        // Supressing online blocks with zero entires from being plotted 
-        if( entries ==  0 ) continue;
+        // suppress single-bin distributions for non-zero-suppressed NDigis etc.
+        if (nonzerobins <= 1) continue;
         h->Scale(ref/entries);
 
         n_color++;
