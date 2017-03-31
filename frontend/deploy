@@ -22,7 +22,7 @@ deploy_frontend_sw()
   # New mod_perl2 version contains breaking api changes, fix it here
   # while supporting both old and new architecture
   case $arch in
-    slc6_amd64_gcc493 )
+    slc6_amd64_gcc493 | slc7_amd64_gcc630 )
       perl -p -i -e 's|connection->remote_addr|connection->client_addr|g' \
            $root/$cfgversion/config/$project/cmsauth.pm
       ;;
