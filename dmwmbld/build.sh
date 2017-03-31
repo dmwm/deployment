@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 ##H Usage: build.sh [-u] [-p DIFFURL] [-l LOGFILE] AREANAME GHOWNER GHBRANCH GHREF ARCH
 ##H
