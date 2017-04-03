@@ -43,7 +43,7 @@ server.workspace('DQMContent', 13, 'Trigger', 'HLT', '^HLT/', '')
 # Tracker workspaces:
 
 server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', '',
-                  'PixelPhase1/Layouts/000 - PixelPhase1 Layer or Disk vs subdet',
+                  'PixelPhase1/Layouts/000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet',
                   'PixelPhase1/Layouts/01a - PixelPhase1_Event_Rate',
                   'PixelPhase1/Layouts/01c - PixelPhase1 Cluster Size vs Cluster Eta',
                   'PixelPhase1/Layouts/02 - PixelPhase1_Digi_ADC_Barrel',
