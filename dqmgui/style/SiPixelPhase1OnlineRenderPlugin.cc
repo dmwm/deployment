@@ -56,9 +56,9 @@ class SiPixelPhase1OnlineRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if ((o.name.find( "PixelPhase1/" ) != std::string::npos || o.name.find( "PixelPilot/" ) != std::string::npos  )
-        && (std::string(o.object->GetName()).find( "OnlineBlock" ) != std::string::npos )) {
-        return true;
+      if(o.name.find( "PixelPhase1Timing/" ) != std::string::npos){
+         if( o.object ) return true;
+        return false;
       } else {
         return false;
       }
@@ -69,11 +69,24 @@ public:
     {
       canvas->cd();
       TH2* obj = dynamic_cast<TH2*>( o.object );
-      if(!obj) return;
 
-      obj->SetStats(1);
-      gStyle->SetOptStat(111);
-      renderInfo.drawOptions = "AXIS";
+      if (o.name.find( "OnlineBlock" ) != std::string::npos && obj ) { // For online blocks with TH2 only 
+         obj->SetStats(1);
+         gStyle->SetOptStat(111);
+         renderInfo.drawOptions = "AXIS";
+      } else if(obj){ // Special case for other 2D Histograms (cluster position, per-lumiseiction etc. )
+         gStyle->SetCanvasBorderMode( 0 );
+         gStyle->SetPadBorderMode( 0 );
+         gStyle->SetPadBorderSize( 0 );
+
+         gStyle->SetOptStat( 0 );
+         obj->SetStats( kFALSE );
+
+         gStyle->SetPalette(1);
+         gPad->SetRightMargin(0.15);
+         obj->SetOption("colz");
+      }
+
     }
 
   // Here, we render our own 1D-view. Some tricks are needed to undo settings that the GUI did.
@@ -83,6 +96,7 @@ public:
       canvas->cd();
       TH2* obj = dynamic_cast<TH2*>( o.object );
       if(!obj) return;
+      if( o.name.find("OnlineBlock") == std::string::npos ) return; // Do nothing for non OnlineBlock plots
 
       // Axis range is not shown anywhere, min abused for block size
       int blocksize = int(obj->GetYaxis()->GetXmin()+0.5);
