@@ -10,7 +10,7 @@ from WMCore.Configuration import Configuration
 acdcDatabase = "acdcserver"
 
 HOST = socket.getfqdn().lower()
-if re.match(r"^vocms0127\.cern\.ch$", HOST):
+if re.match(r"^vocms0(117|127)\.cern\.ch$", HOST):
   ALIAS = "cmsweb-dev.cern.ch"
 elif re.match(r"^vocms0126\.cern\.ch$", HOST):
   ALIAS = "cmsweb-sec.cern.ch"

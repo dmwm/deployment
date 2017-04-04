@@ -60,7 +60,7 @@ deploy_couchdb_post()
 
        # Daily backup the databases to other cluster machines
        case $host in
-         vocms0126 ) tohost=vocms0126 hour=1;;
+         vocms0117 ) tohost=vocms0117 hour=1;;
          vocms0127 ) tohost=vocms0127 hour=1;;
          vocms0132 ) tohost=vocms0131 hour=1;;
          vocms0131 ) tohost=vocms0132 hour=2;;
