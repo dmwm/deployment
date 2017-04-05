@@ -272,6 +272,7 @@ private:
       if( o.name.find("Summary") != std::string::npos && o.name.find("_Error_") == std::string::npos && o.name.find("PixelPhase1/Summary")!=std::string::npos) 
         {
            dqm::utils::reportSummaryMapPalette(obj2);
+           gPad->SetGrid();
         }
 
       if( o.name.find( "reportSummaryMap" ) != std::string::npos )

@@ -31,11 +31,12 @@ class SiPixelMapsRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if (o.name.find( "PixelPhase1/Phase1_MechanicalView" ) != std::string::npos || o.name.find( "PixelPhase1/Tracks" ) != std::string::npos || o.name.find( "PixelPilot/" ) != std::string::npos ){
-	  if (o.object && o.name.find( "Coord" ) != std::string::npos ) return true;
-	  return false;
-	}
-      return false;
+      if ((o.name.find( "PixelPhase1/Phase1_MechanicalView" ) != std::string::npos || o.name.find( "PixelPhase1/Tracks" ) != std::string::npos || o.name.find( "PixelPhase1Timing/" ) != std::string::npos  )
+        && o.object && o.name.find( "Coord" ) != std::string::npos ) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
   //virtual void preDraw( TCanvas * canvas, const VisDQMObject & o, const VisDQMImgInfo & , VisDQMRenderInfo & renderInfo)
