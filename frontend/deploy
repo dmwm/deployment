@@ -147,7 +147,10 @@ deploy_frontend_post()
     :
   elif [ -d /etc/rc.d/init.d ]; then
     sudo rm -f /etc/rc.d/init.d/httpd
-    sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
+    case $arch in
+      slc6*) sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
+      slc7*) sudo cp $PWD/etc/httpd /etc/rc.d/init.d/
+    esac
     sudo /sbin/chkconfig --add httpd
     sudo /sbin/chkconfig --levels 2345 httpd on
   elif [ -d /Library/LaunchDaemons ]; then
