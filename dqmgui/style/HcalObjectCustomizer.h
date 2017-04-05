@@ -253,7 +253,7 @@ namespace hcaldqm
 				VisDQMRenderInfo & ri)
 			{
 				if (_verbosity>0)
-					std::cout << "Calling customize_ByName" << std::cout;
+					std::cout << "Calling customize_ByName" << std::endl;
 
 				TString fullpath(o.name.c_str());
 
