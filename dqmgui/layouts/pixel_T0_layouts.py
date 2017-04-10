@@ -107,3 +107,20 @@ pixellayout(dqmitems, "09 - Pixel Clusters vs LS",
      'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
      'draw': {'withref' : "no" }}]
   )
+pixellayout(dqmitems, "10 - ntracks",
+  [{ 'path': "PixelPhase1/Tracks/ntracks",
+     'description': "Number of Tracks",
+     'draw': {'withref' : "no" }}],
+  )
+
+pixellayout(dqmitems, "12 - ",
+  [{ 'path': "PixelPhase1/Tracks/num_clusters_ontrack_per_Lumisection_PXAII",
+     'description': "# of cluster on track per lumi",
+     'draw': {'withref' : "no" }}],
+  [{ 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX+",
+     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }},
+   { 'path': "Pixel/Endcap/totalNumberOfClustersProfile_siPixelClusters_FPIX-",
+     'description' : "Total # of CLusters in FPIX+ with event time in Seconds (LS)",
+     'draw': {'withref' : "no" }}]
+  )
