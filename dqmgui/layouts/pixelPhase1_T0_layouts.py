@@ -481,7 +481,20 @@ pixellayout(dqmitems, "31 - ntracks",
      'description': "Number of Tracks",
      'draw': {'withref' : "no", , 'drawopts': "COLZ" }}],
   )
-
+pixellayout(dqmitems, "32 - Charge and size ",
+  [{ 'path': "PixelPhase1/Tracks/charge_PXBarrel",
+     'description': "charge PXBarrel",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/charge_PXForward",
+        'description': "charge PXForward",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+   [{ 'path': "PixelPhase1/Tracks/size_PXBarrel",
+      'description': "size of PXBarrel",
+      'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+      { 'path': "PixelPhase1/Tracks/size_PXForward",
+         'description': "size of PXForward",
+         'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
 pixellayout(dqmitems, "33 - ",
   [{ 'path': "PixelPhase1/Tracks/num_clusters_ontrack_per_Lumisection_PXAII",
      'description': "# of cluster on track per Lumisection",
