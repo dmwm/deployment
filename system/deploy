@@ -459,7 +459,8 @@ deploy_system_post()
 	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}') \
         libXmu mesa-libGLU arc.x86_64 arc-server
 
-      [[ $arch =~ ^slc7 ]] && sudo yum install -y voms-clients-java
+      [[ $arch =~ ^slc7 ]] && sudo yum install -y voms-clients-java libXft-devel libXext-devel \
+                                                  mesa-libGLU-devel perl-Switch perl-Env perl-Thread-Queue
 
       # Install myproxy and voms tools.
       sudo yum -y install myproxy wlcg-voms-cms voms-clients3
