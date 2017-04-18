@@ -9,12 +9,12 @@ a configurable amount of Lumisections, usually around 10).
 The output is a set of overlaid, normalized histograms, that can be compared to
 each other to figure which setting gives the best distribution.
 
-The input is a 2D histogram, that has the distribution to be monitored on the 
+The input is a 2D histogram, that has the distribution to be monitored on the
 x-axis and time on the y-axis. As a 2D plot this is not really readable, that
-is why this renderplugin turns each (non-0) bin on the y-axis into a 1D 
+is why this renderplugin turns each (non-0) bin on the y-axis into a 1D
 histogram.
 
-Usage: 
+Usage:
   1. Make sure the 2D plot has time on the y-axis and contains "OnlineBlock" in
      the name.
      A non-trivial detail is that the block size of the OnlineBlocks (which is
@@ -56,9 +56,10 @@ class SiPixelPhase1OnlineRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if(o.name.find( "PixelPhase1Timing/" ) != std::string::npos){
-         if( o.object ) return true;
-        return false;
+      if( ( o.name.find( "PixelPhase1Timing/" )     != std::string::npos ||
+            o.name.find( "TrackTimingPixelPhase1/") != std::string::npos )
+            && o.object && o.name.find("OnlineBlock") != std::string::npos ){
+        return true;
       } else {
         return false;
       }
@@ -70,23 +71,9 @@ public:
       canvas->cd();
       TH2* obj = dynamic_cast<TH2*>( o.object );
 
-      if (o.name.find( "OnlineBlock" ) != std::string::npos && obj ) { // For online blocks with TH2 only 
-         obj->SetStats(1);
-         gStyle->SetOptStat(111);
-         renderInfo.drawOptions = "AXIS";
-      } else if(obj){ // Special case for other 2D Histograms (cluster position, per-lumiseiction etc. )
-         gStyle->SetCanvasBorderMode( 0 );
-         gStyle->SetPadBorderMode( 0 );
-         gStyle->SetPadBorderSize( 0 );
-
-         gStyle->SetOptStat( 0 );
-         obj->SetStats( kFALSE );
-
-         gStyle->SetPalette(1);
-         gPad->SetRightMargin(0.15);
-         obj->SetOption("colz");
-      }
-
+      obj->SetStats(1);
+      gStyle->SetOptStat(111);
+      renderInfo.drawOptions = "AXIS";
     }
 
   // Here, we render our own 1D-view. Some tricks are needed to undo settings that the GUI did.
@@ -96,7 +83,6 @@ public:
       canvas->cd();
       TH2* obj = dynamic_cast<TH2*>( o.object );
       if(!obj) return;
-      if( o.name.find("OnlineBlock") == std::string::npos ) return; // Do nothing for non OnlineBlock plots
 
       // Axis range is not shown anywhere, min abused for block size
       int blocksize = int(obj->GetYaxis()->GetXmin()+0.5);
@@ -134,7 +120,7 @@ public:
 
         n_color++;
         if (n_color == 10) n_color = 15; // skip low saturation stuff in between.
-        
+
         h->SetLineColor(n_color);
         h->Draw("SAME");
         // i is bins, so 1 is 1st block = 0 to blocksize-1
