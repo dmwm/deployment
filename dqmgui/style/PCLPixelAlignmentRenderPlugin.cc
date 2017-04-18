@@ -13,13 +13,11 @@
 
 class PCLPixelAlignmentRenderPlugin : public DQMRenderPlugin
 {
-	double sigCut_;
-	double cut_;
-	double maxMoveCut_;
-	double maxErrorCut_;
-	
-	
-		
+  std::array<double,6> sigCut_;
+  std::array<double,6> cut_;
+  std::array<double,6> maxMoveCut_;
+  std::array<double,6> maxErrorCut_;
+  		
 public:
 
   virtual void initialise (int, char **)
@@ -100,11 +98,26 @@ private:
     c->SetLeftMargin(0.11);
     c->SetRightMargin(0.09);
 
-    cut_ = obj->GetBinContent(8);
-    sigCut_ = obj->GetBinContent(9);
-    maxMoveCut_ = obj->GetBinContent(10);
-    maxErrorCut_ = obj->GetBinContent(11);
+    // dirty trick to ensure compatibility 
+    // with old histogram format
 
+    const int& nBins = obj->GetNbinsX();
+    if(nBins>11){
+      for(size_t i=0;i<6;i++){
+	cut_[i] = obj->GetBinContent(8+5*i);
+	sigCut_[i] = obj->GetBinContent(9+5*i);
+	maxMoveCut_[i] = obj->GetBinContent(10+5*i);
+	maxErrorCut_[i] = obj->GetBinContent(11+5*i);
+      }
+    } else {
+
+      for(size_t i=0;i<6;i++){
+	cut_[i] = obj->GetBinContent(8);
+	sigCut_[i] = obj->GetBinContent(9);
+	maxMoveCut_[i] = obj->GetBinContent(10);
+	maxErrorCut_[i] = obj->GetBinContent(11);
+      }
+    }
 
     obj->SetLineColor(kBlack);
     obj->SetLineWidth(2);
@@ -113,26 +126,23 @@ private:
     double max = -1000;
     double min = 1000;
 
-
     for (int i = 1; i < 7; i++){
-
-    	if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
-    	if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
-
-
-	if (fabs(obj->GetBinContent(i)) > maxMoveCut_) obj->SetFillColor(kRed);
-	else if (obj->GetBinContent(i) > cut_){
-
-		if (obj->GetBinError(i) > maxErrorCut_){
-			obj->SetFillColor(kRed);
-		}
-		else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
-
-			obj->SetFillColor(kGreen+3);
-		}
+      
+      if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
+      if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
+      
+      if (fabs(obj->GetBinContent(i)) > maxMoveCut_[i-1]) obj->SetFillColor(kRed);
+      else if (obj->GetBinContent(i) > cut_[i-1]){
+	
+	if (obj->GetBinError(i) > maxErrorCut_[i-1]){
+	  obj->SetFillColor(kRed);
 	}
+	else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
+	 
+	  obj->SetFillColor(kGreen+3);
+	}
+      }
     }
-
 
     obj->GetXaxis()->SetBinLabel(1,"FPIX(x+,z-)");
     obj->GetXaxis()->SetBinLabel(2,"FPIX(x-,z-)");
@@ -149,7 +159,9 @@ private:
     obj->GetYaxis()->SetTitleSize(0.06);
     obj->GetYaxis()->SetLabelSize(0.06);
 
-    obj->GetYaxis()->SetRangeUser(std::min(min-20,-cut_-20),std::max(max+20,cut_+20));
+    double maxCut_ = *std::max_element(cut_.begin(),cut_.end()); 
+
+    obj->GetYaxis()->SetRangeUser(std::min(min-20,-maxCut_-20),std::max(max+20,maxCut_+20));
 
     obj->SetStats(kFALSE);
     obj->SetFillStyle(3017);
@@ -187,17 +199,37 @@ private:
 
     obj->SetStats( kFALSE );
 
-    cut_ = obj->GetBinContent(8);
-    sigCut_ = obj->GetBinContent(9);
-    maxMoveCut_ = obj->GetBinContent(10);
-    maxErrorCut_ = obj->GetBinContent(11);
+    // dirty trick to ensure compatibility 
+    // with old histogram format
+
+    const int& nBins = obj->GetNbinsX();
+    if(nBins>11){
+      for(size_t i=0;i<6;i++){
+	cut_[i] = obj->GetBinContent(8+5*i);
+	sigCut_[i] = obj->GetBinContent(9+5*i);
+	maxMoveCut_[i] = obj->GetBinContent(10+5*i);
+	maxErrorCut_[i] = obj->GetBinContent(11+5*i);
+      }
+    } else {
+
+      for(size_t i=0;i<6;i++){
+	cut_[i] = obj->GetBinContent(8);
+	sigCut_[i] = obj->GetBinContent(9);
+	maxMoveCut_[i] = obj->GetBinContent(10);
+	maxErrorCut_[i] = obj->GetBinContent(11);
+      }
+    }
                     
     TLine* line = new TLine();
     line->SetBit(kCanDelete);
     line->SetLineWidth(2);
     line->SetLineColor(kRed+2);
-    line->DrawLine(0, cut_, 6, cut_);
-    line->DrawLine(0, -cut_, 6, -cut_);
+
+    for(size_t i=0;i<6;i++){
+      line->DrawLine(i, cut_[i], i+1, cut_[i]);
+      line->DrawLine(i, -cut_[i],i+1, -cut_[i]);
+    }
+
     line->SetLineColor(kBlue+2);
     line->DrawLine(0, 0, 6, 0);
 
@@ -210,39 +242,37 @@ private:
     bool hitMaxError = false;
     bool sigMove = false;
 
-
     for (int i = 1; i < 7; i++){
 
-	if (fabs(obj->GetBinContent(i)) > maxMoveCut_){
-		hitMax = true;	
-	}		
-	else if (fabs(obj->GetBinContent(i)) > cut_){
-		moved = true;
-		if (obj->GetBinError(i) > maxErrorCut_){
-			hitMaxError = true;
-		}
-		else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_){
-			sigMove = true;
-		}
+      if (fabs(obj->GetBinContent(i)) > maxMoveCut_[i-1]){
+	hitMax = true;	
+      }		
+      else if (fabs(obj->GetBinContent(i)) > cut_[i-1]){
+	moved = true;
+	if (obj->GetBinError(i) > maxErrorCut_[i-1]){
+	  hitMaxError = true;
 	}
+	else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
+	  sigMove = true;
+	}
+      }
     }
     if (hitMax){
-	obj->SetFillColor(kRed);
-	t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");	
+      obj->SetFillColor(kRed);
+      t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");	
     }
     else if (moved) {	
-	if (hitMaxError){
-		obj->SetFillColor(kRed);
-		t_text->DrawText(0.25,0.8, "Movement uncertainty exceeds maximum");
-	}
-	else if (sigMove){
-		obj->SetFillColor(kOrange);
-		t_text->DrawText(0.25,0.8, "Significant movement observed");
-	}
+      if (hitMaxError){
+	obj->SetFillColor(kRed);
+	t_text->DrawText(0.25,0.8, "Movement uncertainty exceeds maximum");
+      }
+      else if (sigMove){
+	obj->SetFillColor(kOrange);
+	t_text->DrawText(0.25,0.8, "Significant movement observed");
+      }
     }
     else t_text->DrawText(0.25,0.8, "Movement within limits");
-
-
+    
     return;
   }
 
