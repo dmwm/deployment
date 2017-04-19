@@ -95,7 +95,7 @@ deploy_frontend_post()
   setgroup ug+rw,o-w _frontend $PWD/var
 
   # Hardlink to key used to hmac request headers
-  ln $root/$cfgversion/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
+  sudo ln $root/$cfgversion/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
 
   # Do not require root access when running on single-user mode
   if $nogroups; then
