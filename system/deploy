@@ -460,7 +460,7 @@ deploy_system_post()
         libXmu mesa-libGLU arc.x86_64 arc-server
 
       # CC7 Packages.
-      [[ $arch =~ ^slc7 ]] && sudo yum install -y voms-clients-java libXft-devel libXext-devel \
+      [[ $arch =~ ^slc7 ]] && sudo yum install -y voms-clients-cpp libXft-devel libXext-devel \
                                                   mesa-libGLU-devel perl-Switch perl-Env perl-Thread-Queue libaio
 
       # Install myproxy and voms tools.
