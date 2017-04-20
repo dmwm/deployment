@@ -26,5 +26,6 @@
 ^/auth/complete/scheddmon/0197/ vocms0197.cern.ch
 ^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
+^/auth/complete/wmagent/cern0231 vocms0231.cern.ch
 ^/overview(?:/|$) vocms0132.cern.ch
 ^ vocms0132.cern.ch|vocms0131.cern.ch
