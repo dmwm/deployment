@@ -12,6 +12,7 @@
 ^/auth/complete/wmarchive(?:/|$) vocms013.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
+^/auth/complete/scheddmon/0112/ vocms0112.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
 ^/auth/complete/scheddmon/059/ vocms059.cern.ch
 ^/auth/complete/scheddmon/0107/ vocms0107.cern.ch
