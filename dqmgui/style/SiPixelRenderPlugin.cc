@@ -141,6 +141,16 @@ private:
     }
   };
 
+  void draw_line(double x1, double x2, double y1, double y2 ) 
+    {
+      TLine* l = new TLine(x1, y1, x2, y2);
+      l->SetBit(kCanDelete);
+      l->SetLineWidth(2);
+      l->SetLineStyle(1);
+      l->SetLineColor(1);
+      l->Draw();
+    }
+
   void putMarkers(TH1* obj)
     {
       // TODO: Y-Axis as well?
@@ -301,7 +311,20 @@ private:
       ya->SetTitleSize(0.04);
       ya->SetLabelSize(0.03);
       TGaxis::SetMaxDigits(3);
-
+      
+      if( o.name.find("digi_occupancy_per_col_per_row") != std::string::npos ){
+         // Horizontal
+         draw_line(0,416,80,80);
+        
+         // Vertical
+         draw_line(52 , 52,0,160);
+         draw_line(104,104,0,160);
+         draw_line(156,156,0,160);
+         draw_line(208,208,0,160);
+         draw_line(260,260,0,160);
+         draw_line(312,312,0,160);
+         draw_line(364,364,0,160);
+      }
    }
 
 
