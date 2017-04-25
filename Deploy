@@ -47,11 +47,11 @@ svcs=
 case $(uname) in
   Darwin ) arch=osx108_amd64_gcc481 xargsr="xargs" ;;
   Linux  ) linuxmajor=$(egrep -o 'release [0-9]+{1}\.' /etc/redhat-release|cut -d" " -f2|tr -d .)
-           if [ $linuxmajor = 5 ]; then
-             arch=slc5_amd64_gcc461
-           else
-             arch=slc${linuxmajor}_amd64_gcc481
-           fi
+           case $linuxmajor in
+             5 ) arch=slc5_amd64_gcc461 ;;
+             6 ) arch=slc6_amd64_gcc481 ;;
+             7 ) arch=slc7_amd64_gcc630 ;;
+           esac
            xargsr="xargs -r"
            ;;
   *      ) echo "unsupported architecture" 1>&2; exit 1 ;;

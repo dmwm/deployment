@@ -8,7 +8,7 @@ HOST = socket.gethostname().lower()
 KEY_FILE = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 config = Config(nthreads = THREADS, authkey = KEY_FILE)
 
-if HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
   config.views.data.ldapsync = True
   config.views.data.ldsyncto = "dev"
   config.views.data.ldsynctime = 300

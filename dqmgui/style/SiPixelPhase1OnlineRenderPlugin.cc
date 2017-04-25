@@ -9,12 +9,12 @@ a configurable amount of Lumisections, usually around 10).
 The output is a set of overlaid, normalized histograms, that can be compared to
 each other to figure which setting gives the best distribution.
 
-The input is a 2D histogram, that has the distribution to be monitored on the 
+The input is a 2D histogram, that has the distribution to be monitored on the
 x-axis and time on the y-axis. As a 2D plot this is not really readable, that
-is why this renderplugin turns each (non-0) bin on the y-axis into a 1D 
+is why this renderplugin turns each (non-0) bin on the y-axis into a 1D
 histogram.
 
-Usage: 
+Usage:
   1. Make sure the 2D plot has time on the y-axis and contains "OnlineBlock" in
      the name.
      A non-trivial detail is that the block size of the OnlineBlocks (which is
@@ -56,8 +56,9 @@ class SiPixelPhase1OnlineRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if ((o.name.find( "PixelPhase1/" ) != std::string::npos || o.name.find( "PixelPilot/" ) != std::string::npos  )
-        && (std::string(o.object->GetName()).find( "OnlineBlock" ) != std::string::npos )) {
+      if( ( o.name.find( "PixelPhase1Timing/" )     != std::string::npos ||
+            o.name.find( "TrackTimingPixelPhase1/") != std::string::npos )
+            && o.object && o.name.find("OnlineBlock") != std::string::npos ){
         return true;
       } else {
         return false;
@@ -69,7 +70,6 @@ public:
     {
       canvas->cd();
       TH2* obj = dynamic_cast<TH2*>( o.object );
-      if(!obj) return;
 
       obj->SetStats(1);
       gStyle->SetOptStat(111);
@@ -120,7 +120,7 @@ public:
 
         n_color++;
         if (n_color == 10) n_color = 15; // skip low saturation stuff in between.
-        
+
         h->SetLineColor(n_color);
         h->Draw("SAME");
         // i is bins, so 1 is 1st block = 0 to blocksize-1

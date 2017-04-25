@@ -428,6 +428,8 @@ deploy_system_post()
 
       # Install additional yum repositories
 
+      sudo yum -y install wget
+
       # EGI-trustanchors provides the updated CAs
       sudo wget -q -O /etc/yum.repos.d/egi-trustanchors.repo \
         http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
@@ -456,6 +458,10 @@ deploy_system_post()
 	$(yum -q list compat-{readline5,libtermcap} perl-ExtUtils-Embed 2>/dev/null | \
 	  grep -v -e '^Installed' -e '^Available' | awk '{print $1}') \
         libXmu mesa-libGLU arc.x86_64 arc-server
+
+      # CC7 Packages.
+      [[ $arch =~ ^slc7 ]] && sudo yum install -y voms-clients-cpp libXft-devel libXext-devel \
+                                                  mesa-libGLU-devel perl-Switch perl-Env perl-Thread-Queue libaio
 
       # Install myproxy and voms tools.
       sudo yum -y install myproxy wlcg-voms-cms voms-clients3

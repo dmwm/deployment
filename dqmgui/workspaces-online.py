@@ -87,7 +87,7 @@ server.workspace('DQMContent', 12, 'Trigger', 'HLT', '^HLT/', '',
 
 # Tracker workspaces:
 server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', '',
-                  'PixelPhase1/Layouts/000 - PixelPhase1 Layer or Disk vs subdet',
+                  'PixelPhase1/Layouts/000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet',
                   'PixelPhase1/Layouts/01a - PixelPhase1_Event_Rate',
                   'PixelPhase1/Layouts/01c - PixelPhase1 Cluster Size vs Cluster Eta',
                   'PixelPhase1/Layouts/02 - PixelPhase1_Digi_ADC_Barrel',
@@ -135,7 +135,7 @@ server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^(SiStrip|Tracking)/',
                 )
 
 # Calorimeter workspaces:
-server.workspace('DQMContent', 30, 'Calorimeters', 'Ecal', '(^Ecal(|Barrel|Endcap|Calibration)/|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccRecdEtWgt|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSent|^L1T2016/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd|^HLT/ObjectMonitor/MainShifter/di-Electron_Mass)', 'Ecal/Layouts',
+server.workspace('DQMContent', 30, 'Calorimeters', 'Ecal', '(^Ecal(|Barrel|Endcap|Calibration)/|^L1T/L1TStage2CaloLayer1/ECalDetail/ecalOccRecdEtWgt|^L1T/L1TStage2CaloLayer1/ECalDetail/ecalOccSent|^L1T/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd|^HLT/ObjectMonitor/MainShifter/di-Electron_Mass)', 'Ecal/Layouts',
                  'Ecal/Layouts/00 Summary',
                  'Ecal/Layouts/01 Occupancy Summary',
                  'Ecal/Layouts/02 Calibration Summary',

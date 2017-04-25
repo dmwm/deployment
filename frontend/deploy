@@ -22,7 +22,7 @@ deploy_frontend_sw()
   # New mod_perl2 version contains breaking api changes, fix it here
   # while supporting both old and new architecture
   case $arch in
-    slc6_amd64_gcc493 )
+    slc6_amd64_gcc493 | slc7_amd64_gcc630 )
       perl -p -i -e 's|connection->remote_addr|connection->client_addr|g' \
            $root/$cfgversion/config/$project/cmsauth.pm
       ;;
@@ -95,7 +95,7 @@ deploy_frontend_post()
   setgroup ug+rw,o-w _frontend $PWD/var
 
   # Hardlink to key used to hmac request headers
-  ln $root/$cfgversion/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
+  sudo ln $root/$cfgversion/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
 
   # Do not require root access when running on single-user mode
   if $nogroups; then
@@ -124,7 +124,7 @@ deploy_frontend_post()
        echo "23 */6 * * * $project_config/update-keys $PWD vocms0158 vocms0162 vocms0164" ;;
      preprod:vocms0134 )
        echo "23 */6 * * * $project_config/update-keys $PWD vocms0135" ;;
-     dev:vocms0127 | dev:vocms0126 | default:* )
+     dev:vocms0117 | dev:vocms0127 | default:* )
        echo "23 */6 * * * $project_config/update-keys $PWD" ;;
      * ) ;;
    esac
@@ -147,7 +147,10 @@ deploy_frontend_post()
     :
   elif [ -d /etc/rc.d/init.d ]; then
     sudo rm -f /etc/rc.d/init.d/httpd
-    sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd
+    case $arch in
+      slc6*) sudo ln -s $PWD/etc/httpd /etc/rc.d/init.d/httpd ;;
+      slc7*) sudo cp $PWD/etc/httpd /etc/rc.d/init.d/ ;;
+    esac
     sudo /sbin/chkconfig --add httpd
     sudo /sbin/chkconfig --levels 2345 httpd on
   elif [ -d /Library/LaunchDaemons ]; then

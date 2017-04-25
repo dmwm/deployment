@@ -31,6 +31,14 @@ public:
         return true;
       if( o.name.find( "PixelPhase1/" ) == 0 )
         return true;
+      if( o.name.find( "PixelPhase1Timing/" ) != std::string::npos )
+        return true;
+      if( o.name.find( "TrackTimingPixelPhase1/Phase1_MechanicalView" ) != std::string::npos )
+        return true;
+      if( o.name.find( "TrackTimingPixelPhase1/Phase1_Track" ) != std::string::npos )
+        return true;
+      if( o.name.find( "TrackTimingPixelPhase1/num_feddigis_per_FED" ) != std::string::npos )
+        return true;
 
       return false;
     }
@@ -38,8 +46,8 @@ public:
   virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
     {
       c->cd();
-      
-      if( dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object))
+
+      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object)) && o.name.find( "Lumisection" )!=std::string::npos)
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
         int min_x = (int) obj->FindFirstBinAbove(0.001);
@@ -302,9 +310,10 @@ private:
 
       TH2F* obj2 = dynamic_cast<TH2F*>( o.object );
 
-      if( o.name.find("Summary") != std::string::npos && o.name.find("_Error_") == std::string::npos) 
+      if( o.name.find("Summary") != std::string::npos && o.name.find("_Error_") == std::string::npos && o.name.find("PixelPhase1/Summary")!=std::string::npos)
         {
            dqm::utils::reportSummaryMapPalette(obj2);
+           gPad->SetGrid();
         }
 
       if( o.name.find( "reportSummaryMap" ) != std::string::npos )
@@ -368,7 +377,7 @@ private:
       ya->SetLabelSize(0.03);
       TGaxis::SetMaxDigits(3);
 
-      // Always include 0.
+      // Always include 0
       if( obj->GetMinimum() > 0.) obj->SetMinimum(0.);
 
       // Ranges for specific histograms.
