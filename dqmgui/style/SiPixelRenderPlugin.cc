@@ -264,22 +264,23 @@ private:
         {
           gPad->SetBottomMargin(0.20);
           // +1 since first bin is indexed as bin 1 (not bin 0)
-          obj->GetXaxis()->SetBinLabel(25+1, "ROC of 25"           );
-          obj->GetXaxis()->SetBinLabel(26+1, "Gap word"            );
-          obj->GetXaxis()->SetBinLabel(27+1, "Dummy word"          );
-          obj->GetXaxis()->SetBinLabel(28+1, "FIFO full"           );   
-          obj->GetXaxis()->SetBinLabel(29+1, "Timeout"             );
-          obj->GetXaxis()->SetBinLabel(30+1, "TBM error trailer"   );  
-          obj->GetXaxis()->SetBinLabel(31+1, "TBM/FED mismatch"    );
-          obj->GetXaxis()->SetBinLabel(32+1, "Slink Header"        );
-          obj->GetXaxis()->SetBinLabel(33+1, "Slink Trailer"       );
-          obj->GetXaxis()->SetBinLabel(34+1, "Event size"          );
-          obj->GetXaxis()->SetBinLabel(35+1, "FED channel number"  );
-          obj->GetXaxis()->SetBinLabel(36+1, "ROC value"           ); 
-          obj->GetXaxis()->SetBinLabel(37+1, "dcol or pixel value" );
-          obj->GetXaxis()->SetBinLabel(38+1, "Readout order"       );
-          obj->GetXaxis()->SetBinLabel(39+1, "CRC error"           );
-          obj->GetXaxis()->SetBinLabel(40+1, "overflow"            );
+          // -25 since bin begins at 25
+          obj->GetXaxis()->SetBinLabel(25+1-25, "ROC of 25"           );
+          obj->GetXaxis()->SetBinLabel(26+1-25, "Gap word"            );
+          obj->GetXaxis()->SetBinLabel(27+1-25, "Dummy word"          );
+          obj->GetXaxis()->SetBinLabel(28+1-25, "FIFO full"           );   
+          obj->GetXaxis()->SetBinLabel(29+1-25, "Timeout"             );
+          obj->GetXaxis()->SetBinLabel(30+1-25, "TBM error trailer"   );  
+          obj->GetXaxis()->SetBinLabel(31+1-25, "TBM/FED mismatch"    );
+          obj->GetXaxis()->SetBinLabel(32+1-25, "Slink Header"        );
+          obj->GetXaxis()->SetBinLabel(33+1-25, "Slink Trailer"       );
+          obj->GetXaxis()->SetBinLabel(34+1-25, "Event size"          );
+          obj->GetXaxis()->SetBinLabel(35+1-25, "FED channel number"  );
+          obj->GetXaxis()->SetBinLabel(36+1-25, "ROC value"           ); 
+          obj->GetXaxis()->SetBinLabel(37+1-25, "dcol or pixel value" );
+          obj->GetXaxis()->SetBinLabel(38+1-25, "Readout order"       );
+          obj->GetXaxis()->SetBinLabel(39+1-25, "CRC error"           );
+          obj->GetXaxis()->SetBinLabel(40+1-25, "overflow"            );
         }
       
       if( o.name.find( "avgfedDigiOccvsLumi" ) != std::string::npos )
