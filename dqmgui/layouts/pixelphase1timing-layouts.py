@@ -58,29 +58,29 @@ pixellayout(dqmitems, "05b - Timing_size_Forward",
 ### ADC
 pixellayout(dqmitems, "11a - ADC_Barrel",
     [{ 'path': "PixelPhase1Timing/Phase1_MechanicalView/adc_PXBarrel",
-      'description': "Mean adc value per lumisection in barrel",
+      'description': "Mean adc value in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "11b - ADC_Forward",
     [{ 'path': "PixelPhase1Timing/Phase1_MechanicalView/adc_PXForward",
-      'description': "Mean adc value per lumisection in endcap",
+      'description': "Mean adc value in endcap",
       'draw': { 'withref': "no" }}])
 
 ### Cluster Charge
 pixellayout(dqmitems, "12a - charge_Barrel",
   [{ 'path': "PixelPhase1Timing/Phase1_MechanicalView/charge_PXBarrel",
-      'description': "Mean cluster charge per lumisection in barrel",
+      'description': "Mean cluster charge in barrel",
       'draw': { 'withref': "no" }} ] )
 pixellayout(dqmitems, "12b - charge_Forward",
     [{ 'path': "PixelPhase1Timing/Phase1_MechanicalView/charge_PXForward",
-      'description': "Mean cluster charge per lumisection in endcap",
+      'description': "Mean cluster charge in endcap",
       'draw': { 'withref': "no" }}] )
 
 ### Size
 pixellayout(dqmitems, "13a - size_Forward",
     [{ 'path': "PixelPhase1Timing/Phase1_MechanicalView/size_PXBarrel",
-      'description': "Mean cluster size per lumisection in barrel",
+      'description': "Mean cluster size in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "13b - size_Forward",
     [{ 'path': "PixelPhase1Timing/Phase1_MechanicalView/size_PXForward",
-      'description': "Mean cluster size per lumisection in endcap",
+      'description': "Mean cluster size in endcap",
       'draw': { 'withref': "no" }}] )

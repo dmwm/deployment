@@ -97,59 +97,59 @@ pixellayout(dqmitems, "09b - Timing_residualy_Forward",
 ### ADC
 pixellayout(dqmitems, "11a - ADC_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/adc_PXBarrel",
-      'description': "Mean adc value per lumisection in barrel",
+      'description': "Mean adc value in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "11b - ADC_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/adc_PXForward",
-      'description': "Mean adc value per lumisection in endcap",
+      'description': "Mean adc value in endcap",
       'draw': { 'withref': "no" }}])
 
 ### Cluster Charge
 pixellayout(dqmitems, "12a - charge_Barrel",
   [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/charge_PXBarrel",
-      'description': "Mean cluster charge per lumisection in barrel",
+      'description': "Mean cluster charge in barrel",
       'draw': { 'withref': "no" }} ] )
 pixellayout(dqmitems, "12b - charge_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/charge_PXForward",
-      'description': "Mean cluster charge per lumisection in endcap",
+      'description': "Mean cluster charge in endcap",
       'draw': { 'withref': "no" }}] )
 
 ### Size
 pixellayout(dqmitems, "13a - size_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/size_PXBarrel",
-      'description': "Mean cluster size per lumisection in barrel",
+      'description': "Mean cluster size in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "13b - size_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/size_PXForward",
-      'description': "Mean cluster size per lumisection in endcap",
+      'description': "Mean cluster size in endcap",
       'draw': { 'withref': "no" }}] )
 
 ### Charge On track
 pixellayout(dqmitems, "14a - charge_ontrack_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/charge_PXBarrel",
-      'description': "number of on-track cluster per lumisection in barrel",
+      'description': "number of on-track cluster in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "14b - charge_ontrack_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/charge_PXForward",
-      'description': "number of on-track cluster per lumisection in endcap",
+      'description': "number of on-track cluster in endcap",
       'draw': { 'withref': "no" }}] )
 
 ### Residualx
 pixellayout(dqmitems, "15a - residualx_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_x_PXBarrel",
-      'description': "residual-x per lumisection in barrel",
+      'description': "residual-x in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "15b - residualx_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_x_PXForward",
-      'description': "residual-x size per lumisection in endcap",
+      'description': "residual-x in endcap",
       'draw': { 'withref': "no" }}] )
 
 ### Residualy
 pixellayout(dqmitems, "16a - residualy_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_y_PXBarrel",
-      'description': "residual-y per lumisection in barrel",
+      'description': "residual-y in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "16b - residualy_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_y_PXForward",
-      'description': "residual-y per lumisection in endcap",
+      'description': "residual-y in endcap",
       'draw': { 'withref': "no" }}] )
