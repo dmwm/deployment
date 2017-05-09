@@ -346,16 +346,16 @@ private:
       
       if( o.name.find("digi_occupancy_per_col_per_row") != std::string::npos ){
          // Horizontal
-         draw_line(0,416,80,80);
+         draw_line(0,416,79.5,79.5);
         
          // Vertical
-         draw_line(52 , 52,0,160);
-         draw_line(104,104,0,160);
-         draw_line(156,156,0,160);
-         draw_line(208,208,0,160);
-         draw_line(260,260,0,160);
-         draw_line(312,312,0,160);
-         draw_line(364,364,0,160);
+         draw_line(51.5 , 51.5,0,160);
+         draw_line(103.5,103.5,0,160);
+         draw_line(155.5,155.5,0,160);
+         draw_line(207.5,207.5,0,160);
+         draw_line(259.5,259.5,0,160);
+         draw_line(311.5,311.5,0,160);
+         draw_line(363.5,363.5,0,160);
       }
    }
 
