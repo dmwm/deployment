@@ -272,7 +272,6 @@ private:
         obj->GetYaxis()->SetNdivisions(6,true);
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
-// 	obj->SetOption("text,colz"); //FIXME
         //     obj->SetMarkerSize( 2 );
         //     gStyle->SetPaintTextFormat("2.0f");
         c->SetGrid(1,1);
