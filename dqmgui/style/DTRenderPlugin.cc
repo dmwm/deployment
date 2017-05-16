@@ -278,7 +278,8 @@ private:
         c->SetGrid(1,1);
         return;
       }
-      if( o.name.find( "SegmentGlbSummary" ) != std::string::npos)
+      if( o.name.find( "SegmentGlbSummary" ) != std::string::npos ||
+          o.name.find( "EfficiencyGlbSummary" ) != std::string::npos )
       {
         dqm::utils::reportSummaryMapPalette(obj);
         obj->GetXaxis()->SetNdivisions(13,true);
