@@ -243,3 +243,16 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel/', '',
+		 'CTPPS/TrackingPixel/Layouts/4 fired ROCs per BX',
+		 'CTPPS/TrackingPixel/Layouts/5 fired planes per BX',
+		 'CTPPS/TrackingPixel/Layouts/ROCs hits multiplicity per event',
+		 'CTPPS/TrackingPixel/Layouts/number of fired planes per event',
+		 'CTPPS/TrackingPixel/Layouts/max number of fired aligned_ROCs per event',
+		 'CTPPS/TrackingPixel/Layouts/planes activity',
+		 'CTPPS/TrackingPixel/Layouts/hit multiplicity in planes',
+		 'CTPPS/TrackingPixel/Layouts/hit average multiplicity in planes',
+		 'CTPPS/TrackingPixel/Layouts/hits position:sector 45 station 220_fr_hr',
+		 'CTPPS/TrackingPixel/Layouts/hits position:sector 56 station 220_fr_hr',
+		)
+
