@@ -48,3 +48,4 @@ server.workspace('DQMContent', 43, 'POG', 'EGamma', '^Egamma/', '')
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 51, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+server.workspace('DQMContent', 53, 'CTPPS', 'TimingDiamond', '^CTPPS/TimingDiamond', 'CTPPS/TimingDiamond/Layouts')
