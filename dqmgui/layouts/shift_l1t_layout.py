@@ -48,19 +48,13 @@ l1tlayout(dqmitems,"22 - uGMT OMTF Input P_{T}",
     [{'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFhwPt", 'description': "uGMT OMTF Input P_{T}. x-axis: uGMT OMTF Input P_{T}.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
 l1tlayout(dqmitems,"23 - uGMT OMTF Input SIGN",
     [{'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFhwSign", 'description': "uGMT OMTF Input SIGN. x-axis: uGMT OMTF Input SIGN.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"24 - uGMT EMTF Input BX",
-    [{'path': "L1T/L1TStage2uGMT/EMTFInput/ugmtEMTFBX", 'description': "uGMT EMTF Input BX. x-axis: uGMT EMTF Input BX.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"25 - uGMT EMTF Input HW Global PHI Negative",
-    [{'path': "L1T/L1TStage2uGMT/EMTFInput/ugmtEMTFglbhwPhiNeg", 'description': "uGMT EMTF Input HW Global PHI Negative. x-axis: uGMT EMTF Input HW Global PHI Negative.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"26 - uGMT EMTF Input HW Global PHI Positive",
-    [{'path': "L1T/L1TStage2uGMT/EMTFInput/ugmtEMTFglbhwPhiPos", 'description': "uGMT EMTF Input HW Global PHI Positive. x-axis: uGMT EMTF Input HW Global PHI Positive.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"27 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
+l1tlayout(dqmitems,"24 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
     [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_global", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"28 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
+l1tlayout(dqmitems,"25 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
     [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"29 - uGMT Muon Phi for EMTF Inputs",
+l1tlayout(dqmitems,"26 - uGMT Muon Phi for EMTF Inputs",
     [{'path': "L1T/L1TStage2uGMT/ugmtMuonPhiEmtf", 'description': "uGMT Muon Phi for EMTF Inputs.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"30 - EMTF Chamber Occupancy",
+l1tlayout(dqmitems,"27 - EMTF Chamber Occupancy",
     [{'path': "L1T/L1TStage2EMTF/emtfHitOccupancy", 'description': "EMTF Chamber Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
-l1tlayout(dqmitems,"31 - EMTF Track Bunch Crossing",
+l1tlayout(dqmitems,"28 - EMTF Track Bunch Crossing",
     [{'path': "L1T/L1TStage2EMTF/emtfTrackBX", 'description': "EMTF Track Bunch Crossing. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>."}])
