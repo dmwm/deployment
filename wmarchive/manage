@@ -59,7 +59,7 @@ export MONGO_URI="mongodb://localhost:8230"
 export AVRO_STORAGE=$STATEDIR/avro/data
 export AVRO_STORAGE_MIGRATE=$STATEDIR/avro/migrate
 # area on HDFS where we'll migrate the data
-export HDFS_MIGRATE=/cms/wmarchive/test/avro
+export HDFS_MIGRATE=/cms/wmarchive/avro
 export AVRO_SCHEMA=$STATEDIR/avro/schemas/current.avsc
 export AVRO_SCHEMA_HDFS=`cat $WMARCHIVE_CONFIG | grep ^data.long_storage_uri | awk '{split($0,a,"="); print a[2]}' | sed -e 's/^[[:space:]]*//' -e "s,',,g"`
 # we'll clean-up data a one day old if their storage type is avroio
