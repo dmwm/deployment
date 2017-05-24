@@ -9,7 +9,7 @@
 ^/auth/complete/das(?:/|$) vocms0141.cern.ch|vocms0142.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) vocms0141.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0141.cern.ch|vocms0142.cern.ch :affinity
-^/auth/complete/wmarchive(?:/|$) vocms071.cern.ch
+^/auth/complete/wmarchive(?:/|$) vocms0182.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
