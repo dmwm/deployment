@@ -240,6 +240,12 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
                  'CSC/Layouts/06 Physics Efficiency - RecHits Minus',
                  'CSC/Layouts/07 Physics Efficiency - RecHits Plus',
                 )
+server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
+                 'GEM/Layouts/00 Global view',
+                 'GEM/Layouts/01 recHit',
+                )
+
+
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
