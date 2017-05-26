@@ -138,7 +138,7 @@ pixellayout(dqmitems, "08 - PixelPhase1_ADC_Barrel",
       'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/adc_PXLayer_4",
       'description': "Distribution of raw charge for all digis recorded in layer 4 of pixel barrel",
-      'draw': { 'withref': "no" }}],          
+      'draw': { 'withref': "no" }}],
    )
 
 pixellayout(dqmitems, "09 - PixelPhase1_Digi_Barrel",
@@ -153,7 +153,7 @@ pixellayout(dqmitems, "09 - PixelPhase1_Digi_Barrel",
       'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_digis_PXLayer_4",
       'description': "Number of Digis in layer 4 of pixel barrel",
-      'draw': { 'withref': "no" }}],             
+      'draw': { 'withref': "no" }}],
    )
 
 pixellayout(dqmitems, "10 - PixelPhase1_Cluster_Barrel",
@@ -168,7 +168,7 @@ pixellayout(dqmitems, "10 - PixelPhase1_Cluster_Barrel",
       'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_clusters_PXLayer_4",
       'description': "Number of clusters in layer 4 of pixel barrel",
-      'draw': { 'withref': "no" }}],             
+      'draw': { 'withref': "no" }}],
    )
 
 pixellayout(dqmitems, "11 - PixelPhase1_Cluster_Size_Barrel",
@@ -204,7 +204,7 @@ pixellayout(dqmitems, "12 - PixelPhase1_Charge_Endcap",
       'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_PXDisk_-3",
       'description': "Cluster charge in disk -3 of pixel endcap",
-      'draw': { 'withref': "no" }}],    
+      'draw': { 'withref': "no" }}],
    )
 
 pixellayout(dqmitems, "13 - PixelPhase1_ADC_Endcap",
@@ -246,7 +246,7 @@ pixellayout(dqmitems, "14 - PixelPhase1_Digis_Endcap",
       'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_PXDisk_-3",
       'description': "Number of Digis in disk -3 of pixel endcap",
-      'draw': { 'withref': "no" }}],           
+      'draw': { 'withref': "no" }}],
    )
 
 pixellayout(dqmitems, "15 - PixelPhase1_Clusters_Endcap",
@@ -267,7 +267,7 @@ pixellayout(dqmitems, "15 - PixelPhase1_Clusters_Endcap",
       'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_PXDisk_-3",
       'description': "Number of clusters in disk -3 of pixel endcap",
-      'draw': { 'withref': "no" }}],           
+      'draw': { 'withref': "no" }}],
    )
 
 pixellayout(dqmitems, "16 - PixelPhase1_ClusterSize_Endcap",
@@ -321,7 +321,43 @@ pixellayout(dqmitems, "18 - PixelPhase1 ADC: Ladder vs Module barrel summary",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "19 - PixelPhase1 Digis: Ladder vs Module barrel summary",
+pixellayout(dqmitems, "19 - PixelPhase1 Cluster Position: Z vs Phi barrel summary",
+	[{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_1",
+  	  'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 1 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+     {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_2",
+      'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 2 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+    [{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_3",
+      'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 3 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+     {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_4",
+      'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 4 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   )
+
+pixellayout(dqmitems, "20 - PixelPhase1 Cluster Position: X vs Y endcap summary",
+    [{'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+1",
+      'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+     {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+2",
+      'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +2 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+     {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+3",
+      'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +3 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+    [{'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-1",
+      'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -1 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+     {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-2",
+      'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+     {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-3",
+      'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+	)
+
+pixellayout(dqmitems, "21 - PixelPhase1 Digis: Ladder vs Module barrel summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_digis_per_SignedModule_per_SignedLadder_PXLayer_1",
       'description': "Profile of digis per event and DetID by signed ladder (y-axis) vs signed module (x-axis) in layer 1 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -336,7 +372,7 @@ pixellayout(dqmitems, "19 - PixelPhase1 Digis: Ladder vs Module barrel summary",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "20 - PixelPhase1 Clusters: Ladder vs Module barrel summary",
+pixellayout(dqmitems, "22 - PixelPhase1 Clusters: Ladder vs Module barrel summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/num_clusters_per_SignedModule_per_SignedLadder_PXLayer_1",
       'description': "Profile of number of clusters per event by signed ladder (y-axis) vs signed module (x-axis) in layer 1 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -351,7 +387,7 @@ pixellayout(dqmitems, "20 - PixelPhase1 Clusters: Ladder vs Module barrel summar
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "21 - PixelPhase1 Cluster Size: Ladder vs Module barrel summary",
+pixellayout(dqmitems, "23 - PixelPhase1 Cluster Size: Ladder vs Module barrel summary",
   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/size_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_1",
       'description': "Total cluster size by signed ladder (y-axis) vs signed module (x-axis) in layer 1 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -366,13 +402,13 @@ pixellayout(dqmitems, "21 - PixelPhase1 Cluster Size: Ladder vs Module barrel su
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
   )
 
-pixellayout(dqmitems, "22 - PixelPhase1 Digi Occupancy: Ladder vs Module barrel summary",
+pixellayout(dqmitems, "24 - PixelPhase1 Digi Occupancy: Ladder vs Module barrel summary",
   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/digi_occupancy_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_1",
       'description': "Digi Occupancy by signed ladder (y-axis) vs signed module (x-axis) in layer 1 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/digi_occupancy_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_2",
       'description': "Digi Occupancy by signed ladder (y-axis) vs signed module (x-axis) in layer 2 of barrel",
-      'draw': { 'withref': "no", 'drawopts': "COLZ" }}], 
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/digi_occupancy_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_3",
       'description': "Digi Occupancy by signed ladder (y-axis) vs signed module (x-axis) in layer 1 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -381,7 +417,7 @@ pixellayout(dqmitems, "22 - PixelPhase1 Digi Occupancy: Ladder vs Module barrel 
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
   )
 
-pixellayout(dqmitems, "23 - PixelPhase1 Cluster Occupancy: Ladder vs Module barrel summary",
+pixellayout(dqmitems, "25 - PixelPhase1 Cluster Occupancy: Ladder vs Module barrel summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusters_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_1",
       'description': "Number of clusters per event by signed ladder (y-axis) vs signed module (x-axis) in layer 1 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -396,22 +432,8 @@ pixellayout(dqmitems, "23 - PixelPhase1 Cluster Occupancy: Ladder vs Module barr
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "24 - PixelPhase1 Cluster Position: Z vs Phi barrel summary",
-   [{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_1",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 1 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_2",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 2 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-   [{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_3",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 3 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_4",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 4 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-   )
 
-pixellayout(dqmitems, "25 - PixelPhase1 Charge: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "26 - PixelPhase1 Charge: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
       'description': "Profile of cluster charge per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -420,16 +442,16 @@ pixellayout(dqmitems, "25 - PixelPhase1 Charge: BladePannel vs Disk endcap summa
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "26 - PixelPhase1 ADC: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "27 - PixelPhase1 ADC: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
       'description': "Profile of raw charge for all digis by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_2",
       'description': "Profile of raw charge for all digis by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-    )  
+    )
 
-pixellayout(dqmitems, "27 - PixelPhase1 Digis: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "28 - PixelPhase1 Digis: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_per_PXDisk_per_SignedBladePanel_PXRing_1",
       'description': "Profile of number of digis per event and detId by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -438,7 +460,7 @@ pixellayout(dqmitems, "27 - PixelPhase1 Digis: BladePannel vs Disk endcap summar
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "28 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "29 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_per_PXDisk_per_SignedBladePanel_PXRing_1",
       'description': "Profile of number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -447,7 +469,7 @@ pixellayout(dqmitems, "28 - PixelPhase1 Clusters: BladePannel vs Disk endcap sum
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "29 - PixelPhase1 Cluster Occupancy: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "30 - PixelPhase1 Cluster Occupancy: BladePannel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusters_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
       'description': "Number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
@@ -456,23 +478,99 @@ pixellayout(dqmitems, "29 - PixelPhase1 Cluster Occupancy: BladePannel vs Disk e
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "30 - PixelPhase1 Cluster Position: X vs Y endcap summary",
-   [{'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+1",
-     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
+pixellayout(dqmitems, "31 - ntracks",
+  [{ 'path': "PixelPhase1/Tracks/ntracks",
+     'description': "Number of Tracks in all pixel det",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/ntracksinpixvolume",
+     'description': "Number of Tracks in pix volume",
+     'draw': {'withref' : "no"}}]
+  )
+
+pixellayout(dqmitems, "32 - Charge and size",
+  [{ 'path': "PixelPhase1/Tracks/charge_PXBarrel",
+     'description': "charge PXBarrel",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/charge_PXForward",
+     'description': "charge PXForward",
+     'draw': {'withref' : "no"}}],
+  [{ 'path': "PixelPhase1/Tracks/size_PXBarrel",
+     'description': "size of PXBarrel",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/size_PXForward",
+     'description': "size of PXForward",
+     'draw': {'withref' : "no"}}]
+  )
+
+pixellayout(dqmitems, "33 - Cluster on track and vertices per lumi",
+  [{ 'path': "PixelPhase1/Tracks/num_clusters_ontrack_per_Lumisection_PXAII",
+     'description': "# of cluster on track per Lumisection",
+     'draw': {'withref' : "no"}}],
+  [{ 'path': "PixelPhase1/Tracks/num_vertices_per_Lumisection",
+     'description' : "# vertices per lumisection",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/num_vertices",
+     'description' : "# vertices ",
+     'draw': {'withref' : "no"}}]
+  )
+
+pixellayout(dqmitems, "34 -  Ontrack PXLayer",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_1",
+     'description': "clusterposition_zphi_ontrack_PXLayer_1",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_2",
+        'description': "clusterposition_zphi_ontrack_PXLayer_2",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_3",
+      'description': "clusterposition_zphi_ontrack_PXLayer_3",
+      'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+      { 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_4",
+         'description': "clusterposition_zphi_ontrack_PXLayer_4",
+         'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
+
+pixellayout(dqmitems, "35 - Ontrack Disk",
+  [{'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_+1",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_+2",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_+3",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  [{'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-1",
+  'description': "Clusteron on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-2",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_ -3",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  )
+
+
+pixellayout(dqmitems, "36 - Hit Efficiency Barrel",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
+     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
+        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
+     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
+        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
+pixellayout(dqmitems, "37 - Hit Efficiency Forward",
+   [{'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_1",
+     'description': "hitefficiency_per_PXDisk_per_SignedBl",
      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+2",
-     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +2 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_+3",
-     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +3 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-   [{'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-1",
-     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -1 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-2",
-     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-3",
-     'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
-     'draw': { 'withref': "no", 'drawopts': "COLZ" }}], 
+    {'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_2",
+     'description': "hitefficiency_per_PXDisk_per_SignedB2",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }}
+    ]
    )

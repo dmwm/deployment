@@ -65,6 +65,7 @@ export AVRO_SCHEMA_HDFS=`cat $WMARCHIVE_CONFIG | grep ^data.long_storage_uri | a
 # we'll clean-up data a one day old if their storage type is avroio
 export CLEANUP_TSTAMP=1d
 export CLEANUP_STYPE="avroio"
+export THR=240 # threshold in MB to move files from data to migrate area
 
 cd $STATEDIR
 host=`hostname -s`
@@ -91,10 +92,15 @@ start()
   # start service
   $WMARCHIVE_ROOT/bin/wmc-httpd -r -d $LOGDIR $WMARCHIVE_CONFIG &
   $WMARCHIVE_ROOT/bin/mongo2avro \
-      --mongo=$MONGO_URI --schema=$AVRO_SCHEMA --thr 240 \
-      --odir=$AVRO_STORAGE --mdir=$AVRO_STORAGE_MIGRATE \
+      --mongo=$MONGO_URI --dbname=fwjr --schema=$AVRO_SCHEMA --thr=$THR \
+      --odir=$AVRO_STORAGE/fwjr --mdir=$AVRO_STORAGE_MIGRATE/fwjr \
       --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-fwjr-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  $WMARCHIVE_ROOT/bin/mongo2avro \
+      --mongo=$MONGO_URI --dbname=crab --schema=$AVRO_SCHEMA --thr=$THR \
+      --odir=$AVRO_STORAGE/crab --mdir=$AVRO_STORAGE_MIGRATE/crab \
+      --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE \
+      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-crab-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.
@@ -127,19 +133,22 @@ cron()
   case $action in
     migrate2hdfs )
       $WMARCHIVE_ROOT/bin/migrate2hdfs \
-          --idir=$AVRO_STORAGE_MIGRATE --odir=$HDFS_MIGRATE --check --remove \
-          --verbose &> $LOGDIR/migrate2hdfs.log
+          --idir=$AVRO_STORAGE_MIGRATE/fwjr --odir=$HDFS_MIGRATE/fwjr --check --remove \
+          --verbose &> $LOGDIR/migrate2hdfs-fwjr.log
+      $WMARCHIVE_ROOT/bin/migrate2hdfs \
+          --idir=$AVRO_STORAGE_MIGRATE/crab --odir=$HDFS_MIGRATE/crab --check --remove \
+          --verbose &> $LOGDIR/migrate2hdfs-crab.log
       ;;
     aggregate )
       # run hourly aggregation, results will appear in aggregated.hour MongoDB collection
       WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="hour" WMARCHIVE_AMQ_BROKER=$STATEDIR/wma_broker.json \
       $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=hour \
-          --schema $AVRO_SCHEMA_HDFS \
+          --schema $AVRO_SCHEMA_HDFS --hdir=$HDFS_MIGRATE/fwjr \
           --use_myspark &> $LOGDIR/aggregate_perf_hour.log
       # run daily aggregation, results will appear in aggregated.day MongoDB collection
       WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="day" \
       $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=day \
-          --schema $AVRO_SCHEMA_HDFS \
+          --schema $AVRO_SCHEMA_HDFS --hdir=$HDFS_MIGRATE/fwjr \
           --use_myspark &> $LOGDIR/aggregate_perf_day.log
 
       ;;

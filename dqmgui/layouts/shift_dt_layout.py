@@ -16,7 +16,7 @@ shiftdtlayout(dqmitems, "02-SegmentSummary",
 #             [{ 'path': "DT/04-LocalTrigger-DDU/DDU_CorrFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
 
 shiftdtlayout(dqmitems, "03-TM-TriggerCorrFactionSummary",
-               [{ 'path': "DT/03-LocalTrigger-TM/TM_CorrFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
+               [{ 'path': "DT/03-LocalTrigger-TM/TM_CorrFractionSummaryIn", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
 
 # shiftdtlayout(dqmitems, "05-DDU_Trigger2ndFactionSummary",
 #   [{ 'path': "DT/03-LocalTrigger/DDU_2ndFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
