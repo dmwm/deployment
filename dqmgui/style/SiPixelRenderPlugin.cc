@@ -149,7 +149,7 @@ private:
     }
   };
 
-  void draw_line(double x1, double x2, double y1, double y2, Color_t c) 
+  void draw_line(double x1, double x2, double y1, double y2, Color_t c = kBlack) 
     {
       TLine* l = new TLine(x1, y1, x2, y2);
       l->SetBit(kCanDelete);
