@@ -98,7 +98,7 @@ pixellayout(dqmitems, "11a - ADC_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/adc_PXBarrel",
       'description': "Mean adc value per lumisection",
       'draw': { 'withref': "no" }}])
-pixellayout(dqmitems, "11b - _ADC_Forward",
+pixellayout(dqmitems, "11b - ADC_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/adc_PXForward",
       'description': "Mean adc value per lumisection",
       'draw': { 'withref': "no" }}])
@@ -138,7 +138,7 @@ pixellayout(dqmitems, "15a - residualx_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_x_PXBarrel",
       'description': "Track residual x in barrel",
       'draw': { 'withref': "no" }}])
-pixellayout(dqmitems, "15b - Timing_residualx_Forward",
+pixellayout(dqmitems, "15b - residualx_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_x_PXForward",
       'description': "Track residual x in endcap",
       'draw': { 'withref': "no" }}] )
