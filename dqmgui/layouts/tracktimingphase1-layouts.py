@@ -62,11 +62,11 @@ pixellayout(dqmitems, "06b - Charge_ontrack_Forward",
       'draw': { 'withref': "no" }}] )
 
 ### Number of cluster on track
-pixellayout(dqmitems, "07a - num_cluster_ontrack_Barrel",
+pixellayout(dqmitems, "07a - Cluster_ontrack_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/num_clusters_ontrack_per_OnlineBlock_PXBarrel",
       'description': "Number of on track cluster",
       'draw': { 'withref': "no" }}])
-pixellayout(dqmitems, "07b - num_cluster_ontrack_Forward",
+pixellayout(dqmitems, "07b - Cluster_ontrack_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/num_clusters_ontrack_per_OnlineBlock_PXForward",
       'description': "Number of on track cluster",
       'draw': { 'withref': "no" }}] )

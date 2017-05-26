@@ -149,13 +149,13 @@ private:
     }
   };
 
-  void draw_line(double x1, double x2, double y1, double y2 ) 
+  void draw_line(double x1, double x2, double y1, double y2, Color_t c) 
     {
       TLine* l = new TLine(x1, y1, x2, y2);
       l->SetBit(kCanDelete);
       l->SetLineWidth(2);
       l->SetLineStyle(1);
-      l->SetLineColor(1);
+      l->SetLineColor(c);
       l->Draw();
     }
 
@@ -289,6 +289,7 @@ private:
           obj->GetXaxis()->SetBinLabel(38+1-25, "Readout order"       );
           obj->GetXaxis()->SetBinLabel(39+1-25, "CRC error"           );
           obj->GetXaxis()->SetBinLabel(40+1-25, "overflow"            );
+          obj->GetXaxis()->SetTitle("");
         }
       
       if( o.name.find( "avgfedDigiOccvsLumi" ) != std::string::npos )
@@ -346,16 +347,26 @@ private:
       
       if( o.name.find("digi_occupancy_per_col_per_row") != std::string::npos ){
          // Horizontal
-         draw_line(0,416,80,80);
+         draw_line(0,416,79.5,79.5);
         
          // Vertical
-         draw_line(52 , 52,0,160);
-         draw_line(104,104,0,160);
-         draw_line(156,156,0,160);
-         draw_line(208,208,0,160);
-         draw_line(260,260,0,160);
-         draw_line(312,312,0,160);
-         draw_line(364,364,0,160);
+         draw_line(51.5 , 51.5,0,160);
+         draw_line(103.5,103.5,0,160);
+         draw_line(155.5,155.5,0,160);
+         draw_line(207.5,207.5,0,160);
+         draw_line(259.5,259.5,0,160);
+         draw_line(311.5,311.5,0,160);
+         draw_line(363.5,363.5,0,160);
+
+         // ROC 0 lines 
+
+         if( o.name.find("Shell_p") != std::string::npos ){
+           draw_line(0,   51.5,79.5,79.5,kGray);
+           draw_line(51.5,51.5,79.5,160 ,kGray);
+         } else {
+           draw_line(363.5,416,  79.5,79.5,kGray);
+           draw_line(363.5,363.5,0   ,79.5,kGray);
+         }
       }
    }
 
@@ -433,6 +444,7 @@ private:
           obj->GetXaxis()->SetBinLabel( 5+1, "Reset ROC"            );
           obj->GetXaxis()->SetBinLabel( 6+1, "Reset TBM"            );
           obj->GetXaxis()->SetBinLabel( 7+1, "No token bit pass"    );
+          obj->GetXaxis()->SetTitle("");
         }
       if( o.name.find("tbmtype_FED") != std::string::npos )
         {
@@ -443,6 +455,7 @@ private:
           obj->GetXaxis()->SetBinLabel( 2+1, "FSM error"           );
           obj->GetXaxis()->SetBinLabel( 3+1, "Invalid num of ROCs" );
           obj->GetXaxis()->SetBinLabel( 4+1, "Multiple messages"   );
+          obj->GetXaxis()->SetTitle("");
         }
     }
 
