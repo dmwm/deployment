@@ -126,7 +126,8 @@ public:
       // determine whether core object is an L1T object
       if (o.name.find( "L1T/" ) != std::string::npos )
         // Stage 2 trigger will have new render plugin
-        if (o.name.find( "L1TStage2" ) == std::string::npos )
+        if (o.name.find( "L1TStage2" ) == std::string::npos && 
+            o.name.find( "reportSummaryMap" ) == std::string::npos ) 
           return true;
 
       return false;
