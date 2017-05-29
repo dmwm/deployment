@@ -96,31 +96,31 @@ pixellayout(dqmitems, "09b - residualy_Forward",
 ### ADC
 pixellayout(dqmitems, "11a - ADC_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/adc_PXBarrel",
-      'description': "Mean adc value per lumisection",
+      'description': "Mean adc value in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "11b - _ADC_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/adc_PXForward",
-      'description': "Mean adc value per lumisection",
+      'description': "Mean adc value in endcap",
       'draw': { 'withref': "no" }}])
 
 ### Cluster Charge
 pixellayout(dqmitems, "12a - Cluster_Charge_Barrel",
   [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/charge_PXBarrel",
-      'description': "Mean cluster charge per lumisection in barrel",
+      'description': "Mean cluster charge in barrel",
       'draw': { 'withref': "no" }} ] )
 pixellayout(dqmitems, "12b - Cluster_Charge_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/charge_PXForward",
-      'description': "Mean cluster charge per lumisection in barrel",
+      'description': "Mean cluster charge in endcap",
       'draw': { 'withref': "no" }}] )
 
 ### Size
 pixellayout(dqmitems, "13a - Cluster_Size_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/size_PXBarrel",
-      'description': "Mean cluster size per lumisection in barrel",
+      'description': "Mean cluster size in barrel",
       'draw': { 'withref': "no" }}])
 pixellayout(dqmitems, "13b - Cluster_Size_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_MechanicalView/size_PXForward",
-      'description': "Mean cluster size per lumisection in barrel",
+      'description': "Mean cluster size in endcap",
       'draw': { 'withref': "no" }}] )
 
 ### Charge On track
@@ -138,7 +138,7 @@ pixellayout(dqmitems, "15a - residualx_Barrel",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_x_PXBarrel",
       'description': "Track residual x in barrel",
       'draw': { 'withref': "no" }}])
-pixellayout(dqmitems, "15b - Timing_residualx_Forward",
+pixellayout(dqmitems, "15b - residualx_Forward",
     [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/residual_x_PXForward",
       'description': "Track residual x in endcap",
       'draw': { 'withref': "no" }}] )
