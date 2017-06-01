@@ -134,7 +134,8 @@ for wheel in range(-2, 3):
         histoname6 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station2/Segment/TM_PhibResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St2"
         histoname7 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station3/Segment/TM_PhibResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St3"
         histoname8 = "DT/03-LocalTrigger-TM/Wheel" + str(wheel) + "/Sector" + str(sector) + "/Station4/Segment/TM_PhibResidualOut_W" + str(wheel) + "_Sec" +  str(sector) + "_St4"
-        dtlayout(dqmitems, name,[{ 'path': histoname5},{ 'path': histoname6},{ 'path': histoname7},{ 'path': histoname8}])
+        dtlayout(dqmitems, name,[{ 'path': histoname5},{ 'path': histoname6}],
+                  [{ 'path': histoname7},{ 'path': histoname8}])
 
 
 #### HITS RESIDUALS ###########################################################################
