@@ -272,9 +272,33 @@ private:
         obj->GetYaxis()->SetNdivisions(6,true);
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
-// 	obj->SetOption("text,colz"); //FIXME
         //     obj->SetMarkerSize( 2 );
         //     gStyle->SetPaintTextFormat("2.0f");
+        c->SetGrid(1,1);
+        return;
+      }
+      if( o.name.find( "SegmentGlbSummary" ) != std::string::npos ||
+          o.name.find( "EfficiencyGlbSummary" ) != std::string::npos )
+      {
+        dqm::utils::reportSummaryMapPalette(obj);
+        obj->GetXaxis()->SetNdivisions(13,true);
+        obj->GetYaxis()->SetNdivisions(6,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        c->SetBottomMargin(0.1);
+        c->SetLeftMargin(0.12);
+        c->SetRightMargin(0.12);
+        obj->SetMinimum(-0.00000001);
+        obj->SetMaximum(1.0);
+
+        int colorError1[5];
+        colorError1[0] = 632; // kRed
+        colorError1[1] = 810; // Dark orange
+        colorError1[2] = 800; // kOrange
+        colorError1[3] = 400; //kYellow
+        colorError1[4] = 416;// kGreen
+        gStyle->SetPalette(5, colorError1);
+
         c->SetGrid(1,1);
         return;
       }
