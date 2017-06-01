@@ -47,12 +47,18 @@ public:
     {
       c->cd();
 
-      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object)) && o.name.find( "Lumisection" )!=std::string::npos)
+      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object))
+          && (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos ) )
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
         int min_x = (int) obj->FindFirstBinAbove(0.001);
         int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-        obj->GetXaxis()->SetRange(min_x, max_x+5);
+        if( o.name.find("Lumisection")!=std::string::npos ){
+          obj->GetXaxis()->SetRange(min_x, max_x+5);
+        } else {
+          obj->GetXaxis()->SetTitle("Lumisection (#times10)");
+          obj->GetXaxis()->SetRange(min_x, max_x+1);
+        }
       }
 
       if( dynamic_cast<TH2*>( o.object ) )
@@ -290,28 +296,6 @@ private:
           obj->GetXaxis()->SetBinLabel(39+1-25, "CRC error"           );
           obj->GetXaxis()->SetBinLabel(40+1-25, "overflow"            );
           obj->GetXaxis()->SetTitle("");
-        }
-
-      if( o.name.find( "LumiBlock" ) != std::string::npos ) // Lumiblock plots 
-        {
-          char label[128];
-          TAxis* axis = std::string(obj->GetXaxis()->GetTitle()) == "LumiBlock" ? obj->GetXaxis():
-                        std::string(obj->GetYaxis()->GetTitle()) == "LumiBlock" ? obj->GetYaxis():
-                        nullptr;
-          
-          if( axis == obj->GetXaxis() ) 
-            gPad->SetBottomMargin(0.15);
-          else if ( axis == obj->GetYaxis() ) 
-            gPad->SetLeftMargin(0.15);
-
-          if( axis ){ 
-            for( int i = 1 ; axis && i <= axis ->GetNbins() ; i += 20  ){
-              sprintf( label, "%d", (i-1)*5+1  );
-              axis->SetBinLabel(i, label );
-            }
-            axis->SetTitle("Lumisection");
-            axis->SetTitleOffset( 1.3 );
-          }
         }
 
       if( o.name.find( "avgfedDigiOccvsLumi" ) != std::string::npos )
