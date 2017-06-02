@@ -5,7 +5,7 @@ pixellayout(dqmitems, "000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet"
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
 pixellayout(dqmitems, "00a - PixelPhase1 FED Occupancy vs Lumi Sections",
-            [{ 'path': "PixelPhase1/num_feddigistrend_per_Lumisection_per_FED",
+            [{ 'path': "PixelPhase1/num_feddigistrend_per_LumiBlock_per_FED",
                'description': "Number of digis per FED and Lumisection",
                'draw': { 'withref': "no" }}]
               )
