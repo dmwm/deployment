@@ -242,9 +242,12 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
                 )
 
 server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
-                 'GEM/Layouts/00 Global view',
-                 'GEM/Layouts/01 recHit',
-                 'GEM/Layouts/02 prova', 
+                 'GEM/Layouts/00 eta',
+                 'GEM/Layouts/01 phi',
+                 'GEM/Layouts/02 recHit per VFAT',
+                 'GEM/Layouts/03 VFAT vs ClusterSize',
+                 'GEM/Layouts/04 FiredStrips',
+                 'GEM/Layouts/05 DigiStrips', 
 )
 
 # CTPPS workspaces:
