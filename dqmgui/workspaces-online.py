@@ -247,6 +247,15 @@ server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
 
 
 
+server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
+                 'GEM/Layouts/00 eta',
+                 'GEM/Layouts/01 phi',
+                 'GEM/Layouts/02 recHit per VFAT',
+                 'GEM/Layouts/03 VFAT vs ClusterSize',
+                 'GEM/Layouts/04 FiredStrips',
+                 'GEM/Layouts/05 DigiStrips', 
+)
+
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
 server.workspace('DQMContent', 52, 'CTPPS', 'TimingDiamond', '^CTPPS/TimingDiamond', 'CTPPS/TimingDiamond/Layouts')
