@@ -83,5 +83,5 @@ class GEMRenderPlugin : public DQMRenderPlugin
 };
 
 //----------------------------------------------------------------------------------------------------
-
 static GEMRenderPlugin instance;
+

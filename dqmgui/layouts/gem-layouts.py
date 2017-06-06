@@ -10,5 +10,3 @@ GEMLayout(dqmitems, "05 DigiStrips", [{'path' : "GEM/digi/Digi_Strips_Gemini_671
 
 
 
-
-
