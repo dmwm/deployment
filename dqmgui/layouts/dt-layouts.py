@@ -169,6 +169,29 @@ for wheel in range(-2, 3):
             histoname = "DT/03-LocalTrigger-TM/Wheel" + str(wheel)+ "/Sector" + str(sector) + "/Station" + str(station) + "/LocalTriggerPhiIn/TM_QualvsPhirad_In_W" + str(wheel) + "_Sec" + str(sector) + "_St" + str(station)
             dtlayout(dqmitems, name,[{ 'path': histoname}])
 
+#### HITS RESIDUALS ###########################################################################
+for wheel in range(-2, 3):
+    for station in range (1, 5):
+        for sector in range (1, 15):
+            if station != 4 and (sector == 13 or sector == 14):
+               continue
+            name = "09-Nhits/Wheel" + str(wheel) + "/Sector" + str(sector) + "_Station" + str(station)
+            histoname = "DT/02-Segments/Wheel" + str(wheel)+ "/Sector" + str(sector) + "/Station" + str(station) + "/h4DSegmNHits_W" + str(wheel) + "_St" + str(station) + "_Sec" + str(sector)
+            dtlayout(dqmitems, name,[{ 'path': histoname}])
+
+#### SEGMENTS RESIDUALS #########################################################################
+for wheel in range(-2, 3):
+    for station in range (1, 5):
+        for sector in range (1, 15):
+            if station != 4 and (sector == 13 or sector == 14):
+               continue
+            for sl in range (1, 4):
+                if sl == 2 and (sector == 13 or sector == 14 or station == 4):
+                   continue
+                name = "10-Segments/Wheel" + str(wheel) + "/Sector" + str(sector) + "_Station" + str(station) + "_SL" + str(sl)
+                histoname = "DT/02-Segments/Wheel" + str(wheel)+ "/Sector" + str(sector) + "/Station" + str(station) + "/hResDist_W" + str(wheel) + "_St" + str(station) + "_Sec" + str(sector) + "_SL" + str(sl)
+                dtlayout(dqmitems, name,[{ 'path': histoname}])
+
 #
 #
 #
