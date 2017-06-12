@@ -103,22 +103,6 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/30 - PixelPhase1 Cluster Position: X vs Y endcap summary',
                 )
 
-server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
-                 'Pixel/Layouts/000 - Pixel FED Occupancy vs Lumi Sections',
-                 'Pixel/Layouts/00a - Pixel_Error_Summary',
-                 'Pixel/Layouts/00b - Pixel_Error_Summary',
-                 'Pixel/Layouts/00c - Pixel_Error_Summary',
-                 'Pixel/Layouts/09 - Pixel Clusters vs LS',
-                 'Pixel/Layouts/20a - Cluster occupancy Barrel Layer 1',
-                 'Pixel/Layouts/20b - Cluster occupancy Barrel Layer 2',
-                 'Pixel/Layouts/20c - Cluster occupancy Barrel Layer 3',
-                 'Pixel/Layouts/20d - Cluster occupancy Endcap -z Disk 1',
-                 'Pixel/Layouts/20e - Cluster occupancy Endcap -z Disk 2',
-                 'Pixel/Layouts/20f - Cluster occupancy Endcap +z Disk 1',
-                 'Pixel/Layouts/20g - Cluster occupancy Endcap +z Disk 2',
-                 'Pixel/Layouts/30a - Pixel event rates',
-                )
-
 server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^(SiStrip|Tracking)/', '',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
                  'SiStrip/Layouts/01 - FED-Detected Errors Summary',
