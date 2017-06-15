@@ -288,8 +288,8 @@ private:
         c->SetBottomMargin(0.1);
         c->SetLeftMargin(0.12);
         c->SetRightMargin(0.12);
-        obj->SetMinimum(-0.00000001);
-        obj->SetMaximum(1.0);
+        obj->SetMinimum(0.);
+        obj->SetMaximum(1.25);
 
         int colorError1[5];
         colorError1[0] = 632; // kRed
@@ -1426,7 +1426,7 @@ private:
       if(o.name.find("TTSSummary") != std::string::npos)
       {
         TH2F * histo =  dynamic_cast<TH2F*>( o.object );
-        int nBinsX = histo->GetNbinsX();
+        int nBinsX = histo->GetN
 
         static TLatex *warningLabel = new TLatex(773,1.7,"warning");
         warningLabel->SetTextColor(15);
