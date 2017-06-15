@@ -220,7 +220,7 @@ private:
         if(obj->GetEntries() > 0.) gPad->SetLogz(1);
       }
 
-      if (o.name.find( "reportSummaryMap" ) == std::string::npos) {
+      if (o.name.find( "Pixel/EventInfo/reportSummaryMap" ) == std::string::npos) {
         TAxis* xa = obj->GetXaxis();
         TAxis* ya = obj->GetYaxis();
         xa->SetTitleOffset(0.7);
@@ -317,15 +317,12 @@ private:
            gPad->SetGrid();
         }
 
-      if( o.name.find( "reportSummaryMap" ) != std::string::npos )
+      if( o.name.find( "PixelPhase1/EventInfo/reportSummaryMap" ) != std::string::npos )
         {
           gPad->SetGrid();
-          if(obj->GetNbinsX()==7) gPad->SetLeftMargin(0.3);
+          //if(obj->GetNbinsX()==7) gPad->SetLeftMargin(0.3);
           dqm::utils::reportSummaryMapPalette(obj2);
-          if(obj->GetNbinsX()>10){
-            //Look at last filled bin (above -0.99) and use to zoom in on plot
-            int currentX = (int) obj->FindLastBinAbove(-0.99)+1;
-            obj->GetXaxis()->SetRange(1,currentX);}
+	  obj->SetOption("colztext");
           return;
         }
     }
