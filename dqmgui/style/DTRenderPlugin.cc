@@ -1426,7 +1426,7 @@ private:
       if(o.name.find("TTSSummary") != std::string::npos)
       {
         TH2F * histo =  dynamic_cast<TH2F*>( o.object );
-        int nBinsX = histo->GetN
+        int nBinsX = histo->GetNbinsX();
 
         static TLatex *warningLabel = new TLatex(773,1.7,"warning");
         warningLabel->SetTextColor(15);
