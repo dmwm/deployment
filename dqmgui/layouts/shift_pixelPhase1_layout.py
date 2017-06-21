@@ -1,6 +1,6 @@
 def shiftpixelP1layout(i, p, *rows): i["00 Shift/PixelPhase1/" + p] = DQMItem(layout=rows)
 shiftpixelP1layout(dqmitems, "00 - PixelPhase1 ReportSummary: Layer or Disk vs subdet",
-   [{ 'path': "PixelPhase1/Summary/pixelGrandSummary",
+   [{ 'path': "PixelPhase1/EventInfo/reportSummaryMap",
       'description': "Summary results of qulity tests: Layer/Disk (y-axis) vs. Subdetectors (x-axis). See the PixelPhase1/Summary/ directory for more details.",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
@@ -50,4 +50,11 @@ shiftpixelP1layout(dqmitems, "04 - PixelPhase1 Cluster Position: X vs Y endcap s
      'draw': { 'withref': "no", 'drawopts': "COLZ" }}], 
    )
 
-
+shiftpixelP1layout(dqmitems, "05 - PixelPhase1_Cluster_Charge",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/charge_PXBarrel",
+      'description': "Cluster charge in the BPix modules",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Phase1_MechanicalView/charge_PXForward",
+      'description': "Cluster charge in FPix modules",
+      'draw': { 'withref': "no" }}]
+   )
