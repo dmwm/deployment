@@ -47,12 +47,18 @@ public:
     {
       c->cd();
 
-      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object)) && o.name.find( "Lumisection" )!=std::string::npos)
+      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object))
+          && (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos ) )
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
         int min_x = (int) obj->FindFirstBinAbove(0.001);
         int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-        obj->GetXaxis()->SetRange(min_x, max_x+5);
+        if( o.name.find("Lumisection")!=std::string::npos ){
+          obj->GetXaxis()->SetRange(min_x, max_x+5);
+        } else {
+          obj->GetXaxis()->SetTitle("Lumisection (#times10)");
+          obj->GetXaxis()->SetRange(min_x, max_x+1);
+        }
       }
 
       if( dynamic_cast<TH2*>( o.object ) )
@@ -291,7 +297,7 @@ private:
           obj->GetXaxis()->SetBinLabel(40+1-25, "overflow"            );
           obj->GetXaxis()->SetTitle("");
         }
-      
+
       if( o.name.find( "avgfedDigiOccvsLumi" ) != std::string::npos )
         {
           obj->SetOption("colz");
