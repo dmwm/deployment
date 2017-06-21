@@ -166,6 +166,8 @@ server.workspace('DQMContent', 40, 'Muons', 'CSC', '^CSC/', '',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 07 - CSCs Occupancy 2D',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 09 - RecHits Minus',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 10 - RecHits Plus',
+                 'CSC/Layouts/00 Data Integrity/Physics Efficiency 11 - Segments',
+                 'CSC/Layouts/00 Data Integrity/Physics Efficiency 12 - Timing',
                 )
 
 server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')

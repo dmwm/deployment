@@ -736,6 +736,154 @@ csclayout(dqmitems,"CSC DQM Shifter/04 Timing/08 Segments Timing (Serial)",
     ]
     )
 
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/09 Anodes Segments Timing ME-",
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_m11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/10 Anodes Segments Timing ME+",
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode_p11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None])
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/11 Cathodes Segments Timing ME-",
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_m11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/12 Cathodes Segments Timing ME+",
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode_p11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None])
+
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/13 Combined (anode+cathode) Segments Timing ME-",
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_m11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
+
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/14 Combined (anode+cathode) Segments Timing ME+",
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined_p11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None])
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/15 Anode minus Cathode Segment Timing ME-",
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+        [None,
+         None,
+         None,
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_m11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}])
+
+csclayout(dqmitems,"CSC DQM Shifter/04 Timing/16 Anode minus Cathode Segment Timing ME+",
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p13", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p12", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p22", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p32", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p42", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p11b", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p21", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p31", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+     {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p41", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeDiff_p11a", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+         None,
+         None,
+         None])
+
+
+
 csclayout(dqmitems,"CSC DQM Shifter/05 Gains/01 Sum 3x3 RecHit Charge ME-",
         [None,
          None,
@@ -975,6 +1123,22 @@ csclayout(dqmitems,"00 Data Integrity/Physics Efficiency 10 - RecHits Plus",
   {'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp2", 'description': "Histogram shows 2D RecHits distribution in ME+2. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
   [{'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp3", 'description': "Histogram shows 2D RecHits distribution in ME+3. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
   {'path': "CSC/CSCOfflineMonitor/recHits/hRHGlobalp4", 'description': "Histogram shows 2D RecHits distribution in ME+4. Any unusual inhomogeneity should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}
+  ]
+  )
+
+csclayout(dqmitems,"00 Data Integrity/Physics Efficiency 11 - Segments",
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSGlobalPhi", 'description': "Histogram shows Segments Direction (Global Phi). For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+  {'path': "CSC/CSCOfflineMonitor/Segments/hSGlobalTheta", 'description': "Histogram shows Segments Direction (Global Theta). For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+  [{'path': "CSC/CSCOfflineMonitor/Segments/hSnSegments", 'description': "Histogram shows Number of Segments pre Event. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+  {'path': "CSC/CSCOfflineMonitor/Segments/hSnhits", 'description': "Histogram shows Number of hits on Segments. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}
+  ]
+  )
+
+csclayout(dqmitems,"00 Data Integrity/Physics Efficiency 12 - Timing",
+    [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCathode", 'description': "Histogram shows cathode only segment time distribution. Any significant deviation from Gaussian should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+  {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeAnode", 'description': "Histogram shows anode only segment time distribution. Any significant deviation from Gaussian should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}],
+  [{'path': "CSC/CSCOfflineMonitor/Segments/hSTimeCombined", 'description': "Histogram shows combined segment time vs the distance from IP. Any significant fraction of out of zero events should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."},
+  {'path': "CSC/CSCOfflineMonitor/Segments/hSTimeVsZ", 'description': "Histogram shows combined segment time vs Z axis. Any significant fraction of out of zero events should be reported. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/viewauth/CMS/CSCDPGDataMonitorShiftInstructions\">here</a>."}
   ]
   )
 
