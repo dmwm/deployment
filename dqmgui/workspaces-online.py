@@ -237,6 +237,6 @@ server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPix
                  'CTPPS/TrackingPixel/Layouts/hit multiplicity in planes',
                  'CTPPS/TrackingPixel/Layouts/hit average multiplicity in planes',
                  'CTPPS/TrackingPixel/Layouts/hits position:sector 45 station 220_fr_hr',
-                 'CTPPS/TrackingPixel/Layouts/hits position:sector 56 station 220_fr_hr'
+                 'CTPPS/TrackingPixel/Layouts/hits position:sector 56 station 220_fr_hr',
 )
 server.workspace('DQMContent', 52, 'CTPPS', 'TimingDiamond', '^CTPPS/TimingDiamond', 'CTPPS/TimingDiamond/Layouts')
