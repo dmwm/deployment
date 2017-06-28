@@ -47,8 +47,8 @@ public:
     {
       c->cd();
 
-      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object))
-          && (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos ) )
+      //      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object) )&& 
+      if (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos || o.name.find("Trend")!= std::string::npos)
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
         int min_x = (int) obj->FindFirstBinAbove(0.001);
@@ -323,7 +323,7 @@ private:
            gPad->SetGrid();
         }
 
-      if( o.name.find( "PixelPhase1/EventInfo/reportSummaryMap" ) != std::string::npos )
+      if( o.name.find( "PixelPhase1")!= std::string::npos && o.name.find("reportSummaryMap") != std::string::npos)
         {
           gPad->SetGrid();
           //if(obj->GetNbinsX()==7) gPad->SetLeftMargin(0.3);
