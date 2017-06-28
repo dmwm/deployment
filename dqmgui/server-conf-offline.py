@@ -8,6 +8,7 @@ LOGDIR    = "%s/logs/dqmgui/offline" % BASEDIR
 LAYOUTS = glob("%s/layouts/shift_*_T0_layout.py" % CONFIGDIR)
 LAYOUTS += glob("%s/layouts/*_overview_layouts.py" % CONFIGDIR)
 LAYOUTS += glob("%s/layouts/*_T0_layouts.py" % CONFIGDIR)
+LAYOUTS += glob("%s/layouts/*-APVgain-layouts.py" % CONFIGDIR)
 
 modules = ("Monitoring.DQM.GUI",)
 
