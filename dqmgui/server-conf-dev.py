@@ -10,7 +10,6 @@ LAYOUTS += glob("%s/layouts/*_T0_layouts.py" % CONFIGDIR)
 LAYOUTS += glob("%s/*_overview_layouts.py" % CONFIGDIR)
 LAYOUTS += glob("%s/layouts/shift_*_relval_layout.py" % CONFIGDIR)
 LAYOUTS += glob("%s/layouts/*_relval-layouts.py" % CONFIGDIR)
-LAYOUTS += glob("%s/layouts/*-APVgain-layouts.py" % CONFIGDIR)
 
 modules = ("Monitoring.DQM.GUI",)
 
