@@ -277,8 +277,7 @@ private:
         c->SetGrid(1,1);
         return;
       }
-      if( o.name.find( "SegmentGlbSummary" ) != std::string::npos ||
-          o.name.find( "EfficiencyGlbSummary" ) != std::string::npos )
+      if( o.name.find( "SegmentGlbSummary" ) != std::string::npos )
       {
         dqm::utils::reportSummaryMapPalette(obj);
         obj->GetXaxis()->SetNdivisions(13,true);
@@ -302,6 +301,36 @@ private:
         c->SetGrid(1,1);
         return;
       }
+      if (o.name.find( "EfficiencyGlbSummary" ) != std::string::npos )
+      {
+        dqm::utils::reportSummaryMapPalette(obj);
+        obj->GetXaxis()->SetNdivisions(13,true);
+        obj->GetYaxis()->SetNdivisions(6,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        c->SetBottomMargin(0.1);
+        c->SetLeftMargin(0.12);
+        c->SetRightMargin(0.12);
+        obj->SetMinimum(0.);
+        obj->SetMaximum(1.0);
+
+        int colorError1[10];
+        colorError1[0] = 632; // kRed
+        colorError1[1] = 628;
+        colorError1[2] = 810;
+        colorError1[3] = 807;
+        colorError1[4] = 797;
+        colorError1[5] = 800; // kOrange
+        colorError1[6] = 400; //kYellow
+        colorError1[7] = 406;
+        colorError1[8] = 407;
+        colorError1[9] = 416;// kGreen
+        gStyle->SetPalette(10, colorError1);
+
+        c->SetGrid(1,1);
+        return;
+      }
+
       if( o.name.find( "GlbSummary" ) != std::string::npos  ||
 	o.name.find("DataIntegritySummary") != std::string::npos )
       {
