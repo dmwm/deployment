@@ -58,17 +58,6 @@ deploy_reqmgr2_post()
          "http://localhost:${couch##*:}/reqmgr_config_cache" \
          >> $root/state/${couch%%:*}/stagingarea/reqmgr2
   done
-
-  # Setup reqmgr2 cronjobs
-  (mkcrontab
-   sysboot
-   case $variant:$host in
-     prod:vocms0140 | preprod:vocms0131 | dev:vocms0117 | dev:vocms0127 | default:* )
-       local cmd="$project_config/manage updateversions 'I did read documentation'"
-       $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
-       echo "58 * * * * $cmd" ;;
-     * ) ;;
-   esac) | crontab -
 }
 
 deploy_reqmgr2_auth()
