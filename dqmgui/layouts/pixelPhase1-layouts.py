@@ -26,22 +26,22 @@ pixellayout(dqmitems, "00e - Event Rate",
    )
 
 pixellayout(dqmitems, "01a - Cluster Size vs Cluster Eta",
-   [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/sizeyvseta_PXBarrel",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/sizeyvseta_PXBarrel",
       'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis)",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
 
 pixellayout(dqmitems, "01b - Cluster Size vs Cluster Eta in PXLayers",
-   [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/PXBarrel/sizeyvseta_PXLayer_1",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/sizeyvseta_PXLayer_1",
       'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis) in layer 1 of pixel barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ"}},
-    { 'path': "TrackTimingPixelPhase1/Phase1_Track/PXBarrel/sizeyvseta_PXLayer_2",
+    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/sizeyvseta_PXLayer_2",
       'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis) in layer 2 of pixel barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
-   [{ 'path': "TrackTimingPixelPhase1/Phase1_Track/PXBarrel/sizeyvseta_PXLayer_3",
+   [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/sizeyvseta_PXLayer_3",
       'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis) in layer 3 of pixel barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    { 'path': "TrackTimingPixelPhase1/Phase1_Track/PXBarrel/sizeyvseta_PXLayer_4",
+    { 'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/sizeyvseta_PXLayer_4",
       'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis) in layer 4 of pixel barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
