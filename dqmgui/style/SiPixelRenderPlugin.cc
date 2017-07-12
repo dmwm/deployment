@@ -47,8 +47,8 @@ public:
     {
       c->cd();
 
-      //      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object) )&& 
-      if (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos || o.name.find("Trend")!= std::string::npos)
+      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object) || dynamic_cast<TH1*>(o.object) ) && 
+	  (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos || o.name.find("Trend")!= std::string::npos))
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
         int min_x = (int) obj->FindFirstBinAbove(0.001);
