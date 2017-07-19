@@ -58,6 +58,8 @@ deploy_reqmgr2_post()
          "http://localhost:${couch##*:}/reqmgr_config_cache" \
          >> $root/state/${couch%%:*}/stagingarea/reqmgr2
   done
+
+  (mkcrontab; sysboot) | crontab -
 }
 
 deploy_reqmgr2_auth()
