@@ -143,18 +143,17 @@ private:
     obj->SetMarkerStyle(20);
     obj->SetMarkerColor(4);
     
-    if ((o.name.find("L - status vs lumi") != std::string::npos) ||
-	(o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
+    if ((o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
 	(o.name.find("G - vertex x fit") != std::string::npos) || (o.name.find("G - vertex y fit") != std::string::npos) || (o.name.find("G - vertex z fit") != std::string::npos) ||
 	(o.name.find("I - vertex x cum") != std::string::npos) || (o.name.find("I - vertex y cum") != std::string::npos) || (o.name.find("I - vertex z cum") != std::string::npos) ||
-	(o.name.find("J - good vertices vs lumi") != std::string::npos) || (o.name.find("K - pixelHits vs lumi") != std::string::npos))
+	(o.name.find("L - status vs lumi") != std::string::npos))
       c->SetGrid(false, false);
 
     if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
 	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
 	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
 	(o.name.find("G - vertex x fit") != std::string::npos) || (o.name.find("G - vertex y fit") != std::string::npos) || (o.name.find("G - vertex z fit") != std::string::npos) ||
-	(o.name.find("J - good vertices vs lumi") != std::string::npos) || (o.name.find("K - pixelHits vs lumi") != std::string::npos) ||
+	(o.name.find("J - pixelHits vs lumi") != std::string::npos) || (o.name.find("K - good vertices vs lumi") != std::string::npos) ||
 	(o.name.find("L - status vs lumi") != std::string::npos))
       {
 	obj->SetMarkerSize(0.5);
@@ -273,15 +272,14 @@ private:
     
     if ((o.name.find("F - vertex x") != std::string::npos) || (o.name.find("F - vertex y") != std::string::npos) || (o.name.find("F - vertex z") != std::string::npos) ||
 	(o.name.find("G - vertex x fit") != std::string::npos) || (o.name.find("G - vertex y fit") != std::string::npos) || (o.name.find("G - vertex z fit") != std::string::npos) ||
-	(o.name.find("I - vertex x cum") != std::string::npos) || (o.name.find("I - vertex y cum") != std::string::npos) || (o.name.find("I - vertex z cum") != std::string::npos) ||
-	(o.name.find("J - good vertices vs lumi") != std::string::npos) || (o.name.find("K - pixelHits vs lumi") != std::string::npos))
+	(o.name.find("I - vertex x cum") != std::string::npos) || (o.name.find("I - vertex y cum") != std::string::npos) || (o.name.find("I - vertex z cum") != std::string::npos))
       c->SetGrid(false, false);
 
     if ((o.name.find("B - muX vs lumi") != std::string::npos) || (o.name.find("B - muY vs lumi") != std::string::npos) || (o.name.find("B - muZ vs lumi") != std::string::npos) ||
 	(o.name.find("C - sigmaX vs lumi") != std::string::npos) || (o.name.find("C - sigmaY vs lumi") != std::string::npos) || (o.name.find("C - sigmaZ vs lumi") != std::string::npos) ||
 	(o.name.find("D - dxdz vs lumi") != std::string::npos) || (o.name.find("D - dydz vs lumi") != std::string::npos) ||
 	(o.name.find("G - vertex x fit") != std::string::npos) || (o.name.find("G - vertex y fit") != std::string::npos) || (o.name.find("G - vertex z fit") != std::string::npos) ||
-	(o.name.find("J - good vertices vs lumi") != std::string::npos) || (o.name.find("K - pixelHits vs lumi") != std::string::npos))
+	(o.name.find("J - pixelHits vs lumi") != std::string::npos) || (o.name.find("K - good vertices vs lumi") != std::string::npos))
       {
 	gStyle->SetOptFit(1110);
 	gStyle->SetOptStat(10);
