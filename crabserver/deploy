@@ -28,7 +28,7 @@ deploy_crabserver_sw()
 
   case $variant in
     prod )    extconfig=$variant; aso="";;
-    preprod ) extconfig=$variant; aso="-testbed";;
+    #preprod ) extconfig=$variant; aso="-testbed";;
     * )       extconfig=dev;      aso="-dev";;
   esac
   echo "data.mode = \"cmsweb-$extconfig\"" >> $root/$cfgversion/config/$project/config.py
