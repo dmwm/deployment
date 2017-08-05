@@ -23,8 +23,9 @@ class BeamRenderPlugin : public DQMRenderPlugin {
 
 public:
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & ) {
-    if ((o.name.find( "BeamMonitor/" ) == std::string::npos) &&
-	(o.name.find( "BeamMonitor_PixelLess/" ) == std::string::npos))
+    if ((o.name.find( "BeamMonitor/" )               == std::string::npos) &&
+	(o.name.find( "BeamMonitor_PixelLess/" )     == std::string::npos) &&
+	(o.name.find( "TrackingHLTBeamspotStream/" ) == std::string::npos))
       return false;
 
     if (o.name.find( "/EventInfo/" ) != std::string::npos)
