@@ -545,7 +545,7 @@ pixellayout(dqmitems, "35 - Ontrack Disk",
   {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-2",
   'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
   'draw': { 'withref': "no"}},
-  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_ -3",
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-3",
   'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
   'draw': { 'withref': "no"}}],
   )
