@@ -367,8 +367,14 @@ private:
            draw_line(0,   51.5,79.5,79.5,kGray);
            draw_line(51.5,51.5,79.5,160 ,kGray);
          } else {
-           draw_line(363.5,416,  79.5,79.5,kGray);
-           draw_line(363.5,363.5,0   ,79.5,kGray);
+	   if( o.name.find("PXLayer_1") != std::string::npos ){
+	     draw_line(0,   51.5,79.5,79.5,kGray);
+	     draw_line(51.5,51.5,79.5,160 ,kGray);
+	   }
+	   else{
+	     draw_line(363.5,416,  79.5,79.5,kGray);
+	     draw_line(363.5,363.5,0   ,79.5,kGray);
+	   }
          }
       }
    }
