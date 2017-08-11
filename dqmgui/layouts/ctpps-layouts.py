@@ -1,15 +1,15 @@
 def CTPPSTrackingStripLayout(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/" + p] = DQMItem(layout=rows)
-def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p] = DQMItem(layout=rows)
 def CTPPSTrackingPixelLayout(i, p, *rows): i["CTPPS/TrackingPixel/Layouts/" + p] = DQMItem(layout=rows)
+def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p] = DQMItem(layout=rows)
 
 strips_stations = [ "sector 45/station 210", "sector 56/station 210" ]
 strips_units = [ "nr", "fr" ]
 
-diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
-
 pixstations = [ "sector 45/station 220/", "sector 56/station 220/" ]
 planes  = [ "0","1","2" ]
 planes2 = [ "3","4","5" ]
+
+diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
 
 # layouts with no overlays
 for plot in [ "active planes", "activity in planes (2D)", "vfats with any problem", "track XY profile" ]:
@@ -84,7 +84,16 @@ for plot in ["planes activity", "hit multiplicity in planes","hit average multip
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
-for plot in ["4 fired ROCs per BX", "5 fired planes per BX","ROCs hits multiplicity per event","number of fired planes per event","max number of fired aligned_ROCs per event"]:
+for plot in ["4 fired ROCs per BX"]:
+  rows = list()
+  for station in pixstations:
+    row = list()
+    row.append("CTPPS/TrackingPixel/"+station+"fr_hr/latency/"+plot)
+    rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
+
+for plot in ["5 fired planes per BX","ROCs hits multiplicity per event","ROCs_hits_multiplicity_per_event vs LS","number of fired planes per event","number of fired aligned_ROCs per event"]:
   rows = list()
   for station in pixstations:
     row = list()
