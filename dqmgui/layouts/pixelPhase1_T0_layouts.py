@@ -503,7 +503,7 @@ pixellayout(dqmitems, "32 - Charge and size",
   )
 
 pixellayout(dqmitems, "33 - Cluster on track and vertices per lumi",
-  [{ 'path': "PixelPhase1/Tracks/num_clusters_ontrack_per_Lumisection_PXAII",
+  [{ 'path': "PixelPhase1/Tracks/num_clusters_ontrack_per_Lumisection_PXAll",
      'description': "# of cluster on track per Lumisection",
      'draw': {'withref' : "no"}}],
   [{ 'path': "PixelPhase1/Tracks/num_vertices_per_Lumisection",
