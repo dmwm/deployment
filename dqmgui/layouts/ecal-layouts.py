@@ -499,9 +499,7 @@ ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/10 Amplitude Correlation, BX+1',
 	   [{'path': 'EcalEndcap/EETimingTask/EETMT in-time vs BX+1 amplitude EE -', 'description': 'Correlation between in-time amplitude and BX+1 out-of-time amplitude. Only events with kGood reconstruction flag set, energy above ( EB:1, EE:3 ) GeV, and chi2 less than ( EB:16, EE:50 ) are used.'},
 	    {'path': 'EcalEndcap/EETimingTask/EETMT in-time vs BX+1 amplitude EE +', 'description': 'Correlation between in-time amplitude and BX+1 out-of-time amplitude. Only events with kGood reconstruction flag set, energy above ( EB:1, EE:3 ) GeV, and chi2 less than ( EB:16, EE:50 ) are used.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/11 Timing vs BX',
-	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT Timing vs BX', 'description': 'Average hit timing in the partition as a function of BX number.'}],
-	   [{'path': 'EcalEndcap/EETimingTask/EETMT Timing vs BX EE -', 'description': 'Average hit timing in the partition as a function of BX number.'},
-	    {'path': 'EcalEndcap/EETimingTask/EETMT Timing vs BX EE +', 'description': 'Average hit timing in the partition as a function of BX number.'}])
+	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT Timing vs BX', 'description': 'Average hit timing in EB as a function of BX number. Only events with energy above 2.02 GeV and chi2 less than 16 are used.'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE

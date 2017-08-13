@@ -31,6 +31,7 @@
 #include "TGaxis.h"
 #include "TColor.h"
 #include "TPaletteAxis.h"
+#include "TAxis.h"
 #include "TROOT.h"
 
 #include <vector>
@@ -1393,6 +1394,16 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
           TPRegexp("E[BE]OccupancyTask/E[BE]OT rec hit thr occupancy difference").MatchB(fullpath) ) {
     obj->SetStats(true);
     gStyle->SetOptStat("ourme");
+    applyDefaults = false;
+  }
+  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT Timing vs BX").MatchB(fullpath) ||
+          TPRegexp("E[BE]TimingTask/E[BE]TMT Timing vs Finely Binned BX").MatchB(fullpath) ) {
+    gStyle->SetOptStat(0);
+    obj->SetMarkerStyle(kDot);
+    obj->GetXaxis()->SetTitleOffset(3.);
+    obj->GetYaxis()->SetRangeUser(-1.5, 0.);
+    obj->GetYaxis()->SetNdivisions(15);
+    gPad->SetGridy();
     applyDefaults = false;
   }
 }
