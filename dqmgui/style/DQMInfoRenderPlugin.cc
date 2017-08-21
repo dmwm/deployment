@@ -254,6 +254,7 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
     int begin = histogram->GetXaxis()->GetFirst() - 1;
     int end = histogram->GetXaxis()->GetLast();
     int lineY = 0;
+    TLine line;
     // Run over the summaryMapOrder vector to find the <line> entries.
     // (Actually reverse, since we fill from the bottom)
     for (auto order_iter(summaryMapOrder_.rbegin());
@@ -262,15 +263,14 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
       std::string label(*order_iter);
       // If we encounter a <*_line>, we draw a line
       if (label == "<thick_line>") {
-        TLine *line = new TLine(begin, lineY, end, lineY);
-        line->SetLineWidth(2);
-        line->Draw();
+        line.SetLineWidth(2);
+        line.SetLineColor(1); //Black
+        line.DrawLine(begin, lineY, end, lineY);
       }
       else if (label == "<thin_line>") {
-        TLine *line = new TLine(begin, lineY, end, lineY);
-        line->SetLineWidth(1);
-        line->SetLineColor(12); //Dark gray
-        line->Draw();
+        line.SetLineWidth(1);
+        line.SetLineColor(12); //Dark gray
+        line.DrawLine(begin, lineY, end, lineY);
       }
       else {
         // If we encounter an actual label, we move up
@@ -329,23 +329,21 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
 
 
   void printMainText(const char* message) {
-    TText *text = new TText(.5, .54, message);
-    text->SetNDC(true);
-    text->SetTextAlign(22); // center/center
-    text->SetTextColor(13);
-    text->SetTextSize(0.085);
-    text->Draw();
+    TText text;
+    text.SetTextAlign(22); // center/center
+    text.SetTextColor(13);
+    text.SetTextSize(0.085);
+    text.DrawTextNDC(.5, .54, message);
   }
 
 
   // A bit smaller, a bit lower
   void printSecondaryText(const char* message) {
-    TText *text = new TText(.5, .46, message);
-    text->SetNDC(true);
-    text->SetTextAlign(22); // center/center
-    text->SetTextColor(13);
-    text->SetTextSize(0.06);
-    text->Draw();
+    TText text;
+    text.SetTextAlign(22); // center/center
+    text.SetTextColor(13);
+    text.SetTextSize(0.06);
+    text.DrawTextNDC(.5, .46, message);
   }
 
   ////////////////////////////////////////////////////////////////////////////
@@ -396,12 +394,11 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
     if (label) {
       std::stringstream message;
       message << "Beam mode: " << label;
-      TText *text = new TText(.5, .6, message.str().c_str());
-      text->SetNDC(true);
-      text->SetTextAlign(22); // center/center
-      text->SetTextColor(4);
-      text->SetTextSize(0.06);
-      text->Draw();
+      TText text;
+      text.SetTextAlign(22); // center/center
+      text.SetTextColor(4);
+      text.SetTextSize(0.06);
+      text.DrawTextNDC(.5, .6, message.str().c_str());
     }
   }
 
@@ -422,12 +419,11 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
     {
       std::stringstream message;
       message << "LHC Fill: " << fill_number;
-      TText *text = new TText(.5, .5, message.str().c_str());
-      text->SetNDC(true);
-      text->SetTextAlign(22); // center/center
-      text->SetTextColor(4);
-      text->SetTextSize(0.06);
-      text->Draw();
+      TText text;
+      text.SetTextAlign(22); // center/center
+      text.SetTextColor(4);
+      text.SetTextSize(0.06);
+      text.DrawTextNDC(.5, .5, message.str().c_str());
     }
   }
 
@@ -448,12 +444,11 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
     {
       std::stringstream message;
       message << "Beam Energy: " << momentum << " GeV";
-      TText *text = new TText(.5, .5, message.str().c_str());
-      text->SetNDC(true);
-      text->SetTextAlign(22); // center/center
-      text->SetTextColor(4);
-      text->SetTextSize(0.06);
-      text->Draw();
+      TText text;
+      text.SetTextAlign(22); // center/center
+      text.SetTextColor(4);
+      text.SetTextSize(0.06);
+      text.DrawTextNDC(.5, .5, message.str().c_str());
     }
   }
 
