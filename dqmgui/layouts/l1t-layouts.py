@@ -10,52 +10,62 @@ def l1t_quickCollection(i, name, *rows):
 l1t_quickCollection(dqmitems, "00 - Calo Layer1 ECAL Input Occupancy",
   [{
     'path': "L1T/L1TStage2CaloLayer1/ecalOccupancy",
-    'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower"
+    'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower",
+    'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "01 - Calo Layer1 HCAL Input Occupancy",
   [{
     'path': "L1T/L1TStage2CaloLayer1/hcalOccupancy",
-    'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower"
+    'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower",
+    'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "02 - Calo Layer1 Input Link Errors",
   [{
     'path': "L1T/L1TStage2CaloLayer1/maxEvtLinkErrorsByLumi",
-    'description': "This should be empty at all times."
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "03 - uGMT MUON BX",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonBX",
-    'description': "This should have a peak at BX=0."
+    'description': "This should have a peak at BX=0.",
+    'draw': { 'withref': "yes" }
   }])
 l1t_quickCollection(dqmitems, "04 - uGMT MUON ETA",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonEta",
-    'description': "This should have no spikes."
+    'description': "This should have no spikes.",
+    'draw': { 'withref': "yes" }
   }])
 l1t_quickCollection(dqmitems, "05 - uGMT MUON P_{T}",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonPt",
-    'description': "This should show normal pT spectrum (spikes at 140 GeV and 200 GeV expected from max TF pT assigned)"
+    'description': "This should show normal pT spectrum (spikes at 140 GeV and 200 GeV expected from max TF pT assigned)",
+    'draw': { 'withref': "yes" }
   }])
 l1t_quickCollection(dqmitems, "06 - uGMT MUON PHI ETA",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonPhivsEta",
-    'description': "This should have no big holes."
+    'description': "This should have no big holes.",
+    'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "07 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
   [{
     'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_global",
-    'description': ""
+    'description': "",
+    'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "08 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
   [{
     'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_inEvt",
-    'description': ""
+    'description': "",
+    'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "09 - uGT Algorithm Trigger Bits (after prescale)",
   [{
     'path': "L1T/L1TStage2uGT/algoBits_after_prescale",
-    'description': ""
+    'description': "",
+    'draw': { 'withref': "no" }
   }])
 
 ###############################################
