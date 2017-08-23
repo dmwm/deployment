@@ -133,7 +133,7 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
     // The original plot:
     TH2F* originalPlot = dynamic_cast<TH2F*>(o.object);
     // Clone the plot:
-    TH2F *myClonedPlot = dynamic_cast<TH2F*>(originalPlot->Clone("Cloned"));
+    TH2F myClonedPlot(*originalPlot);
     // And reset the original:
     originalPlot->Reset();
     fixInconsistentPlotLimits(originalPlot);
@@ -142,7 +142,7 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
     // the top row + an extra column we will add:
     int lastBinWithData = getLastBinWithData(myClonedPlot);
     int maxBinX = TMath::Max(lastBinWithData + 1, 2); // Leave at least 2 bins
-    int maxBinY = myClonedPlot->GetNbinsY();
+    int maxBinY = myClonedPlot.GetNbinsY();
 
     // Now we basically copy the data from the cloned plot back into the
     // original one, in the order defined in summaryMapOrder_.
@@ -175,22 +175,22 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
 
 
   // Scan from right to left to see which is the rightmost bin with data
-  int getLastBinWithData(TH2F* histogram) {
-    int maxBinX = histogram->GetNbinsX();
-    int maxBinY = histogram->GetNbinsY();
+  int getLastBinWithData(TH2F const& histogram) {
+    int maxBinX = histogram.GetNbinsX();
+    int maxBinY = histogram.GetNbinsY();
     for (int binX = maxBinX; binX > 0; --binX) {
       // For this scan, we look at the top line, maxBinY, corresponding to
       // "Valid" for online.
       // For offline there is no "Valid", but the scan wouldn't really matter
       // since it shows only existing lumisections anyway.
-      if (histogram->GetBinContent(binX, maxBinY) != 0) {
+      if (histogram.GetBinContent(binX, maxBinY) != 0) {
         return binX;
       }
     }
     // For offline, we often see the last column being all 0 over the entire
     // line. This is fake data. When we see that, we remove it.
     for (int binY = 1; binY <= maxBinY; ++binY) {
-      if (histogram->GetBinContent(maxBinX, binY) != 0) {
+      if (histogram.GetBinContent(maxBinX, binY) != 0) {
         return maxBinX; // Not dropping last column
         break;
       }
@@ -201,7 +201,7 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
 
   // Copy the data from the source plot into the target plot in the order
   // defined in summaryMapOrder_.
-  int copyDataReordered(TH2F* source, TH2F* target, int maxBinX, int maxBinY) {
+  int copyDataReordered(TH2F const& source, TH2F* target, int maxBinX, int maxBinY) {
     int binYNew = 0;
     // Run over the labels in the order in which we want them
     // (Actually reverse, since we fill from the bottom)
@@ -211,7 +211,7 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
       std::string wanted_label(*order_iter);
       // Run over the available data
       for (int binYOrig = 1; binYOrig <= maxBinY; binYOrig++) {
-        std::string current_label(source->GetYaxis()->GetBinLabel(binYOrig));
+        std::string current_label(source.GetYaxis()->GetBinLabel(binYOrig));
         boost::trim(current_label);
         if (current_label == wanted_label) {
           binYNew++;
@@ -219,7 +219,7 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
             // We go to 1 less than maxBinX, because, remember that we added
             // an extra empty column.
             // Just copy the data from one row to the other:
-            target->SetBinContent(binX, binYNew, source->GetBinContent(binX, binYOrig));
+            target->SetBinContent(binX, binYNew, source.GetBinContent(binX, binYOrig));
           }
           // We make an extra white band to the right of the plot for better
           // visibility. (Was originally done in the code, but this belongs
