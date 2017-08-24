@@ -61,6 +61,6 @@ l1tlayout(dqmitems,"28 - uGT Algorithm Trigger Bits (after prescale) vs. BX Numb
 l1tlayout(dqmitems,"29 - uGMT Muon Phi for EMTF Inputs",
     [{'path': "L1T/L1TStage2uGMT/ugmtMuonPhiEmtf", 'description': "uGMT Muon Phi for EMTF Inputs.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "yes" }}])
 l1tlayout(dqmitems,"30 - EMTF Chamber Occupancy",
-    [{'path': "L1T/L1TStage2EMTF/emtfHitOccupancy", 'description': "EMTF Chamber Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2EMTF/cscLCTOccupancy", 'description': "EMTF CSC chamber Occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"31 - EMTF Track Bunch Crossing",
     [{'path': "L1T/L1TStage2EMTF/emtfTrackBX", 'description': "EMTF Track Bunch Crossing. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
