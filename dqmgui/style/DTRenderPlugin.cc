@@ -131,6 +131,7 @@ private:
     }
 
     gStyle->SetPalette(nc+2,colors);
+    delete[] colors;
 
     double *cont = new double[nc+2];
 
@@ -145,6 +146,7 @@ private:
     }
 
     h.SetContour(nc+2,cont);
+    delete[] cont;
 
     return;
 
