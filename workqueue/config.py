@@ -44,7 +44,7 @@ srv = main.section_("server")
 srv.thread_pool = 30
 main.application = "globalworkqueue"
 main.application_dir = "workqueue"
-main.port = 8240 # main application port it listens on (TODO: temporary port updated as Bruno advises)
+main.port = 8240 # main application port it listens on
 main.index = "ui"
 # Defaults to allow any CMS authenticated user. Write APIs should require
 # additional roles in SiteDB (i.e. "Admin" role for the "ReqMgr" group)
@@ -74,7 +74,8 @@ def setWorkQueueCommonConfig(config):
     config.queueParams['RequestDBURL'] = "%s/%s" % (COUCH_URL, reqmgrCouchDB)
     config.queueParams['central_logdb_url'] = LOG_DB_URL
     config.queueParams['log_reporter'] = LOG_REPORTER
-    
+    config.queueParams['SplittingMapping'] = {'MonteCarlo': {'name': 'MonteCarlo', 'args': {'MaxJobsPerElement': 600}}}
+
     config.reqMgrConfig = {}
     config.reqMgrConfig['reqmgr2_endpoint'] = REQMGR2
     config.reqMgrConfig['central_logdb_url'] = LOG_DB_URL
