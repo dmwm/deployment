@@ -88,17 +88,14 @@ public:
     }
 
 private:
-  TText *name_text = nullptr;
 
   void putName(VisDQMObject const& o) {
-    // we cannot delete this immediately, so wait for the next call
-    if (name_text) delete name_text;
 
-    name_text = new TText(0.05,0.01, o.name.c_str());
-    name_text->SetTextColor(kBlack);
-    name_text->SetTextSize(0.02);
-    name_text->SetNDC();
-    name_text->Draw("same");
+    TText name_text(0.05,0.01, o.name.c_str());
+    name_text.SetTextColor(kBlack);
+    name_text.SetTextSize(0.02);
+    name_text.SetNDC();
+    name_text.DrawClone("same");
   }
 
   // simple recursive descent parser for the "Column(0,30,50,)/Other(0,3,5,)/Last"
