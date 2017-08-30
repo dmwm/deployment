@@ -122,19 +122,21 @@ public:
         if (n_color == 10) n_color = 15; // skip low saturation stuff in between.
 
         h->SetLineColor(n_color);
-        h->Draw("SAME");
-        // i is bins, so 1 is 1st block = 0 to blocksize-1
-        leg->AddEntry(h,(std::to_string((i-1)*blocksize) + "-" + std::to_string((i*blocksize)-1)).c_str(),"l");
+        h->DrawCopy("SAME");
+        // i is bins, so 1 is 1st block = 0 to blocksize-1                                                                                                                                                         
+        leg->AddEntry(h->Clone(),(std::to_string((i-1)*blocksize) + "-" + std::to_string((i*blocksize)-1)).c_str(),"l");
         max = std::max(max, h->GetMaximum());
+        delete h;
       }
 
       double ymin = std::isnan(ri.yaxis.min) ? 0 : ri.yaxis.min;
       double ymax = std::isnan(ri.yaxis.max) ? max*1.05 : ri.yaxis.max;
 
       obj->GetYaxis()->Set(1, ymin, ymax);
-      obj->GetYaxis()->SetRange(0,0); // ROOT magic: unset range, use binning min/max set above
+      obj->GetYaxis()->SetRange(0,0); // ROOT magic: unset range, use binning min/max set above                                                                                                                    
       obj->GetYaxis()->SetTitle("");
-      leg->Draw();
+      leg->DrawClone();
+      delete leg;
     }
 
 private:
