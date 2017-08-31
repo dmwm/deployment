@@ -103,6 +103,32 @@ private:
 
       std::string name = o.name.substr(o.name.rfind("/")+1);
 
+      // for object comparison histograms (muons)
+      if (o.name.find("muColl1hwPt") != std::string::npos) {
+        gPad->SetLogy(1);
+      }
+
+      if (o.name.find("muColl2hwPt") != std::string::npos) {
+        gPad->SetLogy(1);
+      }
+
+      if (o.name.find("errorSummary") == 0) {
+        obj->SetOption("texthist");
+      }
+
+      if (o.name.find("mismatchRatio") == 0) {
+        obj->SetOption("texthist");
+      }
+
+      if (o.name.find("summary") == 0) {
+        obj->SetOption("texthist");
+      }
+
+      // MP7 zero suppression validation
+      if (o.name.find("zeroSuppVal") == 0) {
+        obj->SetOption("texthist");
+      }
+
     }
 
   void postDrawTH2F( TCanvas *, const VisDQMObject &o )
