@@ -80,9 +80,6 @@ private :
 
   TGaxis* timingAxis;
   TGaxis* ebpSMPhiAxis[18];
-  TGaxis* rctEtaAxis;
-  TGaxis* rctPhiAxis;
-  TGaxis* ecalEtaAxis;
 
 public :
   EcalRenderPlugin();
@@ -164,10 +161,7 @@ EcalRenderPlugin::EcalRenderPlugin() :
   accumMaskedPalette(),
   timingPalette(),
   pedestalPalette(),
-  timingAxis(0),
-  rctEtaAxis(0),
-  rctPhiAxis(0),
-  ecalEtaAxis(0)
+  timingAxis(0)
 {
   for(int i(0); i < 330; ++i)
     eeDCCSectors[i] = 0;
@@ -1116,12 +1110,12 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
       break;
     case kEcal:
       if(btype == kRCT){
-        rctEtaAxis = new TGaxis(-28, 0, 28, 0, 4, 18, 14,"BMN+-");
-        ecalEtaAxis = new TGaxis(-32, 72, 32, 72, -32, 32, 416,"BLN-");
-        rctPhiAxis = new TGaxis(-32, 0, -32, 72, 0, 18, 18,"BMN+-");
-        rctEtaAxis->Draw("same");
-        ecalEtaAxis->Draw("same");
-        rctPhiAxis->Draw("same");
+        TGaxis rctEtaAxis(-28, 0, 28, 0, 4, 18, 14,"BMN+-");
+        TGaxis ecalEtaAxis(-32, 72, 32, 72, -32, 32, 416,"BLN-");
+        TGaxis rctPhiAxis(-32, 0, -32, 72, 0, 18, 18,"BMN+-");
+        rctEtaAxis.DrawClone("same");
+        ecalEtaAxis.DrawClone("same");
+        rctPhiAxis.DrawClone("same");
         for(int i(0); i < 36; ++i)
           ecalRCTSectors[i]->Draw();
       }
