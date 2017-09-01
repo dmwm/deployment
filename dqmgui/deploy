@@ -16,26 +16,12 @@ deploy_dqmgui_deps()
 deploy_dqmgui_prep()
 {
   extra=
-  case $host in
-    dqm-C2D07-0[12] | dqm-C2D07-12 )
-      extra="$extra /dqmdata/dqm/uploads"
-      extra="$extra /dqmdata/dqm/agents"
-      extra="$extra /dqmdata/dqm/repository/original"
-      extra="$extra online online/sessions $project_logs/online"
-      for a in import-local  import-offsite  import-test; do
-        extra="$extra /dqmdata/dqm/agents/$a"
-      done
-      ;;
-
-    * )
-      for d in online offline relval dev; do
-        extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
-	for a in clean freezer ixmerge ixstageout qcontrol vcontrol register register128 stageout verify zip; do
-	  extra="$extra $d/agents/$a"
-	done
-      done
-      ;;
-  esac
+  for d in online offline relval dev; do
+    extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
+    for a in clean freezer ixmerge ixstageout qcontrol vcontrol register register128 stageout verify zip; do
+      extra="$extra $d/agents/$a"
+    done
+  done
   mkproj $extra backup
   [ ! $variant == online ] &&  mkproxy
   $nogroups || chmod g+ws */data */zipped */agents/*
@@ -68,6 +54,10 @@ deploy_dqmgui_post()
 
   # Castor stageout acronjobs enabled only for the
   # official offline, relval and dev instances
+  ###################################### START TODO FOR CC7
+  # Now the acron jobs are only created for the SLC servers
+  # We will have to add vocms073[89] here
+  ###################################### END TODO FOR CC7
   case $host:$root in
     vocms013[189]:/data/srv )
       klist -s # must have afs kerberos token
