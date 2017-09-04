@@ -1,7 +1,9 @@
 #include "DQM/DQMRenderPlugin.h"
+#include "TROOT.h"
+#include "TStyle.h"
 #include "TH2.h"
 
-class TestDQMRenderPlugin : public DQMRenderPlugin
+class EcalPedestalsPCLRenderPlugin : public DQMRenderPlugin
 {
 public:
   virtual bool applies (const VisDQMObject &dqmObject, const VisDQMImgInfo &)
@@ -15,8 +17,11 @@ public:
     TH2* obj(dynamic_cast<TH2*>(dqmObject.object));
 
     // apply colz to all 2D histos
-    if (obj) renderInfo.drawOptions = "colz";
+    if (obj) {
+      obj->SetStats(false);
+      renderInfo.drawOptions = "colz";
+    }
   }
 };
 
-static TestDQMRenderPlugin instance;
+static EcalPedestalsPCLRenderPlugin instance;
