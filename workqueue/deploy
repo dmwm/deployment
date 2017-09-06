@@ -37,7 +37,7 @@ deploy_workqueue_sw()
 
 deploy_workqueue_post()
 {
-  case $host in vocms013[2689] | vocms014[12] | vocms016[135] ) disable;; * ) enable;; esac
+  case $host in vocms013[2689] |vocms073[89] | vocms014[12] | vocms016[135] ) disable;; * ) enable;; esac
   
   # Do cache cleanup
   local cmd="rm -rf $root/state/workqueue/cache/*"
