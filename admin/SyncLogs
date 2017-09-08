@@ -8,7 +8,7 @@ for h in vocms0{117,127,134,135,160,162,164}; do
 done
 
 # Back-ends in the AI infrastructure
-for h in vocms0{131,132,136,138,139,140,141,161,163,165,306,307,318,738,739}; do
+for h in vocms0{131,132,136,138,139,140,141,142,161,163,165,306,307,318,738,739}; do
   rsync -rm -e "ssh -c arcfour256 -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log*' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
