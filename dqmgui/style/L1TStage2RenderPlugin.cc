@@ -35,6 +35,8 @@ public:
         // Put here the Stage2 subsystems who provide their own plugin:
         if( o.name.find( "L1TStage2CaloLayer1" ) != std::string::npos )
           return false;
+        if( o.name.find( "L1TdeStage2CaloLayer1" ) != std::string::npos )
+          return false;
         if( o.name.find( "L1TStage2EMTF" ) != std::string::npos )
           return false;
         if( o.name.find( "L1TStage2CaloLayer2" ) != std::string::npos )
