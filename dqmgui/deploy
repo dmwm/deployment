@@ -59,16 +59,33 @@ deploy_dqmgui_post()
   # We will have to add vocms073[89] here
   ###################################### END TODO FOR CC7
   case $host:$root in
-    vocms013[189]:/data/srv )
+    # SLC6 Offline and Relval GUIs
+    vocms013[89]:/data/srv )
+      klist -s # must have afs kerberos token
+      # For the SLC6 servers, we actually explicitely _remove_ their acron entries
+      (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
+      ) | acrontab
+      ;;
+    # SLC6 dev machine - One day this should become CC7
+    vocms0131:/data/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
-
        # backup of the index
        echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'"
-
        # backup of the zipped root files
        echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'"
-
+       # check/verification of the backup of the zipped root files
+       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
+      ) | acrontab
+      ;;
+    # CC7 Offline and Relval GUIs
+    vocms073[89]:/data/srv )
+      klist -s # must have afs kerberos token
+      (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
+       # backup of the index
+       echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'"
+       # backup of the zipped root files
+       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'"
        # check/verification of the backup of the zipped root files
        echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
       ) | acrontab
