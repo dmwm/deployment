@@ -49,7 +49,7 @@ server.workspace('DQMContent', 10, 'Trigger', 'L1T', '^(L1T|L1T2016)/', '',
 server.workspace('DQMContent', 11, 'Trigger', 'L1TEMU', '^(L1TEMU|L1T2016EMU)/', '',
                  # Please add plots to Stage2-QuickCollection layout in layouts/l1temulator-layouts.py
                  # with a useful name and description, then reference them here
-                 # 'L1TEMU/Layouts/Stage2-QuickCollection/',
+                 'L1TEMU/Layouts/Stage2-QuickCollection/00 - CaloTower Data-Emulator Status',
                 )
 
 server.workspace('DQMContent', 12, 'Trigger', 'HLT', '^HLT/', '',
