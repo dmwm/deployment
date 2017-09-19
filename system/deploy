@@ -236,7 +236,21 @@ system_install_hostcert()
          cd $tmp
          note "WARNING: requesting now a new grid host certificate via gridca.cern.ch"
          note "WARNING: it will use your kerberos credentials for the Single Sign On."
-         openssl req -new -subj $cn -out $req -nodes -sha512 -newkey rsa:2048 -keyout hostkey.pem
+         # 2017.09.19 To be able to use automatic host cer request, openssl config has to be modified.
+         cp /etc/pki/tls/openssl.cnf /tmp/openssl.cnf
+         echo "
+[req]
+req_extensions = v3_req
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+isubjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = $(hostname -f)" >> /tmp/openssl.cnf
+         openssl req -new -subj $cn -out $req -nodes -sha512 -newkey rsa:2048 -keyout hostkey.pem -config /tmp/openssl.cnf
+         rm -f /tmp/openssl.cnf
          $project_config_src/careq-cern-ch $req hostcert.pem 1>&11 2>&22
          chmod 400 $req hostkey.pem
          chmod 644 hostcert.pem
@@ -433,16 +447,6 @@ deploy_system_post()
       # EGI-trustanchors provides the updated CAs
       sudo wget -q -O /etc/yum.repos.d/egi-trustanchors.repo \
         http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
-
-      # EMI Grid middleware
-      case $arch in
-        slc5*) sudo rpm -ivh --force \
-                 http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
-               ;;
-        slc6* ) sudo rpm -ivh --force \
-              http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm      
-            ;;
-      esac
 
       # WLCG specific (needed for getting the cms voms config files)
       sudo wget -q -O /etc/yum.repos.d/wlcg.sl6.repo \
