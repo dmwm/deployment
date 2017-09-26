@@ -51,14 +51,23 @@ for suffix in [ "", " (short)" ]:
 #####
 
 # layouts with no overlays
-for plot in [ "activity per BX", "active planes", "leading edges without trailing", "leading edge", "time over threshold", "HPTDC Errors", "hits in planes" ]:
+TimingPlots = [ "activity per BX 0 25", "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "tracks", "HPTDC Errors", "MH in channels" ]
+TimingDrawOpt = [{'ytype':"log"}, {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'withref':"no"}, {'xmax':"100"}, {'drawopts':"colztext"}]
+
+for i in range(len(TimingPlots)):
   rows = list()
   for station in diamond_stations:
     row = list()
-    row.append("CTPPS/TimingDiamond/"+station+"/"+plot)
+    path_str = "CTPPS/TimingDiamond/"+station+"/"+TimingPlots[i]
+    row.append( { "path" : path_str, 'draw':TimingDrawOpt[i] } )
     rows.append(row)
 
-  CTPPSTimingDiamondLayout(dqmitems, plot, *rows)
+  CTPPSTimingDiamondLayout(dqmitems, TimingPlots[i], *rows)
+
+
+#for station in diamond_stations:
+#plot = "activity per BX 0 25"
+  #CTPPSTimingDiamondLayout(dqmitems, plot, [{'path': "CTPPS/TimingDiamond/"+station+"/"+plot, 'description':'blablabla', 'draw':{'xtype':'log','ymin':0,'ymax':10,'drawopts':"COLZ"} }])
 
 # clocks display for both sectors
 rows = list()
@@ -66,11 +75,11 @@ for station in diamond_stations:
   row = list()
   for clk in [ 1, 3 ]:
     hist_lead = "CTPPS/TimingDiamond/"+station+"/clock/clock{clock_id} leading edge".format(clock_id=clk)
-    hist_trail = "CTPPS/TimingDiamond/"+station+"/clock/clock{clock_id} trailing edge".format(clock_id=clk)
-    row.append( { "path": hist_lead, "overlays": [ hist_trail ] } )
+    row.append( { "path": hist_lead, 'draw':{'xmax':"25"} } )
   rows.append(row)
 
   CTPPSTimingDiamondLayout(dqmitems, "clocks edges", *rows)
+  
 ###
 #####   CTPPS Pixel Layouts
 ###
