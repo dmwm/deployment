@@ -124,7 +124,8 @@ system_groups_and_accounts()
             T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver   \
             T:100050:_gitweb    T:100051:_bigcouch    T:100052:_victorweb    \
             T:100053:_popdbweb  T:100054:_dcafpilot   T:100055:_confdb       \
-            T:100056:_wmarchive T:100057:_phedexreplicamonitoring; do
+            T:100056:_wmarchive T:100057:_phedexreplicamonitoring            \
+            T:100058:_reqmgr2_ms; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -169,6 +170,7 @@ system_groups_and_accounts()
   add_local_user 100055 _confdb      ,_config "ConfDB App"
   add_local_user 100056 _wmarchive   ,_config "WMArchive App"
   add_local_user 100057 _phedexreplicamonitoring  ,_config "PhedexReplicaMonitoring App"
+  add_local_user 100058 _reqmgr2_ms  ,_config "ReqMgr2 MicroService App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
