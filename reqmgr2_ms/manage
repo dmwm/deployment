@@ -8,7 +8,6 @@
 ##H   status            show current service's status
 ##H   sysboot           start server from crond if not running
 ##H   restart           (re)start the service
-##H   updateversions    update database with ScramArchs/CMSSW releases
 ##H   start             (re)start the service
 ##H   stop              stop the service
 ##H
@@ -93,14 +92,6 @@ check()
   fi
 }
 
-
-updateversions()
-{
-  cd $STATEDIR
-  reqmgr-sw-update $CFGFILE
-}
-
-
 # Main routine, perform action requested on command line.
 case ${1:-status} in
   sysboot )
@@ -120,11 +111,6 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
-    ;;
-
-  updateversions )
-    check "$2"
-    updateversions
     ;;
 
   help )
