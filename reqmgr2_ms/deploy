@@ -33,7 +33,8 @@ deploy_reqmgr2_ms_sw()
 
 deploy_reqmgr2_ms_post()
 {
-  case $host in vocms013[89] | vocms073[89] ) disable;;  * ) enable;; esac
+  # enable crons only on prod/testbed nodes and no more
+  case $host in vocms0140 | vocms0131 ) enable;;  * ) disable;; esac
   (mkcrontab; sysboot) | crontab -
 }
 
