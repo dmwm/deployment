@@ -70,93 +70,93 @@ l1toccupancy(dqmitems,"31 - EMTF Track Bunch Crossing",
 def l1tefficiency(i, p, *rows): i["00 Shift/L1T/Efficiency/" + p] = DQMItem(layout=rows)
 
 l1tefficiency(dqmitems, "00 - Reco Muon L1T Efficiency",
-  [{'path': "L1T/L1TMuon/EffvsPt_16", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TMuon/EffvsPt_20", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TMuon/EffvsPt_25", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TMuon/EffvsEta_16", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TMuon/EffvsEta_20", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TMuon/EffvsEta_25", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TMuon/EffvsPhi_16", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TMuon/EffvsPhi_20", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TMuon/EffvsPhi_25", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TMuon/EffvsPt_SINGLE_25", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TMuon/EffvsPt_DOUBLE_16", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TMuon/EffvsPt_OPEN_16", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TMuon/EffvsEta_SINGLE_25", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TMuon/EffvsEta_DOUBLE_16", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TMuon/EffvsEta_OPEN_16", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TMuon/EffvsPhi_SINGLE_25", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TMuon/EffvsPhi_DOUBLE_16", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TMuon/EffvsPhi_OPEN_16", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tefficiency(dqmitems, "01 - Reco Photon L1T Efficiency",
-  [{'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_36", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_68", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_68", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/efficiencyPhotonET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tefficiency(dqmitems, "02 - Reco Electron L1T Efficiency",
-  [{'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_36", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_68", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_68", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/efficiencyElectronET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tefficiency(dqmitems, "03 - Reco IsoTau L1T Efficiency",
-  [{'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_28", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_32", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_28", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_32", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TTau/efficiencyIsoTauET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tefficiency(dqmitems, "04 - Reco NonIsoTau L1T Efficiency",
-  [{'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_28", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_32", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_28", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_32", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TTau/efficiencyNonIsoTauET_EB_EE_threshold_176", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tefficiency(dqmitems, "05 - Reco Jet L1T Efficiency",
-  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_36", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_68", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_128", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_176", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_68", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/efficiencyJetEt_HB_HE_threshold_176", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tefficiency(dqmitems, "06 - Reco MET L1T Efficiency",
-  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_40", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_60", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_80", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_100", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_120", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_40", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_60", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_80", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_100", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/efficiencyMET_threshold_120", 'description': "", 'draw': { 'withref': "yes" }}])
 
 
 def l1tresolution(i, p, *rows): i["00 Shift/L1T/Resolution/" + p] = DQMItem(layout=rows)
 
 l1tresolution(dqmitems, "00 - Photon",
-  [{'path': "L1T/L1TEGamma/resolutionPhotonET_EB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/resolutionPhotonET_EE", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TEGamma/resolutionPhotonEta", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/resolutionPhotonPhi_EB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/resolutionPhotonPhi_EE", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TEGamma/resolutionPhotonET_EB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/resolutionPhotonET_EE", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TEGamma/resolutionPhotonEta", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/resolutionPhotonPhi_EB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/resolutionPhotonPhi_EE", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tresolution(dqmitems, "01 - Electron",
-  [{'path': "L1T/L1TEGamma/resolutionElectronET_EB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/resolutionElectronET_EE", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TEGamma/resolutionElectronEta", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/resolutionElectronPhi_EB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TEGamma/resolutionElectronPhi_EE", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TEGamma/resolutionElectronET_EB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/resolutionElectronET_EE", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TEGamma/resolutionElectronEta", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/resolutionElectronPhi_EB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TEGamma/resolutionElectronPhi_EE", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tresolution(dqmitems, "02 - Tau",
-  [{'path': "L1T/L1TTau/resolutionTauET_EB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TTau/resolutionTauET_EE", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TTau/resolutionTauEta", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TTau/resolutionTauPhi_EB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TTau/resolutionTauPhi_EE", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TTau/resolutionTauET_EB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TTau/resolutionTauET_EE", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TTau/resolutionTauEta", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TTau/resolutionTauPhi_EB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TTau/resolutionTauPhi_EE", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tresolution(dqmitems, "03 - Jet",
-  [{'path': "L1T/L1TStage2CaloLayer2/resolutionJetET_HB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetET_HE", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetET_HF", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TStage2CaloLayer2/resolutionJetPhi_HB", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetPhi_HE", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetPhi_HF", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TStage2CaloLayer2/resolutionJetEta", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TStage2CaloLayer2/resolutionJetET_HB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetET_HE", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetET_HF", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TStage2CaloLayer2/resolutionJetPhi_HB", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetPhi_HE", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/resolutionJetPhi_HF", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TStage2CaloLayer2/resolutionJetEta", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tresolution(dqmitems, "04 - MET",
-  [{'path': "L1T/L1TStage2CaloLayer2/resolutionETT", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/resolutionHTT", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TStage2CaloLayer2/resolutionMET", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/resolutionMETPhi", 'description': "", 'draw': { 'withref': "no" }}],
-  [{'path': "L1T/L1TStage2CaloLayer2/resolutionMHT", 'description': "", 'draw': { 'withref': "no" }},
-   {'path': "L1T/L1TStage2CaloLayer2/resolutionMHTPhi", 'description': "", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TStage2CaloLayer2/resolutionETT", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/resolutionHTT", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TStage2CaloLayer2/resolutionMET", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/resolutionMETPhi", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TStage2CaloLayer2/resolutionMHT", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TStage2CaloLayer2/resolutionMHTPhi", 'description': "", 'draw': { 'withref': "yes" }}])
 
 
 
