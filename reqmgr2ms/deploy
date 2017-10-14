@@ -1,23 +1,23 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_reqmgr2_ms_variants="default prod preprod dev"
+deploy_reqmgr2ms_variants="default prod preprod dev"
 
-deploy_reqmgr2_ms_deps()
+deploy_reqmgr2ms_deps()
 {
   deploy $stage backend
   deploy $stage wmcore-auth
 }
 
-deploy_reqmgr2_ms_prep()
+deploy_reqmgr2ms_prep()
 {
   mkproj tmp
 }
 
-deploy_reqmgr2_ms_sw()
+deploy_reqmgr2ms_sw()
 {
   deploy_pkg \
     -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
-    comp cms+reqmgr2_ms
+    comp cms+reqmgr2ms
 
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
@@ -31,14 +31,14 @@ deploy_reqmgr2_ms_sw()
   esac
 }
 
-deploy_reqmgr2_ms_post()
+deploy_reqmgr2ms_post()
 {
   # enable crons only on prod/testbed nodes and no more
   case $host in vocms0140 | vocms0131 ) enable;;  * ) disable;; esac
   (mkcrontab; sysboot) | crontab -
 }
 
-deploy_reqmgr2_ms_auth()
+deploy_reqmgr2ms_auth()
 {
   case $1 in
     */*-cert.pem ) echo "replace me with your dmwm service certificate" ;;
