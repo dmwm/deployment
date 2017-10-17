@@ -43,7 +43,7 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
-export WMCORE_ROOT=$REQMGR2_ROOT/lib/python*/site-packages
+export WMCORE_ROOT=$REQMGR2MS_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
 export WMCORE_CACHE_DIR=$STATEDIR
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
@@ -55,7 +55,7 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2-ms-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
 }
 
 
@@ -118,7 +118,7 @@ case ${1:-status} in
     ;;
 
   version )
-    echo "$REQMGR2_VERSION"
+    echo "$REQMGR2MS_VERSION"
     ;;
 
   * )
