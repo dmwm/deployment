@@ -100,7 +100,7 @@ bool checkAndRemove(std::string &s, const char * key)
     checkAndRemove(r.drawOptions,"tlabels");
 
     //Colormap setup
-    if( checkAndRemove(r.drawOptions, "triggerfromhell") )
+    if( checkAndRemove(r.drawOptions, "DarkBodyRadiator") )
       {
      // Choose trigger from hell palette
         obj->SetContour(256);
@@ -109,6 +109,13 @@ bool checkAndRemove(std::string &s, const char * key)
         obj->GetXaxis()->SetAxisColor(kWhite);
         obj->GetYaxis()->SetAxisColor(kWhite);
         tlabels_.SetTextColor(kWhite);
+      }
+    else if( checkAndRemove(r.drawOptions, "InvertedDarkBodyRadiator") )
+      {
+     // Choose the Inverted Dark Body Radiator palette
+      obj->SetContour(100);
+      gStyle->SetPalette(56);
+      tlabels_.SetTextColor(kBlack);
       }
     else
       {
