@@ -166,6 +166,8 @@ server.workspace('DQMContent', 40, 'Muons', 'CSC', '^CSC/', '',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 07 - CSCs Occupancy 2D',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 09 - RecHits Minus',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 10 - RecHits Plus',
+                 'CSC/Layouts/00 Data Integrity/Physics Efficiency 11 - Segments',
+                 'CSC/Layouts/00 Data Integrity/Physics Efficiency 12 - Timing',
                 )
 
 server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')
@@ -174,6 +176,20 @@ server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel/', '',
+                 'CTPPS/TrackingPixel/Layouts/4 fired ROCs per BX',
+                 'CTPPS/TrackingPixel/Layouts/5 fired planes per BX',
+                 'CTPPS/TrackingPixel/Layouts/ROCs hits multiplicity per event',
+                 'CTPPS/TrackingPixel/Layouts/ROCs_hits_multiplicity_per_event vs LS',
+                 'CTPPS/TrackingPixel/Layouts/number of fired planes per event',
+                 'CTPPS/TrackingPixel/Layouts/number of fired aligned_ROCs per event',
+                 'CTPPS/TrackingPixel/Layouts/planes activity',
+                 'CTPPS/TrackingPixel/Layouts/hit multiplicity in planes',
+                 'CTPPS/TrackingPixel/Layouts/hit average multiplicity in planes',
+                 'CTPPS/TrackingPixel/Layouts/hits position:sector 45 station 220_fr_hr',
+                 'CTPPS/TrackingPixel/Layouts/hits position:sector 56 station 220_fr_hr',
+)
+
 
 # POG workspaces:
 server.workspace('DQMContent', 60, 'POG', 'Muons', '^Muons/', '')

@@ -1,6 +1,6 @@
 def pixellayout(i, p, *rows): i["PixelPhase1/Layouts/" + p] = DQMItem(layout=rows)
 pixellayout(dqmitems, "000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet",
-   [{ 'path': "PixelPhase1/Summary/pixelGrandSummary",
+   [{ 'path':  "PixelPhase1/EventInfo/reportSummaryMap",
       'description': "Summary results of qulity tests: Layer/Disk (y-axis) vs. Subdetectors (x-axis). See the PixelPhase1/Summary/ directory for more details.",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
@@ -503,7 +503,7 @@ pixellayout(dqmitems, "32 - Charge and size",
   )
 
 pixellayout(dqmitems, "33 - Cluster on track and vertices per lumi",
-  [{ 'path': "PixelPhase1/Tracks/num_clusters_ontrack_per_Lumisection_PXAII",
+  [{ 'path': "PixelPhase1/Tracks/num_clusters_ontrack_per_Lumisection_PXAll",
      'description': "# of cluster on track per Lumisection",
      'draw': {'withref' : "no"}}],
   [{ 'path': "PixelPhase1/Tracks/num_vertices_per_Lumisection",
@@ -545,7 +545,7 @@ pixellayout(dqmitems, "35 - Ontrack Disk",
   {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-2",
   'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
   'draw': { 'withref': "no"}},
-  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_ -3",
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-3",
   'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
   'draw': { 'withref': "no"}}],
   )

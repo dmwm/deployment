@@ -39,7 +39,7 @@ deploy_reqmgr2_sw()
 
 deploy_reqmgr2_post()
 {
-  case $host in vocms013[89] ) disable;;  * ) enable;; esac
+  case $host in vocms013[89] | vocms073[89] ) disable;;  * ) enable;; esac
 
   # ReqMgr2 and old reqmgr specific couchdb stuff
   # Tell couch to pick up reqmgr on the next restart
@@ -59,16 +59,7 @@ deploy_reqmgr2_post()
          >> $root/state/${couch%%:*}/stagingarea/reqmgr2
   done
 
-  # Setup reqmgr2 cronjobs
-  (mkcrontab
-   sysboot
-   case $variant:$host in
-     prod:vocms0140 | preprod:vocms0131 | dev:vocms0117 | dev:vocms0127 | default:* )
-       local cmd="$project_config/manage updateversions 'I did read documentation'"
-       $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
-       echo "58 * * * * $cmd" ;;
-     * ) ;;
-   esac) | crontab -
+  (mkcrontab; sysboot) | crontab -
 }
 
 deploy_reqmgr2_auth()

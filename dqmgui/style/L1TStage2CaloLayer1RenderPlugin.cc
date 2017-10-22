@@ -212,6 +212,10 @@ private:
       if ( r.drawOptions.length() == 0 ) {
         obj->SetOption("hist");
       }
+      if( name.find( "dataEmulSummary" ) != std::string::npos )
+      {
+        obj->SetFillColor(kRed);
+      }
     }
 
   void postDrawTH2F( TCanvas * c, const VisDQMObject &o, std::string &drawOptions )
@@ -255,7 +259,7 @@ private:
           }
         }
       }
-      else if ( name.find( "hcal" ) != std::string::npos && checkAndRemove(drawOptions, "tlabels") )
+      else if ( (name.find( "hcal" ) != std::string::npos or o.name.find( "L1TdeStage2CaloLayer1/Occupancies" ) != std::string::npos) && checkAndRemove(drawOptions, "tlabels") )
       {
         char text[20];
         for (int ieta=-42; ieta<42; ++ieta) {
@@ -271,7 +275,7 @@ private:
       }
       else if ( name.find( "Correlation" ) != std::string::npos )
       {
-        correlation_->DrawLine(0.,0.,255.,255.);
+        correlation_->DrawLine(0.,0.,512.,512.);
       }
       else if ( name.find( "Mismatches" ) != std::string::npos )
       {
@@ -299,8 +303,7 @@ private:
           obj->GetXaxis()->SetRangeUser(1., i.xaxis.max);
         }
         // To account for our underflow bin hack
-        double currentLumi = obj->GetBinContent(0);
-        obj->SetEntries(obj->GetEntries()-currentLumi);
+        obj->SetEntries(obj->Integral(1, -1));
         gStyle->SetOptStat(11);
       }
       if( o.name.find( "maxEvt" ) != std::string::npos && o.name.find("MismatchDetail") == std::string::npos )
@@ -311,6 +314,15 @@ private:
           // Not sure how to let ROOT choose min
           auto miny = (isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
           obj->GetYaxis()->SetRangeUser(miny, 8856);
+        }
+      }
+      if( name.find( "dataEmulSummary" ) != std::string::npos )
+      {
+        gStyle->SetOptStat(11);
+        if ( isnan(i.yaxis.max) )
+        {
+          auto miny = (isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
+          obj->GetYaxis()->SetRangeUser(miny, 0.1);
         }
       }
     }

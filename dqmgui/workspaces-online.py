@@ -49,7 +49,7 @@ server.workspace('DQMContent', 10, 'Trigger', 'L1T', '^(L1T|L1T2016)/', '',
 server.workspace('DQMContent', 11, 'Trigger', 'L1TEMU', '^(L1TEMU|L1T2016EMU)/', '',
                  # Please add plots to Stage2-QuickCollection layout in layouts/l1temulator-layouts.py
                  # with a useful name and description, then reference them here
-                 # 'L1TEMU/Layouts/Stage2-QuickCollection/',
+                 'L1TEMU/Layouts/Stage2-QuickCollection/00 - CaloTower Data-Emulator Status',
                 )
 
 server.workspace('DQMContent', 12, 'Trigger', 'HLT', '^HLT/', '',
@@ -101,22 +101,6 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/27 - PixelPhase1 Digis: BladePannel vs Disk endcap summary',
                   'PixelPhase1/Layouts/28 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary',
                   'PixelPhase1/Layouts/30 - PixelPhase1 Cluster Position: X vs Y endcap summary',
-                )
-
-server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
-                 'Pixel/Layouts/000 - Pixel FED Occupancy vs Lumi Sections',
-                 'Pixel/Layouts/00a - Pixel_Error_Summary',
-                 'Pixel/Layouts/00b - Pixel_Error_Summary',
-                 'Pixel/Layouts/00c - Pixel_Error_Summary',
-                 'Pixel/Layouts/09 - Pixel Clusters vs LS',
-                 'Pixel/Layouts/20a - Cluster occupancy Barrel Layer 1',
-                 'Pixel/Layouts/20b - Cluster occupancy Barrel Layer 2',
-                 'Pixel/Layouts/20c - Cluster occupancy Barrel Layer 3',
-                 'Pixel/Layouts/20d - Cluster occupancy Endcap -z Disk 1',
-                 'Pixel/Layouts/20e - Cluster occupancy Endcap -z Disk 2',
-                 'Pixel/Layouts/20f - Cluster occupancy Endcap +z Disk 1',
-                 'Pixel/Layouts/20g - Cluster occupancy Endcap +z Disk 2',
-                 'Pixel/Layouts/30a - Pixel event rates',
                 )
 
 server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^(SiStrip|Tracking)/', '',
@@ -243,4 +227,17 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel/', '',
+                 'CTPPS/TrackingPixel/Layouts/4 fired ROCs per BX',
+                 'CTPPS/TrackingPixel/Layouts/5 fired planes per BX',
+                 'CTPPS/TrackingPixel/Layouts/ROCs hits multiplicity per event',
+                 'CTPPS/TrackingPixel/Layouts/ROCs_hits_multiplicity_per_event vs LS',
+                 'CTPPS/TrackingPixel/Layouts/number of fired planes per event',
+                 'CTPPS/TrackingPixel/Layouts/number of fired aligned_ROCs per event',
+                 'CTPPS/TrackingPixel/Layouts/planes activity',
+                 'CTPPS/TrackingPixel/Layouts/hit multiplicity in planes',
+                 'CTPPS/TrackingPixel/Layouts/hit average multiplicity in planes',
+                 'CTPPS/TrackingPixel/Layouts/hits position:sector 45 station 220_fr_hr',
+                 'CTPPS/TrackingPixel/Layouts/hits position:sector 56 station 220_fr_hr',
+)
 server.workspace('DQMContent', 52, 'CTPPS', 'TimingDiamond', '^CTPPS/TimingDiamond', 'CTPPS/TimingDiamond/Layouts')

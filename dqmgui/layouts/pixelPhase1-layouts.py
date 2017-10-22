@@ -1,11 +1,11 @@
 def pixellayout(i, p, *rows): i["PixelPhase1/Layouts/" + p] = DQMItem(layout=rows)
 pixellayout(dqmitems, "000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet",
-   [{ 'path': "PixelPhase1/Summary/pixelGrandSummary",
+   [{ 'path':  "PixelPhase1/EventInfo/reportSummaryMap",
       'description': "Summary results of qulity tests: Layer/Disk (y-axis) vs. Subdetectors (x-axis). See the PixelPhase1/Summary/ directory for more details.",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
 pixellayout(dqmitems, "00a - PixelPhase1 FED Occupancy vs Lumi Sections",
-            [{ 'path': "PixelPhase1/num_feddigistrend_per_Lumisection_per_FED",
+            [{ 'path': "PixelPhase1/num_feddigistrend_per_LumiBlock_per_FED",
                'description': "Number of digis per FED and Lumisection",
                'draw': { 'withref': "no" }}]
               )

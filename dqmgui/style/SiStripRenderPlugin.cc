@@ -463,6 +463,37 @@ private:
 	return;
       }
 
+	if( o.name.find( "NumberOfClusterPerLayerTrendVar" ) != std::string::npos)
+	{
+		if (((TString)obj->GetTitle()).Contains( "TIB" )) {
+			obj->GetYaxis()->SetRangeUser(1,4);
+		} else if (((TString)obj->GetTitle()).Contains( "TOB" ) ) {
+			obj->GetYaxis()->SetRangeUser(1,6);
+		} else if (((TString)obj->GetTitle()).Contains( "TEC" ) ) {
+			obj->GetYaxis()->SetRangeUser(1,9);
+		} else if (((TString)obj->GetTitle()).Contains( "TID" )) {
+			obj->GetYaxis()->SetRangeUser(1,3);
+		}
+		obj->SetStats( kFALSE );
+		gStyle->SetPalette(1,0);
+		obj->SetOption("colz");
+	}
+
+	if( o.name.find("NumberOfClusterPerRingVsTrendVar") != std::string::npos){
+		obj->SetStats( kFALSE );
+		gStyle->SetPalette(1,0);
+		obj->SetOption("colz");
+		if (((TString)obj->GetTitle()).Contains( "TID" )) {
+			obj->GetYaxis()->SetRangeUser(1,3);
+		}
+		if (((TString)obj->GetTitle()).Contains( "TEC" )) {
+			if (((TString)obj->GetTitle()).Contains( "wheel__1" ) or ((TString)obj->GetTitle()).Contains( "wheel__2" ) or ((TString)obj->GetTitle()).Contains( "wheel__3" )) obj->GetYaxis()->SetRangeUser(1,7);
+			if (((TString)obj->GetTitle()).Contains( "wheel__4" ) or ((TString)obj->GetTitle()).Contains( "wheel__5" ) or ((TString)obj->GetTitle()).Contains( "wheel__6" )) obj->GetYaxis()->SetRangeUser(2,7);
+			if (((TString)obj->GetTitle()).Contains( "wheel__7" ) or ((TString)obj->GetTitle()).Contains( "wheel__8" ) ) obj->GetYaxis()->SetRangeUser(3,7);
+			if (((TString)obj->GetTitle()).Contains( "wheel__9" ) ) obj->GetYaxis()->SetRangeUser(4,7);
+		}
+	}
+
       return;
     }
   void preDrawTProfile( TCanvas *c, const VisDQMObject &o )

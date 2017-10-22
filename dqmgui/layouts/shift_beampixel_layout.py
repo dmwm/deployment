@@ -32,14 +32,14 @@ shiftbeamlayout(dqmitems, "C - sigmaZ vs lumi",
                 [{ 'path': "BeamPixel/C - sigmaZ vs lumi",
                    'description': "sigmaZ vs. Lumisection"}])
 
-shiftbeamlayout(dqmitems, "H - vertex x cum",
-                [{ 'path': "BeamPixel/H - vertex x cum",
-                   'description': "Primary Vertex X Distribution (Cumulative)"}])
+shiftbeamlayout(dqmitems, "G - vertex x fit",
+                [{ 'path': "BeamPixel/G - vertex x fit",
+                   'description': "Primary Vertex X Distribution (For Fit)"}])
 
-shiftbeamlayout(dqmitems, "H - vertex y cum",
-                [{ 'path': "BeamPixel/H - vertex y cum",
-                   'description': "Primary Vertex Y Distribution (Cumulative)"}])
+shiftbeamlayout(dqmitems, "G - vertex y fit",
+                [{ 'path': "BeamPixel/G - vertex y fit",
+                   'description': "Primary Vertex Y Distribution (For Fit)"}])
 
-shiftbeamlayout(dqmitems, "H - vertex z cum",
-                [{ 'path': "BeamPixel/H - vertex z cum",
-                   'description': "Primary Vertex Z Distribution (Cumulative)"}])
+shiftbeamlayout(dqmitems, "G - vertex z fit",
+                [{ 'path': "BeamPixel/G - vertex z fit",
+                   'description': "Primary Vertex Z Distribution (For Fit)"}])

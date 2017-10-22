@@ -98,7 +98,15 @@ rpclayout(dqmitems, "09-Endcap_Occupancy",
           [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Endcap", 'description': occupancy + rpclink }]
           )
 
-rpclayout(dqmitems, "10-Barrel_1DOccupancy",
+rpclayout(dqmitems, "10-Barrel_Occupancy_Muon",
+          [{ 'path': "RPC/Muon/SummaryHistograms/Occupancy_for_Barrel", 'description': occupancy + rpclink }]
+          )
+
+rpclayout(dqmitems, "11-Endcap_Occupancy_Muon",
+          [{'path': "RPC/Muon/SummaryHistograms/Occupancy_for_Endcap", 'description': occupancy + rpclink }]
+          )
+
+rpclayout(dqmitems, "12-Barrel_1DOccupancy",
           [{ 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Wheel_2", 'description': occupancy + rpclink },
            { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Wheel_1", 'description': occupancy + rpclink  }],
 
@@ -107,7 +115,7 @@ rpclayout(dqmitems, "10-Barrel_1DOccupancy",
            { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Wheel_-2", 'description': occupancy + rpclink  }]
           )
 
-rpclayout(dqmitems, "11-EndCap_1DOccupancy",
+rpclayout(dqmitems, "13-EndCap_1DOccupancy",
           [{ 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Ring_2", 'description': occupancy + rpclink },
            { 'path': "RPC/AllHits/SummaryHistograms/1DOccupancy_Ring_3", 'description': occupancy + rpclink }]
           )
@@ -115,10 +123,10 @@ rpclayout(dqmitems, "11-EndCap_1DOccupancy",
 ##------------------------
 
 ##Number Digi
-rpclayout(dqmitems, "12-Barrel_Multiplicity",
+rpclayout(dqmitems, "14-Barrel_Multiplicity",
           [{ 'path': "RPC/AllHits/SummaryHistograms/Multiplicity_Barrel", 'description': nrofdigi + rpclink }])
 
-rpclayout(dqmitems, "13-Endcap_Multiplicity",
+rpclayout(dqmitems, "15-Endcap_Multiplicity",
           [ { 'path': "RPC/AllHits/SummaryHistograms/Multiplicity_Endcap-", 'description': nrofdigi + rpclink },
             { 'path': "RPC/AllHits/SummaryHistograms/Multiplicity_Endcap+", 'description': nrofdigi + rpclink  }]
           )
@@ -126,22 +134,22 @@ rpclayout(dqmitems, "13-Endcap_Multiplicity",
 
 ##Number Cluster
 
-rpclayout(dqmitems, "14-Barrel_Number_Of_Clusters",
+rpclayout(dqmitems, "16-Barrel_Number_Of_Clusters",
           [{ 'path': "RPC/Muon/SummaryHistograms/NumberOfClusters_Barrel", 'description': nrofcl + rpclink }]
           )
 
-rpclayout(dqmitems, "15-Endcap_Number_Of_Clusters",
+rpclayout(dqmitems, "17-Endcap_Number_Of_Clusters",
           [ { 'path': "RPC/Muon/SummaryHistograms/NumberOfClusters_Endcap-", 'description': nrofcl + rpclink },
             { 'path': "RPC/Muon/SummaryHistograms/NumberOfClusters_Endcap+", 'description': nrofcl + rpclink  }]
           )
 ##-----------------------
 
 ##Cluster Size
-rpclayout(dqmitems, "16-Barrel_Cluster_Size",
+rpclayout(dqmitems, "18-Barrel_Cluster_Size",
           [{ 'path': "RPC/Muon/SummaryHistograms/ClusterSize_Barrel", 'description': clsize + rpclink }]
           )
 
-rpclayout(dqmitems, "17-Endcap_Cluster_Size",
+rpclayout(dqmitems, "19-Endcap_Cluster_Size",
           [ { 'path': "RPC/Muon/SummaryHistograms/ClusterSize_Endcap-", 'description':  clsize + rpclink },
             { 'path': "RPC/Muon/SummaryHistograms/ClusterSize_Endcap+", 'description':  clsize + rpclink  }]
           )
@@ -149,7 +157,7 @@ rpclayout(dqmitems, "17-Endcap_Cluster_Size",
 ##-----------------------
 
 ##BX
-rpclayout(dqmitems, "18-Barrel_Bunch_Crossing",
+rpclayout(dqmitems, "20-Barrel_Bunch_Crossing",
           [{ 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Wheel_2", 'description': bx + rpclink },
            { 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Wheel_1", 'description': bx + rpclink  }],
 
@@ -158,7 +166,7 @@ rpclayout(dqmitems, "18-Barrel_Bunch_Crossing",
            { 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Wheel_-2", 'description': bx + rpclink  }]
           )
 
-rpclayout(dqmitems, "19-EndCap_Negative_Bunch_Crossing",
+rpclayout(dqmitems, "21-EndCap_Negative_Bunch_Crossing",
           [{ 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Disk_-1", 'description': bx + rpclink },
            { 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Disk_-2", 'description': bx + rpclink }],
 
@@ -166,7 +174,7 @@ rpclayout(dqmitems, "19-EndCap_Negative_Bunch_Crossing",
            { 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Disk_-4", 'description': bx  + rpclink}]
           )
 
-rpclayout(dqmitems, "19-EndCap_Positive_Bunch_Crossing",
+rpclayout(dqmitems, "22-EndCap_Positive_Bunch_Crossing",
           [{ 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Disk_1", 'description': bx + rpclink },
            { 'path': "RPC/Muon/SummaryHistograms/BxDistribution_Disk_2", 'description': bx + rpclink }],
 
@@ -180,14 +188,14 @@ rpclayout(dqmitems, "19-EndCap_Positive_Bunch_Crossing",
 
         ##Efficiency
 
-rpclayout(dqmitems, "21-Statistics",
+rpclayout(dqmitems, "23-Statistics",
           [{ 'path': "RPC/RPCEfficiency/Statistics", 'description': eff + rpclink }])
 
-rpclayout(dqmitems, "22-Barrel_Efficiency_Distribution",
+rpclayout(dqmitems, "24-Barrel_Efficiency_Distribution",
           [{ 'path': "RPC/RPCEfficiency/EffBarrelRoll", 'description': eff + rpclink }]
           )
 
-rpclayout(dqmitems, "23-Barrel_Efficiency",
+rpclayout(dqmitems, "25-Barrel_Efficiency",
           [{ 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_-2", 'description': eff + rpclink },
            { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_-1", 'description': eff + rpclink  }],
 
@@ -196,15 +204,15 @@ rpclayout(dqmitems, "23-Barrel_Efficiency",
            { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Sector_Wheel_2", 'description': eff + rpclink  }]
           )
 
-rpclayout(dqmitems, "24-Endcap_Positive_Efficiency_Distribution",
+rpclayout(dqmitems, "26-Endcap_Positive_Efficiency_Distribution",
           [{ 'path': "RPC/RPCEfficiency/EffEndcapPlusRoll", 'description': eff + rpclink }]
           )
 
-rpclayout(dqmitems, "25-Endcap_Negative_Efficiency_Distribution",
+rpclayout(dqmitems, "27-Endcap_Negative_Efficiency_Distribution",
           [{ 'path': "RPC/RPCEfficiency/EffEndcapMinusRoll", 'description': eff + rpclink }]
           )
 
-rpclayout(dqmitems, "26-EndCap_Negative_Efficiency",
+rpclayout(dqmitems, "28-EndCap_Negative_Efficiency",
           [{ 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Segment_Disk_-1", 'description': eff + rpclink },
            { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Segment_Disk_-2", 'description': eff + rpclink }],
 
@@ -212,7 +220,7 @@ rpclayout(dqmitems, "26-EndCap_Negative_Efficiency",
            { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Segment_Disk_-4", 'description': eff + rpclink }],
           )
 
-rpclayout(dqmitems, "26-EndCap_Positive_Efficiency",
+rpclayout(dqmitems, "29-EndCap_Positive_Efficiency",
           [{ 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Segment_Disk_1", 'description': eff + rpclink },
            { 'path': "RPC/RPCEfficiency/Efficiency_Roll_vs_Segment_Disk_2", 'description': eff + rpclink }],
 

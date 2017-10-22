@@ -75,7 +75,9 @@ case $HOST:$DOMAIN in
   # On the production machines in the CERN network, flavor is based on the
   # machine and they get an alternate user
   vocms0138:* ) FLAVOR=offline;                ALTERNATIVE_USER='cmsweb' ;;
+  vocms0738:* ) FLAVOR=offline;                ALTERNATIVE_USER='cmsweb' ;;
   vocms0139:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
+  vocms0739:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
   vocms0131:* ) FLAVOR=offline-relval-testing; ALTERNATIVE_USER='cmsweb' ;;
   # Private instances get the dev flavor, unless specified differently
   *:cern.ch )   FLAVOR=dev;;
@@ -266,7 +268,7 @@ start_agents()
     # nothing gets backed up
     srv-c2f11-29-04:*agents* )
       start_agents_dqm_test ;;
-    ##### OFFLINE: offline server vocms0138
+    ##### OFFLINE: offline servers vocms0138 (SLC6) and vocms0738 (CC7)
     # The offline server runs
     # - the standard receive and import daemons
     # - the quota and version control daemons
@@ -275,18 +277,18 @@ start_agents()
     #   online to offline
     # note that the agents to copy zip to castor, verify zip from castor and
     # copy index to castor run as tasks under acron.
-    vocms0138:*agents* )
+    vocms0138:*agents* | vocms0738:*agents* )
       start_agents_offline ;;
-    ##### OFFLINE: Relval server vocms0139
+    ##### OFFLINE: relval server vocms0139 (SLC6) and vocms0739 (CC7)
     # The Relval server runs
     # - the standard receive and import daemons
     # - the quota and version control daemons
     # - the zip and zipfreeze daemons
     # Note that the agents to copy zip to Castor, verify zip from Castor and
     # copy index to Castor run as tasks under acron.
-    vocms0139:*agents* )
+    vocms0139:*agents* | vocms0739:*agents* )
       start_agents_relval ;;
-    ##### OFFLINE: Test server vocms0131
+    ##### OFFLINE: test server vocms0131
     # This server runs 3 gui's in 3 flavors: dev, offline and relval
     # The test server runs
     # - the standard receive and import daemons
@@ -729,7 +731,7 @@ indexbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval )
+      vocms0131:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/ixbackup/$D
         ;;
       * )
@@ -768,7 +770,7 @@ zipbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval )
+      vocms0131:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )
@@ -805,7 +807,7 @@ zipbackupcheck()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval )
+      vocms0131:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )

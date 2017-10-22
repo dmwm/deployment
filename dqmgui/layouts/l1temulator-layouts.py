@@ -7,10 +7,11 @@ def l1t_quickCollection(i, name, *rows):
   i["L1TEMU/Layouts/Stage2-QuickCollection/%s" % name] = DQMItem(layout=rows)
 
 # If you add a plot here, remember to add the reference to ../workspaces-online.py
-l1t_quickCollection(dqmitems, "00 - CaloTower Data-Emulator Mismatch Status",
+l1t_quickCollection(dqmitems, "00 - CaloTower Data-Emulator Status",
   [{
-    'path': "L1TEMU/L1TdeStage2CaloLayer1/ecalOccupancy",
-    'description': "This should be empty"
+    'path': "L1TEMU/L1TdeStage2CaloLayer1/dataEmulSummary",
+    'description': "This is a fraction of events with data-emulator mismatches, should be at 1.",
+    'draw': { 'withref': "no" }
   }])
 
 
