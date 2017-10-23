@@ -50,6 +50,10 @@ server.workspace('DQMContent', 11, 'Trigger', 'L1TEMU', '^(L1TEMU|L1T2016EMU)/',
                  # Please add plots to Stage2-QuickCollection layout in layouts/l1temulator-layouts.py
                  # with a useful name and description, then reference them here
                  'L1TEMU/Layouts/Stage2-QuickCollection/00 - CaloTower Data-Emulator Status',
+                 "L1TEMU/Layouts/Stage2-QuickCollection/01 - uGMT Data-Emulator misMatch ratio",
+                 "L1TEMU/Layouts/Stage2-QuickCollection/02 - BMTF Data-Emulator misMatch ratio",
+                 "L1TEMU/Layouts/Stage2-QuickCollection/03 - OMTF Data-Emulator misMatch ratio",
+                 "L1TEMU/Layouts/Stage2-QuickCollection/04 - EMTF Data-Emulator misMatch ratio",
                 )
 
 server.workspace('DQMContent', 12, 'Trigger', 'HLT', '^HLT/', '',
