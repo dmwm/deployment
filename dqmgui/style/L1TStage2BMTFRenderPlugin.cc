@@ -12,6 +12,7 @@
 class L1TStage2BMTFRenderPlugin : public DQMRenderPlugin {
 
   int palette_kry[256];
+  int palette_yrk[256];
   TText tlabels_;
 
 public:
@@ -27,6 +28,7 @@ public:
       for(size_t i=0; i<256; ++i) {
         auto c = new TColor(rValues[i], gValues[i], bValues[i]);
         palette_kry[i] = c->GetNumber();
+        palette_yrk[255-i] = c->GetNumber();
       }
 
     }
@@ -78,7 +80,7 @@ bool checkAndRemove(std::string &s, const char * key)
     checkAndRemove(r.drawOptions,"tlabels");
 
     // Colormap setup
-    if( checkAndRemove(r.drawOptions, "DarkBodyRadiator") )
+    if( checkAndRemove(r.drawOptions, "kry") )
      {
     //  Choose trigger from hell palette
         obj->SetContour(256);
@@ -88,12 +90,15 @@ bool checkAndRemove(std::string &s, const char * key)
         obj->GetYaxis()->SetAxisColor(kWhite);
         tlabels_.SetTextColor(kWhite);
      }
-    else if( checkAndRemove(r.drawOptions, "InvertedDarkBodyRadiator") )
+    else if( checkAndRemove(r.drawOptions, "yrk") )
      {
     // Choose the Inverted Dark Body Radiator palette   
-       obj->SetContour(100);
-       gStyle->SetPalette(56);
-       tlabels_.SetTextColor(kBlack);
+       obj->SetContour(256);
+       gStyle->SetPalette(256, palette_yrk);
+       c->SetFrameFillColor(kBlack);
+       obj->GetXaxis()->SetAxisColor(kWhite);
+       obj->GetYaxis()->SetAxisColor(kWhite);
+       tlabels_.SetTextColor(kWhite);
      }
     else
      {
