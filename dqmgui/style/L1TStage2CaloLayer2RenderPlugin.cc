@@ -121,10 +121,6 @@ bool checkAndRemove(std::string &s, const char * key)
     //  Choose the Inverted Dark Body Radiator palette
         obj->SetContour(256);
         gStyle->SetPalette(256, palette_yrk);
-        c->SetFrameFillColor(kBlack);
-        obj->GetXaxis()->SetAxisColor(kWhite);
-        obj->GetYaxis()->SetAxisColor(kWhite);
-        tlabels_.SetTextColor(kWhite);
       }
      else
       {
