@@ -7,10 +7,39 @@ def l1t_quickCollection(i, name, *rows):
   i["L1TEMU/Layouts/Stage2-QuickCollection/%s" % name] = DQMItem(layout=rows)
 
 # If you add a plot here, remember to add the reference to ../workspaces-online.py
-l1t_quickCollection(dqmitems, "00 - CaloTower Data-Emulator Mismatch Status",
+l1t_quickCollection(dqmitems, "00 - CaloTower Data-Emulator Status",
   [{
-    'path': "L1TEMU/L1TdeStage2CaloLayer1/ecalOccupancy",
-    'description': "This should be empty"
+    'path': "L1TEMU/L1TdeStage2CaloLayer1/dataEmulSummary",
+    'description': "This is a fraction of events with data-emulator mismatches, should be at 1.",
+    'draw': { 'withref': "no" }
+  }])
+
+l1t_quickCollection(dqmitems,"01 - uGMT Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGMT/data_vs_emulator_comparison/mismatchRatio",
+    'description': "uGMT - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
+
+l1t_quickCollection(dqmitems,"02 - BMTF Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2BMTF/mismatchRatio",
+    'description': "BMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
+
+l1t_quickCollection(dqmitems,"03 - OMTF Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2OMTF/mismatchRatio",
+    'description': "OMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
+
+l1t_quickCollection(dqmitems,"04 - EMTF Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2EMTF/mismatchRatio",
+    'description': "EMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
   }])
 
 

@@ -13,6 +13,7 @@ class L1TStage2CaloLayer2RenderPlugin : public DQMRenderPlugin {
 
   int palette_kry[256];
   int palette_yrk[256];
+
   TText tlabels_;
 
 public:

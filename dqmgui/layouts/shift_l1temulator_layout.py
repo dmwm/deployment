@@ -11,3 +11,6 @@ l1temulayout(dqmitems,"02 - OMTF - data vs emulator misMatch ratio",
 
 l1temulayout(dqmitems,"03 - EMTF - data vs emulator misMatch ratio",
              [{'path': "L1TEMU/L1TdeStage2EMTF/mismatchRatio", 'description': "EMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
+
+l1temulayout(dqmitems,"04 - CaloLayer1 - data vs emulator misMatch ratio",
+             [{'path': "L1TEMU/L1TdeStage2CaloLayer1/dataEmulSummary", 'description': "CaloLayer1 - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])

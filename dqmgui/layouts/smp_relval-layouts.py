@@ -1,6 +1,7 @@
-###########---- SMP selection goes here: ##############
-### Made by hugo.ruben.delannoy@cern.ch, 03/23/2015 ###
-#######################################################
+###########---- SMP selection goes here: #######################
+### Made by hugo.ruben.delannoy@cern.ch, 03/23/2015          ###
+### Updated by nicolas.jacques.s.postiau@cern.ch, 10/02/2017 ###
+################################################################
 
 def smpHLTlayouts(i, p, *rows):
     i["HLT/Layouts/" + p] = DQMItem(layout=rows)
@@ -17,7 +18,7 @@ workDir = "SMP/"
 #
 ## Single Muon: W or Z sample. MUO POG
 #
-paths = ["HLT_IsoMu24_eta2p1", "HLT_IsoTkMu24_eta2p1", "HLT_IsoMu27", "HLT_IsoTkMu27", "HLT_IsoMu20", "HLT_IsoTkMu20"]
+paths = ["HLT_IsoMu24_eta2p1", "HLT_IsoMu27", "HLT_IsoMu20"]
 #The Mu20 are maybe not necessary
 
 #Instructions for the sample to use
@@ -26,36 +27,39 @@ smpHLTlayouts(dqmitems, workDir+"SingleMuon/00 - Instructions",
 
 for i, path in enumerate(paths):
     smpHLTlayouts(dqmitems, workDir+"SingleMuon/%02d - %s_gen" % (i+1, path),
-            [{'path': "HLT/Muon/Distributions/%s/genEffEta_Total" % path, 'description':""}],
-            [{'path': "HLT/Muon/Distributions/%s/genEffPhi_Total" % path, 'description':""}],
-            [{'path': "HLT/Muon/Distributions/%s/genTurnOn1_Total" % path, 'description':""}])
-    smpHLTlayouts(dqmitems, workDir+"SingleMuon/%02d - %s_reco" % (i+1, path),
-            [{'path': "HLT/Muon/Distributions/%s/recEffEta_Total" % path, 'description':""}],
-            [{'path': "HLT/Muon/Distributions/%s/recEffPhi_Total" % path, 'description':""}],
-            [{'path': "HLT/Muon/Distributions/%s/recTurnOn1_Total" % path, 'description':""}])
+            [{'path': "HLT/Muon/DistributionsGlobal/%s/efficiencyEta" % path, 'description':""}],
+            [{'path': "HLT/Muon/DistributionsGlobal/%s/efficiencyPhi" % path, 'description':""}],
+            [{'path': "HLT/Muon/DistributionsGlobal/%s/efficiencyTurnOn" % path, 'description':""}])
 
 #
 ## Single Electron: W or Z sample. EGM POG
 #
-paths = ["HLT_Ele23_WPLoose_Gsf", "HLT_Ele27_eta2p1_WPLoose_Gsf", "HLT_Ele32_eta2p1_WPLoose_Gsf"]
+paths = ["HLT_Ele35_WPTight_Gsf", "HLT_Ele38_WPTight_Gsf", "HLT_Ele40_WPTight_Gsf", "HLT_Ele35_WPTight_Gsf_L1EGMT"]
 
 #Instructions for the sample to use
 smpHLTlayouts(dqmitems, workDir+"SingleElectron/00 - Instructions",
         [{'path': "Use ZEE samples", 'description':"Instructions for the paths in this folder"}])
 
+smpHLTlayouts(dqmitems, workDir+"SingleElectron/01 - EffSummaryPaths_SingleEle_gen",
+        [{'path': "HLT/SMP/SingleEle/EffSummaryPaths_SingleEle_gen", 'description':""}])
+smpHLTlayouts(dqmitems, workDir+"SingleElectron/01 - EffSummaryPaths_SingleEle_rec",
+        [{'path': "HLT/SMP/SingleEle/EffSummaryPaths_SingleEle_rec", 'description':""}])
+
 for i, path in enumerate(paths):
-    path += "_DQM"
-    smpHLTlayouts(dqmitems, workDir+"SingleElectron/%02d - %s" % (i+1, path),
-            [{'path': "HLT/HLTEgammaValidation/%s/final_eff_vs_et" % path, 'description':""}],
-            [{'path': "HLT/HLTEgammaValidation/%s/gen_et" % path, 'description':""}],
-            [{'path': "HLT/HLTEgammaValidation/%s/final_eff_vs_eta" % path, 'description':""}],
-            [{'path': "HLT/HLTEgammaValidation/%s/gen_eta" % path, 'description':""}])
+    smpHLTlayouts(dqmitems, workDir+"SingleElectron/%02d - %s_gen" % (i+2, path),
+            [{'path': "HLT/SMP/SingleEle/Eff_genEleEta_%s" % path, 'description':""}],
+            [{'path': "HLT/SMP/SingleEle/Eff_genElePhi_%s" % path, 'description':""}],
+            [{'path': "HLT/SMP/SingleEle/Eff_genEleMaxPt1_%s" % path, 'description':""}])
+    smpHLTlayouts(dqmitems, workDir+"SingleElectron/%02d - %s_reco" % (i+2, path),
+            [{'path': "HLT/SMP/SingleEle/Eff_recEleEta_%s" % path, 'description':""}],
+            [{'path': "HLT/SMP/SingleEle/Eff_recElePhi_%s" % path, 'description':""}],
+            [{'path': "HLT/SMP/SingleEle/Eff_recEleMaxPt1_%s" % path, 'description':""}])
 
 #
 ## Double muon: Z sample. Higgs, HWW (didn't see these paths under MUO)
 #
 #not found in MUO, so we looked in HWW
-paths = ["HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ", "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ"]
+paths = ["HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ"]
 
 #Instructions for the sample to use
 smpHLTlayouts(dqmitems, workDir+"DoubleMuon/00 - Instructions",
@@ -97,7 +101,7 @@ smpHLTlayouts(dqmitems, workDir+"DoubleElectron/%s_reco" % path,
 #
 ## MuEG: TTbarLepton sample. Higgs, HWW
 #
-paths = ["HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL", "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL", "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL", "HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL"]
+paths = ["HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL", "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL"]
 
 #Instructions for the sample to use
 smpHLTlayouts(dqmitems, workDir+"MuEG/00 - Instructions",
@@ -124,22 +128,24 @@ smpHLTlayouts(dqmitems, workDir+"SinglePhoton/01 - EffSummaryPaths_SinglePhoton_
 smpHLTlayouts(dqmitems, workDir+"SinglePhoton/01 - EffSummaryPaths_SinglePhoton_rec",
         [{'path': "HLT/SMP/SinglePhoton/EffSummaryPaths_SinglePhoton_rec", 'description':""}])
 
-numbers = ["22", "30", "36", "50", "75", "90", "120"] #maybe adding 165 but then I cannot loop like this since it's different for HLT_Photon et the other one
+numbers = ["33", "50", "75", "90", "120"] #maybe adding 165 but then I cannot loop like this since it's different for HLT_Photon et the other one
 for number in numbers:
     paths = ["HLT_Photon"+number, "HLT_Photon"+number+"_R9Id90_HE10_IsoM"]
 
     for i, path in enumerate(paths):
         smpHLTlayouts(dqmitems, workDir+"SinglePhoton/%02d - %s_gen" % (i+2, path),
                 [{'path': "HLT/SMP/SinglePhoton/Eff_genPhotonEta_%s" % path, 'description':""}],
+                [{'path': "HLT/SMP/SinglePhoton/Eff_genPhotonPhi_%s" % path, 'description':""}],
                 [{'path': "HLT/SMP/SinglePhoton/Eff_genPhotonMaxPt1_%s" % path, 'description':""}])
         smpHLTlayouts(dqmitems, workDir+"SinglePhoton/%02d - %s_reco" % (i+2, path),
                 [{'path': "HLT/SMP/SinglePhoton/Eff_recPhotonEta_%s" % path, 'description':""}],
+                [{'path': "HLT/SMP/SinglePhoton/Eff_recPhotonPhi_%s" % path, 'description':""}],
                 [{'path': "HLT/SMP/SinglePhoton/Eff_recPhotonMaxPt1_%s" % path, 'description':""}])
 
 #
 ## Double Photon: Hgg sample. Higgs/Hgg
 #
-paths = ["HLT_Diphoton30_18_Solid_R9Id_AND_IsoCaloId_AND_HE_R9Id_Mass55", "HLT_Diphoton30EB_18EB_R9Id_OR_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55", "HLT_Diphoton30PV_18PV_R9Id_AND_IsoCaloId_AND_HE_R9Id_DoublePixelVeto_Mass55"]
+paths = ["HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90", "HLT_Diphoton30EB_18EB_R9Id_OR_IsoCaloId_AND_HE_R9Id_NoPixelVeto_Mass55", "HLT_Diphoton30PV_18PV_R9Id_AND_IsoCaloId_AND_HE_R9Id_PixelVeto_Mass55"]
 
 #Instructions for the sample to use
 smpHLTlayouts(dqmitems, workDir+"DoublePhoton/00 - Instructions",
@@ -147,9 +153,13 @@ smpHLTlayouts(dqmitems, workDir+"DoublePhoton/00 - Instructions",
 
 for i, path in enumerate(paths):
     smpHLTlayouts(dqmitems, workDir+"DoublePhoton/%02d - %s_gen" % (i+1, path),
+            [{'path': "HLT/Higgs/Hgg/Eff_genPhotonEta_%s" % path, 'description':""}],
+            [{'path': "HLT/Higgs/Hgg/Eff_genPhotonPhi_%s" % path, 'description':""}],
             [{'path': "HLT/Higgs/Hgg/Eff_genPhotonMaxPt1_%s" % path, 'description':""}],
             [{'path': "HLT/Higgs/Hgg/Eff_genPhotonMaxPt2_%s" % path, 'description':""}])
     smpHLTlayouts(dqmitems, workDir+"DoublePhoton/%02d - %s_reco" % (i+1, path),
+            [{'path': "HLT/Higgs/Hgg/Eff_recPhotonEta_%s" % path, 'description':""}],
+            [{'path': "HLT/Higgs/Hgg/Eff_recPhotonPhi_%s" % path, 'description':""}],
             [{'path': "HLT/Higgs/Hgg/Eff_recPhotonMaxPt1_%s" % path, 'description':""}],
             [{'path': "HLT/Higgs/Hgg/Eff_recPhotonMaxPt2_%s" % path, 'description':""}])
 

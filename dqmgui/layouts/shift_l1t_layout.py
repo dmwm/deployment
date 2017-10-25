@@ -5,9 +5,9 @@ l1tlayout(dqmitems,"00 - BMTF WEDGE BX",
 l1tlayout(dqmitems,"01 - BMTF HW PT",
     [{'path': "L1T/L1TStage2BMTF/bmtf_hwPt", 'description': "BMTF HW PT. x-axis: BMTF HW PT.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "yes" }}])
 l1tlayout(dqmitems,"02 - CaloLayer1 ECAL OCCUPANCY",
-  [{'path': "L1T/L1TStage2CaloLayer1/ecalOccupancy", 'description': "CaloLayer1 ECAL OCCUPANCY. x-axis: CaloLayer1 ECAL OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TStage2CaloLayer1/ecalOccRecdEtWgt", 'description': "CaloLayer1 ECAL Et-weighted occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"03 - CaloLayer1 HCAL OCCUPANCY",
-  [{'path': "L1T/L1TStage2CaloLayer1/hcalOccupancy", 'description': "CaloLayer1 HCAL OCCUPANCY. x-axis: CaloLayer1 HCAL OCCUPANCY.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
+  [{'path': "L1T/L1TStage2CaloLayer1/hcalOccRecdEtWgt", 'description': "CaloLayer1 HCAL Et-weighted occupancy. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"04 - CaloLayer2 CENTRAL JET E_{T} ETA PHI",
     [{'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsEtEtaPhi", 'description': "CaloLayer2 CENTRAL JET E_{T} ETA PHI. x-axis: CaloLayer2 CENTRAL JET E_{T} ETA; y-axis: CaloLayer2 CENTRAL JET E_{T} PHI.  For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftL1T\">here</a>.", 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"05 - CaloLayer2 FORWARD JET E_{T} ETA PHI",

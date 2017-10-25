@@ -1,7 +1,7 @@
 ^/auth/complete/dqm/(?:online|online-playback|online-test)(?:/|$) cmsdqm.cern.ch
 ^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
-^/auth/complete/dqm/offline(?:/|$) vocms0138.cern.ch
-^/auth/complete/dqm/relval(?:/|$) vocms0139.cern.ch
+^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
+^/auth/complete/dqm/relval(?:/|$) vocms0739.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|relval-test)(?:/|$) vocms0131.cern.ch
 ^/auth/complete/(?:aso-monitor|couchdb2)(?:/|$) vocms0141.cern.ch :affinity
 ^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0142.cern.ch :affinity

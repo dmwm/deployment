@@ -50,8 +50,8 @@ export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export STAGEDIR=$STATEDIR/stagingarea
-export DAS_CONFIG=$ROOT/config/$ME/das_cms.py
-export DAS_CONFIG_CLI=$ROOT/config/$ME/das_cms_cli.py
+export DAS_CONFIG=$ROOT/config/$ME/das.cfg
+export DAS_CONFIG_CLI=$ROOT/config/$ME/das_cli.cfg
 mkdir -p $STAGEDIR
 
 cd $STATEDIR

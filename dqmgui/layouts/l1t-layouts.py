@@ -9,13 +9,13 @@ def l1t_quickCollection(i, name, *rows):
 # If you add a plot here, remember to add the reference to ../workspaces-online.py
 l1t_quickCollection(dqmitems, "00 - Calo Layer1 ECAL Input Occupancy",
   [{
-    'path': "L1T/L1TStage2CaloLayer1/ecalOccupancy",
+    'path': "L1T/L1TStage2CaloLayer1/ecalOccRecdEtWgt",
     'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower",
     'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "01 - Calo Layer1 HCAL Input Occupancy",
   [{
-    'path': "L1T/L1TStage2CaloLayer1/hcalOccupancy",
+    'path': "L1T/L1TStage2CaloLayer1/hcalOccRecdEtWgt",
     'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower",
     'draw': { 'withref': "no" }
   }])

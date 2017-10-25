@@ -725,9 +725,11 @@ private:
         return;
       }
       else if (o.name.find("QualvsPhi")        != std::string::npos ||
-               o.name.find("QualDDUvsQualTM") != std::string::npos ||
+               o.name.find("QualDDUvsQualTM")  != std::string::npos ||
                o.name.find("PositionvsQual")   != std::string::npos ||
-               o.name.find("Flag1stvsQual")    != std::string::npos )
+               o.name.find("Flag1stvsQual")    != std::string::npos ||
+	       o.name.find("FlagUpDownvsQual") != std::string::npos )
+
       {
         obj->SetOption( "box" );
         return;

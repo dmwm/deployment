@@ -13,6 +13,7 @@ class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
 
   int palette_kry[256];
   int palette_yrk[256];
+
   TText tlabels_;
 
 public:
@@ -128,7 +129,7 @@ bool checkAndRemove(std::string &s, const char * key)
       obj->SetContour(100);
       gStyle->SetPalette(1);
       tlabels_.SetTextColor(kBlack);
-  }
+      }
 
     if (o.name.find("ugmtMuonBXvshwCharge") != std::string::npos) {
       obj->SetOption("text colz");
