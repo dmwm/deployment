@@ -16,7 +16,7 @@ main = config.section_("main")
 srv = main.section_("server")
 srv.thread_pool = 30
 main.application = "microservice"
-main.port = 8247  # main application port it listens on
+main.port = 8248  # main application port it listens on
 main.index = 'data' # Configuration requires index attribute
 
 # Security configuration
