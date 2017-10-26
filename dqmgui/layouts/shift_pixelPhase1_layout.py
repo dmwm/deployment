@@ -2,7 +2,7 @@ def shiftpixelP1layout(i, p, *rows): i["00 Shift/PixelPhase1/" + p] = DQMItem(la
 shiftpixelP1layout(dqmitems, "00 - PixelPhase1 ReportSummary: Layer or Disk vs subdet",
    [{ 'path': "PixelPhase1/EventInfo/reportSummaryMap",
       'description': "Summary results of qulity tests: Layer/Disk (y-axis) vs. Subdetectors (x-axis). See the PixelPhase1/Summary/ directory for more details.",
-      'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
+      'draw': { 'withref': "no", 'drawopts': "COLZTEXT" }}]
    )
 shiftpixelP1layout(dqmitems, "01 - PixelPhase1_Error_Summary",
    [{ 'path': "PixelPhase1/FED/nerrors_per_type_per_FED",
