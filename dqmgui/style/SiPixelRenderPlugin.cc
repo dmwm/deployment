@@ -318,6 +318,7 @@ private:
         {
            dqm::utils::reportSummaryMapPalette(obj2);
            gPad->SetGrid();
+	   obj->SetOption("colztext");
         }
 
       if( o.name.find( "PixelPhase1")!= std::string::npos && o.name.find("reportSummaryMap") != std::string::npos)
