@@ -275,18 +275,21 @@ private:
         ya->SetTitle("Number of Clusters");
         //legend = new TLegend(.34,.77,.48,.86);
         legend = new TLegend(.57,.77,.74,.86);
+	legend->SetBit(kCanDelete);
       }
     else if ( o.name.find("WRTP")!=std::string::npos )
       {
         xa->SetTitle("New Gain / Previous Gain");
         ya->SetTitle("Number of APVs");
         legend = new TLegend(.52,.77,.65,.86);
+	legend->SetBit(kCanDelete);
       }
     else if ( o.name.find("/Gains")!=std::string::npos )
       {
         xa->SetTitle("SiStrip Gain values from fit");
         ya->SetTitle("Number of APVs");
         legend = new TLegend(.52,.77,.65,.86);
+	legend->SetBit(kCanDelete);
       }
     else
       {
@@ -294,6 +297,7 @@ private:
         xa->SetTitle("Cluster Charge [ADC/mm]");
         ya->SetTitle("Number of Clusters");
         legend = new TLegend(.52,.77,.65,.86);
+	legend->SetBit(kCanDelete);
       }
 
     gPad->Update();
