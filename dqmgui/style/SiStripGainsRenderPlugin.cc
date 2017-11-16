@@ -22,6 +22,7 @@
 #include "TMath.h"
 #include "TLegend.h"
 #include "TString.h"
+#include "TLatex.h"
 #include <cassert>
 
 class SiStripGainsRenderPlugin : public DQMRenderPlugin
@@ -274,12 +275,21 @@ private:
         ya->SetTitle("Number of Clusters");
         //legend = new TLegend(.34,.77,.48,.86);
         legend = new TLegend(.57,.77,.74,.86);
+	legend->SetBit(kCanDelete);
       }
     else if ( o.name.find("WRTP")!=std::string::npos )
       {
         xa->SetTitle("New Gain / Previous Gain");
         ya->SetTitle("Number of APVs");
         legend = new TLegend(.52,.77,.65,.86);
+	legend->SetBit(kCanDelete);
+      }
+    else if ( o.name.find("/Gains")!=std::string::npos )
+      {
+        xa->SetTitle("SiStrip Gain values from fit");
+        ya->SetTitle("Number of APVs");
+        legend = new TLegend(.52,.77,.65,.86);
+	legend->SetBit(kCanDelete);
       }
     else
       {
@@ -287,6 +297,7 @@ private:
         xa->SetTitle("Cluster Charge [ADC/mm]");
         ya->SetTitle("Number of Clusters");
         legend = new TLegend(.52,.77,.65,.86);
+	legend->SetBit(kCanDelete);
       }
 
     gPad->Update();
@@ -551,6 +562,14 @@ private:
               st->SetY1NDC( .81 );
               st->SetY2NDC( .89 );
             }
+	  
+	  TLatex myt; 
+	  myt.SetTextFont(42);
+	  myt.SetTextSize(0.06);
+	  myt.SetTextColor(kBlue);
+	  myt.DrawLatexNDC(0.15,0.20, o.name.find("fit")!=std::string::npos ? "NO FIT" : "MASKED");
+	  myt.Draw();
+
         }
 
     

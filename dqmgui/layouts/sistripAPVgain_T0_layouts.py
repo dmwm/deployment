@@ -91,9 +91,13 @@ sistripAPVgainLayout(dqmitems, "04 - TEC Gain Summary",
   }])
 
 sistripAPVgainLayout(dqmitems, "05 - Missing APV Summary",
- [{ 'path': "AlCaReco/SiStripGainsHarvesting/NoMPV",
+ [{ 'path': "AlCaReco/SiStripGainsHarvesting/NoMPVfit",
     'description': "Position of non-calibrated APV ",
     'draw': { 'withref': "no" }
+  },
+  { 'path': "AlCaReco/SiStripGainsHarvesting/NoMPVmasked",
+    'description': "Position of masked APV ",
+    'draw': { 'withref': "no" },
   }])
 
 sistripAPVgainLayout(dqmitems, "06 - TIB performance Summary",
