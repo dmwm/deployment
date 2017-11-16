@@ -39,6 +39,7 @@ public:
         auto c = new TColor(rValues[i], gValues[i], bValues[i]);
         palette_kry[i] = c->GetNumber();
         palette_yrk[255-i] = c->GetNumber();
+        delete c;
       }
 
     }
