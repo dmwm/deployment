@@ -74,8 +74,8 @@ case $variant in
     ;;
   preprod|dev)
     frontends="vocms0117,vocms0127,vocms0134,vocms0135"
-    backends="vocms0117,vocms0127,vocms0132,vocms0131"
-    couches="vocms0117,vocms0127,vocms0131,vocms0132"
+    backends="vocms0117,vocms0127,vocms0132,vocms0131,vocms0731"
+    couches="vocms0117,vocms0127,vocms0731,vocms0132"
     ;;
   *)
     usage
