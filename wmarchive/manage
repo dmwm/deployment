@@ -138,28 +138,33 @@ cron()
           --idir=$AVRO_STORAGE_MIGRATE/crab --odir=$HDFS_MIGRATE/crab --check --remove \
           --verbose &> $LOGDIR/migrate2hdfs-crab.log
       ;;
-    aggregate )
+    aggregate-fwjr )
       # run hourly aggregation, results will appear in aggregated.hour MongoDB collection
+      day=0 # use aggregation of the current day
       WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="hour" WMARCHIVE_AMQ_BROKER=$STATEDIR/wma_broker.json \
       $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=hour \
           --schema $AVRO_SCHEMA_HDFS --hdir=$HDFS_MIGRATE/fwjr \
-          --use_myspark &> $LOGDIR/aggregate_perf_hour.log
+          --use_myspark &> $LOGDIR/agg-hour-fwjr.log
       # run daily aggregation, results will appear in aggregated.day MongoDB collection
       WMARCHIVE_PERF_DB="aggregated" WMARCHIVE_PERF_COLL="day" \
       $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=day \
           --schema $AVRO_SCHEMA_HDFS --hdir=$HDFS_MIGRATE/fwjr \
-          --use_myspark &> $LOGDIR/aggregate_perf_day.log
+          --use_myspark &> $LOGDIR/agg-day-fwjr.log
+      ;;
+    aggregate-crab )
       # CRAB aggregation
       # run hourly aggregation, results will appear in aggregated.hour MongoDB collection
+      day=0 # use aggregation of the current day
+      day=1 # use aggregation of the previous day since crab injection is slow
       WMARCHIVE_PERF_DB="crab" WMARCHIVE_PERF_COLL="hour" WMARCHIVE_AMQ_BROKER=$STATEDIR/wma_broker.json \
-      $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=hour \
+      $WMARCHIVE_ROOT/bin/aggregate_performance $day --precision=hour \
           --schema $AVRO_SCHEMA_HDFS --hdir=$HDFS_MIGRATE/crab \
-          --use_myspark &> $LOGDIR/aggregate_perf_hour_crab.log
+          --use_myspark &> $LOGDIR/agg-hour-crab.log
       # run daily aggregation, results will appear in aggregated.day MongoDB collection
       WMARCHIVE_PERF_DB="crab" WMARCHIVE_PERF_COLL="day" \
-      $WMARCHIVE_ROOT/bin/aggregate_performance 0 --precision=day \
+      $WMARCHIVE_ROOT/bin/aggregate_performance $day --precision=day \
           --schema $AVRO_SCHEMA_HDFS --hdir=$HDFS_MIGRATE/crab \
-          --use_myspark &> $LOGDIR/aggregate_perf_day_crab.log
+          --use_myspark &> $LOGDIR/agg-day-crab.log
       ;;
     cleanup )
       $WMARCHIVE_ROOT/bin/clean_performance --interval=3m &> $LOGDIR/cleanup.log
