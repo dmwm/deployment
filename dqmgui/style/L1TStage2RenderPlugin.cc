@@ -106,11 +106,11 @@ private:
       std::string name = o.name.substr(o.name.rfind("/")+1);
 
       // for object comparison histograms (muons)
-      if (name.find("muColl1hwPt") != std::string::npos) {
+      if (name.find("muHwPtColl1") != std::string::npos) {
         gPad->SetLogy(1);
       }
 
-      if (name.find("muColl2hwPt") != std::string::npos) {
+      if (name.find("muHwPtColl2") != std::string::npos) {
         gPad->SetLogy(1);
       }
 
