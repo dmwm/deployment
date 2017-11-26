@@ -46,7 +46,7 @@ export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export WMCORE_ROOT=$REQMGR2MS_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
 export WMCORE_CACHE_DIR=$STATEDIR
-export UNIFIED_CONFIG_JSON=$CFGFILE
+export UNIFIED_CONFIG_JSON=$CFGDIR/unifiedConfiguration.json
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
   export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
   export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
@@ -64,7 +64,7 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
 }
 
 
