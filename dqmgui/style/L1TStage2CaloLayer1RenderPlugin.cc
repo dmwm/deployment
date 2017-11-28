@@ -22,6 +22,7 @@ class L1T2016Layer1RenderPlugin : public DQMRenderPlugin
   TLine * correlation_;
   TText tlabels_;
   int palette_kry[256];
+  int palette_yrk[256];
 
 public:
   virtual void initialise(int, char **)
@@ -49,6 +50,8 @@ public:
       for(size_t i=0; i<256; ++i) {
         auto c = new TColor(rValues[i], gValues[i], bValues[i]);
         palette_kry[i] = c->GetNumber();
+        palette_yrk[255-i] = c->GetNumber();
+        delete c;
       }
 
     }
@@ -149,7 +152,7 @@ private:
       checkAndRemove(r.drawOptions, "tlabels");
 
       // Colormap setup
-      if( checkAndRemove(r.drawOptions, "hottower") )
+      if( checkAndRemove(r.drawOptions, "hottower") || checkAndRemove(r.drawOptions, "kry"))
       {
         // Choose hot tower palette
         obj->SetContour(256);
@@ -158,6 +161,12 @@ private:
         obj->GetXaxis()->SetAxisColor(kWhite);
         obj->GetYaxis()->SetAxisColor(kWhite);
         tlabels_.SetTextColor(kWhite);
+      }
+      else if( checkAndRemove(r.drawOptions, "yrk") )
+      {
+        // Choose the Inverted Dark Body Radiator palette
+        obj->SetContour(256);
+        gStyle->SetPalette(256, palette_yrk);
       }
       else
       {
