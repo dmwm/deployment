@@ -43,7 +43,7 @@ deploy_acdcserver_post()
 
   (mkcrontab;
    case $variant:$host in
-     prod:vocms0140 | preprod:vocms0731 | dev:vocms0117 | dev:vocms0127 | default:* )
+     prod:vocms0140 | preprod:vocms0131 | dev:vocms0117 | dev:vocms0127 | default:* )
        echo "${cleanup}" ;;
      * ) ;;
    esac) | crontab -

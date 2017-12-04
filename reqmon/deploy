@@ -42,7 +42,7 @@ deploy_reqmon_sw()
 
 deploy_reqmon_post()
 {
-  case $host in vocms013[189] | vocms073[89] ) disable;;  * ) enable;; esac
+  case $host in vocms013[89] | vocms073[89] ) disable;;  * ) enable;; esac
 
   # Tell couch to push the reqmon app on the next restart
   for couch in couchdb:5984; do
