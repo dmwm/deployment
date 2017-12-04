@@ -35,7 +35,7 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 CFGFILE=$CFGDIR/ms_config.py
-AUTHDIR=$TOP/current/auth/reqmgr2
+AUTHDIR=$TOP/current/auth/reqmgr2ms
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
@@ -47,6 +47,8 @@ export WMCORE_ROOT=$REQMGR2MS_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
 export WMCORE_CACHE_DIR=$STATEDIR
 export UNIFIED_CONFIG_JSON=$CFGDIR/unifiedConfiguration.json
+export UNIFIED_CAMPAIGNS=$CFGDIR/campaigns.json
+export UNIFIED_CAMPAIGNS_RELVAL=$CFGDIR/campaigns.relval.json
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
   export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
   export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem
@@ -64,6 +66,8 @@ sysboot()
 start()
 {
   echo "starting $ME"
+  echo "X509_USER_CERT=$X509_USER_CERT"
+  echo "X509_USER_KEY=$X509_USER_KEY"
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
 }
 
