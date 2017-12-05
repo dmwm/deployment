@@ -20,16 +20,16 @@ pixellayout(dqmitems, "00c - PixelPhase1_Error_Summary",
       'draw': { 'withref': "no" }}]
    )
 
-pixellayout(dqmitems, "01a - PixelPhase1_Event_Rate",
-  [{ 'path': "PixelPhase1/Phase1_MechanicalView/eventrate_per_BX",
-     'description': "Event rate per bunch crossing",
-     'draw': { 'withref': "no" }}]
-  )
-pixellayout(dqmitems, "01b - PixelPhase1_ClusterEvent_Rate",
-  [{ 'path': "PixelPhase1/Phase1_MechanicalView/clustereventrate_per_BX",
-     'description': "Cluster event rate per bunch crossing",
-     'draw': { 'withref': "no" }}]
-  )
+#pixellayout(dqmitems, "01a - PixelPhase1_Event_Rate",
+#  [{ 'path': "PixelPhase1/Phase1_MechanicalView/eventrate_per_BX",
+#     'description': "Event rate per bunch crossing",
+#     'draw': { 'withref': "no" }}]
+#  )
+#pixellayout(dqmitems, "01b - PixelPhase1_ClusterEvent_Rate",
+#  [{ 'path': "PixelPhase1/Phase1_MechanicalView/clustereventrate_per_BX",
+#     'description': "Cluster event rate per bunch crossing",
+#     'draw': { 'withref': "no" }}]
+#  )
 pixellayout(dqmitems, "01c - PixelPhase1 Cluster Size vs Cluster Eta",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/sizeyvseta_PXBarrel",
       'description': "Cluster size along the beamline in pixel length (y-axis) vs the cluster eta position in eta (x-axis)",
@@ -398,61 +398,61 @@ pixellayout(dqmitems, "23 - PixelPhase1 Cluster Occupancy: Ladder vs Module barr
 
 pixellayout(dqmitems, "24 - PixelPhase1 Cluster Position: Z vs Phi barrel summary",
    [{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_1",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 1 of pixel endcap",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 1 of barrel",
      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_2",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 2 of pixel endcap",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 2 of barrel",
      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    [{'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_3",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 3 of pixel endcap",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 3 of barrel",
      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     {'path': "PixelPhase1/Phase1_MechanicalView/PXBarrel/clusterposition_zphi_PXLayer_4",
-     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 4 of pixel endcap",
+     'description': "Cluster position in global coordinates by Global Phi (y-axis) vs Global Z (x-axis) in layer 4 of barrel",
      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "25 - PixelPhase1 Charge: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "25 - PixelPhase1 Charge: BladePanel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
-      'description': "Profile of cluster charge per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
+      'description': "Profile of cluster charge per event by signed blade panel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/charge_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_2",
-      'description': "Profile of cluster charge per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endap",
+      'description': "Profile of cluster charge per event by signed blade panel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "26 - PixelPhase1 ADC: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "26 - PixelPhase1 ADC: BladePanel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
-      'description': "Profile of raw charge for all digis by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
+      'description': "Profile of raw charge for all digis by signed blade panel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/adc_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_2",
-      'description': "Profile of raw charge for all digis by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
+      'description': "Profile of raw charge for all digis by signed blade panel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
     )  
 
-pixellayout(dqmitems, "27 - PixelPhase1 Digis: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "27 - PixelPhase1 Digis: BladePanel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_per_PXDisk_per_SignedBladePanel_PXRing_1",
-      'description': "Profile of number of digis per event and detId by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
+      'description': "Profile of number of digis per event and detId by signed blade panel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_digis_per_PXDisk_per_SignedBladePanel_PXRing_2",
-      'description': "Profile of number of digis per event and detId by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
+      'description': "Profile of number of digis per event and detId by signed blade panel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "28 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "28 - PixelPhase1 Clusters: BladePanel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_per_PXDisk_per_SignedBladePanel_PXRing_1",
-      'description': "Profile of number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
+      'description': "Profile of number of clusters per event by signed blade panel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/num_clusters_per_PXDisk_per_SignedBladePanel_PXRing_2",
-      'description': "Profile of number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
+      'description': "Profile of number of clusters per event by signed blade panel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "29 - PixelPhase1 Cluster Occupancy: BladePannel vs Disk endcap summary",
+pixellayout(dqmitems, "29 - PixelPhase1 Cluster Occupancy: BladePanel vs Disk endcap summary",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusters_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
-      'description': "Number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
+      'description': "Number of clusters per event by signed blade panel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusters_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_2",
-      'description': "Number of clusters per event by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
+      'description': "Number of clusters per event by signed blade panel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
@@ -475,4 +475,19 @@ pixellayout(dqmitems, "30 - PixelPhase1 Cluster Position: X vs Y endcap summary"
     {'path': "PixelPhase1/Phase1_MechanicalView/PXForward/clusterposition_xy_PXDisk_-3",
      'description': "Cluster position in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
      'draw': { 'withref': "no", 'drawopts': "COLZ" }}], 
+   )
+
+pixellayout(dqmitems, "31 - PixelPhase1 Dead ROC Trends in barrel",
+   [{'path': "PixelPhase1/deadRocTrendLayer_1",
+     'description': "Dead ROCs per lumisections in layer 1 of barrel",
+     'draw': { 'withref': "no"}},
+    {'path': "PixelPhase1/deadRocTrendLayer_2",
+     'description': "Dead ROCs per lumisections in layer 2 of barrel",
+     'draw': { 'withref': "no"}}],
+   [{'path': "PixelPhase1/deadRocTrendLayer_3",
+     'description': "Dead ROCs per lumisections in layer 3 of barrel",
+     'draw': { 'withref': "no"}},
+    {'path': "PixelPhase1/deadRocTrendLayer_4",
+     'description': "Dead ROCs per lumisections in layer 4 of barrel",
+     'draw': { 'withref': "no"}}],
    )

@@ -44,7 +44,10 @@ server.workspace('DQMContent', 13, 'Trigger', 'HLT', '^HLT/', '')
 
 server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', '',
                   'PixelPhase1/Layouts/000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet',
+                  'PixelPhase1/Layouts/00a - PixelPhase1 FED Occupancy vs Lumi Block',
+                  'PixelPhase1/Layouts/00b - PixelPhase1_Error_Summary',
                   'PixelPhase1/Layouts/01a - PixelPhase1_Event_Rate',
+                  'PixelPhase1/Layouts/01b - PixelPhase1 DeadROC Summary',
                   'PixelPhase1/Layouts/01c - PixelPhase1 Cluster Size vs Cluster Eta',
                   'PixelPhase1/Layouts/02 - PixelPhase1_Digi_ADC_Barrel',
                   'PixelPhase1/Layouts/03 - PixelPhase1_Digi_ADC_Endcap',
@@ -59,11 +62,13 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/29 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary',
                   'PixelPhase1/Layouts/31 - ntracks',
                   'PixelPhase1/Layouts/32 - Charge and size',
-                  'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
+                  'PixelPhase1/Layouts/33a - Cluster on track charge per Inner Ladders',
+                  'PixelPhase1/Layouts/33b - Cluster on track charge per Outer Ladders',  
+                  #'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
                   'PixelPhase1/Layouts/34 -  Ontrack PXLayer',
-                  'PixelPhase1/Layouts/35 - Ontrack Disk', 
+                  'PixelPhase1/Layouts/35 - Ontrack Disk',
+                  'PixelPhase1/Layouts/38 - ClusterSize Vs Eta (OnTrack) in PXBarrel', 
                 )
-
 
 server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
                  'Pixel/Layouts/00b - Pixel_Error_Summary',
