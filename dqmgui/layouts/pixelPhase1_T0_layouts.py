@@ -588,30 +588,30 @@ pixellayout(dqmitems, "35 - Ontrack Disk",
   'draw': { 'withref': "no"}}],
   )
 
-#pixellayout(dqmitems, "36 - Hit Efficiency Barrel",
-#  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
-#     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
-#     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
-#     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
-#        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
-#        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
-#  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
-#     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
-#     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
-#     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
-#        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
-#        'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
-#  )
+pixellayout(dqmitems, "36 - Hit Efficiency Barrel",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
+     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
+        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
+     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
+        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
 
-#pixellayout(dqmitems, "37 - Hit Efficiency Forward",
-#   [{'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_1",
-#     'description': "hitefficiency_per_PXDisk_per_SignedBl",
-#     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-#    {'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_2",
-#     'description': "hitefficiency_per_PXDisk_per_SignedB2",
-#     'draw': { 'withref': "no", 'drawopts': "COLZ" }}
-#    ]
-#   )
+pixellayout(dqmitems, "37 - Hit Efficiency Forward",
+   [{'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_1",
+     'description': "hitefficiency_per_PXDisk_per_SignedBl",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_2",
+     'description': "hitefficiency_per_PXDisk_per_SignedB2",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }}
+    ]
+   )
 
 pixellayout(dqmitems, "38 - ClusterSize Vs Eta (OnTrack) in PXBarrel",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_PXLayer_1",
