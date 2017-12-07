@@ -108,6 +108,7 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/28 - PixelPhase1 Clusters: BladePanel vs Disk endcap summary',
                   'PixelPhase1/Layouts/30 - PixelPhase1 Cluster Position: X vs Y endcap summary',
                   'PixelPhase1/Layouts/31 - PixelPhase1 Dead ROC Trends in barrel',
+                  'PixelPhase1/Layouts/32 - PixelPhase1 Dead ROC Trends in endcap',
                 )
 
 server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^(SiStrip|Tracking)/', '',

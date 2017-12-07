@@ -491,3 +491,12 @@ pixellayout(dqmitems, "31 - PixelPhase1 Dead ROC Trends in barrel",
      'description': "Dead ROCs per lumisections in layer 4 of barrel",
      'draw': { 'withref': "no"}}],
    )
+
+pixellayout(dqmitems, "32 - PixelPhase1 Dead ROC Trends in endcap",
+   [{'path': "PixelPhase1/deadRocTrendRing_1",
+     'description': "Dead ROCs per lumisections in ring 1 of endcap",
+     'draw': { 'withref': "no"}},
+    {'path': "PixelPhase1/deadRocTrendRing_2",
+     'description': "Dead ROCs per lumisections in ring 2 of endcap",
+     'draw': { 'withref': "no"}}],
+   )
