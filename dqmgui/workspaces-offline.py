@@ -85,11 +85,11 @@ server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
 server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^SiStrip/', '',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
                  'SiStrip/Layouts/01 - FED-Detected Errors Summary',
-                 'SiStrip/Layouts/02 - FED-Detected Errors',
+                #'SiStrip/Layouts/02 - FED-Detected Errors',
                  'SiStrip/Layouts/03 - # of Cluster Trend',
                  'SiStrip/Layouts/04 - OnTrackCluster (StoN)',
                  'SiStrip/Layouts/05 - OffTrackCluster (Total Number)',
-                 'SiStrip/Layouts/06 - FED Errors vs FED ID',
+                 'SiStrip/Layouts/06a - FED Errors vs FED ID',
                 )
 
 # Calorimeter workspaces:
