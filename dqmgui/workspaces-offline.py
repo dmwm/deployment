@@ -67,7 +67,9 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   #'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
                   'PixelPhase1/Layouts/34 -  Ontrack PXLayer',
                   'PixelPhase1/Layouts/35 - Ontrack Disk',
-                  'PixelPhase1/Layouts/38 - ClusterSize Vs Eta (OnTrack) in PXBarrel', 
+                  'PixelPhase1/Layouts/38 - PixelPhase1 Residuals',
+                  'PixelPhase1/Layouts/39a - ClusterSize Vs Eta (OnTrack) inner',
+                  'PixelPhase1/Layouts/39b - ClusterSize Vs Eta (OnTrack) outer',
                 )
 
 server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
