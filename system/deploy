@@ -463,7 +463,8 @@ deploy_system_post()
 
       # CC7 Packages.
       [[ $arch =~ ^slc7 ]] && sudo yum install -y voms-clients-cpp libXft-devel libXext-devel \
-                                                  mesa-libGLU-devel perl-Switch perl-Env perl-Thread-Queue libaio
+                                                  mesa-libGLU-devel perl-Switch perl-Env perl-Thread-Queue libaio \
+                                                  libXcursor libXrandr libXi libXinerama
 
       # Install myproxy and voms tools.
       sudo yum -y install myproxy wlcg-voms-cms voms-clients3
