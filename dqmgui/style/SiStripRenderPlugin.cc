@@ -39,6 +39,9 @@ public:
       if( o.name.find( "/ReadoutView/" ) != std::string::npos )
         return true;
 
+      if( o.name.find( "/ControlView/" ) != std::string::npos )
+        return true;
+
       if( o.name.find( "/TrackParameters/" ) != std::string::npos )
         return true;
 
@@ -200,7 +203,7 @@ private:
       }
 
 
-	  if( o.name.find( "TrackEtaPhi" )  != std::string::npos)
+	 if( o.name.find( "TrackEtaPhi" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
@@ -208,8 +211,16 @@ private:
         obj->SetOption("colz");
 	return;
       }
-		
-	  if( o.name.find( "SeedPhiVsEta" )  != std::string::npos)
+	
+	 if( o.name.find( "ControlView" )  != std::string::npos) 
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        return;
+      }
+	
+	 if( o.name.find( "PhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
@@ -217,12 +228,12 @@ private:
 	return;
       }
 
-	if( o.name.find( "TrackCandPhiVsEta" )  != std::string::npos)
+	 if( o.name.find( "PtVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
-	return;
+        return;
       }
 
       if( o.name.find( "SeedsVsClusters" )  != std::string::npos)
@@ -447,15 +458,23 @@ private:
         return;
       }
 
-      if( o.name.find( "VsPhiVsEtaPerTrack" )  != std::string::npos)
+       if( o.name.find( "PhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
-      return;
-    }
+        return;
+      }
+        
+         if( o.name.find( "PtVsEta" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        return;
+      }
 
-	if( o.name.find( "fedErrorsVsIdVsLumi" )  != std::string::npos){
+      if( o.name.find( "fedErrorsVsIdVsLumi" )  != std::string::npos){
 		obj->SetStats( kFALSE );
         	gStyle->SetPalette(1,0);
 		obj->SetOption("colz");
