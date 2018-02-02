@@ -134,7 +134,7 @@ shiftsistriplayout(dqmitems, "04f - TEC- Residual",
      'description': "Hit Residual in TEC- Wheel #9"}])
 shiftsistriplayout(dqmitems, "05 Strip Clusters Vs Pixel Clusters",
  [{ 'path': "SiStrip/MechanicalView/StripClusVsPixClus",
-     'description': "Total number of clusters in Strip versuls the total number of clusters in Pixels", 'draw': { 'withref': "no" }}])
+     'description': "Total number of clusters in Strip versus the total number of clusters in Pixels", 'draw': { 'withref': "no" }}])
 shiftsistriplayout(dqmitems, "06 DeltaBx_vs_ApvCycle",
  [{ 'path': "SiStrip/MechanicalView/DeltaBx_vs_ApvCycle",
-     'description': "This plot is to be chacked only for cosmic runs with a number of LS>100, the red rectangles should be empty, if not please inform tracker experts", 'draw': { 'withref': "no" }}])
+     'description': "This plot is to be checked only for cosmic runs with a number of LS>100, the red rectangles should be empty, if not please inform tracker experts", 'draw': { 'withref': "no" }}])
