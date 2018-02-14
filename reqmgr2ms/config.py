@@ -8,6 +8,7 @@ from WMCore.Configuration import Configuration
 
 # globals
 HOST = socket.gethostname().lower()
+BASE_URL = "@@BASE_URL@@"
 LOG_REPORTER = "reqmgr2-ms"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
@@ -35,10 +36,11 @@ app.title = "CMS MicroService"
 views = config.section_("views")
 # web UI interface
 ui = views.section_('web') # was section 'ui'
-ui.object = 'WMCore.Services.MicroService.FrontPage.FrontPage'
+ui.object = 'WMCore.MicroService.WebGui.FrontPage.FrontPage'
 ui.static = ROOTDIR
 
 # REST interface
 data = views.section_('data')
-data.object = 'WMCore.Services.MicroService.RestApi.RestInterface'
-data.manager = 'WMCore.Services.MicroService.Unified.Transferor.UnifiedTransferorManager'
+data.object = 'WMCore.MicroService.Service.RestApiHub.RestApiHub'
+data.manager = 'WMCore.MicroService.Unified.Transferor.UnifiedTransferorManager'
+data.reqmgr2_url = "%s/reqmgr2" % BASE_URL

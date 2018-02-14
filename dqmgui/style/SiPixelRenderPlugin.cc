@@ -48,13 +48,15 @@ public:
       c->cd();
 
       if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object) || dynamic_cast<TH1*>(o.object) ) && 
-	  (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos || o.name.find("Trend")!= std::string::npos))
+	  (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos || o.name.find("RocTrend")!= std::string::npos))
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
         int min_x = (int) obj->FindFirstBinAbove(0.001);
         int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-        if( o.name.find("Lumisection")!=std::string::npos ){
+        if( o.name.find("Lumisection")!=std::string::npos){
           obj->GetXaxis()->SetRange(min_x, max_x+5);
+	} else if(o.name.find("RocTrend")!= std::string::npos){
+	  obj->GetXaxis()->SetRange(min_x, max_x+1);	
         } else {
           obj->GetXaxis()->SetTitle("Lumisection (#times10)");
           obj->GetXaxis()->SetRange(min_x, max_x+1);

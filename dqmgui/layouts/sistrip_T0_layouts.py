@@ -337,5 +337,7 @@ sistriplayout(dqmitems, "27 - APVe Timing",
      'description': "Timing difference FE - TIB"},
    { 'path': "SiStrip/ReadoutView/FE/APVe/FETimeDiffTOB",
      'description': "Timing difference FE - TOB"}])
-
+sistriplayout(dqmitems, "28 Strip Clusters Vs Pixel Clusters",
+ [{ 'path': "SiStrip/MechanicalView/StripClusVsPixClus",
+     'description': "Total number of clusters in Strip versus the total number of clusters in Pixels", 'draw': { 'withref': "no" }}])
 #  LocalWords:  TotalNumberOfClusterProfile
