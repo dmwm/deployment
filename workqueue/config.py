@@ -81,7 +81,7 @@ def setWorkQueueCommonConfig(config):
     config.reqMgrConfig['log_reporter'] = LOG_REPORTER
 
 # Production instance of globalworkqueue, must be a production back-end
-if HOST.startswith("vocms0140") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     extentions = config.section_("extensions")
     reqmgrInteraction = extentions.section_("reqmgrInteraction")
     reqmgrInteraction.object = "WMCore.GlobalWorkQueue.CherryPyThreads.ReqMgrInteractionTask.ReqMgrInteractionTask"
