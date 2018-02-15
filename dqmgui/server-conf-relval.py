@@ -43,7 +43,7 @@ elif hostname == 'vocms0739':
   server.serviceName = 'RelVal'
   server.baseUrl     = '/dqm/relval'
 # Relval test server
-elif hostname == 'vocms0131':
+elif hostname == 'vocms0731':
   server.serviceName = 'RelVal Test'
   server.baseUrl     = '/dqm/relval-test'
 # Any local instance of the relval flavor

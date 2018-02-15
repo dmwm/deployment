@@ -78,7 +78,7 @@ case $HOST:$DOMAIN in
   vocms0738:* ) FLAVOR=offline;                ALTERNATIVE_USER='cmsweb' ;;
   vocms0139:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
   vocms0739:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
-  vocms0131:* ) FLAVOR=offline-relval-testing; ALTERNATIVE_USER='cmsweb' ;;
+  vocms0731:* ) FLAVOR=offline-relval-testing; ALTERNATIVE_USER='cmsweb' ;;
   # Private instances get the dev flavor, unless specified differently
   *:cern.ch )   FLAVOR=dev;;
 esac
@@ -298,7 +298,7 @@ start_agents()
     # - the acron tasks that do the backups to Castor
     # We also keep a local backup of the index (rsynced by the import
     # daemon).
-    vocms0131:*agents* )
+    vocms0731:*agents* )
       start_agents_offline_relval_test ;;
     ##### PRIVATE or DEVELOPMENT instances
     # The private or development servers run
@@ -731,7 +731,7 @@ indexbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
+      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/ixbackup/$D
         ;;
       * )
@@ -741,7 +741,7 @@ indexbackup()
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0131:offline | vocms0131:relval )
+      vocms0731:offline | vocms0731:relval )
 	;;
       * )
         DQM_DATA=$STATEDIR/$D
@@ -770,7 +770,7 @@ zipbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
+      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )
@@ -780,7 +780,7 @@ zipbackup()
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0131:offline | vocms0131:relval )
+      vocms0731:offline | vocms0731:relval )
 	;;
       * )
         DQM_DATA=$STATEDIR/$D
@@ -807,7 +807,7 @@ zipbackupcheck()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
+      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )
@@ -817,7 +817,7 @@ zipbackupcheck()
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0131:offline | vocms0131:relval )
+      vocms0731:offline | vocms0731:relval )
 	;;
       * )
         DQM_DATA=$STATEDIR/$D
