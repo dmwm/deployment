@@ -29,7 +29,7 @@ elif hostname == 'vocms0738':
   server.serviceName = 'Offline'
   server.baseUrl     = '/dqm/offline'
 # Relval test server
-elif hostname == 'vocms0131':
+elif hostname == 'vocms0731':
   server.serviceName = 'Offline Test'
   server.baseUrl     = '/dqm/offline-test'
 # Any local instance of the relval flavor

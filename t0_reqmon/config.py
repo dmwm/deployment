@@ -69,7 +69,7 @@ dataCacheTasks.dataCacheUpdateDuration = 60 * 5 # every 5 min
 dataCacheTasks.log_file = '%s/logs/t0_reqmon/dataCacheTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
 
 # Production/testbed instance of logdb, must be a production/testbed back-end
-if HOST.startswith("vocms0140") or HOST.startswith("vocms0131") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0140") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     
     # LogDB task (update and clean up)
     logDBTasks = extentions.section_("logDBTasks")

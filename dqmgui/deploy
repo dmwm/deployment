@@ -67,7 +67,7 @@ deploy_dqmgui_post()
       ) | acrontab
       ;;
     # SLC6 dev machine - One day this should become CC7
-    vocms0131:/data/srv )
+    vocms0731:/data/srv )
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
        # backup of the index
