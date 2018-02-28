@@ -157,7 +157,7 @@ l1t_quickCollection(dqmitems, "24 - Isolated Tau Pt distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-1t_quickCollection(dqmitems, "25 - Non-Isolated Tau Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "25 - Non-Isolated Tau Bx Occupancy distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausBxOcc",
     'description': "",
