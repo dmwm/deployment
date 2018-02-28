@@ -103,7 +103,7 @@ l1t_quickCollection(dqmitems, "15 - Forward Jet Pt distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-1t_quickCollection(dqmitems, "16 - Isolated EG Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "16 - Isolated EG Bx Occupancy distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsBxOcc",
     'description': "",
@@ -121,7 +121,7 @@ l1t_quickCollection(dqmitems, "18 - Isolated EG Pt distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-1t_quickCollection(dqmitems, "19 - Non-Isolated EG Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "19 - Non-Isolated EG Bx Occupancy distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsBxOcc",
     'description': "",
@@ -139,7 +139,7 @@ l1t_quickCollection(dqmitems, "21 - Non-Isolated EG Pt distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-1t_quickCollection(dqmitems, "22 - Isolated Tau Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "22 - Isolated Tau Bx Occupancy distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausBxOcc",
     'description': "",
@@ -156,6 +156,7 @@ l1t_quickCollection(dqmitems, "24 - Isolated Tau Pt distribution",
     'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausRank",
     'description': "",
     'draw': { 'withref': "no" }
+  }])
 1t_quickCollection(dqmitems, "25 - Non-Isolated Tau Bx Occupancy distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausBxOcc",
