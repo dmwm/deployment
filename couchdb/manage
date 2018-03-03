@@ -260,7 +260,9 @@ backup()
   local hostdir=$1
   [ -n "$hostdir" ] ||
     { echo "You must specify a destination [user@]host:path."; exit 9; }
-  ionice -c3 rsync --delete --delete-excluded --exclude "*.compact*" -au -e 'ssh -c arcfour' $STATEDIR/database/ $hostdir/ ||
+  #ionice -c3 rsync --delete --delete-excluded --exclude "*.compact*" -au -e 'ssh -c arcfour' $STATEDIR/database/ $hostdir/ ||
+   ionice -c3 rsync --delete --delete-excluded --exclude "*.compact*" -au -e 'ssh -c aes128-ctr' $STATEDIR/database/ $hostdir/ ||
+
     { echo "failed to synchronise databases to $hostdir: $?" 1>&2; exit 11; }
 }
 
