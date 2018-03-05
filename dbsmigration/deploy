@@ -25,7 +25,7 @@ deploy_dbsmigration_sw()
 deploy_dbsmigration_post()
 {
   case $host in
-    vocms013[89] |vocms073[89] | vocms014[0123] | vocms0307 | vocms0318 )
+    vocms013[89] |vocms073[89] | vocms0143 | vocms074[012] | vocms0307 | vocms0318 )
       disable
       ;;
     * )

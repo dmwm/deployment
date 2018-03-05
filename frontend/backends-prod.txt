@@ -3,12 +3,12 @@
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0739.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|relval-test)(?:/|$) vocms0731.cern.ch
-^/auth/complete/(?:aso-monitor|couchdb2)(?:/|$) vocms0141.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0142.cern.ch :affinity
-^/auth/complete/(?:c?)(?:couchdb|workqueue|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0140.cern.ch :affinity
-^/auth/complete/das(?:/|$) vocms0141.cern.ch|vocms0142.cern.ch :affinity
-^/auth/complete/crabcache(?:/|$) vocms0141.cern.ch
-^/auth/complete/confdb(?:/|$) vocms0141.cern.ch|vocms0142.cern.ch :affinity
+^/auth/complete/(?:aso-monitor|couchdb2)(?:/|$) vocms0741.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/(?:c?)(?:couchdb|workqueue|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0740.cern.ch :affinity
+^/auth/complete/das(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
+^/auth/complete/crabcache(?:/|$) vocms0741.cern.ch
+^/auth/complete/confdb(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/wmarchive(?:/|$) vocms0182.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
