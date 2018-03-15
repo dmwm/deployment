@@ -12,9 +12,13 @@ from os import path
 HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
 DBS_INS = "@@DBS_INS@@"
+USER_AMQ = "@@USER_AMQ@@"
+PASS_AMQ = "@@PASS_AMQ@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
-LOG_REPORTER = "reqmgr"
+LOG_REPORTER = "reqmgr2"
+AMQ_TOPIC = '/topic/cms.jobmon.wmagent'
+AMQ_HOST_PORT = [('dashb-mb.cern.ch', 61113)]
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 config = Configuration()
@@ -62,7 +66,7 @@ data.couch_wmdatamining_db = "wmdatamining"
 data.couch_acdc_db = "acdcserver"
 data.couch_workqueue_db = "workqueue"
 data.central_logdb_url = LOG_DB_URL
-data.log_reporter = "request_manager"
+data.log_reporter = LOG_REPORTER
 
 # number of past days since when to display requests in the default view
 data.default_view_requests_since_num_days = 30 # days
@@ -168,9 +172,16 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor = extentions.section_("heartbeatMonitor")
     heartbeatMonitor.object = "WMCore.ReqMgr.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
     heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    heartbeatMonitor.wmstatsSvc_url = "%s/wmstatsserver" % BASE_URL
     heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
     heartbeatMonitor.log_file = '%s/logs/reqmgr2/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
+    # AMQ MonIT settings
+    heartbeatMonitor.post_to_amq = True if HOST.startswith("vocms0136") else False  # only production nodes!
+    heartbeatMonitor.user_amq = USER_AMQ
+    heartbeatMonitor.pass_amq = PASS_AMQ
+    heartbeatMonitor.topic_amq = AMQ_TOPIC
+    heartbeatMonitor.host_port_amq = AMQ_HOST_PORT
     #list all the thread need to be monitored
     heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]
