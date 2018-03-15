@@ -124,7 +124,8 @@ system_groups_and_accounts()
             T:100047:_t0_reqmon T:100048:_reqmgr2     T:100049:_acdcserver   \
             T:100050:_gitweb    T:100051:_bigcouch    T:100052:_victorweb    \
             T:100053:_popdbweb  T:100054:_dcafpilot   T:100055:_confdb       \
-            T:100056:_wmarchive T:100057:_phedexreplicamonitoring; do
+            T:100056:_wmarchive T:100057:_phedexreplicamonitoring            \
+            T:1000058:_reqmgr2ms; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -169,6 +170,7 @@ system_groups_and_accounts()
   add_local_user 100055 _confdb      ,_config "ConfDB App"
   add_local_user 100056 _wmarchive   ,_config "WMArchive App"
   add_local_user 100057 _phedexreplicamonitoring  ,_config "PhedexReplicaMonitoring App"
+  add_local_user 1000058 _reqmgr2ms    ,_config "ReqMgr2 MicroService App"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below
@@ -236,7 +238,13 @@ system_install_hostcert()
          cd $tmp
          note "WARNING: requesting now a new grid host certificate via gridca.cern.ch"
          note "WARNING: it will use your kerberos credentials for the Single Sign On."
-         openssl req -new -subj $cn -out $req -nodes -sha512 -newkey rsa:2048 -keyout hostkey.pem
+         # 2017.09.19 To be able to use automatic host cert request, openssl config has to be modified.
+         cp /etc/pki/tls/openssl.cnf /tmp/openssl.cnf
+         sed -i "s+# req_extensions = v3_req+req_extensions = v3_req+" /tmp/openssl.cnf
+         sed -i '/\[ v3_req \]/a subjectAltName = @alt_names' /tmp/openssl.cnf
+         echo -e "\n[alt_names]\nDNS.1 = $(hostname -f)" >> /tmp/openssl.cnf
+         openssl req -new -subj $cn -out $req -nodes -sha512 -newkey rsa:2048 -keyout hostkey.pem -config /tmp/openssl.cnf
+         rm -f /tmp/openssl.cnf
          $project_config_src/careq-cern-ch $req hostcert.pem 1>&11 2>&22
          chmod 400 $req hostkey.pem
          chmod 644 hostcert.pem
@@ -371,7 +379,7 @@ deploy_system_post()
 
           note "IMPORTANT: run the following to update /root/.ssh/known_hosts"
           note "   sudo cfg/admin/ImageKey start"
-          note "   for h in vocms0{306,307,318,12{6,7,8},13{1,2,4,5,6,8,9},14{0,1,2,3},16{0,1,2,3,4,5}}{,.cern.ch}; do"
+          note "   for h in vocms0{306,307,318,12{6,7,8},13{2,4,5,6,8,9},143,74{0,1,2},16{0,1,2,3,4,5},73{1,8,9}}{,.cern.ch}; do"
           note "     echo \$h; sudo cfg/admin/ImageKey run ssh cmsweb@\$h uptime"
           note "   done"
           note "   sudo cfg/admin/ImageKey stop"
@@ -434,16 +442,6 @@ deploy_system_post()
       sudo wget -q -O /etc/yum.repos.d/egi-trustanchors.repo \
         http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
 
-      # EMI Grid middleware
-      case $arch in
-        slc5*) sudo rpm -ivh --force \
-                 http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
-               ;;
-        slc6* ) sudo rpm -ivh --force \
-              http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm      
-            ;;
-      esac
-
       # WLCG specific (needed for getting the cms voms config files)
       sudo wget -q -O /etc/yum.repos.d/wlcg.sl6.repo \
         http://linuxsoft.cern.ch/wlcg/wlcg-sl6.repo
@@ -461,7 +459,8 @@ deploy_system_post()
 
       # CC7 Packages.
       [[ $arch =~ ^slc7 ]] && sudo yum install -y voms-clients-cpp libXft-devel libXext-devel \
-                                                  mesa-libGLU-devel perl-Switch perl-Env perl-Thread-Queue libaio
+                                                  mesa-libGLU-devel perl-Switch perl-Env perl-Thread-Queue libaio \
+                                                  libXcursor libXrandr libXi libXinerama
 
       # Install myproxy and voms tools.
       sudo yum -y install myproxy wlcg-voms-cms voms-clients3

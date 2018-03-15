@@ -337,17 +337,17 @@ init_mysql_db_post(){
     local SQLUSER="CREATE USER '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASS}';"
     local SQLGRANT="GRANT ALL ON *.* TO $MYSQL_USER@localhost WITH GRANT OPTION;"
 
-    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "$SQLUSER"
-    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "$SQLGRANT"
+    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "$SQLUSER"
+    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "$SQLGRANT"
 
     # create databases for agent, wq
     if [ $USING_AG -eq 1 ]; then
         echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
-        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_AG}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
     fi
     if [ $USING_WQ -eq 1 ]; then
         echo "Installing WorkQueue Database: ${MYSQL_DATABASE_WQ}"
-        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_WQ}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_WQ}"
     fi
 }
 
@@ -419,7 +419,7 @@ start_mysql(){
         init_mysql_db_post;
     fi
     echo "Checking Server connection..."
-    mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "SHOW GLOBAL STATUS" > /dev/null;
+    mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "SHOW GLOBAL STATUS" > /dev/null;
     if [ $? -ne 0 ]; then
 	echo "ERROR: checking mysql database is running, failed to execute SHOW GLOBAL STATUS"
 	exit 1
@@ -769,8 +769,8 @@ clean_agent(){
         rm -f $INSTALL_WQ/.init
 
 	if [ "x$MYSQL_USER" != "x" ]; then
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "drop database ${MYSQL_DATABASE_WQ}"
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_WQ}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "drop database ${MYSQL_DATABASE_WQ}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_WQ}"
 	fi
     fi
     if [ $USING_AG -eq 1 ]; then
@@ -780,8 +780,8 @@ clean_agent(){
         rm -f $INSTALL_AG/.init
 
 	if [ "x$MYSQL_USER" != "x" ]; then
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "drop database ${MYSQL_DATABASE_AG}"
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --exec "create database ${MYSQL_DATABASE_AG}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "drop database ${MYSQL_DATABASE_AG}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
 	fi
     fi
 }

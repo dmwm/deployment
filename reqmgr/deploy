@@ -63,7 +63,7 @@ deploy_reqmgr_sw()
 
 deploy_reqmgr_post()
 {
-  case $host in vocms013[89] ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] | vocms073[89] ) disable ;; * ) enable ;; esac
 
   case $variant in
     offsite )
@@ -84,7 +84,7 @@ deploy_reqmgr_post()
       (mkcrontab
        sysboot
        case $variant:$host in
-         prod:vocms0140 | preprod:vocms0131 | dev:vocms0127 | dev:vocms0126 | default:* )
+         prod:vocms0740 | preprod:vocms0731 | dev:vocms0127 | dev:vocms0126 | default:* )
            local cmd="$project_config/manage updateversions 'I did read documentation'"
            $nogroups || cmd="sudo -H -u _reqmgr bashs -l -c \"${cmd}\""
            echo "58 * * * * $cmd" ;;

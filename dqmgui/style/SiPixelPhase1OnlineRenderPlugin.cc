@@ -56,8 +56,7 @@ class SiPixelPhase1OnlineRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if( ( o.name.find( "PixelPhase1Timing/" )     != std::string::npos ||
-            o.name.find( "TrackTimingPixelPhase1/") != std::string::npos )
+      if( ( o.name.find( "PixelPhase1" ) != std::string::npos)
             && o.object && o.name.find("OnlineBlock") != std::string::npos ){
         return true;
       } else {
@@ -115,14 +114,17 @@ public:
         }
 
         // suppress single-bin distributions for non-zero-suppressed NDigis etc.
-        if (nonzerobins <= 1) continue;
+        if (nonzerobins <= 1) {
+	  delete h;
+	  continue;
+	}
         h->Scale(ref/entries);
 
         n_color++;
         if (n_color == 10) n_color = 15; // skip low saturation stuff in between.
 
         h->SetLineColor(n_color);
-        h->Draw("SAME");
+	h->Draw("SAME");
         // i is bins, so 1 is 1st block = 0 to blocksize-1
         leg->AddEntry(h,(std::to_string((i-1)*blocksize) + "-" + std::to_string((i*blocksize)-1)).c_str(),"l");
         max = std::max(max, h->GetMaximum());

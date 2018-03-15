@@ -75,8 +75,10 @@ case $HOST:$DOMAIN in
   # On the production machines in the CERN network, flavor is based on the
   # machine and they get an alternate user
   vocms0138:* ) FLAVOR=offline;                ALTERNATIVE_USER='cmsweb' ;;
+  vocms0738:* ) FLAVOR=offline;                ALTERNATIVE_USER='cmsweb' ;;
   vocms0139:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
-  vocms0131:* ) FLAVOR=offline-relval-testing; ALTERNATIVE_USER='cmsweb' ;;
+  vocms0739:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
+  vocms0731:* ) FLAVOR=offline-relval-testing; ALTERNATIVE_USER='cmsweb' ;;
   # Private instances get the dev flavor, unless specified differently
   *:cern.ch )   FLAVOR=dev;;
 esac
@@ -266,7 +268,7 @@ start_agents()
     # nothing gets backed up
     srv-c2f11-29-04:*agents* )
       start_agents_dqm_test ;;
-    ##### OFFLINE: offline server vocms0138
+    ##### OFFLINE: offline servers vocms0138 (SLC6) and vocms0738 (CC7)
     # The offline server runs
     # - the standard receive and import daemons
     # - the quota and version control daemons
@@ -275,18 +277,18 @@ start_agents()
     #   online to offline
     # note that the agents to copy zip to castor, verify zip from castor and
     # copy index to castor run as tasks under acron.
-    vocms0138:*agents* )
+    vocms0138:*agents* | vocms0738:*agents* )
       start_agents_offline ;;
-    ##### OFFLINE: Relval server vocms0139
+    ##### OFFLINE: relval server vocms0139 (SLC6) and vocms0739 (CC7)
     # The Relval server runs
     # - the standard receive and import daemons
     # - the quota and version control daemons
     # - the zip and zipfreeze daemons
     # Note that the agents to copy zip to Castor, verify zip from Castor and
     # copy index to Castor run as tasks under acron.
-    vocms0139:*agents* )
+    vocms0139:*agents* | vocms0739:*agents* )
       start_agents_relval ;;
-    ##### OFFLINE: Test server vocms0131
+    ##### OFFLINE: test server vocms0131
     # This server runs 3 gui's in 3 flavors: dev, offline and relval
     # The test server runs
     # - the standard receive and import daemons
@@ -296,7 +298,7 @@ start_agents()
     # - the acron tasks that do the backups to Castor
     # We also keep a local backup of the index (rsynced by the import
     # daemon).
-    vocms0131:*agents* )
+    vocms0731:*agents* )
       start_agents_offline_relval_test ;;
     ##### PRIVATE or DEVELOPMENT instances
     # The private or development servers run
@@ -327,7 +329,7 @@ start_agents_dqm_prod_local()
     $DQM_DATA/repository/original \
     $STATEDIR/online/ix128 \
     --rsync \
-    --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch
+    --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
 
   startagent $D/agent-sound \
     visDQMSoundAlarmDaemon \
@@ -404,7 +406,7 @@ start_agents_offline()
       --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
       --rsync \
       --rsyncnext $DQM_DATA/agents/ixstageout \
-      --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch
+      --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
 
     startagent $D/agent-qcontrol \
       visDQMRootFileQuotaControlDaemon \
@@ -469,7 +471,7 @@ start_agents_relval()
       --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
       --rsync \
       --rsyncnext $DQM_DATA/agents/ixstageout \
-      --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch
+      --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
 
     startagent $D/agent-qcontrol \
       visDQMRootFileQuotaControlDaemon \
@@ -522,7 +524,7 @@ start_agents_offline_relval_test()
         --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
         --rsync \
         --rsyncnext $DQM_DATA/agents/ixstageout \
-        --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch
+        --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
       # We do the rsync, but only for the dev instance, it's propagated to the
       # agent dropbox to be backed up on Castor
     else
@@ -539,7 +541,7 @@ start_agents_offline_relval_test()
         $DQM_DATA/ix128 \
         --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
         --rsync \
-        --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch
+        --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
     fi
 
     startagent $D/agent-qcontrol \
@@ -729,7 +731,7 @@ indexbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval )
+      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/ixbackup/$D
         ;;
       * )
@@ -739,7 +741,7 @@ indexbackup()
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0131:offline | vocms0131:relval )
+      vocms0731:offline | vocms0731:relval )
 	;;
       * )
         DQM_DATA=$STATEDIR/$D
@@ -751,7 +753,7 @@ indexbackup()
           $DQM_DATA/agents/ixstageout \
           $DQM_DATA/ix128 \
           $CASTORDIR \
-          broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch \
+          broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch \
           --fullbackup 50 \
           </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
       esac
@@ -768,7 +770,7 @@ zipbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval )
+      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )
@@ -778,7 +780,7 @@ zipbackup()
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0131:offline | vocms0131:relval )
+      vocms0731:offline | vocms0731:relval )
 	;;
       * )
         DQM_DATA=$STATEDIR/$D
@@ -805,7 +807,7 @@ zipbackupcheck()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0131:dev | vocms0138:offline | vocms0139:relval )
+      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
         CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
         ;;
       * )
@@ -815,7 +817,7 @@ zipbackupcheck()
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0131:offline | vocms0131:relval )
+      vocms0731:offline | vocms0731:relval )
 	;;
       * )
         DQM_DATA=$STATEDIR/$D
@@ -825,7 +827,7 @@ zipbackupcheck()
         # It is supposed to be started from/by acrontab.
         visDQMZipCastorVerifier \
           $DQM_DATA/agents/verify \
-          broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch \
+          broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch \
           $DQM_DATA/zipped \
           $CASTORDIR \
           24 \

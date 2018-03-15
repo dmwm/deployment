@@ -399,23 +399,23 @@ ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/04 Basic Cluster Energy EE +',
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC energy projection eta EE +', 'description': 'Projection of the mean energy of the basic clusters.'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC energy projection phi EE +', 'description': 'Projection of the mean energy of the basic clusters.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/05 Basic Cluster Size EB',
-	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size map', 'description': '2D distribution of the mean size (number of crystals) of the basic clusters.'}],
-	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size projection eta', 'description': 'Projection of the mean size (number of crystals) of the basic clusters.'},
-	    {'path': 'EcalBarrel/EBClusterTask/EBCLT BC size projection phi', 'description': 'Projection of the mean size (number of crystals) of the basic clusters.'}])
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size map', 'description': '2D distribution of the mean number of crystals in basic clusters.'}],
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size projection eta', 'description': 'Eta-projection of the number of crystals in basic clusters.'},
+	    {'path': 'EcalBarrel/EBClusterTask/EBCLT BC size projection phi', 'description': 'Phi-projection of the number of crystals in basic clusters.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/06 Basic Cluster Size EE -',
-	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size map EE -', 'description': '2D distribution of the mean size (number of crystals) of the basic clusters.'}],
-	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection eta EE -', 'description': 'Projection of the mean size (number of crystals) of the basic clusters.'},
-	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection phi EE -', 'description': 'Projection of the mean size (number of crystals) of the basic clusters.'}])
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size map EE -', 'description': '2D distribution of the mean number of crystals in basic clusters.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection eta EE -', 'description': 'Eta-rojection of the number of crystals in basic clusters.'},
+	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection phi EE -', 'description': 'Phi-projection of the number of crystals in basic clusters.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/07 Basic Cluster Size EE +',
-	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size map EE +', 'description': '2D distribution of the mean size (number of crystals) of the basic clusters.'}],
-	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection eta EE +', 'description': 'Projection of the mean size (number of crystals) of the basic clusters.'},
-	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection phi EE +', 'description': 'Projection of the mean size (number of crystals) of the basic clusters.'}])
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size map EE +', 'description': '2D distribution of the mean number of crystals in basic clusters.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection eta EE +', 'description': 'Eta-projection of the number of crystals in basic clusters.'},
+	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection phi EE +', 'description': 'Phi-projection of the number of crystals in basic clusters.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/08 Basic Cluster Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC energy', 'description': 'Basic cluster energy distribution.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC energy', 'description': 'Basic cluster energy distribution.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/09 Basic Cluster Size',
-	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size', 'description': 'Distribution of the basic cluster size (number of crystals).'}],
-	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size', 'description': 'Distribution of the basic cluster size (number of crystals).'}])
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size', 'description': 'Distribution of the number of crystals in basic clusters.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size', 'description': 'Distribution of the number of crystals in basic clusters.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/10 Basic Cluster Size Trend',
 	   [{'path': 'Ecal/Trends/ClusterTask EB size of basic clusters', 'description': 'Trend of the mean size of the basic clusters.'}],
 	   [{'path': 'Ecal/Trends/ClusterTask EE size of basic clusters', 'description': 'Trend of the mean size of the basic clusters.'}])
@@ -499,9 +499,7 @@ ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/10 Amplitude Correlation, BX+1',
 	   [{'path': 'EcalEndcap/EETimingTask/EETMT in-time vs BX+1 amplitude EE -', 'description': 'Correlation between in-time amplitude and BX+1 out-of-time amplitude. Only events with kGood reconstruction flag set, energy above ( EB:1, EE:3 ) GeV, and chi2 less than ( EB:16, EE:50 ) are used.'},
 	    {'path': 'EcalEndcap/EETimingTask/EETMT in-time vs BX+1 amplitude EE +', 'description': 'Correlation between in-time amplitude and BX+1 out-of-time amplitude. Only events with kGood reconstruction flag set, energy above ( EB:1, EE:3 ) GeV, and chi2 less than ( EB:16, EE:50 ) are used.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/11 Timing vs BX',
-	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT Timing vs BX', 'description': 'Average hit timing in the partition as a function of BX number.'}],
-	   [{'path': 'EcalEndcap/EETimingTask/EETMT Timing vs BX EE -', 'description': 'Average hit timing in the partition as a function of BX number.'},
-	    {'path': 'EcalEndcap/EETimingTask/EETMT Timing vs BX EE +', 'description': 'Average hit timing in the partition as a function of BX number.'}])
+	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT Timing vs BX', 'description': 'Average hit timing in EB as a function of BX number. Only events with energy above 2.02 GeV and chi2 less than 16 are used.'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE

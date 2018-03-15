@@ -35,12 +35,15 @@ server.logFile     = '%s/weblog-%%Y%%m%%d.log' % LOGDIR
 server.title       = 'CMS data quality'
 # For convenience, we change the service name, depending on the server:
 hostname = socket.gethostname().lower().split('.')[0]
-# Relval production server
+# Relval production servers
 if hostname == 'vocms0139':
   server.serviceName = 'RelVal'
   server.baseUrl     = '/dqm/relval'
+elif hostname == 'vocms0739':
+  server.serviceName = 'RelVal'
+  server.baseUrl     = '/dqm/relval'
 # Relval test server
-elif hostname == 'vocms0131':
+elif hostname == 'vocms0731':
   server.serviceName = 'RelVal Test'
   server.baseUrl     = '/dqm/relval-test'
 # Any local instance of the relval flavor

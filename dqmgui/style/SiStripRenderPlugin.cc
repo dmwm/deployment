@@ -39,6 +39,9 @@ public:
       if( o.name.find( "/ReadoutView/" ) != std::string::npos )
         return true;
 
+      if( o.name.find( "/ControlView/" ) != std::string::npos )
+        return true;
+
       if( o.name.find( "/TrackParameters/" ) != std::string::npos )
         return true;
 
@@ -200,7 +203,7 @@ private:
       }
 
 
-	  if( o.name.find( "TrackEtaPhi" )  != std::string::npos)
+	 if( o.name.find( "TrackEtaPhi" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
@@ -208,8 +211,16 @@ private:
         obj->SetOption("colz");
 	return;
       }
-		
-	  if( o.name.find( "SeedPhiVsEta" )  != std::string::npos)
+	
+	 if( o.name.find( "ControlView" )  != std::string::npos) 
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        return;
+      }
+	
+	 if( o.name.find( "PhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
@@ -217,12 +228,12 @@ private:
 	return;
       }
 
-	if( o.name.find( "TrackCandPhiVsEta" )  != std::string::npos)
+	 if( o.name.find( "PtVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
-	return;
+        return;
       }
 
       if( o.name.find( "SeedsVsClusters" )  != std::string::npos)
@@ -447,13 +458,28 @@ private:
         return;
       }
 
-      if( o.name.find( "VsPhiVsEtaPerTrack" )  != std::string::npos)
+       if( o.name.find( "PhiVsEta" )  != std::string::npos)
       {
         obj->SetStats( kFALSE );
         gStyle->SetPalette(1,0);
         obj->SetOption("colz");
-      return;
-    }
+        return;
+      }
+        
+         if( o.name.find( "PtVsEta" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        return;
+      }
+
+      if( o.name.find( "fedErrorsVsIdVsLumi" )  != std::string::npos){
+		obj->SetStats( kFALSE );
+        	gStyle->SetPalette(1,0);
+		obj->SetOption("colz");
+		return;
+	}
 
 	  if( o.name.find( "StripClusVsBXandOrbit" ) != std::string::npos)
       {
@@ -462,6 +488,37 @@ private:
         obj->SetOption("colz");
 	return;
       }
+
+	if( o.name.find( "NumberOfClusterPerLayerTrendVar" ) != std::string::npos)
+	{
+		if (((TString)obj->GetTitle()).Contains( "TIB" )) {
+			obj->GetYaxis()->SetRangeUser(1,4);
+		} else if (((TString)obj->GetTitle()).Contains( "TOB" ) ) {
+			obj->GetYaxis()->SetRangeUser(1,6);
+		} else if (((TString)obj->GetTitle()).Contains( "TEC" ) ) {
+			obj->GetYaxis()->SetRangeUser(1,9);
+		} else if (((TString)obj->GetTitle()).Contains( "TID" )) {
+			obj->GetYaxis()->SetRangeUser(1,3);
+		}
+		obj->SetStats( kFALSE );
+		gStyle->SetPalette(1,0);
+		obj->SetOption("colz");
+	}
+
+	if( o.name.find("NumberOfClusterPerRingVsTrendVar") != std::string::npos){
+		obj->SetStats( kFALSE );
+		gStyle->SetPalette(1,0);
+		obj->SetOption("colz");
+		if (((TString)obj->GetTitle()).Contains( "TID" )) {
+			obj->GetYaxis()->SetRangeUser(1,3);
+		}
+		if (((TString)obj->GetTitle()).Contains( "TEC" )) {
+			if (((TString)obj->GetTitle()).Contains( "wheel__1" ) or ((TString)obj->GetTitle()).Contains( "wheel__2" ) or ((TString)obj->GetTitle()).Contains( "wheel__3" )) obj->GetYaxis()->SetRangeUser(1,7);
+			if (((TString)obj->GetTitle()).Contains( "wheel__4" ) or ((TString)obj->GetTitle()).Contains( "wheel__5" ) or ((TString)obj->GetTitle()).Contains( "wheel__6" )) obj->GetYaxis()->SetRangeUser(2,7);
+			if (((TString)obj->GetTitle()).Contains( "wheel__7" ) or ((TString)obj->GetTitle()).Contains( "wheel__8" ) ) obj->GetYaxis()->SetRangeUser(3,7);
+			if (((TString)obj->GetTitle()).Contains( "wheel__9" ) ) obj->GetYaxis()->SetRangeUser(4,7);
+		}
+	}
 
       return;
     }
@@ -617,9 +674,26 @@ private:
 
   void postDrawTH1F( TCanvas *, const VisDQMObject &o )
   {
+    TH1F* obj = dynamic_cast<TH1F*>( o.object );
+    assert( obj );
+
+    TLine tl2;
+    tl2.SetLineColor(922); // 15?
+    tl2.SetLineWidth(2);
+    tl2.SetLineStyle(7);
+
+    TLine tl3;
+    tl3.SetLineColor(922); // 15?
+    tl3.SetLineWidth(1);
+    tl3.SetLineStyle(7);
 
     TText tt;
     tt.SetTextSize(0.12);
+    
+    TText tt2;
+    tt2.SetTextSize(0.04);
+    tt2.SetTextColor(15);
+    
     if (o.flags == 0) return;
     else
       {
@@ -639,6 +713,21 @@ private:
 	    tt.DrawTextNDC(0.5, 0.5, "Other ");
 	  }
       }
+      
+      if( o.name.find( "/ReadoutView/FE/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/FED/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/Fiber/VsId/" ) != std::string::npos || o.name.find( "/ReadoutView/DataPresent" ) != std::string::npos )
+    {
+      float plot_ymax = 1.049*(obj->GetMaximum());
+      if ( plot_ymax == 0 ) plot_ymax = 1.049;
+      tl3.DrawLine(134.0, 0., 134.0, plot_ymax);
+      tl2.DrawLine(164.0, 0., 164.0, plot_ymax);
+      tl2.DrawLine(260.0, 0., 260.0, plot_ymax);
+      tl2.DrawLine(356.0, 0., 356.0, plot_ymax);
+
+      tt2.DrawTextNDC(0.18, 0.91, "TIB/D");
+      tt2.DrawTextNDC(0.38, 0.91, "TEC-");
+      tt2.DrawTextNDC(0.55, 0.91, "TEC+");
+      tt2.DrawTextNDC(0.72, 0.91, "TOB");
+    }
 
   }
 
@@ -663,9 +752,14 @@ private:
       float mask2_ymax = 458.5;
 
       TLine tl2;
-      tl2.SetLineColor(921); // 15?
+      tl2.SetLineColor(922); // 15?
       tl2.SetLineWidth(2);
       tl2.SetLineStyle(7);
+      
+      TLine tl3;
+      tl3.SetLineColor(922); // 15?
+      tl3.SetLineWidth(1);
+      tl3.SetLineStyle(7);
 
       TText tt;
       tt.SetTextSize(0.12);
@@ -738,15 +832,16 @@ private:
         }
         return;
       }
-      if( o.name.find( "FEDErrorsVsId" )  != std::string::npos)
+      if( o.name.find( "FEDErrorsVsId" )  != std::string::npos || o.name.find( "ApvIdVsFedId" )  != std::string::npos )
 	    {
         float err_ymin = obj->GetYaxis()->GetXmin();
         float err_ymax = obj->GetYaxis()->GetXmax();
+        tl3.DrawLine(134.0, err_ymin, 134.0, err_ymax);
         tl2.DrawLine(164.0, err_ymin, 164.0, err_ymax);
         tl2.DrawLine(260.0, err_ymin, 260.0, err_ymax);
         tl2.DrawLine(356.0, err_ymin, 356.0, err_ymax);
 
-        tt2.DrawTextNDC(0.28, 0.92, "TIB");
+        tt2.DrawTextNDC(0.27, 0.92, "TIB/D");
         tt2.DrawTextNDC(0.43, 0.92, "TEC-");
         tt2.DrawTextNDC(0.58, 0.92, "TEC+");
         tt2.DrawTextNDC(0.77, 0.92, "TOB");
@@ -767,6 +862,20 @@ private:
     TLine tl2;
     tl2.SetLineColor(4);
     tl2.SetLineWidth(3);
+    
+    TLine tl3;
+    tl3.SetLineColor(922); // 15?
+    tl3.SetLineWidth(2);
+    tl3.SetLineStyle(7);
+
+    TLine tl4;
+    tl4.SetLineColor(922); // 15?
+    tl4.SetLineWidth(1);
+    tl4.SetLineStyle(7);
+
+    TText tt;
+    tt.SetTextSize(0.04);
+    tt.SetTextColor(15);
 
     float xmin = 0.0;
     float xmax = obj->GetXaxis()->GetXmax();
@@ -870,6 +979,21 @@ private:
         }
         return;
       }
+    
+    if( o.name.find( "/ReadoutView/FedEventSize" ) != std::string::npos )
+    {
+      float plot_ymax = 1.049*(obj->GetMaximum()+2*sqrt(obj->GetMaximum()));
+      if ( plot_ymax == 0 ) plot_ymax = 1.049;
+      tl4.DrawLine(134.0, -0.05, 134.0, plot_ymax);
+      tl3.DrawLine(164.0, -0.05, 164.0, plot_ymax);
+      tl3.DrawLine(260.0, -0.05, 260.0, plot_ymax);
+      tl3.DrawLine(356.0, -0.05, 356.0, plot_ymax);
+
+      tt.DrawTextNDC(0.18, 0.91, "TIB/D");
+      tt.DrawTextNDC(0.38, 0.91, "TEC-");
+      tt.DrawTextNDC(0.55, 0.91, "TEC+");
+      tt.DrawTextNDC(0.72, 0.91, "TOB");
+    }
   }
 
 };
