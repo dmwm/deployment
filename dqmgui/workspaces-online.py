@@ -247,6 +247,7 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 
 
 
+
 server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
 #                  'GEM/Layouts/00 eta',
 #                  'GEM/Layouts/01 phi',
@@ -254,6 +255,12 @@ server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
 #                  'GEM/Layouts/03 VFAT vs ClusterSize',
 #                  'GEM/Layouts/04 FiredStrips',
 #                  'GEM/Layouts/05 DigiStrips', 
+                 'GEM/Layouts/00 StatusDigi GDcount',
+                 'GEM/Layouts/01 StatusDigi VFAT Error all',
+                 'GEM/Layouts/02 GEMINI01la1',
+)
+"""
+                 
                  'GEM/Layouts/00 eta',
                  'GEM/Layouts/01 phi',
                  'GEM/Layouts/2 recHit per VFAT 671088640_la_1',
@@ -297,6 +304,7 @@ server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
                  'GEM/Layouts/40 FiredStrips 671096064_la_2',
                  'GEM/Layouts/41 DigiStrips 671096064_la_2',
 )
+"""
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
