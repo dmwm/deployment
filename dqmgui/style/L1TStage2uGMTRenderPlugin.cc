@@ -2,7 +2,7 @@
 #include <string>
 
 #include "DQM/DQMRenderPlugin.h"
-
+#include "TText.h"
 #include "TCanvas.h"
 #include "TColor.h"
 #include "TH1F.h"
@@ -12,6 +12,9 @@
 class L1TStage2uGMTRenderPlugin : public DQMRenderPlugin {
 
   int palette_kry[256];
+  int palette_yrk[256];
+
+  TText tlabels_;
 
 public:
 
@@ -26,6 +29,7 @@ public:
       for(size_t i=0; i<256; ++i) {
         auto c = new TColor(rValues[i], gValues[i], bValues[i]);
         palette_kry[i] = c->GetNumber();
+        palette_yrk[255-i] = c->GetNumber();
       }
 
     }
@@ -37,11 +41,11 @@ public:
     return false;
   }
 
-  virtual void preDraw(TCanvas* c, const VisDQMObject& o, const VisDQMImgInfo&, VisDQMRenderInfo&) {
-    if (dynamic_cast<TH1F*>(o.object)) {
+ virtual void preDraw(TCanvas* c, const VisDQMObject& o, const VisDQMImgInfo&, VisDQMRenderInfo& r) { 
+ if (dynamic_cast<TH1F*>(o.object)) {
       preDrawTH1F(c, o);
     } else if (dynamic_cast<TH2F*>(o.object)) {
-      preDrawTH2F(c, o);
+      preDrawTH2F(c, o, r);
     }
   }
 
@@ -54,6 +58,16 @@ public:
   }
 
  private:
+
+bool checkAndRemove(std::string &s, const char * key)
+  {
+    if( s.find(key) != std::string::npos )
+    {
+      s.replace(s.find(key), strlen(key), "");
+      return true;
+    }
+    return false;
+  }
 
   void preDrawTH1F(TCanvas*, const VisDQMObject& o) {
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
@@ -80,12 +94,38 @@ public:
     }
   }
 
-  void preDrawTH2F(TCanvas*, const VisDQMObject& o) {
-    TH2F* obj = dynamic_cast<TH2F*>(o.object);
+  void preDrawTH2F(TCanvas* c, const VisDQMObject& o, VisDQMRenderInfo &r) {   
+  TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
 
     obj->SetOption("colz");
-    //gStyle->SetPalette(kDarkBodyRadiator);
+
+    checkAndRemove(r.drawOptions,"tlabels");
+
+    //Colormap setup
+    if( checkAndRemove(r.drawOptions, "kry") )
+      {
+     // Choose trigger from hell palette
+        obj->SetContour(256);
+        gStyle->SetPalette(256, palette_kry);
+        c->SetFrameFillColor(kBlack);
+        obj->GetXaxis()->SetAxisColor(kWhite);
+        obj->GetYaxis()->SetAxisColor(kWhite);
+        tlabels_.SetTextColor(kWhite);
+      }
+    else if( checkAndRemove(r.drawOptions, "yrk") )
+      {
+     // Choose the Inverted Dark Body Radiator palette
+        obj->SetContour(256);
+        gStyle->SetPalette(256, palette_yrk);
+      }
+    else
+      {
+   // Set up default palette
+      obj->SetContour(100);
+      gStyle->SetPalette(1);
+      tlabels_.SetTextColor(kBlack);
+      }
 
     if (o.name.find("ugmtMuonBXvshwCharge") != std::string::npos) {
       obj->SetOption("text colz");
@@ -99,9 +139,8 @@ public:
       obj->SetOption("text colz");
     }
 
-    gStyle->SetPalette(256, palette_kry);
-
-  }
+ 
+    }
 
   void postDrawTH1F(TCanvas*, const VisDQMObject&) {}
 

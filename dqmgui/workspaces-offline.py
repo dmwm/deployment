@@ -44,7 +44,10 @@ server.workspace('DQMContent', 13, 'Trigger', 'HLT', '^HLT/', '')
 
 server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', '',
                   'PixelPhase1/Layouts/000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet',
+                  'PixelPhase1/Layouts/00a - PixelPhase1 FED Occupancy vs Lumi Block',
+                  'PixelPhase1/Layouts/00b - PixelPhase1_Error_Summary',
                   'PixelPhase1/Layouts/01a - PixelPhase1_Event_Rate',
+                  'PixelPhase1/Layouts/01b - PixelPhase1 DeadROC Summary',
                   'PixelPhase1/Layouts/01c - PixelPhase1 Cluster Size vs Cluster Eta',
                   'PixelPhase1/Layouts/02 - PixelPhase1_Digi_ADC_Barrel',
                   'PixelPhase1/Layouts/03 - PixelPhase1_Digi_ADC_Endcap',
@@ -55,15 +58,19 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   #'PixelPhase1/Layouts/20 - PixelPhase1 Cluster Position: X vs Y endcap summary',
                   'PixelPhase1/Layouts/21 - PixelPhase1 Digis: Ladder vs Module barrel summary',
                   'PixelPhase1/Layouts/22 - PixelPhase1 Clusters: Ladder vs Module barrel summary',
-                  'PixelPhase1/Layouts/28 - PixelPhase1 Digis: BladePannel vs Disk endcap summary',
-                  'PixelPhase1/Layouts/29 - PixelPhase1 Clusters: BladePannel vs Disk endcap summary',
+                  'PixelPhase1/Layouts/28 - PixelPhase1 Digis: BladePanel vs Disk endcap summary',
+                  'PixelPhase1/Layouts/29 - PixelPhase1 Clusters: BladePanel vs Disk endcap summary',
                   'PixelPhase1/Layouts/31 - ntracks',
                   'PixelPhase1/Layouts/32 - Charge and size',
-                  'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
+                  'PixelPhase1/Layouts/33a - Cluster on track charge per Inner Ladders',
+                  'PixelPhase1/Layouts/33b - Cluster on track charge per Outer Ladders',  
+                  #'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
                   'PixelPhase1/Layouts/34 -  Ontrack PXLayer',
-                  'PixelPhase1/Layouts/35 - Ontrack Disk', 
+                  'PixelPhase1/Layouts/35 - Ontrack Disk',
+                  'PixelPhase1/Layouts/38 - PixelPhase1 Residuals',
+                  'PixelPhase1/Layouts/39a - ClusterSize Vs Eta (OnTrack) inner',
+                  'PixelPhase1/Layouts/39b - ClusterSize Vs Eta (OnTrack) outer',
                 )
-
 
 server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
                  'Pixel/Layouts/00b - Pixel_Error_Summary',
@@ -80,11 +87,11 @@ server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
 server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^SiStrip/', '',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
                  'SiStrip/Layouts/01 - FED-Detected Errors Summary',
-                 'SiStrip/Layouts/02 - FED-Detected Errors',
+                #'SiStrip/Layouts/02 - FED-Detected Errors',
                  'SiStrip/Layouts/03 - # of Cluster Trend',
                  'SiStrip/Layouts/04 - OnTrackCluster (StoN)',
                  'SiStrip/Layouts/05 - OffTrackCluster (Total Number)',
-                 'SiStrip/Layouts/06 - FED Errors vs FED ID',
+                 'SiStrip/Layouts/06a - FED Errors vs FED ID',
                 )
 
 # Calorimeter workspaces:
@@ -166,6 +173,8 @@ server.workspace('DQMContent', 40, 'Muons', 'CSC', '^CSC/', '',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 07 - CSCs Occupancy 2D',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 09 - RecHits Minus',
                  'CSC/Layouts/00 Data Integrity/Physics Efficiency 10 - RecHits Plus',
+                 'CSC/Layouts/00 Data Integrity/Physics Efficiency 11 - Segments',
+                 'CSC/Layouts/00 Data Integrity/Physics Efficiency 12 - Timing',
                 )
 
 server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')
@@ -174,6 +183,20 @@ server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel/', '',
+                 'CTPPS/TrackingPixel/Layouts/4 fired ROCs per BX',
+                 'CTPPS/TrackingPixel/Layouts/5 fired planes per BX',
+                 'CTPPS/TrackingPixel/Layouts/ROCs hits multiplicity per event',
+                 'CTPPS/TrackingPixel/Layouts/ROCs_hits_multiplicity_per_event vs LS',
+                 'CTPPS/TrackingPixel/Layouts/number of fired planes per event',
+                 'CTPPS/TrackingPixel/Layouts/number of fired aligned_ROCs per event',
+                 'CTPPS/TrackingPixel/Layouts/planes activity',
+                 'CTPPS/TrackingPixel/Layouts/hit multiplicity in planes',
+                 'CTPPS/TrackingPixel/Layouts/hit average multiplicity in planes',
+                 'CTPPS/TrackingPixel/Layouts/hits position:sector 45 station 220_fr_hr',
+                 'CTPPS/TrackingPixel/Layouts/hits position:sector 56 station 220_fr_hr',
+)
+
 
 # POG workspaces:
 server.workspace('DQMContent', 60, 'POG', 'Muons', '^Muons/', '')

@@ -111,7 +111,7 @@ deploy_frontend_post()
 
   case $host in * ) enable ;; esac
   (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
-   echo "13 */6 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
+   echo "13 */3 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
         "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
         "-o $PWD/etc/voms-gridmap.txt --vo cms"
    case $host in vocms* ) silent= ;; * ) silent=-q;; esac

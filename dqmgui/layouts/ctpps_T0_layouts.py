@@ -1,8 +1,13 @@
 def CTPPSTrackingStripLayout(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/" + p] = DQMItem(layout=rows)
+def CTPPSTrackingPixelLayout(i, p, *rows): i["CTPPS/TrackingPixel/Layouts/" + p] = DQMItem(layout=rows)
 def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p] = DQMItem(layout=rows)
 
 strips_stations = [ "sector 45/station 210", "sector 56/station 210" ]
 strips_units = [ "nr", "fr" ]
+
+pixstations = [ "sector 45/station 220/", "sector 56/station 220/" ]
+planes  = [ "0","1","2" ]
+planes2 = [ "3","4","5" ]
 
 diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
 
@@ -46,14 +51,23 @@ for suffix in [ "", " (short)" ]:
 #####
 
 # layouts with no overlays
-for plot in [ "activity per BX", "active planes", "leading edges without trailing", "leading edge", "time over threshold", "HPTDC Errors", "hits in planes" ]:
+TimingPlots = [ "activity per BX 0 25", "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "tracks", "HPTDC Errors", "MH in channels" ]
+TimingDrawOpt = [{'ytype':"log"}, {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'withref':"no"}, {'xmax':"100"}, {'drawopts':"colztext"}]
+
+for i in range(len(TimingPlots)):
   rows = list()
   for station in diamond_stations:
     row = list()
-    row.append("CTPPS/TimingDiamond/"+station+"/"+plot)
+    path_str = "CTPPS/TimingDiamond/"+station+"/"+TimingPlots[i]
+    row.append( { "path" : path_str, 'draw':TimingDrawOpt[i] } )
     rows.append(row)
 
-  CTPPSTimingDiamondLayout(dqmitems, plot, *rows)
+  CTPPSTimingDiamondLayout(dqmitems, TimingPlots[i], *rows)
+
+
+#for station in diamond_stations:
+#plot = "activity per BX 0 25"
+  #CTPPSTimingDiamondLayout(dqmitems, plot, [{'path': "CTPPS/TimingDiamond/"+station+"/"+plot, 'description':'blablabla', 'draw':{'xtype':'log','ymin':0,'ymax':10,'drawopts':"COLZ"} }])
 
 # clocks display for both sectors
 rows = list()
@@ -61,8 +75,54 @@ for station in diamond_stations:
   row = list()
   for clk in [ 1, 3 ]:
     hist_lead = "CTPPS/TimingDiamond/"+station+"/clock/clock{clock_id} leading edge".format(clock_id=clk)
-    hist_trail = "CTPPS/TimingDiamond/"+station+"/clock/clock{clock_id} trailing edge".format(clock_id=clk)
-    row.append( { "path": hist_lead, "overlays": [ hist_trail ] } )
+    row.append( { "path": hist_lead, 'draw':{'xmax':"25"} } )
   rows.append(row)
 
   CTPPSTimingDiamondLayout(dqmitems, "clocks edges", *rows)
+  
+###
+#####   CTPPS Pixel Layouts
+###
+
+for plot in ["planes activity", "hit multiplicity in planes","hit average multiplicity in planes"]:
+  rows = list()
+  for station in pixstations:
+    row = list()
+    row.append("CTPPS/TrackingPixel/"+station+plot)
+    rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
+
+for plot in ["4 fired ROCs per BX"]:
+  rows = list()
+  for station in pixstations:
+    row = list()
+    row.append("CTPPS/TrackingPixel/"+station+"fr_hr/latency/"+plot)
+    rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
+
+for plot in ["5 fired planes per BX","ROCs hits multiplicity per event","ROCs_hits_multiplicity_per_event vs LS","number of fired planes per event","number of fired aligned_ROCs per event"]:
+  rows = list()
+  for station in pixstations:
+    row = list()
+    row.append("CTPPS/TrackingPixel/"+station+"fr_hr/"+plot)
+    rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
+
+sectors = [ "sector 45", "sector 56" ]
+for plot in ["hits position"]:
+  for sector in sectors:
+    rows = list()
+    row = list()
+    for plane in planes:
+      row.append("CTPPS/TrackingPixel/"+sector+"/station 220/fr_hr/plane_"+plane+"/"+plot)
+    rows.append(row)
+
+    row = list()
+    for plane in planes2:
+      row.append("CTPPS/TrackingPixel/"+sector+"/station 220/fr_hr/plane_"+plane+"/"+plot)
+    rows.append(row)
+
+    CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" station 220_fr_hr", *rows)

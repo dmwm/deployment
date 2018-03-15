@@ -35,6 +35,8 @@ public:
         // Put here the Stage2 subsystems who provide their own plugin:
         if( o.name.find( "L1TStage2CaloLayer1" ) != std::string::npos )
           return false;
+        if( o.name.find( "L1TdeStage2CaloLayer1" ) != std::string::npos )
+          return false;
         if( o.name.find( "L1TStage2EMTF" ) != std::string::npos )
           return false;
         if( o.name.find( "L1TStage2CaloLayer2" ) != std::string::npos )
@@ -103,6 +105,32 @@ private:
 
       std::string name = o.name.substr(o.name.rfind("/")+1);
 
+      // for object comparison histograms (muons)
+      if (name.find("muHwPtColl1") != std::string::npos) {
+        gPad->SetLogy(1);
+      }
+
+      if (name.find("muHwPtColl2") != std::string::npos) {
+        gPad->SetLogy(1);
+      }
+
+      if (name.find("errorSummary") == 0) {
+        obj->SetOption("texthist");
+      }
+
+      if (name.find("mismatchRatio") == 0) {
+        obj->SetOption("texthist");
+      }
+
+      if (name.find("summary") == 0) {
+        obj->SetOption("texthist");
+      }
+
+      // MP7 zero suppression validation
+      if (name.find("zeroSuppVal") == 0) {
+        obj->SetOption("texthist");
+      }
+
     }
 
   void postDrawTH2F( TCanvas *, const VisDQMObject &o )
@@ -116,58 +144,58 @@ private:
 
       if ( name.find("reportSummaryMap") != std::string::npos )
       {
-            TLine* l_line = new TLine();
-            TText* t_text = new TText();
+	TLine l_line;
+	TText t_text;
 
-            t_text->DrawText(2.25, 14.3, "Mu");
-            t_text->DrawText(2.25, 13.3, "NonIsoEG");
-            t_text->DrawText(2.25, 12.3, "IsoEG");
-            t_text->DrawText(2.25, 11.3, "CenJet");
-            t_text->DrawText(2.25, 10.3, "ForJet");
-            t_text->DrawText(2.25, 9.3,  "NonIsoTau");
-            t_text->DrawText(2.25, 8.3,  "IsoTau");
-            t_text->DrawText(2.25, 7.3,  "ETT");
-            t_text->DrawText(2.25, 6.3,  "ETM");
-            t_text->DrawText(2.25, 5.3,  "HTT");
-            t_text->DrawText(2.25, 4.3,  "HTM");
-            t_text->DrawText(2.25, 3.3,  "minBias");
-            t_text->DrawText(2.25, 2.3,  "-");
-            t_text->DrawText(2.25, 1.3,  "GtExternal");
+            t_text.DrawText(2.25, 14.3, "Mu");
+            t_text.DrawText(2.25, 13.3, "NonIsoEG");
+            t_text.DrawText(2.25, 12.3, "IsoEG");
+            t_text.DrawText(2.25, 11.3, "CenJet");
+            t_text.DrawText(2.25, 10.3, "ForJet");
+            t_text.DrawText(2.25, 9.3,  "NonIsoTau");
+            t_text.DrawText(2.25, 8.3,  "IsoTau");
+            t_text.DrawText(2.25, 7.3,  "ETT");
+            t_text.DrawText(2.25, 6.3,  "ETM");
+            t_text.DrawText(2.25, 5.3,  "HTT");
+            t_text.DrawText(2.25, 4.3,  "HTM");
+            t_text.DrawText(2.25, 3.3,  "minBias");
+            t_text.DrawText(2.25, 2.3,  "-");
+            t_text.DrawText(2.25, 1.3,  "GtExternal");
 
-            t_text->DrawText(1.25, 11.3, "");
-            t_text->DrawText(1.25, 10.3, "");
-            t_text->DrawText(1.25, 9.3, "uGT");
-            t_text->DrawText(1.25, 8.3, "uGMT");
-            t_text->DrawText(1.25, 7.3, "EMTF");
-            t_text->DrawText(1.25, 6.3, "OMTF");
-            t_text->DrawText(1.25, 5.3, "BMTF");
-            t_text->DrawText(1.25, 4.3, "Calo Layer2");
-            t_text->DrawText(1.25, 3.3, "Calo Layer1");
-            t_text->DrawText(1.25, 2.3, "HCAL TPG");
-            t_text->DrawText(1.25, 1.3, "ECAL TPG");
+            t_text.DrawText(1.25, 11.3, "");
+            t_text.DrawText(1.25, 10.3, "");
+            t_text.DrawText(1.25, 9.3, "uGT");
+            t_text.DrawText(1.25, 8.3, "uGMT");
+            t_text.DrawText(1.25, 7.3, "EMTF");
+            t_text.DrawText(1.25, 6.3, "OMTF");
+            t_text.DrawText(1.25, 5.3, "BMTF");
+            t_text.DrawText(1.25, 4.3, "Calo Layer2");
+            t_text.DrawText(1.25, 3.3, "Calo Layer1");
+            t_text.DrawText(1.25, 2.3, "HCAL TPG");
+            t_text.DrawText(1.25, 1.3, "ECAL TPG");
 
-            l_line->SetLineWidth(2);
+            l_line.SetLineWidth(2);
 
             // vertical line
 
-            l_line->DrawLine(2, 1, 2, 15);
+            l_line.DrawLine(2, 1, 2, 15);
 
             // horizontal lines
 
-            l_line->DrawLine(1, 1, 3, 1);
-            l_line->DrawLine(1, 2, 3, 2);
-            l_line->DrawLine(1, 3, 3, 3);
-            l_line->DrawLine(1, 4, 3, 4);
-            l_line->DrawLine(1, 5, 3, 5);
-            l_line->DrawLine(1, 6, 3, 6);
-            l_line->DrawLine(1, 7, 3, 7);
-            l_line->DrawLine(1, 8, 3, 8);
-            l_line->DrawLine(1, 9, 3, 9);
-            l_line->DrawLine(1, 10, 3, 10);
-            l_line->DrawLine(1, 11, 3, 11);
-            l_line->DrawLine(1, 12, 3, 12);
-            l_line->DrawLine(2, 13, 3, 13);
-            l_line->DrawLine(2, 14, 3, 14);
+            l_line.DrawLine(1, 1, 3, 1);
+            l_line.DrawLine(1, 2, 3, 2);
+            l_line.DrawLine(1, 3, 3, 3);
+            l_line.DrawLine(1, 4, 3, 4);
+            l_line.DrawLine(1, 5, 3, 5);
+            l_line.DrawLine(1, 6, 3, 6);
+            l_line.DrawLine(1, 7, 3, 7);
+            l_line.DrawLine(1, 8, 3, 8);
+            l_line.DrawLine(1, 9, 3, 9);
+            l_line.DrawLine(1, 10, 3, 10);
+            l_line.DrawLine(1, 11, 3, 11);
+            l_line.DrawLine(1, 12, 3, 12);
+            l_line.DrawLine(2, 13, 3, 13);
+            l_line.DrawLine(2, 14, 3, 14);
 
             return;
         }

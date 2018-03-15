@@ -3,11 +3,13 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TCanvas.h"
+#include "TStyle.h"
 
 #include <cassert>
 
-//----------------------------------------------------------------------------------------------------
-
+//*****************************************************
+// 11.08.17 V.Popov: changed: TH2 palette to 1; OptStat(0)
+//*****************************************************
 class CTPPSRenderPlugin : public DQMRenderPlugin
 {
 	public:
@@ -28,6 +30,8 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 
 			if (dynamic_cast<TH2F*>(o.object))
 				preDrawTH2F(c, o);
+			if (dynamic_cast<TH2D*>(o.object))
+				preDrawTH2D(c, o);
 		}
 
 		virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & ) override
@@ -67,6 +71,20 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 			assert(obj);
 
 			obj->SetOption("colz");
+			gStyle->SetOptStat(0);
+			obj->SetStats(kFALSE);
+			gStyle->SetPalette(1);
+		}
+
+		void preDrawTH2D(TCanvas *, const VisDQMObject &o)
+		{
+			TH2D* obj = dynamic_cast<TH2D*>(o.object);
+			assert(obj);
+
+			obj->SetOption("colz");
+			gStyle->SetOptStat(0);
+			obj->SetStats(kFALSE);
+			gStyle->SetPalette(1);
 		}
 
 		void postDrawTH1F(TCanvas *c, const VisDQMObject &)

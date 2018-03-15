@@ -137,10 +137,21 @@ private:
             float y1 = ysign * (lad+half_shift*0.5-0.5);
             float y2 = ysign * (lad+half_shift*0.5-0.5 + roc0_orientation*1./2);
             if (!(phase==0&&(lad==1||lad==nlad)&&xsign==-1)) {
-              draw_line(x1, x2, y1, y1, 1);
-              //draw_line(x1, x2, y2, y2, 1);
-              //draw_line(x1, x1, y1, y2, 1);
-              draw_line(x2, x2, y1, y2, 1);
+	      if (lay == 1 && xsign <= -1 ){
+		float x1 = xsign * ((mod-1)+half_shift*0.5 );
+		float x2 = xsign * ((mod-1)+half_shift*0.5 + 1./8);
+		float y1 = ysign * (lad+half_shift*0.5-0.5 + roc0_orientation);
+		float y2 = ysign * (lad+half_shift*0.5-0.5 + roc0_orientation*3./2);
+
+		draw_line(x1, x2, y1, y1, 1);
+		draw_line(x2, x2, y1, y2, 1);
+	      }
+	      else{
+		draw_line(x1, x2, y1, y1, 1);
+		//draw_line(x1, x2, y2, y2, 1);                                         
+		//draw_line(x1, x1, y1, y2, 1);                                                                                                       
+		draw_line(x2, x2, y1, y2, 1);
+	      }
             }
           }
         }

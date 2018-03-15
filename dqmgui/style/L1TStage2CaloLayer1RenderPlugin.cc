@@ -22,6 +22,7 @@ class L1T2016Layer1RenderPlugin : public DQMRenderPlugin
   TLine * correlation_;
   TText tlabels_;
   int palette_kry[256];
+  int palette_yrk[256];
 
 public:
   virtual void initialise(int, char **)
@@ -49,6 +50,7 @@ public:
       for(size_t i=0; i<256; ++i) {
         auto c = new TColor(rValues[i], gValues[i], bValues[i]);
         palette_kry[i] = c->GetNumber();
+        palette_yrk[255-i] = c->GetNumber();
       }
 
     }
@@ -149,7 +151,7 @@ private:
       checkAndRemove(r.drawOptions, "tlabels");
 
       // Colormap setup
-      if( checkAndRemove(r.drawOptions, "hottower") )
+      if( checkAndRemove(r.drawOptions, "hottower") || checkAndRemove(r.drawOptions, "kry"))
       {
         // Choose hot tower palette
         obj->SetContour(256);
@@ -158,6 +160,12 @@ private:
         obj->GetXaxis()->SetAxisColor(kWhite);
         obj->GetYaxis()->SetAxisColor(kWhite);
         tlabels_.SetTextColor(kWhite);
+      }
+      else if( checkAndRemove(r.drawOptions, "yrk") )
+      {
+        // Choose the Inverted Dark Body Radiator palette
+        obj->SetContour(256);
+        gStyle->SetPalette(256, palette_yrk);
       }
       else
       {
@@ -212,6 +220,10 @@ private:
       if ( r.drawOptions.length() == 0 ) {
         obj->SetOption("hist");
       }
+      if( name.find( "dataEmulSummary" ) != std::string::npos )
+      {
+        obj->SetFillColor(kRed);
+      }
     }
 
   void postDrawTH2F( TCanvas * c, const VisDQMObject &o, std::string &drawOptions )
@@ -255,7 +267,7 @@ private:
           }
         }
       }
-      else if ( name.find( "hcal" ) != std::string::npos && checkAndRemove(drawOptions, "tlabels") )
+      else if ( (name.find( "hcal" ) != std::string::npos or o.name.find( "L1TdeStage2CaloLayer1/Occupancies" ) != std::string::npos) && checkAndRemove(drawOptions, "tlabels") )
       {
         char text[20];
         for (int ieta=-42; ieta<42; ++ieta) {
@@ -271,7 +283,7 @@ private:
       }
       else if ( name.find( "Correlation" ) != std::string::npos )
       {
-        correlation_->DrawLine(0.,0.,255.,255.);
+        correlation_->DrawLine(0.,0.,512.,512.);
       }
       else if ( name.find( "Mismatches" ) != std::string::npos )
       {
@@ -299,8 +311,7 @@ private:
           obj->GetXaxis()->SetRangeUser(1., i.xaxis.max);
         }
         // To account for our underflow bin hack
-        double currentLumi = obj->GetBinContent(0);
-        obj->SetEntries(obj->GetEntries()-currentLumi);
+        obj->SetEntries(obj->Integral(1, -1));
         gStyle->SetOptStat(11);
       }
       if( o.name.find( "maxEvt" ) != std::string::npos && o.name.find("MismatchDetail") == std::string::npos )
@@ -311,6 +322,15 @@ private:
           // Not sure how to let ROOT choose min
           auto miny = (isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
           obj->GetYaxis()->SetRangeUser(miny, 8856);
+        }
+      }
+      if( name.find( "dataEmulSummary" ) != std::string::npos )
+      {
+        gStyle->SetOptStat(11);
+        if ( isnan(i.yaxis.max) )
+        {
+          auto miny = (isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
+          obj->GetYaxis()->SetRangeUser(miny, 0.1);
         }
       }
     }

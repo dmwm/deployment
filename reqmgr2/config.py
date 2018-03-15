@@ -112,7 +112,7 @@ ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
 # Production instance of wmdatamining, must be a production back-end
-if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0136") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     extentions = config.section_("extensions")
 #     wmdatamining = extentions.section_("wmdatamining")
 #     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
@@ -152,6 +152,17 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0131") or HOST.startswi
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     statusChangeTasks.central_logdb_url = LOG_DB_URL
     statusChangeTasks.log_reporter = LOG_REPORTER
+
+    # AuxCache update threads
+    auxCacheUpdateTasks = extentions.section_("auxCacheUpdateTasks")
+    auxCacheUpdateTasks.object = "WMCore.ReqMgr.CherryPyThreads.AuxCacheUpdateTasks.AuxCacheUpdateTasks"
+    auxCacheUpdateTasks.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+    auxCacheUpdateTasks.tagCollectDuration = 60 * 60  # every 1 hour
+    auxCacheUpdateTasks.tagcollect_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML"
+    auxCacheUpdateTasks.tagcollect_args = {"anytype": 1, "anyarch": 1}
+    auxCacheUpdateTasks.log_file = '%s/logs/reqmgr2/auxCacheUpdateTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    auxCacheUpdateTasks.central_logdb_url = LOG_DB_URL
+    auxCacheUpdateTasks.log_reporter = LOG_REPORTER
 
     # heartbeat monitor task
     heartbeatMonitor = extentions.section_("heartbeatMonitor")

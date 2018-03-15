@@ -49,9 +49,11 @@ public:
     virtual bool applies(const VisDQMObject& dqmObj, const VisDQMImgInfo&) {
         if (dqmObj.name.find("L1TEMU/") != std::string::npos) {
 
-            // return true for all L1TEMU, except L1TdeRCT
-            if (dqmObj.name.find("L1TEMU/L1TdeRCT/") != std::string::npos) {
-                return false;
+            // return true for all L1TEMU, except L1TdeRCT, L1TStage2 and reportSummaryMap
+            if (dqmObj.name.find("L1TEMU/L1TdeRCT/") != std::string::npos ||
+                dqmObj.name.find("L1TStage2") != std::string::npos ||
+                dqmObj.name.find("reportSummaryMap") != std::string::npos) {
+              return false;
             } else {
                 return true;
             }
