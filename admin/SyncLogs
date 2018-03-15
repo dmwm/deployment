@@ -4,21 +4,14 @@
 
 # Front-ends in the AI infrastructure
 for h in vocms0{117,127,134,135,158,160,162,164}; do
-  #rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
   rsync -rm -e "ssh -c aes128-ctr" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
 # Back-ends in the AI infrastructure
-for h in vocms0{731,132,136,138,139,740,741,742,161,163,165,306,307,318,738,739}; do
-  #rsync -rm -e "ssh -c arcfour256 -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log*' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
+for h in vocms0{731,132,136,161,163,165,738,739,740,741,742}; do
   #Add new cipher aes128-ctr
   rsync -rm -e "ssh -c aes128-ctr -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log*' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
-
-# Machines in the old infrastructure
-#for h in vocms139; do
-#  rsync -rm -e "ssh -c arcfour256" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/ 
-#done
 
 # Delete files not modified in the last 7 days
 find /build/srv-logs/ -type f -mtime +6 -exec rm -f '{}' \;
