@@ -233,6 +233,23 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
                  'CSC/Layouts/07 Physics Efficiency - RecHits Plus',
                 )
 
+
+# GEM workspaces:
+server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
+                 'GEM/Layouts/00 StatusDigi Critical Errors',
+                 'GEM/Layouts/01 StatusDigi Warnings',
+                 'GEM/Layouts/02 GEMINI01la1',
+                 'GEM/Layouts/03 GEMINI01la2',
+                 'GEM/Layouts/04 GEMINI27la1',
+                 'GEM/Layouts/05 GEMINI27la2',
+                 'GEM/Layouts/06 GEMINI28la1',
+                 'GEM/Layouts/07 GEMINI28la2',
+                 'GEM/Layouts/08 GEMINI29la1',
+                 'GEM/Layouts/09 GEMINI29la2',
+                 'GEM/Layouts/10 GEMINI30la1',
+                 'GEM/Layouts/11 GEMINI30la2',
+)
+
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
 server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel/', '',
