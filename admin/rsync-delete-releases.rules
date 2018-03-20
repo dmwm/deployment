@@ -11,7 +11,7 @@
 +r /srv*/HG16***
 +r /srv*/[bf]eHG16***
 +r /srv*/HG180[2][a-z]***
-+r /srv*/[bf]eHG280[2][a-z]***
++r /srv*/[bf]eHG180[2][a-z]***
 
 # Include here anything else you may want to clean up
 +r /.deploy/***
