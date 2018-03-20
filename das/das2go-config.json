@@ -1,0 +1,20 @@
+{
+    "uri":"mongodb://localhost:8230",
+    "base": "/das2go",
+    "port": 8217,
+    "services": ["combined","conddb","dashboard","dbs3","mcm","phedex","reqmgr2","runregistry","sitedb2"],
+    "urlQueueLimit": 1000,
+    "urlRetry": 3,
+    "templates": "{ROOT}/das2go/templates",
+    "jscripts": "{ROOT}/das2go/js",
+    "styles": "{ROOT}/das2go/css",
+    "images": "{ROOT}/das2go/images",
+    "yuiRoot": "{ROOT}/das2go/yui",
+    "dbsInstances": ["prod/global", "prod/phys01", "prod/phys02", "prod/phys03"],
+    "views": ["list", "plain", "table", "json", "xml"],
+    "servercrt": "",
+    "serverkey": "",
+    "hkey": "",
+    "updateDNs": 60,
+    "verbose": 0
+}
