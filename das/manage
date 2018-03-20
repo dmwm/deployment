@@ -186,6 +186,7 @@ start()
   # start DAS cli server in background since we need to wait for DAS web server/MongoDB
   # start_das_cli &
   # start das2go server
+  sleep 30 # let DAS server starts since it will upload DAS maps
   start_das2go
 }
 
@@ -255,8 +256,18 @@ case ${1:-status} in
     start
     ;;
 
+  start_das2go )
+    check "$2"
+    stop_das2go
+    start_das2go
+    ;;
+
   status )
     status
+    ;;
+
+  status_das2go )
+    status_das2go
     ;;
 
   fetchmaps )
@@ -267,6 +278,11 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  stop_das2go )
+    check "$2"
+    stop_das2go
     ;;
 
   cron )
