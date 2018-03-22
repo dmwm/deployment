@@ -95,6 +95,13 @@ bool checkAndRemove(std::string &s, const char * key)
       gPad->SetLogy(1);
     }
 
+    // calo layer2 comparison histograms
+    if (o.name.find("expert") == std::string::npos) {
+      if (o.name.find(" Summary") != std::string::npos || o.name.find(" summary") != std::string::npos) {
+        obj->SetOption("texthist");
+      }
+    }
+
   }
 
   void preDrawTH2F(TCanvas *c, const VisDQMObject& o, VisDQMRenderInfo &r) {
