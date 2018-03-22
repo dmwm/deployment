@@ -36,14 +36,14 @@ l1toccupancy(dqmitems,"15 - EMTF Chamber Occupancy",
     [{'path': "L1T/L1TStage2EMTF/cscLCTOccupancy", 'description': "EMTF CSC chamber Occupancy. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"16 - EMTF Track Bunch Crossing",
     [{'path': "L1T/L1TStage2EMTF/emtfTrackBX", 'description': "EMTF Track Bunch Crossing. "+moreInfoStr, 'draw': { 'withref': "no" }}])
-l1toccupancy(dqmitems,"17 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
-    [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_global", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number. "+moreInfoStr, 'draw': { 'withref': "no" }}])
-l1toccupancy(dqmitems,"18 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
-    [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event. "+moreInfoStr, 'draw': { 'withref': "no" }}])
-l1toccupancy(dqmitems,"19 - uGT # of algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for first bunch in train",
-    [{'path': "L1T/L1TStage2uGT/Ratio_First_Bunch_In_Train", 'description': "uGT number of algo accepts relative to number of all algo accepts in +/-2 BX vs. BX number in event for first bunch in train. x-axis: BX number in event for first bunch in a bunch train; y-axis: uGT algorithm trigger bits (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
-l1toccupancy(dqmitems,"20 - uGT # of algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for last bunch in train",
-    [{'path': "L1T/L1TStage2uGT/Ratio_Last_Bunch_In_Train", 'description': "uGT number of algo accepts relative to number of all algo accepts in +/-2 BX vs. BX number in event last bunch in train. x-axis: BX number in event for last bunch in a bunch train; y-axis: uGT algorithm trigger bits (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+#l1toccupancy(dqmitems,"17 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
+#    [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_global", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+#l1toccupancy(dqmitems,"18 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
+#    [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+#l1toccupancy(dqmitems,"19 - uGT # of algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for first bunch in train",
+#    [{'path': "L1T/L1TStage2uGT/Ratio_First_Bunch_In_Train", 'description': "uGT number of algo accepts relative to number of all algo accepts in +/-2 BX vs. BX number in event for first bunch in train. x-axis: BX number in event for first bunch in a bunch train; y-axis: uGT algorithm trigger bits (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+#l1toccupancy(dqmitems,"20 - uGT # of algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for last bunch in train",
+#    [{'path': "L1T/L1TStage2uGT/Ratio_Last_Bunch_In_Train", 'description': "uGT number of algo accepts relative to number of all algo accepts in +/-2 BX vs. BX number in event last bunch in train. x-axis: BX number in event for last bunch in a bunch train; y-axis: uGT algorithm trigger bits (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 
 def l1tefficiency(i, p, *rows): i["00 Shift/L1T/Efficiency/" + p] = DQMItem(layout=rows)
 
