@@ -34,9 +34,9 @@ ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/03 Occupancy',
 	   [{'path': 'EcalEndcap/EEOccupancyTask/EEOT digi occupancy EE -', 'description': 'Digi occupancy.'},
 	    {'path': 'EcalEndcap/EEOccupancyTask/EEOT digi occupancy EE +', 'description': 'Digi occupancy.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/04 Noise',
-	   [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}],
-	   [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'},
-	    {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
+	   [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}],
+	   [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'},
+	    {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/05 RecHit Energy',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBOT energy summary', 'description': '2D distribution of the mean rec hit energy.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EEOT EE - energy summary', 'description': '2D distribution of the mean rec hit energy.'},
@@ -325,9 +325,9 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
 
 #____________________ Layouts / 03 Noise ____________________
 ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/00 Presample Quality',
-	   [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}],
-	   [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'},
-	    {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
+	   [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}],
+	   [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'},
+	    {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal quality summary G12', 'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/01 RMS Map',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'},
@@ -358,7 +358,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       channellabel = '%s%s%02d' % (label, sign, channel) # e.g. "EE+05"
       ecallayout(dqmitems,'Ecal/Layouts/03 Noise/By SuperModule/Quality/Quality %s' % channellabel,
                  [{'path': 'Ecal%s/%sPedestalOnlineClient/%sPOT pedestal quality G12 %s' % (detector, label, label, channellabel),
-                   'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
+                   'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
       ecallayout(dqmitems,'Ecal/Layouts/03 Noise/By SuperModule/Mean/Mean %s' % channellabel,
                  [{'path': 'Ecal%s/%sPedestalOnlineTask/Gain12/%sPOT pedestal %s G12' % (detector, label, label, channellabel),
                    'description': '2D distribution of mean presample value.'}],
@@ -958,7 +958,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
                    'description': 'Digi occupancy.'}])
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/03 Presample Quality' % channellabel,
                  [{'path': 'Ecal%s/%sPedestalOnlineClient/%sPOT pedestal quality G12 %s' % (detector, label, label, channellabel),
-                   'description': 'Summary of the presample data quality. A channel is red if presample mean is off by 25.0 from 200.0 or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
+                   'description': 'Summary of the presample data quality. A channel is red if presample mean is outside the range (175.0, 240.0) or RMS is greater than 3.0. RMS threshold is 6.0 in the forward region (|eta| > 2.1). Channels with entries less than 6 are not considered.'}])
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/04 Presample Mean' % channellabel,
                  [{'path': 'Ecal%s/%sPedestalOnlineTask/Gain12/%sPOT pedestal %s G12' % (detector, label, label, channellabel),
                    'description': '2D distribution of mean presample value.'}],
