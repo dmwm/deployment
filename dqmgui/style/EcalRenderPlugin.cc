@@ -870,8 +870,9 @@ EcalRenderPlugin::preDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const 
   unsigned& btype(types.second);
 
   bool isEB(fullpath.Contains("EcalBarrel"));
-  bool isNewStyle(obj->TestBit(0x00f80000));
-  bool isMap(isNewStyle ? obj->TestBit(0x00080000) : isTH2Derived); // if not new style, assume TH2 is a map
+  uint32_t packedInfo = obj->GetUniqueID();
+  bool isNewStyle = (packedInfo > 0);
+  bool isMap = (isNewStyle? (packedInfo % 2 == 1) : isTH2Derived);
 
   if(isMap){
 
@@ -998,9 +999,10 @@ EcalRenderPlugin::postDraw(TCanvas* canvas, const VisDQMObject& dqmObject, const
 
   bool isEB(fullpath.Contains("EcalBarrel"));
 
-  bool isNewStyle(obj->TestBit(0x00f80000));
   bool isTH2Derived(obj->InheritsFrom(TH2::Class()));
-  bool isMap(isNewStyle ? obj->TestBit(0x00080000) : isTH2Derived);
+  uint32_t packedInfo = obj->GetUniqueID();
+  bool isNewStyle = (packedInfo > 0);
+  bool isMap = (isNewStyle? (packedInfo % 2 == 1) : isTH2Derived);
 
   if(isMap){
 
@@ -1170,7 +1172,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
 
-  bool isNewStyle(obj->TestBit(0x00f80000));
+  bool isNewStyle = (obj->GetUniqueID() > 0);
 
   if(TPRegexp("E[BE]LaserTask/Laser[1-4]/E[BE]LT shape E[BE][+-][0-1][0-9] L[1-4]").MatchB(fullpath) ||
      TPRegexp("E[BE]TestPulseTask/Gain[0-9]+/E[BE]TPT shape E[BE][+-][0-1][0-9] G[0-9]+").MatchB(fullpath) ||
@@ -1332,7 +1334,7 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
 
-  bool isNewStyle(obj->TestBit(0x00f80000));
+  bool isNewStyle = (obj->GetUniqueID() > 0);
 
   if(!isNewStyle && TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+-][0-1][0-9]").MatchB(fullpath)){
     if(obj->GetZaxis()) obj->GetZaxis()->SetLabelSize(0.);
@@ -1415,11 +1417,11 @@ EcalRenderPlugin::getPlotType(TH1 const* obj, TString const& fullpath) const
   bool isEB(fullpath.Contains("EcalBarrel"));
   bool isEE(fullpath.Contains("EcalEndcap"));
 
-  uint32_t packedInfo(obj->TestBits(0x00f80000) >> 19);
+  uint32_t packedInfo(obj->GetUniqueID());
 
-  if(packedInfo != 0){ // new style
-    otype = (packedInfo >> 1) - 1;
-    bool isMap(packedInfo % 2 == 1);
+  if(packedInfo > 0){ // new style
+    otype = (packedInfo/2) - 1;
+    bool isMap = (packedInfo % 2 == 1);
 
     if(isMap){
       switch(otype){
