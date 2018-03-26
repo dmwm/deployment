@@ -500,3 +500,166 @@ pixellayout(dqmitems, "32 - PixelPhase1 Dead ROC Trends in endcap",
      'description': "Dead ROCs per lumisections in ring 2 of endcap",
      'draw': { 'withref': "no"}}],
    )
+
+
+pixellayout(dqmitems, "33 - ntracks",
+  [{ 'path': "PixelPhase1/Tracks/ntracks",
+     'description': "Number of Tracks in all pixel det",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/ntracksinpixvolume",
+     'description': "Number of Tracks in pix volume",
+     'draw': {'withref' : "no"}}]
+  )
+
+pixellayout(dqmitems, "34 - Charge and size",
+  [{ 'path': "PixelPhase1/Tracks/charge_PXBarrel",
+     'description': "charge PXBarrel",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/charge_PXForward",
+     'description': "charge PXForward",
+     'draw': {'withref' : "no"}}],
+  [{ 'path': "PixelPhase1/Tracks/size_PXBarrel",
+     'description': "size of PXBarrel",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/size_PXForward",
+     'description': "size of PXForward",
+     'draw': {'withref' : "no"}}]
+  )
+
+pixellayout(dqmitems, "35a - Cluster on track charge per Inner Ladders",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/chargeInner_PXLayer_1",
+     'description': "corrected cluster charge (on track) in inner ladders in PXLayer 1",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/PXBarrel/chargeInner_PXLayer_2",
+     'description': "corrected cluster charge (on track) in inner ladders in PXLayer 2",
+     'draw': {'withref' : "no"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/chargeInner_PXLayer_3",
+     'description': "corrected cluster charge (on track) in inner ladders in PXLayer 3",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/PXBarrel/chargeInner_PXLayer_4",
+     'description': "corrected cluster charge (on track) in inner ladders in PXLayer 4",
+     'draw': {'withref' : "no"}}]
+  )
+
+pixellayout(dqmitems, "35b - Cluster on track charge per Outer Ladders",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/chargeOuter_PXLayer_1",
+     'description': "corrected cluster charge (on track) in outer ladders in PXLayer 1",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/PXBarrel/chargeOuter_PXLayer_2",
+     'description': "corrected cluster charge (on track) in outer ladders in PXLayer 2",
+     'draw': {'withref' : "no"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/chargeOuter_PXLayer_3",
+     'description': "corrected cluster charge (on track) in outer ladders in PXLayer 3",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/PXBarrel/chargeOuter_PXLayer_4",
+     'description': "corrected cluster charge (on track) in outer ladders in PXLayer 4",
+     'draw': {'withref' : "no"}}]
+  )
+
+
+pixellayout(dqmitems, "36 -  Ontrack PXLayer",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_1",
+     'description': "clusterposition_zphi_ontrack_PXLayer_1",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_2",
+        'description': "clusterposition_zphi_ontrack_PXLayer_2",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_3",
+      'description': "clusterposition_zphi_ontrack_PXLayer_3",
+      'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+      { 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_4",
+         'description': "clusterposition_zphi_ontrack_PXLayer_4",
+         'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
+
+pixellayout(dqmitems, "37 - Ontrack Disk",
+  [{'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_+1",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_+2",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_+3",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  [{'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-1",
+  'description': "Clusteron on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-2",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_-3",
+  'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  )
+
+pixellayout(dqmitems, "38 - Hit Efficiency Barrel",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
+     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
+        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_2",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
+     'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_3",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
+        'description': "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_4",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
+
+pixellayout(dqmitems, "39 - Hit Efficiency Forward",
+   [{'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_1",
+     'description': "hitefficiency_per_PXDisk_per_SignedBl",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    {'path': "PixelPhase1/Tracks/PXForward/hitefficiency_per_PXDisk_per_SignedBladePanel_PXRing_2",
+     'description': "hitefficiency_per_PXDisk_per_SignedB2",
+     'draw': { 'withref': "no", 'drawopts': "COLZ" }}
+    ]
+   )
+
+pixellayout(dqmitems, "40 - PixelPhase1 Residuals",
+   [{ 'path': "PixelPhase1/Tracks/residual_x_PXBarrel",
+      'description': "Track residuals x in PXBarrel",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/residual_x_PXForward",
+      'description': "Track residuals x in PXForward",
+      'draw': { 'withref': "no" }}],
+   [{ 'path': "PixelPhase1/Tracks/residual_y_PXBarrel",
+      'description': "Track residuals y in PXBarrel",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/residual_y_PXForward",
+      'description': "Track residuals y in PXForward",
+      'draw': { 'withref': "no" }}]
+   )
+
+
+pixellayout(dqmitems, "41a - ClusterSize Vs Eta (OnTrack) inner",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_inner_PXLayer_1",
+     'description': "ClusterSize_Vs_Eta_OnTrack_PXLayer_1",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_inner_PXLayer_2",
+        'description': "ClusterSize_Vs_Eta_OnTrack_inner_PXLayer_2",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_inner_PXLayer_3",
+     'description': "ClusterSize_Vs_Eta_OnTrack_PXLayer_3",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_inner_PXLayer_4",
+        'description': "ClusterSize_Vs_Eta_OnTrack_PXLayer_4",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
+
+pixellayout(dqmitems, "41b - ClusterSize Vs Eta (OnTrack) outer",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_outer_PXLayer_1",
+     'description': "ClusterSize_Vs_Eta_OnTrack_outer_PXLayer_1",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_outer_PXLayer_2",
+        'description': "ClusterSize_Vs_Eta_OnTrack_outer_PXLayer_2",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_outer_PXLayer_3",
+     'description': "ClusterSize_Vs_Eta_OnTrack_PXLayer_3",
+     'draw': {'withref' : "no", 'drawopts': "COLZ"}},
+     { 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_outer_PXLayer_4",
+        'description': "ClusterSize_Vs_Eta_OnTrack_PXLayer_4",
+        'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
+  )
