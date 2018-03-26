@@ -16,5 +16,6 @@
     "serverkey": "",
     "hkey": "",
     "updateDNs": 60,
+    "dasexamples": "/data/srv/state/das",
     "verbose": 0
 }
