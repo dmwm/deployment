@@ -1,6 +1,13 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_reqmgr2_variants="default prod preprod dev"
 
+case $variant in
+  prod )    base_url="https://cmsweb.cern.ch"         dbs_ins="prod";;
+  preprod ) base_url="https://cmsweb-testbed.cern.ch" dbs_ins="int";;
+  dev )     base_url="https://cmsweb-dev.cern.ch"     dbs_ins="dev";;
+  * )       base_url="https://`hostname -f`"          dbs_ins="private_vm";;
+esac
+
 deploy_reqmgr2_deps()
 {
   deploy $stage backend
@@ -26,12 +33,6 @@ deploy_reqmgr2_sw()
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
 
-  case $variant in
-    prod )    base_url="https://cmsweb.cern.ch"         dbs_ins="prod";;
-    preprod ) base_url="https://cmsweb-testbed.cern.ch" dbs_ins="int";;
-    dev )     base_url="https://cmsweb-dev.cern.ch"     dbs_ins="dev";;
-    * )       base_url="https://`hostname -f`"          dbs_ins="private_vm";;
-  esac
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
                  s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
        $root/$cfgversion/config/$project/config.py
@@ -58,6 +59,11 @@ deploy_reqmgr2_post()
          "http://localhost:${couch##*:}/reqmgr_config_cache" \
          >> $root/state/${couch%%:*}/stagingarea/reqmgr2
   done
+
+  # Upload default configuration to reqmgr auxiliary db
+  local cmd="$project_config/manage postdefaultconfig $base_url 'I did read documentation'"
+  $nogroups || cmd="sudo -H -u _reqmgr2 bashs -l -c \"${cmd}\""
+  eval $cmd
 
   (mkcrontab; sysboot) | crontab -
 }

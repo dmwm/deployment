@@ -9,6 +9,7 @@
 ##H   sysboot           start server from crond if not running
 ##H   restart           (re)start the service
 ##H   updateversions    update database with ScramArchs/CMSSW releases
+##H   postdefaultconfig post the default configuration to ReqMgr Auxiliary DB
 ##H   start             (re)start the service
 ##H   stop              stop the service
 ##H
@@ -43,6 +44,7 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+WMCORE_BIN=$ROOT/apps/$ME/bin
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export WMCORE_ROOT=$REQMGR2_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
@@ -96,8 +98,13 @@ check()
 
 updateversions()
 {
-  cd $STATEDIR
-  reqmgr-sw-update $CFGFILE
+  ${WMCORE_BIN}/reqmgr-sw-update $CFGFILE
+}
+
+
+postdefaultconfig()
+{
+  ${WMCORE_BIN}/reqmgr-put-default-config $1
 }
 
 
@@ -125,6 +132,11 @@ case ${1:-status} in
   updateversions )
     check "$2"
     updateversions
+    ;;
+
+  postdefaultconfig )
+    check "$3"
+    postdefaultconfig $2
     ;;
 
   help )
