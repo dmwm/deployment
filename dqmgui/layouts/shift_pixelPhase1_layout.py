@@ -34,15 +34,6 @@ shiftpixelP1layout(dqmitems,"03 - PixelPhase1 Digis: BladePannel vs Disk endcap 
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-#shiftpixelP1layout(dqmitems, "04 - PixelPhase1_Cluster_Charge",
-#   [{ 'path': "PixelPhase1/Phase1_MechanicalView/charge_PXBarrel",
-#      'description': "Cluster charge in the BPix modules",
-#      'draw': { 'withref': "no" }},
-#    { 'path': "PixelPhase1/Phase1_MechanicalView/charge_PXForward",
-#      'description': "Cluster charge in FPix modules",
-#      'draw': { 'withref': "no" }}]
-#   )
-
 shiftpixelP1layout(dqmitems, "04 - PixelPhase1_Cluster_Charge",
    [{ 'path': "PixelPhase1/Tracks/charge_PXBarrel",
       'description': "Corrected Cluster charge (On Track) in the BPix modules",
@@ -51,8 +42,6 @@ shiftpixelP1layout(dqmitems, "04 - PixelPhase1_Cluster_Charge",
       'description': "Corrected Cluster charge (On Track) in FPix modules",
       'draw': { 'withref': "no" }}]
    )
-
-
 
 shiftpixelP1layout(dqmitems, "05 - PixelPhase1_Dead_ROCs",
    [{ 'path': "PixelPhase1/deadRocTrendLayer_1",
