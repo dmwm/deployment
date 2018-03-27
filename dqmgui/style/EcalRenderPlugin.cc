@@ -1226,7 +1226,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
   }
   else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing (map(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath)){
     if(isNewStyle)
-      obj->GetZaxis()->SetRangeUser(-5., 5.);
+      obj->GetZaxis()->SetRangeUser(-25., 25.);
     else
       obj->GetZaxis()->SetRangeUser(45., 55.);
     gStyle->SetPalette(timingPalette.size(), &(timingPalette[0]));
@@ -1258,7 +1258,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     applyDefaults = false;
   }
   else if(TPRegexp("E[BE]TimingClient/E[BE]TMT timing projection (eta|phi)(| EE [+-])").MatchB(fullpath))
-    obj->GetYaxis()->SetRangeUser(-5., 5.);
+    obj->GetYaxis()->SetRangeUser(-25., 25.);
   else if(TPRegexp("E[BE]ClusterTask/E[BE]CLT SC energy vs seed crystal energy").MatchB(fullpath)){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetGrid(false, false);
