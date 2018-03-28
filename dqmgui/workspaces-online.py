@@ -110,15 +110,15 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/31 - PixelPhase1 Dead ROC Trends in barrel',
                   'PixelPhase1/Layouts/32 - PixelPhase1 Dead ROC Trends in endcap',
                   'PixelPhase1/Layouts/33 - ntracks',
-                  'PixelPhase1/Layouts/34 - Charge and size',
-                  'PixelPhase1/Layouts/35a - Cluster on track charge per Inner Ladders',
-                  'PixelPhase1/Layouts/35b - Cluster on track charge per Outer Ladders',  
+                  'PixelPhase1/Layouts/34 - Charge and size (on-track)',
+                  'PixelPhase1/Layouts/35a - Cluster charge (on-track) per Inner Ladders',
+                  'PixelPhase1/Layouts/35b - Cluster charge (on-track) per Outer Ladders',  
                   #'PixelPhase1/Layouts/35 - Cluster on track and vertices per lumi',
-                  'PixelPhase1/Layouts/36 -  Ontrack PXLayer',
-                  'PixelPhase1/Layouts/37 - Ontrack Disk',
+                  'PixelPhase1/Layouts/36 - Cluster position (on-track) per PXLayer',
+                  'PixelPhase1/Layouts/37 - Cluster position (on-track) per Disk',
                   'PixelPhase1/Layouts/40 - PixelPhase1 Residuals',
-                  'PixelPhase1/Layouts/41a - ClusterSize Vs Eta (OnTrack) inner',
-                  'PixelPhase1/Layouts/41b - ClusterSize Vs Eta (OnTrack) outer',
+                  'PixelPhase1/Layouts/41a - ClusterSize Vs Eta (on-track) inner',
+                  'PixelPhase1/Layouts/41b - ClusterSize Vs Eta (on-track) outer',
                 )
 
 

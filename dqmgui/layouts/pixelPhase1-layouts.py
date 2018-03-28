@@ -511,7 +511,7 @@ pixellayout(dqmitems, "33 - ntracks",
      'draw': {'withref' : "no"}}]
   )
 
-pixellayout(dqmitems, "34 - Charge and size",
+pixellayout(dqmitems, "34 - Charge and size (on-track)",
   [{ 'path': "PixelPhase1/Tracks/charge_PXBarrel",
      'description': "charge PXBarrel",
      'draw': {'withref' : "no"}},
@@ -526,7 +526,7 @@ pixellayout(dqmitems, "34 - Charge and size",
      'draw': {'withref' : "no"}}]
   )
 
-pixellayout(dqmitems, "35a - Cluster on track charge per Inner Ladders",
+pixellayout(dqmitems, "35a - Cluster charge (on-track) per Inner Ladders",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/chargeInner_PXLayer_1",
      'description': "corrected cluster charge (on track) in inner ladders in PXLayer 1",
      'draw': {'withref' : "no"}},
@@ -541,7 +541,7 @@ pixellayout(dqmitems, "35a - Cluster on track charge per Inner Ladders",
      'draw': {'withref' : "no"}}]
   )
 
-pixellayout(dqmitems, "35b - Cluster on track charge per Outer Ladders",
+pixellayout(dqmitems, "35b - Cluster charge (on-track) per Outer Ladders",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/chargeOuter_PXLayer_1",
      'description': "corrected cluster charge (on track) in outer ladders in PXLayer 1",
      'draw': {'withref' : "no"}},
@@ -557,7 +557,7 @@ pixellayout(dqmitems, "35b - Cluster on track charge per Outer Ladders",
   )
 
 
-pixellayout(dqmitems, "36 -  Ontrack PXLayer",
+pixellayout(dqmitems, "36 - Cluster position (on-track) per PXLayer",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/clusterposition_zphi_ontrack_PXLayer_1",
      'description': "clusterposition_zphi_ontrack_PXLayer_1",
      'draw': {'withref' : "no", 'drawopts': "COLZ"}},
@@ -572,7 +572,7 @@ pixellayout(dqmitems, "36 -  Ontrack PXLayer",
          'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
   )
 
-pixellayout(dqmitems, "37 - Ontrack Disk",
+pixellayout(dqmitems, "37 - Cluster position (on-track) per Disk",
   [{'path': "PixelPhase1/Tracks/PXForward/clusterposition_xy_ontrack_PXDisk_+1",
   'description': "Cluster on track positions in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
   'draw': { 'withref': "no"}},
@@ -634,7 +634,7 @@ pixellayout(dqmitems, "40 - PixelPhase1 Residuals",
    )
 
 
-pixellayout(dqmitems, "41a - ClusterSize Vs Eta (OnTrack) inner",
+pixellayout(dqmitems, "41a - ClusterSize Vs Eta (on-track) inner",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_inner_PXLayer_1",
      'description': "ClusterSize_Vs_Eta_OnTrack_PXLayer_1",
      'draw': {'withref' : "no", 'drawopts': "COLZ"}},
@@ -649,7 +649,7 @@ pixellayout(dqmitems, "41a - ClusterSize Vs Eta (OnTrack) inner",
         'draw': {'withref' : "no", 'drawopts': "COLZ"}}]
   )
 
-pixellayout(dqmitems, "41b - ClusterSize Vs Eta (OnTrack) outer",
+pixellayout(dqmitems, "41b - ClusterSize Vs Eta (on-track) outer",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_outer_PXLayer_1",
      'description': "ClusterSize_Vs_Eta_OnTrack_outer_PXLayer_1",
      'draw': {'withref' : "no", 'drawopts': "COLZ"}},
