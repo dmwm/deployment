@@ -24,3 +24,20 @@ errorlayout(dqmitems, "06 - BeamSpot missing from online",
 ##errorlayout(dqmitems, "07 - SiStrip DataPresentInLS",
 ## [{ 'path': "SiStrip/MechanicalView/DataPresentInLS",
 ##    'description': "Monitoring of SiStrip activity in each LS. Audio alarm is fired during stable beams if there are no digis in either SiStrip partition for some time (red box). In case of alarm, please verify with the shift leader that SiStrip HV is ON. If HV is ON during alarm, call Tracker DOC at 165503. For more details, please refer to <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftSiStrip>DQMShiftOnlineSiStrip</a> ", 'draw': { 'withref': "no" }}])
+
+errorlayout(dqmitems, "08 - L1T Zero Suppression Error",
+  [{'path': "L1T/L1TStage2uGMT/zeroSuppression/AllEvts/mismatchRatio", 'description': "Summary of the uGMT zero suppression checks for all events. Wrongly zero suppressed raw data can only be checked for the validation events. For normal events only errors where data was not zero suppressed but should have been will be found.", 'draw': { 'withref': "no" }},
+  {'path': "L1T/L1TStage2BMTF/zeroSuppression/AllEvts/mismatchRatio", 'description': "Summary of the BMTF zero suppression checks for all events. Wrongly zero suppressed raw data can only be checked for the validation events. For normal events only errors where data was not zero suppressed but should have been will be found.", 'draw': { 'withref': "no" }}])
+
+errorlayout(dqmitems, "09 - L1T Data Transmission Error",
+  [{'path': "L1T/L1TStage2uGT/uGMToutput_vs_uGTinput/mismatchRatio", 'description': "Summary of the uGMT output to uGT input data transmission checks. The uGT must receive exactly the same objects that the uGMT sends. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }},
+  #{'path': "L1T/L1TStage2uGT/calol2ouput_vs_uGTinput/mismatchRatio", 'description': "Summary of the CaloLayer2 output to uGT input data transmission checks. The uGT must receive exactly the same objects that the CaloLayer2 sends. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }}
+  ])
+
+errorlayout(dqmitems, "10 - L1T uGMT Output Integrity Error",
+  [{'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy1/mismatchRatio", 'description': "Summary of the comparison of the uGMT output muon collection with the copy #1 of the uGMT output muon collection. The two collections must contain identical data. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }},
+  {'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy2/mismatchRatio", 'description': "Summary of the comparison of the uGMT output muon collection with the copy #2 of the uGMT output muon collection. The two collections must contain identical data. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }},
+  {'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy3/mismatchRatio", 'description': "Summary of the comparison of the uGMT output muon collection with the copy #3 of the uGMT output muon collection. The two collections must contain identical data. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }}],
+  [{'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy4/mismatchRatio", 'description': "Summary of the comparison of the uGMT output muon collection with the copy #4 of the uGMT output muon collection. The two collections must contain identical data. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }},
+  {'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy5/mismatchRatio", 'description': "Summary of the comparison of the uGMT output muon collection with the copy #5 of the uGMT output muon collection. The two collections must contain identical data. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }}])
+
