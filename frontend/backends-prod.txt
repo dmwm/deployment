@@ -7,6 +7,7 @@
 ^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0742.cern.ch :affinity
 ^/auth/complete/(?:c?)(?:couchdb|workqueue|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0740.cern.ch :affinity
 ^/auth/complete/das(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
+^/auth/complete/das2go(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) vocms0741.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/wmarchive(?:/|$) vocms0182.cern.ch
