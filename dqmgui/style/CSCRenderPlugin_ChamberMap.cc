@@ -233,7 +233,7 @@ void ChamberMap::draw(TH2*& me) {
                             fillColor = 51 + (int) (((BinContent - HistoMinValue) / (HistoMaxValue - HistoMinValue)) * 49.0);
                         }
                         /** VR: just to be sure :) */
-                        if (fillColor > 100) fillColor = 100;
+                        if (fillColor > 99) fillColor = 99;
                         if (fillColor < 51) fillColor = 51;
 
                     }
