@@ -175,7 +175,78 @@ l1t_quickCollection(dqmitems, "27 - Isolated Tau Pt distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-
+l1t_quickCollection(dqmitems, "28 - ETTEM Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTETMRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "29 - ETT Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "30 - EtSun Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/EtSumBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "31 - HTT Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/HTTRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "30 - METHF Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METHFPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "31 - METHF Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METHFRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "32 - MET Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "33 - MET Rank distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "34 - MHTHF Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "35 - MHTHF Rank distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "36 - MHT Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "37 - MHT Rank distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
 ###############################################
 ### From here down is legacy/stage1 trigger ###
 ###           All in Legacy folder          ###
