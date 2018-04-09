@@ -169,7 +169,7 @@ l1t_quickCollection(dqmitems, "26 - Non-Isolated Tau Et Eta vs Phi distribution"
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "27 - Isolated Tau Pt distribution",
+l1t_quickCollection(dqmitems, "27 - Non-Isolated Tau Pt distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausRank",
     'description': "",
@@ -217,7 +217,7 @@ l1t_quickCollection(dqmitems, "34 - MET Phi distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "35 - MET Rank distribution",
+l1t_quickCollection(dqmitems, "35 - MET Et distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METRank",
     'description': "",
@@ -229,7 +229,7 @@ l1t_quickCollection(dqmitems, "36 - MHTHF Phi distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "37 - MHTHF Rank distribution",
+l1t_quickCollection(dqmitems, "37 - MHTHF Et distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFRank",
     'description': "",
@@ -241,7 +241,7 @@ l1t_quickCollection(dqmitems, "38 - MHT Phi distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "39 - MHT Rank distribution",
+l1t_quickCollection(dqmitems, "39 - MHT Et distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTRank",
     'description': "",
