@@ -187,7 +187,7 @@ l1t_quickCollection(dqmitems, "29 - ETT Et distribution",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "30 - EtSun Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "30 - EtSum Bx Occupancy distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/EtSumBxOcc",
     'description': "",
