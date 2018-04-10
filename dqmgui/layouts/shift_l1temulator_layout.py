@@ -1,20 +1,22 @@
+moreInfoStr = "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."
+
 def l1temulayout(i, p, *rows): i["00 Shift/L1TEMU/" + p] = DQMItem(layout=rows)
 
 l1temulayout(dqmitems,"00 - uGMT - data vs emulator misMatch ratio",
-             [{'path': "L1TEMU/L1TdeStage2uGMT/data_vs_emulator_comparison/mismatchRatio", 'description': "uGMT - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
+             [{'path': "L1TEMU/L1TdeStage2uGMT/data_vs_emulator_comparison/mismatchRatio", 'description': "uGMT - data vs emulator misMatch ratio. "+moreInfoStr}])
 
 l1temulayout(dqmitems,"01 - BMTF - data vs emulator misMatch ratio",
-             [{'path': "L1TEMU/L1TdeStage2BMTF/mismatchRatio", 'description': "BMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
+             [{'path': "L1TEMU/L1TdeStage2BMTF/mismatchRatio", 'description': "BMTF - data vs emulator misMatch ratio. "+moreInfoStr}])
 
 l1temulayout(dqmitems,"02 - OMTF - data vs emulator misMatch ratio",
-             [{'path': "L1TEMU/L1TdeStage2OMTF/mismatchRatio", 'description': "OMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
+             [{'path': "L1TEMU/L1TdeStage2OMTF/mismatchRatio", 'description': "OMTF - data vs emulator misMatch ratio. "+moreInfoStr}])
 
 l1temulayout(dqmitems,"03 - EMTF - data vs emulator misMatch ratio",
-             [{'path': "L1TEMU/L1TdeStage2EMTF/mismatchRatio", 'description': "EMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
+             [{'path': "L1TEMU/L1TdeStage2EMTF/mismatchRatio", 'description': "EMTF - data vs emulator misMatch ratio. "+moreInfoStr}])
 
 l1temulayout(dqmitems,"04 - CaloLayer1 - data vs emulator misMatch ratio",
-             [{'path': "L1TEMU/L1TdeStage2CaloLayer1/dataEmulSummary", 'description': "CaloLayer1 - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
-
+             [{'path': "L1TEMU/L1TdeStage2CaloLayer1/dataEmulSummary", 'description': "CaloLayer1 - data vs emulator misMatch ratio. "+moreInfoStr}])
+	     
 l1temulayout(dqmitems,"05 - Calo Layer2 EG Data-Emulator Agreement Summary",
  	     [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/EG Agreement Summary",'description': "EG Data-Emulator Agreement Summary"}])
 
