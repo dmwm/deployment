@@ -14,3 +14,21 @@ l1temulayout(dqmitems,"03 - EMTF - data vs emulator misMatch ratio",
 
 l1temulayout(dqmitems,"04 - CaloLayer1 - data vs emulator misMatch ratio",
              [{'path': "L1TEMU/L1TdeStage2CaloLayer1/dataEmulSummary", 'description': "CaloLayer1 - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>."}])
+
+l1temulayout(dqmitems,"05 - Calo Layer2 EG Data-Emulator Agreement Summary",
+ 	     [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/EG Agreement Summary",'description': "EG Data-Emulator Agreement Summary"}])
+
+l1temulayout(dqmitems,"06 - Calo Layer2 Energy Sum Data-Emulator Agreement Summary",
+  	     [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Energy Sum Agreement Summary",'description': "Energy Sum Data-Emulator Agreement Summary"}])
+
+l1temulayout(dqmitems,"07 - Calo Layer2 High Level Data-Emulator Agreement Summary",
+  	     [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/High level summary",'description': "Event by event comparison Data-Emulator Agreement Summary"}])
+
+l1temulayout(dqmitems,"08 - Calo Layer2 Jet Data-Emulator Agreement Summary",
+  	     [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Jet Agreement Summary",'description': "Jet Data-Emulator Agreement Summary"}])
+
+l1temulayout(dqmitems,"09 - Calo Layer2 Problem Summary",
+  	     [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Problem Summary",'description': "Problematic Event Summary"}])
+
+l1temulayout(dqmitems,"10 - Calo Layer2 Tau Data-Emulator Agreement Summary",
+  	     [{ 'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Tau Agreement Summary",'description': "Tau Data-Emulator Agreement Summary"}])
