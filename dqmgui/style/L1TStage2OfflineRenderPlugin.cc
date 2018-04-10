@@ -9,7 +9,7 @@
 #include "TH2F.h"
 #include "TStyle.h"
 
-class L1TStage2CaloLayer2RenderPlugin : public DQMRenderPlugin {
+class L1TStage2OfflineRenderPlugin : public DQMRenderPlugin {
 
   int palette_kry[256];
   int palette_yrk[256];
@@ -35,14 +35,14 @@ public:
     }
 
   virtual bool applies(const VisDQMObject& o, const VisDQMImgInfo&) {
-    if (o.name.find("L1T/L1TStage2CaloLayer2/") != std::string::npos || o.name.find("L1TEMU/L1TStage2CaloLayer2/") != std::string::npos)
+    if (o.name.find("L1TriggerVsReco/") != std::string::npos)
       return true;
 
     return false;
   }
 
-  virtual void preDraw(TCanvas* c, const VisDQMObject& o, const VisDQMImgInfo&, VisDQMRenderInfo& r) {
-    if (dynamic_cast<TH1F*>(o.object)) {
+ virtual void preDraw(TCanvas* c, const VisDQMObject& o, const VisDQMImgInfo&, VisDQMRenderInfo& r) { 
+ if (dynamic_cast<TH1F*>(o.object)) {
       preDrawTH1F(c, o);
     } else if (dynamic_cast<TH2F*>(o.object)) {
       preDrawTH2F(c, o, r);
@@ -59,7 +59,7 @@ public:
 
  private:
 
-bool checkAndRemove(std::string &s, const char * key)
+  bool checkAndRemove(std::string &s, const char * key)
   {
     if( s.find(key) != std::string::npos )
     {
@@ -73,49 +73,24 @@ bool checkAndRemove(std::string &s, const char * key)
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
     assert(obj);
 
-    if (o.name.find("Energy-Sums/EtSumBxOcc") != std::string::npos) {
-      gPad->SetLogy(1);
+    if (o.name.find("eff_") != std::string::npos // muon naming scheme
+    || (o.name.find("efficiency") != std::string::npos && o.name.find("_Den") == std::string::npos && o.name.find("_Num") == std::string::npos)) { // calo naming scheme
+      obj->GetYaxis()->SetRangeUser(0., 1.1);
     }
-    if (o.name.find("Energy-Sums/METRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/METPhi") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/ETTRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/MHTRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/MHTPhi") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/HTTRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-
-    // calo layer2 comparison histograms
-    if (o.name.find("expert") == std::string::npos) {
-      if (o.name.find(" Summary") != std::string::npos || o.name.find(" summary") != std::string::npos) {
-        obj->SetOption("texthist");
-      }
-    }
-
   }
 
-  void preDrawTH2F(TCanvas *c, const VisDQMObject& o, VisDQMRenderInfo &r) {
-    TH2F* obj = dynamic_cast<TH2F*>(o.object);
+  void preDrawTH2F(TCanvas* c, const VisDQMObject& o, VisDQMRenderInfo &r) {   
+  TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
 
     obj->SetOption("colz");
-  
+
     checkAndRemove(r.drawOptions,"tlabels");
 
-    // Colormap setup
+    //Colormap setup
     if( checkAndRemove(r.drawOptions, "kry") )
       {
-    //  Choose trigger from hell palette
+     // Choose trigger from hell palette
         obj->SetContour(256);
         gStyle->SetPalette(256, palette_kry);
         c->SetFrameFillColor(kBlack);
@@ -123,28 +98,27 @@ bool checkAndRemove(std::string &s, const char * key)
         obj->GetYaxis()->SetAxisColor(kWhite);
         tlabels_.SetTextColor(kWhite);
       }
-     else if( checkAndRemove(r.drawOptions, "yrk") )
+    else if( checkAndRemove(r.drawOptions, "yrk") )
       {
-    //  Choose the Inverted Dark Body Radiator palette
+     // Choose the Inverted Dark Body Radiator palette
         obj->SetContour(256);
         gStyle->SetPalette(256, palette_yrk);
       }
-     else
+    else
       {
-    // Set up default palette
-       obj->SetContour(100);
-       gStyle->SetPalette(1);
-       tlabels_.SetTextColor(kBlack);
+      // Set up default palette
+      obj->SetContour(100);
+      gStyle->SetPalette(1);
+      tlabels_.SetTextColor(kBlack);
       }
-    
+
+    // 2D efficiency histograms
+    if (o.name.find("efficiency") != std::string::npos && o.name.find("_Den") == std::string::npos && o.name.find("_Num") == std::string::npos) {
+      obj->GetZaxis()->SetRangeUser(0., 1.1);
+    }
   }
 
-  void postDrawTH1F(TCanvas*, const VisDQMObject& o) {
-    TH1F* obj = dynamic_cast<TH1F*>(o.object);
-    assert(obj);
-
-    gStyle->SetOptStat(111110);
-  }
+  void postDrawTH1F(TCanvas*, const VisDQMObject&) {}
 
   void postDrawTH2F(TCanvas*, const VisDQMObject& o) {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
@@ -154,4 +128,4 @@ bool checkAndRemove(std::string &s, const char * key)
   }
 };
 
-static L1TStage2CaloLayer2RenderPlugin instance;
+static L1TStage2OfflineRenderPlugin instance;

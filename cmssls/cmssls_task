@@ -17,7 +17,7 @@ CFGDIR=$(dirname $0)
 STATEDIR=$TOP/state/$ME
 LOGDIR=$TOP/logs/$ME
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
-WEBDIR={WEBDIR}
+WEBDIR=/afs/cern.ch/cms/LCG/www/SLS
 
 # Main routine, perform action requested on command line.
 case ${1:-help} in

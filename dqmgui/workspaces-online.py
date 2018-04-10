@@ -145,7 +145,18 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/30 - PixelPhase1 Cluster Position: X vs Y endcap summary',
                   'PixelPhase1/Layouts/31 - PixelPhase1 Dead ROC Trends in barrel',
                   'PixelPhase1/Layouts/32 - PixelPhase1 Dead ROC Trends in endcap',
+                  'PixelPhase1/Layouts/33 - ntracks',
+                  'PixelPhase1/Layouts/34 - Charge and size (on-track)',
+                  'PixelPhase1/Layouts/35a - Cluster charge (on-track) per Inner Ladders',
+                  'PixelPhase1/Layouts/35b - Cluster charge (on-track) per Outer Ladders',  
+                  #'PixelPhase1/Layouts/35 - Cluster on track and vertices per lumi',
+                  'PixelPhase1/Layouts/36 - Cluster position (on-track) per PXLayer',
+                  'PixelPhase1/Layouts/37 - Cluster position (on-track) per Disk',
+                  'PixelPhase1/Layouts/40 - PixelPhase1 Residuals',
+                  'PixelPhase1/Layouts/41a - ClusterSize Vs Eta (on-track) inner',
+                  'PixelPhase1/Layouts/41b - ClusterSize Vs Eta (on-track) outer',
                 )
+
 
 server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^(SiStrip|Tracking)/', '',
                  'SiStrip/Layouts/00 - SiStrip ReportSummary',
@@ -268,6 +279,23 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
                  'CSC/Layouts/06 Physics Efficiency - RecHits Minus',
                  'CSC/Layouts/07 Physics Efficiency - RecHits Plus',
                 )
+
+
+# GEM workspaces:
+server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
+                 'GEM/Layouts/00 StatusDigi Critical Errors',
+                 'GEM/Layouts/01 StatusDigi Warnings',
+                 'GEM/Layouts/02 GEMINI01la1',
+                 'GEM/Layouts/03 GEMINI01la2',
+                 'GEM/Layouts/04 GEMINI27la1',
+                 'GEM/Layouts/05 GEMINI27la2',
+                 'GEM/Layouts/06 GEMINI28la1',
+                 'GEM/Layouts/07 GEMINI28la2',
+                 'GEM/Layouts/08 GEMINI29la1',
+                 'GEM/Layouts/09 GEMINI29la2',
+                 'GEM/Layouts/10 GEMINI30la1',
+                 'GEM/Layouts/11 GEMINI30la2',
+)
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')

@@ -56,8 +56,7 @@ class SiPixelPhase1OnlineRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if( ( o.name.find( "PixelPhase1Timing/" )     != std::string::npos ||
-            o.name.find( "TrackTimingPixelPhase1/") != std::string::npos )
+      if( ( o.name.find( "PixelPhase1" ) != std::string::npos)
             && o.object && o.name.find("OnlineBlock") != std::string::npos ){
         return true;
       } else {

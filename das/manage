@@ -51,6 +51,7 @@ export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export STAGEDIR=$STATEDIR/stagingarea
 export DAS_CONFIG=$ROOT/config/$ME/das.cfg
+export DAS2GO_CONFIG=$ROOT/config/$ME/das2go-config.json
 export DAS_CONFIG_CLI=$ROOT/config/$ME/das_cli.cfg
 mkdir -p $STAGEDIR
 
@@ -109,6 +110,45 @@ check4das() {
     return
 }
 
+# helper function to wait for MongoDB appearance
+# it will incrementally increase waiting time with 20 iterations (~3minute)
+start_das2go(){
+    echo "Starting das2go service..."
+    nohup das2go_server $DAS2GO_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
+}
+stop_das2go(){
+    echo "Stop das2go service..."
+    local pid=`ps auxwww | grep das2go_server | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    if [ -n "${pid}" ]; then
+        kill -9 ${pid}
+    fi
+    local pid=`ps auxwww | grep das2go | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    if [ -n "${pid}" ]; then
+        kill -9 ${pid}
+    fi
+}
+status_das2go()
+{
+    local pid=`ps auxwww | grep das2go | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+
+    if  [ -z $pid ]; then
+        echo "das2go is not running"
+        return
+    fi
+    if  [ `uname` == "Darwin" ]; then
+        nth=`ps -M -p $pid | grep -v USER | wc -l | awk '{print $1}'`
+    else
+        nth=`ps -L -p $pid | grep -v PID | wc -l | awk '{print $1}'`
+    fi
+    echo "das2go server runs with $nth threads"
+    if [ ! -z "${pid}" ]; then
+        echo "das2go service is running, pid=${pid}"
+        ps -f -wwww -p ${pid}
+    else
+        echo "das2go service is not running"
+    fi
+}
+
 # helper function to wait for DAS server to start
 # it will incrementally increase waiting time with 20 iterations (~3minute)
 start_das_cli() {
@@ -144,7 +184,10 @@ start()
   DASMAPS_DIR=$STAGEDIR LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so $DAS_ROOT/bin/das_server start \
       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
   # start DAS cli server in background since we need to wait for DAS web server/MongoDB
-  start_das_cli &
+  # start_das_cli &
+  # start das2go server
+  sleep 30 # let DAS server starts since it will upload DAS maps
+  start_das2go
 }
 
 # Stop the service.
@@ -154,6 +197,8 @@ stop()
   for das_pid in $(pgrep -u $(id -u) -f "[/]das_server"); do
       kill -9 $das_pid
   done
+  # stop das2go server
+  stop_das2go
 }
 
 # Check if the server is running.
@@ -165,6 +210,7 @@ status()
   else
     echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
+  status_das2go
 }
 
 
@@ -210,8 +256,18 @@ case ${1:-status} in
     start
     ;;
 
+  start_das2go )
+    check "$2"
+    stop_das2go
+    start_das2go
+    ;;
+
   status )
     status
+    ;;
+
+  status_das2go )
+    status_das2go
     ;;
 
   fetchmaps )
@@ -222,6 +278,11 @@ case ${1:-status} in
   stop )
     check "$2"
     stop
+    ;;
+
+  stop_das2go )
+    check "$2"
+    stop_das2go
     ;;
 
   cron )

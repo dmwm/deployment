@@ -2,7 +2,7 @@
 
 #Split CouchDB logs according to the rules defined in couchdb-logrotate.conf
 
-for host in vocms0{117,127,731,132,140,141,142}; do
+for host in vocms0{117,127,731,132,740,741,742}; do
   OUT=$(ssh $host "sudo logrotate /data/srv/current/config/couchdb/couchdb-logrotate.conf")
   if [ "$OUT" == "ROTATE" ]; then
     mv /build/srv-logs/$host/couchdb/{couch.log,couch-$(date +%Y%m%d).log}
