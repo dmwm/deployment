@@ -41,8 +41,42 @@ l1t_quickCollection(dqmitems,"04 - EMTF Data-Emulator misMatch ratio",
     'description': "EMTF - data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
     'draw': { 'withref': "no" }
   }])
-
-
+l1t_quickCollection(dqmitems,"05 - Calo Layer2 EG Data-Emulator Agreement Summary",
+  [{
+    'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/EG Agreement Summary",
+    'description': "EG Data-Emulator Agreement Summary",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"06 - Calo Layer2 Energy Sum Data-Emulator Agreement Summary",
+  [{
+    'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Energy Sum Agreement Summary",
+    'description': "Energy Sum Data-Emulator Agreement Summary",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"07 - Calo Layer2 High Level Data-Emulator Agreement Summary",
+  [{
+    'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/High level summary",
+    'description': "Event by event comparison Data-Emulator Agreement Summary",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"08 - Calo Layer2 Jet Data-Emulator Agreement Summary",
+  [{
+    'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Jet Agreement Summary",
+    'description': "Jet Data-Emulator Agreement Summary",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"09 - Calo Layer2 Problem Summary",
+  [{
+    'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Problem Summary",
+    'description': "Problematic Event Summary",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"10 - Calo Layer2 Tau Data-Emulator Agreement Summary",
+  [{
+    'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Tau Agreement Summary",
+    'description': "Tau Data-Emulator Agreement Summary",
+    'draw': { 'withref': "no" }
+  }])
 ###############################################
 ### From here down is legacy/stage1 trigger ###
 ###           All in Legacy folder          ###

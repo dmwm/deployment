@@ -67,7 +67,186 @@ l1t_quickCollection(dqmitems, "09 - uGT Algorithm Trigger Bits (after prescale)"
     'description': "",
     'draw': { 'withref': "no" }
   }])
-
+l1t_quickCollection(dqmitems, "10 - Calo Layer2 Central Jet Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "11 - Calo Layer2 Central Jet Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsEtEtaPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "12 - Calo Layer2 Central Jets Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "13 - Calo Layer2 Forward Jet Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "14 - Calo Layer2 Forward Jet Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsEtEtaPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "15 - Calo Layer2 Forward Jet Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "16 - Calo Layer2 Isolated EG Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "17 - Calo Layer2 Isolated EG Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsEtEtaPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "18 - Calo Layer2 Isolated EG Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "19 - Calo Layer2 Non-Isolated EG Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "20 - Calo Layer2 Non-Isolated EG Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsEtEtaPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "21 - Calo Layer2 Non-Isolated EG Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "22 - Calo Layer2 Isolated Tau Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "23 - Calo Layer2 Isolated Tau Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausEtEtaPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "24 - Calo Layer2 Isolated Tau Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "25 - Calo Layer2 Non-Isolated Tau Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "26 - Calo Layer2 Non-Isolated Tau Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausEtEtaPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "27 - Calo Layer2 Non-Isolated Tau Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "28 - Calo Layer2 ETTEM Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTEMRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "29 - Calo Layer2 ETT Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "30 - Calo Layer2 EtSum Bx Occupancy distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/EtSumBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "31 - Calo Layer2 HTT Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/HTTRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "32 - Calo Layer2 METHF Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METHFPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "33 - Calo Layer2 METHF Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METHFRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "34 - Calo Layer2 MET Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "35 - Calo Layer2 MET Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "36 - Calo Layer2 MHTHF Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "37 - Calo Layer2 MHTHF Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "38 - Calo Layer2 MHT Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTPhi",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "39 - Calo Layer2 MHT Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTRank",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
 ###############################################
 ### From here down is legacy/stage1 trigger ###
 ###           All in Legacy folder          ###
