@@ -16,15 +16,12 @@ DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2"
-USER_AMQ = "@@USER_AMQ@@"
-PASS_AMQ = "@@PASS_AMQ@@"
-AMQ_TOPIC = "@@TOPIC@@"
 AMQ_HOST_PORT = [('dashb-mb.cern.ch', 61113)]
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2'))
-from ReqMgr2Secrets import *
+from ReqMgr2Secrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
 config = Configuration()
 
