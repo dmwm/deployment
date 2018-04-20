@@ -200,6 +200,12 @@ private:
           obj->SetOption("col");
         }
       }
+      else if ( name.find( "Correlation" ) != std::string::npos )
+      {
+        if ( r.drawOptions.length() == 0 ) {
+          obj->SetOption("colz");
+        }
+      }
     }
 
   void preDrawTH1F( TCanvas *, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo &r )
