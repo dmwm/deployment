@@ -1065,7 +1065,7 @@ private:
         return;
       }
 
-      if( o.name.find("ROSEventLenght") != std::string::npos )
+      if( o.name.find("ROSEventLength") != std::string::npos || o.name.find("ROSEventLenght") != std::string::npos )
       {
         if(obj->GetEntries() != 0) c->SetLogy(1);
         gStyle->SetOptStat( 1111111 );
@@ -1086,7 +1086,7 @@ private:
         obj->SetStats( kTRUE );
       }
 
-      if( o.name.find( "EventLenght" ) != std::string::npos )
+      if( o.name.find( "EventLength" ) != std::string::npos || o.name.find( "EventLenght" ) != std::string::npos )
       {
         gStyle->SetOptStat( 1111111 );
         obj->SetStats( kTRUE );
@@ -1288,20 +1288,20 @@ private:
 //         return;
 //       }
 
-      if(o.name.find("ROSSummary") != std::string::npos)
+      if(o.name.find("ROSSummary_W") != std::string::npos)
       {
         TH2F * histo =  dynamic_cast<TH2F*>( o.object );
         int nBinsY = histo->GetNbinsY();
 
-        static TLine *lineRosTdc = new TLine(14,1,14,nBinsY+1);
+        static TLine *lineRosTdc = new TLine(5,1,5,nBinsY+1);
         lineRosTdc->Draw("same");
 
-        static TLatex *rosLabel = new TLatex(4.75,7.5,"ROS");
+        static TLatex *rosLabel = new TLatex(1.75,5.5,"ROS");
         rosLabel->SetTextColor(15);
         rosLabel->SetTextSize(0.11);
         rosLabel->Draw("same");
 
-        static TLatex *tdcLabel = new TLatex(14.9,7.5,"TDC");
+        static TLatex *tdcLabel = new TLatex(6.9,5.5,"TDC");
         tdcLabel->SetTextColor(15);
         tdcLabel->SetTextSize(0.11);
         tdcLabel->Draw("same");
@@ -1315,39 +1315,49 @@ private:
         int nBinsX = histo->GetNbinsX();
         int nBinsY = histo->GetNbinsY();
 
-        static TLine *lineRosTdc = new TLine(11,0,11,nBinsY);
+        static TLine *lineRosTdc = new TLine(5,0,5,nBinsY);
         lineRosTdc->Draw("same");
+
+        /*static TLatex *rosLabel = new TLatex(1.75,11.5,"ROS");
+        rosLabel->SetTextColor(15);
+        rosLabel->SetTextSize(0.11);
+        rosLabel->Draw("same");*/
+
+        static TLatex *tdcLabel = new TLatex(6.9,13.5,"TDC");
+        tdcLabel->SetTextColor(15);
+        tdcLabel->SetTextSize(0.11);
+        tdcLabel->Draw("same");
 
         static TLine *lineMB1 = new TLine(0,6,nBinsX,6);
         lineMB1->Draw("same");
-        static TLatex *mb1Label = new TLatex(4,1.5,"MB1");
+        static TLatex *mb1Label = new TLatex(2,1.5,"MB1");
         mb1Label->SetTextColor(15);
         mb1Label->SetTextSize(0.11);
         mb1Label->Draw("same");
 
         static TLine *lineMB2 = new TLine(0,12,nBinsX,12);
         lineMB2->Draw("same");
-        static TLatex *mb2Label = new TLatex(4,7.5,"MB2");
+        static TLatex *mb2Label = new TLatex(2,7.5,"MB2");
         mb2Label->SetTextColor(15);
         mb2Label->SetTextSize(0.11);
         mb2Label->Draw("same");
 
         static TLine *lineMB3 = new TLine(0,18,nBinsX,18);
         lineMB3->Draw("same");
-        static TLatex *mb3Label = new TLatex(4,13.5,"MB3");
+        static TLatex *mb3Label = new TLatex(2,13.5,"MB3");
         mb3Label->SetTextColor(15);
         mb3Label->SetTextSize(0.11);
         mb3Label->Draw("same");
 
-        static TLine *lineMB4 = new TLine(0,24,nBinsX,24);
-        lineMB4->Draw("same");
-        static TLatex *mb4Label = new TLatex(4,19.5,"MB4");
+        //static TLine *lineMB4 = new TLine(0,24,nBinsX,24);
+        //lineMB4->Draw("same");
+        static TLatex *mb4Label = new TLatex(2,19.5,"MB4");
         mb4Label->SetTextColor(15);
         mb4Label->SetTextSize(0.11);
         mb4Label->Draw("same");
-
-        static TLine *lineSC = new TLine(0,25,nBinsX,25);
-        lineSC->Draw("same");
+	
+        //static TLine *lineSC = new TLine(0,25,nBinsX,25);
+        //lineSC->Draw("same");
 
         return;
       }
@@ -1355,10 +1365,10 @@ private:
       if(o.name.find("TDCError") != std::string::npos)
       {
         TH2F * histo =  dynamic_cast<TH2F*>( o.object );
-        int nBinsX = histo->GetNbinsX();
+        //int nBinsX = histo->GetNbinsX();
         int nBinsY = histo->GetNbinsY();
 
-        static TLine *lineCEROS0 = new TLine(0,6,nBinsX,6);
+        /*static TLine *lineCEROS0 = new TLine(0,6,nBinsX,6);
         lineCEROS0->Draw("same");
         static TLine *lineCEROS1 = new TLine(0,12,nBinsX,12);
         lineCEROS1->Draw("same");
@@ -1366,7 +1376,7 @@ private:
         lineCEROS2->Draw("same");
         static TLine *lineCEROS3 = new TLine(0,24,nBinsX,24);
         lineCEROS3->Draw("same");
-
+	*/
         static TLine *lineTDC0 = new TLine(6,0,6,nBinsY);
         lineTDC0->Draw("same");
         static TLatex *tdc0Label = new TLatex(0.5,11.,"TDC 0");
@@ -1505,7 +1515,7 @@ private:
 
   void postDrawTH1( TCanvas *, const VisDQMObject &o )
     {
-      if( o.name.find("EventLenght") != std::string::npos )
+      if( o.name.find("EventLenght") != std::string::npos || o.name.find("EventLength") != std::string::npos )
       {
         TH1F * histo =  dynamic_cast<TH1F*>( o.object );
         int nBins = histo->GetNbinsX();
