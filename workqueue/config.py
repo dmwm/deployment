@@ -3,6 +3,7 @@ _GlobalWorkQueueConfig_
 
 Global cmsweb WorkQueue config.
 """
+from __future__ import print_function
 
 import socket
 import os
@@ -34,7 +35,13 @@ os.environ['MAX_LUMIS_PER_WQE'] = '400000'
 ROOTDIR = __file__.rsplit('/', 3)[0]
 # load AMQ credentials
 sys.path.append(os.path.join(ROOTDIR, 'auth/workqueue'))
-from WorkQueueSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
+try:
+    from WorkQueueSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
+except ImportError:
+    print("Mocking WorkQueue credentials...")
+    USER_AMQ=None
+    PASS_AMQ=None
+    AMQ_TOPIC=None
 
 config = Configuration()
 
