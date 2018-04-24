@@ -90,6 +90,7 @@ server.workspace('DQMContent', 11, 'Trigger', 'L1TEMU', '^(L1TEMU|L1T2016EMU)/',
 		 "L1TEMU/Layouts/Stage2-QuickCollection/08 - Calo Layer2 Jet Data-Emulator Agreement Summary",
 		 "L1TEMU/Layouts/Stage2-QuickCollection/09 - Calo Layer2 Problem Summary",
 		 "L1TEMU/Layouts/Stage2-QuickCollection/10 - Calo Layer2 Tau Data-Emulator Agreement Summary",
+                 "L1TEMU/Layouts/Stage2-QuickCollection/11 - uGT Data-Emulator misMatch ratio",
                 )
 
 server.workspace('DQMContent', 12, 'Trigger', 'HLT', '^HLT/', '',

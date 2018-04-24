@@ -77,6 +77,13 @@ l1t_quickCollection(dqmitems,"10 - Calo Layer2 Tau Data-Emulator Agreement Summa
     'description': "Tau Data-Emulator Agreement Summary",
     'draw': { 'withref': "no" }
   }])
+l1t_quickCollection(dqmitems,"11 - uGT Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGTEmul/dataEmulMismatchRatio_CentralBX",
+    'description': "uGT Data-Emulator misMatch ratio -- Central BX",
+    'draw': { 'withref': "no" }
+  }])
+
 ###############################################
 ### From here down is legacy/stage1 trigger ###
 ###           All in Legacy folder          ###
