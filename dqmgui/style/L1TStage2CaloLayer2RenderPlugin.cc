@@ -8,18 +8,25 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TStyle.h"
+#include "TBox.h"
+#include "TFrame.h"
 
 class L1TStage2CaloLayer2RenderPlugin : public DQMRenderPlugin {
 
   int palette_kry[256];
   int palette_yrk[256];
-
+  TBox *exclusionBox_;
   TText tlabels_;
 
 public:
 
   virtual void initialise(int, char **)
-    {
+    { 
+      // For masking areas
+      exclusionBox_ = new TBox();
+      exclusionBox_->SetFillColor(kGray+2);
+      exclusionBox_->SetFillStyle(3002);
+      
       // Laugh all you want, but they do look pretty
       // http://arxiv.org/pdf/1509.03700v1.pdf
       // linear_kry_5-98_c75_n256 reversed
@@ -58,7 +65,11 @@ public:
   }
 
  private:
-
+void drawExclusionBox(double x1, double y1, double x2, double y2)
+  {
+    exclusionBox_->DrawBox(x1, y1, x2, y2);
+  }
+ 
 bool checkAndRemove(std::string &s, const char * key)
   {
     if( s.find(key) != std::string::npos )
@@ -149,6 +160,11 @@ bool checkAndRemove(std::string &s, const char * key)
   void postDrawTH2F(TCanvas*, const VisDQMObject& o) {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
+    
+    if( o.name.find( "ForJetsEtEtaPhi_shift" ) != std::string::npos )
+     {
+       drawExclusionBox(-68, -0.5, 68, 143.5);
+     }
 
     gStyle->SetOptStat(10);
   }
