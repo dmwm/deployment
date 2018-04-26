@@ -79,7 +79,7 @@ l1t_quickCollection(dqmitems,"10 - Calo Layer2 Tau Data-Emulator Agreement Summa
   }])
 l1t_quickCollection(dqmitems,"11 - uGT Data-Emulator misMatch ratio",
   [{
-    'path': "L1TEMU/L1TdeStage2uGTEmul/dataEmulMismatchRatio_CentralBX",
+    'path': "L1TEMU/L1TdeStage2uGT/dataEmulMismatchRatio_CentralBX",
     'description': "uGT Data-Emulator misMatch ratio -- Central BX",
     'draw': { 'withref': "no" }
   }])

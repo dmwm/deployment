@@ -36,4 +36,4 @@ l1temulayout(dqmitems,"10 - CaloLayer2 - Tau Data-Emulator Agreement Summary",
   	         [{ 'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Tau Agreement Summary",'description': "Tau Data-Emulator Agreement Summary"}])
 
 l1temulayout(dqmitems,"11 - uGT Data-Emulator misMatch ratio",
-  	         [{ 'path': "L1TEMU/L1TdeStage2uGTEmul/dataEmulMismatchRatio_CentralBX",'description': "uGT Data-Emulator misMatch ratio -- Central BX"}])
+  	         [{ 'path': "L1TEMU/L1TdeStage2uGT/dataEmulMismatchRatio_CentralBX",'description': "uGT Data-Emulator misMatch ratio -- Central BX"}])
