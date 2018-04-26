@@ -7,17 +7,17 @@ l1tlayout(dqmitems,"00 - CaloLayer1 ECAL occupancy",
 l1tlayout(dqmitems,"01 - CaloLayer1 HCAL occupancy",
   [{'path': "L1T/L1TStage2CaloLayer1/hcalOccRecdEtWgt", 'description': "CaloLayer1 HCAL Et-weighted occupancy. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"02 - CaloLayer2 central jet E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsEtEtaPhi", 'description': "CaloLayer2 central jet E_T eta phi. x-axis: CaloLayer2 central jet E_T eta; y-axis: CaloLayer2 central jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/CenJetsEtEtaPhi_shift", 'description': "CaloLayer2 central jet E_T eta phi. x-axis: CaloLayer2 central jet E_T eta; y-axis: CaloLayer2 central jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"03 - CaloLayer2 forward jet E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsEtEtaPhi", 'description': "CaloLayer2 forward jet E_T eta phi. x-axis: CaloLayer2 forward jet E_T eta; y-axis: CaloLayer2 forward jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/ForJetsEtEtaPhi_shift", 'description': "CaloLayer2 forward jet E_T eta phi. x-axis: CaloLayer2 forward jet E_T eta; y-axis: CaloLayer2 forward jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"04 - CaloLayer2 iso EG E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsEtEtaPhi", 'description': "CaloLayer2 iso EG E_T eta phi. x-axis: CaloLayer2 iso EG E_T eta; y-axis: CaloLayer2 iso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/IsoEGsEtEtaPhi_shift", 'description': "CaloLayer2 iso EG E_T eta phi. x-axis: CaloLayer2 iso EG E_T eta; y-axis: CaloLayer2 iso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"05 - CaloLayer2 noniso EG E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsEtEtaPhi", 'description': "CaloLayer2 noniso EG E_T eta phi. x-axis: CaloLayer2 noniso EG E_T eta; y-axis: CaloLayer2 noniso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/NonIsoEGsEtEtaPhi_shift", 'description': "CaloLayer2 noniso EG E_T eta phi. x-axis: CaloLayer2 noniso EG E_T eta; y-axis: CaloLayer2 noniso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"06 - CaloLayer2 iso tau E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausEtEtaPhi", 'description': "CaloLayer2 iso tau E_T eta phi. x-axis: CaloLayer2 iso tau E_T eta; y-axis: CaloLayer2 iso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/IsoTausEtEtaPhi_shift", 'description': "CaloLayer2 iso tau E_T eta phi. x-axis: CaloLayer2 iso tau E_T eta; y-axis: CaloLayer2 iso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"07 - CaloLayer2 noniso tau E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausEtEtaPhi", 'description': "CaloLayer2 noniso tau E_T eta phi. x-axis: CaloLayer2 noniso tau E_T eta; y-axis: CaloLayer2 noniso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/TausEtEtaPhi_shift", 'description': "CaloLayer2 noniso tau E_T eta phi. x-axis: CaloLayer2 noniso tau E_T eta; y-axis: CaloLayer2 noniso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"08 - uGMT muon p_T",
     [{'path': "L1T/L1TStage2uGMT/ugmtMuonPt", 'description': "uGMT muon p_T. x-axis: uGMT muon p_T. "+moreInfoStr, 'draw': { 'withref': "yes" }}])
 l1tlayout(dqmitems,"09 - uGMT muon eta",
