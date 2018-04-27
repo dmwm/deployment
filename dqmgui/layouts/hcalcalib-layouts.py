@@ -1049,16 +1049,53 @@ hcalcaliblayout(dqmitems, '14 LED TDCTime',
 	]
 )
 
-plot_index = 15
+hcalcaliblayout(dqmitems, "15 Laser summary flags", 
+	[
+		{
+			'path':'Hcal/HBHEHPDTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/HBPMegaTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/HBMMegaTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/HEPMegaTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/HEMMegaTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/HFTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/HOTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/HFRaddamTask/SummaryvsLS/SummaryvsLS', 
+			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+		}
+	], 
+)
+
+plot_index = 16
 subdetpms = {
 	"HBHEHPD":["HBP", "HBM", "HEP", "HEM"], "HBPMega":["HBP"], "HBMMega":["HBM"], "HEPMega":["HEP"], "HEMMega":["HEM"], "HFRaddam":["HF"], "HF":["HF"], "HO":["HO"]
 }
+
 for laser_position in ["HBHEHPD", "HBPMega", "HBMMega", "HEPMega", "HEMMega", "HFRaddam", "HF", "HO"]:
+	plot_index += 1
+
 	row1 = []
 	plots1 = ["HcalCalib/{}Task/LaserMonSumQ_LS/LaserMonSumQ_LS".format(laser_position), "HcalCalib/{}Task/LaserMonTiming/LaserMonTiming".format(laser_position)]
 	for plot in plots1:
 		row1.append({"path":plot, "description":"""LaserMon amplitude and timing <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""})
+
 	plots2 = []
+	row2 = []
 	for subdetpm in subdetpms[laser_position]:
 		plots2.append("HcalCalib/{}Task/TimingDiff_DigiMinusLaserMon/{}".format(laser_position, subdetpm))
 	for plot in plots2:
