@@ -985,7 +985,71 @@ hcalcaliblayout(dqmitems, '10 RAW BadQuality vs BX (LS)', [{'path':'HcalCalib/Ra
 
 hcalcaliblayout(dqmitems, '11 RAW Bcn(Evn) Mismatches', [{'path':'HcalCalib/RawTask/BcnMsm/Electronics/VME', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'HcalCalib/RawTask/BcnMsm/Electronics/uTCA', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}], [{'path':'HcalCalib/RawTask/EvnMsm/Electronics/VME', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'HcalCalib/RawTask/EvnMsm/Electronics/uTCA', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
-plot_index = 12
+hcalcaliblayout(dqmitems, '12 LED pin diode amplitude', [{'path':'HcalCalib/LEDTask/LED_ADCvsBX', 'description':"""LED pin diode amplitude <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""}])
+
+hcalcaliblayout(dqmitems, '13 LED SignalMean', 
+	[
+		{
+			'path':'Hcal/LEDTask/SignalMean/depth/depth1', 
+			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/SignalMean/depth/depth2', 
+			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/SignalMean/depth/depth3', 
+			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/LEDTask/SignalMean/depth/depth4', 
+			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/SignalMean/depth/depth5', 
+			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/SignalMean/depth/depth6', 
+			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/LEDTask/SignalMean/depth/depth7', 
+			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	]
+)
+
+hcalcaliblayout(dqmitems, '14 LED TDCTime', 
+	[
+		{
+			'path':'Hcal/LEDTask/TDCTime/depth/depth1', 
+			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/TDCTime/depth/depth2', 
+			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/TDCTime/depth/depth3', 
+			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/LEDTask/TDCTime/depth/depth4', 
+			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/TDCTime/depth/depth5', 
+			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/LEDTask/TDCTime/depth/depth6', 
+			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/LEDTask/TDCTime/depth/depth7', 
+			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	]
+)
+
+plot_index = 15
 subdetpms = {
 	"HBHEHPD":["HBP", "HBM", "HEP", "HEM"], "HBPMega":["HBP"], "HBMMega":["HBM"], "HEPMega":["HEP"], "HEMMega":["HEM"], "HFRaddam":["HF"], "HF":["HF"], "HO":["HO"]
 }
