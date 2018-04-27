@@ -984,3 +984,54 @@ hcalcaliblayout(dqmitems, '09 Pedestal Occupancy EA vs LS ', [{'path':'HcalCalib
 hcalcaliblayout(dqmitems, '10 RAW BadQuality vs BX (LS)', [{'path':'HcalCalib/RawTask/BadQualityvsBX/BadQualityvsBX', 'description':"""Distribution of Bad Channels vs Bunch Crossing <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'HcalCalib/RawTask/BadQualityvsLS/BadQualityvsLS', 'description':"""Distribution of Bad Channels vs Lumi Section <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
 hcalcaliblayout(dqmitems, '11 RAW Bcn(Evn) Mismatches', [{'path':'HcalCalib/RawTask/BcnMsm/Electronics/VME', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'HcalCalib/RawTask/BcnMsm/Electronics/uTCA', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}], [{'path':'HcalCalib/RawTask/EvnMsm/Electronics/VME', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'HcalCalib/RawTask/EvnMsm/Electronics/uTCA', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
+
+plot_index = 12
+subdetpms = {
+	"HBHEHPD":["HBP", "HBM", "HEP", "HEM"], "HBPMega":["HBP"], "HBMMega":["HBM"], "HEPMega":["HEP"], "HEMMega":["HEM"], "HFRaddam":["HF"], "HF":["HF"], "HO":["HO"]
+}
+for laser_position in ["HBHEHPD", "HBPMega", "HBMMega", "HEPMega", "HEMMega", "HFRaddam", "HF", "HO"]:
+	row1 = []
+	plots1 = ["HcalCalib/{}Task/LaserMonSumQ_LS/LaserMonSumQ_LS".format(laser_position), "HcalCalib/{}Task/LaserMonTiming/LaserMonTiming".format(laser_position)]
+	for plot in plots1:
+		row1.append({"path":plot, "description":"""LaserMon amplitude and timing <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""})
+	plots2 = []
+	for subdetpm in subdetpms[laser_position]:
+		plots2.append("HcalCalib/{}Task/TimingDiff_DigiMinusLaserMon/{}".format(laser_position, subdetpm))
+	for plot in plots2:
+		row2.append({"path":plot, "description":"""Timing vs RBX vs LS, relative to LaserMon <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""})
+	hcalcaliblayout(dqmitems, "{} LaserMon for {}Task".format(plot_index, laser_position), row1, row2)
+	plot_index += 1
+
+	hcalcaliblayout(dqmitems, "{} Laser SignalMean", 
+		[
+			{
+				'path':'Hcal/{}Task/SignalMean/depth/depth1'.format(laser_position), 
+				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+			}, {
+				'path':'Hcal/{}Task/SignalMean/depth/depth2'.format(laser_position), 
+				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+			}, {
+				'path':'Hcal/{}Task/SignalMean/depth/depth3'.format(laser_position), 
+				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+			}
+		], 
+		[
+			{
+				'path':'Hcal/{}Task/SignalMean/depth/depth4'.format(laser_position), 
+				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+			}, {
+				'path':'Hcal/{}Task/SignalMean/depth/depth5'.format(laser_position), 
+				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+			}, {
+				'path':'Hcal/{}Task/SignalMean/depth/depth6'.format(laser_position), 
+				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+			}
+		], 
+		[
+			{
+				'path':'Hcal/{}Task/SignalMean/depth/depth7'.format(laser_position), 
+				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
+			}
+		]
+	)
+	plot_index += 1
