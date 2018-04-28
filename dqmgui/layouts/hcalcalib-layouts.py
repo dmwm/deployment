@@ -990,29 +990,29 @@ hcalcaliblayout(dqmitems, '12 LED pin diode amplitude', [{'path':'HcalCalib/LEDT
 hcalcaliblayout(dqmitems, '13 LED SignalMean', 
 	[
 		{
-			'path':'Hcal/LEDTask/SignalMean/depth/depth1', 
+			'path':'HcalCalib/LEDTask/SignalMean/depth/depth1', 
 			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/SignalMean/depth/depth2', 
+			'path':'HcalCalib/LEDTask/SignalMean/depth/depth2', 
 			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/SignalMean/depth/depth3', 
+			'path':'HcalCalib/LEDTask/SignalMean/depth/depth3', 
 			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}
 	], [
 		{
-			'path':'Hcal/LEDTask/SignalMean/depth/depth4', 
+			'path':'HcalCalib/LEDTask/SignalMean/depth/depth4', 
 			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/SignalMean/depth/depth5', 
+			'path':'HcalCalib/LEDTask/SignalMean/depth/depth5', 
 			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/SignalMean/depth/depth6', 
+			'path':'HcalCalib/LEDTask/SignalMean/depth/depth6', 
 			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}
 	], [
 		{
-			'path':'Hcal/LEDTask/SignalMean/depth/depth7', 
+			'path':'HcalCalib/LEDTask/SignalMean/depth/depth7', 
 			'description':"""Mean signal per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}
 	]
@@ -1021,29 +1021,29 @@ hcalcaliblayout(dqmitems, '13 LED SignalMean',
 hcalcaliblayout(dqmitems, '14 LED TDCTime', 
 	[
 		{
-			'path':'Hcal/LEDTask/TDCTime/depth/depth1', 
+			'path':'HcalCalib/LEDTask/TDCTime/depth/depth1', 
 			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/TDCTime/depth/depth2', 
+			'path':'HcalCalib/LEDTask/TDCTime/depth/depth2', 
 			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/TDCTime/depth/depth3', 
+			'path':'HcalCalib/LEDTask/TDCTime/depth/depth3', 
 			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}
 	], [
 		{
-			'path':'Hcal/LEDTask/TDCTime/depth/depth4', 
+			'path':'HcalCalib/LEDTask/TDCTime/depth/depth4', 
 			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/TDCTime/depth/depth5', 
+			'path':'HcalCalib/LEDTask/TDCTime/depth/depth5', 
 			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/LEDTask/TDCTime/depth/depth6', 
+			'path':'HcalCalib/LEDTask/TDCTime/depth/depth6', 
 			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}
 	], [
 		{
-			'path':'Hcal/LEDTask/TDCTime/depth/depth7', 
+			'path':'HcalCalib/LEDTask/TDCTime/depth/depth7', 
 			'description':"""Average timing (TDC based) per channel from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
 		}
 	]
@@ -1052,30 +1052,30 @@ hcalcaliblayout(dqmitems, '14 LED TDCTime',
 hcalcaliblayout(dqmitems, "15 Laser summary flags", 
 	[
 		{
-			'path':'Hcal/HBHEHPDTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HBHEHPDTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/HBPMegaTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HBPMegaTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/HBMMegaTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HBMMegaTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/HEPMegaTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HEPMegaTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}
 	], [
 		{
-			'path':'Hcal/HEMMegaTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HEMMegaTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/HFTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HFTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/HOTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HOTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}, {
-			'path':'Hcal/HFRaddamTask/SummaryvsLS/SummaryvsLS', 
+			'path':'HcalCalib/HFRaddamTask/SummaryvsLS/SummaryvsLS', 
 			'description':"""Laser summary flags <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 		}
 	], 
@@ -1097,7 +1097,7 @@ for laser_position in ["HBHEHPD", "HBPMega", "HBMMega", "HEPMega", "HEMMega", "H
 	plots2 = []
 	row2 = []
 	for subdetpm in subdetpms[laser_position]:
-		plots2.append("HcalCalib/{}Task/TimingDiff_DigiMinusLaserMon/{}".format(laser_position, subdetpm))
+		plots2.append("HcalCalib/{}Task/TimingDiff_DigiMinusLaserMon/SubdetPM/{}".format(laser_position, subdetpm))
 	for plot in plots2:
 		row2.append({"path":plot, "description":"""Timing vs RBX vs LS, relative to LaserMon <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""})
 	hcalcaliblayout(dqmitems, "{} LaserMon for {}Task".format(plot_index, laser_position), row1, row2)
@@ -1106,31 +1106,31 @@ for laser_position in ["HBHEHPD", "HBPMega", "HBMMega", "HEPMega", "HEMMega", "H
 	hcalcaliblayout(dqmitems, "{} Laser SignalMean", 
 		[
 			{
-				'path':'Hcal/{}Task/SignalMean/depth/depth1'.format(laser_position), 
+				'path':'HcalCalib/{}Task/SignalMean/depth/depth1'.format(laser_position), 
 				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 			}, {
-				'path':'Hcal/{}Task/SignalMean/depth/depth2'.format(laser_position), 
+				'path':'HcalCalib/{}Task/SignalMean/depth/depth2'.format(laser_position), 
 				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 			}, {
-				'path':'Hcal/{}Task/SignalMean/depth/depth3'.format(laser_position), 
+				'path':'HcalCalib/{}Task/SignalMean/depth/depth3'.format(laser_position), 
 				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 			}
 		], 
 		[
 			{
-				'path':'Hcal/{}Task/SignalMean/depth/depth4'.format(laser_position), 
+				'path':'HcalCalib/{}Task/SignalMean/depth/depth4'.format(laser_position), 
 				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 			}, {
-				'path':'Hcal/{}Task/SignalMean/depth/depth5'.format(laser_position), 
+				'path':'HcalCalib/{}Task/SignalMean/depth/depth5'.format(laser_position), 
 				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 			}, {
-				'path':'Hcal/{}Task/SignalMean/depth/depth6'.format(laser_position), 
+				'path':'HcalCalib/{}Task/SignalMean/depth/depth6'.format(laser_position), 
 				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 			}
 		], 
 		[
 			{
-				'path':'Hcal/{}Task/SignalMean/depth/depth7'.format(laser_position), 
+				'path':'HcalCalib/{}Task/SignalMean/depth/depth7'.format(laser_position), 
 				'description':"""Laser SignalMean <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""
 			}
 		]
