@@ -120,8 +120,8 @@ deploy_frontend_post()
         "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
 
    case $variant:$host in
-     prod:vocms0760 )
-       #echo "23 */6 * * * $project_config/update-keys $PWD vocms0158 vocms0162 vocms0164" ;;
+     prod:vocms0160 | vocms0760 )
+       echo "23 */6 * * * $project_config/update-keys $PWD vocms0158 vocms0162 vocms0164" ;;
      ;;
      preprod:vocms0134 )
        echo "23 */6 * * * $project_config/update-keys $PWD vocms0135" ;;
