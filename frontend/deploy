@@ -122,7 +122,6 @@ deploy_frontend_post()
    case $variant:$host in
      prod:vocms0160 | vocms0760 )
        echo "23 */6 * * * $project_config/update-keys $PWD vocms0158 vocms0162 vocms0164" ;;
-     ;;
      preprod:vocms0134 )
        echo "23 */6 * * * $project_config/update-keys $PWD vocms0135" ;;
      dev:vocms0117 | dev:vocms0127 | default:* )
