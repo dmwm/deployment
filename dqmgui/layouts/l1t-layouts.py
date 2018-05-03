@@ -381,7 +381,7 @@ l1t_quickCollection(dqmitems, "61 - uGMT Input vs BMTF Output misMatch Ratio",
   }])
 l1t_quickCollection(dqmitems, "62 - uGMT Muon Copy 1 misMatch Ratio",
   [{
-    'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/GMTMuonCopy1/mismatchRatio",
+    'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy1/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
@@ -425,6 +425,12 @@ l1t_quickCollection(dqmitems, "69 - uGT Input vs uGMT Output misMatch Ratio",
   [{
     'path': "L1T/L1TStage2uGT/uGMToutput_vs_uGTinput/mismatchRatio",
     'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "70 - uGT Algoritm Trigger Bits (before prescale) vs Global BX Number",
+  [{
+    'path': "L1T/L1TStage2uGT/algoBits_before_prescale_bx_global",
+    'description': "",
     'draw': { 'withref': "no" }
   }])
 ###############################################
