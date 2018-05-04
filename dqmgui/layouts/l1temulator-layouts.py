@@ -77,6 +77,42 @@ l1t_quickCollection(dqmitems,"10 - Calo Layer2 Tau Data-Emulator Agreement Summa
     'description': "Tau Data-Emulator Agreement Summary",
     'draw': { 'withref': "no" }
   }])
+l1t_quickCollection(dqmitems,"11 - uGT Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGT/dataEmulMismatchRatio_CentralBX",
+    'description': "uGT Data-Emulator misMatch ratio -- Central BX",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"12 - uGMT Intermediate Muon BMTF Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGMT/intermediate_muons/BMTF/data_vs_emulator_comparison/mismatchRatio",
+    'description': "uGMT - intermediate muon BMTF data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"13 - uGMT Intermediate Muon OMTF Neg Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGMT/intermediate_muons/OMTF_neg/data_vs_emulator_comparison/mismatchRatio",
+    'description': "uGMT - intermediate muon OMTF neg data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"14 - uGMT Intermediate Muon OMTF Pos Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGMT/intermediate_muons/OMTF_pos/data_vs_emulator_comparison/mismatchRatio",
+    'description': "uGMT - intermediate muon OMTF pos data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"15 - uGMT Intermediate Muon EMTF Neg Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGMT/intermediate_muons/EMTF_neg/data_vs_emulator_comparison/mismatchRatio",
+    'description': "uGMT - intermediate muon EMTF neg data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems,"16 - uGMT Intermediate Muon EMTF Pos Data-Emulator misMatch ratio",
+  [{
+    'path': "L1TEMU/L1TdeStage2uGMT/intermediate_muons/EMTF_pos/data_vs_emulator_comparison/mismatchRatio",
+    'description': "uGMT - intermediate muon EMTF pos data vs emulator misMatch ratio. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftTriggerEmulator\">here</a>.",
+    'draw': { 'withref': "no" }
+  }])
 ###############################################
 ### From here down is legacy/stage1 trigger ###
 ###           All in Legacy folder          ###
