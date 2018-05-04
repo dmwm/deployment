@@ -2329,4 +2329,39 @@ hcallayout(dqmitems, '51 TP Et Emul vs BX(LS)', [{'path':'Hcal/TPTask/EtCutEmulv
 
 hcallayout(dqmitems, '51 TP Et Emul vs BX(LS)', [{'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HBHE', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}, {'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HF', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}], [{'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HBHE', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}, {'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HF', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '52 LED pin diode ADC vs BX', [{'path':'Hcal/DigiTask/LED/LED_ADCvsBX', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '52 TP uHTR-L1T mismatch', [{'path':'Hcal/TPTask/EtMsm_uHTR_L1T/EtMsm_uHTR_L1T', 'description':"""TP mismatches between uHTR and L1T <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
+
+
+hcallayout(dqmitems, '53 LED pin diode ADC vs BX', [{'path':'Hcal/DigiTask/LED/LED_ADCvsBX', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
+
+
+hcallayout(dqmitems, '54 (CapId-BX)%4', 
+	[
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HBM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HBP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HEM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HEP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+	],
+	[
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HFM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HFP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HOM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HOP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+	]
+)
