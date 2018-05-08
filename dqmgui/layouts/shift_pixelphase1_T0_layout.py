@@ -76,6 +76,27 @@ shiftpixellayout(dqmitems, "04b - Cluster on track charge per Outer Ladders",
      'draw': {'withref' : "no"}}]
   ) 
 
+shiftpixellayout(dqmitems, "04c - Cluster charge (on-track) per Disk",
+  [{'path': "PixelPhase1/Tracks/PXForward/charge_PXDisk_+1",
+  'description': "Cluster on track charge in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/charge_PXDisk_+2",
+  'description': "Cluster on track charge in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/charge_PXDisk_+3",
+  'description': "Cluster on track charge in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  [{'path': "PixelPhase1/Tracks/PXForward/charge_PXDisk_-1",
+  'description': "Clusteron on track charge in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/charge_PXDisk_-2",
+  'description': "Cluster on track charge in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/charge_PXDisk_-3",
+  'description': "Cluster on track charge in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  )
+
 shiftpixellayout(dqmitems, "05a - PixelPhase1 DeadROC Summary",
   [{ 'path': "PixelPhase1/deadRocTotal",
      'description': "Number of total dead ROCs summary",
@@ -154,3 +175,39 @@ shiftpixellayout(dqmitems, "08b - Hit Efficiency Forward",
      'draw': { 'withref': "no", 'drawopts': "COLZ" }}
     ]
    )
+
+shiftpixellayout(dqmitems, "09a - Cluster size (on-track) per Ladders",
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/size_PXLayer_1",
+     'description': "Cluster size (on track) in ladders in PXLayer 1",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/PXBarrel/size_PXLayer_2",
+     'description': "Cluster size (on track) in ladders in PXLayer 2",
+     'draw': {'withref' : "no"}}],
+  [{ 'path': "PixelPhase1/Tracks/PXBarrel/size_PXLayer_3",
+     'description': "Cluster size (on track) in ladders in PXLayer 3",
+     'draw': {'withref' : "no"}},
+   { 'path': "PixelPhase1/Tracks/PXBarrel/size_PXLayer_4",
+     'description': "Cluster size (on track) in ladders in PXLayer 4",
+     'draw': {'withref' : "no"}}]
+  )
+
+shiftpixellayout(dqmitems, "09b - Cluster size (on-track) per Disk",
+  [{'path': "PixelPhase1/Tracks/PXForward/size_PXDisk_+1",
+  'description': "Cluster on track size in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/size_PXDisk_+2",
+  'description': "Cluster on track size in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/size_PXDisk_+3",
+  'description': "Cluster on track size in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk +3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  [{'path': "PixelPhase1/Tracks/PXForward/size_PXDisk_-1",
+  'description': "Clusteron on track size in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -1 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/size_PXDisk_-2",
+  'description': "Cluster on track size in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -2 of pixel endcap",
+  'draw': { 'withref': "no"}},
+  {'path': "PixelPhase1/Tracks/PXForward/size_PXDisk_-3",
+  'description': "Cluster on track size in global coordinates by Global Y (y-axis) vs Global X (x-axis) in disk -3 of pixel endcap",
+  'draw': { 'withref': "no"}}],
+  )
