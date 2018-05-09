@@ -64,12 +64,17 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/32 - Charge and size',
                   'PixelPhase1/Layouts/33a - Cluster on track charge per Inner Ladders',
                   'PixelPhase1/Layouts/33b - Cluster on track charge per Outer Ladders',  
+                  'PixelPhase1/Layouts/33c - Cluster charge (on-track) per Disk',
                   #'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
                   'PixelPhase1/Layouts/34 -  Ontrack PXLayer',
                   'PixelPhase1/Layouts/35 - Ontrack Disk',
                   'PixelPhase1/Layouts/38 - PixelPhase1 Residuals',
                   'PixelPhase1/Layouts/39a - ClusterSize Vs Eta (OnTrack) inner',
                   'PixelPhase1/Layouts/39b - ClusterSize Vs Eta (OnTrack) outer',
+                  'PixelPhase1/Layouts/40a - Cluster size (on-track) per Ladders',
+                  'PixelPhase1/Layouts/40b - Cluster size (on-track) per Disk',
+                  'PixelPhase1/Layouts/41a - Dead Channels per ROC per Barrel Layer',
+                  'PixelPhase1/Layouts/41b - Dead Channels per ROC per Forward Ring',
                 )
 
 server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
