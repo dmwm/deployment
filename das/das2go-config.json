@@ -1,6 +1,6 @@
 {
     "uri":"mongodb://localhost:8230",
-    "base": "/das2go",
+    "base": "/das",
     "port": 8217,
     "services": ["combined","conddb","dashboard","dbs3","mcm","phedex","reqmgr2","runregistry","sitedb2"],
     "urlQueueLimit": 1000,
