@@ -3,7 +3,7 @@
 # Rsync append only .txt and .log files
 
 # Front-ends in the AI infrastructure
-for h in vocms0{117,127,134,135,158,160,760,162,164}; do
+for h in vocms0{117,127,134,135,158,760,162,164}; do
   rsync -rm -e "ssh -c aes128-ctr" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
