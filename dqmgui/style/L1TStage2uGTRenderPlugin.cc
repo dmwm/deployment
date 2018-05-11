@@ -75,6 +75,8 @@ bool checkAndRemove(std::string &s, const char * key)
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
 
+    std::string name = o.name.substr(o.name.rfind("/")+1);
+
     obj->SetOption("colz");
     checkAndRemove(r.drawOptions,"tlabels");
 
@@ -102,7 +104,14 @@ bool checkAndRemove(std::string &s, const char * key)
        gStyle->SetPalette(1);
        tlabels_.SetTextColor(kBlack);
       }
-  
+
+    if (name.find("Ratio_") == 0) {
+      obj->GetZaxis()->SetRangeUser(0., 1.);
+    }
+
+    if (name.find("rescaled_") != std::string::npos) {
+      obj->SetOption("colztext");
+    }
   }
 
   void postDrawTH1F(TCanvas*, const VisDQMObject&) {}

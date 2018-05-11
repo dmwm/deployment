@@ -348,7 +348,7 @@ private:
       ya->SetLabelSize(0.03);
       TGaxis::SetMaxDigits(3);
       
-      if( o.name.find("digi_occupancy_per_col_per_row") != std::string::npos ){
+      if( o.name.find("digi_occupancy_per_col_per_row") != std::string::npos || o.name.find("digi_occupancy_ontrack_per_col_per_row") != std::string::npos ){
          // Horizontal
          draw_line(0,416,79.5,79.5);
         

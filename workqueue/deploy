@@ -19,6 +19,7 @@ deploy_workqueue_sw()
   deploy_pkg \
     -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+    -a WorkQueueSecrets.py:workqueue/WorkQueueSecrets.py \
     comp cms+workqueue
 
   if grep -rq "replace me" $project_auth; then
@@ -60,5 +61,9 @@ deploy_workqueue_auth()
       echo "replace me with your dmwm service certificate" ;;
     */*-key.pem )
       echo "replace me with your dmwm service key" ;;
+    */WorkQueueSecrets.py )
+      echo 'USER_AMQ = "FOO_FIXME"'
+      echo 'PASS_AMQ = "BAR_FIXME"'
+      echo 'AMQ_TOPIC = "FOOBAR_FIXME"' ;;
   esac
 }

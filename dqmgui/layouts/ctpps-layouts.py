@@ -1,54 +1,84 @@
-def CTPPSTrackingStripLayout(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/" + p] = DQMItem(layout=rows)
-def CTPPSTrackingPixelLayout(i, p, *rows): i["CTPPS/TrackingPixel/Layouts/" + p] = DQMItem(layout=rows)
-def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p] = DQMItem(layout=rows)
+####################################################################################################
+# Strip layouts
+####################################################################################################
 
-strips_stations = [ "sector 45/station 210", "sector 56/station 210" ]
-strips_units = [ "nr", "fr" ]
+def CTPPSTrackingStripLayoutRP(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/RP summary/" + p] = DQMItem(layout=rows)
+def CTPPSTrackingStripLayoutDiag(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/diagonal summary/" + p] = DQMItem(layout=rows)
 
-pixstations = [ "sector 45/station 220/", "sector 56/station 220/" ]
-planes  = [ "0","1","2" ]
-planes2 = [ "3","4","5" ]
-
-diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
+strip_rows = [ "tp", "bt" ]
+strip_cols = [ "sector 45/station 220/fr", "sector 45/station 210/fr", "sector 56/station 210/fr", "sector 56/station 220/fr" ]
 
 # layouts with no overlays
 for plot in [ "active planes", "activity in planes (2D)", "vfats with any problem", "track XY profile" ]:
   rows = list()
-  for station in strips_stations:
+  for rp in strip_rows:
     row = list()
-    for unit in strips_units:
-      row.append("CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/"+plot)
+    for unit in strip_cols:
+      row.append("CTPPS/TrackingStrip/"+unit+"_"+rp+"/"+plot)
     rows.append(row)
-
-  CTPPSTrackingStripLayout(dqmitems, plot, *rows)
-
+  CTPPSTrackingStripLayoutRP(dqmitems, plot, *rows)
 
 # layouts with overlays
 for plot in [ "active planes", "recognized patterns", "planes contributing to fit" ]:
   rows = list()
-  for station in strips_stations:
+  for rp in strip_rows:
     row = list()
-    for unit in strips_units:
-      hist_u = "CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/"+plot + " U"
-      hist_v = "CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/"+plot + " V"
+    for unit in strip_cols:
+      hist_u = "CTPPS/TrackingStrip/"+unit+"_"+rp+"/"+plot + " U"
+      hist_v = "CTPPS/TrackingStrip/"+unit+"_"+rp+"/"+plot + " V"
       row.append( { "path" : hist_u, "overlays" : [ hist_v ] } )
     rows.append(row)
+  CTPPSTrackingStripLayoutRP(dqmitems, plot + " UV", *rows)
 
-  CTPPSTrackingStripLayout(dqmitems, plot + " UV", *rows)
-
-# per-BX plots
+# layouts with overlays
 for suffix in [ "", " (short)" ]:
-  plot_list = list()
-  for station in strips_stations:
-    for unit in strips_units:
-      plot_list.append("CTPPS/TrackingStrip/"+station+"/"+unit+"_hr/activity per BX" + suffix)
+  rows = list()
+  for rp in strip_rows:
+    row = list()
+    for unit in strip_cols:
+      hist_rp = "CTPPS/TrackingStrip/"+unit+"_"+rp+"/activity per BX" + suffix
+      hist_base = "CTPPS/common/events per BX" + suffix
+      row.append( { "path" : hist_rp, "overlays" : [ hist_base ] } )
+    rows.append(row)
+  CTPPSTrackingStripLayoutRP(dqmitems, "activity per BX" + suffix, *rows)
 
-  base_plot = "CTPPS/events per BX" + suffix
-  CTPPSTrackingStripLayout(dqmitems, "activity per BX" + suffix, [ { "path" : base_plot, "overlays" : plot_list } ])
+strip_diagonals = [ "diagonal 45bot - 56top", "diagonal 45top - 56bot" ]
+strip_diagonal_cols = [ "45_220_fr", "45_210_fr", "56_210_fr", "56_220_fr" ]
+strip_diagonal_rows = [ "tp", "bt" ]
 
-#####
-# Diamond detectors layouts
-#####
+# rate plots
+for plot in [ "rate - 2 RPs (220-fr)", "rate - 4 RPs" ]:
+  rows = list()
+  for diag in strip_diagonals:
+    row = list()
+    row.append("CTPPS/TrackingStrip/"+diag+"/"+plot)
+    rows.append(row)
+  CTPPSTrackingStripLayoutDiag(dqmitems, plot, *rows)
+
+# xy plots with conditions
+for cond in [ "2 RPs cond", "4 RPs cond" ]:
+  rows = list()
+  for rp in strip_diagonal_rows:
+    row = list()
+    for unit in strip_diagonal_cols:
+      arm=unit[:2]
+      if ((arm == "45") and (rp == "bt")): diag="diagonal 45bot - 56top"
+      if ((arm == "56") and (rp == "tp")): diag="diagonal 45bot - 56top"
+      if ((arm == "45") and (rp == "tp")): diag="diagonal 45top - 56bot"
+      if ((arm == "56") and (rp == "bt")): diag="diagonal 45top - 56bot"
+      row.append("CTPPS/TrackingStrip/"+diag+"/xy hists/xy hist - "+unit+"_"+rp+" - "+cond)
+    rows.append(row)
+  CTPPSTrackingStripLayoutDiag(dqmitems, "XY profile - "+cond, *rows)
+
+
+
+####################################################################################################
+# Diamond layouts
+####################################################################################################
+
+diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
+
+def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p] = DQMItem(layout=rows)
 
 # layouts with no overlays
 TimingPlots = [ "activity per BX 0 25", "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "tracks", "HPTDC Errors", "MH in channels" ]
@@ -79,50 +109,100 @@ for station in diamond_stations:
   rows.append(row)
 
   CTPPSTimingDiamondLayout(dqmitems, "clocks edges", *rows)
-  
-###
-#####   CTPPS Pixel Layouts
-###
 
-for plot in ["planes activity", "hit multiplicity in planes","hit average multiplicity in planes"]:
+
+  
+####################################################################################################
+# Pixel layouts
+####################################################################################################
+
+sectors = [ "sector 45", "sector 56" ]
+pixelstations = [ "station 210", "station 220" ]
+pixstationsf=["sector 45/station 210/","sector 45/station 220/","sector 56/station 210/","sector 56/station 220/"]
+pix_planes  = [ "0","1","2" ]
+pix_planes2 = [ "3","4","5" ]
+
+def CTPPSTrackingPixelLayout(i, p, *rows): i["CTPPS/TrackingPixel/Layouts/" + p] = DQMItem(layout=rows)
+
+for plot in ["hit multiplicity in planes","hit average multiplicity in planes"]:
   rows = list()
-  for station in pixstations:
-    row = list()
-    row.append("CTPPS/TrackingPixel/"+station+plot)
-    rows.append(row)
+  row = list()
+  for station in pixelstations:
+    row.append("CTPPS/TrackingPixel/sector 45/"+station+"/"+plot)
+  rows.append(row)
+
+  row = list()
+  for station in pixelstations:
+    row.append("CTPPS/TrackingPixel/sector 56/"+station+"/"+plot)
+  rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
+
+for plot in ["number of fired planes per event","number of fired aligned_ROCs per event","ROCs hits multiplicity per event"]:
+  rows = list()
+  row = list()
+  for station in pixelstations:
+    row.append("CTPPS/TrackingPixel/sector 45/"+station+ "/fr_hr/"+plot)
+  rows.append(row)
+
+  row = list()
+  for station in pixelstations:
+    row.append("CTPPS/TrackingPixel/sector 56/"+station+"/fr_hr/"+plot)
+  rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
 for plot in ["4 fired ROCs per BX"]:
   rows = list()
-  for station in pixstations:
+  for station in pixstationsf:
     row = list()
     row.append("CTPPS/TrackingPixel/"+station+"fr_hr/latency/"+plot)
     rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
-for plot in ["5 fired planes per BX","ROCs hits multiplicity per event","ROCs_hits_multiplicity_per_event vs LS","number of fired planes per event","number of fired aligned_ROCs per event"]:
+for plot in ["5 fired planes per BX"]:
   rows = list()
-  for station in pixstations:
+  for station in pixstationsf:
     row = list()
     row.append("CTPPS/TrackingPixel/"+station+"fr_hr/"+plot)
     rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
-sectors = [ "sector 45", "sector 56" ]
+
+for sector in sectors:
+  rows = list()
+  for station in pixelstations:
+    row = list()
+    row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/"+
+        "ROCs_hits_multiplicity_per_event vs LS")
+    rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, "ROC hits per event vs LS "+sector, *rows)
+
+for plot in ["Pixel planes activity"]:
+  rows = list()
+  row = list()
+  row.append("CTPPS/TrackingPixel/"+plot)
+  rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
+
 for plot in ["hits position"]:
   for sector in sectors:
-    rows = list()
-    row = list()
-    for plane in planes:
-      row.append("CTPPS/TrackingPixel/"+sector+"/station 220/fr_hr/plane_"+plane+"/"+plot)
-    rows.append(row)
+    for station in pixelstations:
+      rows = list()
+      row = list()
+      for plane in pix_planes:
+        row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot)
+      rows.append(row)
 
-    row = list()
-    for plane in planes2:
-      row.append("CTPPS/TrackingPixel/"+sector+"/station 220/fr_hr/plane_"+plane+"/"+plot)
-    rows.append(row)
+      row = list()
+      for plane in pix_planes2:
+        row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot)
+      rows.append(row)
 
-    CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" station 220_fr_hr", *rows)
+      CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
+
+
