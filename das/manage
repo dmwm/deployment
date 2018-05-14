@@ -1,6 +1,6 @@
 #!/bin/sh
 
-##H Usage: manage ACTION [SECURITY-STRING]
+##H Usage: manage ACTION [ATTRIBUTE] [SECURITY-STRING]
 ##H
 ##H Available actions:
 ##H   help        show this help
@@ -11,6 +11,12 @@
 ##H   start       (re)start the service
 ##H   stop        stop the service
 ##H   fetchmaps   fetch DAS maps
+##H
+##H Available attributes:
+##H   das2go      name of das2go server
+##H   das2py      name of das2py server
+##H   das_dbs_update name of cronjob
+##H   das_cleanup    name of cronjob
 ##H
 ##H For more details please refer to operations page:
 ##H   https://twiki.cern.ch/twiki/bin/view/CMS/DASOperation
@@ -26,6 +32,14 @@ case $(uname) in Darwin )
   echo_e=
   ;;
 esac
+
+# setup DASSERVER by providing third parameter on command line to manage script
+DASSERVER="das2go" # default server
+msg=${@: -1} # last argument
+attr=$2 # possible attribute value, either server or cron name
+if [ "$attr" == "das2py" ]; then
+   DASSERVER="das2py"
+fi
 
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
@@ -86,8 +100,44 @@ fetchmaps(){
   set +e
 }
 
+# DAS action functions
+sysboot_das()
+{
+    if  [ "$DASSERVER" == "das2go" ]; then
+	sysboot_das2go
+    else
+	sysboot_das2py
+    fi
+}
+
+start_das()
+{
+    if  [ "$DASSERVER" == "das2go" ]; then
+	start_das2go
+    else
+	start_das2py
+    fi
+}
+
+stop_das()
+{
+    if  [ "$DASSERVER" == "das2go" ]; then
+	stop_das2go
+    else
+	stop_das2py
+    fi
+}
+status_das()
+{
+    if  [ "$DASSERVER" == "das2go" ]; then
+	status_das2go
+    else
+	status_das2py
+    fi
+}
+
 # Start service conditionally on crond restart.
-sysboot()
+sysboot_das2py()
 {
   dostart=false
   if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
@@ -96,84 +146,7 @@ sysboot()
   $dostart && start
 }
 
-# use global variable to assign DAS server status
-das_status="no"
-
-# helper function to check DAS server status
-check4das() {
-    das_cmd=`curl -H "cms-auth-status:NONE" -s http://localhost:8212/das/nsystems | egrep -i "DAS systems" | grep -i "dbs"`
-    if  [ -n "$das_cmd" ]; then
-        das_status="ok"
-        return
-    fi
-    das_status="no"
-    return
-}
-
-# helper function to wait for MongoDB appearance
-# it will incrementally increase waiting time with 20 iterations (~3minute)
-start_das2go(){
-    echo "Starting das2go service..."
-    nohup das2go_server $DAS2GO_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
-}
-stop_das2go(){
-    echo "Stop das2go service..."
-    local pid=`ps auxwww | grep das2go_server | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
-    if [ -n "${pid}" ]; then
-        kill -9 ${pid}
-    fi
-    local pid=`ps auxwww | grep das2go | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
-    if [ -n "${pid}" ]; then
-        kill -9 ${pid}
-    fi
-}
-status_das2go()
-{
-    local pid=`ps auxwww | grep das2go | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
-
-    if  [ -z $pid ]; then
-        echo "das2go is not running"
-        return
-    fi
-    if  [ `uname` == "Darwin" ]; then
-        nth=`ps -M -p $pid | grep -v USER | wc -l | awk '{print $1}'`
-    else
-        nth=`ps -L -p $pid | grep -v PID | wc -l | awk '{print $1}'`
-    fi
-    echo "das2go server runs with $nth threads"
-    if [ ! -z "${pid}" ]; then
-        echo "das2go service is running, pid=${pid}"
-        ps -f -wwww -p ${pid}
-    else
-        echo "das2go service is not running"
-    fi
-}
-
-# helper function to wait for DAS server to start
-# it will incrementally increase waiting time with 20 iterations (~3minute)
-start_das_cli() {
-    sleep 30
-    local counter=0
-    # check if mongodb is running
-    while [  $counter -lt 20 ]; do
-        check4das
-        if [ "$das_status" == "ok" ]; then
-            DASMAPS_DIR=$STAGEDIR LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so $DAS_ROOT/bin/das_server start_cli \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/das_cli-%Y%m%d.log 86400 >/dev/null 2>&1 &
-            return
-        fi
-        let counter=counter+1
-        echo "DAS web server is not running, check in $counter sec"
-        sleep $counter
-    done
-    check4das
-    if [ "$das_status" == "no" ]; then
-        echo "DAS web server is not running, unable to start DAS cli server"
-        exit 1
-    fi
-}
-
-start()
+start_das2py()
 {
   echo "starting $ME"
   # choose correct DAS map file
@@ -183,26 +156,19 @@ start()
   # start DAS service (it will load DAS maps into MongoDB and start DAS server)
   DASMAPS_DIR=$STAGEDIR LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so $DAS_ROOT/bin/das_server start \
       </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
-  # start DAS cli server in background since we need to wait for DAS web server/MongoDB
-  # start_das_cli &
-  # start das2go server
-  sleep 30 # let DAS server starts since it will upload DAS maps
-  start_das2go
 }
 
 # Stop the service.
-stop()
+stop_das2py()
 {
   echo "stopping $ME"
   for das_pid in $(pgrep -u $(id -u) -f "[/]das_server"); do
       kill -9 $das_pid
   done
-  # stop das2go server
-  stop_das2go
 }
 
 # Check if the server is running.
-status()
+status_das2py()
 {
   local pid=$(pgrep -u $(id -u) -f "[/]das_server" | sort -n)
   if [ X"$pid" = X ]; then
@@ -210,7 +176,6 @@ status()
   else
     echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
   fi
-  status_das2go
 }
 
 
@@ -244,50 +209,77 @@ check()
   fi
 }
 
+# das2go action functions
+start_das2go()
+{
+    echo "Starting das2go service..."
+    # choose correct DAS map file
+    case $host in vocms012[67] | vocms0132 | vocms0731 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
+    local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
+    cp -f $mapfile $STAGEDIR/update_mapping_db.js
+    nohup das2go_server $DAS2GO_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
+}
+
+stop_das2go()
+{
+    local pid=`ps auxwww | egrep "das2go_server|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    echo "Stop das2go service... ${pid}"
+    if [ -n "${pid}" ]; then
+        kill -9 ${pid}
+    fi
+}
+
+status_das2go()
+{
+    local pid=`ps auxwww | egrep "das2go_server|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+
+    if  [ -z "${pid}" ]; then
+        echo "das2go is not running"
+        return
+    fi
+    if  [ `uname` == "Darwin" ]; then
+        nth=`ps -M -p $pid | grep -v USER | wc -l | awk '{print $1}'`
+    else
+        nth=`ps -L -p $pid | grep -v PID | wc -l | awk '{print $1}'`
+    fi
+    echo "das2go server runs with $nth threads"
+    if [ ! -z "${pid}" ]; then
+        echo $echo_e "das2go service is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID=${pid}"
+        ps -f -wwww -p ${pid}
+    else
+        echo $echo_e "das2go service is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}"
+    fi
+}
+
 # Main routine, perform action requested on command line.
 case ${1:-status} in
   sysboot )
-    sysboot
+    sysboot_das
     ;;
 
   start | restart )
-    check "$2"
-    stop
-    start
-    ;;
-
-  start_das2go )
-    check "$2"
-    stop_das2go
-    start_das2go
+    check "$msg"
+    stop_das
+    start_das
     ;;
 
   status )
-    status
-    ;;
-
-  status_das2go )
-    status_das2go
+    status_das
     ;;
 
   fetchmaps )
-    check "$2"
+    check "$msg"
     fetchmaps
     ;;
 
   stop )
-    check "$2"
-    stop
-    ;;
-
-  stop_das2go )
-    check "$2"
-    stop_das2go
+    check "$msg"
+    stop_das
     ;;
 
   cron )
-    check "$3"
-    cron $2
+    check "$msg"
+    cron $attr
     ;;
 
   help )
