@@ -111,15 +111,15 @@ l1tefficiency(dqmitems, "07 - Reco MET L1T Efficiency",
 def l1tresolution(i, p, *rows): i["00 Shift/L1T/Resolution/" + p] = DQMItem(layout=rows)
 
 l1tresolution(dqmitems, "00 - Muon per Track Finder Region",
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_qoverpt_25_etaMin0_etaMax0p83_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_qoverpt_25_etaMin0p83_etaMax1p24_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_qoverpt_25_etaMin1p24_etaMax2p4_qualAll", 'description': "", 'draw': { 'withref': "yes" }}],
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_eta_25_etaMin0_etaMax0p83_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_eta_25_etaMin0p83_etaMax1p24_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_eta_25_etaMin1p24_etaMax2p4_qualAll", 'description': "", 'draw': { 'withref': "yes" }}],
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_25_etaMin0_etaMax0p83_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_25_etaMin0p83_etaMax1p24_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_25_etaMin1p24_etaMax2p4_qualAll", 'description': "", 'draw': { 'withref': "yes" }}])
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_qoverpt_etaMin0_etaMax0p83_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_qoverpt_etaMin0p83_etaMax1p24_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_qoverpt_etaMin1p24_etaMax2p4_qualAll", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_eta_etaMin0_etaMax0p83_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_eta_etaMin0p83_etaMax1p24_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_eta_etaMin1p24_etaMax2p4_qualAll", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_etaMin0_etaMax0p83_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_etaMin0p83_etaMax1p24_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_etaMin1p24_etaMax2p4_qualAll", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tresolution(dqmitems, "01 - Photon",
   [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonET_EB", 'description': "", 'draw': { 'withref': "yes" }},
