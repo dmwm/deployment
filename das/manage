@@ -104,35 +104,35 @@ fetchmaps(){
 sysboot_das()
 {
     if  [ "$DASSERVER" == "das2go" ]; then
-	sysboot_das2go
+        sysboot_das2go
     else
-	sysboot_das2py
+        sysboot_das2py
     fi
 }
 
 start_das()
 {
     if  [ "$DASSERVER" == "das2go" ]; then
-	start_das2go
+        start_das2go
     else
-	start_das2py
+        start_das2py
     fi
 }
 
 stop_das()
 {
     if  [ "$DASSERVER" == "das2go" ]; then
-	stop_das2go
+        stop_das2go
     else
-	stop_das2py
+        stop_das2py
     fi
 }
 status_das()
 {
     if  [ "$DASSERVER" == "das2go" ]; then
-	status_das2go
+        status_das2go
     else
-	status_das2py
+        status_das2py
     fi
 }
 
@@ -143,7 +143,7 @@ sysboot_das2py()
   if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
       dostart=true
   fi
-  $dostart && start
+  $dostart && start_das2py
 }
 
 start_das2py()
@@ -210,6 +210,15 @@ check()
 }
 
 # das2go action functions
+sysboot_das2go()
+{
+  dostart=false
+  if [ $(pgrep -u $(id -u) -f "[/]das2go_server" | wc -l) = 0 ]; then
+      dostart=true
+  fi
+  $dostart && start_das2go
+}
+
 start_das2go()
 {
     echo "Starting das2go service..."
