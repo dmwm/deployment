@@ -7,17 +7,17 @@ l1toccupancy(dqmitems,"00 - CaloLayer1 ECAL occupancy",
 l1toccupancy(dqmitems,"01 - CaloLayer1 HCAL occupancy",
   [{'path': "L1T/L1TStage2CaloLayer1/hcalOccRecdEtWgt", 'description': "CaloLayer1 HCAL Et-weighted occupancy. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"02 - CaloLayer2 central jet E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsEtEtaPhi", 'description': "CaloLayer2 central jet E_T eta phi. x-axis: CaloLayer2 central jet E_T eta; y-axis: CaloLayer2 central jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/CenJetsEtEtaPhi_shift", 'description': "CaloLayer2 central jet E_T eta phi. x-axis: CaloLayer2 central jet E_T eta; y-axis: CaloLayer2 central jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"03 - CaloLayer2 forward jet E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsEtEtaPhi", 'description': "CaloLayer2 forward jet E_T eta phi. x-axis: CaloLayer2 forward jet E_T eta; y-axis: CaloLayer2 forward jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/ForJetsEtEtaPhi_shift", 'description': "CaloLayer2 forward jet E_T eta phi. x-axis: CaloLayer2 forward jet E_T eta; y-axis: CaloLayer2 forward jet E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"04 - CaloLayer2 iso EG E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsEtEtaPhi", 'description': "CaloLayer2 iso EG E_T eta phi. x-axis: CaloLayer2 iso EG E_T eta; y-axis: CaloLayer2 iso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/IsoEGsEtEtaPhi_shift", 'description': "CaloLayer2 iso EG E_T eta phi. x-axis: CaloLayer2 iso EG E_T eta; y-axis: CaloLayer2 iso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"05 - CaloLayer2 noniso EG E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsEtEtaPhi", 'description': "CaloLayer2 noniso EG E_T eta phi. x-axis: CaloLayer2 noniso EG E_T eta; y-axis: CaloLayer2 noniso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/NonIsoEGsEtEtaPhi_shift", 'description': "CaloLayer2 noniso EG E_T eta phi. x-axis: CaloLayer2 noniso EG E_T eta; y-axis: CaloLayer2 noniso EG E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"06 - CaloLayer2 iso tau E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausEtEtaPhi", 'description': "CaloLayer2 iso tau E_T eta phi. x-axis: CaloLayer2 iso tau E_T eta; y-axis: CaloLayer2 iso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/IsoTausEtEtaPhi_shift", 'description': "CaloLayer2 iso tau E_T eta phi. x-axis: CaloLayer2 iso tau E_T eta; y-axis: CaloLayer2 iso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"07 - CaloLayer2 noniso tau E_T eta phi",
-    [{'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausEtEtaPhi", 'description': "CaloLayer2 noniso tau E_T eta phi. x-axis: CaloLayer2 noniso tau E_T eta; y-axis: CaloLayer2 noniso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+    [{'path': "L1T/L1TStage2CaloLayer2/shifter/TausEtEtaPhi_shift", 'description': "CaloLayer2 noniso tau E_T eta phi. x-axis: CaloLayer2 noniso tau E_T eta; y-axis: CaloLayer2 noniso tau E_T phi. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 l1toccupancy(dqmitems,"08 - uGMT muon p_T",
     [{'path': "L1T/L1TStage2uGMT/ugmtMuonPt", 'description': "uGMT muon p_T. x-axis: uGMT muon p_T. "+moreInfoStr, 'draw': { 'withref': "yes" }}])
 l1toccupancy(dqmitems,"09 - uGMT muon eta",
@@ -40,10 +40,14 @@ l1toccupancy(dqmitems,"16 - EMTF Track Bunch Crossing",
 #    [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_global", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 #l1toccupancy(dqmitems,"18 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
 #    [{'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_inEvt", 'description': "uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event. "+moreInfoStr, 'draw': { 'withref': "no" }}])
-#l1toccupancy(dqmitems,"19 - uGT # of algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for first bunch in train",
-#    [{'path': "L1T/L1TStage2uGT/Ratio_First_Bunch_In_Train", 'description': "uGT number of algo accepts relative to number of all algo accepts in +/-2 BX vs. BX number in event for first bunch in train. x-axis: BX number in event for first bunch in a bunch train; y-axis: uGT algorithm trigger bits (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
-#l1toccupancy(dqmitems,"20 - uGT # of algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for last bunch in train",
-#    [{'path': "L1T/L1TStage2uGT/Ratio_Last_Bunch_In_Train", 'description': "uGT number of algo accepts relative to number of all algo accepts in +/-2 BX vs. BX number in event last bunch in train. x-axis: BX number in event for last bunch in a bunch train; y-axis: uGT algorithm trigger bits (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+l1toccupancy(dqmitems,"19 - uGT # of unprescaled algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for first bunch in train",
+    [{'path': "L1T/L1TStage2uGT/Ratio_Unprescaled_First_Bunch_In_Train", 'description': "uGT number of unprescaled algo accepts relative to number of all unprescaled algo accepts in +/-2 BX vs. BX number in event for first bunch in train. x-axis: BX number in event for first bunch in a bunch train; y-axis: uGT algorithms (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+l1toccupancy(dqmitems,"20 - uGT # of unprescaled algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for last bunch in train",
+    [{'path': "L1T/L1TStage2uGT/Ratio_Unprescaled_Last_Bunch_In_Train", 'description': "uGT number of unprescaled algo accepts relative to number of all unprescaled algo accepts in +/-2 BX vs. BX number in event last bunch in train. x-axis: BX number in event for last bunch in a bunch train; y-axis: uGT algorithms (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+l1toccupancy(dqmitems,"21 - uGT # of prescaled algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for first bunch in train",
+    [{'path': "L1T/L1TStage2uGT/Ratio_Prescaled_First_Bunch_In_Train", 'description': "uGT number of prescaled algo accepts relative to number of all prescaled algo accepts in +/-2 BX vs. BX number in event for first bunch in train. x-axis: BX number in event for first bunch in a bunch train; y-axis: uGT algorithms (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
+l1toccupancy(dqmitems,"22 - uGT # of prescaled algo accepts relative to # of all algo accepts in +-2 BX vs. BX number in event for last bunch in train",
+    [{'path': "L1T/L1TStage2uGT/Ratio_Prescaled_Last_Bunch_In_Train", 'description': "uGT number of prescaled algo accepts relative to number of all prescaled algo accepts in +/-2 BX vs. BX number in event last bunch in train. x-axis: BX number in event for last bunch in a bunch train; y-axis: uGT algorithms (before prescale); z-axis: number of algo accepts relative to number of all algo accepts in +/-2 BX. "+moreInfoStr, 'draw': { 'withref': "no" }}])
 
 def l1tefficiency(i, p, *rows): i["00 Shift/L1T/Efficiency/" + p] = DQMItem(layout=rows)
 
