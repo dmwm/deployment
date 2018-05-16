@@ -69,12 +69,13 @@ l1tefficiency(dqmitems, "01 - Reco Muon L1T Efficiency per Track Finder Region",
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_25_etaMin0p83_etaMax1p24_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_25_etaMin1p24_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tefficiency(dqmitems, "02 - Reco Photon L1T Efficiency",
-  [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyPhotonET_EB_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyPhotonET_EB_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyPhotonET_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }}])
+# remove the photon plots for the time being
+#l1tefficiency(dqmitems, "02 - Reco Photon L1T Efficiency",
+#  [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyPhotonET_EB_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
+#   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyPhotonET_EB_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
+#   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyPhotonET_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tefficiency(dqmitems, "03 - Reco Electron L1T Efficiency",
+l1tefficiency(dqmitems, "02 - Reco Electron L1T Efficiency",
   [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyElectronET_EB_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyElectronET_EB_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyElectronET_EE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }}],
@@ -82,25 +83,25 @@ l1tefficiency(dqmitems, "03 - Reco Electron L1T Efficiency",
    {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyElectronPhi_threshold_48", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/efficiencyElectronNVertex_threshold_48", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tefficiency(dqmitems, "04 - Reco IsoTau L1T Efficiency",
+l1tefficiency(dqmitems, "03 - Reco IsoTau L1T Efficiency",
   [{'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyIsoTauET_EB_EE_threshold_32", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyIsoTauET_EB_threshold_32", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyIsoTauET_EE_threshold_32", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyIsoTauET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tefficiency(dqmitems, "05 - Reco NonIsoTau L1T Efficiency",
+l1tefficiency(dqmitems, "04 - Reco NonIsoTau L1T Efficiency",
   [{'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyNonIsoTauET_EB_EE_threshold_32", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyNonIsoTauET_EB_threshold_32", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyNonIsoTauET_EE_threshold_32", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/efficiencyNonIsoTauET_EB_EE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tefficiency(dqmitems, "06 - Reco Jet L1T Efficiency",
+l1tefficiency(dqmitems, "05 - Reco Jet L1T Efficiency",
   [{'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/efficiencyJetEt_HB_HE_threshold_36", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/efficiencyJetEt_HB_HE_threshold_68", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/efficiencyJetEt_HB_HE_threshold_128", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/efficiencyJetEt_HB_HE_threshold_176", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tefficiency(dqmitems, "07 - Reco MET L1T Efficiency",
+l1tefficiency(dqmitems, "06 - Reco MET L1T Efficiency",
   [{'path': "L1T/L1TObjects/L1TEtSum/L1TriggerVsReco/efficiencyMET_threshold_40", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEtSum/L1TriggerVsReco/efficiencyMET_threshold_60", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TEtSum/L1TriggerVsReco/efficiencyMET_threshold_80", 'description': "", 'draw': { 'withref': "yes" }},
@@ -121,28 +122,29 @@ l1tresolution(dqmitems, "00 - Muon per Track Finder Region",
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_etaMin0p83_etaMax1p24_qualAll", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/resolution/resolution_phi_etaMin1p24_etaMax2p4_qualAll", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tresolution(dqmitems, "01 - Photon",
-  [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonET_EB", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonET_EE", 'description': "", 'draw': { 'withref': "yes" }}],
-  [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonEta", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonPhi_EB", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonPhi_EE", 'description': "", 'draw': { 'withref': "yes" }}])
+# remove the photon plots for the time being
+#l1tresolution(dqmitems, "01 - Photon",
+#  [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonET_EB", 'description': "", 'draw': { 'withref': "yes" }},
+#   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonET_EE", 'description': "", 'draw': { 'withref': "yes" }}],
+#  [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonEta", 'description': "", 'draw': { 'withref': "yes" }},
+#   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonPhi_EB", 'description': "", 'draw': { 'withref': "yes" }},
+#   {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionPhotonPhi_EE", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tresolution(dqmitems, "02 - Electron",
+l1tresolution(dqmitems, "01 - Electron",
   [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionElectronET_EB", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionElectronET_EE", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionElectronEta", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionElectronPhi_EB", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEGamma/L1TriggerVsReco/resolutionElectronPhi_EE", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tresolution(dqmitems, "03 - Tau",
+l1tresolution(dqmitems, "02 - Tau",
   [{'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/resolutionTauET_EB", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/resolutionTauET_EE", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/resolutionTauEta", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/resolutionTauPhi_EB", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TTau/L1TriggerVsReco/resolutionTauPhi_EE", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tresolution(dqmitems, "04 - Jet",
+l1tresolution(dqmitems, "03 - Jet",
   [{'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/resolutionJetET_HB", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/resolutionJetET_HE", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/resolutionJetET_HF", 'description': "", 'draw': { 'withref': "yes" }}],
@@ -151,7 +153,7 @@ l1tresolution(dqmitems, "04 - Jet",
    {'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/resolutionJetPhi_HF", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TJet/L1TriggerVsReco/resolutionJetEta", 'description': "", 'draw': { 'withref': "yes" }}])
 
-l1tresolution(dqmitems, "05 - MET",
+l1tresolution(dqmitems, "04 - MET",
   [{'path': "L1T/L1TObjects/L1TEtSum/L1TriggerVsReco/resolutionETT", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TEtSum/L1TriggerVsReco/resolutionHTT", 'description': "", 'draw': { 'withref': "yes" }}],
   [{'path': "L1T/L1TObjects/L1TEtSum/L1TriggerVsReco/resolutionMET", 'description': "", 'draw': { 'withref': "yes" }},
