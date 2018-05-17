@@ -110,9 +110,11 @@ bool checkAndRemove(std::string &s, const char * key)
     if (o.name.find("expert") == std::string::npos) {
       if (o.name.find(" Summary") != std::string::npos || o.name.find(" summary") != std::string::npos) {
         obj->SetOption("texthist");
+        if (o.name.find("Problem") == std::string::npos) {
+          obj->GetYaxis()->SetRangeUser(0., 1.05);
+        }
       }
     }
-
   }
 
   void preDrawTH2F(TCanvas *c, const VisDQMObject& o, VisDQMRenderInfo &r) {
