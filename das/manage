@@ -99,6 +99,42 @@ fetchmaps(){
   set +e
 }
 
+# use global variable to assign MongoDB status
+mongo_status="no"
+
+# helper function to check MongoDB status
+check4db() {
+    port=8230
+    mongo_ok=`pymongostat | awk '{z=split($0,a," "); print a[z]}'`
+    if  [ -n "$mongo_ok" ]; then
+        mongo_status="ok"
+        return
+    fi
+    mongo_status="no"
+    return
+}
+
+# helper function to wait for MongoDB appearance
+# it will incrementally increase waiting time with 20 iterations (~3minute)
+wait4db() {
+    local counter=0
+    # check if mongodb is running
+    while [  $counter -lt 20 ]; do
+        check4db
+        if [ "$mongo_status" == "ok" ]; then
+            return
+        fi
+        let counter=counter+1
+        echo "MongoDB is not running, check in $counter sec"
+        sleep $counter
+    done
+    check4db
+    if [ "$mongo_status" == "no" ]; then
+        echo "MongoDB is not running, unable to start DAS server"
+        exit 1
+    fi
+}
+
 # Helper function to upload DAS maps before we start DAS server
 load_das_maps()
 {
@@ -162,6 +198,8 @@ sysboot_das2py()
 
 start_das2py()
 {
+  wait4db
+  load_das_maps
   echo "starting $ME"
   # choose correct DAS map file
   case $host in vocms012[67] | vocms0132 | vocms0731 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
@@ -235,6 +273,8 @@ sysboot_das2go()
 
 start_das2go()
 {
+    wait4db
+    load_das_maps
     echo "Starting das2go service..."
     # choose correct DAS map file
     case $host in vocms012[67] | vocms0132 | vocms0731 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
@@ -283,7 +323,6 @@ case ${1:-status} in
   start | restart )
     check "$msg"
     stop_das
-    load_das_maps
     start_das
     ;;
 
