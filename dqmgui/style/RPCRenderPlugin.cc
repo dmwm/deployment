@@ -94,7 +94,12 @@ private:
 
       if( o.name.find("Occupancy") != std::string::npos )
       {
-	obj->SetStats( kTRUE );
+        if((o.name.find("_for_Barrel") != std::string::npos || o.name.find("_for_Endcap") != std::string::npos) && o.name.find("SummaryHistograms") != std::string::npos )
+        {
+          obj->SetStats( kFALSE );
+        } else {
+          obj->SetStats( kTRUE );
+        }
         return;
       }
 
