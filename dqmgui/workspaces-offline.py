@@ -63,7 +63,7 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/31 - ntracks',
                   'PixelPhase1/Layouts/32 - Charge and size',
                   'PixelPhase1/Layouts/33a - Cluster on track charge per Inner Ladders',
-                  'PixelPhase1/Layouts/33b - Cluster on track charge per Outer Ladders',  
+                  'PixelPhase1/Layouts/33b - Cluster on track charge per Outer Ladders',
                   'PixelPhase1/Layouts/33c - Cluster charge (on-track) per Disk',
                   #'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
                   'PixelPhase1/Layouts/34 -  Ontrack PXLayer',
@@ -190,6 +190,7 @@ server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')
 server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/(TrackingPixel|common)/', 'CTPPS/TrackingPixel/Layouts')
 server.workspace('DQMContent', 52, 'CTPPS', 'TimingDiamond', '^CTPPS/(TimingDiamond|common)/', 'CTPPS/TimingDiamond/Layouts')
+server.workspace('DQMContent', 53, 'CTPPS', 'TimingFastSilicon', '^CTPPS/(TimingFastSilicon|common)/', 'CTPPS/TimingFastSilicon/Layouts')
 
 
 # POG workspaces:

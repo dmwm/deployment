@@ -166,7 +166,7 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/000 - PixelPhase1 ReportSummary: Layer or Disk vs subdet',
                   #'PixelPhase1/Layouts/01a - PixelPhase1_Event_Rate',
                   'PixelPhase1/Layouts/00a - PixelPhase1 FED Occupancy vs Lumi Sections',
-                  'PixelPhase1/Layouts/00b - PixelPhase1_Error_Summary', 
+                  'PixelPhase1/Layouts/00b - PixelPhase1_Error_Summary',
                   'PixelPhase1/Layouts/01c - PixelPhase1 Cluster Size vs Cluster Eta',
                   'PixelPhase1/Layouts/02 - PixelPhase1_Digi_ADC_Barrel',
                   'PixelPhase1/Layouts/03 - PixelPhase1_Digi_ADC_Endcap',
@@ -184,7 +184,7 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/33 - ntracks',
                   'PixelPhase1/Layouts/34 - Charge and size (on-track)',
                   'PixelPhase1/Layouts/35a - Cluster charge (on-track) per Inner Ladders',
-                  'PixelPhase1/Layouts/35b - Cluster charge (on-track) per Outer Ladders',  
+                  'PixelPhase1/Layouts/35b - Cluster charge (on-track) per Outer Ladders',
                   'PixelPhase1/Layouts/35c - Cluster charge (on-track) per Disk',
                   #'PixelPhase1/Layouts/35 - Cluster on track and vertices per lumi',
                   'PixelPhase1/Layouts/36 - Cluster position (on-track) per PXLayer',
@@ -342,3 +342,4 @@ server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')
 server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/(TrackingPixel|common)/', 'CTPPS/TrackingPixel/Layouts')
 server.workspace('DQMContent', 52, 'CTPPS', 'TimingDiamond', '^CTPPS/(TimingDiamond|common)/', 'CTPPS/TimingDiamond/Layouts')
+server.workspace('DQMContent', 53, 'CTPPS', 'TimingFastSilicon', '^CTPPS/(TimingFastSilicon|common)/', 'CTPPS/TimingFastSilicon/Layouts')
