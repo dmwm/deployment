@@ -31,7 +31,7 @@ for plot in [ "active planes", "recognized patterns", "planes contributing to fi
   CTPPSTrackingStripLayoutRP(dqmitems, plot + " UV", *rows)
 
 # layouts with overlays
-for suffix in [ "", " (short)" ]:
+for suffix in [ "" ]:
   rows = list()
   for rp in strip_rows:
     row = list()
@@ -42,7 +42,7 @@ for suffix in [ "", " (short)" ]:
     rows.append(row)
   CTPPSTrackingStripLayoutRP(dqmitems, "activity per BX" + suffix, *rows)
 
-strip_diagonals = [ "diagonal 45bot - 56top", "diagonal 45top - 56bot" ]
+strip_diagonals = [ "diagonal 45bot - 56top", "diagonal 45top - 56bot", "antidiagonal 45bot - 56bot", "antidiagonal 45top - 56top" ]
 strip_diagonal_cols = [ "45_220_fr", "45_210_fr", "56_210_fr", "56_220_fr" ]
 strip_diagonal_rows = [ "tp", "bt" ]
 
