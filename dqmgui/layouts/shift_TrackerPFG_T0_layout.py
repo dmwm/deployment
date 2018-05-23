@@ -23,7 +23,7 @@ shiftTkPFGlayout(dqmitems, "02 -SiStrip  # of Cluster Trend",
    {  'path':"SiStrip/MechanicalView/TEC/PLUS/TotalNumberOfClusterProfile__TEC__PLUS",
      'description': "Total # of Clusters in TEC +ve side with event time in Seconds  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}])
 
-shiftTkPFGlayout(dqmitems, "03 SiStrip OnTrackCluster",
+shiftTkPFGlayout(dqmitems, "03a SiStrip OnTrackCluster",
   [{ 'path': "SiStrip/MechanicalView/TIB/Summary_ClusterStoNCorr_OnTrack__TIB",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TIB  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiStrip>DQMShiftOfflineSiStrip</a> ", 'draw': { 'withref': "no" }},
    { 'path': "SiStrip/MechanicalView/TOB/Summary_ClusterStoNCorr_OnTrack__TOB",
@@ -36,6 +36,21 @@ shiftTkPFGlayout(dqmitems, "03 SiStrip OnTrackCluster",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TEC -ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiStrip>DQMShiftOfflineSiStrip</a> ", 'draw': { 'withref': "no" }},
    { 'path': "SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterStoNCorr_OnTrack__TEC__PLUS",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TEC +ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineSiStrip>DQMShiftOfflineSiStrip</a> ", 'draw': { 'withref': "no" } }])
+
+shiftTkPFGlayout(dqmitems, "03b - Cluster Charge per CM (On-Track)",
+  [{ 'path': "SiStrip/MechanicalView/TIB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TIB",
+     'description': "Charge per CM TIB ", 'draw': { 'withref': "yes" }},
+   { 'path': "SiStrip/MechanicalView/TOB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TOB",
+     'description': "Charge per CM TOB", 'draw': { 'withref': "yes" }}],
+   [{ 'path': "SiStrip/MechanicalView/TID/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__MINUS",
+     'description': "Charge per CM TID MINUS ", 'draw': { 'withref': "yes" }},
+   { 'path': "SiStrip/MechanicalView/TID/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__PLUS",
+     'description': "Charge per CM TID PLUS  ", 'draw': { 'withref': "yes" }}],
+  [{ 'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__MINUS",
+     'description': "Charge per CM TEC MINUS  ", 'draw': { 'withref': "yes" }},
+   { 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__PLUS",
+     'description': "Charge per CM TEC PLUS ", 'draw': { 'withref': "yes" }}])
+
 
 shiftTkPFGlayout(dqmitems, "04 - Cluster on track charge per Inner Ladders",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/chargeInner_PXLayer_1",
