@@ -229,6 +229,7 @@ private:
       if( name.find( "dataEmulSummary" ) != std::string::npos )
       {
         obj->SetFillColor(kRed);
+        obj->SetOption("texthist");
       }
     }
 

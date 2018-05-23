@@ -104,6 +104,7 @@ server.workspace('DQMContent', 10, 'Trigger', 'L1T', '^(L1T|L1T2016)/', '',
 	         'L1T/Layouts/Stage2-QuickCollection/67 - uGMT Zero Suppression misMatch Ratio (All Events)',
 	         'L1T/Layouts/Stage2-QuickCollection/68 - uGMT Zero Suppression misMatch Ratio (Fat Events)',
 	         'L1T/Layouts/Stage2-QuickCollection/69 - uGT Input vs uGMT Output misMatch Ratio',
+	         'L1T/Layouts/Stage2-QuickCollection/70 - uGT Algoritm Trigger Bits (before prescale) vs Global BX Number',
                 )
 
 server.workspace('DQMContent', 11, 'Trigger', 'L1TEMU', '^(L1TEMU|L1T2016EMU)/', '',
