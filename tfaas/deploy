@@ -1,4 +1,6 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_tfaas_variants="default prod preprod dev"
+
 deploy_tfaas_deps()
 {
   deploy $stage backend

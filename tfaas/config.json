@@ -1,5 +1,5 @@
 {
-    "port": 8340,
+    "port": 8350,
     "auth": "false",
     "modelDir": "{ROOT}/state/tfaas/models",
     "staticDir": "{ROOT}/state/tfaas/static",
