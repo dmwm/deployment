@@ -1,0 +1,13 @@
+{
+    "port": 8340,
+    "auth": "false",
+    "modelDir": "{ROOT}/state/tfaas/models",
+    "staticDir": "{ROOT}/state/tfaas/static",
+    "configProto": "",
+    "base": "/tfaas",
+    "serverKey": "",
+    "serverCrt": "",
+    "logFormatter": "text",
+    "updateDNs": 600,
+    "verbose": 0
+}
