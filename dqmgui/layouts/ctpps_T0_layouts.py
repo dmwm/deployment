@@ -4,6 +4,7 @@
 
 def CTPPSTrackingStripLayoutRP(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/RP summary/" + p] = DQMItem(layout=rows)
 def CTPPSTrackingStripLayoutDiag(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/diagonal summary/" + p] = DQMItem(layout=rows)
+def CTPPSTrackingStripLayoutAntiDiag(i, p, *rows): i["CTPPS/TrackingStrip/Layouts/antidiagonal summary/" + p] = DQMItem(layout=rows)
 
 strip_rows = [ "tp", "bt" ]
 strip_cols = [ "sector 45/station 220/fr", "sector 45/station 210/fr", "sector 56/station 210/fr", "sector 56/station 220/fr" ]
@@ -42,7 +43,8 @@ for suffix in [ "" ]:
     rows.append(row)
   CTPPSTrackingStripLayoutRP(dqmitems, "activity per BX" + suffix, *rows)
 
-strip_diagonals = [ "diagonal 45bot - 56top", "diagonal 45top - 56bot", "antidiagonal 45bot - 56bot", "antidiagonal 45top - 56top" ]
+strip_diagonals = [ "diagonal 45bot - 56top", "diagonal 45top - 56bot" ]
+strip_antidiagonals = [ "antidiagonal 45bot - 56bot", "antidiagonal 45top - 56top" ]
 strip_diagonal_cols = [ "45_220_fr", "45_210_fr", "56_210_fr", "56_220_fr" ]
 strip_diagonal_rows = [ "tp", "bt" ]
 
@@ -55,6 +57,13 @@ for plot in [ "rate - 2 RPs (220-fr)", "rate - 4 RPs" ]:
     rows.append(row)
   CTPPSTrackingStripLayoutDiag(dqmitems, plot, *rows)
 
+  rows = list()
+  for adiag in strip_antidiagonals:
+    row = list()
+    row.append("CTPPS/TrackingStrip/"+adiag+"/"+plot)
+    rows.append(row)
+  CTPPSTrackingStripLayoutAntiDiag(dqmitems, plot, *rows)
+
 # xy plots with conditions
 for cond in [ "2 RPs cond", "4 RPs cond" ]:
   rows = list()
@@ -62,13 +71,26 @@ for cond in [ "2 RPs cond", "4 RPs cond" ]:
     row = list()
     for unit in strip_diagonal_cols:
       arm=unit[:2]
-      if ((arm == "45") and (rp == "bt")): diag="diagonal 45bot - 56top"
-      if ((arm == "56") and (rp == "tp")): diag="diagonal 45bot - 56top"
-      if ((arm == "45") and (rp == "tp")): diag="diagonal 45top - 56bot"
-      if ((arm == "56") and (rp == "bt")): diag="diagonal 45top - 56bot"
+      if ((arm == "45") and (rp == "bt")): diag = "diagonal 45bot - 56top"
+      if ((arm == "56") and (rp == "tp")): diag = "diagonal 45bot - 56top"
+      if ((arm == "45") and (rp == "tp")): diag = "diagonal 45top - 56bot"
+      if ((arm == "56") and (rp == "bt")): diag = "diagonal 45top - 56bot"
       row.append("CTPPS/TrackingStrip/"+diag+"/xy hists/xy hist - "+unit+"_"+rp+" - "+cond)
     rows.append(row)
   CTPPSTrackingStripLayoutDiag(dqmitems, "XY profile - "+cond, *rows)
+
+  rows = list()
+  for rp in strip_diagonal_rows:
+    row = list()
+    for unit in strip_diagonal_cols:
+      arm=unit[:2]
+      if ((arm == "45") and (rp == "bt")): diag = "antidiagonal 45bot - 56bot"
+      if ((arm == "45") and (rp == "tp")): diag = "antidiagonal 45top - 56top"
+      if ((arm == "56") and (rp == "tp")): diag = "antidiagonal 45top - 56top"
+      if ((arm == "56") and (rp == "bt")): diag = "antidiagonal 45bot - 56bot"
+      row.append("CTPPS/TrackingStrip/"+diag+"/xy hists/xy hist - "+unit+"_"+rp+" - "+cond)
+    rows.append(row)
+  CTPPSTrackingStripLayoutAntiDiag(dqmitems, "XY profile - "+cond, *rows)
 
 
 
