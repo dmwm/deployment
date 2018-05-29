@@ -71,7 +71,12 @@ private:
       gStyle->SetPadBorderSize( 0 );
       gStyle->SetOptStat( 10 );
       gStyle->SetPalette( 1 );
-      obj->SetOption( "colz" );
+      if(o.name.find("Occupancy_for_") != std::string::npos && o.name.find("SummaryHistograms") != std::string::npos )
+      {
+        obj->SetOption( "colztext" );
+      } else {
+        obj->SetOption( "colz" );
+      }
       obj->SetStats( kFALSE );
 
       obj->GetXaxis()->SetNdivisions(-510);
@@ -82,14 +87,19 @@ private:
       c->SetGridy();
 
       if(o.name.find("SummaryMap") != std::string::npos)
-	{
+      {
         dqm::utils::reportSummaryMapPalette(obj);
 	return;
       }
 
       if( o.name.find("Occupancy") != std::string::npos )
       {
-	obj->SetStats( kTRUE );
+        if((o.name.find("_for_Barrel") != std::string::npos || o.name.find("_for_Endcap") != std::string::npos) && o.name.find("SummaryHistograms") != std::string::npos )
+        {
+          obj->SetStats( kFALSE );
+        } else {
+          obj->SetStats( kTRUE );
+        }
         return;
       }
 

@@ -53,11 +53,17 @@ public:
           return false;
         if( o.name.find( "L1TdeStage2CaloLayer1" ) != std::string::npos )
           return false;
-        if( o.name.find( "L1TStage2EMTF" ) != std::string::npos )
-          return false;
         if( o.name.find( "L1TStage2CaloLayer2" ) != std::string::npos )
           return false;
-        if (o.name.find("L1TriggerVsReco") != std::string::npos)
+        if( o.name.find( "L1TStage2BMTF" ) != std::string::npos )
+          return false;
+        if( o.name.find( "L1TStage2EMTF" ) != std::string::npos )
+          return false;
+        if (o.name.find( "L1TriggerVsReco" ) != std::string::npos)
+          return false;
+        if( o.name.find( "L1TStage2uGMT" ) != std::string::npos )
+          return false;
+        if( o.name.find( "L1TStage2uGT" ) != std::string::npos )
           return false;
 
         return true;

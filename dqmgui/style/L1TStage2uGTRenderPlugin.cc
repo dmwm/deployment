@@ -35,7 +35,7 @@ public:
     }
 
   virtual bool applies(const VisDQMObject& o, const VisDQMImgInfo&) {
-    if (o.name.find("L1T/L1TStage2uGT/") != std::string::npos || o.name.find("L1TEMU/L1TStage2uGTEmul/") != std::string::npos )
+    if (o.name.find("L1T/L1TStage2uGT/") != std::string::npos || o.name.find("L1TEMU/L1TStage2uGTEmul/") != std::string::npos || o.name.find("L1TEMU/L1TdeStage2uGT/") != std::string::npos)
       return true;
 
     return false;
@@ -69,7 +69,17 @@ bool checkAndRemove(std::string &s, const char * key)
     return false;
   }
 
-  void preDrawTH1F(TCanvas*, const VisDQMObject&) {}
+  void preDrawTH1F(TCanvas*, const VisDQMObject& o) {
+    TH1F* obj = dynamic_cast<TH1F*>( o.object );
+    assert( obj );
+
+    std::string name = o.name.substr(o.name.rfind("/")+1);
+
+    if (name.find("dataEmulMismatchRatio") == 0) {
+      obj->SetOption("texthist");
+      obj->GetYaxis()->SetRangeUser(0., 1.05);
+    }
+  }
 
   void preDrawTH2F(TCanvas *c, const VisDQMObject& o, VisDQMRenderInfo& r) {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
