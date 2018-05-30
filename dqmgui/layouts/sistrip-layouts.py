@@ -435,3 +435,11 @@ sistriplayout(dqmitems, "32 - TEC- Residual",
        'description': "Hit Residual in TEC- Wheel #8", 'draw': { 'withref': "yes"}},
    { 'path': "SiStrip/MechanicalView/TEC/MINUS/wheel_9/HitResiduals_TEC__wheel__9",
        'description': "Hit Residual in TEC- Wheel #9", 'draw': { 'withref': "yes"}}])
+sistriplayout(dqmitems, "33 - Cluster & Digi occupancy per FED",
+ [{ 'path': "SiStrip/MechanicalView/NumberOfDigisinFED_v_FEDID",
+    'description': "Digi occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }},
+  { 'path': "SiStrip/MechanicalView/NumberOfClustersinFED_v_FEDID",
+    'description': "Cluster occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }}])
+sistriplayout(dqmitems, "34 - FED Errors Vs Id Vs Lumi",
+ [{ 'path': "SiStrip/ReadoutView/Trends/FED/fedErrorsVsIdVsLumi",
+    'description': "Digi occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }}])

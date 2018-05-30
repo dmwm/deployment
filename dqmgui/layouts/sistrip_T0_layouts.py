@@ -358,3 +358,8 @@ sistriplayout(dqmitems, "29 - Cluster Charge per CM (On-Track)",
 
 
 #  LocalWords:  TotalNumberOfClusterProfile
+sistriplayout(dqmitems, "29 - Cluster & Digi occupancy per FED",
+ [{ 'path': "SiStrip/MechanicalView/NumberOfDigisinFED_v_FEDID",
+    'description': "Digi occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }},
+  { 'path': "SiStrip/MechanicalView/NumberOfClustersinFED_v_FEDID",
+    'description': "Cluster occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }}])

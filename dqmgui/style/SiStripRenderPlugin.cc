@@ -58,6 +58,18 @@ public:
     {
       c->cd();
 
+      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object) || dynamic_cast<TH1F*>(o.object) || dynamic_cast<TH2F*>(o.object) ) && 
+	  (o.name.find( "fedErrorsVsIdVsLumi" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos || o.name.find("RocTrend")!= std::string::npos))
+      {
+        TProfile2D*  obj = dynamic_cast<TProfile2D*>(o.object);
+        int min_x = (int) obj->FindFirstBinAbove(0.001);
+        int max_x = (int) obj->FindLastBinAbove(0.001)+1;     
+
+        if( o.name.find("fedErrorsVsIdVsLumi")!=std::string::npos){
+          obj->GetXaxis()->SetRange(min_x, max_x);
+	} 
+      }
+
       if( dynamic_cast<TH2F*>( o.object ) )
       {
         preDrawTH2F( c, o );
@@ -981,6 +993,21 @@ private:
       }
     
     if( o.name.find( "/ReadoutView/FedEventSize" ) != std::string::npos )
+    {
+      float plot_ymax = 1.049*(obj->GetMaximum()+2*sqrt(obj->GetMaximum()));
+      if ( plot_ymax == 0 ) plot_ymax = 1.049;
+      tl4.DrawLine(134.0, -0.05, 134.0, plot_ymax);
+      tl3.DrawLine(164.0, -0.05, 164.0, plot_ymax);
+      tl3.DrawLine(260.0, -0.05, 260.0, plot_ymax);
+      tl3.DrawLine(356.0, -0.05, 356.0, plot_ymax);
+
+      tt.DrawTextNDC(0.18, 0.91, "TIB/D");
+      tt.DrawTextNDC(0.38, 0.91, "TEC-");
+      tt.DrawTextNDC(0.55, 0.91, "TEC+");
+      tt.DrawTextNDC(0.72, 0.91, "TOB");
+    }
+
+    if( o.name.find( "/MechanicalView/NumberOfDigisinFED_v_FEDID" ) != std::string::npos || o.name.find( "/MechanicalView/NumberOfClustersinFED_v_FEDID" ) != std::string::npos )
     {
       float plot_ymax = 1.049*(obj->GetMaximum()+2*sqrt(obj->GetMaximum()));
       if ( plot_ymax == 0 ) plot_ymax = 1.049;

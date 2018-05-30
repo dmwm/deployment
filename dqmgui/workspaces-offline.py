@@ -97,6 +97,7 @@ server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^SiStrip/', '',
                  'SiStrip/Layouts/04 - OnTrackCluster (StoN)',
                  'SiStrip/Layouts/05 - OffTrackCluster (Total Number)',
                  'SiStrip/Layouts/06a - FED Errors vs FED ID',
+                 'SiStrip/Layouts/29 - Cluster & Digi occupancy per FED',
                 )
 
 # Calorimeter workspaces:
