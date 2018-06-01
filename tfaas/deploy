@@ -11,6 +11,7 @@ deploy_tfaas_deps()
 deploy_tfaas_prep()
 {
   mkproj stagingarea
+  mkproj models
   mkproxy
 }
 
@@ -18,7 +19,6 @@ deploy_tfaas_sw()
 {
   deploy_pkg comp cms+tfaas
   perl -p -i -e "s|{ROOT}|$root/$cfgversion/apps/tfaas|" $root/$cfgversion/config/$project/config.json
-  mkdir -p $project_state/models
 }
 
 deploy_tfaas_post()
