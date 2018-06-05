@@ -50,7 +50,7 @@ host=`hostname -s`
 sysboot()
 {
   dostart=false
-  if [ $(pgrep -u $(id -u) -f "[/]tfaas" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "[/]tfaas -config" | wc -l) = 0 ]; then
       dostart=true
   fi
   $dostart && start
@@ -60,7 +60,6 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  # start TFAAS service (it will load TFAAS maps into MongoDB and start TFAAS server)
   $TFAAS_ROOT/bin/tfaas -config $TFAAS_CONFIG \
       </dev/null 2>&1 | rotatelogs $LOGDIR/tfaas-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
@@ -69,7 +68,7 @@ start()
 stop()
 {
   echo "stopping $ME"
-  for tfaas_pid in $(pgrep -u $(id -u) -f "[/]tfaas"); do
+  for tfaas_pid in $(pgrep -u $(id -u) -f "[/]tfaas -config"); do
       kill -9 $tfaas_pid
   done
 }
@@ -77,7 +76,7 @@ stop()
 # Check if the server is running.
 status()
 {
-  local pid=$(pgrep -u $(id -u) -f "[/]tfaas" | sort -n)
+  local pid=$(pgrep -u $(id -u) -f "[/]tfaas -config" | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
