@@ -605,6 +605,15 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/18 TT Flags vs Et',
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT Flags vs Et', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE -', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE +', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/19 Ratio_L1TEGamma_BX_0',
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_0', 'description': 'This 2D plot in (eta, phi) shows the ratio of the total TP energy at BX = 0.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/20 Ratio_L1TEGamma_BX_minus1',
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_minus1', 'description': 'This 2D plot in (eta, phi) shows the ratio of the total TP energy at BX = -1.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/21 noniso_bx_ieta_firstbunch',
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/First_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_firstbunch_ptmin20p0', 'description': 'This 2D plot shows the fraction of the TP energy in a given BX as a function of eta in events from the first bunches.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/22 noniso_bx_ieta_lastbunch',
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Last_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_lastbunch_ptmin20p0', 'description': 'This 2D plot shows the fraction of the TP energy in a given BX as a function of eta in events from the last bunches.'}])
+
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
