@@ -11,8 +11,6 @@
 ##H   fetchmaps   fetch DAS maps
 ##H
 ##H Available attributes:
-##H   das2go      name of das2go server
-##H   das2py      name of das2py server
 ##H   das_cleanup    name of cronjob
 ##H
 ##H For more details please refer to operations page:
@@ -30,8 +28,6 @@ case $(uname) in Darwin )
   ;;
 esac
 
-# setup DASSERVER by providing third parameter on command line to manage script
-DASSERVER="das2go" # default server
 msg=${@: -1} # last argument
 
 ME=$(basename $(dirname $0))
@@ -243,7 +239,7 @@ case ${1:-status} in
 
   cron )
     check "$msg"
-    cron $attr
+    cron "das_cleanup"
     ;;
 
   help )
