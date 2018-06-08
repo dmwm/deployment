@@ -606,13 +606,13 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/18 TT Flags vs Et',
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE -', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE +', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/19 Ratio_L1TEGamma_BX_0',
-           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_0', 'description': 'This 2D plot in (eta, phi) shows the ratio of the total TP energy at BX = 0.'}])
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_0', 'description': 'Fraction of (L1T EGamma objects with pT >= 20 GeV found in BX 0) over (all L1T EGamma objects with pT >= 20 GeV found in a BX range of +/-2 BX around BX 0).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/20 Ratio_L1TEGamma_BX_minus1',
-           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_minus1', 'description': 'This 2D plot in (eta, phi) shows the ratio of the total TP energy at BX = -1.'}])
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_minus1', 'description': 'Fraction of (L1T EGamma objects with pT >= 20 GeV found in BX -1) over (all L1T EGamma objects with pT >= 20 GeV found in a BX range of +/-2 BX around BX 0).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/21 noniso_bx_ieta_firstbunch',
-           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/First_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_firstbunch_ptmin20p0', 'description': 'This 2D plot shows the fraction of the TP energy in a given BX as a function of eta in events from the first bunches.'}])
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/First_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_firstbunch_ptmin20p0', 'description': 'L1T EGamma object BX relative to the BX of the L1_FirstCollisionInTrain algorithm vs. L1T EGamma object iEta, for events where the L1_FirstCollisionInTrain algorithm has fired within +/-2 BX around L1A BX 0. L1T EGamma objects must have pT >= 20 GeV. BX 0 in the histogram marks the first bunch in a bunch train.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/22 noniso_bx_ieta_lastbunch',
-           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Last_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_lastbunch_ptmin20p0', 'description': 'This 2D plot shows the fraction of the TP energy in a given BX as a function of eta in events from the last bunches.'}])
+           [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Last_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_lastbunch_ptmin20p0', 'description': 'L1T EGamma object BX relative to the BX of the L1_LastCollisionInTrain algorithm vs. L1T EGamma object iEta, for events where the L1_LastCollisionInTrain algorithm has fired within +/-2 BX around L1A BX 0. L1T EGamma objects must have pT >= 20 GeV. BX 0 in the histogram marks the last bunch in a bunch train.'}])
 
 
 # By SuperModule _______________
