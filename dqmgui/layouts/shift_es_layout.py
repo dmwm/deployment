@@ -26,3 +26,6 @@ shifteslayout(dqmitems, "04-ESTimingTaskSummary-EcalPreshower",
 
 shifteslayout(dqmitems, "05-ESGain-EcalPreshower",
   [{ 'path': "EcalPreshower/ESIntegrityTask/ES Gain used for data taking", 'description': "ES Gain configuration in the front-end electronics"}])
+
+shifteslayout(dqmitems, "06-ES-Fiber-Error-Code",
+  [{ 'path': "EcalPreshower/ESIntegrityTask/ES Fiber Error Code", 'description': "Error codes for each ES integrity error; the number of entries is the number of events with an error."}])
