@@ -232,6 +232,7 @@ server.workspace('DQMContent', 31, 'Calorimeters', 'EcalPreshower', '^EcalPresho
                  'EcalPreshower/Layouts/03-GoodRechitEnergySummary-EcalPreshower',
                  'EcalPreshower/Layouts/04-ESTimingTaskSummary-EcalPreshower',
                  'EcalPreshower/Layouts/05-ESGain-EcalPreshower',
+                 'EcalPreshower/Layouts/06-ES-Fiber-Error-Code',
                 )
 
 server.workspace('DQMContent', 32, 'Calorimeters', 'HCAL', '^(Hcal|Hcal2)/', '',
