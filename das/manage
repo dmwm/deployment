@@ -162,7 +162,7 @@ check()
 sysboot_das()
 {
   dostart=false
-  if [ $(pgrep -u $(id -u) -f "[/]das2go_server" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "[/]das2go_monitor" | wc -l) = 0 ]; then
       dostart=true
   fi
   $dostart && start_das
@@ -177,12 +177,12 @@ start_das()
     case $host in vocms012[67] | vocms0132 | vocms0731 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
     local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
     cp -f $mapfile $STAGEDIR/update_mapping_db.js
-    nohup das2go_server $DAS2GO_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    nohup das2go_monitor -config $DAS2GO_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 stop_das()
 {
-    local pid=`ps auxwww | egrep "das2go_server|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    local pid=`ps auxwww | egrep "das2go_monitor|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
     echo "Stop das2go service... ${pid}"
     if [ -n "${pid}" ]; then
         kill -9 ${pid}
@@ -191,7 +191,7 @@ stop_das()
 
 status_das()
 {
-    local pid=`ps auxwww | egrep "das2go_server|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    local pid=`ps auxwww | egrep "das2go_monitor|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
 
     if  [ -z "${pid}" ]; then
         echo "das2go is not running"
