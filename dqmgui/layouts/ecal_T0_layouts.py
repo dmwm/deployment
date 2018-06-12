@@ -578,13 +578,13 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/09 Emulation Timing',
 	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT max TP matching index EE -', 'description': 'Distribution of the index of emulated TP with the highest Et value.'},
 	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT max TP matching index EE +', 'description': 'Distribution of the index of emulated TP with the highest Et value.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/10 TTF4 Occupancy',
-	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 Occupancy',      'description': 'Occupancy for TP digis with TTF=4.'}],
-	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE -', 'description': 'Occupancy for TP digis with TTF=4.'},
-	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE +', 'description': 'Occupancy for TP digis with TTF=4.'}])
+	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 Occupancy',      'description': 'Occupancy for TP digis with TTF>=4.'}],
+	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE -', 'description': 'Occupancy for TP digis with TTF>=4.'},
+	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 Occupancy EE +', 'description': 'Occupancy for TP digis with TTF>=4.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/11 TTF4 vs Masking Status',
-     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 vs Masking Status',      'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}],
-     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE -', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'},
-      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE +', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}])
+     [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 vs Masking Status',      'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag>=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}],
+     [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE -', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag>=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'},
+      {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE +', 'description': 'Summarizes whether a TT was masked in either the TPG TT or Strips records, or had an instance of TT Flag>=4.<br/>GRAY: Masked, no TTF4,<br/>BLACK: Masked, has TTF4,<br/>BLUE: Not Masked, has TTF4.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/12 TT Masking Status',
      [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TT Masking Status',      'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'}],
      [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TT Masking Status EE -', 'description': 'Trigger tower masking status: a TT or strip is red if it is masked.'},
