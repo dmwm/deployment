@@ -17,5 +17,6 @@
     "hkey": "",
     "updateDNs": 60,
     "dasexamples": "/data/srv/state/das",
+    "timeout": 180,
     "verbose": 0
 }
