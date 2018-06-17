@@ -18,7 +18,7 @@ deploy_tfaas_prep()
 deploy_tfaas_sw()
 {
   deploy_pkg comp cms+tfaas
-  perl -p -i -e "s|{ROOT}|$root/$cfgversion/apps/tfaas|" $root/$cfgversion/config/$project/config.json
+  perl -p -i -e "s|{ROOT}|$root/current/apps/tfaas|" $root/$cfgversion/config/$project/config.json
 }
 
 deploy_tfaas_post()
