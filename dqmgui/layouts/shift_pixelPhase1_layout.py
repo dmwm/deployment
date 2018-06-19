@@ -66,7 +66,7 @@ shiftpixelP1layout(dqmitems, "06 - PixelPhase1 Dead Channels per ROC: Ladder vs 
    [{ 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_3",
       'description': "Profile of dead channels per ROC by signed ladder (y-axis) vs signed module (x-axis) in layer 3 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    { 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_2",
+    { 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_4",
       'description': "Profile of dead channels per ROC by signed ladder (y-axis) vs signed module (x-axis) in layer 4 of barrel",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
@@ -75,7 +75,7 @@ shiftpixelP1layout(dqmitems,"07 - PixelPhase1 Dead Channels per ROC: BladePannel
    [{ 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
       'description': "Profile of number of dead Channels per ROC by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 1 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
-    { 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
+    { 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_2",
       'description': "Profile of number of dead Channels per ROC by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
