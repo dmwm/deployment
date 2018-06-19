@@ -11,9 +11,6 @@
 ##H   fetchmaps   fetch DAS maps
 ##H
 ##H Available attributes:
-##H   das2go      name of das2go server
-##H   das2py      name of das2py server
-##H   das_dbs_update name of cronjob
 ##H   das_cleanup    name of cronjob
 ##H
 ##H For more details please refer to operations page:
@@ -31,13 +28,7 @@ case $(uname) in Darwin )
   ;;
 esac
 
-# setup DASSERVER by providing third parameter on command line to manage script
-DASSERVER="das2go" # default server
 msg=${@: -1} # last argument
-attr=$2 # possible attribute value, either server or cron name
-if [ "$attr" == "das2py" ]; then
-   DASSERVER="das2py"
-fi
 
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
@@ -51,21 +42,12 @@ COLOR_NORMAL="\\033[0;39m"
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
 export DAS_ROOT YUI_ROOT
-export PYTHONUNBUFFERED=1
-PYTHONV=`echo $PYTHON_VERSION | cut -f1,2 -d.`
-export DAS_PYTHONPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages
-export DAS_JSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/js
-export DAS_CSSPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/css
-export DAS_TMPLPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/jinja_templates
-export DAS_IMAGESPATH=$DAS_ROOT/lib/python$PYTHONV/site-packages/web/images
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export STAGEDIR=$STATEDIR/stagingarea
 export DASMAPS_DIR=$STAGEDIR
-export DAS_CONFIG=$ROOT/config/$ME/das.cfg
 export DAS2GO_CONFIG=$ROOT/config/$ME/das2go-config.json
-export DAS_CONFIG_CLI=$ROOT/config/$ME/das_cli.cfg
 mkdir -p $STAGEDIR
 
 cd $STATEDIR
@@ -105,7 +87,7 @@ mongo_status="no"
 # helper function to check MongoDB status
 check4db() {
     port=8230
-    mongo_ok=`pymongostat | awk '{z=split($0,a," "); print a[z]}'`
+    mongo_ok=`$DAS_ROOT/bin/mongostatus | awk '{z=split($0,a," "); print a[z]}'`
     if  [ -n "$mongo_ok" ]; then
         mongo_status="ok"
         return
@@ -150,87 +132,6 @@ load_das_maps()
     $DAS_ROOT/bin/das_js_import $DASMAPS_DIR
 }
 
-# DAS action functions
-sysboot_das()
-{
-    if  [ "$DASSERVER" == "das2go" ]; then
-        sysboot_das2go
-    else
-        sysboot_das2py
-    fi
-}
-
-start_das()
-{
-    if  [ "$DASSERVER" == "das2go" ]; then
-        start_das2go
-    else
-        start_das2py
-    fi
-}
-
-stop_das()
-{
-    if  [ "$DASSERVER" == "das2go" ]; then
-        stop_das2go
-    else
-        stop_das2py
-    fi
-}
-status_das()
-{
-    if  [ "$DASSERVER" == "das2go" ]; then
-        status_das2go
-    else
-        status_das2py
-    fi
-}
-
-# Start service conditionally on crond restart.
-sysboot_das2py()
-{
-  dostart=false
-  if [ $(pgrep -u $(id -u) -f "[/]das_server.py" | wc -l) = 0 ]; then
-      dostart=true
-  fi
-  $dostart && start_das2py
-}
-
-start_das2py()
-{
-  wait4db
-  load_das_maps
-  echo "starting $ME"
-  # choose correct DAS map file
-  case $host in vocms012[67] | vocms0132 | vocms0731 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
-  local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
-  cp -f $mapfile $STAGEDIR/update_mapping_db.js
-  # start DAS service (it will load DAS maps into MongoDB and start DAS server)
-  DASMAPS_DIR=$STAGEDIR LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so $DAS_ROOT/bin/das_server start \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/das-%Y%m%d.log 86400 >/dev/null 2>&1 &
-}
-
-# Stop the service.
-stop_das2py()
-{
-  echo "stopping $ME"
-  for das_pid in $(pgrep -u $(id -u) -f "[/]das_server"); do
-      kill -9 $das_pid
-  done
-}
-
-# Check if the server is running.
-status_das2py()
-{
-  local pid=$(pgrep -u $(id -u) -f "[/]das_server" | sort -n)
-  if [ X"$pid" = X ]; then
-    echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
-  else
-    echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
-  fi
-}
-
-
 # Runs actions to be done through cronjobs
 cron()
 {
@@ -240,12 +141,8 @@ cron()
       $DAS_ROOT/bin/das_cleanup --verbose \
           </dev/null 2>&1 | rotatelogs $LOGDIR/das_cleanup-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
-    das_dbs_update )
-      $DAS_ROOT/bin/das_dbs_update --verbose \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/das_dbs_update-%Y%m%d.log 86400 >/dev/null 2>&1 &
-      ;;
     * )
-      echo "You must specify the cron action to run: das_dbs_update|das_cleanup "
+      echo "You must specify the cron action to run: das_cleanup "
       exit 1
       ;;
   esac
@@ -262,16 +159,16 @@ check()
 }
 
 # das2go action functions
-sysboot_das2go()
+sysboot_das()
 {
   dostart=false
-  if [ $(pgrep -u $(id -u) -f "[/]das2go_server" | wc -l) = 0 ]; then
+  if [ $(pgrep -u $(id -u) -f "[/]das2go_monitor" | wc -l) = 0 ]; then
       dostart=true
   fi
-  $dostart && start_das2go
+  $dostart && start_das
 }
 
-start_das2go()
+start_das()
 {
     wait4db
     load_das_maps
@@ -280,21 +177,21 @@ start_das2go()
     case $host in vocms012[67] | vocms0132 | vocms0731 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
     local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
     cp -f $mapfile $STAGEDIR/update_mapping_db.js
-    nohup das2go_server $DAS2GO_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    nohup das2go_monitor -config $DAS2GO_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
-stop_das2go()
+stop_das()
 {
-    local pid=`ps auxwww | egrep "das2go_server|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    local pid=`ps auxwww | egrep "das2go_monitor|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
     echo "Stop das2go service... ${pid}"
     if [ -n "${pid}" ]; then
         kill -9 ${pid}
     fi
 }
 
-status_das2go()
+status_das()
 {
-    local pid=`ps auxwww | egrep "das2go_server|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    local pid=`ps auxwww | egrep "das2go_monitor|das2go -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
 
     if  [ -z "${pid}" ]; then
         echo "das2go is not running"
@@ -342,7 +239,7 @@ case ${1:-status} in
 
   cron )
     check "$msg"
-    cron $attr
+    cron "das_cleanup"
     ;;
 
   help )
