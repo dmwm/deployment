@@ -3,7 +3,7 @@ def shifttrackinglayout(i, p, *rows): i["00 Shift/Tracking/" + p] = DQMItem(layo
 shifttrackinglayout(dqmitems, "01 - Tracking ReportSummary",
  [{ 'path': "Tracking/EventInfo/reportSummaryMap",
     'description': " Quality Test results plotted for Tracking parameters : Chi2, TrackRate, #of Hits in Track - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineTracking>DQMShiftOfflineTracking</a> ", 'draw': { 'withref': "no" }}])
-shifttrackinglayout(dqmitems, "02 - Tracks (pp collisions)",
+shifttrackinglayout(dqmitems, "02a - Tracks (pp collisions)",
  [{ 'path': "Tracking/TrackParameters/highPurityTracks/pt_1/GeneralProperties/NumberOfTracks_GenTk",
     'description': "Number of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineTracking>DQMShiftOfflineTracking</a> ", 'draw': { 'withref': "yes" }},
   { 'path': "Tracking/TrackParameters/highPurityTracks/pt_1/HitProperties/NumberOfRecHitsPerTrack_GenTk",
@@ -16,6 +16,11 @@ shifttrackinglayout(dqmitems, "02 - Tracks (pp collisions)",
     'description': "Phi distribution of Reconstructed Tracks -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineTracking>DQMShiftOfflineTracking</a> ", 'draw': { 'withref': "yes" }},
   { 'path': "Tracking/TrackParameters/highPurityTracks/pt_1/GeneralProperties/TrackEta_ImpactPoint_GenTk",
     'description': " Eta distribution of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineTracking>DQMShiftOfflineTracking</a> ", 'draw': { 'withref': "yes" }}])
+shifttrackinglayout(dqmitems, "02b - Total Hits Strip and Pixel (pp collisions)",
+ [{ 'path': "Tracking/TrackParameters/highPurityTracks/pt_1/HitProperties/Strip/NumberOfRecHitsPerTrack_Strip_GenTk",
+    'description': "Number of Strip valid RecHits in each Track", 'draw': { 'withref': "yes" }},
+{ 'path': "Tracking/TrackParameters/highPurityTracks/pt_1/HitProperties/Pixel/NumberOfRecHitsPerTrack_Pixel_GenTk",
+    'description': "Number of Pixel valid RecHits in each Track", 'draw': { 'withref': "yes" }}])
 shifttrackinglayout(dqmitems, "03 - Tracks (Cosmic Tracking)",
  [{ 'path': "Tracking/TrackParameters/GeneralProperties/NumberOfTracks_CKFTk",
     'description': "Number of Reconstructed Tracks - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineTracking>DQMShiftOfflineTracking</a> ", 'draw': { 'withref': "yes" }},
