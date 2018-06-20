@@ -33,6 +33,9 @@ ecalpreshowerlayout(dqmitems, "04-ESTimingTaskSummary-EcalPreshower",
 ecalpreshowerlayout(dqmitems, "05-ESGain-EcalPreshower",
   [{ 'path': "EcalPreshower/ESIntegrityTask/ES Gain used for data taking", 'description': "ES Gain configuration in the front-end electronics"}])
 
+ecalpreshowerlayout(dqmitems, "06-ES-Fiber-Error-Code",
+  [{ 'path': "EcalPreshower/ESIntegrityTask/ES Fiber Error Code", 'description': "Error codes for each ES integrity error; the number of entries is the number of events with an error."}])
+
 # Layouts
 ecalpreshowershiftlayout(dqmitems, "01-IntegritySummary-EcalPreshower",
   [{ 'path': "EcalPreshower/ESIntegrityClient/ES Integrity Summary 1 Z 1 P 1", 'description': "ES+ Front Integrity Summary 1 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> <br/> <table width=100%> <tr><td>1 - not used<td>2 - fiber problem<td>3 - OK<td>4 - FED problem<td><tr>5 - KCHIP problem<td>6 - ES counters are not synced with GT counters (see ESRawDataTask) <td> 7 - more than one problem<td>8 - SLink CRC error</table> " },
@@ -60,6 +63,9 @@ ecalpreshowershiftlayout(dqmitems, "04-ESTimingTaskSummary-EcalPreshower",
 
 ecalpreshowershiftlayout(dqmitems, "05-ESGain-EcalPreshower",
   [{ 'path': "EcalPreshower/ESIntegrityTask/ES Gain used for data taking", 'description': "ES Gain configuration in the front-end electronics"}])
+
+ecalpreshowershiftlayout(dqmitems, "06-ES-Fiber-Error-Code",
+  [{ 'path': "EcalPreshower/ESIntegrityTask/ES Fiber Error Code", 'description': "Error codes for each ES integrity error; the number of entries is the number of events with an error."}])
 
 ecalpreshowerintegritylayout(dqmitems, "01 Integrity Summary 1 Z 1 P 1",
    [{'path': "EcalPreshower/ESIntegrityClient/ES Integrity Summary 1 Z 1 P 1", 'description': "ES+ Front Integrity Summary 1 - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftPreshower>DQMShiftPreshower</a> <br/> <table width=100%> <tr><td>1 - not used<td>2 - fiber problem<td>3 - OK<td>4 - FED problem<td><tr>5 - KCHIP problem<td>6 - ES counters are not synced with GT counters (see ESRawDataTask) <td> 7 - more than one problem<td>8 - SLink CRC error</table> " }])
