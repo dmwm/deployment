@@ -2365,3 +2365,14 @@ hcallayout(dqmitems, '54 (CapId-BX)%4',
 		},
 	]
 )
+
+hcallayout(dqmitems, '55 HF TDC cut efficiency', 
+	[
+		{
+			'path':'Hcal/TPTask/TDCCutEfficiency_depth', 'description':"""Efficiency of HF dual anode TDC cut"""
+		},
+		{
+			'path':'Hcal/TPTask/TDCCutEfficiency_ieta', 'description':"""Efficiency of HF dual anode TDC cut"""
+		},
+	]
+)
