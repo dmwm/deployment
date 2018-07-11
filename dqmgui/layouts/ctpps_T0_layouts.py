@@ -201,7 +201,6 @@ TotemTimingLayout(dqmitems, "sent digis percentage",
 ####################################################################################################
 # Pixel layouts
 ####################################################################################################
-
 sectors = [ "sector 45", "sector 56" ]
 pixelstations = [ "station 210", "station 220" ]
 pixstationsf=["sector 45/station 210/","sector 45/station 220/","sector 56/station 210/","sector 56/station 220/"]
@@ -210,21 +209,21 @@ pix_planes2 = [ "3","4","5" ]
 
 def CTPPSTrackingPixelLayout(i, p, *rows): i["CTPPS/TrackingPixel/Layouts/" + p] = DQMItem(layout=rows)
 
-for plot in ["hit multiplicity in planes","hit average multiplicity in planes"]:
+for plot in ["hit multiplicity in planes"]:
   rows = list()
   row = list()
   for station in pixelstations:
-    row.append("CTPPS/TrackingPixel/sector 45/"+station+"/"+plot)
+    row.append("CTPPS/TrackingPixel/sector 45/"+station+"/fr_hr/"+plot)
   rows.append(row)
 
   row = list()
   for station in pixelstations:
-    row.append("CTPPS/TrackingPixel/sector 56/"+station+"/"+plot)
+    row.append("CTPPS/TrackingPixel/sector 56/"+station+"/fr_hr/"+plot)
   rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
-for plot in ["number of fired planes per event","number of fired aligned_ROCs per event","ROCs hits multiplicity per event"]:
+for plot in ["number of fired planes per event","ROCs hits multiplicity per event","track intercept point","number of tracks per event"]:
   rows = list()
   row = list()
   for station in pixelstations:
@@ -238,7 +237,7 @@ for plot in ["number of fired planes per event","number of fired aligned_ROCs pe
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
-for plot in ["4 fired ROCs per BX"]:
+for plot in ["4 fired ROCs per BX", "5 fired planes per BX"]:
   rows = list()
   for station in pixstationsf:
     row = list()
@@ -246,16 +245,6 @@ for plot in ["4 fired ROCs per BX"]:
     rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
-
-for plot in ["5 fired planes per BX"]:
-  rows = list()
-  for station in pixstationsf:
-    row = list()
-    row.append("CTPPS/TrackingPixel/"+station+"fr_hr/"+plot)
-    rows.append(row)
-
-  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
-
 
 for sector in sectors:
   rows = list()
@@ -281,12 +270,14 @@ for plot in ["hits position"]:
       rows = list()
       row = list()
       for plane in pix_planes:
-        row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot)
+        hit_pos = "CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot
+        row.append( { "path": hit_pos, 'draw':{'ztype':"log"} } )
       rows.append(row)
 
       row = list()
       for plane in pix_planes2:
-        row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot)
+        hit_pos = "CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot
+        row.append( { "path": hit_pos, 'draw':{'ztype':"log"} } )
       rows.append(row)
 
       CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
