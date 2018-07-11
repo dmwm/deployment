@@ -43,18 +43,29 @@ shiftpixelP1layout(dqmitems, "04 - PixelPhase1_Cluster_Charge",
       'draw': { 'withref': "no" }}]
    )
 
-shiftpixelP1layout(dqmitems, "05 - PixelPhase1_Dead_ROCs",
+shiftpixelP1layout(dqmitems, "05 - PixelPhase1 Dead ROCs Barrel",
    [{ 'path': "PixelPhase1/deadRocTrendLayer_1",
       'description': "Number of Dead ROCs in BPix Layer1",
       'draw': { 'withref': "no" }},
-    { 'path': "PixelPhase1/deadRocTrendRing_1",
+    { 'path': "PixelPhase1/deadRocTrendLayer_2",
+      'description': "Number of Dead ROCs in BPix Layer2",
+      'draw': { 'withref': "no" }}],
+    [{ 'path': "PixelPhase1/deadRocTrendLayer_3",
+      'description': "Number of Dead ROCs in BPix Layer3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/deadRocTrendLayer_4",
+      'description': "Number of Dead ROCs in BPix Layer4",
+      'draw': { 'withref': "no" }}]
+)
+
+shiftpixelP1layout(dqmitems, "05bis - PixelPhase1 Dead ROCs Endcaps",
+   [{ 'path': "PixelPhase1/deadRocTrendRing_1",
       'description': "Number of dead ROCs in FPix Ring 1",
       'draw': { 'withref': "no" }},
     { 'path': "PixelPhase1/deadRocTrendRing_2",
       'description': "Number of dead ROCs in FPix Ring 2",
       'draw': { 'withref': "no" }}]
 )
-
 
 shiftpixelP1layout(dqmitems, "06 - PixelPhase1 Dead Channels per ROC: Ladder vs Module barrel summary",
    [{ 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_1",
