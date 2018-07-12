@@ -1122,10 +1122,10 @@ for laser_position in ["HBHEHPD", "HBPMega", "HBMMega", "HEPMega", "HEMMega", "H
 	for plot in plots2:
 		row2.append({"path":plot, "description":"""Timing vs RBX vs LS, relative to LaserMon <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""})
 	plot_index += 1
-	hcalcaliblayout(dqmitems, "{} LaserMon for {}Task".format(plot_index, laser_position), row1, row2)
+	hcalcaliblayout(dqmitems, "{} LaserMon, {}".format(plot_index, laser_position), row1, row2)
 
 	plot_index += 1
-	hcalcaliblayout(dqmitems, "{} Laser SignalMean for {}Task".format(plot_index, laser_position), 
+	hcalcaliblayout(dqmitems, "{} Laser SignalMean, {}".format(plot_index, laser_position), 
 		[
 			{
 				'path':'HcalCalib/{}Task/SignalMean/depth/depth1'.format(laser_position), 
