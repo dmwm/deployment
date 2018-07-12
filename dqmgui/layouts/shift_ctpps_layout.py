@@ -61,7 +61,7 @@ for sector in sectors:
   CTPPSTrackingPixelLayout(dqmitems, "ROC hits per event vs LS "+sector, *rows)
 
 
-for plot in ["number of fired planes per event"]:
+for plot in ["number of fired planes per event","track intercept point","number of tracks per event"]:
   rows = list()
   row = list()
   for station in pixelstations:
@@ -81,12 +81,14 @@ for plot in ["hits position"]:
       rows = list()
       row = list()
       for plane in pix_planes:
-        row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot)
+        hit_pos = "CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot
+        row.append( { "path": hit_pos, 'draw':{'ztype':"log"} } )
       rows.append(row)
 
       row = list()
       for plane in pix_planes2:
-        row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot)
+        hit_pos = "CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot
+        row.append( { "path": hit_pos, 'draw':{'ztype':"log"} } )
       rows.append(row)
 
       CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
