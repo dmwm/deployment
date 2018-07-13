@@ -47,7 +47,7 @@ public:
     {
       c->cd();
 
-      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object) || dynamic_cast<TH1*>(o.object) ) && 
+      if( (dynamic_cast<TProfile*>( o.object ) || dynamic_cast<TProfile2D*>(o.object) || dynamic_cast<TH1*>(o.object) ) &&
 	  (o.name.find( "Lumisection" )!=std::string::npos || o.name.find("LumiBlock")!= std::string::npos || o.name.find("RocTrend")!= std::string::npos))
       {
         TH1*  obj = dynamic_cast<TH1*>(o.object);
@@ -56,7 +56,7 @@ public:
         if( o.name.find("Lumisection")!=std::string::npos){
           obj->GetXaxis()->SetRange(min_x, max_x+5);
 	} else if(o.name.find("RocTrend")!= std::string::npos){
-	  obj->GetXaxis()->SetRange(min_x, max_x+1);	
+	  obj->GetXaxis()->SetRange(min_x, max_x+1);
         } else {
           obj->GetXaxis()->SetTitle("Lumisection (#times10)");
           obj->GetXaxis()->SetRange(min_x, max_x+1);
@@ -154,7 +154,7 @@ private:
     }
   };
 
-  void draw_line(double x1, double x2, double y1, double y2, Color_t c = kBlack) 
+  void draw_line(double x1, double x2, double y1, double y2, Color_t c = kBlack)
     {
       TLine* l = new TLine(x1, y1, x2, y2);
       l->SetBit(kCanDelete);
@@ -244,7 +244,8 @@ private:
         {
           obj->SetOption("colz");
           obj->SetMaximum(1.0);
-          obj->SetMinimum(0.95);
+          if( o.name.find( "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1" ) != std::string::npos) obj->SetMinimum(0.8);
+          else obj->SetMinimum(0.95);
           return;
         }
 
@@ -272,7 +273,7 @@ private:
           obj->SetOption("colztext");
           if( obj->GetEntries() > 0. ) gPad->SetLogz(1);
         }
-        
+
       if( o.name.find( "nerrors_per_type" ) != std::string::npos ) // FED error plots
         {
           gPad->SetBottomMargin(0.20);
@@ -281,15 +282,15 @@ private:
           obj->GetXaxis()->SetBinLabel(25+1-25, "ROC of 25"           );
           obj->GetXaxis()->SetBinLabel(26+1-25, "Gap word"            );
           obj->GetXaxis()->SetBinLabel(27+1-25, "Dummy word"          );
-          obj->GetXaxis()->SetBinLabel(28+1-25, "FIFO full"           );   
+          obj->GetXaxis()->SetBinLabel(28+1-25, "FIFO full"           );
           obj->GetXaxis()->SetBinLabel(29+1-25, "Timeout"             );
-          obj->GetXaxis()->SetBinLabel(30+1-25, "TBM error trailer"   );  
+          obj->GetXaxis()->SetBinLabel(30+1-25, "TBM error trailer"   );
           obj->GetXaxis()->SetBinLabel(31+1-25, "TBM/FED mismatch"    );
           obj->GetXaxis()->SetBinLabel(32+1-25, "Slink Header"        );
           obj->GetXaxis()->SetBinLabel(33+1-25, "Slink Trailer"       );
           obj->GetXaxis()->SetBinLabel(34+1-25, "Event size"          );
           obj->GetXaxis()->SetBinLabel(35+1-25, "FED channel number"  );
-          obj->GetXaxis()->SetBinLabel(36+1-25, "ROC value"           ); 
+          obj->GetXaxis()->SetBinLabel(36+1-25, "ROC value"           );
           obj->GetXaxis()->SetBinLabel(37+1-25, "dcol or pixel value" );
           obj->GetXaxis()->SetBinLabel(38+1-25, "Readout order"       );
           obj->GetXaxis()->SetBinLabel(39+1-25, "CRC error"           );
@@ -347,11 +348,11 @@ private:
       ya->SetTitleSize(0.04);
       ya->SetLabelSize(0.03);
       TGaxis::SetMaxDigits(3);
-      
+
       if( o.name.find("digi_occupancy_per_col_per_row") != std::string::npos || o.name.find("digi_occupancy_ontrack_per_col_per_row") != std::string::npos ){
          // Horizontal
          draw_line(0,416,79.5,79.5);
-        
+
          // Vertical
          draw_line(51.5 , 51.5,0,160);
          draw_line(103.5,103.5,0,160);
@@ -361,7 +362,7 @@ private:
          draw_line(311.5,311.5,0,160);
          draw_line(363.5,363.5,0,160);
 
-         // ROC 0 lines 
+         // ROC 0 lines
 
          if( o.name.find("Shell_p") != std::string::npos ){
            draw_line(0,   51.5,79.5,79.5,kGray);
@@ -440,7 +441,7 @@ private:
       if( o.name.find( "SUMOFF_charge_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(-5.); obj->SetMaximum(45.); }
       if( o.name.find( "SUMOFF_nclusters_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(-0.1); obj->SetMaximum(2.5); }
       if( o.name.find( "SUMOFF_size_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(-0.1); obj->SetMaximum(4.); }
-      
+
       if( o.name.find( "tbmmessage_FED" ) != std::string::npos )
         {
           gPad->SetBottomMargin(0.20);
