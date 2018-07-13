@@ -985,9 +985,31 @@ hcalcaliblayout(dqmitems, '10 RAW BadQuality vs BX (LS)', [{'path':'HcalCalib/Ra
 
 hcalcaliblayout(dqmitems, '11 RAW Bcn(Evn) Mismatches', [{'path':'HcalCalib/RawTask/BcnMsm/Electronics/VME', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'HcalCalib/RawTask/BcnMsm/Electronics/uTCA', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}], [{'path':'HcalCalib/RawTask/EvnMsm/Electronics/VME', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'HcalCalib/RawTask/EvnMsm/Electronics/uTCA', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
-hcalcaliblayout(dqmitems, '12 LED pin diode amplitude', [{'path':'HcalCalib/LEDTask/LED_ADCvsBX', 'description':"""LED pin diode amplitude <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""}])
+hcalcaliblayout(dqmitems, '12 LED pulse shape', 
+	[
+		{
+			'path':'HcalCalib/LEDTask/ADCvsTS/SubdetPM/HEM',
+			'description':"""Pulse shape (ADC vs TS) from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, 
+		{
+			'path':'HcalCalib/LEDTask/ADCvsTS/SubdetPM/HEP',
+			'description':"""Pulse shape (ADC vs TS) from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'HcalCalib/LEDTask/ADCvsTS/SubdetPM/HFM',
+			'description':"""Pulse shape (ADC vs TS) from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}, 
+		{
+			'path':'HcalCalib/LEDTask/ADCvsTS/SubdetPM/HFP',
+			'description':"""Pulse shape (ADC vs TS) from LED events<a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
-hcalcaliblayout(dqmitems, '13 LED SignalMean', 
+hcalcaliblayout(dqmitems, '13 LED pin diode amplitude', [{'path':'HcalCalib/LEDTask/LED_ADCvsBX', 'description':"""LED pin diode amplitude <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#LED_Task_Description'>Details...</a>"""}])
+
+hcalcaliblayout(dqmitems, '14 LED SignalMean', 
 	[
 		{
 			'path':'HcalCalib/LEDTask/SignalMean/depth/depth1', 
@@ -1018,7 +1040,7 @@ hcalcaliblayout(dqmitems, '13 LED SignalMean',
 	]
 )
 
-hcalcaliblayout(dqmitems, '14 LED TDCTime', 
+hcalcaliblayout(dqmitems, '15 LED TDCTime', 
 	[
 		{
 			'path':'HcalCalib/LEDTask/TDCTime/depth/depth1', 
@@ -1049,7 +1071,7 @@ hcalcaliblayout(dqmitems, '14 LED TDCTime',
 	]
 )
 
-hcalcaliblayout(dqmitems, "15 Laser summary flags", 
+hcalcaliblayout(dqmitems, "16 Laser summary flags", 
 	[
 		{
 			'path':'HcalCalib/HBHEHPDTask/SummaryvsLS/SummaryvsLS', 
@@ -1081,29 +1103,29 @@ hcalcaliblayout(dqmitems, "15 Laser summary flags",
 	], 
 )
 
+# Create laser plots with a loop, due to multiple LaserTasks. Require a starting value for the plot index.
 plot_index = 16
 subdetpms = {
 	"HBHEHPD":["HBP", "HBM", "HEP", "HEM"], "HBPMega":["HBP"], "HBMMega":["HBM"], "HEPMega":["HEP"], "HEMMega":["HEM"], "HFRaddam":["HF"], "HF":["HF"], "HO":["HO"]
 }
 
 for laser_position in ["HBHEHPD", "HBPMega", "HBMMega", "HEPMega", "HEMMega", "HFRaddam", "HF", "HO"]:
-	plot_index += 1
 
 	row1 = []
 	plots1 = ["HcalCalib/{}Task/LaserMonSumQ_LS/LaserMonSumQ_LS".format(laser_position), "HcalCalib/{}Task/LaserMonTiming/LaserMonTiming".format(laser_position)]
 	for plot in plots1:
 		row1.append({"path":plot, "description":"""LaserMon amplitude and timing <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""})
-
 	plots2 = []
 	row2 = []
 	for subdetpm in subdetpms[laser_position]:
 		plots2.append("HcalCalib/{}Task/TimingDiff_DigiMinusLaserMon/SubdetPM/{}".format(laser_position, subdetpm))
 	for plot in plots2:
 		row2.append({"path":plot, "description":"""Timing vs RBX vs LS, relative to LaserMon <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Laser_Task_Description'>Details...</a>"""})
-	hcalcaliblayout(dqmitems, "{} LaserMon for {}Task".format(plot_index, laser_position), row1, row2)
 	plot_index += 1
+	hcalcaliblayout(dqmitems, "{} LaserMon, {}".format(plot_index, laser_position), row1, row2)
 
-	hcalcaliblayout(dqmitems, "{} Laser SignalMean", 
+	plot_index += 1
+	hcalcaliblayout(dqmitems, "{} Laser SignalMean, {}".format(plot_index, laser_position), 
 		[
 			{
 				'path':'HcalCalib/{}Task/SignalMean/depth/depth1'.format(laser_position), 
@@ -1135,4 +1157,3 @@ for laser_position in ["HBHEHPD", "HBPMega", "HBMMega", "HEPMega", "HEMMega", "H
 			}
 		]
 	)
-	plot_index += 1
