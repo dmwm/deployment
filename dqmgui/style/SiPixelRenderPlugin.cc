@@ -239,14 +239,23 @@ private:
       // TODO: fix this in the right place?
       if( o.name.find( "endcapOccupancyMap" ) != std::string::npos ) obj->SetTitle("Endcap Digi Occupancy Map");
 
-      //Separated out HitEfficiency maps to set scale
-      if( o.name.find( "fficiency" ) != std::string::npos)
+	//Separated out HitEfficiency_per_SignedModule_per_SignedLadder_PXLayer_1  map to set scale
+	if( o.name.find( "hitefficiency_per_SignedModule_per_SignedLadder_PXLayer_1" ) != std::string::npos)
         {
           obj->SetOption("colz");
           obj->SetMaximum(1.0);
-          obj->SetMinimum(0.95);
+          obj->SetMinimum(0.80);
           return;
         }
+
+      //Separated out HitEfficiency maps to set scale
+	else if( o.name.find( "fficiency" ) != std::string::npos)
+	{
+	   obj->SetOption("colz");
+	   obj->SetMaximum(1.0);
+	   obj->SetMinimum(0.95);
+	   return;
+        }                                            
 
       // FED things
       if( o.name.find( "FedChLErr" ) != std::string::npos )
