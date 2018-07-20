@@ -32,8 +32,8 @@ l1temulayout(dqmitems,"08 - CaloLayer2 - Tau Data-Emulator Agreement Summary",
 l1temulayout(dqmitems,"09 - CaloLayer2 - Energy Sum Data-Emulator Agreement Summary",
              [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Energy Sum Agreement Summary",'description': "Energy Sum Data-Emulator Agreement Summary. "+moreInfoStr}])
 
-#l1temulayout(dqmitems,"09 - CaloLayer2 - Problem Summary",
-#             [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Problem Summary",'description': "Problematic Event Summary. "+moreInfoStr}])
+l1temulayout(dqmitems,"10 - CaloLayer2 - Problem Summary",
+             [{'path': "L1TEMU/L1TStage2CaloLayer2/L1TdeStage2CaloLayer2/Problem Summary",'description': "Problematic Event Summary. "+moreInfoStr}])
 
-l1temulayout(dqmitems,"10 - uGT - Data-Emulator misMatch ratio",
+l1temulayout(dqmitems,"11 - uGT - Data-Emulator misMatch ratio",
              [{ 'path': "L1TEMU/L1TdeStage2uGT/dataEmulMismatchRatio_CentralBX",'description': "uGT Data-Emulator misMatch ratio -- Central BX. "+moreInfoStr}])
