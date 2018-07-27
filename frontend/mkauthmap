@@ -4,7 +4,8 @@
 Queries CRIC roles .json and put it into /data/srv/state/frontend/etc/
 """
 
-import sys, urllib2, os, os.path
+import sys, urllib2, os, os.path, filecmp
+import difflib, filecmp
 from os import open
 from optparse import OptionParser
 from tempfile import mkstemp
@@ -13,15 +14,23 @@ from tempfile import mkstemp
 datain = None
 opts = None
 args = None
+roles = "" 
 url = "http://cms-cric-dev-3.cern.ch/accounts/user/query/?json&preset=roles"
 
+
 #Funtions
+#TODO create a log file to registed when the fetch fails!!
 def request(url):
   req = urllib2.Request(url)
   response = urllib2.urlopen(req)
   content = response.read()
   return content
 
+#def compfiles(f1, f2):
+#  resp = false
+#  if 
+
+#return resp
 
 #-------Main-------------
 #Geting command line ooptions
@@ -31,11 +40,38 @@ opts, args = opt.parse_args()
 
 roles = request(url)
 
+#checking that query get something
+if roles is None:
+  print("null")
+  sys.exit(0)
+else:
+  fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
+  tmpfile = os.fdopen(fd, "w")
+  print >> tmpfile, roles
 
-## conten in printing in a tmp file
+  print tmpname
+  print tmpfile
 
-fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
-tmpfile = os.fdopen(fd, "w")
-print tmpname
-print >> tmpfile, roles
-tmpfile.close()
+############# comparation debtween old and new file is not enougth
+  #compare new a old file
+  oldfile = ""
+  try: oldfile = open(opts.out).read()
+  except: pass
+
+  #print roles
+
+  #if oldfile !=  roles:
+  #diff = None
+  diff = difflib.ndiff(opts.out,tmpfile)
+  print(filecmp.cmp(opts.out, tmpfile, shallow=False))
+
+
+  if oldfile != roles:
+    print "NEWW"
+    #s.remove(opts.out) 
+    #os.rename(tmpname, opts.out)
+    tmpfile.close()
+    sys.exit(0)
+  else:
+    print "NOTHING CHANGED"
+    sys.exit(0)
