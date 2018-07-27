@@ -4,32 +4,38 @@
 Queries CRIC roles .json and put it into /data/srv/state/frontend/etc/
 """
 
-
 import sys, urllib2, os, os.path
 from os import open
 from optparse import OptionParser
 from tempfile import mkstemp
 
-
+#Global vars
 datain = None
 opts = None
 args = None
 url = "http://cms-cric-dev-3.cern.ch/accounts/user/query/?json&preset=roles"
 
+#Funtions
+def request(url):
+  req = urllib2.Request(url)
+  response = urllib2.urlopen(req)
+  content = response.read()
+  return content
 
+
+#-------Main-------------
+#Geting command line ooptions
 opt = OptionParser()
 opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opts, args = opt.parse_args()
 
+roles = request(url)
 
-req = urllib2.Request(url)
-response = urllib2.urlopen(req)
-content = response.read()
 
-###Until here is working it's shows the dowload file
-#print content
+## conten in printing in a tmp file
 
-###I'm getting a TypeError: an integer is required
-fd = mkstemp(dir = os.path.dirname(opts.out))
-outfile = os.fdopen(fd, "w")
-#print >> outfile , content 
+fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
+tmpfile = os.fdopen(fd, "w")
+print tmpname
+print >> tmpfile, roles
+tmpfile.close()
