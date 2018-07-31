@@ -73,26 +73,38 @@ if roles is None:
 else:
   fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
   tmpfile = os.fdopen(fd, "w")
+  tmpfile.write(roles)
+  #print >> tmpfile, roles
 
-  #tmpfile.write(roles)
-  print >> tmpfile, roles
-
-  diff = diffFiles(tmpname,opts.out)   ####-----------------------------there is an added newline in tmpfile ?? alwasys is different!!!
-  #diff = diffFiles(opts.out,tmpname)
-  #diff = diffFiles(tmpfile,opts.out)
-
-  print "diff result:" 
-  print diff
+  diff = diffFiles(tmpname,opts.out)
+  #------------------------Debuggin differences------------------------
+  command = "cp " + opts.out + " " + "/home/h4d4/sitedb-cric/roles-cric-old"
+  p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+  stdout = p.communicate()[0]
 
   if (diff == 0) :
+    print "files =="
     sys.exit(0)
   else:
-  #print tmpname
-  #print tmpfile 
-    command = "cp " + opts.out + " " + "/home/h4d4/sitedb-cric/roles-cric.back"
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    stdout = p.communicate()[0]
-    #copyfile(opts.out,"/home/h4d4/sitedb-cric/roles-cric.back")
-    os.rename(tmpname, opts.out)
-    tmpfile.close()
-    sys.exit(0)
+#------------------------Debuggin differences------------------------
+  #Next lines are for debuggin, to check diferences between the old tmpFile and opts.out(that has the content of the new tmpFile)
+    #command = "cp " + tmpname + " " + opts.out
+    print "files  differents"
+    command2 = "cp " + tmpname + " " + "/home/h4d4/sitedb-cric/newtmp"
+    p2 = subprocess.Popen(command2, stdout=subprocess.PIPE, shell=True)
+    stdout2 = p2.communicate()[0]
+#------------------------Debuggin differences------------------------
+  #Updating roles-cric
+    command3 = "cp " + tmpname + " " + opts.out
+    p3 = subprocess.Popen(command3, stdout=subprocess.PIPE, shell=True)
+    stdout3 = p3.communicate()[0]
+
+#------------------------cloding and deleting file------------------------
+  tmpfile.close()
+  tmpfile.delete() ###FILE have not being deleted
+
+  # command4 = "rm " + tmpname + " " + opts.out
+  # p4 = subprocess.Popen(command4, stdout=subprocess.PIPE, shell=True)
+  # stdout4 = p4.communicate()[0]
+  #os.remove(tmpname)
+  sys.exit(0)
