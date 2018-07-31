@@ -3,36 +3,92 @@
 
 Queries CRIC roles .json and put it into /data/srv/state/frontend/etc/
 """
-import os 
-import subprocess
-import sys, urllib2,os.path
+import os, subprocess, sys
+import urllib2, os.path, re
 from optparse import OptionParser
 from tempfile import mkstemp
 from shutil import copyfile
+from urlparse import urlsplit, urlunparse
 
 #Global vars
 datain = None
 opts = None
 args = None
 roles = "" 
-url = "http://cms-cric-dev-3.cern.ch/accounts/user/query/?json&preset=roles"
+#url = "http://cms-cric-dev-3.cern.ch/accounts/user/query/?json&preset=roles"
 
 
 #Funtions
 #TODO create a log file to registed when the fetch fails!!
 
-# def getFecthDetails(file):
+def getFecthDetails(file):
+  #File should be url URI 
+  nline = 0
+  url = ""
+  for line in open(file,"r"):
+   nline += 1
+   m = re.match(r"^url (cric?:\S+)$", line)
+  if not m:
+    print "%s: %d: line not understood" % (file, nline)
+    sys.exit(1)
 
-#   print "in file" 
-#   print file
-#   nline = 0
-#   url = ""
-#   for line in open(file,"r"):
-#     nline += 1
-#     url = re.match(r"^url (cric?:\S+) (\S+)$", line)
+  return m.group(1)
 
-#   fd.close()
-#   return list
+def requestHttp(url):
+  url = url.split(':')
+  print "PRINTING url"
+  print url
+  print url[1]
+  (scheme, netloc, path, query, frag) = urlsplit("http"+url[1])
+  print "scheme:"
+  print scheme
+  print "netloc:"
+  print netloc
+  print "path:"
+  print path
+  print "query:"
+  print query
+  print "frag:"
+  print frag
+  #query = "method=getGridmapUsers" + ((query and "&container=" + query) or "")
+  query = "json&preset=roles" + ((query and "&container=" + query))
+  #query = ""
+  path += "accounts/user"
+  #req = urllib2.Request(url)
+  response = urllib2.Request(urlunparse((scheme, netloc, path, '', query, frag)))
+  print "scheme:"
+  print scheme
+  print "netloc:"
+  print netloc
+  print "path:"
+  print path
+  print "query:"
+  print query
+  print "frag:"
+  print frag
+  content = urllib2.build_opener().open(response)
+
+  return content
+
+def example(opts):
+  uris = args
+  if opts.conf:
+    nline = 0
+    for line in open(opts.conf, "r"):
+      nline += 1
+      m = re.match(r"^group (vomss?:\S+) (\S+)$", line)
+      if not m:
+        print "%s: %d: line not understood" % (opts.conf, nline)
+        sys.exit(1)
+      #if m.group(2) != opts.vo:
+      #  print "%s: %d: vo %s differs from expected %s" % (m.group(2), opts.vo)
+      #  sys.exit(1)
+      #uris.append(m.group(1))
+    print(m.group(0))
+    print(m.group(1))
+    print(m.group(2))
+
+
 
 def request(url):
   req = urllib2.Request(url)
@@ -95,7 +151,10 @@ opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
 opts, args = opt.parse_args()
 
-updateFile(opts)
+#########updateFile(opts)
 
-#getFecthDetails(opts.conf)
+url = getFecthDetails(opts.conf)
+requestHttp(url)
+
+#example(opts)
 
