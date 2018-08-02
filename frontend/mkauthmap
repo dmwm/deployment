@@ -68,11 +68,20 @@ def updateFile(opts, roles):
     os.remove(tmpname)
 
 ####################################Main####################################
-#Geting command line ooptions
-opt = OptionParser()
-opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
+#Getting command line options
+#opt = OptionParser()
+opt = OptionParser(__doc__)
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
+opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opts, args = opt.parse_args()
+
+if not opts.conf:
+   print >> sys.stderr, "Config file name file is required"
+   exit(1)
+
+if not opts.out:
+   print >> sys.stderr, "Output file name is required"
+   exit(1)
 
 
 uri = getFecthDetails(opts.conf)
