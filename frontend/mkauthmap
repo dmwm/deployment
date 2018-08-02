@@ -67,14 +67,13 @@ def updateFile(opts, roles):
       stdout = p.communicate()[0]
     os.remove(tmpname)
 
-####################################Main####################################
+##Main
 #Getting command line options
-#opt = OptionParser()
 opt = OptionParser(__doc__)
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
 opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opts, args = opt.parse_args()
-
+#Checking command line options
 if not opts.conf:
    print >> sys.stderr, "Config file name file is required"
    exit(1)
@@ -83,9 +82,11 @@ if not opts.out:
    print >> sys.stderr, "Output file name is required"
    exit(1)
 
-
+#Calling core functions
 uri = getFecthDetails(opts.conf)
 content = request(uri)
 updateFile(opts, content)
+exit(0)
+
 
 
