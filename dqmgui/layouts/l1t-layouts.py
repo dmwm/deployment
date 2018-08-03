@@ -409,27 +409,31 @@ l1t_quickCollection(dqmitems, "51 - uGMT Muon Copy 1-5 misMatch Ratios",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "52 - Muon Input vs Output misMatch Ratios (left: uGT vs. uGMT, right: uGMT vs. BMTF)",
+l1t_quickCollection(dqmitems, "52 - Input vs Output misMatch Ratios (clockwise from top left: uGT vs. uGMT, uGT vs. caloL2, uGMT vs. EMTF, uGMT vs. OMTF, uGMT vs. BMTF)",
   [{
     'path': "L1T/L1TStage2uGT/uGMToutput_vs_uGTinput/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   },
   {
+    'path': "L1T/L1TStage2uGT/calol2ouput_vs_uGTinput/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }],
+  [{
     'path': "L1T/L1TStage2uGMT/BMTFoutput_vs_uGMTinput/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
-  # For OMTF and EMTF the agreement is not yet good enough
-  #}],
-  #[{
-  #  'path': "L1T/L1TStage2uGMT/OMTFoutput_vs_uGMTinput/mismatchRatio",
-  #  'description': "This should be empty at all times.",
-  #  'draw': { 'withref': "no" }
-  #},
-  #{
-  #  'path': "L1T/L1TStage2uGMT/EMTFoutput_vs_uGMTinput/mismatchRatio",
-  #  'description': "This should be empty at all times.",
-  #  'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGMT/OMTFoutput_vs_uGMTinput/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGMT/EMTFoutput_vs_uGMTinput/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
   }])
 l1t_quickCollection(dqmitems, "53 - uGMT Zero Suppression misMatch Ratio (left: all events, right: fat events)",
   [{
