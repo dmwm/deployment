@@ -383,7 +383,59 @@ l1t_quickCollection(dqmitems, "50 - Calo TPG Link Errors and event mismatches (t
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "51 - uGMT Muon Copy 1-5 misMatch Ratios",
+l1t_quickCollection(dqmitems, "51 - uGT CaloLayer2 Inputs Board 2-6 misMatch Ratios",
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard2/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard3/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard4/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }],
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard5/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard6/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "52 - uGT Muon Inputs Board 2-6 misMatch Ratios",
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard2/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard3/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard4/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }],
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard5/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard6/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "53 - uGMT Muon Copy 1-5 misMatch Ratios",
   [{
     'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy1/mismatchRatio",
     'description': "This should be empty at all times.",
@@ -409,7 +461,7 @@ l1t_quickCollection(dqmitems, "51 - uGMT Muon Copy 1-5 misMatch Ratios",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "52 - Input vs Output misMatch Ratios (clockwise from top left: uGT vs. uGMT, uGT vs. caloL2, uGMT vs. EMTF, uGMT vs. OMTF, uGMT vs. BMTF)",
+l1t_quickCollection(dqmitems, "54 - Input vs Output misMatch Ratios (clockwise from top left: uGT vs. uGMT, uGT vs. caloL2, uGMT vs. EMTF, uGMT vs. OMTF, uGMT vs. BMTF)",
   [{
     'path': "L1T/L1TStage2uGT/uGMToutput_vs_uGTinput/mismatchRatio",
     'description': "This should be empty at all times.",
@@ -435,7 +487,7 @@ l1t_quickCollection(dqmitems, "52 - Input vs Output misMatch Ratios (clockwise f
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "53 - uGMT Zero Suppression misMatch Ratio (left: all events, right: fat events)",
+l1t_quickCollection(dqmitems, "55 - uGMT Zero Suppression misMatch Ratio (left: all events, right: fat events)",
   [{
     'path': "L1T/L1TStage2uGMT/zeroSuppression/AllEvts/mismatchRatio",
     'description': "This should be empty at all times.",
@@ -446,7 +498,7 @@ l1t_quickCollection(dqmitems, "53 - uGMT Zero Suppression misMatch Ratio (left: 
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "54 - BMTF Zero Suppression misMatch Ratio (left: all events, right: fat events)",
+l1t_quickCollection(dqmitems, "56 - BMTF Zero Suppression misMatch Ratio (left: all events, right: fat events)",
   [{
     'path': "L1T/L1TStage2BMTF/zeroSuppression/AllEvts/mismatchRatio",
     'description': "This should be empty at all times.",
