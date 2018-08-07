@@ -648,24 +648,20 @@ private:
           c->SetGridy();
 
           if (o.name.find( "TotalNumberOfDigiProfile__TIB" ) != std::string::npos) {
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
             obj->SetMaximum(TMath::Max(ymax, TIBLimit1*50 ));
           } else if (o.name.find( "TotalNumberOfDigiProfile__TOB" ) != std::string::npos) {
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
             obj->SetMaximum(TMath::Max(ymax, TOBLimit1*50 ));
           } else if (o.name.find( "TotalNumberOfDigiProfile__TEC" ) != std::string::npos) {
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
             obj->SetMaximum(TMath::Max(ymax, TECLimit1*50 ));
           }  else if (o.name.find( "TotalNumberOfDigiProfile__TID" ) != std::string::npos) {
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
             obj->SetMaximum(TMath::Max(ymax, TIDLimit1*50 ));
           }
         }
@@ -684,24 +680,20 @@ private:
 
 	  if (o.name.find( "TotalNumberOfClusterProfile__TIB" ) != std::string::npos) {
 	    obj->SetMaximum(TMath::Max(ymax, TIBLimit2*20 ));
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
 	  } else if (o.name.find( "TotalNumberOfClusterProfile__TOB" ) != std::string::npos) {
 	    obj->SetMaximum(TMath::Max(ymax, TOBLimit2*20 ));
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
 	  } else if (o.name.find( "TotalNumberOfClusterProfile__TEC" ) != std::string::npos) {
 	    obj->SetMaximum(TMath::Max(ymax, TECLimit2*20 ));
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
 	  }  else if (o.name.find( "TotalNumberOfClusterProfile__TID" ) != std::string::npos) {
 	    obj->SetMaximum(TMath::Max(ymax, TIDLimit2*20 ));
-            int min_x = (int) obj->FindFirstBinAbove(0.001);
             int max_x = (int) obj->FindLastBinAbove(0.001)+1;
-          obj->GetXaxis()->SetRange(min_x, max_x);
+          obj->GetXaxis()->SetRange(0, max_x);
 	  }
 	}
 
