@@ -104,33 +104,43 @@ def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p]
 
 # layouts with no overlays
 TimingPlots = [ "activity per BX 0 25", "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "tracks", "HPTDC Errors", "MH in channels" ]
-TimingDrawOpt = [{'ytype':"log"}, {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'withref':"no"}, {'xmax':"100"}, {'drawopts':"colztext"}]
+TimingDrawOpt = [{'ytype':"log"}, {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'withref':"no"}, {'drawopts':"colztext"}, {'drawopts':"colztext"}]
+TimingDescription = [ "It should be similar to activity of CMS", "It should be with peaks at 0 and 4", 'Most of the event should be in "both"',
+"It should be peaked around 5 ns", "It should be a broad distribution peaked around 12 ns",
+"It should be full", 'It should be similar to "hits in planes"',
+'It should be "uniform"', "It should be empty", "It should be as low as possible (<1%)" ]
 
 for i in range(len(TimingPlots)):
   rows = list()
   for station in diamond_stations:
     row = list()
     path_str = "CTPPS/TimingDiamond/"+station+"/"+TimingPlots[i]
-    row.append( { "path" : path_str, 'draw':TimingDrawOpt[i] } )
+    row.append( { "path" : path_str, 'draw':TimingDrawOpt[i], 'description':TimingDescription[i] } )
     rows.append(row)
 
   CTPPSTimingDiamondLayout(dqmitems, TimingPlots[i], *rows)
 
-
-#for station in diamond_stations:
-#plot = "activity per BX 0 25"
-  #CTPPSTimingDiamondLayout(dqmitems, plot, [{'path': "CTPPS/TimingDiamond/"+station+"/"+plot, 'description':'blablabla', 'draw':{'xtype':'log','ymin':0,'ymax':10,'drawopts':"COLZ"} }])
-
-# clocks display for both sectors
+# Efficiency display for all planes
 rows = list()
 for station in diamond_stations:
   row = list()
-  for clk in [ 1, 3 ]:
-    hist_lead = "CTPPS/TimingDiamond/"+station+"/clock/clock{clock_id} leading edge".format(clock_id=clk)
-    row.append( { "path": hist_lead, 'draw':{'xmax':"25"} } )
+  for plane in range(4):
+    hist_lead = "CTPPS/TimingDiamond/"+station+"/plane {plane_id}/Efficiency wrt pixels".format(plane_id=plane)
+    row.append( { "path": hist_lead, 'draw':{'drawopts':"colz"}, 'description':"It should have most of the bins to 1 or 0 outside the sensor" } )
   rows.append(row)
 
-  CTPPSTimingDiamondLayout(dqmitems, "clocks edges", *rows)
+  CTPPSTimingDiamondLayout(dqmitems, "efficiency", *rows)
+
+# # clocks display for both sectors
+# rows = list()
+# for station in diamond_stations:
+#   row = list()
+#   for clk in [ 1, 3 ]:
+#     hist_lead = "CTPPS/TimingDiamond/"+station+"/clock/clock{clock_id} leading edge".format(clock_id=clk)
+#     row.append( { "path": hist_lead, 'draw':{'xmax':"25"} } )
+#   rows.append(row)
+#
+#   CTPPSTimingDiamondLayout(dqmitems, "clocks edges", *rows)
 
 
 
