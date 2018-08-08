@@ -93,3 +93,39 @@ for plot in ["hits position"]:
 
       CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
 
+####################################################################################################
+# Diamond layouts
+####################################################################################################
+
+diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
+
+def CTPPSTimingDiamondLayout(i, p, *rows): i["00 Shift/CTPPS/TimingDiamond/" + p] = DQMItem(layout=rows)
+
+# layouts with no overlays
+TimingPlots = [ "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "HPTDC Errors" ]
+TimingDrawOpt = [ {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'drawopts':"colztext"} ]
+TimingDescription = [ "It should be with peaks at 0 and 4", 'Most of the event should be in "both"',
+    "It should be peaked around 5 ns", "It should be a broad distribution peaked around 12 ns",
+    "It should be full", 'It should be similar to "hits in planes"', "It should be empty" ]
+
+for i in range(len(TimingPlots)):
+  rows = list()
+  for station in diamond_stations:
+    row = list()
+    path_str = "CTPPS/TimingDiamond/"+station+"/"+TimingPlots[i]
+    row.append( { "path" : path_str, 'draw':TimingDrawOpt[i], 'description':TimingDescription[i] } )
+    rows.append(row)
+
+  CTPPSTimingDiamondLayout(dqmitems, TimingPlots[i], *rows)
+
+
+# Efficiency display for all planes
+rows = list()
+for station in diamond_stations:
+  row = list()
+  for plane in range(4):
+    hist_lead = "CTPPS/TimingDiamond/"+station+"/plane {plane_id}/Efficiency wrt pixels".format(plane_id=plane)
+    row.append( { "path": hist_lead, 'draw':{'drawopts':"colz"}, 'description':"It should have most of the bins to 1 or 0 outside the sensor" } )
+  rows.append(row)
+
+  CTPPSTimingDiamondLayout(dqmitems, "efficiency", *rows)
