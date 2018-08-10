@@ -4,9 +4,9 @@
 Queries CRIC roles .json and put it into /data/srv/state/frontend/etc/
 """
 import os, subprocess, sys
-import urllib2, os.path, re
-from urllib2 import Request, urlopen, URLError
 from traceback import format_exc
+import urllib2, os, os.path, re
+from urllib2 import Request, urlopen, URLError
 from optparse import OptionParser
 from tempfile import mkstemp
 from shutil import copyfile
@@ -21,11 +21,6 @@ roles = ""
 #Funtions
 #TODO create a log file to registed when the fetch fails!!
 #define debug functions 
-
-# Print a message and die.
-def die(fmt, *args):
-  print "%s: error: %s" % (sys.argv[0], fmt % args)
-  sys.exit(1)
 
 #file mkauth.conf
 def getFecthDetails(file):
@@ -51,15 +46,13 @@ def request(uri):
     result = urllib2.urlopen(req)
   except URLError, e:
     if hasattr(e, 'reason'):
-      die("Failed to reach a server. Reason:'%s', %s\n  %s", req, str(e.reason),
-          format_exc().replace("\n", "  \n"))
-      print 'ailed to reach a server. Reason: ' + e.reason
+      print 'Failed to reach a server. Reason: ' + e.reason
     elif hasattr(e, 'code'):
-      die("The server couldn\'t fulfill the request. Error code: '%s', %s\n  %s", req, str(e.code),
-          format_exc().replace("\n", "  \n"))
       print 'The server couldn\'t fulfill the request. Error code: ' + e.code
   else:
       content = result.read()
+      print "Content feth without any error"
+
   return content
 
 def diffFiles(file1, file2):
