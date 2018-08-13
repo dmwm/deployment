@@ -117,9 +117,9 @@ ui_main = ui.section_("main")
 ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
+extentions = config.section_("extensions")
 # Production instance of wmdatamining, must be a production back-end
-if HOST.startswith("vocms0136") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
-    extentions = config.section_("extensions")
+if HOST.startswith("vocms0136") or HOST.startswith("vocms0132") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
 #     wmdatamining = extentions.section_("wmdatamining")
 #     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
 #     wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
@@ -146,7 +146,18 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0731") or HOST.startswi
     couchCleanup.log_file = '%s/logs/reqmgr2/couchCleanup-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     couchCleanup.central_logdb_url = LOG_DB_URL
     couchCleanup.log_reporter = LOG_REPORTER
-    
+
+    # status change task
+    parentageFixTask = extentions.section_("parentageFixTask")
+    parentageFixTask.object = "WMCore.ReqMgr.CherryPyThreads.StepChainParentageFixTask.StepChainParentageFixTask"
+    parentageFixTask.dbs_url = data.dbs_url
+    parentageFixTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    parentageFixTask.parentageFixDuration = 60 * 180  # every 3 hours
+    parentageFixTask.log_file = '%s/logs/reqmgr2/parentageFixTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    parentageFixTask.central_logdb_url = LOG_DB_URL
+    parentageFixTask.log_reporter = LOG_REPORTER
+
+if HOST.startswith("vocms0161") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     # status change task 
     statusChangeTasks = extentions.section_("statusChangeTasks")
     statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
