@@ -14,9 +14,9 @@ from urlparse import urlsplit, urlunparse
 from pprint import pprint #to debug objects content
 
 #Global vars
-opts = None
-args = None
-roles = "" 
+opts = ''
+args = ''
+roles = '' 
 
 #Funtions
 #TODO excape failed commands!!!
@@ -45,9 +45,11 @@ def request(uri):
     result = urllib2.urlopen(req)
   except URLError, e:
     if hasattr(e, 'reason'):
-      print 'Failed to reach a server. Reason: ' + pprint(e.reason)
+      print 'Failed to reach a server. Reason: '
+      pprint(e.reason)
     elif hasattr(e, 'code'):
-      print 'The server couldn\'t fulfill the request. Error code: '+ pprint(e.code)
+      print 'The server couldn\'t fulfill the request. Error code: '
+      pprint(e.code)
   else:
       content = result.read()
       print "Content fetched without any error"
@@ -61,7 +63,8 @@ def diffFiles(file1, file2):
     stdout = p.communicate()[0]
     rcode = p.returncode
   except(IOError, OSError) as e: 
-      print "An error ocurred:" + pprint(e)
+      print "An error ocurred:"
+      pprint(e)
   return rcode
 
 def updateFile(opts, roles):
@@ -72,7 +75,8 @@ def updateFile(opts, roles):
       tmpfile.write(roles)
       tmpfile.close()
     except(IOError, OSError) as e: 
-      print "An error ocurred:" + pprint(e)
+      print "An error ocurred:"
+      pprint(e)
       exit(1) 
     try:
       if os.path.exists(tmpname) and os.path.getsize(tmpname) > 0:#Ensuring that file exits and is not empty
@@ -81,7 +85,8 @@ def updateFile(opts, roles):
           try:
             os.remove(tmpname)
           except(IOError, OSError) as e:
-            print "An error ocurred:" + pprint(e)
+            print "An error ocurred:"
+            pprint(e)
         elif(diff == -1):
           exit(1) #something wrong was there
         else:
@@ -91,9 +96,11 @@ def updateFile(opts, roles):
             stdout = p.communicate()[0]
             os.remove(tmpname)
           except(IOError, OSError) as e:
-            print 'An error ocurred: ' + pprint(e)
+            print 'An error ocurred: '
+            pprint(e)
     except(IOError, OSError) as e:
-      print "An error ocurred" + pprint(e)
+      print "An error ocurred"
+      pprint(e)
 
 ##Main
 #Getting command line options
