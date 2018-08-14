@@ -62,24 +62,33 @@ def diffFiles(file1, file2):
   return p.returncode
 
 def updateFile(opts, roles):
-  fst = 0
   if roles is None: #If file is empty
     #sys.exit(0)
     print "Fetched content is empty"
   else:
-    fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
-    tmpfile = os.fdopen(fd, "w")
-    tmpfile.write(roles)
-    tmpfile.close()
-    diff = diffFiles(tmpname,opts.out)
-    if (diff == 0) :
-      os.remove(tmpname)
-      #sys.exit(0)
-    else:
-      command = "cp " + tmpname + " " + opts.out
-      p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-      stdout = p.communicate()[0]
-      os.remove(tmpname)
+    try:
+      fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
+      tmpfile = os.fdopen(fd, "w")
+      tmpfile.write(roles)
+      tmpfile.close()
+    except(IOError, OSError) as e: 
+      print 'An error ocurred creating tmpfile y/o writting fetched content to tmpfile: '
+      pprint(e)
+    #Ensuring that file exits and is not empty
+    try:
+      if os.path.exists(tmpname) and os.path.getsize(tmpname) > 0:
+        diff = diffFiles(tmpname,opts.out)
+        if (diff == 0) :
+          os.remove(tmpname)
+          #sys.exit(0)
+        else:
+          command = "cp " + tmpname + " " + opts.out
+          p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+          stdout = p.communicate()[0]
+          os.remove(tmpname)
+    except(IOError, OSError) as e:
+      print 'An error ocurred checking if tmpfile exits and is not empty: '
+      pprint(e)
 
 ##Main
 #Getting command line options
@@ -97,10 +106,10 @@ if not opts.out:
    exit(1)
 
 ##Calling core functions
-uri = getFecthDetails(opts.conf)
-content = request(uri)
-updateFile(opts, content)
-exit(0)
+# uri = getFecthDetails(opts.conf)
+# content = request(uri)
+# updateFile(opts, content)
+# exit(0)
 
 ############Defining unit-tests###########
 #Testcases, below code is just for testing propose
