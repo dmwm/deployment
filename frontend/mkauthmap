@@ -77,19 +77,23 @@ def updateFile(opts, roles):
     except(IOError, OSError) as e: 
       print "An error ocurred:"
       pprint(e)
-      exit(1) 
     try:
       if os.path.exists(tmpname) and os.path.getsize(tmpname) > 0:#Ensuring that file exits and is not empty
         diff = diffFiles(tmpname,opts.out)
-        if (diff == 0):
+        if (diff == 0):#fetched content have not changed
           try:
             os.remove(tmpname)
           except(IOError, OSError) as e:
             print "An error ocurred:"
             pprint(e)
-        elif(diff == -1):
-          exit(1) #something wrong was there
-        else:
+        elif(diff == -1):#something wrong was with diff function
+          try:
+            os.remove(tmpname)
+          except(IOError, OSError) as e:
+            print 'An error ocurred: '
+            pprint(e)
+          exit(1) 
+        else:#fetched content have changed
           try:
             command = "cp " + tmpname + " " + opts.out
             p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
@@ -213,7 +217,7 @@ def test4():
 
 
 ### Calling tests
-everithing_ok()
+#everithing_ok()
 #test1()
 #test2()
 #test3()
