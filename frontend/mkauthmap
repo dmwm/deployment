@@ -35,7 +35,7 @@ def getFecthDetails(file):
   return url
 
 def request(uri):
-  content = None
+  content = ''
   url = "http:" + uri
   (scheme, netloc, path, query, frag) = urlsplit(url)
   query = "json&preset=" +query
@@ -65,9 +65,7 @@ def diffFiles(file1, file2):
   return rcode
 
 def updateFile(opts, roles):
-  if roles is None: #If file is empty
-    print "Fetched content is empty"
-  else:
+  if roles:
     try:
       fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
       tmpfile = os.fdopen(fd, "w")
