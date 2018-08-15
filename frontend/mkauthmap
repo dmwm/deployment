@@ -52,7 +52,6 @@ def request(uri):
       pprint(e.code)
   else:
       content = result.read()
-      print "Content fetched without any error"
   return content
 
 def diffFiles(file1, file2):
