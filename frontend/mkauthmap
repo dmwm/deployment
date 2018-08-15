@@ -123,10 +123,10 @@ if not opts.out:
    exit(1)
 
 ##Calling core functions
-# uri = getFecthDetails(opts.conf)
-# content = request(uri)
-# updateFile(opts, content)
-# exit(0)
+uri = getFecthDetails(opts.conf)
+content = request(uri)
+updateFile(opts, content)
+exit(0)
 
 ############Defining unit-tests###########
 #Testcases, below code is just for testing propose
@@ -218,7 +218,7 @@ def test4():
 
 
 ### Calling tests
-everithing_ok()
+#everithing_ok()
 #test1()
 #test2()
 #test3()
