@@ -19,10 +19,10 @@ deploy_das_sw()
   perl -p -i -e "s|{ROOT}|$root/$cfgversion/apps/das|" $root/$cfgversion/config/$project/das2go-config.json
   case $host in
   vocms0126 | vocms0127)
-    perl -p -i -e "s|prod/|dev/|" $root/$cfgversion/config/$project/das2go-config.json
+    perl -p -i -e "s|prod/|dev/|g" $root/$cfgversion/config/$project/das2go-config.json
     ;;
   vocms0132 | vocms0731)
-    perl -p -i -e "s|prod/|int/|" $root/$cfgversion/config/$project/das2go-config.json
+    perl -p -i -e "s|prod/|int/|g" $root/$cfgversion/config/$project/das2go-config.json
     ;;
   *)
     ;;
