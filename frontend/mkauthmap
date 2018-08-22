@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """mkauthmap -c url.conf -c CONFIGFILE -o FILE
-
 Queries CRIC roles .json and put it into /data/srv/state/frontend/etc/
 """
+
 import os, subprocess, sys
 from traceback import format_exc
 import urllib2, os, os.path, re
@@ -18,10 +18,6 @@ opts = ''
 args = ''
 roles = '' 
 
-#Funtions
-#TODO excape failed commands!!!
-
-#file mkauth.conf
 def getFecthDetails(file):
   nline = 0
   for line in open(file,"r"):
@@ -127,99 +123,3 @@ uri = getFecthDetails(opts.conf)
 content = request(uri)
 updateFile(opts, content)
 exit(0)
-
-############Defining unit-tests###########
-#Testcases, below code is just for testing propose
-#test
-def exec_commad(command):
-  p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-  stdout = p.communicate()[0]
-  return stdout
-
-def everithing_ok():
-  uri = getFecthDetails(opts.conf)
-  content = request(uri)
-  updateFile(opts, content)
-  exit(0)
-
-# test1 specified server doesn't exist
-def test1():
-  print "test1 specified server doesn't exist -------------------------------------------------------------------------------"
-  print "------------------------------------------------------------------------------- FILE BEFORE-------------------------------------------------------------------------------" 
-  command1 = "ls -lash " + opts.out
-  print exec_commad(command1)
-  uri ="//cms-cric-dev-3.cern.com"
-  content = request(uri)
-  print "------------------------------------------------------------------------------- INIT content-------------------------------------------------------------------------------"
-  print content
-  print "------------------------------------------------------------------------------- END content-------------------------------------------------------------------------------"
-  updateFile(opts, content)
-  print "------------------------------------------------------------------------------- FILE AFTER------------------------------------------------------------------------------" 
-  command2 = "ls -lash " + opts.out
-  print exec_commad(command2)
-
-# test1_1 404/500 Page not Found
-def test1_1():
-  print "test1_1 404/500 Page not Found -------------------------------------------------------------------------------"
-  print "------------------------------------------------------------------------------- FILE BEFORE-------------------------------------------------------------------------------" 
-  command1 = "ls -lash " + opts.out
-  print exec_commad(command1)
-  uri ="//cmsweb-testbed.cern.ch/reqmgr2/requests?status=rejected-archived"
-  content = request(uri)
-  print "------------------------------------------------------------------------------- INIT content-------------------------------------------------------------------------------"
-  print content
-  print "------------------------------------------------------------------------------- END content-------------------------------------------------------------------------------"
-  updateFile(opts, content)
-  print "------------------------------------------------------------------------------- FILE AFTER------------------------------------------------------------------------------" 
-  command2 = "ls -lash " + opts.out
-  print exec_commad(command2)
-
-#test2 HTTP REQUEST OK && FETCH CONTENT == EMPTY
-def test2():
-  print "test3 HTTP REQUEST OK && FETCH CONTENT == EMPTY -------------------------------------------------------------------------------"
-  print "------------------------------------------------------------------------------- FILE BEFORE-------------------------------------------------------------------------------" 
-  command1 = "ls -lash " + opts.out
-  print exec_commad(command1)
-  uri = getFecthDetails(opts.conf)
-  content = request(uri)
-  ##force content to be NONE for test this case
-  content = None
-  updateFile(opts, content)
-  print "------------------------------------------------------------------------------- FILE AFTER------------------------------------------------------------------------------" 
-  command2 = "ls -lash " + opts.out
-  print exec_commad(command2)
-
- #test3 HTTP REQUEST OK && FETCH CONTENT == IS THE SAME
-def test3():
-  print "test4 HTTP REQUEST OK && FETCH CONTENT == IS THE SAME -------------------------------------------------------------------------------"
-  print "------------------------------------------------------------------------------- FILE BEFORE-------------------------------------------------------------------------------" 
-  command1 = "ls -lash " + opts.out
-  print exec_commad(command1)
-  uri = getFecthDetails(opts.conf)
-  content = request(uri)
-  updateFile(opts, content)
-  print "------------------------------------------------------------------------------- FILE AFTER------------------------------------------------------------------------------" 
-  command2 = "ls -lash " + opts.out
-  print exec_commad(command2)
-
-#test4 HTTP REQUEST OK && FETCH CONTENT == NEW
-def test4():
-  print "test4 HTTP REQUEST OK && FETCH CONTENT == NEW -------------------------------------------------------------------------------"
-  print "------------------------------------------------------------------------------- FILE BEFORE-------------------------------------------------------------------------------" 
-  command1 = "ls -lash " + opts.out
-  print exec_commad(command1)
-  uri = getFecthDetails(opts.conf)
-  content = request(uri)
-  content += "SOMETING NEW======"
-  updateFile(opts, content)
-  print "------------------------------------------------------------------------------- FILE AFTER------------------------------------------------------------------------------" 
-  command2 = "ls -lash " + opts.out
-  print exec_commad(command2)
-
-
-### Calling tests
-#everithing_ok()
-#test1()
-#test2()
-#test3()
-#test4()
