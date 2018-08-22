@@ -117,7 +117,7 @@ deploy_frontend_post()
    case $host in vocms* ) silent= ;; * ) silent=-q;; esac
    echo "*/4 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
         "PYTHONPATH=$root/current/auth/frontend:\$PYTHONPATH $project_config/mkauthmap" \
-        "$silent -c sitedbread.db -o $PWD/etc/authmap.json"
+        "$silent -c $project_config/mkauth.conf -o $PWD/etc/authmap.json"
 
    case $variant:$host in
      prod:vocms0160 | prod:vocms0760 )
