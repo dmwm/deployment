@@ -84,9 +84,9 @@ data.default_sw_scramarch = "slc5_amd64_gcc434"
 data.dqm_url = "%s/dqm/dev" % BASE_URL
 #use dbs testbed for private vm test
 if DBS_INS == "private_vm":
-    data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
+    data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSWriter"
 else:
-    data.dbs_url = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
+    data.dbs_url = "%s/dbs/%s/global/DBSWriter" % (BASE_URL, DBS_INS)
 
 # web user interface
 ui = views.section_("ui")
