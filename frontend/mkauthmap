@@ -17,6 +17,7 @@ from pprint import pprint #to debug objects content
 opts = ''
 args = ''
 roles = '' 
+debug_content = ''
 
 def getFecthDetails(file):
   nline = 0
@@ -56,6 +57,7 @@ def diffFiles(file1, file2):
     command = "diff " + file1 + " " + file2
     p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     stdout = p.communicate()[0]
+    debug_content = stdout
     rcode = p.returncode
   except(IOError, OSError) as e: 
       print "An error ocurred:"
@@ -95,6 +97,8 @@ def updateFile(opts, roles):
             stdout = p.communicate()[0]
             #print to know if the json have being updated
             print "Info: json was updated"
+            print "DIFF OUTPUT: "
+            pprint(debug_content)
             os.remove(tmpname)
           except(IOError, OSError) as e:
             print 'An error ocurred: '
@@ -102,6 +106,8 @@ def updateFile(opts, roles):
     except(IOError, OSError) as e:
       print "An error ocurred"
       pprint(e)
+  else:
+    print "Fetched contend empty"
 
 ##Main
 #Getting command line options
