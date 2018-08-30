@@ -18,6 +18,12 @@ opts = ''
 args = ''
 roles = '' 
 
+def ls_command(file):
+  command = "ls -lash " + opts.out
+  p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+  stdout = p.communicate()[0]
+  return stdout
+
 def getFecthDetails(file):
   nline = 0
   for line in open(file,"r"):
@@ -109,7 +115,8 @@ def updateFile(opts, roles):
       print "An error ocurred"
       pprint(e)
   else:
-    print "Fetched contend empty"
+    print "Fetched contend empty. Below last time that file was updated:"
+    print ls_command(opts.out)
 
 ##Main
 #Getting command line options
