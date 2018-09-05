@@ -191,7 +191,7 @@ if HOST.startswith("vocms0161") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
     # AMQ MonIT settings
-    if HOST.startswith("vocms0731") or HOST.startswith("vocms0136"):
+    if HOST.startswith("vocms0161") or HOST.startswith("vocms0731"):
         heartbeatMonitor.post_to_amq = True
     else:
         heartbeatMonitor.post_to_amq = False
