@@ -46,3 +46,7 @@ errorlayout(dqmitems, "11 - HCAL uHTR-L1T Layer1 Mismatch",
   [{'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtMismatchByLumiHCAL", 'description': "Trigger primitive mismatches between HCAL uHTR and L1T", 'draw': { 'withref': "no" }},
   #{'path': "L1T/L1TStage2uGT/calol2ouput_vs_uGTinput/mismatchRatio", 'description': "Summary of the CaloLayer2 output to uGT input data transmission checks. The uGT must receive exactly the same objects that the CaloLayer2 sends. Mismatches are indicated in the ratio plot.", 'draw': { 'withref': "no" }}
   ])
+
+errorlayout(dqmitems, "12 - HCAL LED Misfires",
+  [{'path': "Hcal/DigiTask/LED/LEDEventCount", 'description': "Number of LED misfire events", 'draw': { 'withref': "no" }},
+  ])
