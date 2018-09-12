@@ -48,5 +48,10 @@ errorlayout(dqmitems, "11 - HCAL uHTR-L1T Layer1 Mismatch",
   ])
 
 errorlayout(dqmitems, "12 - HCAL LED Misfires",
-  [{'path': "Hcal/DigiTask/LED/LEDEventCount", 'description': "Number of LED misfire events", 'draw': { 'withref': "no" }},
+  [{'path': "Hcal/DigiTask/LED_CUCountvsLS/Subdet/HE", 'description': "Number of LED misfire events (HE)", 'draw': { 'withref': "no" }},
+  {'path': "Hcal/DigiTask/LED_CUCountvsLS/Subdet/HF", 'description': "Number of LED misfire events (HF)", 'draw': { 'withref': "no" }},  
+  ])
+
+errorlayout(dqmitems, "13 - HCAL Bad CapID rotation",
+  [{'path':"Hcal/DigiTask/CapID/CapID_BadvsLS", 'description': "Bad CapID values vs FED vs LS", 'draw': { 'withref': "no" }}
   ])
