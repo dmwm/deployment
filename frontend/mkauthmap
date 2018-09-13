@@ -1,196 +1,140 @@
 #!/usr/bin/env python
-"""mkauthmap [-v] [-q] -c MODULE.NAME -o FILE
+"""mkauthmap -c url.conf -c CONFIGFILE -o FILE
+Queries CRIC roles .json and put it into /data/srv/state/frontend/etc/
+"""
 
-Generate JSON text file database of SiteDB user and role authentication
-and authorisation information. Loads the SiteDB database as specified in
-MODULE.NAME database configuration file, reads all user, authn and authz
-information, and generates a JSON version of it. If FILE does not exist,
-or does not contain the same information, atomically replaces contents
-of FILE with the new information.
-
-Records whose data is suspected to be invalid is automatically discarded.
-If -v/--verbose option is used, prints out a warning for omitted details.
-
-This runs as a separate script from front-end so that any oracle outages
-will not cause the httpd servers themselves to freeze, plus it allows
-servers outside cmsweb cluster to use other means to generate an authn/z
-map.  The http servers will automatically load the updated authn/authz
-information whenever it is updated by this script."""
-
-from optparse import OptionParser
+import os, subprocess, sys
 from traceback import format_exc
-from tempfile import NamedTemporaryFile
-import sys, os, signal, json, re
+import urllib2, os, os.path, re
+from urllib2 import Request, urlopen, URLError
+from optparse import OptionParser
+from tempfile import mkstemp
+from shutil import copyfile
+from urlparse import urlsplit, urlunparse
+from pprint import pprint #to debug objects content
 
-# Get current umask.
-def current_umask():
-  val = os.umask(0)
-  os.umask(val)
-  return val
+#Global vars
+opts = ''
+args = ''
+roles = '' 
 
-# Print a message and die.
-def die(fmt, *args):
-  print "%s: error: %s" % (sys.argv[0], fmt % args)
-  sys.exit(1)
+def ls_command(file):
+  command = "ls -lash " + opts.out
+  p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+  stdout = p.communicate()[0]
+  return stdout
 
-# Main routine to perform the update.
-def update(outfile, dbcfg, verbose, quiet):
-  people = []
-  byuid = {}
+def getFecthDetails(file):
+  nline = 0
+  for line in open(file,"r"):
+   nline += 1
+   m = re.match(r"^url (cric?:\S+)$", line)
+  if not m:
+    print "%s: %d: line not understood" % (file, nline)
+    sys.exit(1)
+  ml  =  m.group(1)
+  url =  ml[5:]
+  return url
 
-  # Connect to the database.
-  if quiet:
-    try: conn = dbcfg["type"].connect(dbcfg["database"])
-    except: return
+def request(uri):
+  content = ''
+  url = "http:" + uri
+  (scheme, netloc, path, query, frag) = urlsplit(url)
+  query = "json&preset=" +query
+  path = "/accounts/user" + path
+  req = urllib2.Request(urlunparse((scheme, netloc, path, '', query, frag)))
+  try:
+    result = urllib2.urlopen(req)
+  except URLError, e:
+    if hasattr(e, 'reason'):
+      print 'Failed to reach a server. Reason: '
+      pprint(e.reason)
+    elif hasattr(e, 'code'):
+      print 'The server couldn\'t fulfill the request. Error code: '
+      pprint(e.code)
   else:
-    conn = dbcfg["type"].connect(dbcfg["database"])
+      content = result.read()
+  return content
 
-  if "schema" in dbcfg:
-    conn.current_schema = dbcfg["schema"]
-  if "clientid" in dbcfg:
-    conn.current_schema = dbcfg["schema"]
-    conn.client_identifier = dbcfg["clientid"]
-    conn.clientinfo = conn.module = "mkauthmap"
-
-  # Use TO_NCHAR() with oracle, TO_CHAR() otherwise.
-  uniconv = (("Oracle" in dbcfg["type"].__name__) and "to_nchar") or ""
-
-  # Read users and passwords.
-  c = conn.cursor()
-  c.execute("""select c.id, c.username, %s(c.forename), %s(c.surname), %s(c.dn), p.passwd
-            from contact c left join user_passwd p on p.username = c.username"""
-           % (uniconv, uniconv, uniconv))
-  for row in c:
-    # Unpack values but convert nulls to empty strings.
-    id, login, first, last, dn, passwd = [x or '' for x in row]
-
-    # Fix up database junk.
-    login = login.lower()
-    login = login.strip().rstrip()
-    dn = dn.strip().rstrip()
-    dn = re.sub(r"^DN unknown.*", "", re.sub(r"^\d+$", "", dn))
-
-    # Skip any unsafe material.
-    if (re.search(r"[\x00-\x1f]", ":".join((dn, login, first, last)))
-        or (dn != '' and not re.match(r"^/(?:C|O|DC)=.*/CN=.", dn))
-        or not re.match(r"^(?:[a-z0-9_]*(?:\.nocern|\.notcms)?"
-                        r"|[a-z0-9]+@(?:[-a-z0-9]+\.)+[a-z]{2,5})$", login)):
-      if verbose:
-        print ("WARNING: skipping unsafe user id %(id)s, login '%(login)s',"
-               " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
-               % locals())
-      continue
-
-    # Skip deactivated non-service accounts.
-    is_service = (login.find("@") >= 0 and dn and passwd == "*")
-    if (passwd.find("*") >= 0 or passwd.find("Removed") >= 0) and not is_service:
-      if verbose:
-        print ("WARNING: deactivated user id %(id)s, login '%(login)s',"
-               " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
-               % locals())
-      continue
-
-    # If there is no password, lock the account.
-    if not passwd:
-      if verbose:
-        print ("WARNING: locking account user id %(id)s, login '%(login)s',"
-               " dn '%(dn)s', forename '%(first)s', surname '%(last)s'"
-               % locals())
-      passwd = "*"
-
-    # Build human name.
-    name = " ".join([n for n in (first, last) if n])
-
-    # Remember this user.
-    p = { "ID": id, "LOGIN": login, "NAME": name, "DN": dn,
-          "PASSWD": passwd, "ROLES": {} }
-    byuid[id] = p
-    people.append(p)
-
-  # Read site and group roles of users.
-  for sql in ("""select 'site' type, sr.contact, r.title, c.name
-                 from site_responsibility sr
-                 join role r on r.id = sr.role
-                 join site s on s.id = sr.site
-                 join site_cms_name_map sn on sn.site_id = s.id
-                 join cms_name c on c.id = sn.cms_name_id""",
-              """select 'group' type, gr.contact, r.title, g.name
-                 from group_responsibility gr
-                 join role r on r.id = gr.role
-                 join user_group g on g.id = gr.user_group"""):
-    c.execute(sql)
-    for type, id, role, name in c:
-      if id not in byuid:
-       continue
-      p = byuid[id]
-
-      role = re.sub(r"[^a-z0-9]+", "-", role.lower())
-      name = re.sub(r"[^a-z0-9]+", "-", name.lower())
-
-      if role not in p["ROLES"]:
-        p["ROLES"][role] = []
-      p["ROLES"][role].append("%s:%s" % (type, name))
-
-  # Sort roles and people.
-  people.sort(key = lambda p: p["ID"])
-  for p in people:
-    for role, items in p["ROLES"].iteritems():
-      items.sort()
-
-  # Generate stable JSON representation.
-  enc = json.JSONEncoder(sort_keys=True)
-  jsondata = "[\n " + ",\n ".join(enc.encode(p) for p in people) + "\n]\n"
-
-  # Update the file if the information has changed.
-  old = ""
-  try: old = open(outfile).read()
-  except: pass
-
-  if old != jsondata:
-    if verbose: print "%s: updating contents" % outfile
-    indir = os.path.dirname(outfile) or '.'
-    myumask = current_umask()
-    with NamedTemporaryFile(dir = indir, delete = False) as temp:
-      temp.write(jsondata)
-      temp.close()
-      os.chmod(temp.name, 0666 & ~myumask)
-      os.rename(temp.name, outfile)
-  elif verbose:
-    print "%s: up-to-date, not modifying" % outfile
-
-# Main program.
-if __name__ == "__main__":
-  # Tell Oracle we want real UTF-8 encoding.
-  os.environ["NLS_LANG"] = ".AL32UTF8"
-
-  # Process options.
-  parser = OptionParser(__doc__)
-  parser.add_option("-v", action="store_true", dest="verbose", help="be verbose")
-  parser.add_option("-q", action="store_true", dest="quiet", help="squelch database errors")
-  parser.add_option("-o", metavar="FILE", dest="out", help="output file")
-  parser.add_option("-c", metavar="MODULE.NAME", dest="cfg", help="database configuration")
-  options, args = parser.parse_args()
-
-  # Check options; try to load database configuration.
-  options.out or die("output file name (-o FILE) required")
-  options.cfg or die("database configuration file (-c MODULE.NAME) required")
-  modname, item = options.cfg.rsplit(".", 1)
+def diffFiles(file1, file2):
+  rlist = []
+  rcode = -1
   try:
-    module = __import__(modname, globals(), locals(), [item])
-    dbcfg = getattr(module, item)
-  except Exception, e:
-    die("failed to load '%s', %s\n  %s", options.cfg, str(e),
-        format_exc().replace("\n", "  \n"))
+    command = "diff " + file1 + " " + file2
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    stdout = p.communicate()[0]
+    rcode = p.returncode
+    rlist.append(rcode)
+    rlist.append(stdout)
+  except(IOError, OSError) as e: 
+      print "An error ocurred:"
+      pprint(e)
+  return rlist
 
-  # Set a timeout alarm to commit suicide in case database connection hangs.
-  signal.alarm(60)
+def updateFile(opts, roles):
+  if roles:
+    try:
+      fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
+      tmpfile = os.fdopen(fd, "w")
+      tmpfile.write(roles)
+      tmpfile.close()
+    except(IOError, OSError) as e: 
+      print "An error ocurred:"
+      pprint(e)
+    try:
+      if os.path.exists(tmpname) and os.path.getsize(tmpname) > 0:#Ensuring that file exits and is not empty
+        d_ff = diffFiles(tmpname,opts.out)
+        diff = d_ff[0]
+        if (diff == 0):#fetched content have not changed
+          try:
+            os.remove(tmpname)
+          except(IOError, OSError) as e:
+            print "An error ocurred:"
+            pprint(e)
+        elif(diff == -1):#something wrong was with diff function
+          try:
+            os.remove(tmpname)
+          except(IOError, OSError) as e:
+            print 'An error ocurred: '
+            pprint(e)
+          exit(1) 
+        else:#fetched content have changed
+          try:
+            command = "cp " + tmpname + " " + opts.out
+            p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+            stdout = p.communicate()[0]
+            #print to know if the json have being updated
+            print "Info: json was updated"
+            print "DIFF OUTPUT: "
+            pprint(d_ff[1])
+            os.remove(tmpname)
+          except(IOError, OSError) as e:
+            print 'An error ocurred: '
+            pprint(e)
+    except(IOError, OSError) as e:
+      print "An error ocurred"
+      pprint(e)
+  else:
+    print "Fetched contend empty. Below last time that file was updated:"
+    print ls_command(opts.out)
 
-  # Attempt to update, report errors.
-  try:
-    update(options.out, dbcfg, options.verbose, options.quiet)
-  except Exception, e:
-    die("failed to update %s: %s\n  %s", options.out, str(e),
-        format_exc().replace("\n", "  \n"))
+##Main
+#Getting command line options
+opt = OptionParser(__doc__)
+opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
+opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
+opts, args = opt.parse_args()
+#Checking command line options
+if not opts.conf:
+   print >> sys.stderr, "Config file name file is required"
+   exit(1)
 
-  # We're done.
-  sys.exit(0)
+if not opts.out:
+   print >> sys.stderr, "Output file name is required"
+   exit(1)
+
+##Calling core functions
+uri = getFecthDetails(opts.conf)
+content = request(uri)
+updateFile(opts, content)
+exit(0)
