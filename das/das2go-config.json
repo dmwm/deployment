@@ -2,7 +2,7 @@
     "uri":"mongodb://localhost:8230",
     "base": "/das",
     "port": 8217,
-    "services": ["combined","conddb","dashboard","dbs3","mcm","phedex","reqmgr2","runregistry","sitedb2"],
+    "services": ["combined","conddb","dashboard","dbs3","mcm","phedex","reqmgr2","runregistry","sitedb2","cric"],
     "urlQueueLimit": 1000,
     "urlRetry": 3,
     "templates": "{ROOT}/das2go/templates",
