@@ -106,7 +106,7 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     cleanUpTask.reqdb_couch_app = "ReqMgr"
     cleanUpTask.central_logdb_url = LOG_DB_URL
     cleanUpTask.log_reporter = LOG_REPORTER
-    cleanUpTask.DataKeepDays = 0.125 # 3 hours - unit is day
+    cleanUpTask.DataKeepDays = 45 # 0.125 hours - unit is day
     cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12  # every 12 hours
     cleanUpTask.log_file = '%s/logs/reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     
