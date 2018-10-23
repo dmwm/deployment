@@ -43,6 +43,7 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+export WMCORE_USE_CRIC=true
 export YUI_ROOT
 export WMAGENT_CONFIG=${CFGFILE}
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
