@@ -216,12 +216,13 @@ status_das()
     go tool pprof -top http://localhost:$DAS_PORT/debug/pprof/heap
 
     # generate a graph of current das status
-    echo $echo_e "das2go heap graph"
-    go tool pprof -pdf http://localhost:$DAS_PORT/debug/pprof/heap 2>&1 1>& /tmp/das_pprof.pdf
+    echo $echo_e "das2go heap graph /tmp/$USER/das_pprof.pdf"
+    mkdir -p /tmp/$USER
+    go tool pprof -pdf http://localhost:$DAS_PORT/debug/pprof/heap 2>&1 1>& /tmp/$USER/das_pprof.pdf
 
     # generate Flame graphs
-    echo $echo_e "das2go Flame graph"
-    go-torch -u http://localhost:$DAS_PORT --seconds 10 --file=/tmp/das_torch.svg
+    echo $echo_e "das2go Flame graph /tmp/$USER/das_torch.svg"
+    go-torch -u http://localhost:$DAS_PORT --seconds 10 --file=/tmp/$USER/das_torch.svg
 }
 
 # Main routine, perform action requested on command line.
