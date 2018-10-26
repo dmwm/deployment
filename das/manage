@@ -218,6 +218,7 @@ status_das()
     # generate a graph of current das status
     echo $echo_e "das2go heap graph /tmp/$USER/das_pprof.pdf"
     mkdir -p /tmp/$USER
+    rm /tmp/$USER/*.pb.gz
     go tool pprof -pdf http://localhost:$DAS_PORT/debug/pprof/heap 2>&1 1>& /tmp/$USER/das_pprof.pdf
 
     # generate Flame graphs
