@@ -19,99 +19,134 @@ l1t_quickCollection(dqmitems, "01 - Calo Layer1 HCAL Input Occupancy",
     'description': "This should be well populated in normal collision conditions, shaded areas represent parts of the geometry that have no associated trigger tower",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "02 - Calo Layer1 Input Link Errors",
+l1t_quickCollection(dqmitems, "02 - Calo Layer1 Input Link Errors and event mismatches",
   [{
     'path': "L1T/L1TStage2CaloLayer1/maxEvtLinkErrorsByLumi",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
+  }],
+  [{
+    'path': "L1T/L1TStage2CaloLayer1/maxEvtMismatchByLumi",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "03 - uGMT MUON BX",
+l1t_quickCollection(dqmitems, "03 - uGMT MUON BX and Link vs BX",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonBX",
     'description': "This should have a peak at BX=0.",
     'draw': { 'withref': "yes" }
+  }],
+  [{
+    'path': "L1T/L1TStage2uGMT/ugmtMuonBXvsLink",
+    'description': "This should have a peak at BX=0 for all links.",
+    'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "04 - uGMT MUON ETA",
+l1t_quickCollection(dqmitems, "04 - uGMT MUON P_{T}",
+  [{
+    'path': "L1T/L1TStage2uGMT/ugmtMuonPt",
+    'description': "This should show normal pT spectrum (spikes at 140 GeV, 200 GeV and 255 GeV expected from max TF pT assigned)",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "05 - uGMT MUON ETA",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonEta",
     'description': "This should have no spikes.",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "05 - uGMT MUON P_{T}",
+l1t_quickCollection(dqmitems, "06 - uGMT MUON PHI",
   [{
-    'path': "L1T/L1TStage2uGMT/ugmtMuonPt",
-    'description': "This should show normal pT spectrum (spikes at 140 GeV and 200 GeV expected from max TF pT assigned)",
+    'path': "L1T/L1TStage2uGMT/ugmtMuonPhi",
+    'description': "This should have no spikes or dips.",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "06 - uGMT MUON PHI ETA",
+l1t_quickCollection(dqmitems, "07 - uGMT MUON PHI ETA",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonPhivsEta",
     'description': "This should have no big holes.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "07 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
+l1t_quickCollection(dqmitems, "08 - uGT Algoritm Trigger Bits (before prescale) vs Global BX Number",
+  [{
+    'path': "L1T/L1TStage2uGT/algoBits_before_prescale_bx_global",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "09 - uGT Algorithm Trigger Bits (after prescale) vs. Global BX Number",
   [{
     'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_global",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "08 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
+l1t_quickCollection(dqmitems, "10 - uGT Algorithm Trigger Bits (after prescale) vs. BX Number in Event",
   [{
     'path': "L1T/L1TStage2uGT/algoBits_after_prescale_bx_inEvt",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "09 - uGT Algorithm Trigger Bits (after prescale)",
+l1t_quickCollection(dqmitems, "11 - uGT Algorithm Trigger Bits (after prescale)",
   [{
     'path': "L1T/L1TStage2uGT/algoBits_after_prescale",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "10 - Calo Layer2 Central Jet Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "12 - Calo Layer2 Bx Occupancy distributions",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsBxOcc",
     'description': "",
     'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "11 - Calo Layer2 Central Jet Et Eta vs Phi distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsEtEtaPhi",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "12 - Calo Layer2 Central Jets Pt distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsRank",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "13 - Calo Layer2 Forward Jet Bx Occupancy distribution",
-  [{
+  },
+  {
     'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsBxOcc",
     'description': "",
     'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "14 - Calo Layer2 Forward Jet Et Eta vs Phi distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsEtEtaPhi",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "15 - Calo Layer2 Forward Jet Pt distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsRank",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "16 - Calo Layer2 Isolated EG Bx Occupancy distribution",
+  }],
   [{
     'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsBxOcc",
     'description': "",
     'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }],
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausBxOcc",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "13 - Calo Layer2 Central Jet Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/shifter/CenJetsEtEtaPhi_shift",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "14 - Calo Layer2 Central Jets Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Central-Jets/CenJetsRank",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "15 - Calo Layer2 Forward Jet Et Eta vs Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/shifter/ForJetsEtEtaPhi_shift",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "16 - Calo Layer2 Forward Jet Pt distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Forward-Jets/ForJetsRank",
+    'description': "",
+    'draw': { 'withref': "yes" }
   }])
 l1t_quickCollection(dqmitems, "17 - Calo Layer2 Isolated EG Et Eta vs Phi distribution",
   [{
-    'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsEtEtaPhi",
+    'path': "L1T/L1TStage2CaloLayer2/shifter/IsoEGsEtEtaPhi_shift",
     'description': "",
     'draw': { 'withref': "no" }
   }])
@@ -119,320 +154,363 @@ l1t_quickCollection(dqmitems, "18 - Calo Layer2 Isolated EG Pt distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Isolated-EG/IsoEGsRank",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "19 - Calo Layer2 Non-Isolated EG Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "19 - Calo Layer2 Non-Isolated EG Et Eta vs Phi distribution",
   [{
-    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsBxOcc",
+    'path': "L1T/L1TStage2CaloLayer2/shifter/NonIsoEGsEtEtaPhi_shift",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "20 - Calo Layer2 Non-Isolated EG Et Eta vs Phi distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsEtEtaPhi",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "21 - Calo Layer2 Non-Isolated EG Pt distribution",
+l1t_quickCollection(dqmitems, "20 - Calo Layer2 Non-Isolated EG Pt distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/NonIsolated-EG/NonIsoEGsRank",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "22 - Calo Layer2 Isolated Tau Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "21 - Calo Layer2 Isolated Tau Et Eta vs Phi distribution",
   [{
-    'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausBxOcc",
+    'path': "L1T/L1TStage2CaloLayer2/shifter/IsoTausEtEtaPhi_shift",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "23 - Calo Layer2 Isolated Tau Et Eta vs Phi distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausEtEtaPhi",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "24 - Calo Layer2 Isolated Tau Pt distribution",
+l1t_quickCollection(dqmitems, "22 - Calo Layer2 Isolated Tau Pt distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Isolated-Tau/IsoTausRank",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "25 - Calo Layer2 Non-Isolated Tau Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "23 - Calo Layer2 Non-Isolated Tau Et Eta vs Phi distribution",
   [{
-    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausBxOcc",
+    'path': "L1T/L1TStage2CaloLayer2/shifter/TausEtEtaPhi_shift",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "26 - Calo Layer2 Non-Isolated Tau Et Eta vs Phi distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausEtEtaPhi",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "27 - Calo Layer2 Non-Isolated Tau Pt distribution",
+l1t_quickCollection(dqmitems, "24 - Calo Layer2 Non-Isolated Tau Pt distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/NonIsolated-Tau/TausRank",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "28 - Calo Layer2 ETTEM Et distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTEMRank",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "29 - Calo Layer2 ETT Et distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTRank",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "30 - Calo Layer2 EtSum Bx Occupancy distribution",
+l1t_quickCollection(dqmitems, "25 - Calo Layer2 EtSum Bx Occupancy distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/EtSumBxOcc",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "31 - Calo Layer2 HTT Et distribution",
+l1t_quickCollection(dqmitems, "26 - Calo Layer2 ETT Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTRank",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "27 - Calo Layer2 ETTEM Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/ETTEMRank",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "28 - Calo Layer2 HTT Et distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/HTTRank",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "29 - Calo Layer2 MET Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METRank",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "30 - Calo Layer2 MET Phi distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METPhi",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "31 - Calo Layer2 METHF Et distribution",
+  [{
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METHFRank",
+    'description': "",
+    'draw': { 'withref': "yes" }
   }])
 l1t_quickCollection(dqmitems, "32 - Calo Layer2 METHF Phi distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METHFPhi",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "33 - Calo Layer2 METHF Et distribution",
+l1t_quickCollection(dqmitems, "33 - Calo Layer2 MHT Et distribution",
   [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METHFRank",
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTRank",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "34 - Calo Layer2 MET Phi distribution",
+l1t_quickCollection(dqmitems, "34 - Calo Layer2 MHT Phi distribution",
   [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METPhi",
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTPhi",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "35 - Calo Layer2 MET Et distribution",
+l1t_quickCollection(dqmitems, "35 - Calo Layer2 MHTHF Et distribution",
   [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/METRank",
+    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFRank",
     'description': "",
-    'draw': { 'withref': "no" }
+    'draw': { 'withref': "yes" }
   }])
 l1t_quickCollection(dqmitems, "36 - Calo Layer2 MHTHF Phi distribution",
   [{
     'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFPhi",
     'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "37 - Calo Layer2 MHTHF Et distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTHFRank",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "38 - Calo Layer2 MHT Phi distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTPhi",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "39 - Calo Layer2 MHT Et distribution",
-  [{
-    'path': "L1T/L1TStage2CaloLayer2/Energy-Sums/MHTRank",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "40 - ECAL TPG Input Link Errors",
-  [{
-    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtLinkErrorsByLumiECAL",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "41 - ECAL TPG Event Mismatches",
-  [{
-    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtMismatchByLumiECAL",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "42 - HCAL TPG Input Link Errors",
-  [{
-    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtLinkErrorsByLumiHCAL",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "43 - HCAL TPG Event Mismatches",
-  [{
-    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtMismatchByLumiHCAL",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "44 - Calo Layer1 Event Mismatches",
-  [{
-    'path': "L1T/L1TStage2CaloLayer1/maxEvtMismatchByLumi",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "45 - BMTF Muon HW p_{T}",
-  [{
-    'path': "L1T/L1TStage2BMTF/bmtf_hwPt",
-    'description': "",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "46 - BMTF Muon Wedge vs BX",
+l1t_quickCollection(dqmitems, "37 - uGMT BMTF BX and Wedge vs BX",
+  [{
+    'path': "L1T/L1TStage2uGMT/BMTFInput/ugmtBMTFBX",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }],
   [{
     'path': "L1T/L1TStage2BMTF/bmtf_wedge_bx",
     'description': "",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "47 - EMTF LCT Occupancy",
+l1t_quickCollection(dqmitems, "38 - BMTF Muon HW p_{T}",
   [{
-    'path': "L1T/L1TStage2EMTF/cscLCTOccupancy",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "48 - EMTF Track vs BX",
-  [{
-    'path': "L1T/L1TStage2EMTF/emtfTrackBX",
-    'description': "",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "49 - uGMT BMTF BX",
-  [{
-    'path': "L1T/L1TStage2uGMT/BMTFInput/ugmtBMTFBX",
+    'path': "L1T/L1TStage2BMTF/bmtf_hwPt",
     'description': "",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "50 - uGMT BMTF HW Phi",
-  [{
-    'path': "L1T/L1TStage2uGMT/BMTFInput/ugmtBMTFglbhwPhi",
-    'description': "",
-    'draw': { 'withref': "yes" }
-  }])
-l1t_quickCollection(dqmitems, "51 - uGMT BMTF HW Eta",
+l1t_quickCollection(dqmitems, "39 - uGMT BMTF HW Eta",
   [{
     'path': "L1T/L1TStage2uGMT/BMTFInput/ugmtBMTFhwEta",
     'description': "",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "52 - uGMT BMTF HW vs Sign",
+l1t_quickCollection(dqmitems, "40 - uGMT BMTF HW Phi",
+  [{
+    'path': "L1T/L1TStage2uGMT/BMTFInput/ugmtBMTFglbhwPhi",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "41 - uGMT BMTF HW vs Sign",
   [{
     'path': "L1T/L1TStage2uGMT/BMTFInput/ugmtBMTFhwSign",
     'description': "",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "53 - uGMT OMTF BX",
+l1t_quickCollection(dqmitems, "42 - uGMT OMTF BX and Sector vs. BX",
   [{
     'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFBX",
     'description': "",
     'draw': { 'withref': "yes" }
-  }])
-l1t_quickCollection(dqmitems, "54 - uGMT OMTF Positive HW Phi",
+  }],
   [{
-    'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFglbhwPhiPos",
+    'path': "L1T/L1TStage2uGMT/ugmtBXvsProcessorOMTF",
     'description': "",
-    'draw': { 'withref': "yes" }
+    'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "55 - uGMT OMTF Negative HW Phi",
-  [{
-    'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFglbhwPhiNeg",
-    'description': "",
-    'draw': { 'withref': "yes" }
-  }])
-l1t_quickCollection(dqmitems, "56 - uGMT OMTF HW Eta",
-  [{
-    'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFhwEta",
-    'description': "",
-    'draw': { 'withref': "yes" }
-  }])
-l1t_quickCollection(dqmitems, "57 - uGMT OMTF HW p_{T}",
+l1t_quickCollection(dqmitems, "43 - uGMT OMTF HW p_{T}",
   [{
     'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFhwPt",
     'description': "",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "58 - uGMT OMTF HW Sign",
+l1t_quickCollection(dqmitems, "44 - uGMT OMTF HW Eta",
+  [{
+    'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFhwEta",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "45 - uGMT OMTF HW Phi (top: positive, bottom: negative)",
+  [{
+    'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFglbhwPhiPos",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }],
+  [{
+    'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFglbhwPhiNeg",
+    'description': "",
+    'draw': { 'withref': "yes" }
+  }])
+l1t_quickCollection(dqmitems, "46 - uGMT OMTF HW Sign",
   [{
     'path': "L1T/L1TStage2uGMT/OMTFInput/ugmtOMTFhwSign",
     'description': "",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "59 - uGMT EMTF BX",
+l1t_quickCollection(dqmitems, "47 - uGMT EMTF BX and Track vs BX",
   [{
     'path': "L1T/L1TStage2uGMT/EMTFInput/ugmtEMTFBX",
     'description': "",
     'draw': { 'withref': "yes" }
+  }],
+  [{
+    'path': "L1T/L1TStage2EMTF/emtfTrackBX",
+    'description': "",
+    'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "60 - uGMT EMTF Phi",
+l1t_quickCollection(dqmitems, "48 - uGMT EMTF Phi",
   [{
     'path': "L1T/L1TStage2uGMT/ugmtMuonPhiEmtf",
     'description': "",
     'draw': { 'withref': "yes" }
   }])
-l1t_quickCollection(dqmitems, "61 - uGMT Input vs BMTF Output misMatch Ratio",
+l1t_quickCollection(dqmitems, "49 - EMTF LCT Occupancy",
   [{
-    'path': "L1T/L1TStage2uGMT/BMTFoutput_vs_uGMTinput/mismatchRatio",
+    'path': "L1T/L1TStage2EMTF/cscLCTOccupancy",
+    'description': "",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "50 - Calo TPG Link Errors and event mismatches (top: ECAL, bottom: HCAL)",
+  [{
+    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtLinkErrorsByLumiECAL",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtMismatchByLumiECAL",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }],
+  [{
+    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtLinkErrorsByLumiHCAL",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2CaloLayer1/MismatchDetail/maxEvtMismatchByLumiHCAL",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "62 - uGMT Muon Copy 1 misMatch Ratio",
+l1t_quickCollection(dqmitems, "51 - uGT CaloLayer2 Inputs Board 2-6 misMatch Ratios",
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard2/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard3/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard4/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }],
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard5/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard6/CaloLayer2/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "52 - uGT Muon Inputs Board 2-6 misMatch Ratios",
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard2/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard3/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard4/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }],
+  [{
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard5/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGT/uGTBoardComparisons/Board1vsBoard6/Muons/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "53 - uGMT Muon Copy 1-5 misMatch Ratios",
   [{
     'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy1/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "63 - uGMT Muon Copy 2 misMatch Ratio",
-  [{
+  },
+  {
     'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy2/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "64 - uGMT Muon Copy 3 misMatch Ratio",
-  [{
+  },
+  {
     'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy3/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "65 - uGMT Muon Copy 4 misMatch Ratio",
+  }],
   [{
     'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy4/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "66 - uGMT Muon Copy 5 misMatch Ratio",
-  [{
+  },
+  {
     'path': "L1T/L1TStage2uGMT/uGMTMuonCopies/uGMTMuonCopy5/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "67 - uGMT Zero Suppression misMatch Ratio (All Events)",
-  [{
-    'path': "L1T/L1TStage2uGMT/zeroSuppression/AllEvts/mismatchRatio",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "68 - uGMT Zero Suppression misMatch Ratio (Fat Events)",
-  [{
-    'path': "L1T/L1TStage2uGMT/zeroSuppression/FatEvts/mismatchRatio",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "69 - uGT Input vs uGMT Output misMatch Ratio",
+l1t_quickCollection(dqmitems, "54 - Input vs Output misMatch Ratios (clockwise from top left: uGT vs. uGMT, uGT vs. caloL2, uGMT vs. EMTF, uGMT vs. OMTF, uGMT vs. BMTF)",
   [{
     'path': "L1T/L1TStage2uGT/uGMToutput_vs_uGTinput/mismatchRatio",
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
-  }])
-l1t_quickCollection(dqmitems, "70 - uGT Algoritm Trigger Bits (before prescale) vs Global BX Number",
+  },
+  {
+    'path': "L1T/L1TStage2uGT/calol2ouput_vs_uGTinput/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }],
   [{
-    'path': "L1T/L1TStage2uGT/algoBits_before_prescale_bx_global",
-    'description': "",
+    'path': "L1T/L1TStage2uGMT/BMTFoutput_vs_uGMTinput/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGMT/OMTFoutput_vs_uGMTinput/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGMT/EMTFoutput_vs_uGMTinput/mismatchRatio",
+    'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
+l1t_quickCollection(dqmitems, "55 - uGMT Zero Suppression misMatch Ratio (left: all events, right: fat events)",
+  [{
+    'path': "L1T/L1TStage2uGMT/zeroSuppression/AllEvts/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2uGMT/zeroSuppression/FatEvts/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }])
+l1t_quickCollection(dqmitems, "56 - BMTF Zero Suppression misMatch Ratio (left: all events, right: fat events)",
+  [{
+    'path': "L1T/L1TStage2BMTF/zeroSuppression/AllEvts/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  },
+  {
+    'path': "L1T/L1TStage2BMTF/zeroSuppression/FatEvts/mismatchRatio",
+    'description': "This should be empty at all times.",
+    'draw': { 'withref': "no" }
+  }])
+
+
 ###############################################
 ### From here down is legacy/stage1 trigger ###
 ###           All in Legacy folder          ###

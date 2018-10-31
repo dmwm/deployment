@@ -84,26 +84,26 @@ bool checkAndRemove(std::string &s, const char * key)
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
     assert(obj);
 
-    if (o.name.find("Energy-Sums/EtSumBxOcc") != std::string::npos) {
+    if (o.name.rfind("Central-Jets/CenJetsRank") != std::string::npos
+     || o.name.rfind("Forward-Jets/ForJetsRank") != std::string::npos
+     || o.name.rfind("Isolated-EG/IsoEGsRank") != std::string::npos
+     || o.name.rfind("NonIsolated-EG/NonIsoEGsRank") != std::string::npos
+     || o.name.rfind("Isolated-Tau/IsoTausRank") != std::string::npos
+     || o.name.rfind("NonIsolated-Tau/TausRank") != std::string::npos) {
       gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/METRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/METPhi") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/ETTRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/MHTRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/MHTPhi") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/HTTRank") != std::string::npos) {
-      gPad->SetLogy(1);
+    } else if (o.name.find("Energy-Sums/") != std::string::npos) {
+      if (o.name.rfind("EtSumBxOcc") != std::string::npos
+       || o.name.rfind("METRank") != std::string::npos
+       || o.name.rfind("METPhi") != std::string::npos
+       || o.name.rfind("METHFRank") != std::string::npos
+       || o.name.rfind("ETTRank") != std::string::npos
+       || o.name.rfind("ETTEMRank") != std::string::npos
+       || o.name.rfind("MHTRank") != std::string::npos
+       || o.name.rfind("MHTPhi") != std::string::npos
+       || o.name.rfind("MHTHFRank") != std::string::npos
+       || o.name.rfind("HTTRank") != std::string::npos) {
+        gPad->SetLogy(1);
+      }
     }
 
     // calo layer2 comparison histograms

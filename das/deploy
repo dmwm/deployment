@@ -17,6 +17,16 @@ deploy_das_sw()
 {
   deploy_pkg comp cms+das
   perl -p -i -e "s|{ROOT}|$root/$cfgversion/apps/das|" $root/$cfgversion/config/$project/das2go-config.json
+  case $host in
+  vocms0126 | vocms0127)
+    perl -p -i -e "s|prod/|dev/|g" $root/$cfgversion/config/$project/das2go-config.json
+    ;;
+  vocms0132 | vocms0731)
+    perl -p -i -e "s|prod/|int/|g" $root/$cfgversion/config/$project/das2go-config.json
+    ;;
+  *)
+    ;;
+  esac
 }
 
 deploy_das_post()

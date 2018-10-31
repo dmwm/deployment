@@ -35,18 +35,6 @@ deploy_acdcserver_post()
     echo "couchapp push $root/current/apps/acdcserver/data/couchapps/GroupUser" \
          "http://localhost:${couch##*:}/acdcserver" >> $root/state/${couch%%:*}/stagingarea/acdcserver
   done
-
-  # Setup acdcserver cronjobs
-  local cmd="$manage cleanup_database 'I did read documentation'"
-  $nogroups || cmd="sudo -H -u _acdcserver bashs -l -c \"${cmd}\""
-  local cleanup="0 0 1 * * $cmd"
-
-  (mkcrontab;
-   case $variant:$host in
-     prod:vocms0740 | preprod:vocms0731 | dev:vocms0117 | dev:vocms0127 | default:* )
-       echo "${cleanup}" ;;
-     * ) ;;
-   esac) | crontab -
 }
 
 deploy_acdcserver_auth()
