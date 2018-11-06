@@ -46,7 +46,7 @@ def request(uri):
   url = "http:" + uri
   apimap = {
     'roles': '/accounts/user',
-    'site-names': '/api/cms/site',
+    'site-names&rcsite_state=ANY': '/api/cms/site',
     'people': '/accounts/user',
     'site-responsibilities': '/api/accounts/user'
     }
@@ -107,11 +107,16 @@ def updateFile(opts, roles, sitemap):
           if group in entry['ROLES']:
             group_roles.extend(entry['ROLES'][group])
             for r in entry['ROLES'][group]:
+              if not r.startswith('site:'):
+                continue
               if r in sitemap:
                 group_roles.extend(sitemap[r])
                 if opts.verbose:
                   print "Added role: %s for user %s and group %s " % \
                   (sitemap[r], entry['NAME'], group)
+              else:
+                if opts.verbose:
+                  print "WARNING: role %s is missing from the sitemap" % r
             entry['ROLES'][group] = group_roles
       roles = json.dumps(struct,indent=2) # converts back to a string
     try:
@@ -172,7 +177,8 @@ if not opts.out:
 ##Calling core functions
 uri = getFecthDetails(opts.conf)
 roles = request(uri)
-sites = request (uri.replace('roles','site-names'))
+#sites = request (uri.replace('roles','site-names'))
+sites = request (uri.replace('roles','site-names&rcsite_state=ANY'))
 sitemap = buildSiteMap(sites)
 updateFile(opts, roles, sitemap)
 #content = request(uri)
