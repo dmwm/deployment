@@ -1,4 +1,5 @@
 {
+    "frontend": "https://cmsweb.cern.ch",
     "uri":"mongodb://localhost:8230",
     "base": "/das",
     "port": 8217,
