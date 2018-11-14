@@ -118,13 +118,15 @@ def updateFile(opts, roles, sitemap):
                 if opts.verbose:
                   print "WARNING: role %s is missing from the sitemap" % r
             entry['ROLES'][group] = group_roles
-      roles = json.dumps(struct,indent=2) # converts back to a string
+      # Generate stable JSON representation.
+      enc = json.JSONEncoder(sort_keys=True)
+      jsondata = "[\n " + ",\n ".join(enc.encode(entry) for entry in struct) + "\n]\n"
     try:
       fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
       tmpfile = os.fdopen(fd, "w")
-      tmpfile.write(roles)
+      tmpfile.write(jsondata)
       tmpfile.close()
-    except(IOError, OSError) as e: 
+    except(IOError, OSError) as e:
       print "An error ocurred:"
       pprint(e)
     try:
