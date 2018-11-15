@@ -7,7 +7,6 @@ import json
 import os
 import os.path
 import re
-import subprocess
 import sys
 import urllib2
 from optparse import OptionParser
@@ -22,6 +21,13 @@ args = ''
 roles = ''
 sitemap = {}
 sites = ''
+
+
+def current_umask():
+    """Get current umask"""
+    val = os.umask(0)
+    os.umask(val)
+    return val
 
 
 def convertToHeadersStyle(siteInfo):
@@ -88,19 +94,6 @@ def buildSiteMap(sites):
     return sitemap
 
 
-def diffFiles(file1, file2):
-    rcode = -1
-    try:
-        command = "diff " + file1 + " " + file2
-        p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-        stdout = p.communicate()[0]
-        rcode = p.returncode
-    except(IOError, OSError) as e:
-        print "An error ocurred:"
-        pprint(e)
-    return rcode
-
-
 def updateFile(opts, roles, sitemap):
     """
     If sitemap argument is given, decode the CRIC roles API output, extend phedex 
@@ -131,40 +124,27 @@ def updateFile(opts, roles, sitemap):
             # Generate stable JSON representation.
             enc = json.JSONEncoder(sort_keys=True)
             jsondata = "[\n " + ",\n ".join(enc.encode(entry) for entry in struct) + "\n]\n"
-        try:
-            fd, tmpname = mkstemp(dir=os.path.dirname(opts.out))
-            tmpfile = os.fdopen(fd, "w")
-            tmpfile.write(jsondata)
-            tmpfile.close()
-        except(IOError, OSError) as e:
-            print "An error ocurred:"
-            pprint(e)
-        try:
-            if os.path.exists(tmpname) and os.path.getsize(tmpname) > 0:  # Ensuring that file exits and is not empty
-                diff = diffFiles(tmpname, opts.out)
-                if diff == 0:
-                    # fetched content have not changed
-                    pass
-                elif diff == -1:
-                    # something wrong was with diff function
-                    exit(1)
-                else:
-                    # fetched content have changed
-                    command = "cp " + tmpname + " " + opts.out
-                    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-                    stdout = p.communicate()[0]
-                    # print to know if the json have being updated
-                    print "Info: json was updated"
 
-                # finally remove the tmp file
-                try:
-                    os.remove(tmpname)
-                except(IOError, OSError) as e:
-                    print 'An error ocurred: '
-                    pprint(e)
-        except(IOError, OSError) as e:
-            print "An error ocurred"
-            pprint(e)
+            # compare this against the current one (create it if it does not exist)
+            try:
+                with open(opts.out) as fp:
+                    oldjsondata = fp.read()
+            except IOError:
+                print "File %s does not exist yet." % opts.out
+                oldjsondata = ''
+
+            if jsondata != oldjsondata:
+                # then let's write out a new file and replace the current one
+                print "Info: json content has changed, updating it ..."
+                fd, tmpname = mkstemp()
+                tmpfile = os.fdopen(fd, "w")
+                tmpfile.write(jsondata)
+                tmpfile.close()
+
+                myumask = current_umask()
+                os.chmod(tmpname, 0666 & ~myumask)
+                os.rename(tmpname, opts.out)
+                print "Done!"
 
 
 ##Main
