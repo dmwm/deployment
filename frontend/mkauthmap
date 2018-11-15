@@ -24,27 +24,27 @@ sitemap = {}
 sites = ''
 
 
-def convertToHeadersStyle(str):
+def convertToHeadersStyle(siteInfo):
     """  
      - all lower case
      - whitespaces and underscores replaced by dashes
     """
-    result = str.replace('_', '-')
-    result = result.replace(' ', '-')
+    result = siteInfo.replace('_', '-').replace(' ', '-')
     return result.lower()
 
 
-def getFecthDetails(file):
-    nline = 0
-    for line in open(file, "r"):
-        nline += 1
-        m = re.match(r"^url (cric?:\S+)$", line)
-    if not m:
-        print "%s: %d: line not understood" % (file, nline)
-        sys.exit(1)
-    ml = m.group(1)
-    url = ml[5:]
-    return url
+def getFecthDetails(fname):
+    with open(fname) as fp:
+        content = fp.readlines()
+
+    for line in content:
+        m = re.match(r"^url (cric?:\S+)$", line.strip())
+        if not m:
+            print "%s: %d: line not understood" % (fname, line)
+            sys.exit(1)
+        ml = m.group(1)
+        url = ml[5:]
+        return url
 
 
 def request(uri):
@@ -142,30 +142,26 @@ def updateFile(opts, roles, sitemap):
         try:
             if os.path.exists(tmpname) and os.path.getsize(tmpname) > 0:  # Ensuring that file exits and is not empty
                 diff = diffFiles(tmpname, opts.out)
-                if (diff == 0):  # fetched content have not changed
-                    try:
-                        os.remove(tmpname)
-                    except(IOError, OSError) as e:
-                        print "An error ocurred:"
-                        pprint(e)
-                elif (diff == -1):  # something wrong was with diff function
-                    try:
-                        os.remove(tmpname)
-                    except(IOError, OSError) as e:
-                        print 'An error ocurred: '
-                        pprint(e)
+                if diff == 0:
+                    # fetched content have not changed
+                    pass
+                elif diff == -1:
+                    # something wrong was with diff function
                     exit(1)
-                else:  # fetched content have changed
-                    try:
-                        command = "cp " + tmpname + " " + opts.out
-                        p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-                        stdout = p.communicate()[0]
-                        # print to know if the json have being updated
-                        print "Info: json was updated"
-                        os.remove(tmpname)
-                    except(IOError, OSError) as e:
-                        print 'An error ocurred: '
-                        pprint(e)
+                else:
+                    # fetched content have changed
+                    command = "cp " + tmpname + " " + opts.out
+                    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+                    stdout = p.communicate()[0]
+                    # print to know if the json have being updated
+                    print "Info: json was updated"
+
+                # finally remove the tmp file
+                try:
+                    os.remove(tmpname)
+                except(IOError, OSError) as e:
+                    print 'An error ocurred: '
+                    pprint(e)
         except(IOError, OSError) as e:
             print "An error ocurred"
             pprint(e)
