@@ -3,184 +3,173 @@
 Queries CRIC roles .json and put it into FILE
 """
 
-import os, subprocess, sys
-from traceback import format_exc
-import urllib2, os, os.path, re
 import json
-from urllib2 import Request, urlopen, URLError
+import os
+import os.path
+import re
+import sys
+import urllib2
 from optparse import OptionParser
+from pprint import pprint  # to debug objects content
 from tempfile import mkstemp
-from shutil import copyfile
+from urllib2 import URLError
 from urlparse import urlsplit, urlunparse
-from pprint import pprint #to debug objects content
 
-#Global vars
+# Global vars
 opts = ''
 args = ''
 roles = ''
 sitemap = {}
 sites = ''
-"""  
- - all lower case
- - whitespaces and underscores replaced by dashes
-"""  
-def convertToHeadersStyle (str):
-  result=str.replace('_','-')
-  result=result.replace(' ','-')
-  return result.lower()
 
-def getFecthDetails(file):
-  nline = 0
-  for line in open(file,"r"):
-    nline += 1
-    m = re.match(r"^url (cric?:\S+)$", line)
-  if not m:
-    print "%s: %d: line not understood" % (file, nline)
-    sys.exit(1)
-  ml  =  m.group(1)
-  url =  ml[5:]
-  return url
+
+def current_umask():
+    """Get current umask"""
+    val = os.umask(0)
+    os.umask(val)
+    return val
+
+
+def convertToHeadersStyle(siteInfo):
+    """  
+     - all lower case
+     - whitespaces and underscores replaced by dashes
+    """
+    result = siteInfo.replace('_', '-').replace(' ', '-')
+    return result.lower()
+
+
+def getFecthDetails(fname):
+    with open(fname) as fp:
+        content = fp.readlines()
+
+    for line in content:
+        m = re.match(r"^url (cric?:\S+)$", line.strip())
+        if not m:
+            print "%s: %d: line not understood" % (fname, line)
+            sys.exit(1)
+        ml = m.group(1)
+        url = ml[5:]
+        return url
+
 
 def request(uri):
-  content = ''
-  url = "http:" + uri
-  apimap = {
-    'roles': '/accounts/user',
-    'site-names&rcsite_state=ANY': '/api/cms/site',
-    'people': '/accounts/user',
-    'site-responsibilities': '/api/accounts/user'
+    content = ''
+    url = "http:" + uri
+    apimap = {
+        'roles': '/accounts/user',
+        'site-names&rcsite_state=ANY': '/api/cms/site',
+        'people': '/accounts/user',
+        'site-responsibilities': '/api/accounts/user'
     }
-  (scheme, netloc, path, query, frag) = urlsplit(url)
-  path = apimap[query] + path
-  query = "json&preset=" +query
-  req = urllib2.Request(urlunparse((scheme, netloc, path, '', query, frag)))
-  try:
-    result = urllib2.urlopen(req)
-  except URLError, e:
-    if hasattr(e, 'reason'):
-      print 'Failed to reach a server. Reason: '
-      pprint(e.reason)
-    elif hasattr(e, 'code'):
-      print 'The server couldn\'t fulfill the request. Error code: '
-      pprint(e.code)
-  else:
-      content = result.read()
-  return content
+    (scheme, netloc, path, query, frag) = urlsplit(url)
+    path = apimap[query] + path
+    query = "json&preset=" + query
+    req = urllib2.Request(urlunparse((scheme, netloc, path, '', query, frag)))
+    try:
+        result = urllib2.urlopen(req)
+    except URLError as e:
+        if hasattr(e, 'reason'):
+            print 'Failed to reach a server. Reason: '
+            pprint(e.reason)
+        elif hasattr(e, 'code'):
+            print 'The server couldn\'t fulfill the request. Error code: '
+            pprint(e.code)
+    else:
+        content = result.read()
+    return content
 
-def buildSiteMap (sites):
-  # Following the format of 'roles' API, all names are prepended by 'site:'
-  sitemap = {}
-  for entry in json.loads(sites)['result']:
-    if entry[0] == 'phedex':
-      sitename = "site:"+convertToHeadersStyle(entry[1])
-      nodename = "site:"+convertToHeadersStyle(entry[2])
-      if sitename in sitemap:
-        sitemap[sitename].append(nodename)
-      else:
-        sitemap[sitename] = [nodename]
-  return sitemap
 
-def diffFiles(file1, file2):
-  rcode = -1
-  try:
-    command = "diff " + file1 + " " + file2
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    stdout = p.communicate()[0]
-    rcode = p.returncode
-  except(IOError, OSError) as e: 
-      print "An error ocurred:"
-      pprint(e)
-  return rcode
+def buildSiteMap(sites):
+    # Following the format of 'roles' API, all names are prepended by 'site:'
+    sitemap = {}
+    for entry in json.loads(sites)['result']:
+        if entry[0] == 'phedex':
+            sitename = "site:" + convertToHeadersStyle(entry[1])
+            nodename = "site:" + convertToHeadersStyle(entry[2])
+            if sitename in sitemap:
+                sitemap[sitename].append(nodename)
+            else:
+                sitemap[sitename] = [nodename]
+    return sitemap
 
-""" If sitemap argument is given, decode the CRIC roles API output, extend phedex 
-related groups by adding roles with phedex node names mapped via CRIC site-names API
-and converted to headers style; then convert the data structure back to a json string.
-"""
+
 def updateFile(opts, roles, sitemap):
-  if roles:
-    if sitemap:
-      struct = json.loads(roles)
-      for entry in struct:
-        # Only extend the groups interesting to PhEDEx:
-        for group in ['data-manager', 'site-admin', 'phedex-contact']:
-          group_roles = []
-          if group in entry['ROLES']:
-            group_roles.extend(entry['ROLES'][group])
-            for r in entry['ROLES'][group]:
-              if not r.startswith('site:'):
-                continue
-              if r in sitemap:
-                group_roles.extend(sitemap[r])
-                if opts.verbose:
-                  print "Added role: %s for user %s and group %s " % \
-                  (sitemap[r], entry['NAME'], group)
-              else:
-                if opts.verbose:
-                  print "WARNING: role %s is missing from the sitemap" % r
-            entry['ROLES'][group] = group_roles
-      roles = json.dumps(struct,indent=2) # converts back to a string
-    try:
-      fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
-      tmpfile = os.fdopen(fd, "w")
-      tmpfile.write(roles)
-      tmpfile.close()
-    except(IOError, OSError) as e: 
-      print "An error ocurred:"
-      pprint(e)
-    try:
-      if os.path.exists(tmpname) and os.path.getsize(tmpname) > 0:#Ensuring that file exits and is not empty
-        diff = diffFiles(tmpname,opts.out)
-        if (diff == 0):#fetched content have not changed
-          try:
-            os.remove(tmpname)
-          except(IOError, OSError) as e:
-            print "An error ocurred:"
-            pprint(e)
-        elif(diff == -1):#something wrong was with diff function
-          try:
-            os.remove(tmpname)
-          except(IOError, OSError) as e:
-            print 'An error ocurred: '
-            pprint(e)
-          exit(1) 
-        else:#fetched content have changed
-          try:
-            command = "cp " + tmpname + " " + opts.out
-            p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-            stdout = p.communicate()[0]
-            #print to know if the json have being updated
-            print "Info: json was updated"
-            os.remove(tmpname)
-          except(IOError, OSError) as e:
-            print 'An error ocurred: '
-            pprint(e)
-    except(IOError, OSError) as e:
-      print "An error ocurred"
-      pprint(e)
+    """
+    If sitemap argument is given, decode the CRIC roles API output, extend phedex 
+    related groups by adding roles with phedex node names mapped via CRIC site-names API
+    and converted to headers style; then convert the data structure back to a json string.
+    """
+    if roles:
+        if sitemap:
+            struct = json.loads(roles)
+            for entry in struct:
+                # Only extend the groups interesting to PhEDEx:
+                for group in ['data-manager', 'site-admin', 'phedex-contact']:
+                    group_roles = []
+                    if group in entry['ROLES']:
+                        group_roles.extend(entry['ROLES'][group])
+                        for r in entry['ROLES'][group]:
+                            if not r.startswith('site:'):
+                                continue
+                            if r in sitemap:
+                                group_roles.extend(sitemap[r])
+                                if opts.verbose:
+                                    print "Added role: %s for user %s and group %s " % \
+                                          (sitemap[r], entry['NAME'], group)
+                            else:
+                                if opts.verbose:
+                                    print "WARNING: role %s is missing from the sitemap" % r
+                        entry['ROLES'][group] = group_roles
+            # Generate stable JSON representation.
+            enc = json.JSONEncoder(sort_keys=True)
+            jsondata = "[\n " + ",\n ".join(enc.encode(entry) for entry in struct) + "\n]\n"
+
+            # compare this against the current one (create it if it does not exist)
+            try:
+                with open(opts.out) as fp:
+                    oldjsondata = fp.read()
+            except IOError:
+                print "File %s does not exist yet." % opts.out
+                oldjsondata = ''
+
+            if jsondata != oldjsondata:
+                # then let's write out a new file and replace the current one
+                print "Info: json content has changed, updating it ..."
+                fd, tmpname = mkstemp()
+                tmpfile = os.fdopen(fd, "w")
+                tmpfile.write(jsondata)
+                tmpfile.close()
+
+                myumask = current_umask()
+                os.chmod(tmpname, 0666 & ~myumask)
+                os.rename(tmpname, opts.out)
+                print "Done!"
+
 
 ##Main
-#Getting command line options
+# Getting command line options
 opt = OptionParser(__doc__)
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
 opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opt.add_option("-v", "--verbose", action="store_true", help="increase output verbosity")
 opts, args = opt.parse_args()
-#Checking command line options
+# Checking command line options
 if not opts.conf:
-   print >> sys.stderr, "Config file name file is required"
-   exit(1)
+    print >> sys.stderr, "Config file name file is required"
+    exit(1)
 
 if not opts.out:
-   print >> sys.stderr, "Output file name is required"
-   exit(1)
+    print >> sys.stderr, "Output file name is required"
+    exit(1)
 
 ##Calling core functions
 uri = getFecthDetails(opts.conf)
 roles = request(uri)
-#sites = request (uri.replace('roles','site-names'))
-sites = request (uri.replace('roles','site-names&rcsite_state=ANY'))
+# sites = request (uri.replace('roles','site-names'))
+sites = request(uri.replace('roles', 'site-names&rcsite_state=ANY'))
 sitemap = buildSiteMap(sites)
 updateFile(opts, roles, sitemap)
-#content = request(uri)
-#updateFile(opts, content)
+# content = request(uri)
+# updateFile(opts, content)
 exit(0)
