@@ -9,6 +9,7 @@ import os.path
 import re
 import sys
 import urllib2
+import shutil # intead of os.rename, it's return an error
 from optparse import OptionParser
 from pprint import pprint  # to debug objects content
 from tempfile import mkstemp
@@ -143,7 +144,7 @@ def updateFile(opts, roles, sitemap):
 
                 myumask = current_umask()
                 os.chmod(tmpname, 0666 & ~myumask)
-                os.rename(tmpname, opts.out)
+                shutil.move(tmpname, opts.out)
                 print "Done!"
 
 
