@@ -128,16 +128,20 @@ api = apil[len(apil)-1]
 uri = getFecthDetails(opts.conf)
 
 if api == "group-responsibilities.json":
-   ncontent = request(uri.replace('roles', 'group-responsibilities'))
+    uri = uri + "group-responsibilities"
+    ncontent = request(uri)
 
 if api == "people.json":
-    ncontent = request(uri.replace('roles', 'people'))
+    uri = uri + "people"
+    ncontent = request(uri)
 
 if api == "site-names.json":
-    ncontent = request(uri.replace('roles', 'site-names&rcsite_state=ANY'))
+    uri = uri + "site-names&rcsite_state=ANY"
+    ncontent = request(uri)
 
 if api == "site-responsibilities.json":
-    ncontent = request(uri.replace('roles', 'site-responsibilities'))
+    uri = uri + "site-responsibilities"
+    ncontent = request(uri)
 
 updateFile(opts, ncontent)
 exit(0)
