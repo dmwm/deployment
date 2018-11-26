@@ -72,9 +72,13 @@ def request(uri):
         if hasattr(e, 'reason'):
             print 'Failed to reach a server. Reason: '
             pprint(e.reason)
+            print 'URL: '
+            pprint(urlunparse((scheme, netloc, path, '', query, frag)))
         elif hasattr(e, 'code'):
             print 'The server couldn\'t fulfill the request. Error code: '
             pprint(e.code)
+            print 'URL: '
+            pprint(urlunparse((scheme, netloc, path, '', query, frag)))
     else:
         content = result.read()
     return content
