@@ -7,16 +7,16 @@ shiftcastorlayout(dqmitems, "01 - Map of frontend and readout errors",
            )
 
 shiftcastorlayout(dqmitems, "02 - Channel-wise timing",
-           [{ 'path': "Castor/CastorDigiMonitor/QfC=f(x=Tile y=TS) (cumulative)",
+           [{ 'path': "Castor/CastorDigiMonitor/Castor cells avr digi(fC) per event Map TS vs Channel",
              'description':"Channel-wise timing"}]
            )
 shiftcastorlayout(dqmitems, "02b - Channel-wise timing (rms)",
-           [{ 'path': "Castor/CastorDigiMonitor/QrmsfC=f(Tile TS)",
+           [{ 'path': "Castor/CastorDigiMonitor/Castor cells avr digiRMS(fC) per event Map TS vs Channel",
              'description':"Channel-wise timing (rms)"}]
            )
 
 shiftcastorlayout(dqmitems, "03 - CASTOR DeadChannelsMap",
-           [{ 'path': "Castor/CastorDigiMonitor/CASTOR DeadChannelsMap",
+           [{ 'path': "Castor/CastorDigiMonitor/CASTOR BadChannelsMap",
              'description':"CASTOR DeadChannelsMap"}]
            )
 

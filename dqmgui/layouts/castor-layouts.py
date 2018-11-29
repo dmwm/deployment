@@ -12,11 +12,11 @@ castorlayout(dqmitems, "01 - Map of frontend and readout errors",
            )
 
 castorlayout(dqmitems, "02 - Channel-wise timing",
-           [{ 'path': "Castor/CastorDigiMonitor/QfC=f(x=Tile y=TS) (cumulative)",
+           [{ 'path': "Castor/CastorDigiMonitor/Castor cells avr digi(fC) per event Map TS vs Channel",
              'description':"Channel-wise timing"}]
            )
 castorlayout(dqmitems, "02b - Channel-wise timing (rms)",
-           [{ 'path': "Castor/CastorDigiMonitor/QrmsfC=f(Tile TS)",
+           [{ 'path': "Castor/CastorDigiMonitor/Castor cells avr digiRMS(fC) per event Map TS vs Channel",
              'description':"Channel-wise timing (rms)"}]
            )
 
@@ -61,29 +61,23 @@ castorlayout(dqmitems, "RECO/08 - Tower EM vs HAD",
            )
 
 castorlayout(dqmitems, "RECO/09 - Cells Energy profile(GeV)",
-           [{ 'path': "Castor/CastorRecHitMonitor/CastorTileRecHit",
+           [{ 'path': "Castor/CastorRecHitMonitor/Castor Cell Energy",
              'description':"CastorTileRecHit",
 		'draw': { 'ytype':'log' } }]
            )
 
 castorlayout(dqmitems, "RECO/10 - Map: cells average Energy per event",
-           [{ 'path': "Castor/CastorRecHitMonitor/CastorRecHitOccMap",
+           [{ 'path': "Castor/CastorRecHitMonitor/Castor cell avr Energy per event Map Z-Phi",
              'description':"Map of rechit occupancies"}]
            )
 
 castorlayout(dqmitems, "RECO/11 - Energy(EM + HAD) by Sectors",
-           [{ 'path': "Castor/CastorRecHitMonitor/CastorRecHit by Sectors",
+           [{ 'path': "Castor/CastorRecHitMonitor/Castor Energy by Sectors #Phi",
              'description':"CastorRecHit by Sectors",
 		'draw': { 'ytype':'log' } }]
            )
 
-castorlayout(dqmitems, "RECO/12 - Castor Total Energy",
-           [{ 'path': "Castor/CastorRecHitMonitor/Reco all tiles",
-             'description':"Reco all tiles",
-		'draw': { 'ytype':'log' } }]
-           )
-
-castorlayout(dqmitems, "RECO/13 - Rec Hits Time",
+castorlayout(dqmitems, "RECO/12 - Rec Hits Time",
            [{ 'path': "Castor/CastorRecHitMonitor/CastorRecHitTime",
              'description':"CastorRecHitTime",
 		'draw': { 'ytype':'log' } }]
@@ -96,8 +90,8 @@ castorlayout(dqmitems, "Digi/01 - CASTORreportSummaryMap",
              'description':"CASTORreportSummaryMap"}]
            )
 
-castorlayout(dqmitems, "Digi/02 - CASTOR DeadChannelsMap",
-           [{ 'path': "Castor/CastorDigiMonitor/CASTOR DeadChannelsMap",
+castorlayout(dqmitems, "Digi/02 - CASTOR BadChannelsMap",
+           [{ 'path': "Castor/CastorDigiMonitor/CASTOR BadChannelsMap",
              'description':"CASTOR DeadChannelsMap"}]
            )
 
@@ -124,17 +118,14 @@ castorlayout(dqmitems, "Digi/07 - Sector #phi(fC)_all TS",
            [{ 'path': "Castor/CastorDigiMonitor/Sector #phi(fC)_allTS",
              'description':"Sector #phi(fC)_all TS"}]
            )
-castorlayout(dqmitems, "Digi/08 - QfC=f(x=Cell y=TS) (cumulative)",
-           [{ 'path': "Castor/CastorDigiMonitor/QfC=f(x=Tile y=TS) (cumulative)",
-             'description':"QfC=f(x=Tile y=TS) (cumulative)" }]
-           )
+
 castorlayout(dqmitems, "Digi/09 - QmeanfC=f(Cell, TS)",
-           [{ 'path': "Castor/CastorDigiMonitor/QmeanfC=f(Tile TS)",
+           [{ 'path': "Castor/CastorDigiMonitor/Castor cells avr digi(fC) per event Map TS vs Channel",
              'description':"QmeanfC=f(Tile TS)"}]
            )
 
 castorlayout(dqmitems, "Digi/10 - QrmsfC=f(Cell, TS)",
-           [{ 'path': "Castor/CastorDigiMonitor/QrmsfC=f(Tile TS)",
+           [{ 'path': "Castor/CastorDigiMonitor/Castor cells avr digiRMS(fC) per event Map TS vs Channel",
              'description':"QrmsfC=f(Tile TS)"}]
            )
 castorlayout(dqmitems, "Digi/11 - QmeanfC_map(allTS)",
