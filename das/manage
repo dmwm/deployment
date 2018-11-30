@@ -140,7 +140,7 @@ cron()
   local action=$1
   case $action in
     das_cleanup )
-      $DAS_ROOT/bin/das_cleanup --verbose \
+      $DAS_ROOT/bin/das_cleanup --verbose 1 \
           </dev/null 2>&1 | rotatelogs $LOGDIR/das_cleanup-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
     * )
