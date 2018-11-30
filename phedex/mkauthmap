@@ -44,7 +44,7 @@ def getFecthDetails(fname):
         return url
 
 
-def request(uri):
+def request(uri, header):
     content = ''
     url = "http:" + uri
     apimap = {
@@ -70,7 +70,13 @@ def request(uri):
             print 'The server couldn\'t fulfill the request. Error code: '
             pprint(e.code)
     else:
-        content = result.read()
+        if header == 1:
+            #print "1"
+            content = '{"desc": {"columns": ["username", "site_name", "role"]}, "result": '
+            content = content + result.read()
+            content = content + '}'
+        else:
+            content = result.read()
     return content
 
 
@@ -129,19 +135,19 @@ uri = getFecthDetails(opts.conf)
 
 if api == "group-responsibilities.json":
     uri = uri + "group-responsibilities"
-    ncontent = request(uri)
+    ncontent = request(uri, 0)
 
 if api == "people.json":
     uri = uri + "people"
-    ncontent = request(uri)
+    ncontent = request(uri, 0)
 
 if api == "site-names.json":
     uri = uri + "site-names&rcsite_state=ANY"
-    ncontent = request(uri)
+    ncontent = request(uri, 0)
 
 if api == "site-responsibilities.json":
     uri = uri + "site-responsibilities"
-    ncontent = request(uri)
+    ncontent = request(uri, 1)
 
 updateFile(opts, ncontent)
 exit(0)
