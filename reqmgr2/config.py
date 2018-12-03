@@ -166,7 +166,7 @@ if HOST.startswith("vocms0161") or HOST.startswith("vocms0731") or HOST.startswi
     statusChangeTasks.reqmgr2_url = "%s/reqmgr2" % BASE_URL
     statusChangeTasks.wmstats_url = "%s/wmstatsserver" % BASE_URL
     statusChangeTasks.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
-    statusChangeTasks.archiveDelayHours = 24 # delay the archive at least 24 hours after announced
+    statusChangeTasks.archiveDelayHours = 24 * 7 # delay the archive at least 7 days after announced
     statusChangeTasks.checkStatusDuration = 60 * 10  # every 10 min
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     statusChangeTasks.central_logdb_url = LOG_DB_URL
