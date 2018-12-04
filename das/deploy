@@ -22,10 +22,10 @@ deploy_das_sw()
     perl -p -i -e "s|prod/|dev/|g" $root/$cfgversion/config/$project/das2go-config.json
     perl -p -i -e "s|cmsweb|cmsweb-dev|g" $root/$cfgversion/config/$project/das2go-config.json
     ;;
-  vocms0132 | vocms0731)
-    perl -p -i -e "s|prod/|int/|g" $root/$cfgversion/config/$project/das2go-config.json
-    perl -p -i -e "s|cmsweb|cmsweb-testbed|g" $root/$cfgversion/config/$project/das2go-config.json
-    ;;
+#  vocms0132 | vocms0731)
+#    perl -p -i -e "s|prod/|int/|g" $root/$cfgversion/config/$project/das2go-config.json
+#    perl -p -i -e "s|cmsweb|cmsweb-testbed|g" $root/$cfgversion/config/$project/das2go-config.json
+#    ;;
   *)
     ;;
   esac
