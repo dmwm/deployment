@@ -139,7 +139,7 @@ def updateFile(opts, roles, sitemap):
 
             if jsondata != oldjsondata:
                 # then let's write out a new file and replace the current one
-                print "Info: json content has changed, updating it ..."
+                #print "Info: json content has changed, updating it ..."
                 try:
                   fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
                   tmpfile = os.fdopen(fd, "w")
@@ -152,7 +152,7 @@ def updateFile(opts, roles, sitemap):
                 myumask = current_umask()
                 os.chmod(tmpname, 0666 & ~myumask)
                 os.rename(tmpname, opts.out)
-                print "Done!"
+                #print "Done!"
 
 ##Main
 # Getting command line options
