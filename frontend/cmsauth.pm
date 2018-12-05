@@ -8,7 +8,7 @@
 # request headers are modified to report authentication information.
 #
 # If authentication succeeds, the users' roles are retrieved from the
-# CMS authorisation database (SiteDB), although this happens via an
+# CMS authorisation database (CRIC), although this happens via an
 # intermediary JSON file so the httpd server isn't dependent on the
 # database availability. If the user is known and has authorisation
 # roles, the information is added to the HTTP request headers. The
@@ -153,13 +153,13 @@
 #
 #   The value of this header is the CMS hypernew login of the client.
 #   It is present if CMS-AuthN-Method is X509Cert/(Limited)Proxy and 
-#   SiteDB has DN account association. This string is ASCII.
+#   CRIC has DN account association. This string is ASCII.
 #
 #  CMS-AuthN-Name
 #
-#   The value of this header is the SiteDB registered forename and
+#   The value of this header is the CRIC registered forename and
 #   surname of the client. It may not be present if the fields have
-#   not been recorded in SiteDB. If authentication method is HostIP
+#   not been recorded in CRIC. If authentication method is HostIP
 #   or None, this header is not present. This string is UTF-8.
 #
 #  CMS-AuthZ-<Role>
@@ -209,7 +209,7 @@
 #  AUTH_HOST_EXEMPT   List of files with exempted host ip-address name pairs.
 #  AUTH_GRID_MAPS     List of files with additional cert VO memberships.
 #  AUTH_REVOKED       List of files containing revoked users.
-#  AUTH_JSON_MAP      File containing SiteDB authn/authz info from mkauthmap.
+#  AUTH_JSON_MAP      File containing CRIC authn/authz info from mkauthmap.
 
 package cmsauth;
 use strict;
@@ -430,18 +430,18 @@ sub auth_trouble_handler : method
   if ($dn && exists $authz_by_dn{$dn})
   {
     $message .= "<p>Your certificate is mapped to the username '"
-             . $authz_by_dn{$dn}{LOGIN} . "' in SiteDB.</p>";
+             . $authz_by_dn{$dn}{LOGIN} . "' in CRIC.</p>";
   }
   elsif ($dn && ($dn =~ m{(.*?)(?:(?:/CN=\d+|/CN=proxy)|(/CN=limited proxy))+$}o
                  && exists $authz_by_dn{$1}))
   {
     $message .= "<p>Your certificate is mapped to the username '"
-             . $authz_by_dn{$1}{LOGIN} . "' in SiteDB.</p>";
+             . $authz_by_dn{$1}{LOGIN} . "' in CRIC.</p>";
   }
   else
   {
     $message .= "<p>Your certificate is not mapped to any user"
-              . " in SiteDB. Go to the CERN certificate mapping"
+              . " in CRIC. Go to the CERN certificate mapping"
               . " <a href='https://resources.web.cern.ch/resources/Manage/Accounts/MapCertificate.aspx'>"
               . "page</a>, remove all existing mappings and add your certificate."
               . " The information should take up to one hour to propagate.</p>"
@@ -651,7 +651,7 @@ sub init($)
   $initialised = 1;
 }
 
-# Reload SiteDB authentication and authorisation information. The data
+# Reload CRIC authentication and authorisation information. The data
 # is updated periodically by a separate process. The update is atomic,
 # and the file is modified only if the data has actually changed. Load
 # the new data on any request after the JSON file has changed, so all
