@@ -13,7 +13,8 @@ deploy_frontend_prep()
 
 deploy_frontend_sw()
 {
-  deploy_pkg -a frontend/sitedbread.py comp cms+frontend
+  #deploy_pkg -a frontend/sitedbread.py comp cms+frontend
+  deploy_pkg -a frontend/sitedbread.py comp.valya cms+frontend 5.0-comp15
 
   $authlink || if grep -q Oracle $project_auth/sitedbread.py; then :; else
     deploy_frontend_fakeauth $project_auth/users.db
@@ -45,29 +46,35 @@ deploy_frontend_post()
     exit 1
   fi
 
-  local backends opts name user
+  local backends opts name user issuer
   case $variant in
     prod )
-      opts="" name="-n cmsweb.cern.ch"
+      opts="" name="-n cmsweb.cern.ch" issuer="cmsweb.cern.ch"
       backends=backends-prod.txt ;;
     preprod )
-      opts="" name="-n cmsweb-testbed.cern.ch"
+      opts="" name="-n cmsweb-testbed.cern.ch" issuer="cmsweb-testbed.cern.ch"
       backends=backends-preprod.txt ;;
     dev )
       opts="-DTEST" 
       case $host in
-        vocms0126 ) name="-n cmsweb-sec.cern.ch";;
-        * ) name="-n cmsweb-dev.cern.ch";;
+        vocms0126 ) name="-n cmsweb-sec.cern.ch" issuer="cmsweb-sec.cern.ch";;
+        * ) name="-n cmsweb-dev.cern.ch" issuer="cmsweb-dev.cern.ch";;
       esac
       backends=backends-dev.txt ;;
     * )
-      opts="-DTEST" name=""
+      opts="-DTEST" name="" issuer="`hostname`"
       backends=backends-dev.txt ;;
   esac
   if $nogroups; then user="-u $(id -un):$(id -gn)"; else user="-u _frontend:_frontend"; fi
 
   # This hack is needed while supporting old and new deployment procedures
   $nogroups || { sudo chown -R $USER:_config $PWD/{*.conf,htdocs,etc} || true; }
+
+  # fix path in x509_scitokens_issuer configs before we'll make server configuration
+  perl -p -i -e "s|\@STATEDIR\@|$project_state|g" \
+    $project_config/x509_scitokens_issuer/x509_scitokens_issuer_app.json
+  perl -p -i -e "s|\@STATEDIR\@|$project_state|g" \
+    $project_config/x509_scitokens_issuer/x509_scitokens_issuer_http.conf
 
   # Generate apache httpd server configuration
   (. $root/current/apps/frontend/etc/profile.d/init.sh
@@ -86,13 +93,44 @@ deploy_frontend_post()
    -d $project_config/htdocs                          \
    -e "$APACHE24_SETUP_ROOT/etc/env.d/*.sh"           \
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
-   -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so)
+   -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so \
+   -m gridsite_module:$MOD_GRIDSITE24_ROOT/usr/local/lib/httpd/modules/mod_gridsite.so \
+   -m wsgi_module:$MOD_WSGI24_ROOT/modules/mod_wsgi.so)
 #   -m evasive20_module:$MOD_EVASIVE24_ROOT/modules/mod_evasive20.so)
   [ $? = 0 ]
   rm -f $PWD/etc/keys/authz-headers
   setgroup -R ugo+r,go-w _config $PWD/{*.conf,htdocs,etc/env.d,etc/keys}
   setgroup ugo+r,go-w _config $PWD/{etc/,etc/{httpd,options.txt}}
   setgroup ug+rw,o-w _frontend $PWD/var
+
+  ### x509-scitokens-issuer setup
+  (. $root/current/apps/frontend/etc/profile.d/init.sh
+
+  chmod 644 $project_config/x509_scitokens_issuer/x509_scitokens_issuer_app.json
+
+  mkdir -p $project_state/wsgi
+  mkdir -p $project_state/logs
+  mkdir -p $project_state/x509_scitokens_issuer
+  mkdir -p $project_state/htdocs/.well-known
+  mkdir -p $project_state/htdocs/oauth2
+
+  scitokens-admin-create-key --create-keys --pem-private --pem-public > /tmp/issuer.pem
+  scitokens-admin-create-key --private-keyfile /tmp/issuer.pem --jwks-private > /tmp/issuer_key.jwks
+  scitokens-admin-create-key --public-keyfile /tmp/issuer.pem --jwks-public > /tmp/issuer_public.jwks
+
+  cp -f /tmp/issuer_public.jwks $project_state/htdocs/oauth2/certs
+  cp -f /tmp/issuer_key.jwks $project_state/x509_scitokens_issuer
+  cp -f /tmp/issuer_public.jwks $project_state/x509_scitokens_issuer
+  chmod 444 $project_state/x509_scitokens_issuer/issuer_key.jwks
+  chmod 644 $project_state/x509_scitokens_issuer/issuer_public.jwks
+  rm /tmp/issuer.pem /tmp/issuer_key.jwks /tmp/issuer_public.jwks
+
+  cat $project_config/x509_scitokens_issuer/openid-configuration | sed -e "s,cmsweb.cern.ch,$issuer,"\
+    > $project_state/htdocs/.well-known/openid-configuration
+  cp -f $project_config/x509_scitokens_issuer/* $project_state/x509_scitokens_issuer/
+  cp -f $X509_SCITOKENS_ISSUER_ROOT/wsgi/x509-scitokens-issuer.wsgi $project_state/wsgi
+  cp -f $X509_SCITOKENS_ISSUER_ROOT/wsgi/x509-scitokens-issuer.wsgi $project_state/wsgi)
+  ### end of x509-scitokens-issuer setup
 
   # Hardlink to key used to hmac request headers
   sudo ln $root/$cfgversion/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers

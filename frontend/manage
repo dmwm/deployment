@@ -16,7 +16,16 @@
 
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
 STATEDIR=$TOP/state/$ME
+
+# x509-scitokens-issuer settings
+export X509_SCITOKENS_ISSUER_CONFIG=$STATEDIR/x509_scitokens_issuer/x509_scitokens_issuer_app.json
+export X509_SCITOKENS_ISSUER_INSTANCE_PATH=$STATEDIR/x509_scitokens_issuer
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+# make gridsite libs available
+export LD_LIBRARY_PATH=$MOD_GRIDSITE24_ROOT/usr/local/lib:$LD_LIBRARY_PATH
 
 # Detect if we're in single user mode
 case $(uname) in
