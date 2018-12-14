@@ -74,6 +74,10 @@ deploy_frontend_post()
     $project_config/x509_scitokens_issuer/x509_scitokens_issuer_app.json
   perl -p -i -e "s|\@STATEDIR\@|$project_state|g" \
     $project_config/x509_scitokens_issuer/x509_scitokens_issuer_http.conf
+  perl -p -i -e "s|cmsweb.cern.ch|$issuer|g" \
+      $project_config/x509_scitokens_issuer/openid-configuration
+  perl -p -i -e "s|cmsweb.cern.ch|$issuer|g" \
+      $project_config/x509_scitokens_issuer/00-defaults.cfg
 
   # Generate apache httpd server configuration
   (. $root/current/apps/frontend/etc/profile.d/init.sh
@@ -151,7 +155,7 @@ deploy_frontend_post()
    echo "13 */3 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
         "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
         "-o $PWD/etc/voms-gridmap.txt --vo cms"
-   case $host in vocms* ) silent= ;; * ) silent=-q;; esac
+   case $host in vocms* ) silent= ;; * ) silent= ;; esac
    echo "*/4 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
         "PYTHONPATH=$root/current/auth/frontend:\$PYTHONPATH $project_config/mkauthmap" \
         "$silent -c $project_config/mkauth.conf -o $PWD/etc/authmap.json"
