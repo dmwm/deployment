@@ -1,3 +1,3 @@
 {
-  "rules": []
+  "rules": [{"match": "fqan:/Role=users", "scopes":["read"], "scope":"read"}]
 }
