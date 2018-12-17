@@ -1,3 +1,6 @@
 {
-  "rules": [{"match": "fqan:/Role=users", "scopes":["read"], "scope":"read"}]
+  "rules": [
+      {"match": "fqan:/users", "scopes":["read:/store"], "scope":"read"},
+      {"match": "fqan:/cms", "scopes": ["read:/store", "write:/store/user/{username}"]}
+  ]
 }
