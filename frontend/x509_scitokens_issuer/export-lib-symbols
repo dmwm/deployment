@@ -1,8 +1,0 @@
-{
-global:
-  x509_scitokens_issuer*;
-  x509_macaroon_issuer*;
-
-local:
-  *;
-};
