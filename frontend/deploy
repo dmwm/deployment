@@ -131,7 +131,6 @@ deploy_frontend_post()
   cat $project_config/x509_scitokens_issuer/openid-configuration | sed -e "s,cmsweb.cern.ch,$issuer,"\
     > $project_state/htdocs/.well-known/openid-configuration
   cp -f $project_config/x509_scitokens_issuer/* $project_state/x509_scitokens_issuer/
-  cp -f $X509_SCITOKENS_ISSUER_ROOT/wsgi/x509-scitokens-issuer.wsgi $project_state/wsgi
   cp -f $X509_SCITOKENS_ISSUER_ROOT/wsgi/x509-scitokens-issuer.wsgi $project_state/wsgi)
   ### end of x509-scitokens-issuer setup
 
