@@ -1,0 +1,11 @@
+[Unit]
+Description=CMS User Mapping Update
+Requires=network-online.target
+
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cms-update-mapping /var/cache/httpd/x509-scitokens-issuer/dn_mapping.json
+
+[Install]
+WantedBy=multi-user.target
