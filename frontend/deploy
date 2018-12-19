@@ -153,6 +153,7 @@ deploy_frontend_post()
 
   case $host in * ) enable ;; esac
   (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
+   sysboot
    echo "13 */3 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
         "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
         "-o $PWD/etc/voms-gridmap.txt --vo cms"
