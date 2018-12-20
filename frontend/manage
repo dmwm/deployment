@@ -8,7 +8,6 @@
 ##H   configtest  check server configuration
 ##H   restart     (re)start the service
 ##H   start       (re)start the service
-##H   sysboot     start server from crond
 ##H   graceful    restart the service gracefully
 ##H   stop        stop the service
 ##H
@@ -45,7 +44,7 @@ case ${1:-status} in
     fi
     ;;
 
-  start | restart | sysboot )
+  start | restart )
     if $groups; then
       case $(uname) in
         Linux  ) sudo /sbin/service httpd restart ;;
