@@ -227,6 +227,8 @@ use Sys::Hostname;
 use JSON::XS 'decode_json';
 use cmstools;
 use CGI;
+use Crypt::X509;
+use URI::Escape;
 
 sub request_server_name($);
 sub authn_fail($$);
@@ -847,6 +849,37 @@ sub authn_cert($$)
   my $vstart = $ir->subprocess_env->get('SSL_CLIENT_V_START');
   my $vend = $ir->subprocess_env->get('SSL_CLIENT_V_END');
   my $iscms;
+
+  # get traefik headers and if they exists proceed with authentication
+  # we need to decide how traefik certs will be passed around, see
+  # https://its.cern.ch/jira/browse/OS-7073
+  # they may be: X-Forwarded-Ssl-Client-Cert and X-Forwarded-Ssl-Client-Cert-Infos
+  # but for testing purpose we use Traefik-Cert and Traefik-Cert-Infos
+  my $traefik = $r->headers_in->get('Traefik-Cert') || '';
+  my $traefik_info = $r->headers_in->get('Traefik-Cert-Infos') || '';
+  if ($traefik ne '')
+  {
+    # decode traefik cert
+    my $traefik_cert = uri_unescape($traefik);
+    #$r->log->notice("$me parsing traefik certificate $traefik_cert,"
+    #            . " with info $traefik_info");
+    # we expect only base64 string w/o BEGIN/END CERTIFICATE, see
+    # https://stackoverflow.com/questions/38991171/extract-data-from-certificate-with-perl-cryptx509
+    my $pem_cert = MIME::Base64::decode($traefik_cert);
+    my $decoded = Crypt::X509->new(cert => $pem_cert);
+    if ( $decoded->error ) {
+        my $e = $decoded->error;
+        $r->log->notice("$me parsing traefik cert error $e");
+        return authn_step($r, $opts) if ! $dn;
+    }
+    # extract dn from it
+    $dn = "/".join('/',@{$decoded->Subject});
+    $r->log->notice("$me traefik dn $dn");
+
+    # TODO: need perl here code to verify client certificates for x509-scitokens, see
+    # https://github.com/bbockelm/simple-proxy-utils/blob/master/src/simple_proxy_utils.py
+    # https://github.com/bbockelm/simple-proxy-utils/blob/master/src/SimpleProxyUtils.cc#L32
+  }
 
   # The following is merely to produce better error reports on cert
   # validation, with no change of result. First report gross errors.
