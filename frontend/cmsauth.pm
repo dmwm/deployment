@@ -895,7 +895,7 @@ sub authn_cert($$)
     $verify = 'SUCCESS';
     $vstart = $decoded->not_before;
     $vend = $decoded->not_after;
-    $vremain = time - $vend;
+    $vremain = $vend - time;
 
     # TODO: need perl here code to verify client certificates for x509-scitokens, see
     # https://github.com/bbockelm/simple-proxy-utils/blob/master/src/simple_proxy_utils.py
