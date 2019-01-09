@@ -874,6 +874,18 @@ sub authn_cert($$)
     $dn = "/".join('/',@{$decoded->Subject});
     $r->log->notice("$me traefik dn $dn");
 
+    # setup attributes which usually comes from apache mod_ssl when client
+    # connects with certificate:
+    # SSL_CLIENT_VERIFY
+    # SSL_CLIENT_V_REMAIN
+    # SSL_CLIENT_V_START
+    # SSL_CLIENT_V_END
+    # see https://httpd.apache.org/docs/2.4/mod/mod_ssl.html
+    $verify = 'SUCCESS';
+    $vstart = $decoded->not_before;
+    $vend = $decoded->not_after;
+    $vremain = time - $vend;
+
     # TODO: need perl here code to verify client certificates for x509-scitokens, see
     # https://github.com/bbockelm/simple-proxy-utils/blob/master/src/simple_proxy_utils.py
     # https://github.com/bbockelm/simple-proxy-utils/blob/master/src/SimpleProxyUtils.cc#L32
