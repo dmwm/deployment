@@ -853,10 +853,8 @@ sub authn_cert($$)
   # get traefik headers and if they exists proceed with authentication
   # we need to decide how traefik certs will be passed around, see
   # https://its.cern.ch/jira/browse/OS-7073
-  # they may be: X-Forwarded-Ssl-Client-Cert and X-Forwarded-Ssl-Client-Cert-Infos
-  # but for testing purpose we use Traefik-Cert and Traefik-Cert-Infos
-  my $traefik = $r->headers_in->get('Traefik-Cert') || '';
-  my $traefik_info = $r->headers_in->get('Traefik-Cert-Infos') || '';
+  my $traefik = $r->headers_in->get('X-Forwarded-Ssl-Client-Cert') || '';
+  my $traefik_info = $r->headers_in->get('X-Forwarded-Ssl-Client-Cert-Infos') || '';
   if ($traefik ne '')
   {
     # decode traefik cert
