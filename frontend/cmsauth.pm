@@ -864,6 +864,16 @@ sub authn_cert($$)
     #            . " with info $traefik_info");
     # we expect only base64 string w/o BEGIN/END CERTIFICATE, see
     # https://stackoverflow.com/questions/38991171/extract-data-from-certificate-with-perl-cryptx509
+    my $begin_cert = "\n-----BEGIN CERTIFICATE-----\n";
+    my $end_cert = "\n-----END CERTIFICATE-----\n";
+    my $iloc = index($traefik_cert, $begin_cert);
+    my $eloc = index($traefik_cert, $end_cert);
+    if ( ($iloc > 0) && ($eloc > 0) ) {
+        my $offset = $iloc+length($begin_cert);
+        my $len = $eloc - $iloc;
+        $traefik_cert = substr($traefik_cert, $offset, $len);
+    }
+
     my $pem_cert = MIME::Base64::decode($traefik_cert);
     my $decoded = Crypt::X509->new(cert => $pem_cert);
     if ( $decoded->error ) {
