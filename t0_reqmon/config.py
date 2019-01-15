@@ -78,6 +78,7 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     logDBTasks.object = "WMCore.WMStats.CherryPyThreads.LogDBTasks.LogDBTasks"
     logDBTasks.central_logdb_url = LOG_DB_URL
     logDBTasks.log_reporter = LOG_REPORTER
+    logDBTasks.keepDocsAge = 60 * 60 * 24 * 90 # keep data newer than 90 days
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
     logDBTasks.log_file = '%s/logs/t0_reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
         
