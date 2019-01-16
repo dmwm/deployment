@@ -229,6 +229,21 @@ use cmstools;
 use CGI;
 use Crypt::X509;
 use URI::Escape;
+use Inline C => Config =>
+    DIRECTORY => '/data/srv/state/frontend/libs/Inline' =>
+    LIBS => '-L/data/srv/state/frontend/libs -lSimpleProxyUtils -lvomsapi -lc';
+use Inline C => <<'END_OF_CODE';
+#include <stddef.h>
+int cert_chain_verify(char *cert) {
+    char **ident = NULL;
+    char ***fqans = NULL;
+    char **err = NULL;
+    int *count = 0;
+    int res;
+    res = chain_verify(cert, ident, fqans, count, err);
+    return res;
+}
+END_OF_CODE
 
 sub request_server_name($);
 sub authn_fail($$);
@@ -860,12 +875,16 @@ sub authn_cert($$)
   {
     # decode traefik cert
     my $traefik_cert = uri_unescape($traefik);
-    #$r->log->notice("$me parsing traefik certificate $traefik_cert,"
-    #            . " with info $traefik_info");
+#    $r->log->notice("$me parsing traefik certificate $traefik_cert,"
+#                . " with info $traefik_info");
+#
+    # verify certificate chain
+    my $out = cert_chain_verify($traefik_cert);
+    $r->log->notice("$me cert chain verify $out");
     # we expect only base64 string w/o BEGIN/END CERTIFICATE, see
     # https://stackoverflow.com/questions/38991171/extract-data-from-certificate-with-perl-cryptx509
     my $begin_cert = "\n-----BEGIN CERTIFICATE-----\n";
-    my $end_cert = "\n-----END CERTIFICATE-----\n";
+    my $end_cert = "\n-----END CERTIFICATE-----";
     my $iloc = index($traefik_cert, $begin_cert);
     my $eloc = index($traefik_cert, $end_cert);
     if ( ($iloc > 0) && ($eloc > 0) ) {
@@ -873,6 +892,7 @@ sub authn_cert($$)
         my $len = $eloc - $iloc;
         $traefik_cert = substr($traefik_cert, $offset, $len);
     }
+#    $r->log->notice("$me parsed traefik certificate $traefik_cert");
 
     my $pem_cert = MIME::Base64::decode($traefik_cert);
     my $decoded = Crypt::X509->new(cert => $pem_cert);
@@ -1032,7 +1052,7 @@ sub authn_aucookie($$)
   return authn_step($r, $opts)
     if (! $cookie
         || $cookie !~ /^([0-9a-f]{40})([0-9a-f]{40})$/
-	|| ! secret_hmac_check("cert-cookie", pack("h*", $1), $2));
+    || ! secret_hmac_check("cert-cookie", pack("h*", $1), $2));
 
   # The junk matched are server key, pass through.
   $r->subprocess_env->set("AUTH_DONE" => "OK");

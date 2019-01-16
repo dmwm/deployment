@@ -23,6 +23,7 @@ STATEDIR=$TOP/state/$ME
 export X509_SCITOKENS_ISSUER_CONFIG=$STATEDIR/x509_scitokens_issuer/x509_scitokens_issuer_app.json
 export X509_SCITOKENS_ISSUER_INSTANCE_PATH=$STATEDIR/x509_scitokens_issuer
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$STATEDIR/libs:/usr/lib64
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
 # Detect if we're in single user mode
