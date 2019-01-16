@@ -48,6 +48,11 @@ export WMAKEYTAB=$STATEDIR/wma.keytab
 principal=`klist -k $WMAKEYTAB | tail -1 | awk '{print $2}'`
 kinit $principal -k -t $WMAKEYTAB
 
+# detect hadoop distribution
+if [ -d /usr/hdp/hadoop ]; then
+    export HADOOP_HOME=/usr/hdp/hadoop
+fi
+
 # GRID
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
