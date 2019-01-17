@@ -233,13 +233,12 @@ use Inline C => Config =>
     DIRECTORY => '/data/srv/state/frontend/libs/Inline' =>
     LIBS => '-L/data/srv/state/frontend/libs -lSimpleProxyUtils -lvomsapi -lc';
 use Inline C => <<'END_OF_CODE';
-#include <stddef.h>
 int cert_chain_verify(char *cert) {
-    char **ident = NULL;
-    char ***fqans = NULL;
-    char **err = NULL;
-    int *count = 0;
-    return chain_verify(cert, ident, fqans, count, err);
+    char **ident;
+    char ***fqans;
+    char **err;
+    int *count;
+    return chain_verify(cert, &ident, &fqans, &count, &err);
 }
 END_OF_CODE
 
@@ -877,8 +876,11 @@ sub authn_cert($$)
 #                . " with info $traefik_info");
 #
     # verify certificate chain
-    my $out = cert_chain_verify($traefik_cert);
-    $r->log->notice("$me cert chain verify $out");
+    my $chain_status = cert_chain_verify($traefik_cert);
+    if($chain_status != 0) {
+        $r->log->notice("$me cert chain verify status $chain_status");
+        return authn_step($r, $opts);
+    }
     # we expect only base64 string w/o BEGIN/END CERTIFICATE, see
     # https://stackoverflow.com/questions/38991171/extract-data-from-certificate-with-perl-cryptx509
     my $begin_cert = "\n-----BEGIN CERTIFICATE-----\n";
