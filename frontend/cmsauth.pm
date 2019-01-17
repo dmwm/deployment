@@ -239,9 +239,7 @@ int cert_chain_verify(char *cert) {
     char ***fqans = NULL;
     char **err = NULL;
     int *count = 0;
-    int res;
-    res = chain_verify(cert, ident, fqans, count, err);
-    return res;
+    return chain_verify(cert, ident, fqans, count, err);
 }
 END_OF_CODE
 
