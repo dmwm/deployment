@@ -111,6 +111,30 @@ def check_keys(jsdata):
 
     return True
 
+def roles_to_lower(jsdata):
+    data = json.loads(jsdata)
+
+    for entry in data:
+        roles2 = {}
+        for role in entry['ROLES']:
+            cur_key = role
+            cur_val = entry['ROLES'][cur_key]
+
+            cur_key = role.lower()
+
+            for i in range(0, len(cur_val)):
+                cur_val[i] = cur_val[i].lower()
+
+            roles2[cur_key] = cur_val
+        
+        del entry['ROLES']
+        entry['ROLES'] = roles2
+
+    enc = json.JSONEncoder(sort_keys=True)
+    jsondata = "[\n " + ",\n ".join(enc.encode(entry) for entry in data) + "\n]\n"
+
+    return jsondata
+
 def updateFile(opts, roles, sitemap):
     """
     If sitemap argument is given, decode the CRIC roles API output, extend phedex 
@@ -152,24 +176,24 @@ def updateFile(opts, roles, sitemap):
  
             if jsondata != oldjsondata:
                 if check_keys(jsondata): ##CALL SECURITY MODULE-CHECKS----
-                    print "Done!"
-                # then let's write out a new file and replace the current one
-                #print "Info: json content has changed, updating it ..."
-                # try:
-                #   fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
-                #   tmpfile = os.fdopen(fd, "w")
-                #   tmpfile.write(jsondata)
-                #   tmpfile.close()
-                # except(IOError, OSError) as e: 
-                #   print "An error ocurred:"
-                #   pprint(e)
+                   jsondata_roles_lower = roles_to_lower(jsondata)
+                   # then let's write out a new file and replace the current one
+                   print "Info: json content has changed, updating it ..."
+                   try:
+                     fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
+                     tmpfile = os.fdopen(fd, "w")
+                     tmpfile.write(jsondata_roles_lower)
+                     tmpfile.close()
+                   except(IOError, OSError) as e: 
+                     print "An error ocurred:"
+                     pprint(e)
 
-                # myumask = current_umask()
-                # os.chmod(tmpname, 0666 & ~myumask)
-                # os.rename(tmpname, opts.out)
-                #print "Done!"
+                   myumask = current_umask()
+                   os.chmod(tmpname, 0666 & ~myumask)
+                   os.rename(tmpname, opts.out)
+                   #print "Done!"
                 else:
-                    print "Old JSON was not updated. Their content structured was canched!"
+                    print "Old JSON was not updated. Their content structured was changed!"
 
 ##Main
 # Getting command line options
