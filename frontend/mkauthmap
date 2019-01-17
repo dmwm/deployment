@@ -97,6 +97,19 @@ def buildSiteMap(sites):
                 sitemap[sitename] = [nodename]
     return sitemap
 
+def check_keys(jsdata):
+    set_keys = set(['DN', 'ID', 'LOGIN', 'NAME', 'ROLES'])
+    data = json.loads(jsdata)
+
+    for entry in data:
+        set_cur_keys = set()
+        for k in entry:
+            set_cur_keys.add(k)
+
+        if set_keys != set_cur_keys:
+            return False
+
+    return True
 
 def updateFile(opts, roles, sitemap):
     """
@@ -136,23 +149,27 @@ def updateFile(opts, roles, sitemap):
             except IOError:
                 print "File %s does not exist yet." % opts.out
                 oldjsondata = ''
-
+ 
             if jsondata != oldjsondata:
+                if check_keys(jsondata): ##CALL SECURITY MODULE-CHECKS----
+                    print "Done!"
                 # then let's write out a new file and replace the current one
                 #print "Info: json content has changed, updating it ..."
-                try:
-                  fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
-                  tmpfile = os.fdopen(fd, "w")
-                  tmpfile.write(jsondata)
-                  tmpfile.close()
-                except(IOError, OSError) as e: 
-                  print "An error ocurred:"
-                  pprint(e)
+                # try:
+                #   fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
+                #   tmpfile = os.fdopen(fd, "w")
+                #   tmpfile.write(jsondata)
+                #   tmpfile.close()
+                # except(IOError, OSError) as e: 
+                #   print "An error ocurred:"
+                #   pprint(e)
 
-                myumask = current_umask()
-                os.chmod(tmpname, 0666 & ~myumask)
-                os.rename(tmpname, opts.out)
+                # myumask = current_umask()
+                # os.chmod(tmpname, 0666 & ~myumask)
+                # os.rename(tmpname, opts.out)
                 #print "Done!"
+                else:
+                    print "Old JSON was not updated. Their content structured was canched!"
 
 ##Main
 # Getting command line options
