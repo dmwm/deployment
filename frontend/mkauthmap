@@ -175,7 +175,8 @@ def updateFile(opts, roles, sitemap):
                 oldjsondata = ''
  
             if jsondata != oldjsondata:
-                if check_keys(jsondata): ##CALL SECURITY MODULE-CHECKS----
+                #Check json structure
+                if check_keys(jsondata): 
                    jsondata_roles_lower = roles_to_lower(jsondata)
                    # then let's write out a new file and replace the current one
                    print "Info: json content has changed, updating it ..."
@@ -193,7 +194,7 @@ def updateFile(opts, roles, sitemap):
                    os.rename(tmpname, opts.out)
                    #print "Done!"
                 else:
-                    print "Old JSON was not updated. Their content structured was changed!"
+                    print "Old JSON was not updated. Their structure was changed!"
 
 ##Main
 # Getting command line options
