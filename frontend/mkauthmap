@@ -14,6 +14,7 @@ from pprint import pprint  # to debug objects content
 from tempfile import mkstemp
 from urllib2 import URLError
 from urlparse import urlsplit, urlunparse
+from collections import OrderedDict
 
 # Global vars
 opts = ''
@@ -98,17 +99,20 @@ def buildSiteMap(sites):
     return sitemap
 
 def check_keys(jsdata):
-    set_keys = set(['DN', 'ID', 'LOGIN', 'NAME', 'ROLES'])
-    data = json.loads(jsdata)
+    valid_keys = OrderedDict([(1,'DN'),(2,'ID'), (3,'LOGIN'), (4,'NAME'), (5,'ROLES')])
+    #get json content keeping their order
+    data = json.loads(jsdata, object_pairs_hook=OrderedDict) 
 
     for entry in data:
-        set_cur_keys = set()
+        got_keys = OrderedDict()
+        i=0
+
         for k in entry:
-            set_cur_keys.add(k)
+            i = i +1
+            got_keys[i] = k
 
-        if set_keys != set_cur_keys:
+        if valid_keys != got_keys:
             return False
-
     return True
 
 def roles_to_lower(jsdata):
@@ -176,7 +180,7 @@ def updateFile(opts, roles, sitemap):
  
             if jsondata != oldjsondata:
                 #Check json structure
-                if check_keys(jsondata): 
+                if check_keys(jsondata):
                    jsondata_roles_lower = roles_to_lower(jsondata)
                    # then let's write out a new file and replace the current one
                    print "Info: json content has changed, updating it ..."
