@@ -98,6 +98,29 @@ def buildSiteMap(sites):
     return sitemap
 
 
+def rolesToLower(dataDict):
+    """
+    Receives a python dictionary with all the user entries and convert
+    all group/user ROLES information to lower case, updating it in place
+    """
+    for entry in dataDict:
+        for role, groups in entry['ROLES'].items():
+            entry['ROLES'][role] = [item.lower() for item in groups]
+
+
+def validateMapKeys(dataDict):
+    """
+    Given a python dictionary with the final user information, validate
+    that each entry contains only keys supported by our frontend.
+    """
+    supportedKeys = set(['DN', 'ID', 'LOGIN', 'NAME', 'ROLES'])
+    for entry in dataDict:
+        if set(entry.keys()) != supportedKeys:
+            print >> sys.stderr, "Found keys not supported: %s" % (set(entry.keys()) != supportedKeys)
+            print >> sys.stderr, "It needs to be reported to the CRIC developers!"
+            exit(3)
+
+
 def updateFile(opts, roles, sitemap):
     """
     If sitemap argument is given, decode the CRIC roles API output, extend phedex 
@@ -125,6 +148,10 @@ def updateFile(opts, roles, sitemap):
                                 if opts.verbose:
                                     print "WARNING: role %s is missing from the sitemap" % r
                         entry['ROLES'][group] = group_roles
+            # make sure we only have the expected arguments in the mapping
+            validateMapKeys(struct)
+            # now convert all group/roles to lower
+            rolesToLower(struct)
             # Generate stable JSON representation.
             enc = json.JSONEncoder(sort_keys=True)
             jsondata = "[\n " + ",\n ".join(enc.encode(entry) for entry in struct) + "\n]\n"
@@ -141,13 +168,13 @@ def updateFile(opts, roles, sitemap):
                 # then let's write out a new file and replace the current one
                 #print "Info: json content has changed, updating it ..."
                 try:
-                  fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
-                  tmpfile = os.fdopen(fd, "w")
-                  tmpfile.write(jsondata)
-                  tmpfile.close()
+                    fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
+                    tmpfile = os.fdopen(fd, "w")
+                    tmpfile.write(jsondata)
+                    tmpfile.close()
                 except(IOError, OSError) as e: 
-                  print "An error ocurred:"
-                  pprint(e)
+                    print "An error ocurred:"
+                    pprint(e)
 
                 myumask = current_umask()
                 os.chmod(tmpname, 0666 & ~myumask)
