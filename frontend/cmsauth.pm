@@ -233,12 +233,40 @@ use Inline C => Config =>
     DIRECTORY => '/data/srv/state/frontend/libs/Inline' =>
     LIBS => '-L/data/srv/state/frontend/libs -lSimpleProxyUtils -lvomsapi -lc';
 use Inline C => <<'END_OF_CODE';
-int cert_chain_verify(char *cert) {
-    char **ident;
-    char ***fqans;
-    char **err;
-    int *count;
-    return chain_verify(cert, &ident, &fqans, &count, &err);
+#include <stdio.h>
+int chain_verify(const char *cert, char **ident, char ***fqans, int *fqans_count, char **err_msg);
+
+int cert_chain_verify(const char* cert, SV* idsv, SV* fqansref, SV* errsv) {
+    char *ident;
+    char **fqans;
+    int count;
+    char *errmsg = NULL;
+
+    int res = chain_verify(cert, &ident, &fqans, &count, &errmsg);
+
+    AV* arr = (AV*) SvRV(fqansref);
+    av_clear(arr);
+
+    if (res == 0) {
+        int i;
+
+        /* printf("### output: res=%d, ident=%s err=%s\n", res, ident, errmsg); */
+        sv_setpvn(idsv, ident, strlen(ident));
+        sv_setpvn(errsv, NULL, 0);
+
+        for (i = 0; i < count; ++i) {
+            SV* entry = newSVpvn(fqans[i], strlen(fqans[i]));
+            av_push(arr, entry);
+        }
+        free(ident);
+        fqans_free(fqans);
+    } else {
+        sv_setpvn(idsv, NULL, 0);
+        sv_setpvn(errsv, errmsg, strlen(errmsg));
+        free(errmsg);
+    }
+
+    return res;
 }
 END_OF_CODE
 
@@ -876,9 +904,10 @@ sub authn_cert($$)
 #                . " with info $traefik_info");
 #
     # verify certificate chain
-    my $chain_status = cert_chain_verify($traefik_cert);
+    my ($ident, $err, $cert, $out, @fqans);
+    my $chain_status = cert_chain_verify($traefik_cert, $ident, \@fqans, $err);
     if($chain_status != 0) {
-        $r->log->notice("$me cert chain verify status $chain_status");
+        $r->log->notice("$me cert chain verify status $chain_status, dn=$ident, error=$err");
         return authn_step($r, $opts);
     }
     # we expect only base64 string w/o BEGIN/END CERTIFICATE, see
