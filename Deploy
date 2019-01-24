@@ -246,7 +246,7 @@ inrepo()
      rm -fr $swarea
      mkdir -p $swarea
      cd $swarea
-     curl -sO http://$rpmhost/cmssw/repos/bootstrap.sh
+     curl -sO http://$rpmhost/cmssw/bootstrap.sh
      sh -x ./bootstrap.sh -architecture $arch -path $PWD -repository $repo \
        -server $rpmhost setup > $PWD/bootstrap-$arch.log 2>&1
      touch .bootstrapped)
