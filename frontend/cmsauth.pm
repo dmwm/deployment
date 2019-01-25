@@ -910,6 +910,8 @@ sub authn_cert($$)
         $r->log->notice("$me cert chain verify status $chain_status, dn=$ident, error=$err");
         return authn_step($r, $opts);
     }
+    my $fqans_str = join(' ', @fqans);
+    $r->log->notice("$me cert chain verify dn=$ident, fqans=$fqans_str");
     # we expect only base64 string w/o BEGIN/END CERTIFICATE, see
     # https://stackoverflow.com/questions/38991171/extract-data-from-certificate-with-perl-cryptx509
     my $begin_cert = "\n-----BEGIN CERTIFICATE-----\n";
