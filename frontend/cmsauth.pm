@@ -227,6 +227,48 @@ use Sys::Hostname;
 use JSON::XS 'decode_json';
 use cmstools;
 use CGI;
+use Crypt::X509;
+use URI::Escape;
+use Inline C => Config =>
+    DIRECTORY => '/data/srv/state/frontend/libs/Inline' =>
+    LIBS => '-L/data/srv/state/frontend/libs -lSimpleProxyUtils -lvomsapi -lc';
+use Inline C => <<'END_OF_CODE';
+#include <stdio.h>
+int chain_verify(const char *cert, char **ident, char ***fqans, int *fqans_count, char **err_msg);
+
+int cert_chain_verify(const char* cert, SV* idsv, SV* fqansref, SV* errsv) {
+    char *ident;
+    char **fqans;
+    int count;
+    char *errmsg = NULL;
+
+    int res = chain_verify(cert, &ident, &fqans, &count, &errmsg);
+
+    AV* arr = (AV*) SvRV(fqansref);
+    av_clear(arr);
+
+    if (res == 0) {
+        int i;
+
+        /* printf("### output: res=%d, ident=%s err=%s\n", res, ident, errmsg); */
+        sv_setpvn(idsv, ident, strlen(ident));
+        sv_setpvn(errsv, NULL, 0);
+
+        for (i = 0; i < count; ++i) {
+            SV* entry = newSVpvn(fqans[i], strlen(fqans[i]));
+            av_push(arr, entry);
+        }
+        free(ident);
+        fqans_free(fqans);
+    } else {
+        sv_setpvn(idsv, NULL, 0);
+        sv_setpvn(errsv, errmsg, strlen(errmsg));
+        free(errmsg);
+    }
+
+    return res;
+}
+END_OF_CODE
 
 sub request_server_name($);
 sub authn_fail($$);
@@ -848,6 +890,69 @@ sub authn_cert($$)
   my $vend = $ir->subprocess_env->get('SSL_CLIENT_V_END');
   my $iscms;
 
+  # get traefik headers and if they exists proceed with authentication
+  # we need to decide how traefik certs will be passed around, see
+  # https://its.cern.ch/jira/browse/OS-7073
+  # this done with https://metacpan.org/pod/Crypt::X509 module
+  my $traefik = $r->headers_in->get('X-Forwarded-Ssl-Client-Cert') || '';
+  my $traefik_info = $r->headers_in->get('X-Forwarded-Ssl-Client-Cert-Infos') || '';
+  if ($traefik ne '')
+  {
+    # decode traefik cert
+    my $traefik_cert = uri_unescape($traefik);
+#    $r->log->notice("$me parsing traefik certificate $traefik_cert,"
+#                . " with info $traefik_info");
+#
+    # verify certificate chain
+    my ($ident, $err, $cert, $out, @fqans);
+    my $chain_status = cert_chain_verify($traefik_cert, $ident, \@fqans, $err);
+    if($chain_status != 0) {
+        $r->log->notice("$me cert chain verify status $chain_status, dn=$ident, error=$err");
+        return authn_step($r, $opts);
+    }
+    my $fqans_str = join(' ', @fqans);
+    $r->log->notice("$me cert chain verify dn=$ident, fqans=$fqans_str");
+    # we expect only base64 string w/o BEGIN/END CERTIFICATE, see
+    # https://stackoverflow.com/questions/38991171/extract-data-from-certificate-with-perl-cryptx509
+    my $begin_cert = "\n-----BEGIN CERTIFICATE-----\n";
+    my $end_cert = "\n-----END CERTIFICATE-----";
+    my $iloc = index($traefik_cert, $begin_cert);
+    my $eloc = index($traefik_cert, $end_cert);
+    if ( ($iloc > 0) && ($eloc > 0) ) {
+        my $offset = $iloc+length($begin_cert);
+        my $len = $eloc - $iloc;
+        $traefik_cert = substr($traefik_cert, $offset, $len);
+    }
+#    $r->log->notice("$me parsed traefik certificate $traefik_cert");
+
+    my $pem_cert = MIME::Base64::decode($traefik_cert);
+    my $decoded = Crypt::X509->new(cert => $pem_cert);
+    if ( $decoded->error ) {
+        my $e = $decoded->error;
+        $r->log->notice("$me parsing traefik cert error $e");
+        return authn_step($r, $opts) if ! $dn;
+    }
+    # extract dn from it
+    $dn = "/".join('/',@{$decoded->Subject});
+    $r->log->notice("$me traefik dn $dn");
+
+    # setup attributes which usually comes from apache mod_ssl when client
+    # connects with certificate:
+    # SSL_CLIENT_VERIFY
+    # SSL_CLIENT_V_REMAIN
+    # SSL_CLIENT_V_START
+    # SSL_CLIENT_V_END
+    # see https://httpd.apache.org/docs/2.4/mod/mod_ssl.html
+    $verify = 'SUCCESS';
+    $vstart = $decoded->not_before;
+    $vend = $decoded->not_after;
+    $vremain = $vend - time;
+
+    # TODO: need perl here code to verify client certificates for x509-scitokens, see
+    # https://github.com/bbockelm/simple-proxy-utils/blob/master/src/simple_proxy_utils.py
+    # https://github.com/bbockelm/simple-proxy-utils/blob/master/src/SimpleProxyUtils.cc#L32
+  }
+
   # The following is merely to produce better error reports on cert
   # validation, with no change of result. First report gross errors.
   # However silently keep plodding if there is no DN at all.
@@ -978,7 +1083,7 @@ sub authn_aucookie($$)
   return authn_step($r, $opts)
     if (! $cookie
         || $cookie !~ /^([0-9a-f]{40})([0-9a-f]{40})$/
-	|| ! secret_hmac_check("cert-cookie", pack("h*", $1), $2));
+    || ! secret_hmac_check("cert-cookie", pack("h*", $1), $2));
 
   # The junk matched are server key, pass through.
   $r->subprocess_env->set("AUTH_DONE" => "OK");
