@@ -52,15 +52,7 @@ case ${1:-status} in
         Darwin ) for a in unload load; do sudo launchctl $a -w $t; done ;;
       esac
     else
-      echo "sudo /sbin/service httpd stop"
-      sudo /sbin/service httpd stop
-      echo "for i in `ipcs -s | awk '/apache/ {print $2}'`; do (sudo ipcrm -s $i); done"
-      for i in `ipcs -s | awk '/apache/ {print $2}'`; do (sudo ipcrm -s $i); done
-      sleep 2;
-      echo "sudo /sbin/service httpd status"
-      sudo /sbin/service httpd status
-      echo "sudo /sbin/service httpd start"
-      sudo /sbin/service httpd start
+      $STATEDIR/etc/httpd restart
     fi
     ;;
 
