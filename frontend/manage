@@ -59,7 +59,7 @@ case ${1:-status} in
       echo "sudo /sbin/service httpd status"
       sudo /sbin/service httpd status
       echo "sudo /sbin/service httpd start"
-      sudo /sbin/service httpd start
+      $STATEDIR/etc/httpd restart
     fi
     ;;
 
