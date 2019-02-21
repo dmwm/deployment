@@ -55,7 +55,7 @@ case ${1:-status} in
       sudo /sbin/service httpd stop
       echo "for i in `ipcs -s | awk '/apache/ {print $2}'`; do (sudo ipcrm -s $i); done"
       for i in `ipcs -s | awk '/apache/ {print $2}'`; do (sudo ipcrm -s $i); done
-      sleep 2;
+      sleep 30;
       echo "sudo /sbin/service httpd status"
       sudo /sbin/service httpd status
       echo "sudo /sbin/service httpd start"
