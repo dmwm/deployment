@@ -41,7 +41,9 @@ server.source('DQMStripChart')
 server.source('DQMCertification')
 server.source('DQMLive', "127.0.0.1:8061")
 server.source('DQMArchive', "%s/ix128" % STATEDIR, '^/Global/')
-server.source('DQMLayout')
+# Layouts are disabled because dev gui is used for visualising PR test bin by bin comparison output.
+# Uncomment the following line to enable layouts:
+# server.source('DQMLayout')
 
 execfile(CONFIGDIR + "/dqm-services.py")
 execfile(CONFIGDIR + "/workspaces-dev.py")
