@@ -1,0 +1,155 @@
+##H Usage: manage ACTION [ATTRIBUTE] [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+echo_e=-e
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e=
+  ;;
+esac
+
+msg=${@: -1} # last argument
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+export EXPORTERS_ROOT
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
+export STAGEDIR=$STATEDIR/stagingarea
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+start()
+{
+    # cmsweb activity page
+    # https://cms-http-group.web.cern.ch/cms-http-group/activity.html
+
+    local host=`hostname -s`
+    case $host in
+    # production nodes
+    vocms0136 | vocms0161 | vocms0163 | vocms0165)
+        # start process_exporter for DBS
+        process_monitor.sh ".*DBSGlobalReader" dbs_exporter 5 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start process_exporter for CRAB
+        process_monitor.sh ".*CRAB" crab_exporter 5 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    vocms0741 | vocms0742)
+        # start das2go_exporter for DAS
+        das2go_exporter \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    vocms0158 | vocms0760 | vocms0162 | vocms0164)
+        # start apache_exporter for frontend
+        apache_exporter \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    # pre-production nodes
+    vocms0734 | vocms0135)
+        # start apache_exporter for frontend
+        apache_exporter \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+    vocms0731 | vocms0132)
+        # start process_exporter for DBS
+        process_monitor.sh ".*DBSGlobalReader" dbs_exporter 5 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start process_exporter for CRAB
+        process_monitor.sh ".*CRAB" crab_exporter 5 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start das2go_exporter for DAS
+        das2go_exporter \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    *)
+      ;;
+    esac
+}
+
+stop()
+{
+    for pat in "dbs_exporter crab_exporter das_exporter apache_exporter"; do
+        local pid=`ps auxwww | grep "$pat" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+        if [ -n "${pid}" ]; then
+            echo "Stopping $pat exporter ... ${pid}"
+            kill -9 ${pid}
+        fi
+    done
+}
+
+status()
+{
+    local out=`ps auxw | grep ".*_exporter" | grep -v grep`
+    if  [ -z "${out}" ]; then
+        echo "exporters are not running"
+        return
+    fi
+    echo $out
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  start | restart | sysboot)
+    check "$msg"
+    stop
+    start
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$msg"
+    stop
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$EXPORTERS_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

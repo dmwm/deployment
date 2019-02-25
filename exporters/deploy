@@ -1,0 +1,21 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_exporters_deps()
+{
+  deploy $stage backend
+  deploy $stage admin
+}
+
+deploy_exporters_prep()
+{
+  mkproj stagingarea
+  mkproxy
+}
+
+deploy_exporters_sw()
+{
+  deploy_pkg comp cms+exporters
+}
+
+deploy_exporters_post()
+{
+}
