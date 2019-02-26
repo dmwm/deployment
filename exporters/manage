@@ -62,8 +62,8 @@ start()
         # start process_exporter for DBS
         process_monitor.sh ".*DBSGlobalReader" dbs_exporter 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
-        # start process_exporter for CRAB
-        process_monitor.sh ".*CRAB" crab_exporter 5 \
+        # start process_exporter for crabserver
+        process_monitor.sh ".*crabserver" crab_exporter 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
@@ -89,8 +89,8 @@ start()
         # start process_exporter for DBS
         process_monitor.sh ".*DBSGlobalReader" dbs_exporter 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
-        # start process_exporter for CRAB
-        process_monitor.sh ".*CRAB" crab_exporter 5 \
+        # start process_exporter for crabserver
+        process_monitor.sh ".*crabserver" crab_exporter 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
         das2go_exporter \
