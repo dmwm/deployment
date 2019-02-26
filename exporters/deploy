@@ -18,4 +18,6 @@ deploy_exporters_sw()
 
 deploy_exporters_post()
 {
+  # keep this line to avoid error on empty function
+  local cmd="test"
 }
