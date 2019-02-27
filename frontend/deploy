@@ -136,6 +136,17 @@ deploy_frontend_post()
   cp -f $X509_SCITOKENS_ISSUER_ROOT/wsgi/x509-scitokens-issuer.wsgi $project_state/wsgi)
   ### end of x509-scitokens-issuer setup
 
+  ### setup simple-proxy-utils
+  (. $root/current/apps/frontend/etc/profile.d/init.sh
+  if [ -d $project_state/libs ]; then
+      sudo rm -rf $project_state/libs
+  fi
+  mkdir -p $project_state/libs/Inline
+  cp -f $SIMPLE_PROXY_UTILS_ROOT/lib/libSimpleProxyUtils.so $project_state/libs
+  rm -f $project_state/libs/libSimpleProxyUtils.so.0
+  ln -s $project_state/libs/libSimpleProxyUtils.so $project_state/libs/libSimpleProxyUtils.so.0)
+  ### end of setup simple-proxy-utils
+
   # Hardlink to key used to hmac request headers
   sudo ln $root/$cfgversion/auth/wmcore-auth/header-auth-key $PWD/etc/keys/authz-headers
 
