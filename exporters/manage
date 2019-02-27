@@ -60,40 +60,40 @@ start()
     # production nodes
     vocms0136 | vocms0161 | vocms0163 | vocms0165)
         # start process_exporter for DBS
-        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 5 \
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
-        process_monitor.sh ".*crabserver" crab_exporter 5 \
+        process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     vocms0741 | vocms0742)
         # start das2go_exporter for DAS
-        das2go_exporter \
+        das2go_exporter -port 18217 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     vocms0158 | vocms0760 | vocms0162 | vocms0164)
         # start apache_exporter for frontend
-        apache_exporter \
+        apache_exporter -telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     # pre-production nodes
     vocms0734 | vocms0135)
         # start apache_exporter for frontend
-        apache_exporter \
+        apache_exporter -telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
     vocms0731 | vocms0132)
         # start process_exporter for DBS
-        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 5 \
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
-        process_monitor.sh ".*crabserver" crab_exporter 5 \
+        process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
-        das2go_exporter \
+        das2go_exporter -port 18217 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
