@@ -60,8 +60,8 @@ start()
     # production nodes
     vocms0136 | vocms0161 | vocms0163 | vocms0165)
         # start process_exporter for DBS
-        process_monitor.sh ".*DBSGlobalReader" dbs_exporter 5 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 5 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
         process_monitor.sh ".*crabserver" crab_exporter 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
@@ -87,8 +87,8 @@ start()
       ;;
     vocms0731 | vocms0132)
         # start process_exporter for DBS
-        process_monitor.sh ".*DBSGlobalReader" dbs_exporter 5 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 5 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
         process_monitor.sh ".*crabserver" crab_exporter 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
@@ -104,7 +104,7 @@ start()
 
 stop()
 {
-    for pat in "dbs_exporter crab_exporter das_exporter apache_exporter"; do
+    for pat in "dbs_global_exporter crab_exporter das_exporter apache_exporter"; do
         local pid=`ps auxwww | grep "$pat" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
         if [ -n "${pid}" ]; then
             echo "Stopping $pat exporter ... ${pid}"
