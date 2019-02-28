@@ -27,10 +27,6 @@ sub handler($)
   {
     foreach (grep /$bad_hdr/, keys %{$r->headers_in})
     {
-      # clear all x-forwarded- requests except those which setup by traefik
-      if ($_ eq 'X-Forwarded-Ssl-Client-Cert' || $_ eq 'X-Forwarded-Ssl-Client-Cert-Infos') {
-          next;
-      }
       $r->log->warn("clearing incoming request header $_");
       $r->headers_in->unset($_);
     }
