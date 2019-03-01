@@ -31,21 +31,43 @@ if [ -f /usr/sbin/apachectl ]; then
     sudo /usr/sbin/apachectl stop
 fi
 
-case ${1:-status} in
-  status | graceful | stop | configtest )
-    $STATEDIR/etc/httpd $1
-    ;;
-
-  start | restart )
-    echo "stopping httpd service ..."
-    $STATEDIR/etc/httpd stop
+cleanup()
+{
+    pids=`ps auxww | grep http | grep frontend | awk '{ORS=" "; print $2}'`
+    if [ -n "$pids" ]; then
+        sudo kill -9 $pids
+    fi
     ipids=`ipcs -s | awk '/apache|frontend/ {print $2}'`
     if [ -n "$ipids" ]; then
         echo "for i in $ipids; do (sudo ipcrm -s $i); done"
-        for i in `ipcs -s | awk '/apache/ {print $2}'`; do (sudo ipcrm -s $i); done
+        for i in `ipcs -s | awk '/apache|frontend/ {print $2}'`; do (sudo ipcrm -s $i); done
     fi
-    echo "restarting httpd service ..."
-    $STATEDIR/etc/httpd restart
+}
+
+case ${1:-status} in
+  status | graceful | configtest )
+    $STATEDIR/etc/httpd $1
+    ;;
+
+  stop )
+    echo "stopping httpd service ..."
+    if [ -n "`ps auxw | grep httpd | grep frontend`" ]; then
+        $STATEDIR/etc/httpd stop
+        cleanup
+    else
+        echo "No httpd daemon found, nothing to stop"
+    fi
+    ;;
+
+  start | restart )
+    if [ -n "`ps auxw | grep httpd | grep frontend`" ]; then
+        $STATEDIR/etc/httpd stop
+        cleanup
+    else
+        echo "No httpd daemon found, nothing to stop"
+    fi
+    echo "$1 httpd service ..."
+    $STATEDIR/etc/httpd $1
     ;;
 
   help )
