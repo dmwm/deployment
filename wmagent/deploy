@@ -19,17 +19,17 @@ deploy_wmagent_sw()
 
   mkdir -p $root/$cfgversion/config/reqmgr
   mkdir -p $root/$cfgversion/config/workqueue
-
+  mkdir -p $root/$cfgversion/config/mysql
+  mkdir -p $root/$cfgversion/config/couchdb
+  mkdir -p $root/$cfgversion/config/rucio/etc
 
   local couchdb_ini=$root/$cfgversion/config/wmagent/local.ini
-  local mysql_config=$root/$cfgversion/config/wmagent/my.cnf
   perl -p -i -e "s{deploy_project_root}{$root/$cfgversion/install}g" $couchdb_ini
+  cp -f $couchdb_ini $root/$cfgversion/config/couchdb/
 
-  mkdir -p $root/$cfgversion/config/couchdb
-  cp -f $couchdb_ini $root/$cfgversion/config/couchdb
-  mkdir -p $root/$cfgversion/config/mysql
-  cp -f $mysql_config $root/$cfgversion/config/mysql
+  local mysql_config=$root/$cfgversion/config/wmagent/my.cnf
+  cp -f $mysql_config $root/$cfgversion/config/mysql/
 
-
-
+  local rucio_config=$root/$cfgversion/config/wmagent/rucio.cfg
+  cp -f $rucio_config $root/$cfgversion/config/rucio/etc/
 }
