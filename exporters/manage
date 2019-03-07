@@ -125,9 +125,14 @@ status()
 
 # Main routine, perform action requested on command line.
 case ${1:-status} in
-  start | restart | sysboot )
+  start | restart )
     check "$msg"
     stop
+    start
+    ;;
+
+  sysboot )
+    check "$msg"
     start
     ;;
 

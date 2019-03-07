@@ -20,7 +20,7 @@ deploy_exporters_post()
 {
   # keep this line to avoid error on empty function
   local cmd="test"
-  case $host in vocms013[689] | vocms073[89] | vocms016[135] | vocms0740) disable ;; * ) enable ;; esac
+  case $host in vocms073[89] | vocms0740) disable ;; * ) enable ;; esac
   (mkcrontab
    sysboot
   ) | crontab -
