@@ -60,10 +60,10 @@ start()
     # production nodes
     vocms0136 | vocms0161 | vocms0163 | vocms0165)
         # start process_exporter for DBS
-        sudo process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
-        sudo process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
+        process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
@@ -87,10 +87,10 @@ start()
       ;;
     vocms0731 | vocms0132)
         # start process_exporter for DBS
-        sudo process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
-        sudo process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
+        process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
         das2go_exporter -address ":18217" \
