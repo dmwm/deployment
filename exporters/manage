@@ -69,7 +69,7 @@ start()
 
     vocms0741 | vocms0742)
         # start das2go_exporter for DAS
-        das2go_exporter -port 18217 \
+        das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
@@ -93,7 +93,7 @@ start()
         process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
-        das2go_exporter -port 18217 \
+        das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
@@ -125,7 +125,7 @@ status()
 
 # Main routine, perform action requested on command line.
 case ${1:-status} in
-  start | restart | sysboot)
+  start | restart | sysboot )
     check "$msg"
     stop
     start
