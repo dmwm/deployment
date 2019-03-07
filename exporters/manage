@@ -98,6 +98,11 @@ start()
       ;;
 
     *)
+		# if we run on local VM we'll start process monitor for scitokens and apache
+        process_monitor.sh ".*scitokens" scitokens ":18843" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        apache_exporter -telemetry.address ":18443" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
     esac
 }
