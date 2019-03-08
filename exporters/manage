@@ -60,10 +60,10 @@ start()
     # production nodes
     vocms0136 | vocms0161 | vocms0163 | vocms0165)
         # start process_exporter for DBS
-        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18250" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
-        process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
+        process_monitor.sh ".*crabserver" crab_exporter ":18270" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
@@ -87,10 +87,10 @@ start()
       ;;
     vocms0731 | vocms0132)
         # start process_exporter for DBS
-        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter 18250 5 \
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18250" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start process_exporter for crabserver
-        process_monitor.sh ".*crabserver" crab_exporter 18270 5 \
+        process_monitor.sh ".*crabserver" crab_exporter ":18270" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
         das2go_exporter -address ":18217" \
@@ -98,6 +98,11 @@ start()
       ;;
 
     *)
+		# if we run on local VM we'll start process monitor for scitokens and apache
+        process_monitor.sh ".*scitokens" scitokens ":18843" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        apache_exporter -telemetry.address ":18443" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
     esac
 }
@@ -125,9 +130,14 @@ status()
 
 # Main routine, perform action requested on command line.
 case ${1:-status} in
-  start | restart | sysboot )
+  start | restart )
     check "$msg"
     stop
+    start
+    ;;
+
+  sysboot )
+    check "$msg"
     start
     ;;
 
