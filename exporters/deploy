@@ -19,6 +19,6 @@ deploy_exporters_post()
 {
   case $host in vocms073[89] | vocms0740) disable ;; * ) enable ;; esac
   (mkcrontab
-   echo "@reboot sudo bashs -l -c \"$project_config/manage start 'I did read documentation'\""
+   echo "@reboot sudo bashs -l -c \"$project_config/manage sysboot 'I did read documentation'\""
   ) | crontab -
 }
