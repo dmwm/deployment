@@ -178,6 +178,7 @@ case ${1:-status} in
   sysboot )
     check "$msg"
     start
+    status
     ;;
 
   status )
