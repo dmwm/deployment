@@ -120,7 +120,7 @@ stop()
 
 process_status()
 {
-    local pid=`ps auxw | grep "$1" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    local pid=`ps auxw | grep "$1" | grep -v grep | grep -v rotatelogs | awk 'BEGIN{ORS=" "} {print $2}'`
     if [ ! -z "${pid}" ]; then
         echo $echo_e "$1 service is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID=${pid}"
         ps -f -wwww -p ${pid}
