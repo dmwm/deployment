@@ -45,7 +45,7 @@ export STAGEDIR=$STATEDIR/stagingarea
 wait4proc() {
     local counter=0
     proc=$1 # process we need to check
-    while [  $counter -lt 20 ]; do
+    while [  $counter -lt 60 ]; do
         ok=`ps auxw | grep "$proc"`
         if [ -n "$ok" ]; then
             return
