@@ -40,6 +40,27 @@ export X509_USER_CERT=$X509_USER_PROXY
 export X509_USER_KEY=$X509_USER_PROXY
 export STAGEDIR=$STATEDIR/stagingarea
 
+# helper function to wait for DAS appearance
+# it will incrementally increase waiting time with 20 iterations (~3minute)
+wait4proc() {
+    local counter=0
+    proc=$1 # process we need to check
+    while [  $counter -lt 20 ]; do
+        ok=`ps auxw | grep "$proc"`
+        if [ -n "$ok" ]; then
+            return
+        fi
+        let counter=counter+1
+        echo "$proc is not running, check in $counter sec"
+        sleep $counter
+    done
+    ok=`ps auxw | grep "$proc"`
+    if [ -z "$ok" ]; then
+        echo "$proc is not running, unable to start $proc exporter"
+        exit 1
+    fi
+}
+
 # Verify the security string.
 check()
 {
@@ -59,22 +80,22 @@ start()
     case $host in
     # production nodes
     vocms0136 | vocms0161 | vocms0163 | vocms0165)
-        # start process_exporter for DBS
+        # start process_exporter for DBS server
+        wait4proc "DBSGlobalReader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18250" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
-        # start process_exporter for crabserver
-        process_monitor.sh ".*crabserver" crab_exporter ":18270" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     vocms0741 | vocms0742)
-        # start das2go_exporter for DAS
+        # start das2go_exporter for DAS server
+        wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     vocms0158 | vocms0760 | vocms0162 | vocms0164)
         # start apache_exporter for frontend
+        wait4proc "httpd" # check for pattern that httpd is running
         apache_exporter -telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
@@ -82,25 +103,27 @@ start()
     # pre-production nodes
     vocms0734 | vocms0135)
         # start apache_exporter for frontend
+        wait4proc "httpd" # check for pattern that httpd is running
         apache_exporter -telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
     vocms0731 | vocms0132)
         # start process_exporter for DBS
+        wait4proc "DBSGlobalReader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18250" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
-        # start process_exporter for crabserver
-        process_monitor.sh ".*crabserver" crab_exporter ":18270" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/crab_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
+        wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     *)
 		# if we run on local VM we'll start process monitor for scitokens and apache
+        wait4proc "scitokens" # check for pattern that stitokens is running
         process_monitor.sh ".*scitokens" scitokens ":18843" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "httpd" # check for pattern that httpd is running
         apache_exporter -telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
@@ -109,7 +132,7 @@ start()
 
 stop()
 {
-    for pat in "dbs_global_exporter crab_exporter das_exporter apache_exporter"; do
+    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter"; do
         local pid=`ps auxwww | grep "$pat" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
         if [ -n "${pid}" ]; then
             echo "Stopping $pat exporter ... ${pid}"
@@ -118,14 +141,53 @@ stop()
     done
 }
 
+process_status()
+{
+    local pid=`ps auxw | grep "$1" | grep -v grep | grep -v rotatelogs | awk 'BEGIN{ORS=" "} {print $2}'`
+    if [ ! -z "${pid}" ]; then
+        echo $echo_e "$1 service is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID=${pid}"
+        ps -f -wwww -p ${pid}
+    else
+        echo $echo_e "$1 service is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}"
+    fi
+}
+
 status()
 {
-    local out=`ps auxw | grep ".*_exporter" | grep -v grep`
-    if  [ -z "${out}" ]; then
-        echo "exporters are not running"
-        return
-    fi
-    echo $out
+    local host=`hostname -s`
+    case $host in
+    # production nodes
+    vocms0136 | vocms0161 | vocms0163 | vocms0165)
+        # process exporter
+        process_status "process_exporter"
+      ;;
+
+    vocms0741 | vocms0742)
+        # das2go exporter
+        process_status "das2go_exporter"
+      ;;
+
+    vocms0158 | vocms0760 | vocms0162 | vocms0164)
+        # apache exporter
+        process_status "apache_exporter"
+      ;;
+
+    # pre-production nodes
+    vocms0734 | vocms0135)
+        # apache exporter
+        process_status "apache_exporter"
+      ;;
+    vocms0731 | vocms0132)
+        # process exporter
+        process_status "process_exporter"
+      ;;
+
+    *)
+        # process exporter and apache exporter
+        process_status "process_exporter"
+        process_status "apache_exporter"
+      ;;
+    esac
 }
 
 # Main routine, perform action requested on command line.
@@ -139,6 +201,7 @@ case ${1:-status} in
   sysboot )
     check "$msg"
     start
+    echo "All exporters are started, please use status option to check their health"
     ;;
 
   status )
