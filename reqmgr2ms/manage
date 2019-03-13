@@ -49,6 +49,7 @@ export WMCORE_CACHE_DIR=$STATEDIR
 export UNIFIED_CONFIG_JSON=$CFGDIR/unifiedConfiguration.json
 export UNIFIED_CAMPAIGNS=$CFGDIR/campaigns.json
 export UNIFIED_CAMPAIGNS_RELVAL=$CFGDIR/campaigns.relval.json
+export RUCIO_HOME=$CFGDIR
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
   export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
   export X509_USER_KEY=$AUTHDIR/dmwm-service-key.pem

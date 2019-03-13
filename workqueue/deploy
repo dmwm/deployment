@@ -26,14 +26,35 @@ deploy_workqueue_sw()
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
 
+  # use rucio testbed for anything that is not production
+  rucio_host_url=http://cms-rucio-testbed.cern.ch
+  rucio_auth_url=https://cms-rucio-tb-authz.cern.ch
   case $variant in
-    prod )    base_url="https://cmsweb.cern.ch"         ;;
-    preprod ) base_url="https://cmsweb-testbed.cern.ch" ;;
-    dev )     base_url="https://cmsweb-dev.cern.ch"     ;;
-    * )       base_url="https://`hostname -f`"          ;;
+    prod )
+        base_url="https://cmsweb.cern.ch"
+        rucio_host_url=http://cms-rucio.cern.ch
+        rucio_auth_url=https://cms-rucio-authz.cern.ch
+        ;;
+    preprod )
+        base_url="https://cmsweb-testbed.cern.ch"
+        ;;
+    dev )
+        base_url="https://cmsweb-dev.cern.ch"
+        ;;
+    * )
+        base_url="https://`hostname -f`"
+        ;;
   esac
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g;" \
        $root/$cfgversion/config/$project/config.py
+
+  # setup rucio configuration file
+  mkdir -p $root/$cfgversion/config/$project/etc
+  mv $root/$cfgversion/config/$project/rucio.cfg $root/$cfgversion/config/$project/etc/
+  perl -p -i -e "s{RUCIO_HOST_OVERWRITE}{$rucio_host_url}g; \
+                 s{RUCIO_AUTH_OVERWRITE}{$rucio_auth_url}g" \
+       $root/$cfgversion/config/$project/etc/rucio.cfg
+
 }
 
 deploy_workqueue_post()

@@ -25,7 +25,7 @@ REQMGR2 = "%s/reqmgr2" % BASE_URL
 WEBURL = "%s/%s" % (COUCH_URL, workqueueDBName)
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "global_workqueue"
-AMQ_HOST_PORT = [('dashb-mb.cern.ch', 61113)]
+AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 
 root = __file__.rsplit('/', 4)[0]
 cache_dir = os.path.join(root, 'state', 'workqueue', 'cache')
@@ -42,6 +42,11 @@ except ImportError:
     USER_AMQ=None
     PASS_AMQ=None
     AMQ_TOPIC=None
+
+if BASE_URL == "https://cmsweb.cern.ch":
+    RUCIO_ACCT = "production"
+else:
+    RUCIO_ACCT="wmagent_testing"
 
 config = Configuration()
 
@@ -71,13 +76,13 @@ sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 # is reachable and this features in CMS web frontend rewrite rules
 app = config.section_(main.application) # string containing "globalworkqueue"
 app.admin = "cms-service-webtools@cern.ch"
-app.description = "CMS data operations Global WorkQueue"
+app.description = "CMS Workload Management Global WorkQueue"
 app.title = " Global WorkQueue (GQ)"
 
 views = config.section_("views")
 
 def setWorkQueueCommonConfig(config):    
-    # actual params need to creaating global queue
+    # actual params needed to creating global queue
     config.queueParams = {}
     config.queueParams['CouchUrl'] = COUCH_URL
     config.queueParams['DbName'] = workqueueDBName
@@ -88,7 +93,8 @@ def setWorkQueueCommonConfig(config):
     config.queueParams['RequestDBURL'] = "%s/%s" % (COUCH_URL, reqmgrCouchDB)
     config.queueParams['central_logdb_url'] = LOG_DB_URL
     config.queueParams['log_reporter'] = LOG_REPORTER
-    
+    config.queueParams['rucioAccount'] = RUCIO_ACCT
+
     config.reqMgrConfig = {}
     config.reqMgrConfig['reqmgr2_endpoint'] = REQMGR2
     config.reqMgrConfig['central_logdb_url'] = LOG_DB_URL
