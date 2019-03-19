@@ -52,4 +52,6 @@ data = views.section_('data')
 data.object = 'WMCore.MicroService.Service.RestApiHub.RestApiHub'
 data.manager = 'WMCore.MicroService.Unified.Transferor.UnifiedTransferorManager'
 data.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+data.verbose = True
+data.interval = 600
 data.rucioAccount = RUCIO_ACCT
