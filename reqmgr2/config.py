@@ -16,7 +16,7 @@ DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2"
-AMQ_HOST_PORT = [('dashb-mb.cern.ch', 61113)]
+AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 # load AMQ credentials
@@ -80,11 +80,7 @@ data.tag_collector_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML"
 # keys are not present at easy item but defined in a dedicated item ...)
 # https://cmssdt.cern.ch/tc/getReleasesInformation?release_state=Announced
 
-# request related settings (e.g. default injection arguments)
-data.default_sw_version = "CMSSW_5_2_5"
-data.default_sw_scramarch = "slc5_amd64_gcc434"
-data.dqm_url = "%s/dqm/dev" % BASE_URL
-#use dbs testbed for private vm test
+# used for the StepChainParentageFixTask; use dbs testbed for private vm test
 if DBS_INS == "private_vm":
     data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSWriter"
 else:
