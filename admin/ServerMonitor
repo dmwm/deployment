@@ -118,7 +118,7 @@ class SystemMonitor(Monitor):
     @param proc_name -- regex pattern to match process name
     @param activity -- list of activities to log.
     The allowed activities are:
-    cpu, mem, swp, user, system, rss, vms, swap, threads, connections, io, files, oom_score, oom_adj, oom_score_adj, pid"""
+    cpu, mem, swp, user, system, rss, vms, swap, threads, connections, io, files, oomscore, oomadj, oomscoreadj, pid"""
 
     def safemsg(field, f):
       try:
