@@ -199,21 +199,21 @@ class SystemMonitor(Monitor):
           try:
               with open('/proc/%s/oom_score' % proc.pid) as fdesc:
                   oom_score = int(fdesc.read().replace('\n', ''))
-                  addfield(data, field, safefield('oomscore', oom_score))
+                  addfield(data, field, oom_score)
           except:
             addfield(data, field, 0)
         elif field == 'oomadj':
           try:
               with open('/proc/%s/oom_adj' % proc.pid) as fdesc:
                   oom_adj = int(fdesc.read().replace('\n', ''))
-                  addfield(data, field, safefield('oomadj', oom_adj))
+                  addfield(data, field, oom_adj)
           except:
             addfield(data, field, 0)
         elif field == 'oomscoreadj':
           try:
               with open('/proc/%s/oom_score_adj' % proc.pid) as fdesc:
                   oom_score_adj = int(fdesc.read().replace('\n', ''))
-                  addfield(data, field, safefield('oomscoreadj', oom_score_adj))
+                  addfield(data, field, oom_score_adj)
           except:
             addfield(data, field, 0)
 
