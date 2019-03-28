@@ -194,7 +194,7 @@ class SystemMonitor(Monitor):
         elif field == 'files':
           addfield(data, field, safefield('files', proc.open_files))
         elif field == 'pid':
-          addfield(data, field, safefield('pid', proc.pid))
+          addfield(data, field, proc.pid)
         elif field == 'oomscore':
           try:
               with open('/proc/%s/oom_score' % proc.pid) as fdesc:
