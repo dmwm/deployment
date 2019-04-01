@@ -11,6 +11,7 @@
 ^/auth/complete/das(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/das2go(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/wmarchive(?:/|$) vocms0181.cern.ch
+^/auth/complete/microservice(?:/|$) vocms0731.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
 ^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
 ^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
@@ -29,6 +30,5 @@
 ^/auth/complete/scheddmon/0197/ vocms0197.cern.ch
 ^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
-^/auth/complete/wmagent/cern0231 vocms0231.cern.ch
 ^/overview(?:/|$) vocms0132.cern.ch
 ^ vocms0132.cern.ch|vocms0731.cern.ch
