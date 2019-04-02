@@ -20,18 +20,20 @@ server.workspace('DQMShift',   2, 'Summaries', 'Shift')
 server.workspace('DQMContent', 3, 'Summaries', 'Everything', '^', '^')
 
 # Data workspaces:
-server.workspace('DQMContent', 10, 'Data', 'Tk' , '^(Tk/|Pixel|SiStrip|Tracking)', 'DataLayouts/Tk',
+server.workspace('DQMContent', 10, 'Data', 'Tk' , '^(Tk/|Pixel|SiStrip|Tracking|OfflinePV)', 'DataLayouts/Tk',
                  'DataLayouts/Tk/01 - TEC-',
                  'DataLayouts/Tk/02 - TEC+',
                  'DataLayouts/Tk/03 - TIB',
                  'DataLayouts/Tk/04 - TID-',
                  'DataLayouts/Tk/05 - TID+',
                  'DataLayouts/Tk/06 - TOB',
-                 'DataLayouts/Tk/07 - Pixel RecHits Barrel',
-                 'DataLayouts/Tk/08 - Pixel RecHits Endcap',
+                 'DataLayouts/Tk/07 - Pixel Digis ADC Barrel',
+                 'DataLayouts/Tk/08 - Pixel Digis ADC Endcap',
                  'DataLayouts/Tk/09 - Pixel Occupancy',
-                 'DataLayouts/Tk/10 - Pixel Clusters Barrel',
-                 'DataLayouts/Tk/11 - Pixel Clusters Endcap',
+                 'DataLayouts/Tk/10 - PXBarrel OnTk Clusters Charge',
+                 'DataLayouts/Tk/11 - PXEndcap OnTk Clusters Charge',
+                 'DataLayouts/Tk/12 - PXBarrel OnTk Clusters Size',
+                 'DataLayouts/Tk/13 - PXEndcap OnTk Clusters Size',
                 )
 server.workspace('DQMContent', 11, 'Data', 'Ecal' , '^Ecal.*/', 'DataLayouts/Ecal',
                  'DataLayouts/Ecal/04 Ecal Spectrum',
