@@ -93,6 +93,12 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
+    vocms0740 | vocms0741 )
+        # start couchdb_exporter for CouchDB server
+        couchdb_exporter -telemetry.address=":15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
     vocms0158 | vocms0760 | vocms0162 | vocms0164 )
         # start apache_exporter for frontend
         wait4proc "httpd" # check for pattern that httpd is running
