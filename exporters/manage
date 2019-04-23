@@ -78,7 +78,10 @@ start()
 
     local host=`hostname -s`
     case $host in
+    #
     # production nodes
+    #
+    # DBS on production nodes
     vocms0136 | vocms0161 | vocms0163 | vocms0165 )
         # start process_exporter for DBS server
         wait4proc "DBSGlobalReader" # check for pattern that DBS is running
@@ -86,13 +89,24 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
+    # DAS/MongoDB exporters on production nodes
     vocms0741 | vocms0742 )
         # start das2go_exporter for DAS server
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
+    # CouchDB on production nodes
+    vocms0740 | vocms0741 | vocms0742 )
+        wait4proc "couchdb" # check for pattern that couchdb is running
+        couchdb_exporter -couchdb.uri="http://localhost:5984" \
+            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+
+    # Apache exporter on production nodes
     vocms0158 | vocms0760 | vocms0162 | vocms0164 )
         # start apache_exporter for frontend
         wait4proc "httpd" # check for pattern that httpd is running
@@ -100,13 +114,17 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
+    #
     # pre-production nodes
+    #
+    # Apache exporter
     vocms0734 | vocms0135 )
         # start apache_exporter for frontend
         wait4proc "httpd" # check for pattern that httpd is running
         apache_exporter -telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
+    # DBS, DAS, MongoDB, CouchDB exporters
     vocms0731 | vocms0132 )
         # start process_exporter for DBS
         wait4proc "DBSGlobalReader" # check for pattern that DBS is running
@@ -116,6 +134,14 @@ start()
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start mongodb exporter
+        mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start CouchDB exporter
+        wait4proc "couchdb" # check for pattern that couchdb is running
+        couchdb_exporter -couchdb.uri="http://localhost:5984" \
+            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     *)
@@ -165,6 +191,13 @@ status()
     vocms0741 | vocms0742 )
         # das2go exporter
         process_status "das2go_exporter"
+        # mongodb exporter
+        process_status "mongodb_exporter"
+      ;;
+
+    vocms0740 | vocms0741 | vocms0742 )
+        # couchdb exporter
+        process_status "couchdb_exporter"
       ;;
 
     vocms0158 | vocms0760 | vocms0162 | vocms0164 )
@@ -181,6 +214,8 @@ status()
         # process exporter
         process_status "process_exporter"
         process_status "das2go_exporter"
+        process_status "mongodb_exporter"
+        process_status "couchdb_exporter"
       ;;
 
     *)
