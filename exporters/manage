@@ -105,6 +105,7 @@ start()
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
             -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
 
     # Apache exporter on production nodes
     vocms0158 | vocms0760 | vocms0162 | vocms0164 )
