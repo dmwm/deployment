@@ -87,6 +87,18 @@ start()
         wait4proc "DBSGlobalReader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18250" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSGlobalWriter" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSGlobalWriter" dbs_globalW_exporter ":18251" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18252" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18253" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSMigrate" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSMigrate" dbs_migrate_exporter ":18254" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     # DAS/MongoDB exporters on production nodes
@@ -131,6 +143,18 @@ start()
         wait4proc "DBSGlobalReader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18250" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSGlobalWriter" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSGlobalWriter" dbs_globalW_exporter ":18251" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18252" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18253" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSMigrate" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSMigrate" dbs_migrate_exporter ":18254" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
