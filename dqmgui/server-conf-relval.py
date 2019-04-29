@@ -18,8 +18,7 @@ LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "hcal"))
 LAYOUTS += glob("%s/layouts/%sMC_relval-layouts.py" % (CONFIGDIR, "hcal")) 
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "tk"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "smp"))
-
-
+LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "aliOfflinePV"))
 
 
 
