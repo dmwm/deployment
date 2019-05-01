@@ -20,7 +20,7 @@ deploy_dcafpilot_sw()
 
 deploy_dcafpilot_post()
 {
-  case $host in vocms013[689] |vocms073[89] | vocms0143 | vocms074[012] | vocms016[135] ) disable ;; * ) enable ;; esac
+  case $host in vocms013[689] |vocms073[89] | vocms0143 | vocms074[012] | vocms016[135] | vocms0766 ) disable ;; * ) enable ;; esac
   (mkcrontab
    sysboot
    for action in dataframe:'50 20 * * 5' models:'15 18 * * *' verify:'10 3 * * *'; do

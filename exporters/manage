@@ -82,7 +82,7 @@ start()
     # production nodes
     #
     # DBS on production nodes
-    vocms0136 | vocms0161 | vocms0163 | vocms0165 )
+    vocms0136 | vocms0161 | vocms0163 | vocms0165 | vocms0766 )
         # start process_exporter for DBS server
         wait4proc "DBSGlobalReader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18252" 15 \
@@ -208,7 +208,7 @@ status()
     local host=`hostname -s`
     case $host in
     # production nodes
-    vocms0136 | vocms0161 | vocms0163 | vocms0165 )
+    vocms0136 | vocms0161 | vocms0163 | vocms0165  | vocms0766 )
         # process exporter
         process_status "process_exporter"
       ;;

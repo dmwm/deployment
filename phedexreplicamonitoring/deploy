@@ -18,7 +18,7 @@ deploy_phedexreplicamonitoring_sw()
 
 deploy_phedexreplicamonitoring_post()
 {
-  case $host in vocms013[689] | vocms073[89] | vocms0740 | vocms016[135] ) disable ;; * ) enable ;; esac
+  case $host in vocms013[689] | vocms073[89] | vocms0740 | vocms016[135] | vocms0766 ) disable ;; * ) enable ;; esac
   (mkcrontab
    sysboot
   for action in prmonitor:'0 0 * * *'; do
