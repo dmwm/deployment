@@ -8,7 +8,7 @@ for h in vocms0{117,127,134,734,135,158,160,760,162,164}; do
 done
 
 # Back-ends in the AI infrastructure
-for h in vocms0{731,132,136,161,163,165,738,739,740,741,742}; do
+for h in vocms0{731,132,136,161,163,165,738,739,740,741,742,766}; do
   #Add new cipher aes128-ctr
   rsync -rm -e "ssh -c aes128-ctr -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log*' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
