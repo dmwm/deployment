@@ -48,6 +48,7 @@ server.workspace('DQMContent', 42, 'POG', 'JetMet', '^JetMET/', '')
 server.workspace('DQMContent', 43, 'POG', 'EGamma', '^Egamma/', '')
 
 # CTPPS workspaces:
-server.workspace('DQMContent', 51, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
-server.workspace('DQMContent', 52, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel', 'CTPPS/TrackingPixel/Layouts')
-server.workspace('DQMContent', 53, 'CTPPS', 'TimingDiamond', '^CTPPS/TimingDiamond', 'CTPPS/TimingDiamond/Layouts')
+server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel', 'CTPPS/TrackingPixel/Layouts')
+server.workspace('DQMContent', 52, 'CTPPS', 'TimingDiamond', '^CTPPS/TimingDiamond', 'CTPPS/TimingDiamond/Layouts')
+server.workspace('DQMContent', 53, 'CTPPS', 'TimingFastSilicon', '^CTPPS/TimingFastSilicon', 'CTPPS/TimingFastSilicon/Layouts')

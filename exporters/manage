@@ -1,0 +1,289 @@
+##H Usage: manage ACTION [ATTRIBUTE] [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+echo_e=-e
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e=
+  ;;
+esac
+
+msg=${@: -1} # last argument
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+export EXPORTERS_ROOT
+export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
+export X509_USER_CERT=$X509_USER_PROXY
+export X509_USER_KEY=$X509_USER_PROXY
+export STAGEDIR=$STATEDIR/stagingarea
+
+# helper function to wait for DAS appearance
+# it will incrementally increase waiting time with 20 iterations (~3minute)
+wait4proc() {
+    local counter=0
+    proc=$1 # process we need to check
+    while [  $counter -lt 60 ]; do
+        ok=`ps auxw | grep "$proc"`
+        if [ -n "$ok" ]; then
+            return
+        fi
+        let counter=counter+1
+        echo "$proc is not running, check in $counter sec"
+        sleep $counter
+    done
+    ok=`ps auxw | grep "$proc"`
+    if [ -z "$ok" ]; then
+        echo "$proc is not running, unable to start $proc exporter"
+        exit 1
+    fi
+}
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+start()
+{
+    # cmsweb activity page
+    # https://cms-http-group.web.cern.ch/cms-http-group/activity.html
+
+    local host=`hostname -s`
+    case $host in
+    #
+    # production nodes
+    #
+    # DBS on production nodes
+    vocms0136 | vocms0161 | vocms0163 | vocms0165 )
+        # start process_exporter for DBS server
+        wait4proc "DBSGlobalReader" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18252" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSGlobalWriter" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSGlobalWriter" dbs_globalW_exporter ":18253" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18254" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18255" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSMigrate" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSMigrate" dbs_migrate_exporter ":18251" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    # DAS/MongoDB exporters on production nodes
+    vocms0741 | vocms0742 )
+        # start das2go_exporter for DAS server
+        wait4proc "das2go -config" # check for pattern that DAS is running
+        das2go_exporter -address ":18217" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    # CouchDB on production nodes
+    vocms0740 | vocms0741 | vocms0742 )
+        wait4proc "couchdb" # check for pattern that couchdb is running
+        couchdb_exporter -couchdb.uri="http://localhost:5984" \
+            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    # Apache exporter on production nodes
+    vocms0158 | vocms0760 | vocms0162 | vocms0164 )
+        # start apache_exporter for frontend
+        wait4proc "httpd" # check for pattern that httpd is running
+        apache_exporter -telemetry.address ":18443" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    #
+    # pre-production nodes
+    #
+    # Apache exporter
+    vocms0734 | vocms0135 )
+        # start apache_exporter for frontend
+        wait4proc "httpd" # check for pattern that httpd is running
+        apache_exporter -telemetry.address ":18443" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+    # DBS, DAS, MongoDB, CouchDB exporters
+    vocms0731 | vocms0132 )
+        # start process_exporter for DBS server
+        wait4proc "DBSGlobalReader" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18252" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSGlobalWriter" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSGlobalWriter" dbs_globalW_exporter ":18253" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18254" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18255" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "DBSMigrate" # check for pattern that DBS is running
+        process_monitor.sh ".*DBSMigrate" dbs_migrate_exporter ":18251" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start das2go_exporter for DAS
+        wait4proc "das2go -config" # check for pattern that DAS is running
+        das2go_exporter -address ":18217" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start mongodb exporter
+        mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start CouchDB exporter
+        wait4proc "couchdb" # check for pattern that couchdb is running
+        couchdb_exporter -couchdb.uri="http://localhost:5984" \
+            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+
+    *)
+		# if we run on local VM we'll start process monitor for scitokens and apache
+        wait4proc "scitokens" # check for pattern that stitokens is running
+        process_monitor.sh ".*scitokens" scitokens ":18843" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "httpd" # check for pattern that httpd is running
+        apache_exporter -telemetry.address ":18443" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      ;;
+    esac
+}
+
+stop()
+{
+    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter"; do
+        local pid=`ps auxwww | grep "$pat" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+        if [ -n "${pid}" ]; then
+            echo "Stopping $pat exporter ... ${pid}"
+            kill -9 ${pid}
+        fi
+    done
+}
+
+process_status()
+{
+    local pid=`ps auxw | grep "$1" | grep -v grep | grep -v rotatelogs | awk 'BEGIN{ORS=" "} {print $2}'`
+    if [ ! -z "${pid}" ]; then
+        echo $echo_e "$1 service is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID=${pid}"
+        ps -f -wwww -p ${pid}
+    else
+        echo $echo_e "$1 service is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}"
+    fi
+}
+
+status()
+{
+    local host=`hostname -s`
+    case $host in
+    # production nodes
+    vocms0136 | vocms0161 | vocms0163 | vocms0165 )
+        # process exporter
+        process_status "process_exporter"
+      ;;
+
+    vocms0741 | vocms0742 )
+        # das2go exporter
+        process_status "das2go_exporter"
+        # mongodb exporter
+        process_status "mongodb_exporter"
+      ;;
+
+    vocms0740 | vocms0741 | vocms0742 )
+        # couchdb exporter
+        process_status "couchdb_exporter"
+      ;;
+
+    vocms0158 | vocms0760 | vocms0162 | vocms0164 )
+        # apache exporter
+        process_status "apache_exporter"
+      ;;
+
+    # pre-production nodes
+    vocms0734 | vocms0135 )
+        # apache exporter
+        process_status "apache_exporter"
+      ;;
+    vocms0731 | vocms0132 )
+        # process exporter
+        process_status "process_exporter"
+        process_status "das2go_exporter"
+        process_status "mongodb_exporter"
+        process_status "couchdb_exporter"
+      ;;
+
+    *)
+        # process exporter and apache exporter
+        process_status "process_exporter"
+        process_status "apache_exporter"
+      ;;
+    esac
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  start | restart )
+    check "$msg"
+    stop
+    start
+    ;;
+
+  sysboot )
+    check "$msg"
+    start
+    echo "All exporters are started, please use status option to check their health"
+    ;;
+
+  status )
+    status
+    ;;
+
+  stop )
+    check "$msg"
+    stop
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$EXPORTERS_VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

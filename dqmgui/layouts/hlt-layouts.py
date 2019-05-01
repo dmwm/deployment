@@ -54,23 +54,24 @@ hlt_evInfo_single(dqmitems, "FourVectorHLT", "HLT1Electron_etaphi")
 ########## TPG Summary #################
 #######################################
 
-def tpgSummary_l1t(i, p, *rows):
-   i["L1T/Layouts/TPG-Summary-L1T/" + p] = DQMItem(layout=rows)
-
-tpgSummary_l1t(dqmitems, "01 - L1 Predeadtime Rate - Physics",
-           [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/Physics Trigger Rate", 'description':"Physics Predeadtime"}])
-
-tpgSummary_l1t(dqmitems, "02 - L1 Predeadtime Rate - Technical",
-           [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/TechnicalRates/Rate_TechBit_005", 'description':"Technical Predeadtime"}])
-
-tpgSummary_l1t(dqmitems, "03.01 - Muon Timing DT vs CSC",
-           [{'path': "L1T/L1TGMT/bx_DT_vs_CSC", 'description':"Muon Timing"}])
-
-tpgSummary_l1t(dqmitems, "03.02 - Muon Timing DT vs RPC",
-           [{'path': "L1T/L1TGMT/bx_DT_vs_RPC", 'description':"Muon Timing"}])
-
-tpgSummary_l1t(dqmitems, "03.03 - Muon Timing DT vs RPC",
-           [{'path': "L1T/L1TGMT/bx_CSC_vs_RPC", 'description':"Muon Timing"}])
+# Legacy L1 trigger code
+#def tpgSummary_l1t(i, p, *rows):
+#   i["L1T/Layouts/TPG-Summary-L1T/" + p] = DQMItem(layout=rows)
+#
+#tpgSummary_l1t(dqmitems, "01 - L1 Predeadtime Rate - Physics",
+#           [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/Physics Trigger Rate", 'description':"Physics Predeadtime"}])
+#
+#tpgSummary_l1t(dqmitems, "02 - L1 Predeadtime Rate - Technical",
+#           [{'path': "L1T/L1TScalersSCAL/Level1TriggerRates/TechnicalRates/Rate_TechBit_005", 'description':"Technical Predeadtime"}])
+#
+#tpgSummary_l1t(dqmitems, "03.01 - Muon Timing DT vs CSC",
+#           [{'path': "L1T/L1TGMT/bx_DT_vs_CSC", 'description':"Muon Timing"}])
+#
+#tpgSummary_l1t(dqmitems, "03.02 - Muon Timing DT vs RPC",
+#           [{'path': "L1T/L1TGMT/bx_DT_vs_RPC", 'description':"Muon Timing"}])
+#
+#tpgSummary_l1t(dqmitems, "03.03 - Muon Timing DT vs RPC",
+#           [{'path': "L1T/L1TGMT/bx_CSC_vs_RPC", 'description':"Muon Timing"}])
 
 ######################## TPG HLT ################################3
 

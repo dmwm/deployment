@@ -1999,15 +1999,102 @@ hcallayout(dqmitems, '00 Run Summary', [{'path':'Hcal/TPTask/SummaryvsLS/Summary
 
 hcallayout(dqmitems, '01 RAW Bad Quality', [{'path':'Hcal/RawTask/BadQualityvsBX/BadQualityvsBX', 'description':"""Distribution of Bad Channels vs Bunch Crossing <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/BadQualityvsLS/BadQualityvsLS', 'description':"""Distribution of Bad Channels vs Lumi Section <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '02 RAW Bad Quality depth', [{'path':'Hcal/RawTask/BadQuality/depth/depth1', 'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/BadQuality/depth/depth2', 'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}], [{'path':'Hcal/RawTask/BadQuality/depth/depth3', 'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/BadQuality/depth/depth4', 'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '02 RAW Bad Quality depth', 
+	[
+		{
+			'path':'Hcal/RawTask/BadQuality/depth/depth1', 
+			'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/RawTask/BadQuality/depth/depth2', 
+			'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/RawTask/BadQuality/depth/depth3', 
+			'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/RawTask/BadQuality/depth/depth4', 
+			'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/RawTask/BadQuality/depth/depth5', 
+			'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/RawTask/BadQuality/depth/depth6', 
+			'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/RawTask/BadQuality/depth/depth7', 
+			'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
 hcallayout(dqmitems, '03 RAW Bcn(Evn) Mismatches', [{'path':'Hcal/RawTask/BcnMsm/Electronics/VME', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/BcnMsm/Electronics/uTCA', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}], [{'path':'Hcal/RawTask/EvnMsm/Electronics/VME', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/EvnMsm/Electronics/uTCA', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '04 DIGI Occupancy', [{'path':'Hcal/DigiTask/Occupancy/depth/depth1', 'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/Occupancy/depth/depth2', 'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/Occupancy/depth/depth3', 'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/Occupancy/depth/depth4', 'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '04 DIGI Occupancy', 
+	[
+		{
+			'path':'Hcal/DigiTask/Occupancy/depth/depth1', 
+			'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/Occupancy/depth/depth2', 
+			'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/Occupancy/depth/depth3', 
+			'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/DigiTask/Occupancy/depth/depth4', 
+			'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/Occupancy/depth/depth5', 
+			'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/Occupancy/depth/depth6', 
+			'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/DigiTask/Occupancy/depth/depth7', 
+			'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
 hcallayout(dqmitems, '05 DIGI Occupancy vs LS', [{'path':'Hcal/DigiTask/OccupancyvsLS/Subdet/HB', 'description':"""Occupancy vs LS.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/OccupancyvsLS/Subdet/HE', 'description':"""Occupancy vs LS.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/OccupancyvsLS/Subdet/HF', 'description':"""Occupancy vs LS.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/OccupancyvsLS/Subdet/HO', 'description':"""Occupancy vs LS.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '06 DIGI Occupancy Cut', [{'path':'Hcal/DigiTask/OccupancyCut/depth/depth1', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/OccupancyCut/depth/depth2', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/OccupancyCut/depth/depth3', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/OccupancyCut/depth/depth4', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '06 DIGI Occupancy Cut', 
+	[
+		{
+			'path':'Hcal/DigiTask/OccupancyCut/depth/depth1', 
+			'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/OccupancyCut/depth/depth2', 
+			'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/OccupancyCut/depth/depth3', 
+			'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/DigiTask/OccupancyCut/depth/depth4', 
+			'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/OccupancyCut/depth/depth5', 
+			'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/OccupancyCut/depth/depth6', 
+			'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/DigiTask/OccupancyCut/depth/depth7', 
+			'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
 hcallayout(dqmitems, '07 DIGI Occupancy Cut vs BX', [{'path':'Hcal/DigiTask/OccupancyCutvsBX/Subdet/HB', 'description':"""Occupancy vs BX <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/OccupancyCutvsBX/Subdet/HE', 'description':"""Occupancy vs BX <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/OccupancyCutvsBX/Subdet/HF', 'description':"""Occupancy vs BX <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/OccupancyCutvsBX/Subdet/HO', 'description':"""Occupancy vs BX <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
@@ -2021,7 +2108,36 @@ hcallayout(dqmitems, '11 DIGI Amplitude vs LS', [{'path':'Hcal/DigiTask/SumQvsLS
 
 hcallayout(dqmitems, '12 DIGI Amplitude vs BX', [{'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HBM', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HBP', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HEM', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HEP', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HFM', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HFP', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HOM', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HOP', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '13 DIGI Timing', [{'path':'Hcal/DigiTask/TimingCut/depth/depth1', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/TimingCut/depth/depth2', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/TimingCut/depth/depth3', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/TimingCut/depth/depth4', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '13 DIGI Timing', 
+	[
+		{
+			'path':'Hcal/DigiTask/TimingCut/depth/depth1', 
+			'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/TimingCut/depth/depth2', 
+			'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/TimingCut/depth/depth3', 
+			'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/DigiTask/TimingCut/depth/depth4', 
+			'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/TimingCut/depth/depth5', 
+			'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal/DigiTask/TimingCut/depth/depth6', 
+			'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal/DigiTask/TimingCut/depth/depth7', 
+			'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
 hcallayout(dqmitems, '14 DIGI Timing', [{'path':'Hcal/DigiTask/TimingCut/SubdetPM/HBM', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/TimingCut/SubdetPM/HBP', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/TimingCut/SubdetPM/HEM', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/TimingCut/SubdetPM/HEP', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/TimingCut/SubdetPM/HFM', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/TimingCut/SubdetPM/HFP', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}], [{'path':'Hcal/DigiTask/TimingCut/SubdetPM/HOM', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}, {'path':'Hcal/DigiTask/TimingCut/SubdetPM/HOP', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
@@ -2033,7 +2149,36 @@ hcallayout(dqmitems, '17 DIGI Timing vs LS', [{'path':'Hcal/DigiTask/TimingvsLS/
 
 hcallayout(dqmitems, '18 RECO Energy', [{'path':'Hcal2/RecHitTask/Energy/Subdet/HB', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energy/Subdet/HE', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/Energy/Subdet/HF', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energy/Subdet/HO', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '19 RECO Energy', [{'path':'Hcal2/RecHitTask/Energy/depth/depth1', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energy/depth/depth2', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/Energy/depth/depth3', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energy/depth/depth4', 'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '19 RECO Energy', 
+	[
+		{
+			'path':'Hcal2/RecHitTask/Energy/depth/depth1', 
+			'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Energy/depth/depth2', 
+			'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Energy/depth/depth3', 
+			'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+	{
+			'path':'Hcal2/RecHitTask/Energy/depth/depth4', 
+			'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Energy/depth/depth5', 
+			'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Energy/depth/depth6', 
+			'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal2/RecHitTask/Energy/depth/depth7', 
+			'description':"""Energy Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
 hcallayout(dqmitems, '20 RECO Energy vs LS', [{'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HBM', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HBP', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HEM', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HEP', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HFM', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HFP', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HOM', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/EnergyvsLS/SubdetPM/HOP', 'description':"""Energy vs LS (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
@@ -2041,9 +2186,67 @@ hcallayout(dqmitems, '21 RECO Energy vs ieta', [{'path':'Hcal2/RecHitTask/Energy
 
 hcallayout(dqmitems, '22 RECO Energy vs iphi', [{'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HBM', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HBP', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HEM', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HEP', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HFM', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HFP', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HOM', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Energyvsiphi/SubdetPM/HOP', 'description':"""Energy vs iphi (Cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '23 RECO Occupancy', [{'path':'Hcal2/RecHitTask/Occupancy/depth/depth1', 'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Occupancy/depth/depth2', 'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/Occupancy/depth/depth3', 'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/Occupancy/depth/depth4', 'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '23 RECO Occupancy', 
+	[
+		{
+			'path':'Hcal2/RecHitTask/Occupancy/depth/depth1', 
+			'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Occupancy/depth/depth2', 
+			'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Occupancy/depth/depth3', 
+			'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal2/RecHitTask/Occupancy/depth/depth4', 
+			'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Occupancy/depth/depth5', 
+			'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/Occupancy/depth/depth6', 
+			'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal2/RecHitTask/Occupancy/depth/depth7', 
+			'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
-hcallayout(dqmitems, '25 RECO Occupancy Cut', [{'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth1', 'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth2', 'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth3', 'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth4', 'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '25 RECO Occupancy Cut', 
+	[
+		{
+			'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth1', 
+			'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth2', 
+			'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth3', 
+			'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth4', 
+			'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth5', 
+			'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth6', 
+			'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal2/RecHitTask/OccupancyCut/depth/depth7', 
+			'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
 hcallayout(dqmitems, '26 RECO Occupancy Cut vs LS', [{'path':'Hcal2/RecHitTask/OccupancyCutvsLS/Subdet/HB', 'description':"""Occupancy vs LS (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCutvsLS/Subdet/HE', 'description':"""Occupancy vs LS (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/OccupancyCutvsLS/Subdet/HF', 'description':"""Occupancy vs LS (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCutvsLS/Subdet/HO', 'description':"""Occupancy vs LS (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
@@ -2051,7 +2254,36 @@ hcallayout(dqmitems, '27 RECO Occupancy Cut vs ieta', [{'path':'Hcal2/RecHitTask
 
 hcallayout(dqmitems, '28 RECO Occupancy Cut vs iphi', [{'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HBM', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HBP', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HEM', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HEP', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HFM', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HFP', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HOM', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/OccupancyCutvsiphi/SubdetPM/HOP', 'description':"""Occupancy Distribution vs iphi (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '29 RECO Timing', [{'path':'Hcal2/RecHitTask/TimingCut/depth/depth1', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/TimingCut/depth/depth2', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/TimingCut/depth/depth3', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/TimingCut/depth/depth4', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '29 RECO Timing', 
+	[
+		{
+			'path':'Hcal2/RecHitTask/TimingCut/depth/depth1', 
+			'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/TimingCut/depth/depth2', 
+			'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/TimingCut/depth/depth3', 
+			'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal2/RecHitTask/TimingCut/depth/depth4', 
+			'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/TimingCut/depth/depth5', 
+			'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}, {
+			'path':'Hcal2/RecHitTask/TimingCut/depth/depth6', 
+			'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	], [
+		{
+			'path':'Hcal2/RecHitTask/TimingCut/depth/depth7', 
+			'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""
+		}
+	]
+)
 
 hcallayout(dqmitems, '30 RECO Timing', [{'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HBM', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HBP', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HEM', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HEP', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HFM', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HFP', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}], [{'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HOM', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}, {'path':'Hcal2/RecHitTask/TimingCut/SubdetPM/HOP', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
@@ -2095,28 +2327,52 @@ hcallayout(dqmitems, '50 TP Et Data vs BX(LS)', [{'path':'Hcal/TPTask/EtCutDatav
 
 hcallayout(dqmitems, '51 TP Et Emul vs BX(LS)', [{'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HBHE', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}, {'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HF', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}], [{'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HBHE', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}, {'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HF', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '52 DIGI VME vs uTCA ADC', [{'path':'Hcal2/DigiComparisonTask/ADC/Subdet/HB', 'description':"""ADC Correlation for all Time Slices VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/ADC/Subdet/HE', 'description':"""ADC Correlation for all Time Slices VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}], [{'path':'Hcal2/DigiComparisonTask/ADC/Subdet/HF', 'description':"""ADC Correlation for all Time Slices VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/ADC/Subdet/HO', 'description':"""ADC Correlation for all Time Slices VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
+hcallayout(dqmitems, '51 TP Et Emul vs BX(LS)', [{'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HBHE', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}, {'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HF', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}], [{'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HBHE', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}, {'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HF', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '53 DIGI VME vs uTCA ADC(uTCA) Missing VME', [{'path':'Hcal2/DigiComparisonTask/ADCMsnVME/Subdet/HB', 'description':"""ADC Distribution for Missing VME Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/ADCMsnVME/Subdet/HE', 'description':"""ADC Distribution for Missing VME Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}], [{'path':'Hcal2/DigiComparisonTask/ADCMsnVME/Subdet/HF', 'description':"""ADC Distribution for Missing VME Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/ADCMsnVME/Subdet/HO', 'description':"""ADC Distribution for Missing VME Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
+hcallayout(dqmitems, '52 TP uHTR-L1T mismatch', [{'path':'Hcal/TPTask/EtMsm_uHTR_L1T/EtMsm_uHTR_L1T', 'description':"""TP mismatches between uHTR and L1T <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '54 DIGI VME vs uTCA ADC(VME) Missing uTCA', [{'path':'Hcal2/DigiComparisonTask/ADCMsnuTCA/Subdet/HB', 'description':"""ADC Distribution for Missing uTCA Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/ADCMsnuTCA/Subdet/HE', 'description':"""ADC Distribution for Missing uTCA Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}], [{'path':'Hcal2/DigiComparisonTask/ADCMsnuTCA/Subdet/HF', 'description':"""ADC Distribution for Missing uTCA Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/ADCMsnuTCA/Subdet/HO', 'description':"""ADC Distribution for Missing uTCA Digis <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
 
-hcallayout(dqmitems, '55 DIGI VME vs uTCA Mismatched', [{'path':'Hcal2/DigiComparisonTask/Mismatched/depth/depth1', 'description':"""Digis for which ADCs are mismatched <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/Mismatched/depth/depth2', 'description':"""Digis for which ADCs are mismatched <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}], [{'path':'Hcal2/DigiComparisonTask/Mismatched/depth/depth3', 'description':"""Digis for which ADCs are mismatched <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/Mismatched/depth/depth4', 'description':"""Digis for which ADCs are mismatched <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
+hcallayout(dqmitems, '53 LED pin diode ADC vs BX', [{'path':'Hcal/DigiTask/LED/LED_ADCvsBX', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, '56 DIGI VME vs uTCA Missing', [{'path':'Hcal2/DigiComparisonTask/Missing_VME/depth/depth1', 'description':"""Digis missing from VME collection and present in uTCA <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/Missing_VME/depth/depth2', 'description':"""Digis missing from VME collection and present in uTCA <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/Missing_VME/depth/depth3', 'description':"""Digis missing from VME collection and present in uTCA <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}], [{'path':'Hcal2/DigiComparisonTask/Missing_VME/depth/depth4', 'description':"""Digis missing from VME collection and present in uTCA <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/Missing_uTCA/depth/depth1', 'description':"""Digis missing from uTCA collection and present in VME <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/Missing_uTCA/depth/depth2', 'description':"""Digis missing from uTCA collection and present in VME <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}], [{'path':'Hcal2/DigiComparisonTask/Missing_uTCA/depth/depth3', 'description':"""Digis missing from uTCA collection and present in VME <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}, {'path':'Hcal2/DigiComparisonTask/Missing_uTCA/depth/depth4', 'description':"""Digis missing from uTCA collection and present in VME <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Comparison_Task_VME_vs_uTCA'>Details...</a>"""}])
 
-hcallayout(dqmitems, '57 TP VME vs uTCA Et', [{'path':'Hcal2/TPComparisonTask/Et/TTSubdet/HBHE', 'description':"""Et Correlation over all TS. VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Trigger_Primitives_Comparison_Ta'>Details...</a>"""}, {'path':'Hcal2/TPComparisonTask/Et/TTSubdet/HF', 'description':"""Et Correlation over all TS. VME(Y) vs uTCA(X) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Trigger_Primitives_Comparison_Ta'>Details...</a>"""}])
+hcallayout(dqmitems, '54 (CapId-BX)%4', 
+	[
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HBM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HBP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HEM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HEP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+	],
+	[
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HFM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HFP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HOM', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+		{
+			'path':'Hcal/DigiTask/CapID/SubdetPM/HOP', 'description':"""(CapId-BX)%4 (should have exactly one value) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""
+		},
+	]
+)
 
-hcallayout(dqmitems, '58 TP VME vs uTCA Et Mismatched', [{'path':'Hcal2/TPComparisonTask/EtMsm/EtMsm', 'description':"""Distrubution of channels that have Et mismatched <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Trigger_Primitives_Comparison_Ta'>Details...</a>"""}])
-
-hcallayout(dqmitems, '59 TP VME vs uTCA FG Mismatched', [{'path':'Hcal2/TPComparisonTask/FGMsm/FGMsm', 'description':"""Distribution of channels that have FG bit mismatched <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Trigger_Primitives_Comparison_Ta'>Details...</a>"""}])
-
-hcallayout(dqmitems, '60 TP VME vs uTCA Missing', [{'path':'Hcal2/TPComparisonTask/Missing/Missing_VME', 'description':"""Distribution of channels missing from 1 ELECTRONICS UNIT and present in the other <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Trigger_Primitives_Comparison_Ta'>Details...</a>"""}, {'path':'Hcal2/TPComparisonTask/Missing/Missing_uTCA', 'description':"""Distribution of channels missing from 1 ELECTRONICS UNIT and present in the other <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Trigger_Primitives_Comparison_Ta'>Details...</a>"""}])
-
-hcallayout(dqmitems, '61 QIE10 ADC', [{'path':'Hcal/QIE10Task/ADC/ADC', 'description':"""QIE10 ADC Distribution <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#QIE10_Task'>Details...</a>"""}])
-
-hcallayout(dqmitems, '62 QIE10 LETDC', [{'path':'Hcal/QIE10Task/LETDC/LETDC', 'description':"""QIE10 Leading Edge TDC Distribution <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#QIE10_Task'>Details...</a>"""}])
-
-hcallayout(dqmitems, '63 QIE10 LETDC vs ADC', [{'path':'Hcal/QIE10Task/LETDCvsADC/LETDCvsADC', 'description':"""QIE10 Leading Edge TDC vs ADC Distribution <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#QIE10_Task'>Details...</a>"""}])
-
-hcallayout(dqmitems, '64 QIE10 TETDC vs ADC', [{'path':'Hcal/QIE10Task/TETDCvsADC/TETDCvsADC', 'description':"""QIE10 Trailing Edge TDC vs ADC Distribution <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#QIE10_Task'>Details...</a>"""}])
+hcallayout(dqmitems, '55 HF TDC cut efficiency', 
+	[
+		{
+			'path':'Hcal/TPTask/TDCCutEfficiency_depth', 'description':"""Efficiency of HF dual anode TDC cut"""
+		},
+		{
+			'path':'Hcal/TPTask/TDCCutEfficiency_ieta', 'description':"""Efficiency of HF dual anode TDC cut"""
+		},
+	]
+)

@@ -16,15 +16,27 @@ deploy_das_prep()
 deploy_das_sw()
 {
   deploy_pkg comp cms+das
-  perl -p -i -e "s|{ROOT}|$root|" $root/$cfgversion/config/$project/analytics_cfg.py
+  perl -p -i -e "s|{ROOT}|$root/$cfgversion/apps/das|" $root/$cfgversion/config/$project/das2go-config.json
+  case $host in
+  vocms0126 | vocms0127)
+    perl -p -i -e "s|prod/|dev/|g" $root/$cfgversion/config/$project/das2go-config.json
+    perl -p -i -e "s|cmsweb|cmsweb-dev|g" $root/$cfgversion/config/$project/das2go-config.json
+    ;;
+#  vocms0132 | vocms0731)
+#    perl -p -i -e "s|prod/|int/|g" $root/$cfgversion/config/$project/das2go-config.json
+#    perl -p -i -e "s|cmsweb|cmsweb-testbed|g" $root/$cfgversion/config/$project/das2go-config.json
+#    ;;
+  *)
+    ;;
+  esac
 }
 
 deploy_das_post()
 {
-  case $host in vocms013[689] | vocms073[89] | vocms016[135] ) disable ;; * ) enable ;; esac
+  case $host in vocms013[689] | vocms073[89] | vocms016[135] | vocms0740) disable ;; * ) enable ;; esac
   (mkcrontab
    sysboot
-   for action in das_cleanup:'0 0-23/2 * * *' das_dbs_update:'0-59/20 * * * *'; do
+   for action in das_cleanup:'0 0-23/2 * * *'; do
      local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
      $nogroups || cmd="sudo -H -u _das bashs -l -c \"${cmd}\""
      echo "${action##*:} $cmd"

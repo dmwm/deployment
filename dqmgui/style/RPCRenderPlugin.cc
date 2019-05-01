@@ -71,7 +71,12 @@ private:
       gStyle->SetPadBorderSize( 0 );
       gStyle->SetOptStat( 10 );
       gStyle->SetPalette( 1 );
-      obj->SetOption( "colz" );
+      if(o.name.find("Occupancy_for_") != std::string::npos && o.name.find("SummaryHistograms") != std::string::npos )
+      {
+        obj->SetOption( "colztext" );
+      } else {
+        obj->SetOption( "colz" );
+      }
       obj->SetStats( kFALSE );
 
       obj->GetXaxis()->SetNdivisions(-510);
@@ -82,14 +87,19 @@ private:
       c->SetGridy();
 
       if(o.name.find("SummaryMap") != std::string::npos)
-	{
+      {
         dqm::utils::reportSummaryMapPalette(obj);
 	return;
       }
 
       if( o.name.find("Occupancy") != std::string::npos )
       {
-	obj->SetStats( kTRUE );
+        if((o.name.find("_for_Barrel") != std::string::npos || o.name.find("_for_Endcap") != std::string::npos) && o.name.find("SummaryHistograms") != std::string::npos )
+        {
+          obj->SetStats( kFALSE );
+        } else {
+          obj->SetStats( kTRUE );
+        }
         return;
       }
 
@@ -165,11 +175,17 @@ private:
         //rb1out
         line.DrawLine(85, 2.5, 85, 4.5);
         line.DrawLine(85, 4.5, 91, 4.5);
-        //rb2in X 3
-        line.DrawLine(91, 4.5, 91, 7.5);
-        line.DrawLine(91, 7.5, 85, 7.5);
-        //rb2out
-        line.DrawLine(85, 7.5, 85, 9.5);
+        //rb2in and rb2out
+        if(o.name.find("Wheel_-2") != std::string::npos || o.name.find("Wheel_2") != std::string::npos)
+        {
+          line.DrawLine(91, 4.5, 91, 6.5);
+          line.DrawLine(91, 6.5, 85, 6.5);
+          line.DrawLine(85, 6.5, 85, 9.5);
+        } else {
+          line.DrawLine(91, 4.5, 91, 7.5);
+          line.DrawLine(91, 7.5, 85, 7.5);
+          line.DrawLine(85, 7.5, 85, 9.5);
+        }
         line.DrawLine(85, 9.5, 43, 9.5);
         //rb3
         line.DrawLine(43, 9.5, 43, 13.5);

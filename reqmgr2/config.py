@@ -6,6 +6,7 @@ Everything configurable in ReqMgr is defined here.
 
 import socket
 import time
+import sys
 from WMCore.Configuration import Configuration
 from os import path
 
@@ -14,9 +15,14 @@ BASE_URL = "@@BASE_URL@@"
 DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
-LOG_REPORTER = "reqmgr"
+LOG_REPORTER = "reqmgr2"
+AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
+# load AMQ credentials
+sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2'))
+from ReqMgr2Secrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
+
 config = Configuration()
 
 main = config.section_("main")
@@ -28,6 +34,8 @@ main.index = "ui"
 # Defaults to allow any CMS authenticated user. Write APIs should require
 # additional roles in SiteDB (i.e. "Admin" role for the "ReqMgr" group)
 main.authz_defaults = {"role": None, "group": None, "site": None}
+#set default logging (prevent duplicate)
+main.log_screen = True
 
 sec = main.section_("tools").section_("cms_auth")
 sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
@@ -62,7 +70,7 @@ data.couch_wmdatamining_db = "wmdatamining"
 data.couch_acdc_db = "acdcserver"
 data.couch_workqueue_db = "workqueue"
 data.central_logdb_url = LOG_DB_URL
-data.log_reporter = "request_manager"
+data.log_reporter = LOG_REPORTER
 
 # number of past days since when to display requests in the default view
 data.default_view_requests_since_num_days = 30 # days
@@ -72,15 +80,11 @@ data.tag_collector_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML"
 # keys are not present at easy item but defined in a dedicated item ...)
 # https://cmssdt.cern.ch/tc/getReleasesInformation?release_state=Announced
 
-# request related settings (e.g. default injection arguments)
-data.default_sw_version = "CMSSW_5_2_5"
-data.default_sw_scramarch = "slc5_amd64_gcc434"
-data.dqm_url = "%s/dqm/dev" % BASE_URL
-#use dbs testbed for private vm test
+# used for the StepChainParentageFixTask; use dbs testbed for private vm test
 if DBS_INS == "private_vm":
-    data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
+    data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSWriter"
 else:
-    data.dbs_url = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
+    data.dbs_url = "%s/dbs/%s/global/DBSWriter" % (BASE_URL, DBS_INS)
 
 # web user interface
 ui = views.section_("ui")
@@ -111,9 +115,9 @@ ui_main = ui.section_("main")
 ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
+extentions = config.section_("extensions")
 # Production instance of wmdatamining, must be a production back-end
-if HOST.startswith("vocms0136") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
-    extentions = config.section_("extensions")
+if HOST.startswith("vocms0136") or HOST.startswith("vocms0132") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
 #     wmdatamining = extentions.section_("wmdatamining")
 #     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
 #     wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
@@ -140,14 +144,25 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0731") or HOST.startswi
     couchCleanup.log_file = '%s/logs/reqmgr2/couchCleanup-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     couchCleanup.central_logdb_url = LOG_DB_URL
     couchCleanup.log_reporter = LOG_REPORTER
-    
+
+    # status change task
+    parentageFixTask = extentions.section_("parentageFixTask")
+    parentageFixTask.object = "WMCore.ReqMgr.CherryPyThreads.StepChainParentageFixTask.StepChainParentageFixTask"
+    parentageFixTask.dbs_url = data.dbs_url
+    parentageFixTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    parentageFixTask.parentageFixDuration = 60 * 180  # every 3 hours
+    parentageFixTask.log_file = '%s/logs/reqmgr2/parentageFixTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    parentageFixTask.central_logdb_url = LOG_DB_URL
+    parentageFixTask.log_reporter = LOG_REPORTER
+
+if HOST.startswith("vocms0161") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     # status change task 
     statusChangeTasks = extentions.section_("statusChangeTasks")
     statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
     statusChangeTasks.reqmgr2_url = "%s/reqmgr2" % BASE_URL
     statusChangeTasks.wmstats_url = "%s/wmstatsserver" % BASE_URL
     statusChangeTasks.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
-    statusChangeTasks.archiveDelayHours = 24 # delay the archive at least 24 hours after announced
+    statusChangeTasks.archiveDelayHours = 24 * 7 # delay the archive at least 7 days after announced
     statusChangeTasks.checkStatusDuration = 60 * 10  # every 10 min
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     statusChangeTasks.central_logdb_url = LOG_DB_URL
@@ -168,9 +183,19 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor = extentions.section_("heartbeatMonitor")
     heartbeatMonitor.object = "WMCore.ReqMgr.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
     heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
+    heartbeatMonitor.wmstatsSvc_url = "%s/wmstatsserver" % BASE_URL
     heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
     heartbeatMonitor.log_file = '%s/logs/reqmgr2/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
+    # AMQ MonIT settings
+    if HOST.startswith("vocms0161") or HOST.startswith("vocms0731"):
+        heartbeatMonitor.post_to_amq = True
+    else:
+        heartbeatMonitor.post_to_amq = False
+    heartbeatMonitor.user_amq = USER_AMQ
+    heartbeatMonitor.pass_amq = PASS_AMQ
+    heartbeatMonitor.topic_amq = AMQ_TOPIC
+    heartbeatMonitor.host_port_amq = AMQ_HOST_PORT
     #list all the thread need to be monitored
     heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]

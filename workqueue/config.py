@@ -3,11 +3,12 @@ _GlobalWorkQueueConfig_
 
 Global cmsweb WorkQueue config.
 """
+from __future__ import print_function
 
 import socket
 import os
 import time
-
+import sys
 from WMCore.Configuration import Configuration
 
 workqueueDBName = 'workqueue'
@@ -24,6 +25,7 @@ REQMGR2 = "%s/reqmgr2" % BASE_URL
 WEBURL = "%s/%s" % (COUCH_URL, workqueueDBName)
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "global_workqueue"
+AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 
 root = __file__.rsplit('/', 4)[0]
 cache_dir = os.path.join(root, 'state', 'workqueue', 'cache')
@@ -31,6 +33,21 @@ os.environ['WMCORE_CACHE_DIR'] = cache_dir
 os.environ['MAX_LUMIS_PER_WQE'] = '400000'
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
+# load AMQ credentials
+sys.path.append(os.path.join(ROOTDIR, 'auth/workqueue'))
+try:
+    from WorkQueueSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
+except ImportError:
+    print("Mocking WorkQueue credentials...")
+    USER_AMQ=None
+    PASS_AMQ=None
+    AMQ_TOPIC=None
+
+if BASE_URL == "https://cmsweb.cern.ch":
+    RUCIO_ACCT = "production"
+else:
+    RUCIO_ACCT="wmagent_testing"
+
 config = Configuration()
 
 # this section is only needed for updating couchapp (it is using wmagent-couchapp-init)
@@ -44,11 +61,13 @@ srv = main.section_("server")
 srv.thread_pool = 30
 main.application = "globalworkqueue"
 main.application_dir = "workqueue"
-main.port = 8240 # main application port it listens on (TODO: temporary port updated as Bruno advises)
+main.port = 8240
 main.index = "ui"
 # Defaults to allow any CMS authenticated user. Write APIs should require
 # additional roles in SiteDB (i.e. "Admin" role for the "ReqMgr" group)
 main.authz_defaults = {"role": None, "group": None, "site": None}
+#set default logging (prevent duplicate)
+main.log_screen = True
 
 sec = main.section_("tools").section_("cms_auth")
 sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
@@ -57,13 +76,13 @@ sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 # is reachable and this features in CMS web frontend rewrite rules
 app = config.section_(main.application) # string containing "globalworkqueue"
 app.admin = "cms-service-webtools@cern.ch"
-app.description = "CMS data operations Global WorkQueue"
+app.description = "CMS Workload Management Global WorkQueue"
 app.title = " Global WorkQueue (GQ)"
 
 views = config.section_("views")
 
 def setWorkQueueCommonConfig(config):    
-    # actual params need to creaating global queue
+    # actual params needed to creating global queue
     config.queueParams = {}
     config.queueParams['CouchUrl'] = COUCH_URL
     config.queueParams['DbName'] = workqueueDBName
@@ -74,7 +93,8 @@ def setWorkQueueCommonConfig(config):
     config.queueParams['RequestDBURL'] = "%s/%s" % (COUCH_URL, reqmgrCouchDB)
     config.queueParams['central_logdb_url'] = LOG_DB_URL
     config.queueParams['log_reporter'] = LOG_REPORTER
-    
+    config.queueParams['rucioAccount'] = RUCIO_ACCT
+
     config.reqMgrConfig = {}
     config.reqMgrConfig['reqmgr2_endpoint'] = REQMGR2
     config.reqMgrConfig['central_logdb_url'] = LOG_DB_URL
@@ -118,5 +138,14 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor.wmstats_url = "%s/%s" % (COUCH_URL, wmstatDBName)
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
+    # AMQ MonIT settings
+    if HOST.startswith("vocms0740") or HOST.startswith("vocms0731"):
+        heartbeatMonitor.post_to_amq = True
+    else:
+        heartbeatMonitor.post_to_amq = False
+    heartbeatMonitor.user_amq = USER_AMQ
+    heartbeatMonitor.pass_amq = PASS_AMQ
+    heartbeatMonitor.topic_amq = AMQ_TOPIC
+    heartbeatMonitor.host_port_amq = AMQ_HOST_PORT
     #list all the thread need to be monitored
     heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]

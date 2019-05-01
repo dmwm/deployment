@@ -28,6 +28,8 @@ main.index = "ui"
 # Defaults to allow any CMS authenticated user. Write APIs should require
 # additional roles in SiteDB (i.e. "Admin" role for the "ReqMgr" group)
 main.authz_defaults = {"role": None, "group": None, "site": None}
+#set default logging (prevent duplicate)
+main.log_screen = True
 
 sec = main.section_("tools").section_("cms_auth")
 sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
@@ -76,6 +78,7 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     logDBTasks.object = "WMCore.WMStats.CherryPyThreads.LogDBTasks.LogDBTasks"
     logDBTasks.central_logdb_url = LOG_DB_URL
     logDBTasks.log_reporter = LOG_REPORTER
+    logDBTasks.keepDocsAge = 60 * 60 * 24 * 90 # keep data newer than 90 days
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
     logDBTasks.log_file = '%s/logs/t0_reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
         

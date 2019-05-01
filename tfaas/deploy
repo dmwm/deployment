@@ -1,0 +1,30 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_tfaas_variants="default prod preprod dev"
+
+deploy_tfaas_deps()
+{
+  deploy $stage backend
+  deploy $stage wmcore-auth
+  deploy $stage admin
+}
+
+deploy_tfaas_prep()
+{
+  mkproj stagingarea
+  mkproj models
+  mkproxy
+}
+
+deploy_tfaas_sw()
+{
+  deploy_pkg comp cms+tfaas
+  perl -p -i -e "s|{ROOT}|$root/current/apps/tfaas|" $root/$cfgversion/config/$project/config.json
+}
+
+deploy_tfaas_post()
+{
+  case $host in vocms013[689] | vocms073[89] | vocms016[135] ) disable ;; * ) enable ;; esac
+  (mkcrontab
+   sysboot
+  ) | crontab -
+}

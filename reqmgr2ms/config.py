@@ -2,7 +2,6 @@
 MicroService configuration file.
 """
 
-import os
 import socket
 from WMCore.Configuration import Configuration
 
@@ -11,6 +10,12 @@ HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
 LOG_REPORTER = "reqmgr2-ms"
 ROOTDIR = __file__.rsplit('/', 3)[0]
+
+if BASE_URL == "https://cmsweb.cern.ch":
+    RUCIO_ACCT = "production"
+else:
+    RUCIO_ACCT="wmagent_testing"
+
 config = Configuration()
 
 main = config.section_("main")
@@ -22,6 +27,9 @@ main.index = 'data' # Configuration requires index attribute
 
 # Security configuration
 main.authz_defaults = {"role": None, "group": None, "site": None}
+#set default logging (prevent duplicate)
+main.log_screen = True
+
 sec = main.section_("tools").section_("cms_auth")
 sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 
@@ -29,8 +37,8 @@ sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 # is reachable and this features in CMS web frontend rewrite rules
 app = config.section_(main.application)
 app.admin = "cms-service-webtools@cern.ch"
-app.description = "CMS data operations MicroService"
-app.title = "CMS MicroService"
+app.description = "CMS Workload Management MicroServices"
+app.title = "CMS MicroServices"
 
 # define different views for our application
 views = config.section_("views")
@@ -44,3 +52,6 @@ data = views.section_('data')
 data.object = 'WMCore.MicroService.Service.RestApiHub.RestApiHub'
 data.manager = 'WMCore.MicroService.Unified.Transferor.UnifiedTransferorManager'
 data.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+data.verbose = True
+data.interval = 600
+data.rucioAccount = RUCIO_ACCT

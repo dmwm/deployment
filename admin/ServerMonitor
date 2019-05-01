@@ -118,7 +118,7 @@ class SystemMonitor(Monitor):
     @param proc_name -- regex pattern to match process name
     @param activity -- list of activities to log.
     The allowed activities are:
-    cpu, mem, swp, user, system, rss, vms, swap, threads, connections, io, files"""
+    cpu, mem, swp, user, system, rss, vms, swap, threads, connections, io, files, oomscore, oomadj, oomscoreadj, procpid"""
 
     def safemsg(field, f):
       try:
@@ -140,6 +140,12 @@ class SystemMonitor(Monitor):
         return 0
 
     def addfield(dic, field, value):
+      if field == 'procpid':
+        try:
+          dic[field] += ' %s' % value
+        except:
+          dic[field] = str(value)
+	return
       try:
         dic[field] += value
       except:
@@ -151,7 +157,7 @@ class SystemMonitor(Monitor):
       return int(match.group(1)) * 1024
 
     def swap_percent(proc):
-      return swap_info(proc) * 100.0 / psutil.swap_memory().total
+      return swap_info(proc) * 100.0 / (psutil.swap_memory().total + 0.0001)
 
     if not psutil:
       return
@@ -167,6 +173,26 @@ class SystemMonitor(Monitor):
       mem_info = proc.memory_info()
       cpu_info = proc.cpu_times()
       data['processes'] += 1
+      proc_pid = proc.pid
+      ofiles = len(proc.open_files())
+      oom_score = 0
+      try:
+        with open('/proc/%s/oom_score' % proc_pid) as fdesc:
+          oom_score = int(fdesc.read().replace('\n', ''))
+      except:
+	pass
+      oom_adj = 0
+      try:
+        with open('/proc/%s/oom_adj' % proc_pid) as fdesc:
+          oom_adj = int(fdesc.read().replace('\n', ''))
+      except:
+	pass
+      oom_score_adj = 0
+      try:
+        with open('/proc/%s/oom_score_adj' % proc_pid) as fdesc:
+          oom_score_adj = int(fdesc.read().replace('\n', ''))
+      except:
+	pass
       for field in activity:
         field = field.strip()
         if field == 'cpu':
@@ -192,7 +218,15 @@ class SystemMonitor(Monitor):
         elif field == 'io':
           addfield(data, field, safefield('io', proc.io_counters))
         elif field == 'files':
-          addfield(data, field, safefield('files', proc.open_files))
+          addfield(data, field, ofiles)
+        elif field == 'procpid':
+          addfield(data, field, proc_pid)
+        elif field == 'oomscore':
+          addfield(data, field, oom_score)
+        elif field == 'oomadj':
+          addfield(data, field, oom_score)
+        elif field == 'oomscoreadj':
+          addfield(data, field, oom_score_adj)
 
     if data['processes'] < 1:
       return

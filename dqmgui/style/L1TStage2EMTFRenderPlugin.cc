@@ -1,13 +1,18 @@
-#include <cassert>
-#include <string>
-
+//EMTF Render Plugin
+//Modified By Chad Freer July 2018
+//Doesn't do much but does control the colors for the report summary maps
 #include "DQM/DQMRenderPlugin.h"
+#include "QualityTestStatusRenderPlugin.h"
 #include "TText.h"
 #include "TCanvas.h"
 #include "TColor.h"
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TStyle.h"
+
+#include <cassert>
+#include <string>
+
 
 class L1TStage2EMTFRenderPlugin : public DQMRenderPlugin {
 
@@ -82,9 +87,37 @@ public:
     }
   }
 
-  void preDrawTH2F(TCanvas *c, const VisDQMObject& o, VisDQMRenderInfo &r) {
+  void preDrawTH2F(TCanvas *c, const VisDQMObject &o, VisDQMRenderInfo &r) {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
+
+      std::string name = o.name.substr(o.name.rfind("/")+1);
+
+      if (o.name.find("reportSummaryMap_EMTF") != std::string::npos) {
+
+          obj->SetStats(kFALSE);
+          dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(obj);
+
+          obj->GetXaxis()->SetLabelSize(0.1);
+
+          obj->GetXaxis()->CenterLabels();
+          obj->GetYaxis()->CenterLabels();
+
+          return;
+      }
+
+      if (o.name.find("reportSummaryMap_chamberStrip") != std::string::npos) {
+
+          obj->SetStats(kFALSE);
+          dqm::QualityTestStatusRenderPlugin::reportSummaryMapPalette(obj);
+
+          obj->GetXaxis()->SetLabelSize(0.1);
+
+          obj->GetXaxis()->CenterLabels();
+          obj->GetYaxis()->CenterLabels();
+
+          return;
+      }
 
     obj->SetOption("colz");
   

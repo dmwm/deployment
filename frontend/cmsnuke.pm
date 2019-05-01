@@ -13,7 +13,10 @@ package cmsnuke;
 use strict;
 use warnings;
 use Apache2::Const 'DECLINED';
-my $bad_hdr = qr{^(?:via|x-forwarded-|cms-|ssl_|https)}io;
+
+# for x509-scitoken-issuer we relax pattern in order to pass CMS headers to it
+#my $bad_hdr = qr{^(?:via|x-forwarded-|cms-|ssl_|https)}io;
+my $bad_hdr = qr{^(?:via|x-forwarded-|https)}io;
 
 sub handler($)
 {

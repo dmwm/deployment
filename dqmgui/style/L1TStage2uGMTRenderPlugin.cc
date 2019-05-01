@@ -92,6 +92,12 @@ bool checkAndRemove(std::string &s, const char * key)
     if (o.name.find("ugmtMuonPt") != std::string::npos) {
       gPad->SetLogy(1);
     }
+
+    if (o.name.find("/mismatchRatio") != std::string::npos) {
+      obj->SetOption("texthist");
+      obj->GetYaxis()->SetRangeUser(0., 1.05);
+    }
+
   }
 
   void preDrawTH2F(TCanvas* c, const VisDQMObject& o, VisDQMRenderInfo &r) {   

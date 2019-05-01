@@ -29,6 +29,8 @@ main.index = "ui"
 # Defaults to allow any CMS authenticated user. Write APIs should require
 # additional roles in SiteDB (i.e. "Admin" role for the "ReqMgr" group)
 main.authz_defaults = {"role": None, "group": None, "site": None}
+#set default logging (prevent duplicate)
+main.log_screen = True
 
 sec = main.section_("tools").section_("cms_auth")
 sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
@@ -93,7 +95,8 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     logDBTasks.object = "WMCore.WMStats.CherryPyThreads.LogDBTasks.LogDBTasks"
     logDBTasks.central_logdb_url = LOG_DB_URL
     logDBTasks.log_reporter = LOG_REPORTER
-    logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
+    logDBTasks.keepDocsAge = 60 * 60 * 24 * 90  # keep data newer than 90 days
+    logDBTasks.logDBCleanDuration = 60 * 60 * 12  # every 12 hours
     logDBTasks.log_file = '%s/logs/reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     
     # Cleaning up wmstats db
@@ -104,7 +107,6 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     cleanUpTask.reqdb_couch_app = "ReqMgr"
     cleanUpTask.central_logdb_url = LOG_DB_URL
     cleanUpTask.log_reporter = LOG_REPORTER
-    cleanUpTask.DataKeepDays = 0.125 # 3 hours - unit is day
     cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12  # every 12 hours
     cleanUpTask.log_file = '%s/logs/reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     

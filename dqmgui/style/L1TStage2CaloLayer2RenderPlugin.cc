@@ -8,18 +8,25 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TStyle.h"
+#include "TBox.h"
+#include "TFrame.h"
 
 class L1TStage2CaloLayer2RenderPlugin : public DQMRenderPlugin {
 
   int palette_kry[256];
   int palette_yrk[256];
-
+  TBox *exclusionBox_;
   TText tlabels_;
 
 public:
 
   virtual void initialise(int, char **)
-    {
+    { 
+      // For masking areas
+      exclusionBox_ = new TBox();
+      exclusionBox_->SetFillColor(kGray+2);
+      exclusionBox_->SetFillStyle(3002);
+      
       // Laugh all you want, but they do look pretty
       // http://arxiv.org/pdf/1509.03700v1.pdf
       // linear_kry_5-98_c75_n256 reversed
@@ -35,7 +42,7 @@ public:
     }
 
   virtual bool applies(const VisDQMObject& o, const VisDQMImgInfo&) {
-    if (o.name.find("L1T/L1TStage2CaloLayer2/") != std::string::npos || o.name.find("L1TEMU/L1TStage2CaloLayer2EMU/") != std::string::npos)
+    if (o.name.find("L1T/L1TStage2CaloLayer2/") != std::string::npos || o.name.find("L1TEMU/L1TStage2CaloLayer2/") != std::string::npos)
       return true;
 
     return false;
@@ -58,7 +65,11 @@ public:
   }
 
  private:
-
+void drawExclusionBox(double x1, double y1, double x2, double y2)
+  {
+    exclusionBox_->DrawBox(x1, y1, x2, y2);
+  }
+ 
 bool checkAndRemove(std::string &s, const char * key)
   {
     if( s.find(key) != std::string::npos )
@@ -73,28 +84,37 @@ bool checkAndRemove(std::string &s, const char * key)
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
     assert(obj);
 
-    if (o.name.find("Energy-Sums/EtSumBxOcc") != std::string::npos) {
+    if (o.name.rfind("Central-Jets/CenJetsRank") != std::string::npos
+     || o.name.rfind("Forward-Jets/ForJetsRank") != std::string::npos
+     || o.name.rfind("Isolated-EG/IsoEGsRank") != std::string::npos
+     || o.name.rfind("NonIsolated-EG/NonIsoEGsRank") != std::string::npos
+     || o.name.rfind("Isolated-Tau/IsoTausRank") != std::string::npos
+     || o.name.rfind("NonIsolated-Tau/TausRank") != std::string::npos) {
       gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/METRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/METPhi") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/ETTRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/MHTRank") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/MHTPhi") != std::string::npos) {
-      gPad->SetLogy(1);
-    }
-    if (o.name.find("Energy-Sums/HTTRank") != std::string::npos) {
-      gPad->SetLogy(1);
+    } else if (o.name.find("Energy-Sums/") != std::string::npos) {
+      if (o.name.rfind("EtSumBxOcc") != std::string::npos
+       || o.name.rfind("METRank") != std::string::npos
+       || o.name.rfind("METPhi") != std::string::npos
+       || o.name.rfind("METHFRank") != std::string::npos
+       || o.name.rfind("ETTRank") != std::string::npos
+       || o.name.rfind("ETTEMRank") != std::string::npos
+       || o.name.rfind("MHTRank") != std::string::npos
+       || o.name.rfind("MHTPhi") != std::string::npos
+       || o.name.rfind("MHTHFRank") != std::string::npos
+       || o.name.rfind("HTTRank") != std::string::npos) {
+        gPad->SetLogy(1);
+      }
     }
 
+    // calo layer2 comparison histograms
+    if (o.name.find("expert") == std::string::npos) {
+      if (o.name.find(" Summary") != std::string::npos || o.name.find(" summary") != std::string::npos) {
+        obj->SetOption("texthist");
+        if (o.name.find("Problem") == std::string::npos) {
+          obj->GetYaxis()->SetRangeUser(0., 1.05);
+        }
+      }
+    }
   }
 
   void preDrawTH2F(TCanvas *c, const VisDQMObject& o, VisDQMRenderInfo &r) {
@@ -142,6 +162,11 @@ bool checkAndRemove(std::string &s, const char * key)
   void postDrawTH2F(TCanvas*, const VisDQMObject& o) {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
+    
+    if( o.name.find( "ForJetsEtEtaPhi_shift" ) != std::string::npos )
+     {
+       drawExclusionBox(-68, -0.5, 68, 143.5);
+     }
 
     gStyle->SetOptStat(10);
   }

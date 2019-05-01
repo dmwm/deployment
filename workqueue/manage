@@ -46,6 +46,7 @@ COLOR_NORMAL="\\033[0;39m"
 export YUI_ROOT
 export WMAGENT_CONFIG=${CFGFILE}
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
+export RUCIO_HOME=$CFGDIR
 
 export WMCORE_ROOT=$WORKQUEUE_ROOT/lib/python*/site-packages
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then

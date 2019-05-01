@@ -1,0 +1,24 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_exporters_deps()
+{
+  # keep this line to avoid error on empty function
+  local cmd="test"
+}
+
+deploy_exporters_prep()
+{
+  mkproj stagingarea
+}
+
+deploy_exporters_sw()
+{
+  deploy_pkg comp cms+exporters
+}
+
+deploy_exporters_post()
+{
+  case $host in vocms073[89] | vocms0740) disable ;; * ) enable ;; esac
+  (mkcrontab
+   echo "@reboot sudo bashs -l -c \"$project_config/manage sysboot 'I did read documentation'\""
+  ) | crontab -
+}

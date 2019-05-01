@@ -63,13 +63,18 @@ server.workspace('DQMContent', 19, 'Tracker', 'PixelPhase1', '^PixelPhase1/', ''
                   'PixelPhase1/Layouts/31 - ntracks',
                   'PixelPhase1/Layouts/32 - Charge and size',
                   'PixelPhase1/Layouts/33a - Cluster on track charge per Inner Ladders',
-                  'PixelPhase1/Layouts/33b - Cluster on track charge per Outer Ladders',  
+                  'PixelPhase1/Layouts/33b - Cluster on track charge per Outer Ladders',
+                  'PixelPhase1/Layouts/33c - Cluster charge (on-track) per Disk',
                   #'PixelPhase1/Layouts/33 - Cluster on track and vertices per lumi',
                   'PixelPhase1/Layouts/34 -  Ontrack PXLayer',
                   'PixelPhase1/Layouts/35 - Ontrack Disk',
                   'PixelPhase1/Layouts/38 - PixelPhase1 Residuals',
                   'PixelPhase1/Layouts/39a - ClusterSize Vs Eta (OnTrack) inner',
                   'PixelPhase1/Layouts/39b - ClusterSize Vs Eta (OnTrack) outer',
+                  'PixelPhase1/Layouts/40a - Cluster size (on-track) per Ladders',
+                  'PixelPhase1/Layouts/40b - Cluster size (on-track) per Disk',
+                  'PixelPhase1/Layouts/41a - Dead Channels per ROC per Barrel Layer',
+                  'PixelPhase1/Layouts/41b - Dead Channels per ROC per Forward Ring',
                 )
 
 server.workspace('DQMContent', 20, 'Tracker', 'Pixel', '^Pixel/', '',
@@ -92,6 +97,7 @@ server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^SiStrip/', '',
                  'SiStrip/Layouts/04 - OnTrackCluster (StoN)',
                  'SiStrip/Layouts/05 - OffTrackCluster (Total Number)',
                  'SiStrip/Layouts/06a - FED Errors vs FED ID',
+                 'SiStrip/Layouts/29 - Cluster & Digi occupancy per FED',
                 )
 
 # Calorimeter workspaces:
@@ -182,20 +188,10 @@ server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')
 server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
 
 # CTPPS workspaces:
-server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/', 'CTPPS/TrackingStrip/Layouts')
-server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/TrackingPixel/', '',
-                 'CTPPS/TrackingPixel/Layouts/4 fired ROCs per BX',
-                 'CTPPS/TrackingPixel/Layouts/5 fired planes per BX',
-                 'CTPPS/TrackingPixel/Layouts/ROCs hits multiplicity per event',
-                 'CTPPS/TrackingPixel/Layouts/ROCs_hits_multiplicity_per_event vs LS',
-                 'CTPPS/TrackingPixel/Layouts/number of fired planes per event',
-                 'CTPPS/TrackingPixel/Layouts/number of fired aligned_ROCs per event',
-                 'CTPPS/TrackingPixel/Layouts/planes activity',
-                 'CTPPS/TrackingPixel/Layouts/hit multiplicity in planes',
-                 'CTPPS/TrackingPixel/Layouts/hit average multiplicity in planes',
-                 'CTPPS/TrackingPixel/Layouts/hits position:sector 45 station 220_fr_hr',
-                 'CTPPS/TrackingPixel/Layouts/hits position:sector 56 station 220_fr_hr',
-)
+server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')
+server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/(TrackingPixel|common)/', 'CTPPS/TrackingPixel/Layouts')
+server.workspace('DQMContent', 52, 'CTPPS', 'TimingDiamond', '^CTPPS/(TimingDiamond|common)/', 'CTPPS/TimingDiamond/Layouts')
+server.workspace('DQMContent', 53, 'CTPPS', 'TimingFastSilicon', '^CTPPS/(TimingFastSilicon|common)/', 'CTPPS/TimingFastSilicon/Layouts')
 
 
 # POG workspaces:
@@ -217,7 +213,8 @@ server.workspace('DQMContent', 63, 'POG', 'Btag', '^Btag/', '',
 
 server.workspace('DQMContent', 64, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonitor|OfflinePV)/', '',
                  'Tracking/Layouts/01 - Tracking ReportSummary',
-                 'Tracking/Layouts/02 - Tracks (pp collisions)',
+                 'Tracking/Layouts/02a - Tracks (pp collisions)',
+		 'Tracking/Layouts/02b - Total Hits Strip and Pixel (pp collisions)',
                  'Tracking/Layouts/03 - Tracks (Cosmic Tracking)',
                  'Tracking/Layouts/04 - Tracks (HI run)',
                  'Tracking/Layouts/06 - Number of Seeds (pp collisions)',

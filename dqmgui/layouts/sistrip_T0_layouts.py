@@ -340,4 +340,26 @@ sistriplayout(dqmitems, "27 - APVe Timing",
 sistriplayout(dqmitems, "28 Strip Clusters Vs Pixel Clusters",
  [{ 'path': "SiStrip/MechanicalView/StripClusVsPixClus",
      'description': "Total number of clusters in Strip versus the total number of clusters in Pixels", 'draw': { 'withref': "no" }}])
+sistriplayout(dqmitems, "29 - Cluster Charge per CM (On-Track)",
+  [{ 'path': "SiStrip/MechanicalView/TIB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TIB",
+     'description': "Charge per CM TIB ", 'draw': { 'withref': "yes" }},
+   { 'path': "SiStrip/MechanicalView/TOB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TOB",
+     'description': "Charge per CM TOB", 'draw': { 'withref': "yes" }}],
+   [{ 'path': "SiStrip/MechanicalView/TID/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__MINUS",
+     'description': "Charge per CM TID MINUS ", 'draw': { 'withref': "yes" }},
+   { 'path': "SiStrip/MechanicalView/TID/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__PLUS",
+     'description': "Charge per CM TID PLUS  ", 'draw': { 'withref': "yes" }}],
+  [{ 'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__MINUS",
+     'description': "Charge per CM TEC MINUS  ", 'draw': { 'withref': "yes" }},
+   { 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__PLUS",
+     'description': "Charge per CM TEC PLUS ", 'draw': { 'withref': "yes" }}])
+
+
+
+
 #  LocalWords:  TotalNumberOfClusterProfile
+sistriplayout(dqmitems, "29 - Cluster & Digi occupancy per FED",
+ [{ 'path': "SiStrip/MechanicalView/NumberOfDigisinFED_v_FEDID",
+    'description': "Digi occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }},
+  { 'path': "SiStrip/MechanicalView/NumberOfClustersinFED_v_FEDID",
+    'description': "Cluster occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }}])

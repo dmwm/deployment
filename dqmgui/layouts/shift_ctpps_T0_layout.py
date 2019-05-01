@@ -5,7 +5,7 @@ stations = [ "sector 45/station 210", "sector 56/station 210" ]
 units = [ "nr", "fr" ]
 
 sectors = [ "sector 45", "sector 56" ]
-pixstations = [ "sector 45/station 220/", "sector 56/station 220/" ]
+pixelstations = [ "station 210", "station 220" ]
 pix_planes  = [ "0","1","2" ]
 pix_planes2 = [ "3","4","5" ]
 
@@ -50,27 +50,82 @@ for suffix in [ " (short)" ]:
 # 	CTPPS Pixel
 ###
 
-for plot in ["ROCs_hits_multiplicity_per_event vs LS","number of fired planes per event"]:
+for sector in sectors:
   rows = list()
-  for station in pixstations:
+  for station in pixelstations:
     row = list()
-    row.append("CTPPS/TrackingPixel/"+station+"fr_hr/"+plot)
+    row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/"+
+	"ROCs_hits_multiplicity_per_event vs LS")
     rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, "ROC hits per event vs LS "+sector, *rows)
+
+
+for plot in ["number of fired planes per event","track intercept point","number of tracks per event"]:
+  rows = list()
+  row = list()
+  for station in pixelstations:
+    row.append("CTPPS/TrackingPixel/sector 45/"+station+"/fr_hr/"+plot)
+  rows.append(row)
+
+  row = list()
+  for station in pixelstations:
+    row.append("CTPPS/TrackingPixel/sector 56/"+station+"/fr_hr/"+plot)
+  rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
 for plot in ["hits position"]:
   for sector in sectors:
-    rows = list()
+    for station in pixelstations:
+      rows = list()
+      row = list()
+      for plane in pix_planes:
+        hit_pos = "CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot
+        row.append( { "path": hit_pos, 'draw':{'ztype':"log"} } )
+      rows.append(row)
+
+      row = list()
+      for plane in pix_planes2:
+        hit_pos = "CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/plane_"+plane+"/"+plot
+        row.append( { "path": hit_pos, 'draw':{'ztype':"log"} } )
+      rows.append(row)
+
+      CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
+
+####################################################################################################
+# Diamond layouts
+####################################################################################################
+
+diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
+
+def CTPPSTimingDiamondLayout(i, p, *rows): i["00 Shift/CTPPS/TimingDiamond/" + p] = DQMItem(layout=rows)
+
+# layouts with no overlays
+TimingPlots = [ "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "HPTDC Errors" ]
+TimingDrawOpt = [ {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'drawopts':"colztext"} ]
+TimingDescription = [ "It should be with peaks at 0 and 4", 'Most of the event should be in "both"',
+    "It should be peaked around 5 ns", "It should be a broad distribution peaked around 12 ns",
+    "It should be full", 'It should be similar to "hits in planes"', "It should be empty" ]
+
+for i in range(len(TimingPlots)):
+  rows = list()
+  for station in diamond_stations:
     row = list()
-    for plane in pix_planes:
-      row.append("CTPPS/TrackingPixel/"+sector+"/station 220/fr_hr/plane_"+plane+"/"+plot)
+    path_str = "CTPPS/TimingDiamond/"+station+"/"+TimingPlots[i]
+    row.append( { "path" : path_str, 'draw':TimingDrawOpt[i], 'description':TimingDescription[i] } )
     rows.append(row)
 
-    row = list()
-    for plane in pix_planes2:
-      row.append("CTPPS/TrackingPixel/"+sector+"/station 220/fr_hr/plane_"+plane+"/"+plot)
-    rows.append(row)
+  CTPPSTimingDiamondLayout(dqmitems, TimingPlots[i], *rows)
 
-    CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" station 220_fr_hr", *rows)
 
+# Efficiency display for all planes
+rows = list()
+for station in diamond_stations:
+  row = list()
+  for plane in range(4):
+    hist_lead = "CTPPS/TimingDiamond/"+station+"/plane {plane_id}/Efficiency wrt pixels".format(plane_id=plane)
+    row.append( { "path": hist_lead, 'draw':{'drawopts':"colz"}, 'description':"It should have most of the bins to 1 or 0 outside the sensor" } )
+  rows.append(row)
+
+  CTPPSTimingDiamondLayout(dqmitems, "efficiency", *rows)

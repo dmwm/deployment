@@ -116,7 +116,7 @@ system_groups_and_accounts()
             T:100021:_base      T:100022:_couchdb     T:100023:_das          \
             T:100024:_dbs       T:100026:_dqmgui      T:100027:_filemover    \
             T:100028:_overview  T:100029:_phedex      T:100030:_sitedb       \
-            T:100031:_t0mon     T:100032:_mongodb     T:100033:_reqmgr       \
+            T:100031:_t0mon     T:100032:_mongodb                            \
             T:100034:_workqueue T:100035:_configcache T:100037:_t0datasvc    \
             T:100038:_reqmon    T:100039:_crabserver  T:100040:_crabcache    \
             T:100041:_dmwmmon   T:100042:_an_reqmgr   T:100043:_an_workqueue \
@@ -125,7 +125,7 @@ system_groups_and_accounts()
             T:100050:_gitweb    T:100051:_bigcouch    T:100052:_victorweb    \
             T:100053:_popdbweb  T:100054:_dcafpilot   T:100055:_confdb       \
             T:100056:_wmarchive T:100057:_phedexreplicamonitoring            \
-            T:1000058:_reqmgr2ms; do
+            T:1000058:_reqmgr2ms T:1000059:_tfaas     T:1000060:_exporters; do
     add_local_group $(echo $ng | tr : " ")
   done
 
@@ -146,7 +146,6 @@ system_groups_and_accounts()
   add_local_user 100030 _sitedb      ,_config "SiteDB App"
   add_local_user 100031 _t0mon       ,_config "T0Mon App"
   add_local_user 100032 _mongodb     ,_config "MongoDB App"
-  add_local_user 100033 _reqmgr      ,_config "ReqMgr App"
   add_local_user 100034 _workqueue   ,_config "WorkQueue App"
   add_local_user 100035 _configcache ,_config "ConfigCache App"
   add_local_user 100037 _t0datasvc   ,_config "T0DataSvc App"
@@ -171,6 +170,8 @@ system_groups_and_accounts()
   add_local_user 100056 _wmarchive   ,_config "WMArchive App"
   add_local_user 100057 _phedexreplicamonitoring  ,_config "PhedexReplicaMonitoring App"
   add_local_user 1000058 _reqmgr2ms    ,_config "ReqMgr2 MicroService App"
+  add_local_user 1000059 _tfaas    ,_config "TFaaS MicroService App"
+  add_local_user 1000060 _exporters    ,_config "Prometheus exporters"
 
   # Restart nscd to flush account changes. Current account will _not_
   # see these changes before logout/login however, so commands below

@@ -7,6 +7,7 @@ deploy_phedex_deps()
 deploy_phedex_prep()
 {
   mkproj sessions cache/phedex-datasvc
+  mkproj cric-json
 }
 
 deploy_phedex_sw()
@@ -75,8 +76,17 @@ deploy_phedex_post()
 
   (mkcrontab; sysboot
    cmd="$project_config/trim-cache $PWD/cache/phedex-datasvc 1G"
+   api1="$project_config/mkauthmap -c $project_config/mkauth.conf -o $PWD/cric-json/group-responsibilities.json"
+   api2="$project_config/mkauthmap -c $project_config/mkauth.conf -o $PWD/cric-json/people.json"
+   api3="$project_config/mkauthmap -c $project_config/mkauth.conf -o $PWD/cric-json/site-names.json"
+   api4="$project_config/mkauthmap -c $project_config/mkauth.conf -o $PWD/cric-json/site-responsibilities.json"
    $nogroups || cmd="sudo -H -u _phedex bashs -c '$cmd'"
-   [ ! -f $root/enabled/$project ] || echo "0 */3 * * * $cmd") | crontab -
+   [ ! -f $root/enabled/$project ] || echo "0 */3 * * * $cmd"
+   [ ! -f $root/enabled/$project ] || echo "*/4 * * * * sudo -H -u _phedex bashs -c '$api1'"
+   [ ! -f $root/enabled/$project ] || echo "*/4 * * * * sudo -H -u _phedex bashs -c '$api2'"
+   [ ! -f $root/enabled/$project ] || echo "*/4 * * * * sudo -H -u _phedex bashs -c '$api3'"
+   [ ! -f $root/enabled/$project ] || echo "*/4 * * * * sudo -H -u _phedex bashs -c '$api4'"
+   ) | crontab -
 
   if $nogroups; then
     rm -fr cache/phedex-datasvc/*

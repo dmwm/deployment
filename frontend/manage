@@ -16,36 +16,36 @@
 
 ME=$(basename $(dirname $0))
 TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
 STATEDIR=$TOP/state/$ME
 
-# Detect if we're in single user mode
-case $(uname) in
-  Linux ) t="/etc/rc.d/init.d/httpd";;
-  Darwin) t="/Library/LaunchDaemons/ch.cern.cms.httpd.plist";;
-esac
-[ "$t" -ef "$STATEDIR/etc/httpd" ] && groups=true || groups=false
+# x509-scitokens-issuer settings
+export X509_SCITOKENS_ISSUER_CONFIG=$STATEDIR/x509_scitokens_issuer/x509_scitokens_issuer_app.json
+export X509_SCITOKENS_ISSUER_INSTANCE_PATH=$STATEDIR/x509_scitokens_issuer
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$STATEDIR/libs:/usr/lib64
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+# Detect if we have system httpd daemon
+if [ -f /usr/sbin/apachectl ]; then
+    sudo /usr/sbin/apachectl stop
+fi
 
 case ${1:-status} in
   status | graceful | stop | configtest )
-    if $groups; then
-      case $(uname) in
-        Linux  ) sudo /sbin/service httpd $1 ;;
-        Darwin ) sudo $STATEDIR/etc/httpd $1 ;;
-      esac
-    else
-      $STATEDIR/etc/httpd $1
-    fi
+    $STATEDIR/etc/httpd $1
     ;;
 
   start | restart )
-    if $groups; then
-      case $(uname) in
-        Linux  ) sudo /sbin/service httpd restart ;;
-        Darwin ) for a in unload load; do sudo launchctl $a -w $t; done ;;
-      esac
-    else
-      $STATEDIR/etc/httpd restart
+    echo "stopping httpd service ..."
+    $STATEDIR/etc/httpd stop
+    ipids=`ipcs -s | awk '/apache|frontend/ {print $2}'`
+    if [ -n "$ipids" ]; then
+        echo "for i in $ipids; do (sudo ipcrm -s $i); done"
+        for i in `ipcs -s | awk '/apache/ {print $2}'`; do (sudo ipcrm -s $i); done
     fi
+    echo "restarting httpd service ..."
+    $STATEDIR/etc/httpd restart
     ;;
 
   help )

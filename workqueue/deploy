@@ -19,20 +19,42 @@ deploy_workqueue_sw()
   deploy_pkg \
     -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+    -a WorkQueueSecrets.py:workqueue/WorkQueueSecrets.py \
     comp cms+workqueue
 
   if grep -rq "replace me" $project_auth; then
     note "WARNING: replace certificates in $project_auth with real ones"
   else :; fi
 
+  # use rucio testbed for anything that is not production
+  rucio_host_url=http://cms-rucio-testbed.cern.ch
+  rucio_auth_url=https://cms-rucio-tb-authz.cern.ch
   case $variant in
-    prod )    base_url="https://cmsweb.cern.ch"         ;;
-    preprod ) base_url="https://cmsweb-testbed.cern.ch" ;;
-    dev )     base_url="https://cmsweb-dev.cern.ch"     ;;
-    * )       base_url="https://`hostname -f`"          ;;
+    prod )
+        base_url="https://cmsweb.cern.ch"
+        rucio_host_url=http://cms-rucio.cern.ch
+        rucio_auth_url=https://cms-rucio-authz.cern.ch
+        ;;
+    preprod )
+        base_url="https://cmsweb-testbed.cern.ch"
+        ;;
+    dev )
+        base_url="https://cmsweb-dev.cern.ch"
+        ;;
+    * )
+        base_url="https://`hostname -f`"
+        ;;
   esac
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g;" \
        $root/$cfgversion/config/$project/config.py
+
+  # setup rucio configuration file
+  mkdir -p $root/$cfgversion/config/$project/etc
+  mv $root/$cfgversion/config/$project/rucio.cfg $root/$cfgversion/config/$project/etc/
+  perl -p -i -e "s{RUCIO_HOST_OVERWRITE}{$rucio_host_url}g; \
+                 s{RUCIO_AUTH_OVERWRITE}{$rucio_auth_url}g" \
+       $root/$cfgversion/config/$project/etc/rucio.cfg
+
 }
 
 deploy_workqueue_post()
@@ -60,5 +82,9 @@ deploy_workqueue_auth()
       echo "replace me with your dmwm service certificate" ;;
     */*-key.pem )
       echo "replace me with your dmwm service key" ;;
+    */WorkQueueSecrets.py )
+      echo 'USER_AMQ = "FOO_FIXME"'
+      echo 'PASS_AMQ = "BAR_FIXME"'
+      echo 'AMQ_TOPIC = "FOOBAR_FIXME"' ;;
   esac
 }
