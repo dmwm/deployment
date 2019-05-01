@@ -22,7 +22,7 @@ deploy_wmarchive_sw()
 
 deploy_wmarchive_post()
 {
-  case $host in vocms013[689] | vocms073[89] | vocms0143 | vocms074[012] | vocms016[135] ) disable ;; * ) enable ;; esac
+  case $host in vocms013[689] | vocms073[89] | vocms0143 | vocms074[012] | vocms016[135] | vocms0766 ) disable ;; * ) enable ;; esac
   (mkcrontab
    sysboot
    for action in migrate2hdfs:'*/10 0-23 * * *' aggregate-fwjr:'0 1,3,5,7,9,11,13,15,17,19,21,23 * * *' aggregate-crab:'0 0,2,4,6,8,10,12,14,16,18,20,22 * * *' cleanup:'0 2 * * *'; do
