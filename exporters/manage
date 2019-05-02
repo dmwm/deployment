@@ -115,7 +115,7 @@ start()
     vocms0740 | vocms0741 | vocms0742 )
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
-            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
+            -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
@@ -165,7 +165,7 @@ start()
         # start CouchDB exporter
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
-            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
+            -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
