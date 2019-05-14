@@ -67,7 +67,7 @@ for viewname, access in [('DBSReader','reader')]:
       dbconf.dbowner = db_mapping[instance_name][0]['databaseOwner']
       dbconf.version = DBSVERSION
       dbconf.connectUrl = db_mapping[instance_name][0]['connectUrl'][access]
-      dbconf.engineParameters = {'pool_size': 15, 'max_overflow': 10, 'pool_timeout': 200}
+      dbconf.engineParameters = {'pool_size': 30, 'max_overflow': 10, 'pool_timeout': 200}
       seconf = secinst.section_(instance_name)
       if instance_name in view_mapping[VARIANT][viewname]:
         seconf.params = db_mapping[instance_name][1][access]
