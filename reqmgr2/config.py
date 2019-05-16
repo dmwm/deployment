@@ -28,6 +28,9 @@ config = Configuration()
 main = config.section_("main")
 srv = main.section_("server")
 srv.thread_pool = 30
+# The maximum number of requests which will be queued up before
+# the server refuses to accept it (default -1, meaning no limit).
+srv.accepted_queue_size = -1
 main.application = "reqmgr2"
 main.port = 8246 # main application port it listens on
 main.index = "ui"

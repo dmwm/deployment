@@ -9,6 +9,9 @@ conf = Configuration()
 main = conf.section_('main')
 srv = main.section_('server')
 srv.thread_pool = 25
+# The maximum number of requests which will be queued up before
+# the server refuses to accept it (default -1, meaning no limit).
+srv.accepted_queue_size = -1
 main.application = 'crabserver'
 main.port = 8270
 main.index = 'data'
