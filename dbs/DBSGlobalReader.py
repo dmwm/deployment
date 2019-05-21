@@ -33,7 +33,11 @@ config.SecurityModule.key_file = os.path.join(ROOTDIR, 'auth/wmcore-auth/header-
 config.component_('Webtools')
 config.Webtools.port = 8252
 config.Webtools.thread_pool = 30
-config.Webtools.accepted_queue_size = 100
+# The maximum number of requests which will be queued up before
+# the server refuses to accept it (default -1, meaning no limit).
+config.Webtools.accepted_queue_size = -1
+# enable CherryPy statistics monitoring
+config.Webtools.cpstats = False
 config.Webtools.log_screen = False
 config.Webtools.proxy_base = 'True'
 config.Webtools.application = 'dbs'

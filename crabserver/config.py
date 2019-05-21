@@ -17,7 +17,10 @@ main.port = 8270
 main.index = 'data'
 
 main.authz_defaults = { 'role': None, 'group': None, 'site': None }
-main.section_('tools').section_('cms_auth').key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
+tools = main.section_("tools")
+# provide CherryPy monitoring under the `stats` API
+tools.section_("cpstats").on = False
+tools.section_('cms_auth').key_file = "%s/auth/wmcore-auth/header-auth-key" % __file__.rsplit('/', 3)[0]
 
 app = conf.section_('crabserver')
 app.admin = 'cms-service-webtools@cern.ch'

@@ -40,8 +40,10 @@ main.authz_defaults = {"role": None, "group": None, "site": None}
 #set default logging (prevent duplicate)
 main.log_screen = True
 
-sec = main.section_("tools").section_("cms_auth")
-sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
+tools = main.section_("tools")
+# provide CherryPy monitoring under: <hostname>/reqmgr2/data/stats
+tools.section_("cpstats").on = False
+tools.section_("cms_auth").key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 
 # this is where the application will be mounted, where the REST API
 # is reachable and this features in CMS web frontend rewrite rules
