@@ -28,6 +28,10 @@ config = Configuration()
 main = config.section_("main")
 srv = main.section_("server")
 srv.thread_pool = 30
+# The maximum number of requests which will be queued up before
+# the server refuses to accept it (default -1, meaning no limit).
+srv.accepted_queue_size = -1
+srv.accepted_queue_timeout = 0
 main.application = "reqmgr2"
 main.port = 8246 # main application port it listens on
 main.index = "ui"
@@ -37,8 +41,10 @@ main.authz_defaults = {"role": None, "group": None, "site": None}
 #set default logging (prevent duplicate)
 main.log_screen = True
 
-sec = main.section_("tools").section_("cms_auth")
-sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
+tools = main.section_("tools")
+# provide CherryPy monitoring under: <hostname>/reqmgr2/data/stats
+tools.section_("cpstats").on = False
+tools.section_("cms_auth").key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 
 # this is where the application will be mounted, where the REST API
 # is reachable and this features in CMS web frontend rewrite rules
