@@ -30,4 +30,4 @@
 ^/auth/complete/scheddmon/0197/ vocms0197.cern.ch
 ^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
-^ vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch
+^ vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch
