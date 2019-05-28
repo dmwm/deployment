@@ -29,20 +29,25 @@ deploy_reqmgr2ms_sw()
   case $variant in
     prod )
         base_url="https://cmsweb.cern.ch"
+        dbs_ins="prod"
         rucio_host_url=http://cms-rucio.cern.ch
         rucio_auth_url=https://cms-rucio-authz.cern.ch
         ;;
     preprod )
         base_url="https://cmsweb-testbed.cern.ch"
+        dbs_ins="int"
         ;;
     dev )
         base_url="https://cmsweb-dev.cern.ch"
+        dbs_ins="dev"
         ;;
     * )
         base_url="https://`hostname -f`"
+        dbs_ins="private_vm"
         ;;
   esac
-  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g" \
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
+                 s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
        $root/$cfgversion/config/$project/config.py
 
   # setup rucio configuration file

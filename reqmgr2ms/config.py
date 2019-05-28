@@ -8,7 +8,8 @@ from WMCore.Configuration import Configuration
 # globals
 HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
-LOG_REPORTER = "reqmgr2-ms"
+DBS_INS = "@@DBS_INS@@"
+LOG_REPORTER = "reqmgr2ms"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 
 if BASE_URL == "https://cmsweb.cern.ch":
@@ -51,7 +52,13 @@ ui.static = ROOTDIR
 data = views.section_('data')
 data.object = 'WMCore.MicroService.Service.RestApiHub.RestApiHub'
 data.manager = 'WMCore.MicroService.Unified.Transferor.UnifiedTransferorManager'
-data.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
+data.readOnly = True
 data.verbose = True
 data.interval = 600
 data.rucioAccount = RUCIO_ACCT
+# if private_vm, just fallback to preprod DBS
+if DBS_INS == "private_vm":
+    data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
+else:
+    data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)

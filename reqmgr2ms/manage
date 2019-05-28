@@ -67,8 +67,6 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  echo "X509_USER_CERT=$X509_USER_CERT"
-  echo "X509_USER_KEY=$X509_USER_KEY"
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
 }
 
