@@ -93,7 +93,7 @@ start()
         wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18254" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
-        cpy_exporter -uri http://localhost:8254/stats -address ":19254" \
+        cpy_exporter -uri http://localhost:8254/dbs/stats -address ":19254" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_cpy_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18255" 15 \
@@ -155,7 +155,7 @@ start()
         wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18254" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
-        cpy_exporter -uri http://localhost:8254/stats -address ":19254" \
+        cpy_exporter -uri http://localhost:8254/dbs/stats -address ":19254" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_cpy_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18255" 15 \
