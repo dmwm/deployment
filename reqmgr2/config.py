@@ -123,7 +123,7 @@ ui_main.application = ui.index
 
 extentions = config.section_("extensions")
 # Production instance of wmdatamining, must be a production back-end
-if HOST.startswith("vocms0136") or HOST.startswith("vocms0132") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0766") or HOST.startswith("vocms0132") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
 #     wmdatamining = extentions.section_("wmdatamining")
 #     wmdatamining.object = "WMCore.ReqMgr.CherryPyThreads.WMDataMining.WMDataMining"
 #     wmdatamining.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
@@ -161,7 +161,7 @@ if HOST.startswith("vocms0136") or HOST.startswith("vocms0132") or HOST.startswi
     parentageFixTask.central_logdb_url = LOG_DB_URL
     parentageFixTask.log_reporter = LOG_REPORTER
 
-if HOST.startswith("vocms0161") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     # status change task 
     statusChangeTasks = extentions.section_("statusChangeTasks")
     statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
@@ -195,7 +195,7 @@ if HOST.startswith("vocms0161") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
     # AMQ MonIT settings
-    if HOST.startswith("vocms0161") or HOST.startswith("vocms0731"):
+    if HOST.startswith("vocms0766") or HOST.startswith("vocms0731"):
         heartbeatMonitor.post_to_amq = True
     else:
         heartbeatMonitor.post_to_amq = False
