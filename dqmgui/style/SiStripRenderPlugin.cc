@@ -223,6 +223,23 @@ private:
         obj->SetOption("colz");
 	return;
       }
+
+	 if( o.name.find( "Foldingmap" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+	return;
+      }
+	
+	 if( o.name.find( "ControlView" )  != std::string::npos) 
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        return;
+      }
+
 	
 	 if( o.name.find( "ControlView" )  != std::string::npos) 
       {
@@ -263,7 +280,6 @@ private:
         obj->SetOption("colz");
 	return;
       }
-
 
       if( o.name.find( "TracksVs" )  != std::string::npos)
       {
@@ -338,6 +354,7 @@ private:
 
       // This applies to all
       gStyle->SetOptStat(1110);
+
       //  if ( obj->GetMaximum(1.e5) > 0. ) {
       //    gPad->SetLogy(1);
       //  } else {
@@ -353,6 +370,12 @@ private:
       ya->SetTitleOffset(0.7);
       ya->SetTitleSize(0.04);
       ya->SetLabelSize(0.04);
+
+
+       if( o.name.find( "Ratio" )  != std::string::npos)
+	{
+	      obj->SetOption("e");
+	}
 
       if( o.name.find( "Summary_MeanNumberOfDigis" )  != std::string::npos)
       {

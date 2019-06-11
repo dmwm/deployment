@@ -216,8 +216,11 @@ server.workspace('DQMContent', 64, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonito
                  'Tracking/Layouts/02a - Tracks (pp collisions)',
 		 'Tracking/Layouts/02b - Total Hits Strip and Pixel (pp collisions)',
                  'Tracking/Layouts/03 - Tracks (Cosmic Tracking)',
-                 'Tracking/Layouts/04 - Tracks (HI run)',
-                 'Tracking/Layouts/06 - Number of Seeds (pp collisions)',
+		 'Tracking/Layouts/05 - Number of Seeds (pp collisions)',
+		 'Tracking/Layouts/06 - Tracks resolution',
+		 'Tracking/Layouts/06a - Tracks quality',
+		 'Tracking/Layouts/07 - Vertex reconstruction',
+		 'Tracking/Layouts/08 - Tracking Efficiency',
                 )
 
 server.workspace('DQMContent', 65, 'POG', 'Tau', '^RecoTauV/', '',
