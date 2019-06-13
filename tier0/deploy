@@ -17,4 +17,9 @@ deploy_tier0_sw()
 
   mkdir -p $root/$cfgversion/config/couchdb
   cp -f $couchdb_ini $root/$cfgversion/config/couchdb
+
+  mkdir -p $root/$cfgversion/config/rucio/etc
+  local rucio_config=$root/$cfgversion/config/tier0/rucio.cfg
+  cp -f $rucio_config $root/$cfgversion/config/rucio/etc/
+
 }
