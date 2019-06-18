@@ -101,6 +101,14 @@ start()
         wait4proc "DBSMigrate" # check for pattern that DBS is running
         process_monitor.sh ".*DBSMigrate" dbs_migrate_exporter ":18251" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start crabserver exporter
+        wait4proc "crabserver" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start reqmgr2 exporter
+        wait4proc "reqmgr2" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/reqmgr2/pid reqmgr2 ":18240" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr2_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     # DAS/MongoDB exporters on production nodes
@@ -175,6 +183,14 @@ start()
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
             -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start crabserver exporter
+        wait4proc "crabserver" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        # start reqmgr2 exporter
+        wait4proc "reqmgr2" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/reqmgr2/pid reqmgr2 ":18240" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr2_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     *)
