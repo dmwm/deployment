@@ -78,7 +78,7 @@ for viewname, access in [('DBSMigrate','writer')]:
     secinst=view.security.section_('instances')
     for instance_name in config.dbs.instances:
       dbconf = dbinst.section_(instance_name)
-      dbconf.throllting_limit = 20
+      dbconf.throllting_limit = 15
       #dbconf.throllting_time = 1
       dbconf.dbowner = db_mapping[instance_name][0]['databaseOwner']
       dbconf.version = DBSVERSION
