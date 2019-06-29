@@ -312,91 +312,26 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 #                )
 
 
-
-
-server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
-#                  'GEM/Layouts/00 eta',
-#                  'GEM/Layouts/01 phi',
-#                  'GEM/Layouts/02 recHit per VFAT',
-#                  'GEM/Layouts/03 VFAT vs ClusterSize',
-#                  'GEM/Layouts/04 FiredStrips',
-#                  'GEM/Layouts/05 DigiStrips', 
-                 'GEM/Layouts/00 StatusDigi Critical Errors',
-                 'GEM/Layouts/01 StatusDigi Warnings',
-                 'GEM/Layouts/02 GEMINI01la1',
-                 'GEM/Layouts/03 GEMINI01la2',
-                 'GEM/Layouts/04 GEMINI27la1',
-                 'GEM/Layouts/05 GEMINI27la2',
-                 'GEM/Layouts/06 GEMINI28la1',
-                 'GEM/Layouts/07 GEMINI28la2',
-                 'GEM/Layouts/08 GEMINI29la1',
-                 'GEM/Layouts/09 GEMINI29la2',
-                 'GEM/Layouts/10 GEMINI30la1',
-                 'GEM/Layouts/11 GEMINI30la2',
-)
-"""
-                 
-                 'GEM/Layouts/00 eta',
-                 'GEM/Layouts/01 phi',
-                 'GEM/Layouts/2 recHit per VFAT 671088640_la_1',
-                 'GEM/Layouts/3 VFAT vs ClusterSize 671088640_la_1',
-                 'GEM/Layouts/4 FiredStrips 671088640_la_1',
-                 'GEM/Layouts/5 DigiStrips 671088640_la_1',
-                 'GEM/Layouts/6 recHit per VFAT 671088640_la_2',
-                 'GEM/Layouts/7 VFAT vs ClusterSize 671088640_la_2',
-                 'GEM/Layouts/8 FiredStrips 671088640_la_2',
-                 'GEM/Layouts/9 DigiStrips 671088640_la_2',
-                 'GEM/Layouts/10 recHit per VFAT 671095296_la_1',
-                 'GEM/Layouts/11 VFAT vs ClusterSize 671095296_la_1',
-                 'GEM/Layouts/12 FiredStrips 671095296_la_1',
-                 'GEM/Layouts/13 DigiStrips 671095296_la_1',
-                 'GEM/Layouts/14 recHit per VFAT 671095296_la_2',
-                 'GEM/Layouts/15 VFAT vs ClusterSize 671095296_la_2',
-                 'GEM/Layouts/16 FiredStrips 671095296_la_2',
-                 'GEM/Layouts/17 DigiStrips 671095296_la_2',
-                 'GEM/Layouts/18 recHit per VFAT 671095552_la_1',
-                 'GEM/Layouts/19 VFAT vs ClusterSize 671095552_la_1',
-                 'GEM/Layouts/20 FiredStrips 671095552_la_1',
-                 'GEM/Layouts/21 DigiStrips 671095552_la_1',
-                 'GEM/Layouts/22 recHit per VFAT 671095552_la_2',
-                 'GEM/Layouts/23 VFAT vs ClusterSize 671095552_la_2',
-                 'GEM/Layouts/24 FiredStrips 671095552_la_2',
-                 'GEM/Layouts/25 DigiStrips 671095552_la_2',
-                 'GEM/Layouts/26 recHit per VFAT 671095808_la_1',
-                 'GEM/Layouts/27 VFAT vs ClusterSize 671095808_la_1',
-                 'GEM/Layouts/28 FiredStrips 671095808_la_1',
-                 'GEM/Layouts/29 DigiStrips 671095808_la_1',
-                 'GEM/Layouts/30 recHit per VFAT 671095808_la_2',
-                 'GEM/Layouts/31 VFAT vs ClusterSize 671095808_la_2',
-                 'GEM/Layouts/32 FiredStrips 671095808_la_2',
-                 'GEM/Layouts/33 DigiStrips 671095808_la_2',
-                 'GEM/Layouts/34 recHit per VFAT 671096064_la_1',
-                 'GEM/Layouts/35 VFAT vs ClusterSize 671096064_la_1',
-                 'GEM/Layouts/36 FiredStrips 671096064_la_1',
-                 'GEM/Layouts/37 DigiStrips 671096064_la_1',
-                 'GEM/Layouts/38 recHit per VFAT 671096064_la_2',
-                 'GEM/Layouts/39 VFAT vs ClusterSize 671096064_la_2',
-                 'GEM/Layouts/40 FiredStrips 671096064_la_2',
-                 'GEM/Layouts/41 DigiStrips 671096064_la_2',
-)
-"""
-
-
 # GEM workspaces:
-server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
-                 'GEM/Layouts/00 StatusDigi Critical Errors',
-                 'GEM/Layouts/01 StatusDigi Warnings',
-                 'GEM/Layouts/02 GEMINI01la1',
-                 'GEM/Layouts/03 GEMINI01la2',
-                 'GEM/Layouts/04 GEMINI27la1',
-                 'GEM/Layouts/05 GEMINI27la2',
-                 'GEM/Layouts/06 GEMINI28la1',
-                 'GEM/Layouts/07 GEMINI28la2',
-                 'GEM/Layouts/08 GEMINI29la1',
-                 'GEM/Layouts/09 GEMINI29la2',
-                 'GEM/Layouts/10 GEMINI30la1',
-                 'GEM/Layouts/11 GEMINI30la2',
-)
+listGEMLayoutsPre = ["Summary", "AMC status", "GEB input status"]
+listGEMLayouts = [ "%02i %s"%(i, s) for i, s in enumerate(listGEMLayoutsPre) ]
+nIdx = len(listGEMLayouts)
+
+for layer in ["+11", "+12", "-11", "-12"]: 
+  listGEMLayouts.append("%02i Global position GE%s"%(nIdx, layer))
+  nIdx += 1
+
+layers = ["p1_1", "p1_2", "m1_1", "m1_2"]
+GeminisId = [ i + 1 for i in range(30) ]
+
+for i, gemini in enumerate(GeminisId):
+  for layer in layers:
+    strLayerLabel = "GE%s%s%s"%("+" if layer[ 0 ] == "p" else "-", layer[ 1 ], layer[ 3 ])
+    listGEMLayouts.append("%02i GEMINI%02i_%s"%(nIdx, int(GeminisId[ i ]), strLayerLabel))
+    nIdx += 1
+
+strListGEMLayouts = ", ".join([ "'GEM/Layouts/%s'"%s for s in listGEMLayouts ])
+eval("server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '', %s)"%strListGEMLayouts)
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')

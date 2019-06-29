@@ -1,4 +1,6 @@
 #include "DQM/DQMRenderPlugin.h"
+ 
+#include "GEMRenderPlugin_SummaryChamber.h"
 
 #include "TH1F.h"
 #include "TH2F.h"
@@ -10,6 +12,9 @@
 
 class GEMRenderPlugin : public DQMRenderPlugin
 {
+  private: 
+    SummaryChamber summaryCh;
+  
 	public:
 		virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &) override
 		{
@@ -22,6 +27,8 @@ class GEMRenderPlugin : public DQMRenderPlugin
 		virtual void preDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & ) override
 		{
 			c->cd();
+      
+      gStyle->SetOptStat(10);
 
 			if (dynamic_cast<TH1F*>(o.object))
 				preDrawTH1F(c, o);
@@ -33,6 +40,25 @@ class GEMRenderPlugin : public DQMRenderPlugin
 		virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & ) override
 		{
 			c->cd();
+      
+      gStyle->SetOptStat(10);
+      
+      if ( o.name.rfind("summary_statusChamber") != std::string::npos ||
+           o.name.rfind("reportSummaryMap")      != std::string::npos ) {
+        TH2* obj2 = dynamic_cast<TH2*>(o.object);
+			  //assert(obj2);
+        if ( obj2 == NULL ) return;
+        
+        summaryCh.drawStats(obj2);
+        
+        //obj2->SetStats(false);
+        gStyle->SetOptStat("e");
+        obj2->SetOption("");
+        gPad->SetGridx();
+        gPad->SetGridy();
+        
+        return;
+      }
 			
 			if (dynamic_cast<TH1F*>(o.object))
 				postDrawTH1F(c, o);
@@ -54,6 +80,8 @@ class GEMRenderPlugin : public DQMRenderPlugin
 
 			TH1F* obj = dynamic_cast<TH1F*>(o.object);
 			assert(obj);
+      
+      //obj->SetStats(false);
 
 			if (setColor)
 				obj->SetLineColor(2);
@@ -65,18 +93,34 @@ class GEMRenderPlugin : public DQMRenderPlugin
 		{
 			TH2F* obj = dynamic_cast<TH2F*>(o.object);
 			assert(obj);
-
+      
 			obj->SetOption("colz");
+      //obj->SetStats(false);
+      
+      gPad->SetGridx();
+      gPad->SetGridy();
 		}
 
-		void postDrawTH1F(TCanvas *c, const VisDQMObject &)
+		void postDrawTH1F(TCanvas *c, const VisDQMObject &o)
 		{
+			TH1F* obj = dynamic_cast<TH1F*>(o.object);
+			assert(obj);
+      
+      //obj->SetStats(false);
 			c->SetGridx();
 			c->SetGridy();
 		}
 
-		void postDrawTH2F(TCanvas *c, const VisDQMObject &)
+		void postDrawTH2F(TCanvas *c, const VisDQMObject &o)
 		{
+			TH2F* obj = dynamic_cast<TH2F*>(o.object);
+			assert(obj);
+      
+      if ( o.name.find("GEM/StatusDigi") != std::string::npos ) {
+        obj->SetStats(false);
+      }
+      
+      //obj->SetStats(false);
 			c->SetGridx();
 			c->SetGridy();
 		}
