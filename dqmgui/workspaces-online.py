@@ -311,8 +311,10 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 #                 'GEM/Layouts/01 recHit',
 #                )
 
+################################################################################
+# GEM workspace: start
+################################################################################
 
-# GEM workspaces:
 listGEMLayoutsPre = ["Summary", "AMC status", "GEB input status"]
 listGEMLayouts = [ "%02i %s"%(i, s) for i, s in enumerate(listGEMLayoutsPre) ]
 nIdx = len(listGEMLayouts)
@@ -332,6 +334,10 @@ for i, gemini in enumerate(GeminisId):
 
 strListGEMLayouts = ", ".join([ "'GEM/Layouts/%s'"%s for s in listGEMLayouts ])
 eval("server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '', %s)"%strListGEMLayouts)
+
+################################################################################
+# GEM workspace: end
+################################################################################
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')
