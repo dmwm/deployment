@@ -315,20 +315,23 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 # GEM workspace: start
 ################################################################################
 
+GeminisId = [ i + 1 for i in range(36) ]
+listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
+
+
+layersWithTitle = [ [ s, "%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
+
 listGEMLayoutsPre = ["Summary", "AMC status", "GEB input status"]
 listGEMLayouts = [ "%02i %s"%(i, s) for i, s in enumerate(listGEMLayoutsPre) ]
 nIdx = len(listGEMLayouts)
 
-for layer in ["+11", "+12", "-11", "-12"]: 
-  listGEMLayouts.append("%02i Global position GE%s"%(nIdx, layer))
+for layerEntry in layersWithTitle: 
+  listGEMLayouts.append("%02i Global position GE%s"%(nIdx, layerEntry[ 1 ]))
   nIdx += 1
 
-layers = ["p1_1", "p1_2", "m1_1", "m1_2"]
-GeminisId = [ i + 1 for i in range(30) ]
-
 for i, gemini in enumerate(GeminisId):
-  for layer in layers:
-    strLayerLabel = "GE%s%s%s"%("+" if layer[ 0 ] == "p" else "-", layer[ 1 ], layer[ 3 ])
+  for layerEntry in layersWithTitle:
+    strLayerLabel = "GE%s"%(layerEntry[ 1 ])
     listGEMLayouts.append("%02i GEMINI%02i_%s"%(nIdx, int(GeminisId[ i ]), strLayerLabel))
     nIdx += 1
 
