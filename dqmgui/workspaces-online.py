@@ -317,23 +317,40 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 
 GeminisId = [ i + 1 for i in range(36) ]
 listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
+listLayersWithTitle = [ [ s, "GE%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
+strTitleFmt = "%02i GEMINI%02i_%s"
+bIsLayerWise = True
+bIsGlobalPos = True
 
-
-layersWithTitle = [ [ s, "%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
 
 listGEMLayoutsPre = ["Summary", "AMC status", "GEB input status"]
+
+
 listGEMLayouts = [ "%02i %s"%(i, s) for i, s in enumerate(listGEMLayoutsPre) ]
 nIdx = len(listGEMLayouts)
 
-for layerEntry in layersWithTitle: 
-  listGEMLayouts.append("%02i Global position GE%s"%(nIdx, layerEntry[ 1 ]))
-  nIdx += 1
-
-for i, gemini in enumerate(GeminisId):
-  for layerEntry in layersWithTitle:
-    strLayerLabel = "GE%s"%(layerEntry[ 1 ])
-    listGEMLayouts.append("%02i GEMINI%02i_%s"%(nIdx, int(GeminisId[ i ]), strLayerLabel))
+if bIsGlobalPos: 
+  for layerEntry in listLayersWithTitle: 
+    listGEMLayouts.append("%02i Global position %s"%(nIdx, layerEntry[ 1 ]))
     nIdx += 1
+
+listGEMChambers = []
+
+if bIsLayerWise: 
+  for layer in listLayersWithTitle:
+    for gemini in GeminisId:
+      listGEMChambers.append([gemini, layer])
+else: 
+  for gemini in GeminisId:
+    for layer in listLayersWithTitle:
+      listGEMChambers.append([gemini, layer])
+
+for itCh in listGEMChambers: 
+  gemini = itCh[ 0 ]
+  layer  = itCh[ 1 ]
+  
+  listGEMLayouts.append(strTitleFmt%(nIdx, gemini, layer[ 1 ]))
+  nIdx += 1
 
 strListGEMLayouts = ", ".join([ "'GEM/Layouts/%s'"%s for s in listGEMLayouts ])
 eval("server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '', %s)"%strListGEMLayouts)
