@@ -26,7 +26,10 @@ GEMLayout(dqmitems, "%02i GEB input status"%nIdx,
     ])
 nIdx += 1
 
+
+GeminisId = [ i + 1 for i in range(36) ]
 listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
+
 
 for layer in listLayers: 
   strTitle = "%s%s%s"%("+" if layer[ 0 ] == "p" else "-", layer[ 1 ], layer[ 3 ])
@@ -35,17 +38,8 @@ for layer in listLayers:
         "description": "Global position"}])
   nIdx += 1
 
-
-#Geminis = ["671093248", "671095040", "671095296", "671095552", "671095808"]
-#Geminis = ["671088640", "671095296", "671095552", "671095808", "671096064"]
-#GeminisId = ["1", "11", "13", "15", "17", "19", "27", "28", "29", "30"]
-#GeminisId = ["11", "13", "15", "17", "19"]
-#nIdx = 3
-layers = ["p1_1", "p1_2", "m1_1", "m1_2"]
-GeminisId = [ i + 1 for i in range(30) ]
-
 for i, gemini in enumerate(GeminisId):
-  for layer in layers:
+  for layer in listLayers:
     strID = "Gemini_%i_GE%s"%(gemini, layer)
     strLayerLabel = "GE%s%s%s"%("+" if layer[ 0 ] == "p" else "-", layer[ 1 ], layer[ 3 ])
     
