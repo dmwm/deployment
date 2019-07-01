@@ -28,11 +28,25 @@ nIdx += 1
 
 
 GeminisId = [ i + 1 for i in range(36) ]
+GeminisIdWithTitle = [ [ gid, "GEMINI%02i"%gid ] for gid in GeminisId ]
 listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
 listLayersWithTitle = [ [ s, "GE%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
-strTitleFmt = "%02i GEMINI%02i_%s"
 bIsLayerWise = True
 bIsGlobalPos = True
+
+
+strTitleFmt = "%02i %s_%s"
+
+listGEMChambers = []
+
+if bIsLayerWise: 
+  for layer in listLayersWithTitle:
+    for gemini in GeminisIdWithTitle:
+      listGEMChambers.append([gemini, layer])
+else: 
+  for gemini in GeminisIdWithTitle:
+    for layer in listLayersWithTitle:
+      listGEMChambers.append([gemini, layer])
 
 
 if bIsGlobalPos: 
@@ -42,22 +56,11 @@ if bIsGlobalPos:
           "description": "Global position"}])
     nIdx += 1
 
-listGEMChambers = []
-
-if bIsLayerWise: 
-  for layer in listLayersWithTitle:
-    for gemini in GeminisId:
-      listGEMChambers.append([gemini, layer])
-else: 
-  for gemini in GeminisId:
-    for layer in listLayersWithTitle:
-      listGEMChambers.append([gemini, layer])
-
 for itCh in listGEMChambers: 
   gemini = itCh[ 0 ]
   layer  = itCh[ 1 ]
   
-  strID = "Gemini_%i_GE%s"%(gemini, layer[ 0 ])
+  strID = "Gemini_%i_GE%s"%(gemini[ 0 ], layer[ 0 ])
   
   strPathVFATStatus = "GEM/StatusDigi/vfatStatus_QualityFlag_" + strID
   strPathBxCross    = "GEM/StatusDigi/vfatStatus_BC_" + strID
@@ -66,7 +69,7 @@ for itCh in listGEMChambers:
   strPathRHCLSize   = "GEM/recHit/VFAT_vs_ClusterSize_" + strID
   strPathRHHitX     = "GEM/recHit/recHit_x_" + strID
   
-  GEMLayout(dqmitems, strTitleFmt%(nIdx, gemini, layer[ 1 ]), 
+  GEMLayout(dqmitems, strTitleFmt%(nIdx, gemini[ 1 ], layer[ 1 ]), 
     [{'path': strPathVFATStatus, 'description': "VFAT quality"},
      {'path': strPathBxCross,    'description': "Bunch crossing"}, 
      {'path': strPathEvtCounter, 'description': "Event counter"}],
