@@ -111,7 +111,7 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr2_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
-    # DAS/MongoDB exporters on production nodes
+    # DAS/MongoDB/CouchDB exporters on production nodes
     vocms0741 | vocms0742 )
         # start das2go_exporter for DAS server
         wait4proc "das2go -config" # check for pattern that DAS is running
@@ -119,10 +119,14 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        wait4proc "couchdb" # check for pattern that couchdb is running
+        couchdb_exporter -couchdb.uri="http://localhost:5984" \
+            -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     # CouchDB on production nodes
-    vocms0740 | vocms0741 | vocms0742 )
+    vocms0740 )
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
             -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
