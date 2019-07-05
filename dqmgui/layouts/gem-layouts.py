@@ -62,19 +62,24 @@ for itCh in listGEMChambers:
   
   strID = "Gemini_%i_GE%s"%(gemini[ 0 ], layer[ 0 ])
   
-  strPathVFATStatus = "GEM/StatusDigi/vfatStatus_QualityFlag_" + strID
-  strPathBxCross    = "GEM/StatusDigi/vfatStatus_BC_" + strID
-  strPathEvtCounter = "GEM/StatusDigi/vfatStatus_EC_" + strID
-  strPathDigiStrip  = "GEM/digi/Digi_Strips_" + strID
-  strPathRHCLSize   = "GEM/recHit/VFAT_vs_ClusterSize_" + strID
-  strPathRHHitX     = "GEM/recHit/recHit_x_" + strID
+  listU1 = ["GEM/StatusDigi/vfatStatus_QualityFlag_" + strID, "VFAT quality"]
+  listU2 = ["GEM/StatusDigi/vfatStatus_BC_" + strID,          "Bunch crossing"]
+  listU3 = ["GEM/StatusDigi/vfatStatus_EC_" + strID,          "Event counter"]
+  listL1 = ["GEM/digi/Digi_Strips_" + strID,                  "Number of Digi Strips"]
+  listL2 = ["GEM/recHit/VFAT_vs_ClusterSize_" + strID,        "VFAT vs ClusterSize"]
+  #strPathRHHitX     = "GEM/recHit/recHit_x_" + strID
   
   GEMLayout(dqmitems, strTitleFmt%(nIdx, gemini[ 1 ], layer[ 1 ]), 
-    [{'path': strPathVFATStatus, 'description': "VFAT quality"},
-     {'path': strPathBxCross,    'description': "Bunch crossing"}, 
-     {'path': strPathEvtCounter, 'description': "Event counter"}],
-    [{'path': strPathDigiStrip,  'description': "Number of Digi Strips"}, 
-     {'path': strPathRHCLSize,   'description': "VFAT vs ClusterSize"}])
+    [
+      {'path': listU1[ 0 ], 'description': listU1[ 1 ]},
+      {'path': listU2[ 0 ], 'description': listU2[ 1 ]},
+      {'path': listU3[ 0 ], 'description': listU3[ 1 ]},
+    ],
+    [
+      {'path': listL1[ 0 ], 'description': listL1[ 1 ]},
+      {'path': listL2[ 0 ], 'description': listL2[ 1 ]},
+    ]
+  )
   
   nIdx += 1
 
