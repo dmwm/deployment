@@ -63,10 +63,10 @@ for itCh in listGEMChambers:
   strID = "Gemini_%i_GE%s"%(gemini[ 0 ], layer[ 0 ])
   
   listU1 = ["GEM/StatusDigi/vfatStatus_QualityFlag_" + strID, "VFAT quality"]
-  listU2 = ["GEM/StatusDigi/vfatStatus_BC_" + strID,          "Bunch crossing"]
-  listU3 = ["GEM/StatusDigi/vfatStatus_EC_" + strID,          "Event counter"]
-  listL1 = ["GEM/digi/Digi_Strips_" + strID,                  "Number of Digi Strips"]
-  listL2 = ["GEM/recHit/VFAT_vs_ClusterSize_" + strID,        "VFAT vs ClusterSize"]
+  listU2 = ["GEM/StatusDigi/vfatStatus_BC_"          + strID, "Bunch crossing"]
+  listU3 = ["GEM/StatusDigi/vfatStatus_EC_"          + strID, "Event counter"]
+  listL1 = ["GEM/digi/Digi_Strips_"                  + strID, "Number of Digi Strips"]
+  listL2 = ["GEM/recHit/VFAT_vs_ClusterSize_"        + strID, "VFAT vs ClusterSize"]
   #strPathRHHitX     = "GEM/recHit/recHit_x_" + strID
   
   strTitle = strTitleFmt%(nIdx, gemini[ 1 ], layer[ 1 ])
