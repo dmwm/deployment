@@ -69,7 +69,9 @@ for itCh in listGEMChambers:
   listL2 = ["GEM/recHit/VFAT_vs_ClusterSize_" + strID,        "VFAT vs ClusterSize"]
   #strPathRHHitX     = "GEM/recHit/recHit_x_" + strID
   
-  GEMLayout(dqmitems, strTitleFmt%(nIdx, gemini[ 1 ], layer[ 1 ]), 
+  strTitle = strTitleFmt%(nIdx, gemini[ 1 ], layer[ 1 ])
+  
+  GEMLayout(dqmitems, strTitle, 
     [
       {'path': listU1[ 0 ], 'description': listU1[ 1 ]},
       {'path': listU2[ 0 ], 'description': listU2[ 1 ]},
