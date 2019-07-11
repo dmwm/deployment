@@ -100,12 +100,24 @@ start_dbs()
 
 start()
 {
-  start_dbs $CFGFILE
-  start_dbs $CFGFILE_GR
-  start_dbs $CFGFILE_GW
-  start_dbs $CFGFILE_P3R
-  start_dbs $CFGFILE_P3W
-  start_dbs $CFGFILE_MG
+    if [ -f $CFGFILE ]; then
+        start_dbs $CFGFILE
+    fi
+    if [ -f $CFGFILE_GR ]; then
+        start_dbs $CFGFILE_GR
+    fi
+    if [ -f $CFGFILE_GW ]; then
+        start_dbs $CFGFILE_GW
+    fi
+    if [ -f $CFGFILE_P3R ]; then
+        start_dbs $CFGFILE_P3R
+    fi
+    if [ -f $CFGFILE_P3W ]; then
+        start_dbs $CFGFILE_P3W
+    fi
+    if [ -f $CFGFILE_MG ]; then
+        start_dbs $CFGFILE_MG
+    fi
 }
 
 # Stop the service.
