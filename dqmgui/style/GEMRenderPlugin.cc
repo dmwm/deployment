@@ -14,6 +14,47 @@ class GEMRenderPlugin : public DQMRenderPlugin
 {
   private: 
     SummaryChamber summaryCh;
+    
+    int drawTimeHisto(TH2F *h2Curr) {
+      std::string strNewName = std::string(h2Curr->GetName()).substr(std::string("per_time_").size());
+      std::string strTmpPrefix = "tmp_";
+      
+      Int_t nNbinsX = h2Curr->GetNbinsX();
+      Int_t nNbinsY = h2Curr->GetNbinsY();
+      Int_t nNbinsXActual = 0;
+      
+      for ( nNbinsXActual = 0 ; nNbinsXActual < nNbinsX ; nNbinsXActual++ ) {
+        if ( h2Curr->GetBinContent(nNbinsXActual + 1, 0) <= 0 ) break;
+      }
+      
+      std::string strTitle = std::string(h2Curr->GetTitle());
+      
+      //std::string strAxisX = h2Curr->GetXaxis()->GetTitle();
+      std::string strAxisX = "Bin per " + std::to_string((Int_t)h2Curr->GetBinContent(0, 0)) + " events";
+      std::string strAxisY = h2Curr->GetYaxis()->GetTitle();
+      //strTitle += ";" + strAxisX + ";" + strAxisY;
+      
+      strTitle = "";
+      TH2F *h2New = new TH2F(( strTmpPrefix + strNewName ).c_str(), strTitle.c_str(), 
+          nNbinsXActual, 0.0, (Double_t)nNbinsXActual, nNbinsY, 0.0, (Double_t)nNbinsY);
+      
+      h2New->GetXaxis()->SetTitle(strAxisX.c_str());
+      h2New->GetYaxis()->SetTitle(strAxisY.c_str());
+      
+      for ( Int_t i = 1 ; i <= nNbinsY ; i++ ) {
+        std::string strLabel = h2Curr->GetYaxis()->GetBinLabel(i);
+        if ( !strLabel.empty() ) h2New->GetYaxis()->SetBinLabel(i, strLabel.c_str());
+      }
+      
+      for ( Int_t j = 0 ; j <= nNbinsY ; j++ ) 
+      for ( Int_t i = 1 ; i <= nNbinsXActual ; i++ ) {
+        h2New->SetBinContent(i, j, h2Curr->GetBinContent(i, j));
+      }
+      
+      h2New->Draw("colz");
+      
+      return 0;
+    };
   
   public:
     virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &) override
@@ -118,6 +159,11 @@ class GEMRenderPlugin : public DQMRenderPlugin
       
       if ( o.name.find("GEM/StatusDigi") != std::string::npos ) {
         obj->SetStats(false);
+      }
+      
+      if ( o.name.find("GEM/StatusDigi/per_time_") != std::string::npos ) {
+        drawTimeHisto(dynamic_cast<TH2F*>(o.object));
+        
       }
       
       //obj->SetStats(false);
