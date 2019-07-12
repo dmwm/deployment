@@ -61,6 +61,36 @@ export X509_USER_KEY=$X509_USER_PROXY
 # Necessary to evaluate the configuration
 export DBS3_VERSION
 
+checkCfg()
+{
+
+if [ -f $CFGFILE ]; then
+    echo $CFGFILE 
+fi
+
+if [ -f $CFGFILE_GR ]; then
+    echo $CFGFILE_GR 
+fi
+
+if [ -f $CFGFILE_GW ]; then
+    echo $CFGFILE_GW  
+fi
+
+if [ -f $CFGFILE_P3R ]; then
+    echo $CFGFILE_P3R 
+fi
+
+if [ -f $CFGFILE_P3W ]; then
+    echo $CFGFILE_P3W 
+fi
+
+if [ -f $CFGFILE_MG ]; then
+    echo $CFGFILE_MG 
+fi
+
+
+}
+
 # Start service conditionally on crond restart.
 sysboot()
 {
@@ -100,12 +130,29 @@ start_dbs()
 
 start()
 {
-  start_dbs $CFGFILE
-  start_dbs $CFGFILE_GR
-  start_dbs $CFGFILE_GW
-  start_dbs $CFGFILE_P3R
-  start_dbs $CFGFILE_P3W
-  start_dbs $CFGFILE_MG
+  if [ -f $CFGFILE ]; then
+      start_dbs $CFGFILE
+  fi
+
+  if [ -f $CFGFILE_GR ]; then
+      start_dbs $CFGFILE_GR
+  fi
+ 
+  if [ -f $CFGFILE_GW ]; then
+      start_dbs $CFGFILE_GW
+  fi
+ 
+  if [ -f $CFGFILE_P3R ]; then
+      start_dbs $CFGFILE_P3R
+  fi
+ 
+  if [ -f $CFGFILE_P3W ]; then
+      start_dbs $CFGFILE_P3W
+  fi
+  
+  if [ -f $CFGFILE_MG ]; then
+      start_dbs $CFGFILE_MG
+  fi
 }
 
 # Stop the service.
@@ -122,12 +169,30 @@ stop_dbs()
 }
 stop()
 {
-  stop_dbs $CFGFILE
-  stop_dbs $CFGFILE_GR
-  stop_dbs $CFGFILE_GW
-  stop_dbs $CFGFILE_P3R
-  stop_dbs $CFGFILE_P3W
-  stop_dbs $CFGFILE_MG 
+  if [ -f $CFGFILE ]; then
+      stop_dbs $CFGFILE
+  fi
+
+  if [ -f $CFGFILE_GR ]; then
+      stop_dbs $CFGFILE_GR
+  fi
+
+  if [ -f $CFGFILE_GW ]; then
+      stop_dbs $CFGFILE_GW
+  fi
+
+  if [ -f $CFGFILE_P3R ]; then
+      stop_dbs $CFGFILE_P3R
+  fi
+   
+  if [ -f $CFGFILE_P3W ]; then
+      stop_dbs $CFGFILE_P3W
+  fi
+
+  if [ -f $CFGFILE_MG ]; then
+      stop_dbs $CFGFILE_MG
+  fi
+ 
 }
 
 # Check if the server is running.
@@ -143,12 +208,31 @@ status_dbs()
 
 status()
 {
-  status_dbs $CFGFILE
-  status_dbs $CFGFILE_GR
-  status_dbs $CFGFILE_GW
-  status_dbs $CFGFILE_P3R
-  status_dbs $CFGFILE_P3W
-  status_dbs $CFGFILE_MG  
+
+  if [ -f $CFGFILE ]; then
+      status_dbs $CFGFILE
+  fi      
+
+  if [ -f $CFGFILE_GR ]; then
+      status_dbs $CFGFILE_GR
+  fi
+
+  if [ -f $CFGFILE_GW ]; then
+      status_dbs $CFGFILE_GW
+  fi
+
+  if [ -f $CFGFILE_P3R ]; then
+      status_dbs $CFGFILE_P3R
+  fi
+
+  if [ -f $CFGFILE_P3W ]; then
+      status_dbs $CFGFILE_P3W
+  fi
+
+  if [ -f $CFGFILE_MG ]; then
+      status_dbs $CFGFILE_MG
+  fi
+  
 }
 
 
@@ -218,6 +302,9 @@ check()
 case ${1:-status} in
   sysboot )
     sysboot
+    ;;
+  checkCfg )
+    checkCfg
     ;;
 
   start | restart )
