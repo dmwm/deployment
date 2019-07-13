@@ -123,9 +123,11 @@ sysboot()
 start_dbs()
 {
   cd $STATEDIR
-  echo "starting $(echo $1|cut -d'.' -f 1)"
+  fname=$(basename $1)
+  bname=$(echo $fname|cut -d'.' -f 1)
+  echo "starting $bname"
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so python -u $DBS3_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$1 \
-    </dev/null 2>&1 | rotatelogs $LOGDIR/$(echo $1| cut -d'.' -f 1)-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    </dev/null 2>&1 | rotatelogs $LOGDIR/$bname-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 start()
