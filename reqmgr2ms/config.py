@@ -51,12 +51,13 @@ ui.static = ROOTDIR
 # REST interface
 data = views.section_('data')
 data.object = 'WMCore.MicroService.Service.RestApiHub.RestApiHub'
-data.manager = 'WMCore.MicroService.Unified.Transferor.UnifiedTransferorManager'
+data.manager = 'WMCore.MicroService.Unified.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.readOnly = True
 data.verbose = True
 data.interval = 600
 data.rucioAccount = RUCIO_ACCT
+data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
 # if private_vm, just fallback to preprod DBS
 if DBS_INS == "private_vm":
     data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"

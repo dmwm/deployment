@@ -181,6 +181,7 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     auxCacheUpdateTasks.tagCollectDuration = 60 * 60  # every 1 hour
     auxCacheUpdateTasks.tagcollect_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML"
     auxCacheUpdateTasks.tagcollect_args = {"anytype": 1, "anyarch": 1}
+    auxCacheUpdateTasks.unified_url = "https://raw.githubusercontent.com/CMSCompOps/WmAgentScripts/master/unifiedConfiguration.json"
     auxCacheUpdateTasks.log_file = '%s/logs/reqmgr2/auxCacheUpdateTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     auxCacheUpdateTasks.central_logdb_url = LOG_DB_URL
     auxCacheUpdateTasks.log_reporter = LOG_REPORTER
