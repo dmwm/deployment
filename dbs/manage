@@ -61,31 +61,61 @@ export X509_USER_KEY=$X509_USER_PROXY
 # Necessary to evaluate the configuration
 export DBS3_VERSION
 
+checkCfg()
+{
+
+if [ -f $CFGDIR/$CFGFILE ]; then
+    echo $CFGDIR/$CFGFILE 
+fi
+
+if [ -f $CFGDIR/$CFGFILE_GR ]; then
+    echo $CFGDIR/$CFGFILE_GR 
+fi
+
+if [ -f $CFGDIR/$CFGFILE_GW ]; then
+    echo $CFGDIR/$CFGFILE_GW  
+fi
+
+if [ -f $CFGDIR/$CFGFILE_P3R ]; then
+    echo $CFGDIR/$CFGFILE_P3R 
+fi
+
+if [ -f $CFGDIR/$CFGFILE_P3W ]; then
+    echo $CFGDIR/$CFGFILE_P3W 
+fi
+
+if [ -f $CFGDIR/$CFGFILE_MG ]; then
+    echo $CFGDIR/$CFGFILE_MG 
+fi
+
+
+}
+
 # Start service conditionally on crond restart.
 sysboot()
 {
   if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE" | wc -l) = 0 ]; then
-    start_dbs $CFGFILE
+    start_dbs $CFGDIR/$CFGFILE
   fi
 
   if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_GR" | wc -l) = 0 ]; then
-    start_dbs $CFGFILE_GR
+    start_dbs $CFGDIR/$CFGFILE_GR
   fi
 
   if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_GW" | wc -l) = 0 ]; then
-    start_dbs $CFGFILE_GW
+    start_dbs $CFGDIR/$CFGFILE_GW
   fi
 
   if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_P3R" | wc -l) = 0 ]; then
-    start_dbs $CFGFILE_P3R
+    start_dbs $CFGDIR/$CFGFILE_P3R
   fi
 
   if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_P3W" | wc -l) = 0 ]; then
-    start_dbs $CFGFILE_P3W
+    start_dbs $CFGDIR/$CFGFILE_P3W
   fi
 
   if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_MG" | wc -l) = 0 ]; then
-    start_dbs $CFGFILE_MG
+    start_dbs $CFGDIR/$CFGFILE_MG
   fi
 }
 
@@ -93,26 +123,45 @@ sysboot()
 start_dbs()
 {
   cd $STATEDIR
-  echo "starting $(echo $1|cut -d'.' -f 1)"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so python -u $DBS3_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$CFGDIR/$1 \
-    </dev/null 2>&1 | rotatelogs $LOGDIR/$(echo $1| cut -d'.' -f 1)-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  fname=$(basename $1)
+  bname=$(echo $fname|cut -d'.' -f 1)
+  echo "starting $bname"
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so python -u $DBS3_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$1 \
+    </dev/null 2>&1 | rotatelogs $LOGDIR/$bname-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 start()
 {
-  start_dbs $CFGFILE
-  start_dbs $CFGFILE_GR
-  start_dbs $CFGFILE_GW
-  start_dbs $CFGFILE_P3R
-  start_dbs $CFGFILE_P3W
-  start_dbs $CFGFILE_MG
+  if [ -f $CFGDIR/$CFGFILE ]; then
+      start_dbs $CFGDIR/$CFGFILE
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_GR ]; then
+      start_dbs $CFGDIR/$CFGFILE_GR
+  fi
+ 
+  if [ -f $CFGDIR/$CFGFILE_GW ]; then
+      start_dbs $CFGDIR/$CFGFILE_GW
+  fi
+ 
+  if [ -f $CFGDIR/$CFGFILE_P3R ]; then
+      start_dbs $CFGDIR/$CFGFILE_P3R
+  fi
+ 
+  if [ -f $CFGDIR/$CFGFILE_P3W ]; then
+      start_dbs $CFGDIR/$CFGFILE_P3W
+  fi
+  
+  if [ -f $CFGDIR/$CFGFILE_MG ]; then
+      start_dbs $CFGDIR/$CFGFILE_MG
+  fi
 }
 
 # Stop the service.
 stop_dbs()
 {
   echo "stopping $(echo $1| cut -d'.' -f 1)"
-  for PID in $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$1" | sort -rn); do
+  for PID in $(pgrep -u $(id -u) -f "Root.py.*[=]$1" | sort -rn); do
     PSLINE=$(ps -o pid=,$bsdstart=,args= $PID |
              perl -n -e 'print join(" ", (split)[0..6])')
     echo "Stopping $PID ($PSLINE):"
@@ -122,18 +171,36 @@ stop_dbs()
 }
 stop()
 {
-  stop_dbs $CFGFILE
-  stop_dbs $CFGFILE_GR
-  stop_dbs $CFGFILE_GW
-  stop_dbs $CFGFILE_P3R
-  stop_dbs $CFGFILE_P3W
-  stop_dbs $CFGFILE_MG 
+  if [ -f $CFGDIR/$CFGFILE ]; then
+      stop_dbs $CFGDIR/$CFGFILE
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_GR ]; then
+      stop_dbs $CFGDIR/$CFGFILE_GR
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_GW ]; then
+      stop_dbs $CFGDIR/$CFGFILE_GW
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_P3R ]; then
+      stop_dbs $CFGDIR/$CFGFILE_P3R
+  fi
+   
+  if [ -f $CFGDIR/$CFGFILE_P3W ]; then
+      stop_dbs $CFGDIR/$CFGFILE_P3W
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_MG ]; then
+      stop_dbs $CFGDIR/$CFGFILE_MG
+  fi
+ 
 }
 
 # Check if the server is running.
 status_dbs()
 {
-  pid=$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$1" | sort -n)
+  pid=$(pgrep -u $(id -u) -f "Root.py.*[=]$1" | sort -n)
   if [ X"$pid" = X ]; then
     echo $echo_e "$(echo $1| cut -d'.' -f 1) is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
   else
@@ -143,12 +210,31 @@ status_dbs()
 
 status()
 {
-  status_dbs $CFGFILE
-  status_dbs $CFGFILE_GR
-  status_dbs $CFGFILE_GW
-  status_dbs $CFGFILE_P3R
-  status_dbs $CFGFILE_P3W
-  status_dbs $CFGFILE_MG  
+
+  if [ -f $CFGDIR/$CFGFILE ]; then
+      status_dbs $CFGDIR/$CFGFILE
+  fi      
+
+  if [ -f $CFGDIR/$CFGFILE_GR ]; then
+      status_dbs $CFGDIR/$CFGFILE_GR
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_GW ]; then
+      status_dbs $CFGDIR/$CFGFILE_GW
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_P3R ]; then
+      status_dbs $CFGDIR/$CFGFILE_P3R
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_P3W ]; then
+      status_dbs $CFGDIR/$CFGFILE_P3W
+  fi
+
+  if [ -f $CFGDIR/$CFGFILE_MG ]; then
+      status_dbs $CFGDIR/$CFGFILE_MG
+  fi
+  
 }
 
 
@@ -179,24 +265,24 @@ setinstances()
       echo $f_p3w > $STATEDIR/view_instances_p3w.json
       echo $f_mg > $STATEDIR/view_instances_mg.json
       if [ X"$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE" | sort -n)" != X ]; then
-        stop_dbs $CFGFILE
-        start_dbs $CFGFILE
+        stop_dbs $CFGDIR/$CFGFILE
+        start_dbs $CFGDIR/$CFGFILE
       fi
       if [ X"$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_GR" | sort -n)" != X ]; then
-        stop_dbs $CFGFILE_GR
-        start_dbs $CFGFILE_GR
+        stop_dbs $CFGDIR/$CFGFILE_GR
+        start_dbs $CFGDIR/$CFGFILE_GR
       fi
       if [ X"$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_GW" | sort -n)" != X ]; then
-        stop_dbs $CFGFILE_GW
-        start_dbs $CFGFILE_GW
+        stop_dbs $CFGDIR/$CFGFILE_GW
+        start_dbs $CFGDIR/$CFGFILE_GW
       fi
       if [ X"$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_P3R" | sort -n)" != X ]; then
-        stop_dbs $CFGFILE_P3R
-        start_dbs $CFGFILE_P3R
+        stop_dbs $CFGDIR/$CFGFILE_P3R
+        start_dbs $CFGDIR/$CFGFILE_P3R
       fi
       if [ X"$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_MG" | sort -n)" != X ]; then
-        stop_dbs $CFGFILE_MG
-        start_dbs $CFGFILE_MG
+        stop_dbs $CFGDIR/$CFGFILE_MG
+        start_dbs $CFGDIR/$CFGFILE_MG
       fi
     }
   else
@@ -218,6 +304,9 @@ check()
 case ${1:-status} in
   sysboot )
     sysboot
+    ;;
+  checkCfg )
+    checkCfg
     ;;
 
   start | restart )
