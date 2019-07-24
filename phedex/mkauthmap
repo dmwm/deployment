@@ -86,7 +86,6 @@ def updateFile(opts, jsondata):
 
         if jsondata != oldjsondata:
             # then let's write out a new file and replace the current one
-            print "Info: json content has changed, updating it ..."
             try:
               fd, tmpname= mkstemp(dir = os.path.dirname(opts.out))
               tmpfile = os.fdopen(fd, "w")
