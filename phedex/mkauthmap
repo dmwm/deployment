@@ -98,7 +98,6 @@ def updateFile(opts, jsondata):
             myumask = current_umask()
             os.chmod(tmpname, 0666 & ~myumask)
             os.rename(tmpname, opts.out)
-            print "Done!"
 
 
 ##Main
