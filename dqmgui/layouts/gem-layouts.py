@@ -28,14 +28,14 @@ nIdx += 1
 
 
 GeminisId = [ i + 1 for i in range(36) ]
-GeminisIdWithTitle = [ [ gid, "GEMINI%02i"%gid ] for gid in GeminisId ]
+GeminisIdWithTitle = [ {"chid": gid, "title": "GEMINI%02i"%gid} for gid in GeminisId ]
 listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
 listLayersWithTitle = [ [ s, "GE%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
 bIsLayerWise = True
 bIsGlobalPos = True
 
+strTitleFmt = "%(idx)02i %(title)s_%(layer)s"
 
-strTitleFmt = "%02i %s_%s"
 
 listGEMChambers = []
 
@@ -60,7 +60,7 @@ for itCh in listGEMChambers:
   gemini = itCh[ 0 ]
   layer  = itCh[ 1 ]
   
-  strID = "Gemini_%i_GE%s"%(gemini[ 0 ], layer[ 0 ])
+  strID = "Gemini_%i_GE%s"%(gemini[ "chid" ], layer[ 0 ])
   
   listU1 = ["GEM/StatusDigi/vfatStatus_QualityFlag_" + strID, "VFAT quality"]
   listU2 = ["GEM/StatusDigi/vfatStatus_BC_"          + strID, "Bunch crossing"]
@@ -69,7 +69,9 @@ for itCh in listGEMChambers:
   listL2 = ["GEM/recHit/VFAT_vs_ClusterSize_"        + strID, "VFAT vs ClusterSize"]
   #strPathRHHitX     = "GEM/recHit/recHit_x_" + strID
   
-  strTitle = strTitleFmt%(nIdx, gemini[ 1 ], layer[ 1 ])
+  gemini[ "idx" ] = nIdx
+  gemini[ "layer" ] = layer[ 1 ]
+  strTitle = strTitleFmt%gemini
   
   GEMLayout(dqmitems, strTitle, 
     [

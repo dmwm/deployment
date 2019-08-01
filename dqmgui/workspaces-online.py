@@ -316,7 +316,7 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
 ################################################################################
 
 GeminisId = [ i + 1 for i in range(36) ]
-GeminisIdWithTitle = [ [ gid, "GEMINI%02i"%gid ] for gid in GeminisId ]
+GeminisIdWithTitle = [ {"chid": gid, "title": "GEMINI%02i"%gid} for gid in GeminisId ]
 listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
 listLayersWithTitle = [ [ s, "GE%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
 bIsLayerWise = True
@@ -325,8 +325,8 @@ bIsGlobalPos = True
 
 listGEMLayoutsPre = ["Summary", "AMC status", "GEB input status"]
 
+strTitleFmt = "%(idx)02i %(title)s_%(layer)s"
 
-strTitleFmt = "%02i %s_%s"
 
 listGEMChambers = []
 
@@ -352,7 +352,9 @@ for itCh in listGEMChambers:
   gemini = itCh[ 0 ]
   layer  = itCh[ 1 ]
   
-  listGEMLayouts.append(strTitleFmt%(nIdx, gemini[ 1 ], layer[ 1 ]))
+  gemini[ "idx" ] = nIdx
+  gemini[ "layer" ] = layer[ 1 ] 
+  listGEMLayouts.append(strTitleFmt%gemini)
   nIdx += 1
 
 strListGEMLayouts = ", ".join([ "'GEM/Layouts/%s'"%s for s in listGEMLayouts ])
