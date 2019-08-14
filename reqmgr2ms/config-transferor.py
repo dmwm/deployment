@@ -22,7 +22,7 @@ config = Configuration()
 main = config.section_("main")
 srv = main.section_("server")
 srv.thread_pool = 30
-main.application = "microservice"
+main.application = "ms-transferor"
 main.port = 8248  # main application port it listens on
 main.index = 'data' # Configuration requires index attribute
 
