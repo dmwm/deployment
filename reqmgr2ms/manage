@@ -35,6 +35,8 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 CFGFILE=$CFGDIR/config.py
+CFGFILETR=$CFGDIR/config-transferor.py
+CFGFILEMON=$CFGDIR/config-monitor.py
 AUTHDIR=$TOP/current/auth/reqmgr2ms
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
@@ -59,7 +61,8 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILETR
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILEMON
 }
 
 
@@ -67,7 +70,8 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILETR
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILEMON
 }
 
 
@@ -75,14 +79,16 @@ start()
 stop()
 {
   echo "stopping $ME"
-  wmc-httpd -k -d $STATEDIR $CFGFILE
+  wmc-httpd -k -d $STATEDIR $CFGFILETR
+  wmc-httpd -k -d $STATEDIR $CFGFILEMON
 }
 
 
 # Check if the server is running.
 status()
 {
-  wmc-httpd -s -d $STATEDIR $CFGFILE
+  wmc-httpd -s -d $STATEDIR $CFGFILETR
+  wmc-httpd -s -d $STATEDIR $CFGFILEMON
 }
 
 
