@@ -1,5 +1,5 @@
 """
-MicroService configuration file.
+MicroService Monitor configuration file.
 """
 
 import socket
@@ -22,7 +22,7 @@ config = Configuration()
 main = config.section_("main")
 srv = main.section_("server")
 srv.thread_pool = 30
-main.application = "microservice"
+main.application = "ms-monitor"
 main.port = 8248  # main application port it listens on
 main.index = 'data' # Configuration requires index attribute
 
@@ -39,7 +39,7 @@ sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 app = config.section_(main.application)
 app.admin = "cms-service-webtools@cern.ch"
 app.description = "CMS Workload Management MicroServices"
-app.title = "CMS MicroServices"
+app.title = "CMS MicroService Monitor"
 
 # define different views for our application
 views = config.section_("views")
@@ -56,6 +56,7 @@ data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.readOnly = True
 data.verbose = True
 data.interval = 600
+data.services = ['monitor']
 data.rucioAccount = RUCIO_ACCT
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
 # if private_vm, just fallback to preprod DBS
