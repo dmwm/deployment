@@ -48,7 +48,10 @@ deploy_reqmgr2ms_sw()
   esac
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
                  s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
-       $root/$cfgversion/config/$project/config.py
+       $root/$cfgversion/config/$project/config-transferor.py
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
+                 s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
+       $root/$cfgversion/config/$project/config-monitor.py
 
   # setup rucio configuration file
   mkdir -p $root/$cfgversion/config/$project/etc
