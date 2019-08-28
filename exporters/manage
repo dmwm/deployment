@@ -107,8 +107,12 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start reqmgr2 exporter
         wait4proc "reqmgr2" # check for pattern that it is running
-        process_monitor.sh /data/srv/state/reqmgr2/pid reqmgr2 ":18240" 15 \
+        process_monitor.sh /data/srv/state/reqmgr2/reqmgr2.pid reqmgr2 ":18240" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr2_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-transferor.pid ms-transferor ":18247" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-transferor_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-monitor.pid ms-monitor ":18248" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     # DAS/MongoDB/CouchDB exporters on production nodes
@@ -193,8 +197,12 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         # start reqmgr2 exporter
         wait4proc "reqmgr2" # check for pattern that it is running
-        process_monitor.sh /data/srv/state/reqmgr2/pid reqmgr2 ":18240" 15 \
+        process_monitor.sh /data/srv/state/reqmgr2/reqmgr2.pid reqmgr2 ":18240" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr2_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-transferor.pid ms-transferor ":18247" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-transferor_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-monitor.pid ms-monitor ":18248" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     *)
