@@ -28,12 +28,12 @@ deploy_workqueue_sw()
 
   # use rucio testbed for anything that is not production
   rucio_host_url=http://cms-rucio-testbed.cern.ch
-  rucio_auth_url=https://cms-rucio-tb-authz.cern.ch
+  rucio_auth_url=https://cms-rucio-auth-testbed.cern.ch
   case $variant in
     prod )
         base_url="https://cmsweb.cern.ch"
         rucio_host_url=http://cms-rucio.cern.ch
-        rucio_auth_url=https://cms-rucio-authz.cern.ch
+        rucio_auth_url=https://cms-rucio-auth.cern.ch
         ;;
     preprod )
         base_url="https://cmsweb-testbed.cern.ch"
