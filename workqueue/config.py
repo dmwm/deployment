@@ -115,7 +115,7 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     locationUpdateTask = extentions.section_("locationUpdateTask")
     locationUpdateTask.object = "WMCore.GlobalWorkQueue.CherryPyThreads.LocationUpdateTask.LocationUpdateTask"
     setWorkQueueCommonConfig(locationUpdateTask)
-    locationUpdateTask.locationUpdateDuration = 60 * 20 # every 20 minutes
+    locationUpdateTask.locationUpdateDuration = 60 * 60 * 6 # every 6 hours
     locationUpdateTask.log_file = '%s/logs/workqueue/locationUpdateTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
     locationUpdateTask.central_logdb_url = LOG_DB_URL
     locationUpdateTask.log_reporter = LOG_REPORTER
