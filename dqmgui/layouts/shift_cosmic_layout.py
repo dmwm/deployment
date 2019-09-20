@@ -87,3 +87,21 @@ shiftcosmiclayout(dqmitems, "10 - RPC_Occupancy",
                [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Barrel", 'description': occupancy + rpclink  }],
                [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Endcap", 'description': occupancy + rpclink }])
 
+shiftcosmiclayout(dqmitems, "11 - uGMT MUON P_{T}",
+  [{
+    'path': "L1T/L1TStage2uGMT/ugmtMuonPt",
+    'description': "This should show normal pT spectrum (spikes at 140 GeV, 200 GeV and 255 GeV expected from max TF pT assigned)",
+    'draw': { 'withref': "no" }
+  }])
+shiftcosmiclayout(dqmitems, "12 - uGMT MUON ETA",
+  [{
+    'path': "L1T/L1TStage2uGMT/ugmtMuonEta",
+    'description': "This should have no spikes.",
+    'draw': { 'withref': "no" }
+  }])
+shiftcosmiclayout(dqmitems, "13 - uGMT MUON PHI",
+  [{
+    'path': "L1T/L1TStage2uGMT/ugmtMuonPhi",
+    'description': "This should have no spikes or dips.",
+    'draw': { 'withref': "no" }
+  }])
