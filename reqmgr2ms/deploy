@@ -17,6 +17,7 @@ deploy_reqmgr2ms_sw()
   deploy_pkg \
     -a dmwm-service-cert.pem:wmcore/dmwm-service-cert.pem \
     -a dmwm-service-key.pem:wmcore/dmwm-service-key.pem \
+    -a ReqMgr2MSSecrets.py:reqmgr2ms/ReqMgr2MSSecrets.py \
     comp cms+reqmgr2ms
 
   if grep -rq "replace me" $project_auth; then
@@ -73,5 +74,10 @@ deploy_reqmgr2ms_auth()
   case $1 in
     */*-cert.pem ) echo "replace me with your dmwm service certificate" ;;
     */*-key.pem )  echo "replace me with your dmwm service key" ;;
+    */ReqMgr2MSSecrets*.py )
+      echo 'USER_AMQ = "FOO_FIXME"'
+      echo 'PASS_AMQ = "BAR_FIXME"'
+      echo 'AMQ_TOPIC = "FOOBAR_FIXME"'
+      ;;
   esac
 }
