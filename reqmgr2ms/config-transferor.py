@@ -13,9 +13,9 @@ LOG_REPORTER = "reqmgr2ms"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 
 if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_ACCT = "production"
+    RUCIO_ACCT = "wma_prod"
 else:
-    RUCIO_ACCT="wmagent_testing"
+    RUCIO_ACCT="wma_test"
 
 config = Configuration()
 

@@ -44,9 +44,9 @@ except ImportError:
     AMQ_TOPIC=None
 
 if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_ACCT = "production"
+    RUCIO_ACCT = "wma_prod"
 else:
-    RUCIO_ACCT="wmagent_testing"
+    RUCIO_ACCT="wma_test"
 
 config = Configuration()
 
