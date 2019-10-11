@@ -170,25 +170,25 @@ private:
         TLine line;
         line.SetLineWidth(2);// Draw lines to delimitate the end of the roll
         //rb1in
-        line.DrawLine(91, 0.5, 91, 2.5);
-        line.DrawLine(91, 2.5, 85, 2.5);
+        line.DrawLine(90.5, 0.5, 90.5, 2.5);
+        line.DrawLine(90.5, 2.5, 84.5, 2.5);
         //rb1out
-        line.DrawLine(85, 2.5, 85, 4.5);
-        line.DrawLine(85, 4.5, 91, 4.5);
+        line.DrawLine(84.5, 2.5, 84.5, 4.5);
+        line.DrawLine(84.5, 4.5, 90.5, 4.5);
         //rb2in and rb2out
         if(o.name.find("Wheel_-2") != std::string::npos || o.name.find("Wheel_2") != std::string::npos)
         {
-          line.DrawLine(91, 4.5, 91, 6.5);
-          line.DrawLine(91, 6.5, 85, 6.5);
-          line.DrawLine(85, 6.5, 85, 9.5);
+          line.DrawLine(90.5, 4.5, 90.5, 6.5);
+          line.DrawLine(90.5, 6.5, 84.5, 6.5);
+          line.DrawLine(84.5, 6.5, 84.5, 9.5);
         } else {
-          line.DrawLine(91, 4.5, 91, 7.5);
-          line.DrawLine(91, 7.5, 85, 7.5);
-          line.DrawLine(85, 7.5, 85, 9.5);
+          line.DrawLine(90.5, 4.5, 90.5, 7.5);
+          line.DrawLine(90.5, 7.5, 84.5, 7.5);
+          line.DrawLine(84.5, 7.5, 84.5, 9.5);
         }
-        line.DrawLine(85, 9.5, 43, 9.5);
+        line.DrawLine(84.5, 9.5, 42.5, 9.5);
         //rb3
-        line.DrawLine(43, 9.5, 43, 13.5);
+        line.DrawLine(42.5, 9.5, 42.5, 13.5);
 
        //  gPad->Update();
 //         TPaletteAxis *palette;
