@@ -10,15 +10,15 @@
 +r /srv*/
 +r /srv*/HG16***
 +r /srv*/[bf]eHG16***
-+r /srv*/HG190[1-8][a-z]***
-+r /srv*/[bf]eHG190[1-8][a-z]***
++r /srv*/HG190[1-9][a-z]***
++r /srv*/[bf]eHG190[1-9][a-z]***
 
 # Include here anything else you may want to clean up
 +r /.deploy/***
 +r /cfg*/***
 +r /srv*/.deploy/
 +r /srv*/.deploy/2016*.log
-+r /srv*/.deploy/20190[1-8]*.log
++r /srv*/.deploy/20190[1-9]*.log
 
 # Do not delete anything else
 -r /***
