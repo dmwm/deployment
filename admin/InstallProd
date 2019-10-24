@@ -391,7 +391,7 @@ case $STAGE in
 
       production )
         for host in $HOSTS; do
-          ssh cmsweb@$host sudo /usr/sbin/lemon-host-check -t 15 || true
+          ssh cmsweb@$host sudo /usr/bin/collectdctl listval state=FAILURE || true
         done
         confirm "ok to put $HOSTS into $WHAT"
  
