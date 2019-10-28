@@ -1,4 +1,5 @@
 #include "DQM/DQMRenderPlugin.h"
+#include "utils.h"
 #include "TCanvas.h"
 #include "TH1F.h"
 #include "TH2F.h"
@@ -154,6 +155,7 @@ private:
     obj->GetXaxis()->SetTitleSize(0.06);
     obj->GetXaxis()->SetLabelSize(0.06);
     obj->GetXaxis()->SetTitleOffset(1.05);
+    obj->GetYaxis()->SetTitleOffset(0.95);
     obj->GetXaxis()->SetRangeUser(0,6);
 
     obj->GetYaxis()->SetTitleSize(0.06);
@@ -174,6 +176,13 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
 
+    if( o.name.find("SiPixelAli")!= std::string::npos && o.name.find("statusResults") != std::string::npos){
+      gPad->SetGrid();
+      dqm::utils::reportSummaryMapPalette(obj);
+      obj->SetMarkerSize(1.5);
+      obj->SetOption("colztext");
+      return;
+    }
   }
 
   void preDrawTProfile(TCanvas *, const VisDQMObject &o)
@@ -280,6 +289,8 @@ private:
   {
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
+
+    obj->SetStats( kFALSE );
 
   }
 
