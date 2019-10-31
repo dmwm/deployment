@@ -4,6 +4,7 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TProfile.h"
+#include "TObjString.h"
 #include "TProfile2D.h"
 #include "TStyle.h"
 #include "TGaxis.h"
@@ -58,6 +59,27 @@ public:
   virtual void postDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &)
   {
     c->cd();
+
+    if( o.name.find("SiPixelAli")!= std::string::npos && o.name.find("PedeExitCode") != std::string::npos){
+      // Clear the default string from the canvas 
+      c->Clear();
+      
+      TObjString* tos = dynamic_cast<TObjString*>( o.object );
+      auto exitCode = TString((tos->GetString())(0,6));
+      TText *t = new TText(.5, .5, tos->GetString());
+      t->SetTextFont(63);
+      t->SetTextAlign(22);
+      t->SetTextSize(18);
+      // from Pede manual: http://www.desy.de/~kleinwrt/MP2/doc/html/exit_code_page.html
+      // all exit codes <  10 are normal endings
+      // all exit codes >= 10 indicated an aborted measurement
+      if(exitCode.Atoi()>=10){
+	t->SetTextColor(kRed);
+      } else {
+	t->SetTextColor(kGreen+2);
+      }
+      t->Draw();
+    }
 
     if( dynamic_cast<TH1F*>( o.object ) )
     {
