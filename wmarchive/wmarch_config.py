@@ -49,3 +49,6 @@ data.wmauri = 'http://localhost:%s' % main.port
 # yarn option will be passed to myspark string
 # use empty string for no yarn or --yarn or --yarn-cluster strings
 data.yarn = ''
+# monit settings
+data.monit_credentials='/data/srv/state/wmarchive/wma_dataops_monit.json'
+data.monit_attributes=['task','exitCode','site','outputDataset']
