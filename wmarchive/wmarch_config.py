@@ -51,4 +51,4 @@ data.wmauri = 'http://localhost:%s' % main.port
 data.yarn = ''
 # monit settings
 data.monit_credentials='/data/srv/state/wmarchive/wma_dataops_monit.json'
-data.monit_attributes=['task','exitCode','site','outputDataset']
+data.monit_attributes=[]
