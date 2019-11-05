@@ -55,4 +55,4 @@ data.monit_attributes=[]
 # NATS settings
 data.nats_server='nats://cms-nats.cern.ch'
 data.nats_pub=''
-data..nats_topics=[]
+data.nats_topics=[]
