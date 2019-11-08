@@ -53,6 +53,7 @@ data.yarn = ''
 data.monit_credentials='/data/srv/state/wmarchive/wma_dataops_monit.json'
 data.monit_attributes=[]
 # NATS settings
-data.nats_server='nats://cms-nats.cern.ch'
+data.use_nats=False
+data.nats_server='137.138.158.11,137.138.158.238'
 data.nats_pub=''
 data.nats_topics=[]
