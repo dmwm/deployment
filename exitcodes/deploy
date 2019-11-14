@@ -1,0 +1,20 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_exitcodes_deps()
+{
+  deploy $stage backend
+}
+
+deploy_exitcodes_prep()
+{
+  mkproj stagingarea
+}
+
+deploy_exitcodes_sw()
+{
+  deploy_pkg comp cms+exitcodes
+  perl -p -i -e "s|{ROOT}|$root/$cfgversion/apps/exitcodes|" $root/$cfgversion/config/$project/server.json
+}
+
+deploy_exitcodes_post()
+{
+}

@@ -1,0 +1,9 @@
+{
+    "exitCodes": "/data/srv/current/apps/exitcodes/codes",
+    "port": 9201,
+    "templates": "/data/srv/current/apps/exitcodes/templates",
+    "jscripts": "/data/srv/current/apps/exitcodes/js",
+    "styles": "/data/srv/current/apps/exitcodes/css",
+    "images": "/data/srv/current/apps/exitcodes/images",
+    "verbose": 0
+}
