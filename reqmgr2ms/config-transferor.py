@@ -70,6 +70,9 @@ data.readOnly = True
 data.verbose = True
 data.interval = 600
 data.services = ['transferor']
+data.quotaUsage = 0.8
+data.quotaAccount = "DataOps"
+data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
 data.rucioAccount = RUCIO_ACCT
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
 # if private_vm, just fallback to preprod DBS
