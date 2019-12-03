@@ -75,3 +75,7 @@ for viewname, access in [('DBSWriter','writer')]:
         seconf.params = db_mapping[instance_name][1][access]
       else:
         seconf.params = {'disabled': 'disabled'}
+      # NATS integration
+      dbconf.nats_server=""
+      dbconf.use_nats=False
+      dbconf.nats_topics=[]
