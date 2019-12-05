@@ -17,7 +17,7 @@ deploy_t0wmadatasvc_sw()
 
 deploy_t0wmadatasvc_post()
 {
-  case $host in vocms013[89] | vocms073[89] | vocms0143 | vocms074[012] | vocms0307 | vocms0318 ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] | vocms073[89] | vocms0143 | vocms074[01234] | vocms0307 | vocms0318 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 }
 
