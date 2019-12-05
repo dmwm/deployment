@@ -26,7 +26,7 @@ deploy_victorweb_sw()
 
 deploy_victorweb_post()
 {
-  case $host in vocms013[89] | vocms073[89] | vocms014[0123] | vocms0307 | vocms0318 ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] | vocms073[89] | vocms014[0123] | vocms0307 | vocms074[01234] | vocms0318 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 
   (set -e

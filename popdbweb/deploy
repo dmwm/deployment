@@ -28,7 +28,7 @@ deploy_popdbweb_sw()
 deploy_popdbweb_post()
 {
   case $host in
-    vocms013[89] | vocms073[89] | vocms014[0123] | vocms0307 | vocms0318 )
+    vocms013[89] | vocms073[89] | vocms014[0123] | vocms0307 | vocms0318 | vocms074[34])
       disable
       ;;
     * )
