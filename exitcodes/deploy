@@ -17,7 +17,7 @@ deploy_exitcodes_sw()
 
 deploy_exitcodes_post()
 {
-  case $host in vocms013[689] | vocms073[89] | vocms016[135] | vocms0740 | vocms0766 ) disable ;; * ) enable ;; esac
+  case $host in vocms0136 | vocms016[135] | vocms0766 ) enable ;; * ) disable ;; esac
   (mkcrontab
    sysboot
   ) | crontab -
