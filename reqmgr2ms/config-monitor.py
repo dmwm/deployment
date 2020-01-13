@@ -34,12 +34,12 @@ srv = main.section_("server")
 srv.thread_pool = 30
 main.application = "ms-monitor"
 main.port = 8248  # main application port it listens on
-main.index = 'data' # Configuration requires index attribute
+main.index = 'ui' # Configuration requires index attribute
 
 # Security configuration
 main.authz_defaults = {"role": None, "group": None, "site": None}
 #set default logging (prevent duplicate)
-main.log_screen = True
+main.log_screen = False
 
 sec = main.section_("tools").section_("cms_auth")
 sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
@@ -54,7 +54,7 @@ app.title = "CMS MicroService Monitor"
 # define different views for our application
 views = config.section_("views")
 # web UI interface
-ui = views.section_('web') # was section 'ui'
+ui = views.section_('ui')
 ui.object = 'WMCore.MicroService.WebGui.FrontPage.FrontPage'
 ui.static = ROOTDIR
 
