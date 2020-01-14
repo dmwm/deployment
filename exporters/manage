@@ -130,7 +130,7 @@ start()
       ;;
 
     # CouchDB on production nodes
-    vocms0740 )
+    vocms0740 | vocms0743 | vocms0744)
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
             -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
@@ -259,7 +259,7 @@ status()
         process_status "mongodb_exporter"
       ;;
 
-    vocms0740 | vocms0741 | vocms0742 )
+    vocms0740 | vocms0742 | vocms0743 | vocms0744)
         # couchdb exporter
         process_status "couchdb_exporter"
       ;;
