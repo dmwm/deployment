@@ -10,7 +10,7 @@ done
 # Back-ends in the AI infrastructure
 for h in vocms0{731,132,136,161,163,165,738,739,740,741,742,766,743,744}; do
   #Add new cipher aes128-ctr
-  rsync -rm -e "ssh -c aes128-ctr -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log*' -f '-s /***/*' --exclude='couch.log' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
+  rsync -rm -e "ssh -c aes128-ctr -i $HOME/.ssh/id_dsa_backend" --append -f '+s */' -f '+s *.txt' -f '+s *.log*' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
 done
 
 # Delete files not modified in the last 7 days

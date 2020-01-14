@@ -123,14 +123,10 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
-        wait4proc "couchdb" # check for pattern that couchdb is running
-        couchdb_exporter -couchdb.uri="http://localhost:5984" \
-            -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
       ;;
 
     # CouchDB on production nodes
-    vocms0740 | vocms0743 | vocms0744)
+    vocms0740 | vocms0742 | vocms0743 | vocms0744)
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
             -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
