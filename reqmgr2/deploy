@@ -42,8 +42,9 @@ deploy_reqmgr2_sw()
 
 deploy_reqmgr2_post()
 {
+  # in practice, general purpose backends and vocms0742 (prod, for couchapps)
   case $host in
-    vocms013[89] | vocms073[89] | vocms074[1234] )
+    vocms013[89] | vocms073[89] | vocms074[0134] )
       disable;;
     * )
       enable;;

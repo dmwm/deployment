@@ -3,14 +3,17 @@
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0739.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|relval-test)(?:/|$) vocms0731.cern.ch
-^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0742.cern.ch :affinity
-^/auth/complete/(?:c?)(?:couchdb|workqueue|workloadsummary|alertscollector|analysis_workqueue|analysis_wmstats|tier0_wmstats|t0_workloadsummary|acdcserver)(?:/|$) vocms0740.cern.ch :affinity
+^/auth/complete/(?:c?)(?:couchdb/workqueue|workqueue)(?:/|$) vocms0740.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats|wmstats|workloadsummary|wmstats_logdb)(?:/|$) vocms0743.cern.ch :affinity
+^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats|t0_workloadsummary|t0_request|t0_logdb)(?:/|$) vocms0744.cern.ch :affinity
+^/auth/complete/(?:c?)(?:couchdb|acdcserver)(?:/|$) vocms0742.cern.ch :affinity
 ^/auth/complete/das(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/das2go(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) vocms0741.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/wmarchive(?:/|$) vocms0182.cern.ch
-^/auth/complete/microservice(?:/|$) vocms0740.cern.ch
+^/auth/complete/ms-transferor(?:/|$) vocms0742.cern.ch
+^/auth/complete/ms-monitor(?:/|$) vocms0742.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
