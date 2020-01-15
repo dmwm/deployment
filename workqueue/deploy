@@ -59,7 +59,13 @@ deploy_workqueue_sw()
 
 deploy_workqueue_post()
 {
-  case $host in vocms013[2689] |vocms073[89] | vocms074[12] | vocms016[135] | vocms0766 ) disable;; * ) enable;; esac
+  # in practice, enabled it on private VMs, vocms0731 (preprod) and vocms0740 (prod)
+  case $host in
+    vocms013[2689] | vocms073[89] | vocms074[1234] | vocms016[135] | vocms0766 )
+      disable;;
+    * )
+      enable;;
+    esac
   
   # Do cache cleanup
   local cmd="rm -rf $root/state/workqueue/cache/*"

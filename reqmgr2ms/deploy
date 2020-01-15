@@ -64,8 +64,13 @@ deploy_reqmgr2ms_sw()
 
 deploy_reqmgr2ms_post()
 {
-  # in practice, enabled on private VMs, vocms0731 (preprod) and vocms0740 (prod)
-  case $host in vocms013[2689] | vocms073[89] | vocms074[1234] | vocms016[135] | vocms0766 ) disable;; * ) enable;; esac
+  # in practice, enabled on private VMs, vocms0731 (preprod) and vocms0742 (prod)
+  case $host in
+    vocms013[2689] | vocms073[89] | vocms074[0134] | vocms016[135] | vocms0766 )
+      disable;;
+    * )
+      enable;;
+    esac
   (mkcrontab; sysboot) | crontab -
 }
 
