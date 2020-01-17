@@ -45,7 +45,7 @@ deploy_acdcserver_post()
       setup_acdcserver_couch
       ;;
     * )
-      if [ "$host" != vocms* ]; then
+      if [[ "$host" != vocms* ]]; then
         enable
         setup_acdcserver_couch
       else

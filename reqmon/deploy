@@ -69,7 +69,7 @@ deploy_reqmon_post()
       enable
       ;;
     * )
-      if [ "$host" != vocms* ]; then
+      if [[ "$host" != vocms* ]]; then
         enable
         setup_reqmon_couch
       else

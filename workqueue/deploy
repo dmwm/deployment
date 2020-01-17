@@ -75,7 +75,7 @@ deploy_workqueue_post()
       setup_workqueue_couch
       ;;
     * )
-      if [ "$host" != vocms* ]; then
+      if [[ "$host" != vocms* ]]; then
         enable
         setup_workqueue_couch
       else

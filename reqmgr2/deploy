@@ -69,7 +69,7 @@ deploy_reqmgr2_post()
       enable
       ;;
     * )
-      if [ "$host" != vocms* ]; then
+      if [[ "$host" != vocms* ]]; then
         enable
         setup_reqmgr2_couch
       else
