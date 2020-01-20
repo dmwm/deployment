@@ -57,38 +57,27 @@ deploy_workqueue_sw()
 
 }
 
-setup_workqueue_couch()
-{
-  # Tell couch to push workqueue apps on the next restart
-  for couch in couchdb:5984; do
-    echo "$project_config/manage pushcouchapp http://localhost:${couch##*:}" \
-      > $root/state/${couch%%:*}/stagingarea/workqueue
-  done
-}
-
 deploy_workqueue_post()
 {
   # in practice, enabled it on private VMs, vocms0731 (preprod) and vocms0740 (prod)
   case $host in
-    vocms0117 | vocms0731 | vocms0740 )
-      enable
-      setup_workqueue_couch
-      ;;
+    vocms013[2689] | vocms073[89] | vocms074[1234] | vocms016[135] | vocms0766 )
+      disable;;
     * )
-      if [ "$host" != vocms* ]; then
-        enable
-        setup_workqueue_couch
-      else
-        disable
-      fi
-      ;;
-  esac
-
+      enable;;
+    esac
+  
   # Do cache cleanup
   local cmd="rm -rf $root/state/workqueue/cache/*"
   $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
   eval $cmd
 
+  # Tell couch to push workqueue apps on the next restart
+  for couch in couchdb:5984; do
+    echo "$project_config/manage pushcouchapp http://localhost:${couch##*:}" \
+      > $root/state/${couch%%:*}/stagingarea/workqueue
+  done
+  
   (mkcrontab; sysboot) | crontab -
 }
 

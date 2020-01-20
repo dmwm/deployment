@@ -25,7 +25,7 @@ deploy_acdcserver_sw()
   else :; fi
 }
 
-setup_acdcserver_couch()
+deploy_acdcserver_post()
 {
   # Tell couch to push acdcserver apps on the next restart
   local manage=$project_config/acdcserver_manage
@@ -35,24 +35,6 @@ setup_acdcserver_couch()
     echo "couchapp push $root/current/apps/acdcserver/data/couchapps/GroupUser" \
          "http://localhost:${couch##*:}/acdcserver" >> $root/state/${couch%%:*}/stagingarea/acdcserver
   done
-}
-
-deploy_acdcserver_post()
-{
-  case $host in
-    vocms0117 | vocms0132 | vocms0740 )
-      enable
-      setup_acdcserver_couch
-      ;;
-    * )
-      if [ "$host" != vocms* ]; then
-        enable
-        setup_acdcserver_couch
-      else
-        disable
-      fi
-      ;;
-  esac
 }
 
 deploy_acdcserver_auth()

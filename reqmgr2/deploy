@@ -40,43 +40,33 @@ deploy_reqmgr2_sw()
        $root/$cfgversion/config/$project/config.py
 }
 
-setup_reqmgr2_couch()
-{
-  # ReqMgr2 and old reqmgr specific couchdb stuff
-  # Tell couch to pick up reqmgr on the next restart
-  local reqmgrapp=$root/current/apps/reqmgr2
-  for couch in couchdb:5984; do
-    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux http://localhost:${couch##*:}/reqmgr_auxiliary" \
-         > $root/state/${couch%%:*}/stagingarea/reqmgr2
-    echo "couchapp push $reqmgrapp/data/couchapps/WMDataMining http://localhost:${couch##*:}/wmdatamining" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
-    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr http://localhost:${couch##*:}/reqmgr_workload_cache" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
-    echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache http://localhost:${couch##*:}/reqmgr_config_cache" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
-  done
-}
-
 deploy_reqmgr2_post()
 {
   # in practice, general purpose backends and vocms0742 (prod, for couchapps)
   case $host in
-    vocms0117 | vocms0132 | vocms0742 )
-      enable
-      setup_reqmgr2_couch
-      ;;
-    vocms0731 | vocms0136 | vocms016[135] | vocms0766 )
-      enable
-      ;;
+    vocms013[89] | vocms073[89] | vocms074[0134] )
+      disable;;
     * )
-      if [ "$host" != vocms* ]; then
-        enable
-        setup_reqmgr2_couch
-      else
-        disable
-      fi
-      ;;
-  esac
+      enable;;
+    esac
+
+  # ReqMgr2 and old reqmgr specific couchdb stuff
+  # Tell couch to pick up reqmgr on the next restart
+  local reqmgrapp=$root/current/apps/reqmgr2
+  for couch in couchdb:5984; do
+    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux" \
+         "http://localhost:${couch##*:}/reqmgr_auxiliary" \
+         > $root/state/${couch%%:*}/stagingarea/reqmgr2
+    echo "couchapp push $reqmgrapp/data/couchapps/WMDataMining" \
+         "http://localhost:${couch##*:}/wmdatamining" \
+         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
+    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr" \
+         "http://localhost:${couch##*:}/reqmgr_workload_cache" \
+         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
+    echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache" \
+         "http://localhost:${couch##*:}/reqmgr_config_cache" \
+         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
+  done
 
   (mkcrontab; sysboot) | crontab -
 }

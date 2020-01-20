@@ -38,8 +38,16 @@ deploy_t0_reqmon_sw()
        $root/$cfgversion/config/$project/config.py
 }
 
-setup_t0_reqmon_couch()
+deploy_t0_reqmon_post()
 {
+  # in practice, general purpose backends and vocms0744 (prod, for couchapps)
+  case $host in
+    vocms013[89] | vocms073[89] | vocms074[0123] )
+      disable;;
+    * )
+      enable;;
+    esac
+  
   # Tell couch to push the t0_reqmon app on the next restart
   for couch in couchdb:5984; do
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/WMStats" \
@@ -53,31 +61,7 @@ setup_t0_reqmon_couch()
     echo "couchapp push $root/$cfgversion/apps.$glabel/t0_reqmon/data/couchapps/LogDB" \
          "http://localhost:${couch##*:}/t0_logdb" >> $root/state/${couch%%:*}/stagingarea/t0_reqmon
   done
-}
-
-deploy_t0_reqmon_post()
-{
-  # in practice, general purpose backends and vocms0744 (prod, for couchapps)
-  case $host in
-    # fix this line to: vocms0117 | vocms0731 | vocms0744 )
-    vocms0117 | vocms0744 )
-      enable
-      setup_t0_reqmon_couch
-      ;;
-    # fix this line to:     vocms0132 | vocms0136 | vocms016[135] | vocms0766 )
-    vocms0132 | vocms0731 | vocms0136 | vocms016[135] | vocms0766 )
-      enable
-      ;;
-    * )
-      if [ "$host" != vocms* ]; then
-        enable
-        setup_t0_reqmon_couch
-      else
-        disable
-      fi
-      ;;
-  esac
-
+  
   (mkcrontab; sysboot) | crontab -
 }
 
