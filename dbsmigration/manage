@@ -60,7 +60,7 @@ start()
   cd $STATEDIR
   echo "starting $ME"
   python -u $DBS3_MIGRATION_ROOT/lib/python*/site-packages/dbs/components/migration/StartUp.py --config=$CFGFILE \
-    </dev/null 2>&1 | rotatelogs $LOGDIR/dbsmigration-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    </dev/null 2>&1 | rotatelogs $LOGDIR/dbsmigration-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.

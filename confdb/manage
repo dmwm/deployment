@@ -56,7 +56,7 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  python $CONFDB_ROOT/Application/Main.py </dev/null 2>&1 | rotatelogs $LOGDIR/confdb-%Y%m%d.log 86400 >/dev/null 2>&1 &
+  python $CONFDB_ROOT/Application/Main.py </dev/null 2>&1 | rotatelogs $LOGDIR/confdb-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.

@@ -127,7 +127,7 @@ start_dbs()
   bname=$(echo $fname|cut -d'.' -f 1)
   echo "starting $bname"
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so python -u $DBS3_ROOT/lib/python*/site-packages/WMCore/WebTools/Root.py --ini=$1 \
-    </dev/null 2>&1 | rotatelogs $LOGDIR/$bname-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    </dev/null 2>&1 | rotatelogs $LOGDIR/$bname-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 start()

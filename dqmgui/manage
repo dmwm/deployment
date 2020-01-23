@@ -186,7 +186,7 @@ startagent()
   esac
   local logstem=${1}; shift
   ([ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
-   set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d.log 86400 >/dev/null 2>&1 &
+   set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
 }
 
 # Start service conditionally on crond restart.
@@ -614,20 +614,20 @@ start_collector()
   case $FLAVOR:$HOST:${1:-collector} in
     # Online servers: Collector for the first one, no collector for the other two:
     online:srv-c2f11-29-01:*collector* )
-      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
     online:srv-c2f11-29-02:*collector* ) ;;
     online:srv-c2f11-29-04:*collector* ) ;;
     # Playback server: Gets its own collector:
     online:srv-c2f11-29-03:*collector* )
-      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
     # Hcal server: Gets its own collector:
     online:fu-c2f11-21-03:*collector* )
-      DQMCollector --listen 9091 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+      DQMCollector --listen 9091 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
     # Rest/default: Standard collector:
     online:*:*collector* )
-      DQMCollector --listen 9190 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+      DQMCollector --listen 9190 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
     *:*:*collector* )
-      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
+      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 & ;;
   esac
 }
 
@@ -755,7 +755,7 @@ indexbackup()
           $CASTORDIR \
           broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch \
           --fullbackup 50 \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
+          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1
       esac
   done
 }
@@ -792,7 +792,7 @@ zipbackup()
           $DQM_DATA/zipped \
           $CASTORDIR \
           $DQM_DATA/agents/verify \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
+          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1
     esac
   done
 }
@@ -832,7 +832,7 @@ zipbackupcheck()
           $CASTORDIR \
           24 \
           $DQM_DATA/agents/clean \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d.log 86400 >/dev/null 2>&1
+          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1
     esac
   done
 }
