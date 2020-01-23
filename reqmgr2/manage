@@ -59,7 +59,7 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2-`hostname`-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2-%Y%m%d-`hostname -s`.log 86400" $CFGFILE
 }
 
 
@@ -67,7 +67,7 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2-`hostname`-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2-%Y%m%d-`hostname -s`.log 86400" $CFGFILE
 }
 
 

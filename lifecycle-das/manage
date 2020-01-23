@@ -51,7 +51,7 @@ run()
   echo "starting $ME"
   cd $STATEDIR
   Lifecycle.pl --config $ROOT/config/$ME/DAS.conf \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/$ME-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/$ME-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.

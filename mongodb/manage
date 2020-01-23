@@ -62,7 +62,7 @@ start()
   fi
   $cmd $MONGO_ROOT/bin/mongod --dbpath=$STATEDIR/db --storageEngine mmapv1 \
       --port 8230 --quiet --nojournal --nohttpinterface --bind_ip 127.0.0.1 \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 
   n=0 started=false
   while [ $n -le 300 ]; do

@@ -59,7 +59,7 @@ sysboot_srv()
 start_srv()
 {
     echo "Starting exitcodes service..."
-    nohup CMSExitCodes -config $CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/exitcodes-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    nohup CMSExitCodes -config $CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/exitcodes-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 stop_srv()

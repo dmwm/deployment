@@ -27,7 +27,7 @@ export WMCORE_ROOT=$ACDCSERVER_ROOT
 export YUI_ROOT
 export ACDC_CLI="${ACDCSERVER_ROOT}/bin/acdcserver-tools"
 export WMAGENT_CONFIG=${CFGFILE}
-logcmd="rotatelogs $LOGDIR/acdcserver-`hostname`-%Y%m%d.log 86400 2>&1"
+logcmd="rotatelogs $LOGDIR/acdcserver-%Y%m%d-`hostname -s`.log 86400 2>&1"
 
 # Verify the security string.
 check()

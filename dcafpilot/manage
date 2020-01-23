@@ -63,7 +63,7 @@ start()
   echo "starting $ME"
   # start service
   $DCAFPILOT_ROOT/bin/dcaf_server --config=$DCAFPILOT_CONFIG \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/dcaf-`hostname`-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/dcaf-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.

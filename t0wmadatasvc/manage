@@ -33,14 +33,14 @@ PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 # Start service conditionally on crond restart.
 sysboot()
 {
-  wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/t0wmadatasvc-`hostname`-%Y%m%d.log 86400" $CFGFILE
+  wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/t0wmadatasvc-%Y%m%d-`hostname -s`.log 86400" $CFGFILE
 }
 
 # Start the service.
 start()
 {
   echo "starting $ME"
-  wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/t0wmadatasvc-`hostname`-%Y%m%d.log 86400" $CFGFILE
+  wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/t0wmadatasvc-%Y%m%d-`hostname -s`.log 86400" $CFGFILE
 }
 
 # Stop the service.
