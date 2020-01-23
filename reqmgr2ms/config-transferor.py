@@ -90,7 +90,7 @@ heartbeatMonitor.object = "WMCore.MicroService.CherryPyThreads.HeartbeatMonitor.
 heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 heartbeatMonitor.wmstatsSvc_url = "%s/wmstatsserver" % BASE_URL
 heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
-heartbeatMonitor.log_file = '%s/logs/reqmgr2ms/heartbeatMonitor_transferor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+heartbeatMonitor.log_file = '%s/logs/reqmgr2ms/heartbeatMonitor_transferor-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
 heartbeatMonitor.central_logdb_url = LOG_DB_URL
 heartbeatMonitor.log_reporter = LOG_REPORTER
 # AMQ MonIT settings

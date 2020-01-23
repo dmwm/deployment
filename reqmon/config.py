@@ -83,7 +83,7 @@ dataCacheTasks.object = "WMCore.WMStats.CherryPyThreads.DataCacheUpdate.DataCach
 dataCacheTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 dataCacheTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
 dataCacheTasks.dataCacheUpdateDuration = 60 * 5 # every 5 min
-dataCacheTasks.log_file = '%s/logs/reqmon/dataCacheTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+dataCacheTasks.log_file = '%s/logs/reqmon/dataCacheTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0],HOST.split('.', 1)[0],time.strftime("%Y%m%d"))
 dataCacheTasks.central_logdb_url = LOG_DB_URL
 dataCacheTasks.log_reporter = "%s-%s" % (LOG_REPORTER, HOST)
 
@@ -97,7 +97,7 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     logDBTasks.log_reporter = LOG_REPORTER
     logDBTasks.keepDocsAge = 60 * 60 * 24 * 90  # keep data newer than 90 days
     logDBTasks.logDBCleanDuration = 60 * 60 * 12  # every 12 hours
-    logDBTasks.log_file = '%s/logs/reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    logDBTasks.log_file = '%s/logs/reqmon/logDBTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0],HOST.split('.', 1)[0],time.strftime("%Y%m%d"))
     
     # Cleaning up wmstats db
     cleanUpTask = extentions.section_("cleanUpTask")
@@ -108,15 +108,17 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     cleanUpTask.central_logdb_url = LOG_DB_URL
     cleanUpTask.log_reporter = LOG_REPORTER
     cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12  # every 12 hours
-    cleanUpTask.log_file = '%s/logs/reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    cleanUpTask.log_file = '%s/logs/reqmon/cleanUpTask-%s-%s.log' % (__file__.rsplit('/', 4)[0],HOST.split('.', 1)[0],time.strftime("%Y%m%d"))
     
     # heartbeat monitor task
     heartbeatMonitor = extentions.section_("heartbeatMonitor")
     heartbeatMonitor.object = "WMCore.WMStats.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
     heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
-    heartbeatMonitor.log_file = '%s/logs/reqmon/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    heartbeatMonitor.log_file = '%s/logs/reqmon/heartbeatMonitor-%s-%s.log' % (__file__.rsplit('/', 4)[0],HOST.split('.', 1)[0],time.strftime("%Y%m%d"))
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
     #list all the thread need to be monitored
     heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]
+    icho $(bc -l <<<"${total}/$run")
+done
