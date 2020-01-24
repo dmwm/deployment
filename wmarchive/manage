@@ -99,12 +99,12 @@ start()
       --mongo=$MONGO_URI --dbname=fwjr --schema=$AVRO_SCHEMA --thr=240 \
       --odir=$AVRO_STORAGE/fwjr --mdir=$AVRO_STORAGE_MIGRATE/fwjr \
       --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE --dtype=fwjr \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-fwjr-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-fwjr-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
   $WMARCHIVE_ROOT/bin/mongo2avro \
       --mongo=$MONGO_URI --dbname=crab --schema=$AVRO_SCHEMA --thr=240 \
       --odir=$AVRO_STORAGE/crab --mdir=$AVRO_STORAGE_MIGRATE/crab \
       --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE --dtype=crab \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-crab-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-crab-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.

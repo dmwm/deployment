@@ -61,7 +61,7 @@ start()
 {
   echo "starting $ME"
   $TFAAS_ROOT/bin/tfaas -config $TFAAS_CONFIG \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/tfaas-%Y%m%d.log 86400 >/dev/null 2>&1 &
+      </dev/null 2>&1 | rotatelogs $LOGDIR/tfaas-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.

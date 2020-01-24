@@ -147,7 +147,7 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
     couchCleanup.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     couchCleanup.workqueueCleanDuration = 60 * 60 * 12 # every 12 hours
-    couchCleanup.log_file = '%s/logs/reqmgr2/couchCleanup-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    couchCleanup.log_file = '%s/logs/reqmgr2/couchCleanup-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
     couchCleanup.central_logdb_url = LOG_DB_URL
     couchCleanup.log_reporter = LOG_REPORTER
 
@@ -157,7 +157,7 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     parentageFixTask.dbs_url = data.dbs_url
     parentageFixTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
     parentageFixTask.parentageFixDuration = 60 * 180  # every 3 hours
-    parentageFixTask.log_file = '%s/logs/reqmgr2/parentageFixTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    parentageFixTask.log_file = '%s/logs/reqmgr2/parentageFixTask-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
     parentageFixTask.central_logdb_url = LOG_DB_URL
     parentageFixTask.log_reporter = LOG_REPORTER
 
@@ -170,7 +170,7 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     statusChangeTasks.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     statusChangeTasks.archiveDelayHours = 24 * 7 # delay the archive at least 7 days after announced
     statusChangeTasks.checkStatusDuration = 60 * 10  # every 10 min
-    statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
     statusChangeTasks.central_logdb_url = LOG_DB_URL
     statusChangeTasks.log_reporter = LOG_REPORTER
 
@@ -182,7 +182,7 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     auxCacheUpdateTasks.tagcollect_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML"
     auxCacheUpdateTasks.tagcollect_args = {"anytype": 1, "anyarch": 1}
     auxCacheUpdateTasks.unified_url = "https://raw.githubusercontent.com/CMSCompOps/WmAgentScripts/master/unifiedConfiguration.json"
-    auxCacheUpdateTasks.log_file = '%s/logs/reqmgr2/auxCacheUpdateTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    auxCacheUpdateTasks.log_file = '%s/logs/reqmgr2/auxCacheUpdateTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
     auxCacheUpdateTasks.central_logdb_url = LOG_DB_URL
     auxCacheUpdateTasks.log_reporter = LOG_REPORTER
 
@@ -192,7 +192,7 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
     heartbeatMonitor.wmstatsSvc_url = "%s/wmstatsserver" % BASE_URL
     heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
-    heartbeatMonitor.log_file = '%s/logs/reqmgr2/heartbeatMonitor-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    heartbeatMonitor.log_file = '%s/logs/reqmgr2/heartbeatMonitor-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
     # AMQ MonIT settings

@@ -68,7 +68,7 @@ dataCacheTasks.object = "WMCore.WMStats.T0.CherryPyThreads.T0DataCacheUpdate.T0D
 dataCacheTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 dataCacheTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
 dataCacheTasks.dataCacheUpdateDuration = 60 * 5 # every 5 min
-dataCacheTasks.log_file = '%s/logs/t0_reqmon/dataCacheTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+dataCacheTasks.log_file = '%s/logs/t0_reqmon/dataCacheTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
 
 # Production/testbed instance of logdb, must be a production/testbed back-end
 if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
@@ -80,7 +80,7 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     logDBTasks.log_reporter = LOG_REPORTER
     logDBTasks.keepDocsAge = 60 * 60 * 24 * 90 # keep data newer than 90 days
     logDBTasks.logDBCleanDuration = 60 * 60 * 24 * 1 # 1 day
-    logDBTasks.log_file = '%s/logs/t0_reqmon/logDBTasks-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    logDBTasks.log_file = '%s/logs/t0_reqmon/logDBTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
         
     # Cleaning up wmstats db
     cleanUpTask = extentions.section_("cleanUpTask")
@@ -92,5 +92,5 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     cleanUpTask.log_reporter = LOG_REPORTER
     cleanUpTask.DataKeepDays = 0.125 # 3 hours - unit is a day
     cleanUpTask.archivedCleanUpDuration = 60 * 60 * 12 # every 12 hours
-    cleanUpTask.log_file = '%s/logs/t0_reqmon/cleanUpTask-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+    cleanUpTask.log_file = '%s/logs/t0_reqmon/cleanUpTask-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
     
