@@ -120,5 +120,3 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor.log_reporter = LOG_REPORTER
     #list all the thread need to be monitored
     heartbeatMonitor.thread_list = [a.object.split('.')[-1] for a in config.section_("extensions")]
-    icho $(bc -l <<<"${total}/$run")
-done
