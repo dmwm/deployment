@@ -42,7 +42,7 @@ deploy_reqmon_sw()
 
 deploy_reqmon_post()
 {
-  # in practice, general purpose backends and vocms0743 (prod, for couchapps)
+  # in practice, general purpose backends, couchapps on vocms0731 (preprod) and vocms0743 (prod)
   case $host in
     vocms013[89] | vocms073[89] | vocms074[0124] )
       disable;;
