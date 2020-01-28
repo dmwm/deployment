@@ -1,7 +1,5 @@
 """
-DBS Server configuration file.
-This is the old conf file, but we still need it for server side unit tests because they require to config both the writer and reader 
-together. 
+DBS Server configuration file
 """
 import os, sys, json
 from WMCore.Configuration import Configuration
@@ -82,7 +80,6 @@ for viewname, access in [('DBSReader','reader'),('DBSWriter','writer'),('DBSMigr
       dbconf = dbinst.section_(instance_name)
       dbconf.dbowner = db_mapping[instance_name][0]['databaseOwner']
       dbconf.version = DBSVERSION
-      dbconf.throllting_limit = 15
       dbconf.connectUrl = db_mapping[instance_name][0]['connectUrl'][access]
       dbconf.engineParameters = {'pool_size': 15, 'max_overflow': 10, 'pool_timeout': 200}
       seconf = secinst.section_(instance_name)
