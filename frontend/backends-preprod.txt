@@ -3,20 +3,20 @@
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0739.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|relval-test)(?:/|$) vocms0731.cern.ch
-^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0731.cern.ch :affinity
-^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0731.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0743.cern.ch :affinity
-^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0743.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0743.cern.ch :affinity
-^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats)(?:/|$) vocms0744.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_workloadsummary|t0_workloadsummary)(?:/|$) vocms0744.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_request|t0_request)(?:/|$) vocms0744.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_logdb|t0_logdb)(?:/|$) vocms0744.cern.ch :affinity
 ^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/acdcserver|acdcserver)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_workloadsummary|t0_workloadsummary)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_request|t0_request)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_logdb|t0_logdb)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0731.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) vocms0731.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0731.cern.ch|vocms0132.cern.ch
 ^/auth/complete/das(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
