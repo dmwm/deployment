@@ -25,17 +25,17 @@ if VARIANT == 'prod':
                 'prod/phys03': [dbs3_pp3_r, {'reader':{},'writer':{}}],
                 'prod/caf':    [dbs3_pc_r, {'reader':{},'writer':{}}],
                 'prod/test':   [dbs3_pt_i2, {'reader':{},'writer':{}}]}
-
 elif VARIANT == 'preprod':
   db_mapping = {'int/global': [dbs3_ig_i2,  {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
-                'int/phys01': [dbs3_ip1_i2, {'reader':{},'writer':{}}],
-                'int/phys02': [dbs3_ip2_i2, {'reader':{},'writer':{}}],
-                'int/phys03': [dbs3_ip3_i2,{'reader':{},'writer':{}}]}
+                'int/phys03': [dbs3_ip3_i2, {'reader':{},'writer':{}}]}                
 elif VARIANT == 'dev':
   db_mapping = {'dev/global': [dbs3_dg_i2, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
                 'dev/phys01': [dbs3_dp1_i2, {'reader':{},'writer':{}}],
                 'dev/phys02': [dbs3_dp2_i2, {'reader':{},'writer':{}}],
                 'dev/phys03': [dbs3_dp3_i2, {'reader':{},'writer':{}}]}
+elif VARIANT == 'k8s':
+  db_mapping = {'int/global': [dbs3_k8sg_r,{'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}],
+                'int/phys03': [dbs3_k8sp_r,{'reader':{},'writer':{}}]}
 else:
   db_mapping = {'dev/global': [dbs3_l2_i2,{'reader':{},'writer':{}}],
                 'dev/phys03': [dbs3_p_i2, {'reader':{},'writer':{}}]}

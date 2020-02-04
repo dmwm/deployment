@@ -24,6 +24,8 @@ elif VARIANT == 'preprod':
   db_mapping = {'int/phys03': [dbs3_ip3_i2,{'reader':{},'writer':{}}]}
 elif VARIANT == 'dev':
   db_mapping = {'dev/phys03': [dbs3_dp3_i2, {'reader':{},'writer':{}}]}
+elif VARIANT == 'k8s':
+  db_mapping = {'int/phys03': [dbs3_k8sp_r, {'reader':{},'writer':{}}]}
 else:
   db_mapping = {'dev/phys03': [dbs3_p_i2, {'reader':{},'writer':{}}]}
 
