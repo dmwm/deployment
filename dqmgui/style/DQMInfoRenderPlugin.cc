@@ -183,14 +183,16 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
       // "Valid" for online.
       // For offline there is no "Valid", but the scan wouldn't really matter
       // since it shows only existing lumisections anyway.
-      if (histogram.GetBinContent(binX, maxBinY) != 0) {
+      Double_t binContent = histogram.GetBinContent(binX, maxBinY);
+      if (binContent != 0 && binContent != -1) {
         return binX;
       }
     }
     // For offline, we often see the last column being all 0 over the entire
     // line. This is fake data. When we see that, we remove it.
     for (int binY = 1; binY <= maxBinY; ++binY) {
-      if (histogram.GetBinContent(maxBinX, binY) != 0) {
+      Double_t binContent = histogram.GetBinContent(maxBinX, binY);
+      if (binContent != 0 && binContent != -1) {
         return maxBinX; // Not dropping last column
         break;
       }

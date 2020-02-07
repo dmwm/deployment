@@ -1,0 +1,24 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_exitcodes_deps()
+{
+  deploy $stage backend
+}
+
+deploy_exitcodes_prep()
+{
+  mkproj stagingarea
+}
+
+deploy_exitcodes_sw()
+{
+  deploy_pkg comp cms+exitcodes
+  perl -p -i -e "s|{ROOT}|$root/$cfgversion/apps/exitcodes|" $root/$cfgversion/config/$project/server.json
+}
+
+deploy_exitcodes_post()
+{
+  case $host in vocms0136 | vocms016[135] | vocms0766 | vocms0731 | vocms0132 ) enable ;; * ) disable ;; esac
+  (mkcrontab
+   sysboot
+  ) | crontab -
+}

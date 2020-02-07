@@ -43,6 +43,7 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+export WMCORE_USE_RUCIO=false
 export YUI_ROOT
 export WMAGENT_CONFIG=${CFGFILE}
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
@@ -58,7 +59,7 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/workqueue-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/workqueue-%Y%m%d-`hostname -s`.log 86400" $CFGFILE
 }
 
 
@@ -66,7 +67,7 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/workqueue-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/workqueue-%Y%m%d-`hostname -s`.log 86400" $CFGFILE
 }
 
 

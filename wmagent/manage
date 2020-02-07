@@ -313,7 +313,7 @@ export WMAGENT_ROOT
 export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
-
+export WMAGENT_USE_RUCIO=false
 
 #########################
 #  MySQL                #
@@ -572,7 +572,7 @@ start_couch(){
     couchdb -b -a $CONFIG_COUCH/local.ini \
             -p $INSTALL_COUCH/logs/couchdb.pid \
             -e $INSTALL_COUCH/logs/stderr.log \
-            -o $INSTALL_COUCH/logs/stdout.log
+            -o /dev/null
     if [ $COUCH_INIT_DONE -eq 0 ]; then
 	echo "CouchDB has not been initialised... running post initialisation"
 	init_couch_post;

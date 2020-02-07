@@ -60,7 +60,7 @@ start()
 {
   cd $STATEDIR
   couchdb -A $CFGDIR/ -a $KEYFILE -b \
-    -o $LOGDIR/$(date +%Y%m%d-%H%M%S).stdout \
+    -o /dev/null \
     -e $LOGDIR/$(date +%Y%m%d-%H%M%S).stderr \
     -p $STATEDIR/couchdb.pid </dev/null >/dev/null 2>&1
 

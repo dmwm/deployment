@@ -40,7 +40,13 @@ deploy_t0_reqmon_sw()
 
 deploy_t0_reqmon_post()
 {
-  case $host in vocms013[89] | vocms073[89] ) disable;;  * ) enable;; esac
+  # in practice, general purpose backends, couchapps on vocms0132 (preprod) and vocms0744 (prod)
+  case $host in
+    vocms013[89] | vocms073[89] | vocms074[0123] )
+      disable;;
+    * )
+      enable;;
+    esac
   
   # Tell couch to push the t0_reqmon app on the next restart
   for couch in couchdb:5984; do

@@ -35,7 +35,7 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms0117 | vocms0127 | vocms013[245689] | vocms0734| vocms073[189] | vocms0143 | vocms074[012] | vocms016[01235] | vocms0760 | vocms030[67] | vocms0318 )
+    vocms0117 | vocms0127 | vocms013[245689] | vocms0734| vocms073[189] | vocms0143 | vocms074[01234] | vocms016[01235] | vocms076[06] | vocms030[67] | vocms0318 )
       pxlabel=cmsweb_backends ;;
     * )
       pxlabel=devvm_$(echo $host | tr - _) ;;
@@ -55,12 +55,22 @@ deploy_admin_post()
     fi
   fi
 
-  (mkcrontab
-   echo "@reboot sudo -E bash -c \"source $project_config/init.sh && $project_config/ServerMonitor -r\""
-   echo "37 */12 * * * sudo -E bash -c \"source $project_config/init.sh && $project_config/ServerMonitor -q -r\""
-   $pxskip || echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
-   echo "7 */12 * * * $project_config/LogArchive $root") |
-   crontab -
+  if $nogroups; then
+    # single-user mode, e.g. DQM GUI at P5, when no sudo access is given
+    (mkcrontab
+     echo "@reboot source $project_config/init.sh && $project_config/ServerMonitor -r"
+     echo "37 */12 * * * source $project_config/init.sh && $project_config/ServerMonitor -q -r"
+     $pxskip || echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
+     echo "7 */12 * * * $project_config/LogArchive $root") |
+     crontab -
+  else
+    (mkcrontab
+     echo "@reboot sudo -E bash -c \"source $project_config/init.sh && $project_config/ServerMonitor -r\""
+     echo "37 */12 * * * sudo -E bash -c \"source $project_config/init.sh && $project_config/ServerMonitor -q -r\""
+     $pxskip || echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
+     echo "7 */12 * * * $project_config/LogArchive $root") |
+     crontab -
+  fi
 
   case $host:$root in
     vocms0117:/data/srv | vocms0127:/data/srv | vocms0134:/data/srv | vocms0734:/data/srv | vocms0135:/data/srv | \

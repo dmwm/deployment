@@ -141,7 +141,7 @@ cron()
   case $action in
     das_cleanup )
       $DAS_ROOT/bin/das_cleanup --verbose 1 \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/das_cleanup-%Y%m%d.log 86400 >/dev/null 2>&1 &
+          </dev/null 2>&1 | rotatelogs $LOGDIR/das_cleanup-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
     * )
       echo "You must specify the cron action to run: das_cleanup "
@@ -179,7 +179,7 @@ start_das()
     case $host in vocms012[67] | vocms0132 | vocms0731 ) tbed="_testbed" dbspace="_int";; * ) tbed="" dbspace="_prod";; esac
     local mapfile=$STAGEDIR/das${tbed}_maps_dbs${dbspace}.js
     cp -f $mapfile $STAGEDIR/update_mapping_db.js
-    nohup das2go_monitor -config $DAS_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    nohup das2go_monitor -config $DAS_CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/das2go-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 stop_das()

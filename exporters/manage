@@ -82,41 +82,55 @@ start()
     # production nodes
     #
     # DBS on production nodes
-    vocms0136 | vocms0161 | vocms0163 | vocms0165 )
+    vocms0136 | vocms0161 | vocms0163 | vocms0165 | vocms0766 )
         # start process_exporter for DBS server
         wait4proc "DBSGlobalReader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18252" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSGlobalWriter" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalWriter" dbs_globalW_exporter ":18253" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18254" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        cpy_exporter -uri http://localhost:8254/dbs/stats -address ":19254" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_cpy_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18255" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSMigrate" # check for pattern that DBS is running
         process_monitor.sh ".*DBSMigrate" dbs_migrate_exporter ":18251" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        # start crabserver exporter
+        wait4proc "crabserver" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        # start reqmgr2 exporter
+        wait4proc "reqmgr2" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/reqmgr2/reqmgr2.pid reqmgr2 ":18240" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr2_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-transferor.pid ms-transferor ":18247" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-transferor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-monitor.pid ms-monitor ":18248" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
-    # DAS/MongoDB exporters on production nodes
+    # DAS/MongoDB/CouchDB exporters on production nodes
     vocms0741 | vocms0742 )
         # start das2go_exporter for DAS server
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
     # CouchDB on production nodes
-    vocms0740 | vocms0741 | vocms0742 )
+    vocms0740 | vocms0742 | vocms0743 | vocms0744)
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
-            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+            -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
     # Apache exporter on production nodes
@@ -124,7 +138,9 @@ start()
         # start apache_exporter for frontend
         wait4proc "httpd" # check for pattern that httpd is running
         apache_exporter -telemetry.address ":18443" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        node_exporter --web.listen-address=":19000" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
     #
@@ -135,55 +151,73 @@ start()
         # start apache_exporter for frontend
         wait4proc "httpd" # check for pattern that httpd is running
         apache_exporter -telemetry.address ":18443" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        node_exporter --web.listen-address=":19000" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
     # DBS, DAS, MongoDB, CouchDB exporters
     vocms0731 | vocms0132 )
         # start process_exporter for DBS server
         wait4proc "DBSGlobalReader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalReader" dbs_global_exporter ":18252" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_global_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSGlobalWriter" # check for pattern that DBS is running
         process_monitor.sh ".*DBSGlobalWriter" dbs_globalW_exporter ":18253" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_globalW_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSPhys03Reader" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Reader" dbs_phys03R_exporter ":18254" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        cpy_exporter -uri http://localhost:8254/dbs/stats -address ":19254" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03R_cpy_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSPhys03Writer" # check for pattern that DBS is running
         process_monitor.sh ".*DBSPhys03Writer" dbs_phys03W_exporter ":18255" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_phys03W_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "DBSMigrate" # check for pattern that DBS is running
         process_monitor.sh ".*DBSMigrate" dbs_migrate_exporter ":18251" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start das2go_exporter for DAS
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start mongodb exporter
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start CouchDB exporter
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" \
-            -databases="_all_dbs" -databases.views=true -telemetry.address="localhost:15984" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+            -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        # start crabserver exporter
+        wait4proc "crabserver" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        # start reqmgr2 exporter
+        wait4proc "reqmgr2" # check for pattern that it is running
+        process_monitor.sh /data/srv/state/reqmgr2/reqmgr2.pid reqmgr2 ":18240" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/reqmgr2_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-transferor.pid ms-transferor ":18247" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-transferor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-monitor.pid ms-monitor ":18248" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
     *)
 		# if we run on local VM we'll start process monitor for scitokens and apache
         wait4proc "scitokens" # check for pattern that stitokens is running
         process_monitor.sh ".*scitokens" scitokens ":18843" 15 \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "httpd" # check for pattern that httpd is running
         apache_exporter -telemetry.address ":18443" \
-              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d.log 86400 >/dev/null 2>&1 &
+              </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        node_exporter --web.listen-address=":19000" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
     esac
 }
 
 stop()
 {
-    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter"; do
+    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter" "cpy_exporter"; do
         local pid=`ps auxwww | grep "$pat" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
         if [ -n "${pid}" ]; then
             echo "Stopping $pat exporter ... ${pid}"
@@ -208,9 +242,10 @@ status()
     local host=`hostname -s`
     case $host in
     # production nodes
-    vocms0136 | vocms0161 | vocms0163 | vocms0165 )
+    vocms0136 | vocms0161 | vocms0163 | vocms0165  | vocms0766 )
         # process exporter
         process_status "process_exporter"
+        process_status "cpy_exporter"
       ;;
 
     vocms0741 | vocms0742 )
@@ -220,7 +255,7 @@ status()
         process_status "mongodb_exporter"
       ;;
 
-    vocms0740 | vocms0741 | vocms0742 )
+    vocms0740 | vocms0742 | vocms0743 | vocms0744)
         # couchdb exporter
         process_status "couchdb_exporter"
       ;;
@@ -241,6 +276,7 @@ status()
         process_status "das2go_exporter"
         process_status "mongodb_exporter"
         process_status "couchdb_exporter"
+        process_status "cpy_exporter"
       ;;
 
     *)

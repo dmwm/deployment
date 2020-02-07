@@ -34,7 +34,10 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-CFGFILE=$CFGDIR/config.py
+CFGFILETR=$CFGDIR/config-transferor.py
+CFGFILEMON=$CFGDIR/config-monitor.py
+LOG_TRANS=ms-transferor
+LOG_MON=ms-monitor
 AUTHDIR=$TOP/current/auth/reqmgr2ms
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
@@ -42,13 +45,11 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+export WMCORE_USE_RUCIO=false
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export WMCORE_ROOT=$REQMGR2MS_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
 export WMCORE_CACHE_DIR=$STATEDIR
-export UNIFIED_CONFIG_JSON=$CFGDIR/unifiedConfiguration.json
-export UNIFIED_CAMPAIGNS=$CFGDIR/campaigns.json
-export UNIFIED_CAMPAIGNS_RELVAL=$CFGDIR/campaigns.relval.json
 export RUCIO_HOME=$CFGDIR
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
   export X509_USER_CERT=$AUTHDIR/dmwm-service-cert.pem
@@ -59,7 +60,8 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
 }
 
 
@@ -67,9 +69,8 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  echo "X509_USER_CERT=$X509_USER_CERT"
-  echo "X509_USER_KEY=$X509_USER_KEY"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/reqmgr2ms-%Y%m%d.log 86400" $CFGFILE
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
 }
 
 
@@ -77,14 +78,16 @@ start()
 stop()
 {
   echo "stopping $ME"
-  wmc-httpd -k -d $STATEDIR $CFGFILE
+  wmc-httpd -k -d $STATEDIR $CFGFILETR
+  wmc-httpd -k -d $STATEDIR $CFGFILEMON
 }
 
 
 # Check if the server is running.
 status()
 {
-  wmc-httpd -s -d $STATEDIR $CFGFILE
+  wmc-httpd -s -d $STATEDIR $CFGFILETR
+  wmc-httpd -s -d $STATEDIR $CFGFILEMON
 }
 
 

@@ -65,7 +65,7 @@ start()
   echo "starting $ME"
   cmsWeb --base-url=$url --port=$port --default-page /DDServer \
     --pid-file $pidfile </dev/null 2>&1 |
-    rotatelogs $LOGDIR/dbsweb-%Y%m%d.log 86400 >/dev/null 2>&1 &
+    rotatelogs $LOGDIR/dbsweb-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 # Stop the service.

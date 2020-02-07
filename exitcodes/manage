@@ -1,0 +1,129 @@
+##H Usage: manage ACTION [ATTRIBUTE] [SECURITY-STRING]
+##H
+##H Available actions:
+##H   help        show this help
+##H   version     get current version of the service
+##H   status      show current service's status
+##H   sysboot     start server from crond if not running
+##H   restart     (re)start the service
+##H   start       (re)start the service
+##H   stop        stop the service
+##H
+
+if [ $(id -un)  = cmsweb ]; then
+  echo "ERROR: please use another account" 1>&2
+  exit 1
+fi
+
+echo_e=-e
+case $(uname) in Darwin )
+  md5sum() { md5 -r ${1+"$@"}; }
+  echo_e=
+  ;;
+esac
+
+msg=${@: -1} # last argument
+
+ME=$(basename $(dirname $0))
+TOP=$(cd $(dirname $0)/../../.. && pwd)
+ROOT=$(cd $(dirname $0)/../.. && pwd)
+LOGDIR=$TOP/logs/$ME
+STATEDIR=$TOP/state/$ME
+COLOR_OK="\\033[0;32m"
+COLOR_WARN="\\033[0;31m"
+COLOR_NORMAL="\\033[0;39m"
+CONFIG=$TOP/current/apps/exitcodes/server.json
+
+. $ROOT/apps/$ME/etc/profile.d/init.sh
+
+# Verify the security string.
+check()
+{
+  CHECK=$(echo "$1" | md5sum | awk '{print $1}')
+  if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
+    echo "$0: cannot complete operation, please check documentation." 1>&2
+    exit 2;
+  fi
+}
+
+# action functions
+sysboot_srv()
+{
+  dostart=false
+  if [ $(pgrep -u $(id -u) -f "[/]CMSExitCodes" | wc -l) = 0 ]; then
+      dostart=true
+  fi
+  $dostart && start_srv
+}
+
+start_srv()
+{
+    echo "Starting exitcodes service..."
+    nohup CMSExitCodes -config $CONFIG </dev/null 2>&1 | rotatelogs $LOGDIR/exitcodes-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+}
+
+stop_srv()
+{
+    local pid=`ps auxwww | egrep "CMSExitCodes -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+    echo "Stop exitcodes service... ${pid}"
+    if [ -n "${pid}" ]; then
+        kill -9 ${pid}
+    fi
+}
+
+status_srv()
+{
+    local pid=`ps auxwww | egrep "CMSExitCodes -config" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
+
+    if  [ -z "${pid}" ]; then
+        echo "exitcodes is not running"
+        return
+    fi
+    if  [ `uname` == "Darwin" ]; then
+        nth=`ps -M -p $pid | grep -v USER | wc -l | awk '{print $1}'`
+    else
+        nth=`ps -L -p $pid | grep -v PID | wc -l | awk '{print $1}'`
+    fi
+    echo "exitcodes server runs with $nth threads"
+    if [ ! -z "${pid}" ]; then
+        echo $echo_e "exitcodes service is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID=${pid}"
+        ps -f -wwww -p ${pid}
+    else
+        echo $echo_e "exitcodes service is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}"
+    fi
+}
+
+# Main routine, perform action requested on command line.
+case ${1:-status} in
+  sysboot )
+    sysboot_srv
+    ;;
+
+  start | restart )
+    check "$msg"
+    stop_srv
+    start_srv
+    ;;
+
+  status )
+    status_srv
+    ;;
+
+  stop )
+    check "$msg"
+    stop_srv
+    ;;
+
+  help )
+    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
+    ;;
+
+  version )
+    echo "$VERSION"
+    ;;
+
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1
+    ;;
+esac

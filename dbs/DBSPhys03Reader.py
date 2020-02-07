@@ -34,6 +34,12 @@ config.SecurityModule.key_file = os.path.join(ROOTDIR, 'auth/wmcore-auth/header-
 config.component_('Webtools')
 config.Webtools.port = 8254
 config.Webtools.thread_pool = 15
+# The maximum number of requests which will be queued up before
+# the server refuses to accept it (default -1, meaning no limit).
+config.Webtools.accepted_queue_size = -1
+config.Webtools.accepted_queue_timeout = 5
+# enable CherryPy statistics monitoring
+config.Webtools.cpstats = True
 config.Webtools.log_screen = False
 config.Webtools.proxy_base = 'True'
 config.Webtools.application = 'dbs'
@@ -65,6 +71,8 @@ for viewname, access in [('DBSReader','reader')]:
     secinst=view.security.section_('instances')
     for instance_name in config.dbs.instances:
       dbconf = dbinst.section_(instance_name)
+      dbconf.throllting_limit = 15
+      #dbconf.throllting_time = 1
       dbconf.dbowner = db_mapping[instance_name][0]['databaseOwner']
       dbconf.version = DBSVERSION
       dbconf.connectUrl = db_mapping[instance_name][0]['connectUrl'][access]
