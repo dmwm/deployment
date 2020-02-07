@@ -119,6 +119,9 @@ float SummaryChamber::GetYmax(ChamberID &id) const {return m_fScaleY * (id.nIdx 
 void SummaryChamber::drawStats(TH2*& me) {
   gStyle->SetPalette(1, 0);
   
+  // Useless labels for the current layout
+  for ( int i = 0 ; i < me->GetNbinsX() ; i++ ) me->GetXaxis()->SetBinLabel(i + 1, "");
+  
   /** Cosmetics... :P */
   me->GetXaxis()->SetTitle("Chamber");
   me->GetXaxis()->CenterTitle(true);
