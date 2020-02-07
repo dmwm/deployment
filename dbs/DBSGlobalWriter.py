@@ -26,6 +26,8 @@ elif VARIANT == 'dev':
   db_mapping = {'dev/global': [dbs3_dg_i2, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
 elif VARIANT == 'k8s':
   db_mapping = {'int/global': [dbs3_k8sg_r,{'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
+elif VARIANT == 'k8s-dev':
+  db_mapping = {'dev/global': [dbs3_p1_i2,{'reader':{},'writer':{}}]}
 else:
   db_mapping = {'dev/global': [dbs3_l2_i2,{'reader':{},'writer':{}}]}
 config = Configuration()
