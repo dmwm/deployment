@@ -61,7 +61,16 @@ SummaryChamber::SummaryChamber() {
     return nA > nB;
   };
   
-  std::sort(listChPre.begin(), listChPre.end(), lambdaChamber);
+  //std::sort(listChPre.begin(), listChPre.end(), lambdaChamber);
+  for ( unsigned int i = 0 ; i < (unsigned int)listChPre.size() ; i++ ) {
+    for ( unsigned int j = i + 1 ; j < (unsigned int)listChPre.size() ; j++ ) {
+      if ( !lambdaChamber(listChPre[ i ], listChPre[ j ]) ) {
+        auto objS = listChPre[ i ];
+        listChPre[ i ] = listChPre[ j ];
+        listChPre[ j ] = objS;
+      }
+    }
+  }
   
   for ( auto id : listChPre ) {
     m_nNumLayer++;
