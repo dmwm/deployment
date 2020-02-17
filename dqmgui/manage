@@ -336,7 +336,13 @@ start_agents_dqm_prod_local()
     http://localhost:8030/dqm/online \
     daq-expert.cms \
     50555 600 2 \
-    cms-dqm-oncall@cern.ch
+    cms-dqm-oncall@cern.ch \
+    http://localhost:8031/disabled
+    
+  startagent $D/agent-sound-manager \
+    visDQMSoundAlarmManager \
+    http://localhost:8030/dqm/online \
+    8031
 }
 
 start_agents_dqm_prod_offsite()
