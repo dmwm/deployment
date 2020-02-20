@@ -11,6 +11,12 @@ VARIANT="@@VARIANT@@"
 
 # load secrets
 sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
+# load NATS secrets and if it is not set make it available as None
+try:
+    from DBSSecrets import nats_secrets
+except ImportError:
+    nats_secrets = None
+# load all other secrets
 from DBSSecrets import *
 
 # get viewnames -> instance names list
@@ -50,6 +56,12 @@ config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 900
 config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i in r]))
+
+# NATS integration, nats_secrets will be supplied in DBSSecrets
+if nats_secrets:
+    config.dbs.nats_server=nats_secrets
+    config.dbs.use_nats=True
+    config.dbs.nats_topics=[]
 
 ### Create views for DBSReader
 active = config.dbs.views.section_('active')
