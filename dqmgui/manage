@@ -341,7 +341,7 @@ start_agents_dqm_prod_local()
     
   startagent $D/agent-sound-manager \
     visDQMSoundAlarmManager \
-    http://localhost:8030/dqm/online \
+    http://localhost:8030/dqm/online/ \
     8031
 }
 
@@ -649,7 +649,7 @@ stop()
   esac
   # Agents
   case ${1:-agents} in *agents* )
-    killproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*"
+    killproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQM.*Manager"
     # The visDQMZipCastorStager and visDQMZipCastorVerifier agents keep their
     # status in a persisted file. When we restart (and hence stop) these
     # agents we want these files to be deleted. Otherwise it would be as if
