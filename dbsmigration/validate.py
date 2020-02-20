@@ -6,8 +6,8 @@ try:
 except:
   print >> sys.stderr, "Data is not a valid json."
   raise
-
-if set(d.keys()) != set(["default", "dev", "preprod", "prod"]):
+if set(d.keys()) != set(["default", "dev", "preprod", "prod", "k8s", "k8s-dev"]):
+#if set(d.keys()) != set(["default", "dev", "preprod", "prod"]):
   print >> sys.stderr, "Must have configuration for default, dev, preprod and prod, nothing else."
   sys.exit(1)
 for v in d.values():
