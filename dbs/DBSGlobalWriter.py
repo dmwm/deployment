@@ -13,7 +13,7 @@ VARIANT="@@VARIANT@@"
 sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
 # load NATS secrets and if it is not set make it available as None
 try:
-    from DBSSecrets import nats_secrets
+    from NATSSecrets import nats_secrets
 except ImportError:
     nats_secrets = None
 # load all other secrets
