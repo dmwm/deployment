@@ -34,10 +34,10 @@ elif VARIANT == 'dev':
                 'dev/phys01': dbs3_dp1_i2,
                 'dev/phys02': dbs3_dp2_i2,
                 'dev/phys03': dbs3_dp3_i2}
-else if VARIANT == 'k8s':
+elif VARIANT == 'k8s':
   db_mapping = {'int/global': dbs3_k8sg_r,
                 'int/phys03': dbs3_k8sp_r}
-else if VARIANT == 'k8s-dev':
+elif VARIANT == 'k8s-dev':
   db_mapping = {'dev/global': dbs3_p1_i2,
                 'dev/phys03': dbs3_p2_i2}
 else:
