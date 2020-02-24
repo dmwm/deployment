@@ -11,6 +11,12 @@ VARIANT="@@VARIANT@@"
 
 # load secrets
 sys.path.append(os.path.join(ROOTDIR, 'auth/dbs'))
+# load NATS secrets and if it is not set make it available as None
+try:
+    from NATSSecrets import nats_secrets
+except ImportError:
+    nats_secrets = None
+# load all other secrets
 from DBSSecrets import *
 
 # get viewnames -> instance names list
@@ -24,6 +30,10 @@ elif VARIANT == 'preprod':
   db_mapping = {'int/global': [dbs3_ig_i2,  {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
 elif VARIANT == 'dev':
   db_mapping = {'dev/global': [dbs3_dg_i2, {'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
+elif VARIANT == 'k8s':
+  db_mapping = {'int/global': [dbs3_k8sg_r,{'reader':{},'writer':{'dbs': 'operator', 'dataops': 'production-operator'}}]}
+elif VARIANT == 'k8s-dev':
+  db_mapping = {'dev/global': [dbs3_p1_i2,{'reader':{},'writer':{}}]}
 else:
   db_mapping = {'dev/global': [dbs3_l2_i2,{'reader':{},'writer':{}}]}
 config = Configuration()
@@ -46,6 +56,12 @@ config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 900
 config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i in r]))
+
+# NATS integration, nats_secrets will be supplied in DBSSecrets
+if nats_secrets:
+    config.dbs.nats_server=nats_secrets
+    config.dbs.use_nats=True
+    config.dbs.nats_topics=[]
 
 ### Create views for DBSReader
 active = config.dbs.views.section_('active')
