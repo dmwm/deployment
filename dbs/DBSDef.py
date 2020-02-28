@@ -54,6 +54,9 @@ config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 900
+# This assume reader and writer has the same instances, such as prod/phys01, prod/phys02.
+# THe difference defined in the state/dbs/view_instances_def.json will not make real difference.
+# YG 2020-02-27
 config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i in r]))
 
 ### Create views for DBSReader, DBSWriter and DBSMigrate
