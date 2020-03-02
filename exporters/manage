@@ -103,7 +103,7 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start crabserver exporter
         wait4proc "crabserver" # check for pattern that it is running
-        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+        process_monitor.sh /data/srv/state/crabserver/crabserver.pid crabserver ":18270" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start reqmgr2 exporter
         wait4proc "reqmgr2" # check for pattern that it is running
@@ -189,7 +189,7 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start crabserver exporter
         wait4proc "crabserver" # check for pattern that it is running
-        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+        process_monitor.sh /data/srv/state/crabserver/crabserver.pid crabserver ":18270" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start reqmgr2 exporter
         wait4proc "reqmgr2" # check for pattern that it is running
