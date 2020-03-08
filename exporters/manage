@@ -221,7 +221,7 @@ start()
 
 stop()
 {
-    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter" "cpy_exporter"; do
+    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter" "cpy_exporter" "couchdb_exporter"; do
         local pid=`ps auxwww | grep "$pat" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
         if [ -n "${pid}" ]; then
             echo "Stopping $pat exporter ... ${pid}"
