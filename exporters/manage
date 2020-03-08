@@ -121,7 +121,9 @@ start()
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        group="asserts,durability,background_flushing,connections,extra_info,global_lock,index_counters,network,op_counters,memory,locks,metrics"
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              -groups.enabled "$groups" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
@@ -180,7 +182,9 @@ start()
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start mongodb exporter
+        groups="asserts,durability,background_flushing,connections,extra_info,global_lock,index_counters,network,op_counters,memory,locks,metrics"
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              -groups.enabled "$groups" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start CouchDB exporter
         wait4proc "couchdb" # check for pattern that couchdb is running
