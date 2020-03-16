@@ -87,6 +87,16 @@ dataCacheTasks.log_file = '%s/logs/reqmon/dataCacheTasks-%s-%s.log' % (__file__.
 dataCacheTasks.central_logdb_url = LOG_DB_URL
 dataCacheTasks.log_reporter = "%s-%s" % (LOG_REPORTER, HOST)
 
+# construct list of locked parent datasets
+parentTask = extentions.section_("parentLock")
+parentTask.object = "WMCore.WMStats.CherryPyThreads.BuildParentLock.BuildParentLock"
+parentTask.dbs_url = data.dbs_url
+parentTask.central_logdb_url = LOG_DB_URL
+parentTask.log_reporter = LOG_REPORTER
+parentTask.updateParentsInterval = 60 * 10  # every 10 minutes
+parentTask.log_file = '%s/logs/reqmon/parentTask-%s-%s.log' % (
+__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
+
 # Production/testbed instance of logdb, must be a production/testbed back-end
 if HOST.startswith("vocms0743") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     

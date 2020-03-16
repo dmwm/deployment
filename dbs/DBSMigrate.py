@@ -62,7 +62,7 @@ config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 900
-config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i in r]))
+config.dbs.instances = view_mapping[VARIANT]['DBSMigrate']
 
 ### Create views for DBSReader, DBSWriter and DBSMigrate
 active = config.dbs.views.section_('active')
