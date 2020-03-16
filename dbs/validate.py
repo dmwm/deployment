@@ -28,6 +28,10 @@ for v in d.values():
     if set(v.keys()) != set(["DBSReader", "DBSWriter"]):
       print >> sys.stderr, "Must have view names for 'DBSReader'and 'DBSWriter', nothing else."
       sys.exit(1)
+  elif sys.argv[1] == "migrate":
+    if set(v.keys()) != set(["DBSMigrate"]):
+      print >> sys.stderr, "Must have view names for 'DBSReader', 'DBSWriter' and 'DBSMigrate', nothing else."
+      sys.exit(1)
   else:
     if set(v.keys()) != set(["DBSReader", "DBSWriter", "DBSMigrate"]):
       print >> sys.stderr, "Must have view names for 'DBSReader', 'DBSWriter' and 'DBSMigrate', nothing else."

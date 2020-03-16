@@ -103,7 +103,7 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/dbs_migrate_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start crabserver exporter
         wait4proc "crabserver" # check for pattern that it is running
-        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+        process_monitor.sh /data/srv/state/crabserver/crabserver.pid crabserver ":18270" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start reqmgr2 exporter
         wait4proc "reqmgr2" # check for pattern that it is running
@@ -121,14 +121,16 @@ start()
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        group="asserts,durability,background_flushing,connections,extra_info,global_lock,index_counters,network,op_counters,memory,locks,metrics"
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              -groups.enabled "$groups" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
     # CouchDB on production nodes
     vocms0740 | vocms0742 | vocms0743 | vocms0744)
         wait4proc "couchdb" # check for pattern that couchdb is running
-        couchdb_exporter -couchdb.uri="http://localhost:5984" \
+        couchdb_exporter -couchdb.uri="http://localhost:5984" -logtostderr=true \
             -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
@@ -180,16 +182,18 @@ start()
         das2go_exporter -address ":18217" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start mongodb exporter
+        groups="asserts,durability,background_flushing,connections,extra_info,global_lock,index_counters,network,op_counters,memory,locks,metrics"
         mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              -groups.enabled "$groups" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start CouchDB exporter
         wait4proc "couchdb" # check for pattern that couchdb is running
-        couchdb_exporter -couchdb.uri="http://localhost:5984" \
+        couchdb_exporter -couchdb.uri="http://localhost:5984" -logtostderr=true \
             -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start crabserver exporter
         wait4proc "crabserver" # check for pattern that it is running
-        process_monitor.sh /data/srv/state/crabserver/pid crabserver ":18270" 15 \
+        process_monitor.sh /data/srv/state/crabserver/crabserver.pid crabserver ":18270" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/crabserver_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         # start reqmgr2 exporter
         wait4proc "reqmgr2" # check for pattern that it is running
@@ -217,7 +221,7 @@ start()
 
 stop()
 {
-    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter" "cpy_exporter"; do
+    for pat in "process_monitor" "process_exporter" "das2go_exporter" "apache_exporter" "cpy_exporter" "couchdb_exporter"; do
         local pid=`ps auxwww | grep "$pat" | grep -v grep | awk 'BEGIN{ORS=" "} {print $2}'`
         if [ -n "${pid}" ]; then
             echo "Stopping $pat exporter ... ${pid}"
