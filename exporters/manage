@@ -139,7 +139,7 @@ start()
     vocms0158 | vocms0760 | vocms0162 | vocms0164 )
         # start apache_exporter for frontend
         wait4proc "httpd" # check for pattern that httpd is running
-        apache_exporter -telemetry.address ":18443" \
+        apache_exporter --telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         node_exporter --web.listen-address=":19000" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
@@ -152,7 +152,7 @@ start()
     vocms0734 | vocms0135 )
         # start apache_exporter for frontend
         wait4proc "httpd" # check for pattern that httpd is running
-        apache_exporter -telemetry.address ":18443" \
+        apache_exporter --telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         node_exporter --web.listen-address=":19000" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
@@ -211,7 +211,7 @@ start()
         process_monitor.sh ".*scitokens" scitokens ":18843" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         wait4proc "httpd" # check for pattern that httpd is running
-        apache_exporter -telemetry.address ":18443" \
+        apache_exporter --telemetry.address ":18443" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         node_exporter --web.listen-address=":19000" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
