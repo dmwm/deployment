@@ -187,6 +187,18 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     auxCacheUpdateTasks.central_logdb_url = LOG_DB_URL
     auxCacheUpdateTasks.log_reporter = LOG_REPORTER
 
+    # construct list of locked parent datasets
+    parentTask = extentions.section_("parentLock")
+    parentTask.object = "WMCore.ReqMgr.CherryPyThreads.BuildParentLock.BuildParentLock"
+    parentTask.dbs_url = data.dbs_url
+    parentTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    parentTask.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+    parentTask.central_logdb_url = LOG_DB_URL
+    parentTask.log_reporter = LOG_REPORTER
+    parentTask.updateParentsInterval = 60 * 10  # every 10 minutes
+    parentTask.log_file = '%s/logs/reqmgr2/parentTask-%s-%s.log' % (
+    __file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
+
     # heartbeat monitor task
     heartbeatMonitor = extentions.section_("heartbeatMonitor")
     heartbeatMonitor.object = "WMCore.ReqMgr.CherryPyThreads.HeartbeatMonitor.HeartbeatMonitor"
