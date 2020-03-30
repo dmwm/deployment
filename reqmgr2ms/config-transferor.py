@@ -77,6 +77,8 @@ data.quotaAccount = "DataOps"
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
 data.rucioAccount = RUCIO_ACCT
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
+data.toAddr = ["cms-comp-ops-workflow-team@cern.ch"]
+data.warningTransferThreshold = 100. * (1000 ** 4) # 100 TB (terabyte)
 # if private_vm, just fallback to preprod DBS
 if DBS_INS == "private_vm":
     data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
