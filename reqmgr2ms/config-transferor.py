@@ -77,13 +77,19 @@ data.quotaAccount = "DataOps"
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
 data.rucioAccount = RUCIO_ACCT
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
-data.toAddr = ["cms-comp-ops-workflow-team@cern.ch"]
+data.toAddr = ["alan.malta@cern.ch", "todor.trendafilov.ivanov@cern.ch", "kenyi.paolo.hurtado.anampa@cern.ch"]
 data.warningTransferThreshold = 100. * (1000 ** 4) # 100 TB (terabyte)
 # if private_vm, just fallback to preprod DBS
 if DBS_INS == "private_vm":
     data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
 else:
     data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
+# if production CMSWEB, set PhEDEx settings to also auto-approve requests
+# make it based on DBS_INS to avoid hard links in multiple places
+if DBS_INS == "prod":
+    data.phedexRequestOnly = False
+else:
+    data.phedexRequestOnly = True
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
