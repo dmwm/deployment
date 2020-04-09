@@ -5,6 +5,7 @@ deploy_reqmgr2ms_deps()
 {
   deploy $stage backend
   deploy $stage wmcore-auth
+  deploy $stage mongodb
 }
 
 deploy_reqmgr2ms_prep()
