@@ -115,8 +115,8 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
-    # DAS/MongoDB/CouchDB exporters on production nodes
-    vocms0741 | vocms0742 )
+    # DAS/MongoDB exporters on vocms0741
+    vocms0741 )
         # start das2go_exporter for DAS server
         wait4proc "das2go -config" # check for pattern that DAS is running
         das2go_exporter -address ":18217" \
@@ -126,9 +126,23 @@ start()
               -groups.enabled "$groups" \
               </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
+    # DAS/MongoDB/CouchDB exporters on vocms0742
+    vocms0742 )
+        # start das2go_exporter for DAS server
+        wait4proc "das2go -config" # check for pattern that DAS is running
+        das2go_exporter -address ":18217" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/das_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        group="asserts,durability,background_flushing,connections,extra_info,global_lock,index_counters,network,op_counters,memory,locks,metrics"
+        mongodb_exporter -mongodb.uri mongodb://localhost:8230 --web.listen-address ":18230" \
+              -groups.enabled "$groups" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        couchdb_exporter -couchdb.uri="http://localhost:5984" -logtostderr=true \
+            -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+      ;;
 
     # CouchDB on production nodes
-    vocms0740 | vocms0742 | vocms0743 | vocms0744 | vocms0745)
+    vocms0740 | vocms0743 | vocms0744 | vocms0745)
         wait4proc "couchdb" # check for pattern that couchdb is running
         couchdb_exporter -couchdb.uri="http://localhost:5984" -logtostderr=true \
             -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
