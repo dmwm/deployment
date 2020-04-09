@@ -33,6 +33,6 @@ deploy_dbsweb_sw()
 
 deploy_dbsweb_post()
 {
-  case $host in vocms013[89] |vocms073[89] | vocms074[034] | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
+  case $host in vocms013[89] |vocms073[89] | vocms074[0345] | vocms030[67] | vocms0318 ) disable ;; * ) enable ;; esac
   (mkcrontab; sysboot) | crontab -
 }
