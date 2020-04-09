@@ -268,7 +268,7 @@ print_settings(){
     echo "ORACLE_USER=               $ORACLE_USER               "
     echo "ORACLE_PASS=               $ORACLE_PASS               "
     echo "ORACLE_TNS=                $ORACLE_TNS                "
-    echo "GRAFANA_TOKEN=             $GRAFANA_TOKEN                "
+    echo "GRAFANA_TOKEN=             $GRAFANA_TOKEN             "
     echo "MYSQL_USER=                $MYSQL_USER                "
     echo "MYSQL_PASS=                $MYSQL_PASS                "
     echo "COUCH_USER=                $COUCH_USER                "
@@ -299,9 +299,9 @@ print_settings(){
     echo "CENTRAL_LOGDB_URL=         $CENTRAL_LOGDB_URL         "
     echo "WMARCHIVE_URL=             $WMARCHIVE_URL             "
     echo "AMQ_CREDENTIALS=           $AMQ_CREDENTIALS           "
-    echo "RUCIO_HOST=                $RUCIO_HOST           "
-    echo "RUCIO_AUTH=                $RUCIO_AUTH           "
-    echo "RUCIO_ACCOUNT=             $RUCIO_ACCOUNT           "
+    echo "RUCIO_HOST=                $RUCIO_HOST                "
+    echo "RUCIO_AUTH=                $RUCIO_AUTH                "
+    echo "RUCIO_ACCOUNT=             $RUCIO_ACCOUNT             "
 
 }
 
@@ -638,56 +638,40 @@ init_rucio(){
 init_wmagent(){
     load_secrets_file;
     init_rucio;
+
     if [ "x$MYSQL_USER" != "x" ]; then
-	wmagent-mod-config --input=$CONFIG_AG/config-template.py \
-                       --output=$CONFIG_AG/config.py \
-                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
-                       --mysql_socket=$MYSQL_SOCK \
-                       --working_dir=$INSTALL_AG \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
-                       --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --grafana_token=$GRAFANA_TOKEN \
-                       --wmstats_url=$WMSTATS_URL \
-                       --reqmgr2_url=$REQMGR2_URL \
-	                   --acdc_url=$ACDC_URL \
-	                   --dbs3_url=$DBS3_URL \
-	                   --phedex_url=$PHEDEX_URL \
-	                   --dqm_url=$DQM_URL \
-	                   --requestcouch_url=$REQUESTCOUCH_URL \
-	                   --central_logdb_url=$CENTRAL_LOGDB_URL \
-	                   --wmarchive_url=$WMARCHIVE_URL \
-	                   --amq_credentials=$AMQ_CREDENTIALS \
-	                   --rucio_account=$RUCIO_ACCOUNT
-
+        local database_options="--mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
+                          --mysql_socket=$MYSQL_SOCK "
     elif [ "x$ORACLE_USER" != "x" ]; then
-	wmagent-mod-config --input=$CONFIG_AG/config-template.py \
-                       --output=$CONFIG_AG/config.py \
-                       --coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS \
-                       --working_dir=$INSTALL_AG \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
-                       --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
-                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
-                       --grafana_token=$GRAFANA_TOKEN \
-                       --wmstats_url=$WMSTATS_URL \
-                       --reqmgr2_url=$REQMGR2_URL \
-	                   --acdc_url=$ACDC_URL \
-	                   --dbs3_url=$DBS3_URL \
-	                   --phedex_url=$PHEDEX_URL \
-	                   --dqm_url=$DQM_URL \
-	                   --requestcouch_url=$REQUESTCOUCH_URL \
-	                   --central_logdb_url=$CENTRAL_LOGDB_URL \
-	                   --wmarchive_url=$WMARCHIVE_URL \
-	                   --amq_credentials=$AMQ_CREDENTIALS \
-	                   --rucio_account=$RUCIO_ACCOUNT
-
-
+        local database_options="--coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS "
     else
 	echo "No database configured, should never have reached this point..."
 	exit 1;
     fi
+
+	wmagent-mod-config $database_options \
+	                   --input=$CONFIG_AG/config-template.py \
+                       --output=$CONFIG_AG/config.py \
+                       --working_dir=$INSTALL_AG \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
+                       --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
+                       --grafana_token=$GRAFANA_TOKEN \
+                       --wmstats_url=$WMSTATS_URL \
+                       --reqmgr2_url=$REQMGR2_URL \
+	                   --acdc_url=$ACDC_URL \
+	                   --dbs3_url=$DBS3_URL \
+	                   --phedex_url=$PHEDEX_URL \
+	                   --dqm_url=$DQM_URL \
+	                   --requestcouch_url=$REQUESTCOUCH_URL \
+	                   --central_logdb_url=$CENTRAL_LOGDB_URL \
+	                   --wmarchive_url=$WMARCHIVE_URL \
+	                   --amq_credentials=$AMQ_CREDENTIALS \
+	                   --rucio_account=$RUCIO_ACCOUNT \
+	                   --rucio_host=$RUCIO_HOST \
+	                   --rucio_auth=$RUCIO_AUTH
+
     wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
     wmagent-couchapp-init;
