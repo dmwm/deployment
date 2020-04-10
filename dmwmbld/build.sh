@@ -35,6 +35,11 @@ BLD=$TOP/state/$ME/builds/$areaname
 OUT=$TOP/state/$ME/webarea/$areaname
 AUTHDIR=$TOP/current/auth/dmwmbld
 
+# change permission if build directory exists
+if [ -d $BLD/w ]; then
+chmod -R +w $BLD/w
+fi
+
 # create destination directory if not exists
 mkdir -p $OUT
 [ ! -d $BLD ] || rm -rf $BLD
