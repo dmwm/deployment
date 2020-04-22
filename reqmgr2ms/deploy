@@ -54,6 +54,9 @@ deploy_reqmgr2ms_sw()
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
                  s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
        $root/$cfgversion/config/$project/config-monitor.py
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
+                 s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
+       $root/$cfgversion/config/$project/config-output.py
 
   # setup rucio configuration file
   mkdir -p $root/$cfgversion/config/$project/etc
