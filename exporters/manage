@@ -113,6 +113,8 @@ start()
               </dev/null 2>&1 | rotatelogs $LOGDIR/ms-transferor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
         process_monitor.sh /data/srv/state/reqmgr2ms/ms-monitor.pid ms-monitor ":18248" 15 \
               </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        process_monitor.sh /data/srv/state/reqmgr2ms/ms-output.pid ms-monitor ":18245" 15 \
+              </dev/null 2>&1 | rotatelogs $LOGDIR/ms-output_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
       ;;
 
     # DAS/MongoDB exporters on vocms0741
