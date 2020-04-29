@@ -76,16 +76,21 @@ apache_monitors()
     # start apache_exporter for frontend
     wait4proc "httpd" # check for pattern that httpd is running
     apache_exporter --telemetry.address ":18443" \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        </dev/null 2>&1 | rotatelogs $LOGDIR/apache_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+}
+
+node_monitors()
+{
+    # start node_exporter for any node
     node_exporter --web.listen-address=":19000" \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        </dev/null 2>&1 | rotatelogs $LOGDIR/node_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 scitokens_monitors()
 {
     wait4proc "scitokens" # check for pattern that stitokens is running
     process_monitor.sh ".*scitokens" scitokens ":18843" 15 \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+        </dev/null 2>&1 | rotatelogs $LOGDIR/scitokens-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 dbs_monitors()
@@ -175,17 +180,20 @@ start()
         # production nodes #
         ####################
         vocms0136 | vocms0161 | vocms0163 | vocms0165 | vocms0766 )
+            node_monitors
             dbs_monitors
             crab_monitors
             reqmgr2_monitors
             ;;
 
         vocms0741 )
+            node_monitors
             das2go_monitors
             mongodb_monitors
             ;;
 
         vocms0742 )
+            node_monitors
             das2go_monitors
             mongodb_monitors
             couchdb_monitors
@@ -193,10 +201,12 @@ start()
             ;;
 
         vocms0740 | vocms0743 | vocms0744 | vocms0745 )
+            node_monitors
             couchdb_monitors
             ;;
 
         vocms0158 | vocms0760 | vocms0162 | vocms0164 )
+            node_monitors
             apache_monitors
             ;;
 
@@ -204,10 +214,12 @@ start()
         # pre-production nodes #
         ########################
         vocms0734 | vocms0135 )
+            node_monitors
             apache_monitors
             ;;
 
         vocms0132 )
+            node_monitors
             dbs_monitors
             das2go_monitors
             mongodb_monitors
@@ -217,6 +229,7 @@ start()
             ;;
 
         vocms0731 )
+            node_monitors
             dbs_monitors
             das2go_monitors
             mongodb_monitors
@@ -230,7 +243,8 @@ start()
             # if we run on local VM we'll start process monitor for scitokens and apache
             scitokens_monitors
             apache_monitors
-          ;;
+            node_monitors
+            ;;
     esac
 }
 
