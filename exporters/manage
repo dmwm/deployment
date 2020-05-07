@@ -301,7 +301,10 @@ status()
         process_status "couchdb_exporter"
         process_status "das2go_exporter"
         process_status "mongodb_exporter"
-        process_status "reqmgr2ms_exporter"
+        process_status "ms_monitor"
+        process_status "ms_output"
+        process_status "ms_transferor"
+
         ;;
 
     vocms0740 | vocms0743 | vocms0744 | vocms0745)
