@@ -161,11 +161,11 @@ reqmgr2ms_monitors()
 {
     # start reqmgr2ms exporter
     wait4proc "reqmgr2ms" # check for pattern that it is running
-    process_monitor.sh /data/srv/state/reqmgr2ms/ms-transferor.pid ms-transferor ":18247" 15 \
+    process_monitor.sh /data/srv/state/reqmgr2ms/ms-transferor.pid ms_transferor ":18247" 15 \
         </dev/null 2>&1 | rotatelogs $LOGDIR/ms-transferor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
-    process_monitor.sh /data/srv/state/reqmgr2ms/ms-monitor.pid ms-monitor ":18248" 15 \
+    process_monitor.sh /data/srv/state/reqmgr2ms/ms-monitor.pid ms_monitor ":18248" 15 \
         </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
-    process_monitor.sh /data/srv/state/reqmgr2ms/ms-output.pid ms-monitor ":18245" 15 \
+    process_monitor.sh /data/srv/state/reqmgr2ms/ms-output.pid ms_output ":18245" 15 \
         </dev/null 2>&1 | rotatelogs $LOGDIR/ms-output_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
