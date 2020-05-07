@@ -153,7 +153,7 @@ couchdb_monitors()
     # start couchdb exporters
     wait4proc "couchdb" # check for pattern that couchdb is running
     couchdb_exporter -couchdb.uri="http://localhost:5984" -logtostderr=true \
-        -databases="_all_dbs" -databases.views=true -telemetry.address=":15984" \
+        -databases=$1 -databases.views=false -telemetry.address=":15984" \
         </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
@@ -174,39 +174,45 @@ start()
     # cmsweb activity page
     # https://cms-http-group.web.cern.ch/cms-http-group/activity.html
 
+    # generic exporter started every where
+    node_monitors
+
     local host=`hostname -s`
     case $host in
         ####################
         # production nodes #
         ####################
         vocms0136 | vocms0161 | vocms0163 | vocms0165 | vocms0766 )
-            node_monitors
             dbs_monitors
             crab_monitors
             reqmgr2_monitors
             ;;
 
+        vocms0740 )
+            couchdb_monitors "workqueue,workqueue_inbox"
+            ;;
+
         vocms0741 )
-            node_monitors
             das2go_monitors
             mongodb_monitors
             ;;
 
         vocms0742 )
-            node_monitors
             das2go_monitors
             mongodb_monitors
-            couchdb_monitors
+            couchdb_monitors "reqmgr_workload_cache,reqmgr_config_cache,acdcserver,reqmgr_auxiliary"
             reqmgr2ms_monitors
             ;;
 
-        vocms0740 | vocms0743 | vocms0744 | vocms0745 )
-            node_monitors
-            couchdb_monitors
+        vocms0743 )
+            couchdb_monitors "wmstats,workloadsummary,wmstats_logdb"
+            ;;
+
+        vocms0744 )
+            couchdb_monitors "tier0_wmstats,t0_workloadsummary,t0_request,t0_logdb"
             ;;
 
         vocms0158 | vocms0760 | vocms0162 | vocms0164 )
-            node_monitors
             apache_monitors
             ;;
 
@@ -214,36 +220,36 @@ start()
         # pre-production nodes #
         ########################
         vocms0734 | vocms0135 )
-            node_monitors
             apache_monitors
             ;;
 
         vocms0132 )
-            node_monitors
             dbs_monitors
             das2go_monitors
             mongodb_monitors
-            couchdb_monitors
+            couchdb_monitors "reqmgr_workload_cache,reqmgr_config_cache,acdcserver,tier0_wmstats,t0_workloadsummary,t0_request,t0_logdb,reqmgr_auxiliary"
             crab_monitors
             reqmgr2_monitors
             ;;
 
         vocms0731 )
-            node_monitors
             dbs_monitors
             das2go_monitors
             mongodb_monitors
-            couchdb_monitors
+            couchdb_monitors "workqueue,workqueue_inbox,wmstats,workloadsummary,wmstats_logdb"
             crab_monitors
             reqmgr2_monitors
             reqmgr2ms_monitors
+            ;;
+
+        vocms0745 )
+            couchdb_monitors "_all_dbs"
             ;;
 
         *)
             # if we run on local VM we'll start process monitor for scitokens and apache
             scitokens_monitors
             apache_monitors
-            node_monitors
             ;;
     esac
 }
@@ -272,6 +278,9 @@ process_status()
 
 status()
 {
+    # generic exporter executed everywhere
+    process_status "node_exporter"
+
     local host=`hostname -s`
     case $host in
     # production nodes
