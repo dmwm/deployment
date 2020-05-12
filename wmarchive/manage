@@ -99,8 +99,8 @@ start()
 {
   # Go based service
   if [ -f $WMARCHIVE_GOCONFIG ]; then
-      echo "starting $ME with $WMARCHVIE_GOCONFIG"
-      $WMARCHIVE_ROOT/bin/wmarchive -config $WMARCHIVE_CONFIG \
+      echo "starting $ME with $WMARCHIVE_GOCONFIG"
+      $WMARCHIVE_ROOT/bin/wmarchive -config $WMARCHIVE_GOCONFIG \
           </dev/null 2>&1 | rotatelogs $LOGDIR/wmarchive-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
   else
       echo "starting $ME"
