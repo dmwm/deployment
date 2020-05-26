@@ -19,6 +19,10 @@
 ^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0742.cern.ch :affinity
 ^/auth/complete/(?:couchdb/acdcserver|acdcserver)(?:/|$) vocms0742.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/acdcserver(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/workqueue(?:/|$) vocms0740.cern.ch :affinity
+^/auth/complete/tier0_wmstats(?:/|$) vocms0744.cern.ch :affinity
+^/auth/complete/wmstats(?:/|$) vocms0743.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/confdb(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
