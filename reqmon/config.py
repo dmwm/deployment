@@ -81,7 +81,7 @@ extentions = config.section_("extensions")
 dataCacheTasks = extentions.section_("dataCacheTasks")
 dataCacheTasks.object = "WMCore.WMStats.CherryPyThreads.DataCacheUpdate.DataCacheUpdate"
 
-dataCacheTasks.getJobInfo = False  # does not get job-level information from wmstats
+dataCacheTasks.getJobInfo = True  # False to not get job-level information from wmstats
 dataCacheTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 dataCacheTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
 dataCacheTasks.dataCacheUpdateDuration = 60 * 5 # every 5 min
