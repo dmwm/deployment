@@ -419,18 +419,33 @@ ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/09 Basic Cluster Size',
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/10 Basic Cluster Size Trend',
 	   [{'path': 'Ecal/Trends/ClusterTask EB size of basic clusters', 'description': 'Trend of the mean size of the basic clusters.'}],
 	   [{'path': 'Ecal/Trends/ClusterTask EE size of basic clusters', 'description': 'Trend of the mean size of the basic clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/11 Super Cluster Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/11-1 Super Cluster Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy', 'description': 'Super cluster energy distribution.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy', 'description': 'Super cluster energy distribution.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/12 Super Cluster Energy Low',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/11-2 Super Cluster Energy',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy', 'description': 'Super cluster raw energy distribution.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy', 'description': 'Super cluster raw energy distribution.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/12-1 Super Cluster Energy Low',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy (low scale)', 'description': 'Energy distribution of the super clusters (low scale).'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy (low scale)', 'description': 'Energy distribution of the super clusters (low scale).'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/12-2 Super Cluster Energy Low',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/13 Super Cluster Seed Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14 Super Cluster R9',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14-1 Super Cluster R9',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14-2 Super Cluster R9 Raw',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14-3 Super Cluster R9 Full',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14-4 Super Cluster R9 Full Raw',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/15 Super Cluster Size',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'},
 	    {'path': 'EcalBarrel/EBClusterTask/EBCLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}],
