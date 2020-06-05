@@ -62,7 +62,7 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-if [ -f $CFGDIR/$CFGFILETR ]; then
+if [ -f $CFGFILETR ]; then
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
 fi
 if [ -f $CFGFILEMON ]; then
