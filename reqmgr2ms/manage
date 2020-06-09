@@ -59,9 +59,44 @@ if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]
 fi
 
 
+check4db ()
+{
+python <<EOF
+from pymongo import MongoClient, errors
+client = MongoClient('127.0.0.1', port=8230)
+try:
+    client.admin.command('ismaster')
+except errors.ConnectionFailure as ex:
+    raise ex
+EOF
+return $?
+}
+
+
+# helper function to wait for MongoDB appearance
+# it will incrementally increase waiting time with 20 iterations (~3minute)
+wait4db() {
+    local counter=0
+    # check if mongodb is running
+    while [  $counter -lt 20 ]; do
+        check4db && break
+        let counter=counter+1
+        echo "MongoDB is not running, check in $counter sec"
+        sleep $counter
+    done
+    check4db || {
+        echo "MongoDB is not running, unable to start MicroServices server"
+        exit 1
+        }
+}
+
+
 # Start service conditionally on crond restart.
 sysboot()
 {
+  # Check for MongoDB before starting MicroServices:
+  wait4db
+
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
@@ -71,6 +106,9 @@ sysboot()
 # Start the service.
 start()
 {
+  # Check for MongoDB before starting MicroServices:
+  wait4db
+
   echo "starting $ME"
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
