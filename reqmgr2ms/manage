@@ -97,9 +97,15 @@ sysboot()
   # Check for MongoDB before starting MicroServices:
   wait4db
 
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
+  if [ -f $CFGFILETR ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
+  fi
 }
 
 
@@ -110,9 +116,15 @@ start()
   wait4db
 
   echo "starting $ME"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
+  if [ -f $CFGFILETR ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
+  fi
 }
 
 
@@ -120,18 +132,30 @@ start()
 stop()
 {
   echo "stopping $ME"
-  wmc-httpd -k -d $STATEDIR $CFGFILETR
-  wmc-httpd -k -d $STATEDIR $CFGFILEMON
-  wmc-httpd -k -d $STATEDIR $CFGFILEOUT
+  if [ -f $CFGFILETR ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILEOUT
+  fi
 }
 
 
 # Check if the server is running.
 status()
 {
-  wmc-httpd -s -d $STATEDIR $CFGFILETR
-  wmc-httpd -s -d $STATEDIR $CFGFILEMON
-  wmc-httpd -s -d $STATEDIR $CFGFILEOUT
+  if [ -f $CFGFILETR ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILEOUT
+  fi
 }
 
 
