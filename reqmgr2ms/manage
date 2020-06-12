@@ -94,9 +94,6 @@ wait4db() {
 # Start service conditionally on crond restart.
 sysboot()
 {
-  # Check for MongoDB before starting MicroServices:
-  wait4db
-
   if [ -f $CFGFILETR ]; then
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
   fi
@@ -104,6 +101,9 @@ sysboot()
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
   fi
   if [ -f $CFGFILEOUT ]; then
+    # Check for MongoDB before starting MicroServices:
+    wait4db
+
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
   fi
 }
@@ -112,9 +112,6 @@ sysboot()
 # Start the service.
 start()
 {
-  # Check for MongoDB before starting MicroServices:
-  wait4db
-
   echo "starting $ME"
   if [ -f $CFGFILETR ]; then
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
@@ -123,6 +120,9 @@ start()
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
   fi
   if [ -f $CFGFILEOUT ]; then
+    # Check for MongoDB before starting MicroServices:
+    wait4db
+
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
   fi
 }
