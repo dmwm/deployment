@@ -13,19 +13,21 @@ btaglayout(dqmitems, "00 - Jet Property",
   { 'path': "Btag/deepCSV_BvsAll_GLOBAL/jetPhi_deepCSV_BvsAll_GLOBALALL",
     'description': "Jet Phi ",
     'draw': { 'withref': "no" }}])
+
 btaglayout(dqmitems, "01 - Tracks in Jet",
  [{ 'path': "Btag/IPTag_GLOBAL/selectedTrackMultVsJetPt_IPTag_GLOBALALL",
     'description': "Track Multiplicity vs Jet Pt for Selected Tracks Associated to Jets",
-    'draw': { 'withref': "no", 'drawopts': "colz" }},
+    'draw': { 'withref': "no", 'xmin': '25', 'drawopts': "colz" }},
   { 'path': "Btag/IPTag_GLOBAL/trackMultVsJetPt_IPTag_GLOBALALL",
     'description': "Track Multiplicity vs Jet Pt for Tracks Associated to Jets",
-    'draw': { 'withref': "no", 'drawopts': "colz" }}],
+    'draw': { 'withref': "no", 'xmin': '25', 'drawopts': "colz" }}],
  [{ 'path': "Btag/IPTag_GLOBAL/selectedTrackQual_IPTag_GLOBALALL",
     'description': "Track Quality of Selected Tracks Associated to Jets",
     'draw': { 'withref': "no" }},
   { 'path': "Btag/IPTag_GLOBAL/trackQual_IPTag_GLOBALALL",
     'description': "Track Quality of Tracks Associated to Jets",
     'draw': { 'withref': "no" }}])
+
 btaglayout(dqmitems, "02 - Vertex Property",
  [{ 'path': "Btag/CSVTag_GLOBAL/vertexCategory_CSVTag_GLOBALALL",
     'description': "Category of Secondary Vertex (Reco, Pseudo, No) ",
@@ -42,6 +44,7 @@ btaglayout(dqmitems, "02 - Vertex Property",
   { 'path': "Btag/CSVTag_GLOBAL/vertexJetDeltaR_CSVTag_GLOBALALL",
     'description': "Pseudoangular Distance between Jet Axis and Secondary Vertex Direction",
    'draw': { 'withref': "no" }}])
+
 btaglayout(dqmitems, "03 - Flight Distance Summary",
  [{ 'path': "Btag/CSVTag_GLOBAL/flightDistance2dVal_CSVTag_GLOBALALL",
     'description': "Transverse Distance between Primary and Secondary Vertex ",
@@ -55,6 +58,7 @@ btaglayout(dqmitems, "03 - Flight Distance Summary",
   { 'path': "Btag/CSVTag_GLOBAL/flightDistance3dSig_CSVTag_GLOBALALL",
     'description': "distance significance between primary and secondary vertex all jets ",
    'draw': { 'withref': "no" }}])
+
 btaglayout(dqmitems, "04 - Discriminator Summary",
  [{ 'path': "Btag/CSVv2_GLOBAL/discr_CSVv2_GLOBALALL",
     'description': "Discriminator for CombinedSecondaryVertex Version 2 ",
@@ -86,6 +90,7 @@ btaglayout(dqmitems, "04 - Discriminator Summary",
   { 'path': "Btag/deepCSV_CvsL_GLOBAL/discr_deepCSV_CvsL_GLOBALALL",
     'description': "Discriminator for deepCSV CvsL ",
     'draw': { 'withref': "no" }}])
+
 btaglayout(dqmitems, "05 - 2D-Impact Parameter",
  [{ 'path': "Btag/IPTag_GLOBAL/ip_2D_IPTag_GLOBALALL",
     'description': "2D Impact Parameter Value",
@@ -108,6 +113,7 @@ btaglayout(dqmitems, "05 - 2D-Impact Parameter",
   { 'path': "Btag/IPTag_GLOBAL/jetDist_2D_IPTag_GLOBALALL",
     'description': "2D Jet Distance",
     'draw': { 'withref': "no" }}])
+
 btaglayout(dqmitems, "06 - 3D-Impact Parameter",
  [{ 'path': "Btag/IPTag_GLOBAL/ip_3D_IPTag_GLOBALALL",
     'description': "3D Impact Parameter Value",
@@ -139,12 +145,10 @@ btaglayout(dqmitems, "06 - 3D-Impact Parameter",
   { 'path': "Btag/IPTag_GLOBAL/jetDist_3D_IPTag_GLOBALALL",
     'description': "3D Jet Distance",
     'draw': { 'withref': "no" }}])
+
 btaglayout(dqmitems, "07 - ROC Curves",
  [{ 'path': "Btag/deepCSV_BvsAll_GLOBAL/FlavEffVsBEff_DUSG_discr_deepCSV_BvsAll_GLOBAL",
     'overlays': ["Btag/deepCSV_BvsAll_GLOBAL/FlavEffVsBEff_C_discr_deepCSV_BvsAll_GLOBAL"],
     'description': "ROC Curve BvsAll",
-    'draw': { 'withref': "no" , 'ytype':'log'}},
-  { 'path': "Btag/deepCSV_BvsAll_GLOBAL/FlavEffVsBEff_C_discr_deepCSV_BvsAll_GLOBAL",
-    'description': "ROC Curve BvsAll",
-    'draw': { 'withref': "no" , 'ytype':'log'}},
+    'draw': {'withref': "no", 'xmin': '0.2', 'xmax': '1', 'xtype': 'log', 'ytype': 'log'}},
   ])

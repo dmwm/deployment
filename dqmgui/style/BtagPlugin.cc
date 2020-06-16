@@ -59,7 +59,6 @@ class BtagPlugin : public DQMRenderPlugin
             c->cd();
             TH1* obj = dynamic_cast<TH1*>( o.object );
             assert( obj );
-
         }
 
 
@@ -95,7 +94,7 @@ class BtagPlugin : public DQMRenderPlugin
 
                         if ((hname.find("_DUSG_discr_") != std::string::npos)) legend->AddEntry(obj,"DUSG","l");
                         else if ((hname.find("_C_discr_") != std::string::npos)) legend->AddEntry(obj, "C","l");
-                        else legend->AddEntry(obj, "???","l");
+//                         else legend->AddEntry(obj, "???","l"); // enable for unkown labels
                     }
                     // remove stats from plot
                     else if( dynamic_cast<TPaveStats*>(cobj))
