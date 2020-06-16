@@ -15,7 +15,9 @@
 
 #sudo su
 echo "start"
-BASEDIR=/cephfs/testbed/
+# give this /cephfs as parameter to run this script as cron job
+
+BASEDIR=${1-$(cd $(dirname $0)/../../.. && pwd)}
 
 echo $BASEDIR
 
