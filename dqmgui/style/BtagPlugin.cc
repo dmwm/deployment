@@ -1,11 +1,3 @@
-/*!
-  \file SiStripRenderPlugin
-  \brief Display Plugin for SiStrip DQM Histograms
-  \author S. Dutta
-  \version $Revision: 1.45 $
-  \date $Date: 2011/11/16 17:35:55 $
-*/
-
 #include "DQM/DQMRenderPlugin.h"
 #include "utils.h"
 #include "TPaveStats.h"
@@ -22,101 +14,100 @@
 #include "TMath.h"
 #include <cassert>
 
+
+
+
 class BtagPlugin : public DQMRenderPlugin
 {
-public:
-  virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
-    {
-      if ((o.name.find( "Btag/deepCSV_BvsAll_GLOBAL/FlavEffVsBEff_DUSG_discr_deepCSV_BvsAll_GLOBAL" ) == std::string::npos)) return false;
-      //if ((o.name.find( "") == std::string::npos)) return false;
-
-      return true;
-    }
-
-  virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
-    {
-      c->cd();
-
-      if( dynamic_cast<TH1F*>( o.object ) )
-      {
-        preDrawTH1F( c, o );
-        c->cd();
-      }
-    }
-
-  virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & )
-    {
-      c->cd();
-      if( dynamic_cast<TH1F*>( o.object ) )
-      {
-        postDrawTH1F(c);//,o);
-        c->cd();
-      }
- 
-    }
-
-private:
-    void preDrawTH1F( TCanvas *c, const VisDQMObject &o )
-    {
-      c->cd();
-      TH1F* obj = dynamic_cast<TH1F*>( o.object );
-      assert( obj );
-
-      // This applies to all
-      gStyle->SetOptStat(1000000001);
-      //obj->SetStats( kFALSE );
-     }
-
-  void postDrawTH1F( TCanvas *c)//, const VisDQMObject &o )
-    {
-      
-        c->cd();
-       	TIter next(gPad->GetListOfPrimitives());
-        TObject * cobj;
-        int k = 0;
-
-        //Count number of histograms
-        while((cobj=next()))
+    public:
+        virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
         {
-          if( dynamic_cast<TH1F*>(cobj) )
-          {
-           k=k+1;
-          }
-	}
+            if ((o.name.find( "Btag/" ) == std::string::npos)) return false;
 
-        if(k<2){
-		return;
-	}
-	
-	k=0;
-	next.Reset();
-        TLegend* legend = new TLegend(0.1,0.7,0.48,0.9);
-        legend->SetHeader("ROC Curves","C");
-
-        gStyle->SetOptStat(1000000001);
-
-        while((cobj=next()))
-        {
-          if( dynamic_cast<TH1F*>(cobj) )
-          {
-           TH1F* obj = dynamic_cast<TH1F*>( cobj ); 
-           obj->SetStats( kFALSE );
-           if(k==0) legend->AddEntry(obj,"DUSG","l");
-           if(k==1) legend->AddEntry(obj,"C","l");
-           k=k+1;
-          }
-
-	 else if( dynamic_cast<TPaveStats*>(cobj))
-         {
-           TPaveStats* ps = dynamic_cast<TPaveStats*>(cobj);
-           gPad->GetListOfPrimitives()->Remove(ps);
-         }
-          
+            return true;
         }
-        legend->Draw();
-   }
 
-  };
+
+        virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
+        {
+            c->cd();
+            if( dynamic_cast<TH1*>( o.object ) )
+            {
+                preDrawTH1( c, o );
+            }
+
+            if( dynamic_cast<TH2*>( o.object ) )
+            {
+                preDrawTH2( c, o );
+            }
+        }
+
+
+        virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & )
+        {
+            c->cd();
+            if( dynamic_cast<TH1*>( o.object ) )
+            {
+                postDrawTH1(c);//,o);
+            }
+        }
+
+
+    private:
+        void preDrawTH1( TCanvas *c, const VisDQMObject &o )
+        {
+            c->cd();
+            TH1* obj = dynamic_cast<TH1*>( o.object );
+            assert( obj );
+
+        }
+
+
+        void preDrawTH2( TCanvas *c, const VisDQMObject &o )
+        {
+            c->cd();
+            TH1* obj = dynamic_cast<TH2*>( o.object );
+            assert( obj );
+
+            obj->SetStats( kFALSE );
+        }
+
+
+
+        void postDrawTH1( TCanvas *c)//, const VisDQMObject &o )
+        {
+            c->cd();
+            TIter next(gPad->GetListOfPrimitives());
+            TObject * cobj;
+
+            // add legend for multiple entries
+            if(next.GetCollection()->GetEntries() > 1)
+            {
+                TLegend* legend = new TLegend(0.12,0.7,0.48,0.88);
+
+                while((cobj=next()))
+                {
+                    if( dynamic_cast<TH1*>(cobj) )
+                    {
+                        TH1* obj = dynamic_cast<TH1*>( cobj );
+                        std::string hname = static_cast<std::string>(obj->GetName());
+                        obj->SetStats( kFALSE );
+
+                        if ((hname.find("_DUSG_discr_") != std::string::npos)) legend->AddEntry(obj,"DUSG","l");
+                        else if ((hname.find("_C_discr_") != std::string::npos)) legend->AddEntry(obj, "C","l");
+                        else legend->AddEntry(obj, "???","l");
+                    }
+                    // remove stats from plot
+                    else if( dynamic_cast<TPaveStats*>(cobj))
+                    {
+                        TPaveStats* ps = dynamic_cast<TPaveStats*>(cobj);
+                        gPad->GetListOfPrimitives()->Remove(ps);
+                    }
+                }
+                legend->Draw("NB");
+            }
+        }
+};
 
 
 static BtagPlugin instance;
