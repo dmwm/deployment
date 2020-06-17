@@ -19,7 +19,6 @@ deploy_dbsmigration_sw()
 {
   deploy_pkg -a dbs/DBSSecrets.py -l dbsmigration comp cms+dbs3-migration
   perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/dmwm/DBS/raw/master/view_instances.json,g" $root/$cfgversion/config/$project/manage
-  perl -p -i -e "s,\@\@JSONURL\@\@,https://github.com/dmwm/DBS/raw/master/view_instances_k8s_migration.json,g" $root/$cfgversion/config/$project/manage
   perl -p -i -e "s,\@\@VARIANT\@\@,$variant,g" $root/$cfgversion/config/$project/Migration.py
 }
 
