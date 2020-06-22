@@ -14,7 +14,7 @@
 #include "TMath.h"
 #include <cassert>
 
-
+enum BTVDQMMode {trigger, tagging, undefined};
 
 
 class BtagPlugin : public DQMRenderPlugin
@@ -22,9 +22,20 @@ class BtagPlugin : public DQMRenderPlugin
     public:
         virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & )
         {
-            if ((o.name.find( "Btag/" ) == std::string::npos)) return false;
+            if (o.name.find( "Btag/" ) != std::string::npos)
+            {
+                mode = BTVDQMMode::tagging;
 
-            return true;
+                return true;
+            }
+            else if (o.name.find("HLT/BTV") != std::string::npos)
+            {
+                mode = BTVDQMMode::trigger;
+
+                return true;
+            }
+
+            return false;
         }
 
 
@@ -54,11 +65,15 @@ class BtagPlugin : public DQMRenderPlugin
 
 
     private:
+        BTVDQMMode mode = BTVDQMMode::undefined;
+
         void preDrawTH1( TCanvas *c, const VisDQMObject &o )
         {
             c->cd();
             TH1* obj = dynamic_cast<TH1*>( o.object );
             assert( obj );
+
+            if(mode == BTVDQMMode::trigger) obj->SetStats( kFALSE );
         }
 
 
@@ -76,34 +91,37 @@ class BtagPlugin : public DQMRenderPlugin
         void postDrawTH1( TCanvas *c)//, const VisDQMObject &o )
         {
             c->cd();
-            TIter next(gPad->GetListOfPrimitives());
-            TObject * cobj;
-
-            // add legend for multiple entries
-            if(next.GetCollection()->GetEntries() > 1)
+            if (mode == BTVDQMMode::tagging)
             {
-                TLegend* legend = new TLegend(0.12,0.7,0.48,0.88);
+                TIter next(gPad->GetListOfPrimitives());
+                TObject * cobj;
 
-                while((cobj=next()))
+                // add legend for multiple entries
+                if(next.GetCollection()->GetEntries() > 1)
                 {
-                    if( dynamic_cast<TH1*>(cobj) )
-                    {
-                        TH1* obj = dynamic_cast<TH1*>( cobj );
-                        std::string hname = static_cast<std::string>(obj->GetName());
-                        obj->SetStats( kFALSE );
+                    TLegend* legend = new TLegend(0.12,0.7,0.48,0.88);
 
-                        if ((hname.find("_DUSG_discr_") != std::string::npos)) legend->AddEntry(obj,"DUSG","l");
-                        else if ((hname.find("_C_discr_") != std::string::npos)) legend->AddEntry(obj, "C","l");
-//                         else legend->AddEntry(obj, "???","l"); // enable for unkown labels
-                    }
-                    // remove stats from plot
-                    else if( dynamic_cast<TPaveStats*>(cobj))
+                    while((cobj=next()))
                     {
-                        TPaveStats* ps = dynamic_cast<TPaveStats*>(cobj);
-                        gPad->GetListOfPrimitives()->Remove(ps);
+                        if( dynamic_cast<TH1*>(cobj) )
+                        {
+                            TH1* obj = dynamic_cast<TH1*>( cobj );
+                            std::string hname = static_cast<std::string>(obj->GetName());
+                            obj->SetStats( kFALSE );
+
+                            if ((hname.find("_DUSG_discr_") != std::string::npos)) legend->AddEntry(obj,"DUSG","l");
+                            else if ((hname.find("_C_discr_") != std::string::npos)) legend->AddEntry(obj, "C","l");
+    //                         else legend->AddEntry(obj, "???","l"); // enable for unkown labels
+                        }
+                        // remove stats from plot
+                        else if( dynamic_cast<TPaveStats*>(cobj))
+                        {
+                            TPaveStats* ps = dynamic_cast<TPaveStats*>(cobj);
+                            gPad->GetListOfPrimitives()->Remove(ps);
+                        }
                     }
+                    legend->Draw("NB");
                 }
-                legend->Draw("NB");
             }
         }
 };
