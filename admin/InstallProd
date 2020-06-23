@@ -121,7 +121,7 @@ case $STAGE in
     [ X"$HOSTS" = X ] && usage
     [ X"$PXUSER" = X ] && usage
     case $WHAT in
-      check | production | maintenance ) ;;
+      check | production | maintenance | maintenance_monit ) ;;
       * ) usage ;;
     esac
     ;;
@@ -386,6 +386,14 @@ case $STAGE in
         (echo "roger show $HOSTS | egrep 'hostname|app_alarmed|appstate'|tr -d ','"
          echo "roger update --all_alarms false $HOSTS"
          echo "roger update --appstate disabled $HOSTS"
+        ) | ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch sh -l
+	;;
+
+       maintenance_monit )
+	expire=`date -d '+2 hour' --rfc-3339=ns | tr ' ' 'T'`
+	msg="CMSWEB Outages for $STEM environment"
+	set -x
+        ( echo "/cvmfs/cms.cern.ch/cmsmon/amtool alert add cmsweb_maintenance alertname='cmsweb maintenance' severity=maintenance tag=cmsweb alert=amtool env=preprod instance='$HOSTS' service='$PKGS' severity=maintenance --end=$expire  	--annotation=summary='$msg' --annotation=date='`date`' 	--alertmanager.url=http://cms-monitoring.cern.ch:30093"
         ) | ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch sh -l
         ;;
 
