@@ -17,15 +17,18 @@ LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2ms_transferor"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
+if BASE_URL == "https://cmsweb.cern.ch":
+    RUCIO_ACCT = "wma_prod"
+    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
+    RUCIO_URL="http://cms-rucio.cern.ch"
+else:
+    RUCIO_ACCT="wma_test"
+    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
+    RUCIO_URL="http://cmsrucio-int.cern.ch"
 
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
-
-if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_ACCT = "wma_prod"
-else:
-    RUCIO_ACCT="wma_test"
 
 config = Configuration()
 
@@ -75,7 +78,10 @@ data.services = ['transferor']
 data.quotaUsage = 0.8
 data.quotaAccount = "DataOps"
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
+data.useRucio = False
 data.rucioAccount = RUCIO_ACCT
+data.rucioAuthUrl = RUCIO_AUTH_URL
+data.rucioUrl = RUCIO_URL
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
 data.toAddr = ["alan.malta@cern.ch", "todor.trendafilov.ivanov@cern.ch", "kenyi.paolo.hurtado.anampa@cern.ch"]
 data.warningTransferThreshold = 100. * (1000 ** 4) # 100 TB (terabyte)
