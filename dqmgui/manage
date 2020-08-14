@@ -329,7 +329,7 @@ start_agents_dqm_prod_local()
     $DQM_DATA/repository/original \
     $STATEDIR/online/ix128 \
     --rsync \
-    --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
+    --email marco.rovere@cern.ch,james.patrick@cern.ch
 
   startagent $D/agent-sound \
     visDQMSoundAlarmDaemon \
@@ -412,7 +412,7 @@ start_agents_offline()
       --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
       --rsync \
       --rsyncnext $DQM_DATA/agents/ixstageout \
-      --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
+      --email marco.rovere@cern.ch,james.patrick@cern.ch
 
     startagent $D/agent-qcontrol \
       visDQMRootFileQuotaControlDaemon \
@@ -477,7 +477,7 @@ start_agents_relval()
       --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
       --rsync \
       --rsyncnext $DQM_DATA/agents/ixstageout \
-      --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
+      --email marco.rovere@cern.ch,james.patrick@cern.ch
 
     startagent $D/agent-qcontrol \
       visDQMRootFileQuotaControlDaemon \
@@ -530,7 +530,7 @@ start_agents_offline_relval_test()
         --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
         --rsync \
         --rsyncnext $DQM_DATA/agents/ixstageout \
-        --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
+        --email marco.rovere@cern.ch,james.patrick@cern.ch
       # We do the rsync, but only for the dev instance, it's propagated to the
       # agent dropbox to be backed up on Castor
     else
@@ -547,7 +547,7 @@ start_agents_offline_relval_test()
         $DQM_DATA/ix128 \
         --next $DQM_DATA/agents/qcontrol $DQM_DATA/agents/vcontrol \
         --rsync \
-        --email broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch
+        --email marco.rovere@cern.ch,james.patrick@cern.ch
     fi
 
     startagent $D/agent-qcontrol \
@@ -759,7 +759,7 @@ indexbackup()
           $DQM_DATA/agents/ixstageout \
           $DQM_DATA/ix128 \
           $CASTORDIR \
-          broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch \
+          marco.rovere@cern.ch,james.patrick@cern.ch \
           --fullbackup 50 \
           </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1
       esac
@@ -833,7 +833,7 @@ zipbackupcheck()
         # It is supposed to be started from/by acrontab.
         visDQMZipCastorVerifier \
           $DQM_DATA/agents/verify \
-          broen.van.besien@cern.ch,marco.rovere@cern.ch,tomas.hreus@cern.ch,james.patrick@cern.ch,marcel.andre.schneider@cern.ch \
+          marco.rovere@cern.ch,james.patrick@cern.ch \
           $DQM_DATA/zipped \
           $CASTORDIR \
           24 \
