@@ -242,7 +242,7 @@ start()
             reqmgr2ms_monitors
             ;;
 
-        vocms0745 )
+        vocms0745 | vocms0746 )
             couchdb_monitors "_all_dbs"
             ;;
 
@@ -307,7 +307,7 @@ status()
 
         ;;
 
-    vocms0740 | vocms0743 | vocms0744 | vocms0745)
+    vocms0740 | vocms0743 | vocms0744 | vocms0745 | vocms0746)
         # couchdb exporter
         process_status "couchdb_exporter"
         ;;

@@ -33,7 +33,7 @@ deploy_das_sw()
 
 deploy_das_post()
 {
-  case $host in vocms013[689] | vocms073[89] | vocms016[135] | vocms074[0345] | vocms0766 ) disable ;; * ) enable ;; esac
+  case $host in vocms013[689] | vocms073[89] | vocms016[135] | vocms074[03456] | vocms0766 ) disable ;; * ) enable ;; esac
   (mkcrontab
    sysboot
    for action in das_cleanup:'0 0-23/2 * * *'; do
