@@ -74,7 +74,7 @@ for viewname, access in [('DBSReader','reader')]:
     secinst=view.security.section_('instances')
     for instance_name in config.dbs.instances:
       dbconf = dbinst.section_(instance_name)
-      dbconf.throllting_limit = 5
+      dbconf.throllting_limit = 7
       #dbconf.throllting_time = 1
       dbconf.dbowner = db_mapping[instance_name][0]['databaseOwner']
       dbconf.version = DBSVERSION
