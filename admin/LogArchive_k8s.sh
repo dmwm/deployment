@@ -35,8 +35,10 @@ case $applogs in
       find $applogs -name '*_log_*' -mtime +1 -print |
         while read f; do
           case $f in *.zip ) continue ;; esac
-          kind=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
-          month=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
+          temp1=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
+          kind=$(n=1; echo $temp1 | awk -v m="$n" '{print substr($0,m,40);}')
+          temp2=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
+	  month=$(n=27; echo $temp2 | awk -v m="$n" '{print substr($0,m,6);}')
           ionice -c3 zip -9Trmuoqj ${kind}_${month}.zip $f ||
             { echo "$f: failed to archive logs: $?" 1>&2; exit 3; }
         done
@@ -45,9 +47,11 @@ case $applogs in
       find $applogs -name '*_log_*' -print |
         while read f; do
           case $f in *.zip ) continue ;; esac
-          kind=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
-          month=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
-          ionice -c3 zip -9Truoqj ${kind}_${month}.zip $f ||
+          temp1=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
+          kind=$(n=1; echo $temp1 | awk -v m="$n" '{print substr($0,m,40);}')
+          temp2=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
+	  month=$(n=27; echo $temp2 | awk -v m="$n" '{print substr($0,m,6);}')
+  	  ionice -c3 zip -9Truoqj ${kind}_${month}.zip $f ||
             { echo "$f: failed to archive logs: $?" 1>&2; exit 4; }
         done
       ;;
