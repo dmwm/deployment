@@ -1,4 +1,4 @@
-^/auth/complete/dqm/(?:online|online-playback|online-test)(?:/|$) cmsdqm.cern.ch
+^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new)(?:/|$) cmsdqm.cern.ch
 ^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0739.cern.ch
