@@ -1,6 +1,6 @@
 ^/auth/complete/phedex(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
-^/auth/complete/dqm/(?:online|online-playback|online-test)(?:/|$) cmsdqm.cern.ch
+^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new)(?:/|$) cmsdqm.cern.ch
 ^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0739.cern.ch
