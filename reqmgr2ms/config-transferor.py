@@ -18,9 +18,11 @@ LOG_REPORTER = "reqmgr2ms_transferor"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 if BASE_URL == "https://cmsweb.cern.ch":
+    RULE_LIFETIME=None
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
 else:
+    RULE_LIFETIME=24 * 60 * 60  # 24h
     RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
     RUCIO_URL="http://cmsrucio-int.cern.ch"
 
@@ -77,6 +79,7 @@ data.quotaUsage = 0.9
 data.quotaAccount = "DataOps"
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
 data.useRucio = False
+data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = "wmcore_transferor"
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
