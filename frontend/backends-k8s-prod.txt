@@ -1,3 +1,4 @@
+^/auth/complete/t0_reqmon(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/reqmgr2(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/reqmon(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/phedex(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
