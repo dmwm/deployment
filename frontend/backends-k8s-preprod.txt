@@ -1,3 +1,5 @@
+^/auth/complete/reqmon(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
+^/auth/complete/reqmgr2(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new)(?:/|$) cmsdqm.cern.ch
@@ -20,13 +22,13 @@
 ^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0731.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/confdb(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/confdb(?:/|$) vocms0731.cern.ch|vocms0132.cern.ch
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/wmarchive(?:/|$) vocms0181.cern.ch
-^/auth/complete/ms-transferor(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/ms-transferor(?:/|$) vocms0731.cern.ch
+^/auth/complete/ms-monitor(?:/|$) vocms0731.cern.ch
+^/auth/complete/ms-output(?:/|$) vocms0731.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
