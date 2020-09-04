@@ -35,5 +35,7 @@ deploy_wmarchive_post()
   if [ -f /data/srv/state/wmarchive/avro/schemas/current.avsc ]; then
      rm /data/srv/state/wmarchive/avro/schemas/current.avsc
   fi
-  cp /data/srv/current/apps/wmarchive/data/schemas/fwjr_prod.avsc /data/srv/state/wmarchive/avro/schemas/current.avsc
+  if [ -f /data/srv/current/apps/wmarchive/data/schemas/fwjr_prod.avsc ]; then
+     cp /data/srv/current/apps/wmarchive/data/schemas/fwjr_prod.avsc /data/srv/state/wmarchive/avro/schemas/current.avsc
+  fi
 }
