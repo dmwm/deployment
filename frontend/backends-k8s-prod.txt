@@ -26,7 +26,7 @@
 ^/auth/complete/confdb(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/wmarchive(?:/|$) vocms0182.cern.ch
+^/auth/complete/wmarchive(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-transferor(?:/|$) vocms0742.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) vocms0742.cern.ch
 ^/auth/complete/ms-output(?:/|$) vocms0742.cern.ch
