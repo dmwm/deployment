@@ -22,18 +22,22 @@ deploy_wmarchive_sw()
 
 deploy_wmarchive_post()
 {
-  case $host in vocms0731 | vocms0741 ) enable ;; * ) disable ;; esac
+  case $host in vocms0731 | vocms0741 | vocms0181 | vocms0182 ) enable ;; * ) disable ;; esac
   (mkcrontab
    sysboot
-   for action in migrate2hdfs:'*/10 0-23 * * *' aggregate-fwjr:'0 1,3,5,7,9,11,13,15,17,19,21,23 * * *' aggregate-crab:'0 0,2,4,6,8,10,12,14,16,18,20,22 * * *' cleanup:'0 2 * * *'; do
-     local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
-     $nogroups || cmd="sudo -H -u _wmarchive bashs -l -c \"${cmd}\""
-     echo "${action##*:} $cmd"
-   done
+   case $host in vocms0181 | vocms0182 )
+       for action in migrate2hdfs:'*/10 0-23 * * *' aggregate-fwjr:'0 1,3,5,7,9,11,13,15,17,19,21,23 * * *' aggregate-crab:'0 0,2,4,6,8,10,12,14,16,18,20,22 * * *' cleanup:'0 2 * * *'; do
+         local cmd="$project_config/manage cron ${action%%:*} 'I did read documentation'"
+         $nogroups || cmd="sudo -H -u _wmarchive bashs -l -c \"${cmd}\""
+         echo "${action##*:} $cmd"
+       done
+   ;;
   ) | crontab -
   # copy release schema into state area
   if [ -f /data/srv/state/wmarchive/avro/schemas/current.avsc ]; then
      rm /data/srv/state/wmarchive/avro/schemas/current.avsc
   fi
-  cp /data/srv/current/apps/wmarchive/data/schemas/fwjr_prod.avsc /data/srv/state/wmarchive/avro/schemas/current.avsc
+  if [ -f /data/srv/current/apps/wmarchive/data/schemas/fwjr_prod.avsc ]; then
+     cp /data/srv/current/apps/wmarchive/data/schemas/fwjr_prod.avsc /data/srv/state/wmarchive/avro/schemas/current.avsc
+  fi
 }
