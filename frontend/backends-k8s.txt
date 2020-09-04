@@ -23,7 +23,7 @@
 ^/auth/complete/confdb(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/wmarchive(?:/|$) vocms0181.cern.ch
+^/auth/complete/wmarchive(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-transferor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch

@@ -21,7 +21,7 @@
 ^/auth/complete/confdb(?:/|$) vocms0731.cern.ch|vocms0132.cern.ch
 ^/auth/complete/das(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/das2go(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
-^/auth/complete/wmarchive(?:/|$) vocms0181.cern.ch
+^/auth/complete/wmarchive(?:/|$) vocms0731.cern.ch
 ^/auth/complete/ms-transferor(?:/|$) vocms0731.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) vocms0731.cern.ch
 ^/auth/complete/ms-output(?:/|$) vocms0731.cern.ch

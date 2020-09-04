@@ -1,0 +1,10 @@
+{
+    "base": "/wmarchive/data/",
+    "port": 8200,
+    "stompLogin":"cmsjmwrv",
+    "stompPassword":"bce68nd2E04oREtM",
+    "producer":"wmarchive",
+    "endpoint":"/topic/cms.jobmon.wmarchive",
+    "stompURI":"cms-mb.cern.ch:61313",
+    "verbose": 1
+}
