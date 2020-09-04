@@ -32,6 +32,7 @@ deploy_wmarchive_post()
          echo "${action##*:} $cmd"
        done
    ;;
+   esac
   ) | crontab -
   # copy release schema into state area
   if [ -f /data/srv/state/wmarchive/avro/schemas/current.avsc ]; then
