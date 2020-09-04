@@ -1,3 +1,6 @@
+^/auth/complete/t0_reqmon(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
+^/auth/complete/reqmgr2(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
+^/auth/complete/reqmon(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/phedex(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new)(?:/|$) cmsdqm.cern.ch
@@ -5,28 +8,28 @@
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/relval(?:/|$) vocms0739.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|relval-test)(?:/|$) vocms0731.cern.ch
-^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_workloadsummary|t0_workloadsummary)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_request|t0_request)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_logdb|t0_logdb)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/acdcserver|acdcserver)(?:/|$) vocms0746.cern.ch :affinity
-^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0746.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0740.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0740.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0743.cern.ch :affinity
+^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0743.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0743.cern.ch :affinity
+^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats)(?:/|$) vocms0744.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_workloadsummary|t0_workloadsummary)(?:/|$) vocms0744.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_request|t0_request)(?:/|$) vocms0744.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_logdb|t0_logdb)(?:/|$) vocms0744.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/(?:couchdb/acdcserver|acdcserver)(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0742.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/confdb(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/confdb(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/wmarchive(?:/|$) vocms0182.cern.ch
-^/auth/complete/ms-transferor(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/ms-transferor(?:/|$) vocms0742.cern.ch
+^/auth/complete/ms-monitor(?:/|$) vocms0742.cern.ch
+^/auth/complete/ms-output(?:/|$) vocms0742.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
