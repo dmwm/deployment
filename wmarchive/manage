@@ -54,7 +54,8 @@ if [ -d /usr/hdp/hadoop ]; then
 fi
 
 # Go based config
-export WMARCHIVE_GOCONFIG=$ROOT/config/$ME/wmarch_go.json
+#export WMARCHIVE_GOCONFIG=$ROOT/config/$ME/wmarch_go.json
+export WMARCHIVE_GOCONFIG=$ROOT/auth/$ME/wmarch_go.json
 
 # GRID
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
