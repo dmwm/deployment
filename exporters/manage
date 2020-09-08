@@ -169,6 +169,14 @@ reqmgr2ms_monitors()
         </dev/null 2>&1 | rotatelogs $LOGDIR/ms-output_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
+wma_monitors()
+{
+    # start crabserver exporter
+    wait4proc "wmarchive" # check for pattern that it is running
+    process_monitor.sh ".*wmarch_go.json" wma_exporter ":18200" 15 \
+        </dev/null 2>&1 | rotatelogs $LOGDIR/wma_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+}
+
 start()
 {
     # cmsweb activity page
@@ -195,6 +203,7 @@ start()
         vocms0741 )
             das2go_monitors
             mongodb_monitors
+            wma_monitors
             ;;
 
         vocms0742 )
@@ -240,6 +249,7 @@ start()
             crab_monitors
             reqmgr2_monitors
             reqmgr2ms_monitors
+            wma_monitors
             ;;
 
         vocms0745 | vocms0746 )
