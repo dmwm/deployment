@@ -24,6 +24,7 @@
 ^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0731.cern.ch|vocms0132.cern.ch
+^/auth/complete/wmstatsserver(?:/|$) vocms0731.cern.ch|vocms0132.cern.ch :affinity
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/wmarchive(?:/|$) cmsweb-srv.cern.ch
