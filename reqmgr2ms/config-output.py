@@ -22,10 +22,14 @@ AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
+RUCIO_ACCT = "wmcore_transferor"
+RULE_LIFETIME = 30 * 24 * 60 * 60  # 30 days
 if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_ACCT = "wma_prod"
+    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
+    RUCIO_URL="http://cms-rucio.cern.ch"
 else:
-    RUCIO_ACCT="wma_test"
+    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
+    RUCIO_URL="http://cmsrucio-int.cern.ch"
 
 config = Configuration()
 
@@ -70,12 +74,14 @@ data.limitRequestsPerCycle = 500
 data.verbose = True
 data.interval = 60 * 60 * 1  # run it every hour
 data.services = ['output']
-data.defaultDataManSys = "DDM"  # "Rucio"
 data.defaultGroup = "DataOps"
-data.enableAggSubscr = True
 data.enableDataPlacement = False
 data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
+data.useRucio = False
+data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = RUCIO_ACCT
+data.rucioAuthUrl = RUCIO_AUTH_URL
+data.rucioUrl = RUCIO_URL
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
 data.ddmUrl = "https://dynamo.mit.edu"
 # if private_vm, just fallback to preprod DBS
