@@ -75,6 +75,18 @@ data.verbose = True
 data.interval = 60 * 60 * 1  # run it every hour
 data.services = ['output']
 data.defaultGroup = "DataOps"
+# This tape pledges was extracted from WLCG Rebus and will be needed for PhEDEx-based data placement
+# https://wlcg-rebus.cern.ch/core/pledge/list/?vo_name=CMS&year=2020&type=Tape
+# However, FNAL will have a different value because it currently holds ~16PB of HI data
+# Note that these values are in TeraBytes (TB) and will only be used ih the PhEDEx era
+data.tapePledges = {"T0_CH_CERN_MSS": 99000,
+                    "T1_US_FNAL_MSS": 88000 + 16000,
+                    "T1_IT_CNAF_MSS": 28600,
+                    "T1_DE_KIT_MSS": 22000,
+                    "T1_FR_CCIN2P3_MSS": 18700,
+                    "T1_UK_RAL_MSS": 17600,
+                    "T1_RU_JINR_MSS": 10000,
+                    "T1_ES_PIC_MSS": 8800}
 data.enableDataPlacement = False
 data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
 data.useRucio = False
