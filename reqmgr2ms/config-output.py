@@ -22,10 +22,14 @@ AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
+RUCIO_ACCT = "wmcore_transferor"
+RULE_LIFETIME = 30 * 24 * 60 * 60  # 30 days
 if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_ACCT = "wma_prod"
+    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
+    RUCIO_URL="http://cms-rucio.cern.ch"
 else:
-    RUCIO_ACCT="wma_test"
+    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
+    RUCIO_URL="http://cmsrucio-int.cern.ch"
 
 config = Configuration()
 
@@ -70,12 +74,26 @@ data.limitRequestsPerCycle = 500
 data.verbose = True
 data.interval = 60 * 60 * 1  # run it every hour
 data.services = ['output']
-data.defaultDataManSys = "DDM"  # "Rucio"
 data.defaultGroup = "DataOps"
-data.enableAggSubscr = True
+# This tape pledges was extracted from WLCG Rebus and will be needed for PhEDEx-based data placement
+# https://wlcg-rebus.cern.ch/core/pledge/list/?vo_name=CMS&year=2020&type=Tape
+# However, FNAL will have a different value because it currently holds ~16PB of HI data
+# Note that these values are in TeraBytes (TB) and will only be used ih the PhEDEx era
+data.tapePledges = {"T0_CH_CERN_MSS": 99000,
+                    "T1_US_FNAL_MSS": 88000 + 16000,
+                    "T1_IT_CNAF_MSS": 28600,
+                    "T1_DE_KIT_MSS": 22000,
+                    "T1_FR_CCIN2P3_MSS": 18700,
+                    "T1_UK_RAL_MSS": 17600,
+                    "T1_RU_JINR_MSS": 10000,
+                    "T1_ES_PIC_MSS": 8800}
 data.enableDataPlacement = False
 data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
+data.useRucio = False
+data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = RUCIO_ACCT
+data.rucioAuthUrl = RUCIO_AUTH_URL
+data.rucioUrl = RUCIO_URL
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
 data.ddmUrl = "https://dynamo.mit.edu"
 # if private_vm, just fallback to preprod DBS
