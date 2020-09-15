@@ -95,6 +95,7 @@ data.tapePledges = {"T0_CH_CERN_MSS": 99000,
                     "T1_ES_PIC_MSS": 8800}
 data.enableDataPlacement = False
 data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
+data.rucioRSEAttribute = "ddm_quota"
 data.useRucio = False
 data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = RUCIO_ACCT
