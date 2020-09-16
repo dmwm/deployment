@@ -27,9 +27,11 @@ RULE_LIFETIME = 30 * 24 * 60 * 60  # 30 days
 if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
+    SEND_NOTIFICATION=True
 else:
     RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
     RUCIO_URL="http://cmsrucio-int.cern.ch"
+    SEND_NOTIFICATION=False
 
 config = Configuration()
 
@@ -71,24 +73,30 @@ data.couch_wmstats_db = "wmstats"
 data.manager = 'WMCore.MicroService.Unified.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.limitRequestsPerCycle = 500
+# Allows or not some alert notifications to be sent to the production-admin egroup
+data.sendNotification = SEND_NOTIFICATION
 data.verbose = True
 data.interval = 60 * 60 * 1  # run it every hour
 data.services = ['output']
 data.defaultGroup = "DataOps"
-# This tape pledges was extracted from WLCG Rebus and will be needed for PhEDEx-based data placement
+# This tape pledges was extracted from WLCG Rebus and will be needed for the PhEDEx-based data placement
 # https://wlcg-rebus.cern.ch/core/pledge/list/?vo_name=CMS&year=2020&type=Tape
-# However, FNAL will have a different value because it currently holds ~16PB of HI data
+# Note that a few sites are storing HI data as well, so we need to subtract the storage
+# usage for those sites by the amount of Heavy Ion data (or increase the quota here ;))
+# Numbers are: FNAL 15.3 PB, IN2P3: 3.0 PB, JINR: 1.1 PB
 # Note that these values are in TeraBytes (TB) and will only be used ih the PhEDEx era
 data.tapePledges = {"T0_CH_CERN_MSS": 99000,
-                    "T1_US_FNAL_MSS": 88000 + 16000,
+                    "T1_US_FNAL_MSS": 88000 + 15300,
                     "T1_IT_CNAF_MSS": 28600,
                     "T1_DE_KIT_MSS": 22000,
-                    "T1_FR_CCIN2P3_MSS": 18700,
+                    "T1_FR_CCIN2P3_MSS": 18700 + 3000,
                     "T1_UK_RAL_MSS": 17600,
-                    "T1_RU_JINR_MSS": 10000,
+                    "T1_RU_JINR_MSS": 10000 + 1100,
                     "T1_ES_PIC_MSS": 8800}
 data.enableDataPlacement = False
+data.enableRelValCustodial = False
 data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
+data.rucioRSEAttribute = "ddm_quota"
 data.useRucio = False
 data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = RUCIO_ACCT
