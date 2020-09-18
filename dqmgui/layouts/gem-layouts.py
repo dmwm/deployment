@@ -1,62 +1,90 @@
 def GEMLayout(i, p, *rows): i["GEM/Layouts/" + p] = DQMItem(layout=rows)
 #def GEMLayout(i, p, *rows): return 1 # this line and the following one line is for printing out indices
-#dqmitems = ""
 
-#GEMLayout(dqmitems, "0 eta", [{'path' : "GEM/eta", 'description': 'eta recHit'}])
-#GEMLayout(dqmitems, "1 phi", [{'path' : "GEM/phi", 'description': 'phi recHit'}])
+
+nIdx = 0
+
+GEMLayout(dqmitems, "%02i Summary"%nIdx, 
+    [{"path" : "GEM/EventInfo/reportSummaryMap", 
+    "description": 'For more information (... under construction)'}])
+nIdx += 1
+
+GEMLayout(dqmitems, "%02i AMC status"%nIdx, 
+    [{"path" : "GEM/StatusDigi/amc_statusflag", 
+    "description": 'For more information (... under construction)'}])
+nIdx += 1
 
 # StatusDigi
-GEMLayout(dqmitems, "00 StatusDigi Critical Errors", 
-    [{'path' : "GEM/StatusDigi/GEB_Errors", 
-    'description': 'Critical errors on GEM'}])
+GEMLayout(dqmitems, "%02i GEB input status"%nIdx, 
+    [
+      {"path": "GEM/StatusDigi/geb_input_status_st_m1_la_1", "description": "GEB input status in GE-1/1"}, 
+      {"path": "GEM/StatusDigi/geb_input_status_st_m1_la_2", "description": "GEB input status in GE-1/2"}, 
+    ], 
+    [
+      {"path": "GEM/StatusDigi/geb_input_status_st_p1_la_1", "description": "GEB input status in GE+1/1"}, 
+      {"path": "GEM/StatusDigi/geb_input_status_st_p1_la_2", "description": "GEB input status in GE+1/2"}, 
+    ])
+nIdx += 1
 
-GEMLayout(dqmitems, "01 StatusDigi Warnings", 
-    [{'path' : "GEM/StatusDigi/GEB_Warnings", 
-    'description': 'Warnings on GEM'}])
 
-GEMLayout(dqmitems, "01 StatusDigi VFAT Error all", 
-    [{'path' : "GEM/StatusDigi/vfatErrors_all_CRC", 
-    'description': 'CRC (all) in StatusDigi'}, 
-    {'path' : "GEM/StatusDigi/vfatErrors_all_flag", 
-    'description': 'Flag (all) in StatusDigi'}], 
-    [{'path' : "GEM/StatusDigi/vfatErrors_all_b1010", 
-    'description': 'Control bit 1010 (all) in StatusDigi'}, 
-    {'path' : "GEM/StatusDigi/vfatErrors_all_b1100", 
-    'description': 'Control bit 1100 (all) in StatusDigi'}, 
-    {'path' : "GEM/StatusDigi/vfatErrors_all_b1110", 
-    'description': 'Control bit 1110 (all) in StatusDigi'}])
+GeminisId = [ i + 1 for i in range(36) ]
+GeminisIdWithTitle = [ {"chid": gid, "title": "GEMINI%02i"%gid} for gid in GeminisId ]
+listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
+listLayersWithTitle = [ [ s, "GE%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
+bIsLayerWise = True
+bIsGlobalPos = True
 
-layers = ["1", "2"]
-#Geminis = ["671093248", "671095040", "671095296", "671095552", "671095808"]
-Geminis = ["671088640", "671095296", "671095552", "671095808", "671096064"]
-GeminisId = ["1", "27", "28", "29", "30"]
-index = 2
+strTitleFmt = "%(idx)02i %(title)s_%(layer)s"
 
-for i, gemini in enumerate(Geminis):
-  for layer in layers:
-    """
-    recHit = "GEM/recHit/recHit_Gemini_" + GeminisId[ i ] + "_la_" + layer
-    VFAT = "GEM/recHit/VFAT_vs_ClusterSize_Gemini_" + GeminisId[ i ] + "_la_" + layer
-    Fired = "GEM/recHit/StripFired_Gemini_" + GeminisId[ i ] + "_la_" + layer
-    Digi = "GEM/digi/Digi_Strips_Gemini_" + gemini + "_la_" + layer
-    
-    GEMLayout(dqmitems, "%02i GEMINI%02ila%s"%(index, int(GeminisId[ i ]), layer), 
-      [{'path': recHit, 'description': "Number of recHit per VFAT (!!!)"},
-        {'path': VFAT, 'description': "VFAT cs ClusterSize"}],
-      [{'path': Fired, 'description': "Number of Fired Strips"},
-        {'path': Digi, 'description': "Number of Digi Strips"}])  
-    """
-    strPathDigiVFAT   = "GEM/digi/Digi_Strips_Gemini_%s_l_%s_VFAT"%(GeminisId[ i ], layer)
-    strPathDigiStrip  = "GEM/digi/Digi_Strips_Gemini_%s_l_%s"%(GeminisId[ i ], layer)
-    strPathRHCLSize   = "GEM/recHit/VFAT_vs_ClusterSize_Gemini_%s_la_%s"%(GeminisId[ i ], layer)
-    strPathRHHitX     = "GEM/recHit/recHit_x_Gemini_%s_la_%s"%(GeminisId[ i ], layer)
-    
-    GEMLayout(dqmitems, "%02i GEMINI%02ila%s"%(index, int(GeminisId[ i ]), layer), 
-      [{'path': strPathDigiVFAT, 'description': "Number of VFAT"},
-        {'path': strPathDigiStrip, 'description': "Number of Digi Strips"}],
-      [{'path': strPathRHCLSize, 'description': "VFAT vs ClusterSize"},
-        {'path': strPathRHHitX, 'description': "Number on hit x"}])  
-    
-    index += 1
+
+listGEMChambers = []
+
+if bIsLayerWise: 
+  for layer in listLayersWithTitle:
+    for gemini in GeminisIdWithTitle:
+      listGEMChambers.append([gemini, layer])
+else: 
+  for gemini in GeminisIdWithTitle:
+    for layer in listLayersWithTitle:
+      listGEMChambers.append([gemini, layer])
+
+
+if bIsGlobalPos: 
+  for layer in listLayersWithTitle: 
+    GEMLayout(dqmitems, "%02i Global position %s"%(nIdx, layer[ 1 ]), 
+        [{"path": "GEM/recHit/recHit_globalPos_Gemini_GE" + layer[ 0 ], 
+          "description": "Global position"}])
+    nIdx += 1
+
+for itCh in listGEMChambers: 
+  gemini = itCh[ 0 ]
+  layer  = itCh[ 1 ]
+  
+  strID = "Gemini_%i_GE%s"%(gemini[ "chid" ], layer[ 0 ])
+  
+  listU1 = ["GEM/StatusDigi/vfatStatus_QualityFlag_" + strID, "VFAT quality"]
+  listU2 = ["GEM/StatusDigi/vfatStatus_BC_"          + strID, "Bunch crossing"]
+  listU3 = ["GEM/StatusDigi/vfatStatus_EC_"          + strID, "Event counter"]
+  listL1 = ["GEM/digi/Digi_Strips_"                  + strID, "Number of Digi Strips"]
+  listL2 = ["GEM/recHit/VFAT_vs_ClusterSize_"        + strID, "VFAT vs ClusterSize"]
+  #strPathRHHitX     = "GEM/recHit/recHit_x_" + strID
+  
+  gemini[ "idx" ] = nIdx
+  gemini[ "layer" ] = layer[ 1 ]
+  strTitle = strTitleFmt%gemini
+  
+  GEMLayout(dqmitems, strTitle, 
+    [
+      {'path': listU1[ 0 ], 'description': listU1[ 1 ]},
+      {'path': listU2[ 0 ], 'description': listU2[ 1 ]},
+      {'path': listU3[ 0 ], 'description': listU3[ 1 ]},
+    ],
+    [
+      {'path': listL1[ 0 ], 'description': listL1[ 1 ]},
+      {'path': listL2[ 0 ], 'description': listL2[ 1 ]},
+    ]
+  )
+  
+  nIdx += 1
 
 

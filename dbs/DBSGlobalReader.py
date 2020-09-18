@@ -55,7 +55,7 @@ config.dbs.description = 'CMS DBS Service'
 config.dbs.section_('views')
 config.dbs.admin = 'cmsdbs'
 config.dbs.default_expires = 900
-config.dbs.instances = list(set([i for r in view_mapping[VARIANT].values() for i in r]))
+config.dbs.instances = view_mapping[VARIANT]['DBSReader']
 
 ### Create views for DBSReader
 active = config.dbs.views.section_('active')
@@ -74,7 +74,7 @@ for viewname, access in [('DBSReader','reader')]:
     secinst=view.security.section_('instances')
     for instance_name in config.dbs.instances:
       dbconf = dbinst.section_(instance_name)
-      dbconf.throllting_limit = 15
+      dbconf.throllting_limit = 7
       #dbconf.throllting_time = 1
       dbconf.dbowner = db_mapping[instance_name][0]['databaseOwner']
       dbconf.version = DBSVERSION

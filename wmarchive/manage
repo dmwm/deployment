@@ -53,6 +53,10 @@ if [ -d /usr/hdp/hadoop ]; then
     export HADOOP_HOME=/usr/hdp/hadoop
 fi
 
+# Go based config
+#export WMARCHIVE_GOCONFIG=$ROOT/config/$ME/wmarch_go.json
+export WMARCHIVE_GOCONFIG=$ROOT/auth/$ME/wmarch_go.json
+
 # GRID
 export X509_USER_PROXY=$STATEDIR/proxy/proxy.cert
 export X509_USER_CERT=$X509_USER_PROXY
@@ -86,53 +90,81 @@ sysboot()
 
 createindex()
 {
-    mport=`echo $MONGO_URI | awk -F: '{print $3}'`
-    mongo --port $mport < $WMARCHIVE_ROOT/data/js/create_wma_indexes.js
+  if [ ! -f $WMARCHIVE_GOCONFIG ]; then
+      mport=`echo $MONGO_URI | awk -F: '{print $3}'`
+      mongo --port $mport < $WMARCHIVE_ROOT/data/js/create_wma_indexes.js
+  fi
 }
 
 start()
 {
-  echo "starting $ME"
-  # start service
-  $WMARCHIVE_ROOT/bin/wmc-httpd -r -d $LOGDIR $WMARCHIVE_CONFIG &
-  $WMARCHIVE_ROOT/bin/mongo2avro \
-      --mongo=$MONGO_URI --dbname=fwjr --schema=$AVRO_SCHEMA --thr=240 \
-      --odir=$AVRO_STORAGE/fwjr --mdir=$AVRO_STORAGE_MIGRATE/fwjr \
-      --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE --dtype=fwjr \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-fwjr-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
-  $WMARCHIVE_ROOT/bin/mongo2avro \
-      --mongo=$MONGO_URI --dbname=crab --schema=$AVRO_SCHEMA --thr=240 \
-      --odir=$AVRO_STORAGE/crab --mdir=$AVRO_STORAGE_MIGRATE/crab \
-      --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE --dtype=crab \
-      </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-crab-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+  # Go based service
+  if [ -f $WMARCHIVE_GOCONFIG ]; then
+      echo "starting $ME with $WMARCHIVE_GOCONFIG"
+      $WMARCHIVE_ROOT/bin/wmarchive -config $WMARCHIVE_GOCONFIG \
+          </dev/null 2>&1 | rotatelogs $LOGDIR/wmarchive-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+  else
+      echo "starting $ME"
+      # start service
+      $WMARCHIVE_ROOT/bin/wmc-httpd -r -d $LOGDIR $WMARCHIVE_CONFIG &
+      $WMARCHIVE_ROOT/bin/mongo2avro \
+          --mongo=$MONGO_URI --dbname=fwjr --schema=$AVRO_SCHEMA --thr=240 \
+          --odir=$AVRO_STORAGE/fwjr --mdir=$AVRO_STORAGE_MIGRATE/fwjr \
+          --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE --dtype=fwjr \
+          </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-fwjr-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+      $WMARCHIVE_ROOT/bin/mongo2avro \
+          --mongo=$MONGO_URI --dbname=crab --schema=$AVRO_SCHEMA --thr=240 \
+          --odir=$AVRO_STORAGE/crab --mdir=$AVRO_STORAGE_MIGRATE/crab \
+          --tstamp=$CLEANUP_TSTAMP --stype=$CLEANUP_STYPE --dtype=crab \
+          </dev/null 2>&1 | rotatelogs $LOGDIR/mongo2avro-crab-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+  fi
 }
 
 # Stop the service.
 stop()
 {
-  echo "stopping $ME"
-  for pid in $(pgrep -u $(id -u) -f "[/]wmarch_config.py"); do
-      kill -9 $pid
-  done
-  for pid in $(pgrep -u $(id -u) -f "[/]mongo2avro"); do
-      kill -9 $pid
-  done
+  if [ -f $WMARCHIVE_GOCONFIG ]; then
+      echo "stopping $ME with $WMARCHIVE_GOCONFIG"
+      for pid in $(pgrep -u $(id -u) -f "[/]wmarch_go.json"); do
+          kill -9 $pid
+      done
+  else
+      echo "stopping $ME"
+      for pid in $(pgrep -u $(id -u) -f "[/]wmarch_config.py"); do
+          kill -9 $pid
+      done
+      for pid in $(pgrep -u $(id -u) -f "[/]mongo2avro"); do
+          kill -9 $pid
+      done
+  fi
 }
 
 # Check if the server is running.
 status()
 {
-  local pid=$(pgrep -u $(id -u) -f "[/]wmarch_config.py" | sort -n)
-  if [ X"$pid" = X ]; then
-    echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+  if [ -f $WMARCHIVE_GOCONFIG ]; then
+      local pid=$(pgrep -u $(id -u) -f "[/]wmarch_go.json" | sort -n)
+      if [ X"$pid" = X ]; then
+        echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+      else
+        echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+      fi
   else
-    echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+      local pid=$(pgrep -u $(id -u) -f "[/]wmarch_config.py" | sort -n)
+      if [ X"$pid" = X ]; then
+        echo $echo_e "$ME $pat is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."
+      else
+        echo $echo_e "$ME $pat is ${COLOR_OK}RUNNING${COLOR_NORMAL}, PID" $pid
+      fi
   fi
 }
 
 # Runs actions to be done through cronjobs
 cron()
 {
+  if [ -f $WMARCHIVE_GOCONFIG ]; then
+      return
+  fi
   local action=$1
   case $action in
     migrate2hdfs )

@@ -27,8 +27,8 @@ deploy_workqueue_sw()
   else :; fi
 
   # use rucio testbed for anything that is not production
-  rucio_host_url=http://cms-rucio-int.cern.ch
-  rucio_auth_url=https://cms-rucio-auth-int.cern.ch
+  rucio_host_url=http://cmsrucio-int.cern.ch
+  rucio_auth_url=https://cmsrucio-auth-int.cern.ch
   case $variant in
     prod )
         base_url="https://cmsweb.cern.ch"
@@ -61,7 +61,7 @@ deploy_workqueue_post()
 {
   # in practice, enabled it on private VMs, vocms0731 (preprod) and vocms0740 (prod)
   case $host in
-    vocms013[2689] | vocms073[89] | vocms074[1234] | vocms016[135] | vocms0766 )
+    vocms013[2689] | vocms073[89] | vocms074[123456] | vocms016[135] | vocms0766 )
       disable;;
     * )
       enable;;

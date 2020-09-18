@@ -109,8 +109,9 @@ class BtagPlugin : public DQMRenderPlugin
                             std::string hname = static_cast<std::string>(obj->GetName());
                             obj->SetStats( kFALSE );
 
-                            if ((hname.find("_DUSG_discr_") != std::string::npos)) legend->AddEntry(obj,"DUSG","l");
-                            else if ((hname.find("_C_discr_") != std::string::npos)) legend->AddEntry(obj, "C","l");
+                            if ((hname.find("_DUSG_discr_") != std::string::npos)) legend->AddEntry(obj,"d, u, s, g","l");
+                            else if ((hname.find("_C_discr_") != std::string::npos)) legend->AddEntry(obj, "c","l");
+                            else if ((hname.find("_B_discr_") != std::string::npos)) legend->AddEntry(obj, "b","l");
     //                         else legend->AddEntry(obj, "???","l"); // enable for unkown labels
                         }
                         // remove stats from plot

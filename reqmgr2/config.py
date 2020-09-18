@@ -1,7 +1,6 @@
 """
 ReqMgr only configuration file.
 Everything configurable in ReqMgr is defined here.
-
 """
 
 import socket
@@ -14,6 +13,7 @@ HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
 DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
+REQMGR2_URL = "%s/reqmgr2" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2"
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
@@ -115,7 +115,7 @@ ui.base = '/reqmgr2'
 ui.index = 'reqmgr2' # this part must be activated, see below
 ui.reqmgr = data # this part contains uiuration for ReqMgr REST API, see above
 # This need to be removed when ReqMgr Client is removed
-ui.reqmgr.reqmgr2_url = "%s/reqmgr2" % BASE_URL # this part contains uiuration for ReqMgr REST API, see above
+ui.reqmgr.reqmgr2_url = REQMGR2_URL # this part contains uiuration for ReqMgr REST API, see above
 ui.reqmgr.wmstats_url = "%s/wmstatsserver" % BASE_URL
 ui_main = ui.section_("main")
 ui_main.application = ui.index
@@ -142,9 +142,11 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     # ACDC/workqueue cleanup threads
     couchCleanup = extentions.section_("couchCleanup")
     couchCleanup.object = "WMCore.ReqMgr.CherryPyThreads.CouchDBCleanup.CouchDBCleanup"
+    couchCleanup.reqmgr2_url = REQMGR2_URL
     couchCleanup.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
     couchCleanup.acdc_url = "%s/%s" % (data.couch_host, data.couch_acdc_db)
     couchCleanup.acdcCleanDuration = 60 * 60 * 4 # every 4 hours
+    couchCleanup.auxCleanDuration = 60 * 60 * 12 # every 12 hours
     couchCleanup.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
     couchCleanup.workqueueCleanDuration = 60 * 60 * 12 # every 12 hours
     couchCleanup.log_file = '%s/logs/reqmgr2/couchCleanup-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
@@ -165,10 +167,10 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     # status change task 
     statusChangeTasks = extentions.section_("statusChangeTasks")
     statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
-    statusChangeTasks.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+    statusChangeTasks.reqmgr2_url = REQMGR2_URL
     statusChangeTasks.wmstats_url = "%s/wmstatsserver" % BASE_URL
     statusChangeTasks.workqueue_url = "%s/%s" % (data.couch_host, data.couch_workqueue_db)
-    statusChangeTasks.archiveDelayHours = 24 * 7 # delay the archive at least 7 days after announced
+    statusChangeTasks.archiveDelayHours = 24 * 3 # archive workflows after being for 3 days in the previous status
     statusChangeTasks.checkStatusDuration = 60 * 10  # every 10 min
     statusChangeTasks.enableMSStatusTransition = False
     statusChangeTasks.log_file = '%s/logs/reqmgr2/statusChangeTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
@@ -178,7 +180,7 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     # AuxCache update threads
     auxCacheUpdateTasks = extentions.section_("auxCacheUpdateTasks")
     auxCacheUpdateTasks.object = "WMCore.ReqMgr.CherryPyThreads.AuxCacheUpdateTasks.AuxCacheUpdateTasks"
-    auxCacheUpdateTasks.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+    auxCacheUpdateTasks.reqmgr2_url = REQMGR2_URL
     auxCacheUpdateTasks.tagCollectDuration = 60 * 60  # every 1 hour
     auxCacheUpdateTasks.tagcollect_url = "https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML"
     auxCacheUpdateTasks.tagcollect_args = {"anytype": 1, "anyarch": 1}
@@ -186,6 +188,18 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     auxCacheUpdateTasks.log_file = '%s/logs/reqmgr2/auxCacheUpdateTasks-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
     auxCacheUpdateTasks.central_logdb_url = LOG_DB_URL
     auxCacheUpdateTasks.log_reporter = LOG_REPORTER
+
+    # construct list of locked parent datasets
+    parentTask = extentions.section_("parentLock")
+    parentTask.object = "WMCore.ReqMgr.CherryPyThreads.BuildParentLock.BuildParentLock"
+    parentTask.dbs_url = data.dbs_url
+    parentTask.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
+    parentTask.reqmgr2_url = "%s/reqmgr2" % BASE_URL
+    parentTask.central_logdb_url = LOG_DB_URL
+    parentTask.log_reporter = LOG_REPORTER
+    parentTask.updateParentsInterval = 60 * 10  # every 10 minutes
+    parentTask.log_file = '%s/logs/reqmgr2/parentTask-%s-%s.log' % (
+    __file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
 
     # heartbeat monitor task
     heartbeatMonitor = extentions.section_("heartbeatMonitor")

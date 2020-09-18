@@ -8,6 +8,7 @@ deploy_exporters_deps()
 deploy_exporters_prep()
 {
   mkproj stagingarea
+  mkproxy
 }
 
 deploy_exporters_sw()

@@ -306,23 +306,63 @@ server.workspace('DQMContent', 42, 'Muons', 'CSC', '^CSC/', '',
                  'CSC/Layouts/06 Physics Efficiency - RecHits Minus',
                  'CSC/Layouts/07 Physics Efficiency - RecHits Plus',
                 )
+#server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
+#                 'GEM/Layouts/00 Global view',
+#                 'GEM/Layouts/01 recHit',
+#                )
+
+################################################################################
+# GEM workspace: start
+################################################################################
+
+GeminisId = [ i + 1 for i in range(36) ]
+GeminisIdWithTitle = [ {"chid": gid, "title": "GEMINI%02i"%gid} for gid in GeminisId ]
+listLayers = ["p1_1", "p1_2", "m1_1", "m1_2"]
+listLayersWithTitle = [ [ s, "GE%s%s%s"%("+" if s[ 0 ] == "p" else "-", s[ 1 ], s[ 3 ]) ] for s in listLayers ]
+bIsLayerWise = True
+bIsGlobalPos = True
 
 
-# GEM workspaces:
-server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
-                 'GEM/Layouts/00 StatusDigi Critical Errors',
-                 'GEM/Layouts/01 StatusDigi Warnings',
-                 'GEM/Layouts/02 GEMINI01la1',
-                 'GEM/Layouts/03 GEMINI01la2',
-                 'GEM/Layouts/04 GEMINI27la1',
-                 'GEM/Layouts/05 GEMINI27la2',
-                 'GEM/Layouts/06 GEMINI28la1',
-                 'GEM/Layouts/07 GEMINI28la2',
-                 'GEM/Layouts/08 GEMINI29la1',
-                 'GEM/Layouts/09 GEMINI29la2',
-                 'GEM/Layouts/10 GEMINI30la1',
-                 'GEM/Layouts/11 GEMINI30la2',
-)
+listGEMLayoutsPre = ["Summary", "AMC status", "GEB input status"]
+
+strTitleFmt = "%(idx)02i %(title)s_%(layer)s"
+
+
+listGEMChambers = []
+
+if bIsLayerWise: 
+  for layer in listLayersWithTitle:
+    for gemini in GeminisIdWithTitle:
+      listGEMChambers.append([gemini, layer])
+else: 
+  for gemini in GeminisIdWithTitle:
+    for layer in listLayersWithTitle:
+      listGEMChambers.append([gemini, layer])
+
+
+listGEMLayouts = [ "%02i %s"%(i, s) for i, s in enumerate(listGEMLayoutsPre) ]
+nIdx = len(listGEMLayouts)
+
+if bIsGlobalPos: 
+  for layerEntry in listLayersWithTitle: 
+    listGEMLayouts.append("%02i Global position %s"%(nIdx, layerEntry[ 1 ]))
+    nIdx += 1
+
+for itCh in listGEMChambers: 
+  gemini = itCh[ 0 ]
+  layer  = itCh[ 1 ]
+  
+  gemini[ "idx" ] = nIdx
+  gemini[ "layer" ] = layer[ 1 ] 
+  listGEMLayouts.append(strTitleFmt%gemini)
+  nIdx += 1
+
+strListGEMLayouts = ", ".join([ "'GEM/Layouts/%s'"%s for s in listGEMLayouts ])
+eval("server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '', %s)"%strListGEMLayouts)
+
+################################################################################
+# GEM workspace: end
+################################################################################
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')

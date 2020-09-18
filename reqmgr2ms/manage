@@ -36,8 +36,10 @@ LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 CFGFILETR=$CFGDIR/config-transferor.py
 CFGFILEMON=$CFGDIR/config-monitor.py
+CFGFILEOUT=$CFGDIR/config-output.py
 LOG_TRANS=ms-transferor
 LOG_MON=ms-monitor
+LOG_OUT=ms-output
 AUTHDIR=$TOP/current/auth/reqmgr2ms
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
@@ -57,11 +59,53 @@ if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]
 fi
 
 
+check4db ()
+{
+python <<EOF
+from pymongo import MongoClient, errors
+client = MongoClient('127.0.0.1', port=8230)
+try:
+    client.admin.command('ismaster')
+except errors.ConnectionFailure as ex:
+    raise ex
+EOF
+return $?
+}
+
+
+# helper function to wait for MongoDB appearance
+# it will incrementally increase waiting time with 20 iterations (~3minute)
+wait4db() {
+    local counter=0
+    # check if mongodb is running
+    while [  $counter -lt 20 ]; do
+        check4db && break
+        let counter=counter+1
+        echo "MongoDB is not running, check in $counter sec"
+        sleep $counter
+    done
+    check4db || {
+        echo "MongoDB is not running, unable to start MicroServices server"
+        exit 1
+        }
+}
+
+
 # Start service conditionally on crond restart.
 sysboot()
 {
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
+  if [ -f $CFGFILETR ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    # Check for MongoDB before starting MicroServices:
+    wait4db
+
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
+  fi
 }
 
 
@@ -69,8 +113,18 @@ sysboot()
 start()
 {
   echo "starting $ME"
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
-  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
+  if [ -f $CFGFILETR ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_TRANS-%Y%m%d-`hostname -s`.log 86400" $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_MON-%Y%m%d-`hostname -s`.log 86400" $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    # Check for MongoDB before starting MicroServices:
+    wait4db
+
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
+  fi
 }
 
 
@@ -78,16 +132,30 @@ start()
 stop()
 {
   echo "stopping $ME"
-  wmc-httpd -k -d $STATEDIR $CFGFILETR
-  wmc-httpd -k -d $STATEDIR $CFGFILEMON
+  if [ -f $CFGFILETR ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILEOUT
+  fi
 }
 
 
 # Check if the server is running.
 status()
 {
-  wmc-httpd -s -d $STATEDIR $CFGFILETR
-  wmc-httpd -s -d $STATEDIR $CFGFILEMON
+  if [ -f $CFGFILETR ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILETR
+  fi
+  if [ -f $CFGFILEMON ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILEMON
+  fi
+  if [ -f $CFGFILEOUT ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILEOUT
+  fi
 }
 
 

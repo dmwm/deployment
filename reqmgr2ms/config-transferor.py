@@ -17,15 +17,18 @@ LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2ms_transferor"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
+if BASE_URL == "https://cmsweb.cern.ch":
+    RULE_LIFETIME=None
+    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
+    RUCIO_URL="http://cms-rucio.cern.ch"
+else:
+    RULE_LIFETIME=24 * 60 * 60  # 24h
+    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
+    RUCIO_URL="http://cmsrucio-int.cern.ch"
 
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
-
-if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_ACCT = "wma_prod"
-else:
-    RUCIO_ACCT="wma_test"
 
 config = Configuration()
 
@@ -72,16 +75,28 @@ data.enableDataTransfer = True
 data.verbose = True
 data.interval = 600
 data.services = ['transferor']
-data.quotaUsage = 0.8
+data.quotaUsage = 0.9
 data.quotaAccount = "DataOps"
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
-data.rucioAccount = RUCIO_ACCT
+data.useRucio = False
+data.rulesLifetime = RULE_LIFETIME
+data.rucioAccount = "wmcore_transferor"
+data.rucioAuthUrl = RUCIO_AUTH_URL
+data.rucioUrl = RUCIO_URL
 data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
+data.toAddr = ["alan.malta@cern.ch", "todor.trendafilov.ivanov@cern.ch", "kenyi.paolo.hurtado.anampa@cern.ch"]
+data.warningTransferThreshold = 100. * (1000 ** 4) # 100 TB (terabyte)
 # if private_vm, just fallback to preprod DBS
 if DBS_INS == "private_vm":
     data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
 else:
     data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
+# if production CMSWEB, set PhEDEx settings to also auto-approve requests
+# make it based on DBS_INS to avoid hard links in multiple places
+if DBS_INS == "prod":
+    data.phedexRequestOnly = False
+else:
+    data.phedexRequestOnly = True
 
 # heartbeat monitor task
 extentions = config.section_("extensions")

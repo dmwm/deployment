@@ -80,6 +80,8 @@ extentions = config.section_("extensions")
 # wmstats data cache update (This need to be updated for all backend since this is memory cache)
 dataCacheTasks = extentions.section_("dataCacheTasks")
 dataCacheTasks.object = "WMCore.WMStats.CherryPyThreads.DataCacheUpdate.DataCacheUpdate"
+
+dataCacheTasks.getJobInfo = True  # False to not get job-level information from wmstats
 dataCacheTasks.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 dataCacheTasks.reqmgrdb_url = "%s/%s" % (data.couch_host, data.couch_reqmgr_db)
 dataCacheTasks.dataCacheUpdateDuration = 60 * 5 # every 5 min
@@ -88,7 +90,7 @@ dataCacheTasks.central_logdb_url = LOG_DB_URL
 dataCacheTasks.log_reporter = "%s-%s" % (LOG_REPORTER, HOST)
 
 # Production/testbed instance of logdb, must be a production/testbed back-end
-if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0743") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
     
     # LogDB task (update and clean up)
     logDBTasks = extentions.section_("logDBTasks")

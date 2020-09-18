@@ -5,6 +5,7 @@ deploy_reqmgr2ms_deps()
 {
   deploy $stage backend
   deploy $stage wmcore-auth
+  deploy $stage mongodb
 }
 
 deploy_reqmgr2ms_prep()
@@ -25,8 +26,8 @@ deploy_reqmgr2ms_sw()
   else :; fi
 
   # use rucio testbed for anything that is not production
-  rucio_host_url=http://cms-rucio-int.cern.ch
-  rucio_auth_url=https://cms-rucio-auth-int.cern.ch
+  rucio_host_url=http://cmsrucio-int.cern.ch
+  rucio_auth_url=https://cmsrucio-auth-int.cern.ch
   case $variant in
     prod )
         base_url="https://cmsweb.cern.ch"
@@ -53,6 +54,9 @@ deploy_reqmgr2ms_sw()
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
                  s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
        $root/$cfgversion/config/$project/config-monitor.py
+  perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g; \
+                 s{\"\@\@DBS_INS\@\@\"}{\"$dbs_ins\"}g"   \
+       $root/$cfgversion/config/$project/config-output.py
 
   # setup rucio configuration file
   mkdir -p $root/$cfgversion/config/$project/etc
@@ -66,7 +70,7 @@ deploy_reqmgr2ms_post()
 {
   # in practice, enabled on private VMs, vocms0731 (preprod) and vocms0742 (prod)
   case $host in
-    vocms013[2689] | vocms073[89] | vocms074[0134] | vocms016[135] | vocms0766 )
+    vocms013[2689] | vocms073[89] | vocms074[013456] | vocms016[135] | vocms0766 )
       disable;;
     * )
       enable;;

@@ -9,7 +9,7 @@ except:
   print >> sys.stderr, "Data is not a valid json."
   raise
 
-if set(d.keys()) != set(["default", "dev", "preprod", "prod"]):
+if set(d.keys()) != set(["default", "dev", "preprod", "prod", "k8s", "k8s-dev"]):
   print >> sys.stderr, "Must have configuration for default, dev, preprod and prod, nothing else."
   sys.exit(1)
 for v in d.values():
@@ -27,6 +27,10 @@ for v in d.values():
   elif sys.argv[1] == "reader&writer":
     if set(v.keys()) != set(["DBSReader", "DBSWriter"]):
       print >> sys.stderr, "Must have view names for 'DBSReader'and 'DBSWriter', nothing else."
+      sys.exit(1)
+  elif sys.argv[1] == "migrate":
+    if set(v.keys()) != set(["DBSMigrate"]):
+      print >> sys.stderr, "Must have view names for 'DBSReader', 'DBSWriter' and 'DBSMigrate', nothing else."
       sys.exit(1)
   else:
     if set(v.keys()) != set(["DBSReader", "DBSWriter", "DBSMigrate"]):
