@@ -209,6 +209,7 @@ server.workspace('DQMContent', 63, 'POG', 'Btag', '^Btag/', '',
                  'Btag/Layouts/04 - Discriminator Summary',
                  'Btag/Layouts/05 - 2D-Impact Parameter',
                  'Btag/Layouts/06 - 3D-Impact Parameter',
+                 'Btag/Layouts/07 - ROC Curves',
                 )
 
 server.workspace('DQMContent', 64, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonitor|OfflinePV)/', '',
