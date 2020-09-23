@@ -19,5 +19,6 @@
     "updateDNs": 60,
     "dasexamples": "/data/srv/state/das",
     "timeout": 180,
+    "useDNSCache": true,
     "verbose": 0
 }
