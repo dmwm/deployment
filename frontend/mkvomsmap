@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 """ mkvomsmap -o OUTPUT --cert CERT --key KEY [--vo VONAME]
-                  [-c CONFIG-FILE] [URI...]
+                  [-c CONFIG-FILE] [--git-token-path GIT_TOKEN] [URI...]
 
 Queries VOMS for member data and writes out a gridmap file into OUTPUT
 as VONAME memberships (default: 'cms'). The CERT and KEY should normally
 be the host certificate and key, respectively. Queries all given URIs
 and combines all their results into one combined output list.
+
+Users who's DNs appear in the blacklist file are not included in the output.
+The blacklist file is maintained and hosted in GitLab and in order to access
+it a valid path with a file including the GIT_TOKEN must be provided.
 
 The output file is written in a manner which guarantees it will not be
 removed or truncated in case of a failure, however it may disappear for
@@ -17,10 +21,11 @@ The URIs should be of the form:
   vomss://voms2.cern.ch:8443/voms/cms?/cms
 
 If CONFIG-FILE is given, it's assumed to consist of lines in format
-'group URI VONAME', compatible with edg-mkgridmap. The VONAME given
-in CONFIG-FILE must match the value given with --vo option."""
+'group URI VONAME', compatible with edg-mkgridmap, and a line in format
+'gitlab URL' to provide the url of the blacklist file.
+The VONAME given in CONFIG-FILE must match the value given with --vo option."""
 
-import sys, re, urllib2, httplib, os, os.path
+import sys, re, urllib2, httplib, os, os.path, traceback
 from xml.sax import saxutils, handler as sax_handler, parseString
 from urlparse import urlsplit, urlunparse
 from optparse import OptionParser
@@ -96,6 +101,7 @@ opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration 
 opt.add_option("--cert", dest="cert", metavar="FILE", help="certificate file")
 opt.add_option("--key", dest="key", metavar="FILE", help="private key file")
 opt.add_option("--vo", dest="vo", default="cms", metavar="NAME", help="VO name")
+opt.add_option("--git-token-path", dest="git_token_path", default="", metavar="NAME", help="path of file containing GitLab access token")
 opts, args = opt.parse_args()
 
 if not opts.key or not os.path.exists(opts.key):
@@ -113,18 +119,33 @@ if not opts.out:
 # Any remaining command line arguments are URIs to process. If we were given
 # a configuration file, parse it too and add to the URI list.
 uris = args
+gitlab_url = ''
 if opts.conf:
   nline = 0
   for line in open(opts.conf, "r"):
     nline += 1
     m = re.match(r"^group (vomss?:\S+) (\S+)$", line)
-    if not m:
+    n = re.match(r"^gitlab (https?:\S+)$", line)
+    if not m and not n:
       print "%s: %d: line not understood" % (opts.conf, nline)
       sys.exit(1)
-    if m.group(2) != opts.vo:
-      print "%s: %d: vo %s differs from expected %s" % (m.group(2), opts.vo)
-      sys.exit(1)
-    uris.append(m.group(1))
+    if m:
+      if m.group(2) != opts.vo:
+        print "%s: %d: vo %s differs from expected %s" % (m.group(2), opts.vo)
+        sys.exit(1)
+      uris.append(m.group(1))
+    if n:
+      with open(opts.git_token_path) as f:
+        token = f.read()
+        gitlab_url = n.group(1) + '&access_token=' + token
+
+
+try:
+  blacklisted_dns = urllib2.urlopen(gitlab_url).read().split('\n')
+except Exception:
+  blacklisted_dns = []
+  print('List of blacklisted DNs couldn\'t be fetched from GitLab.')
+  traceback.print_exc()
 
 # Fetch VOMS membership info. Combine all of them into single set of users.
 users = set()
@@ -136,7 +157,10 @@ for uri in uris:
 # wiping out the file in case the disk fills up or some other error occurs.
 fd, tmpname = mkstemp(dir = os.path.dirname(opts.out))
 outfile = os.fdopen(fd, "w")
+# Iterate over voms data. `users` is a list of user DNs.
 for user in users:
+  if user in blacklisted_dns:
+    continue
   print >> outfile, '"%s" %s' % (user, opts.vo)
 outfile.close()
 os.chmod(tmpname, 0666 & ~myumask)
