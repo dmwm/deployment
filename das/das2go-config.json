@@ -19,6 +19,7 @@
     "updateDNs": 60,
     "dasexamples": "/data/srv/state/das",
     "timeout": 180,
+    "logFile": "/data/srv/logs/das/das.log",
     "useDNSCache": true,
     "verbose": 0
 }
