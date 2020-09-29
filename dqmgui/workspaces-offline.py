@@ -187,6 +187,19 @@ server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')
 
 server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
 
+server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
+                 "GEM/Layouts/01 DIGI Occupancy",
+                 "GEM/Layouts/02 RecHit Occupancy",
+                 "GEM/Layouts/03 Efficiency - Tight GLB Muon",
+                 "GEM/Layouts/04 Efficiency - STA Muon",
+                 "GEM/Layouts/05 Efficiency vs Tight GLB Muon PT",
+                 "GEM/Layouts/06 Efficiency vs STA Muon PT",
+                 "GEM/Layouts/07 Efficiency vs Tight GLB Muon Eta",
+                 "GEM/Layouts/08 Efficiency vs STA Muon Eta",
+                 "GEM/Layouts/09 Phi Residual - Tight GLB Muon",
+                 "GEM/Layouts/10 Phi Residual - STA Muon",
+                )
+
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')
 server.workspace('DQMContent', 51, 'CTPPS', 'TrackingPixel', '^CTPPS/(TrackingPixel|common)/', 'CTPPS/TrackingPixel/Layouts')
