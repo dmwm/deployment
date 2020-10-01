@@ -135,17 +135,20 @@ if opts.conf:
         sys.exit(1)
       uris.append(m.group(1))
     if n:
-      with open(opts.git_token_path) as f:
-        token = f.read()
-        gitlab_url = n.group(1) + '&access_token=' + token
+      try:
+        with open(opts.git_token_path) as f:
+          token = f.read()
+          gitlab_url = n.group(1) + '&access_token=' + token
+      except IOError:
+        print "Reading error at %s. Wrong path defined or file doesn't exist." % opts.git_token_path
 
-
-try:
-  blacklisted_dns = urllib2.urlopen(gitlab_url).read().split('\n')
-except Exception:
-  blacklisted_dns = []
-  print('List of blacklisted DNs couldn\'t be fetched from GitLab.')
-  traceback.print_exc()
+blacklisted_dns = []
+if gitlab_url:
+  try:
+    blacklisted_dns = urllib2.urlopen(gitlab_url).read().split('\n')
+  except Exception:
+    print('List of blacklisted DNs couldn\'t be fetched from GitLab.')
+    traceback.print_exc()
 
 # Fetch VOMS membership info. Combine all of them into single set of users.
 users = set()
