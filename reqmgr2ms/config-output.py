@@ -97,6 +97,8 @@ data.enableDataPlacement = False
 data.enableRelValCustodial = False
 data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
 data.rucioRSEAttribute = "ddm_quota"
+# FIXME: remove T0 Tape once CTA is ready to receive output data placement
+data.rucioTapeExpression = "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
 data.useRucio = False
 data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = RUCIO_ACCT
