@@ -28,10 +28,12 @@ if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
     SEND_NOTIFICATION=True
+    ENABLE_DATA_PLACEMENT=True
 else:
     RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
     RUCIO_URL="http://cmsrucio-int.cern.ch"
     SEND_NOTIFICATION=False
+    ENABLE_DATA_PLACEMENT=False
 
 config = Configuration()
 
@@ -93,7 +95,7 @@ data.tapePledges = {"T0_CH_CERN_MSS": 99000,
                     "T1_UK_RAL_MSS": 17600,
                     "T1_RU_JINR_MSS": 10000 + 1100,
                     "T1_ES_PIC_MSS": 8800}
-data.enableDataPlacement = False
+data.enableDataPlacement = ENABLE_DATA_PLACEMENT
 data.enableRelValCustodial = False
 data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
 data.rucioRSEAttribute = "ddm_quota"
