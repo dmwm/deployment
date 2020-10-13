@@ -22,7 +22,7 @@ AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
-RUCIO_ACCT = "wmcore_transferor"
+RUCIO_ACCT = "wmcore_output"
 RULE_LIFETIME = 30 * 24 * 60 * 60  # 30 days
 if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
