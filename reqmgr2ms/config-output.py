@@ -97,8 +97,9 @@ data.tapePledges = {"T0_CH_CERN_MSS": 99000,
                     "T1_ES_PIC_MSS": 8800}
 data.enableDataPlacement = ENABLE_DATA_PLACEMENT
 data.enableRelValCustodial = False
-data.excludeDataTier = ['NANOAOD', 'NANOAODSIM']
+data.excludeDataTier = []
 data.rucioRSEAttribute = "ddm_quota"
+data.rucioDiskRuleWeight = "ddm_quota"
 # FIXME: remove T0 Tape once CTA is ready to receive output data placement
 data.rucioTapeExpression = "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
 data.useRucio = True
