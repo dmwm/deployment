@@ -649,6 +649,213 @@ pixellayout(dqmitems, "38 - PixelPhase1 Residuals",
       'draw': { 'withref': "no" }}]
    )
 
+pixellayout(dqmitems, "38aa - Residuals x per Layer",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_PXLayer_1",
+      'description': "Track residuals x in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_PXLayer_2",
+      'description': "Track residuals x in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_PXLayer_3",
+      'description': "Track residuals x in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_PXLayer_4",
+      'description': "Track residuals x in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38ab - Residuals y per Layer",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_PXLayer_1",
+      'description': "Track residuals y in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_PXLayer_2",
+      'description': "Track residuals y in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_PXLayer_3",
+      'description': "Track residuals y in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_PXLayer_4",
+      'description': "Track residuals y in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38ba - Profile Residuals x PXBarrel",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_per_SignedModule_per_SignedLadder_PXLayer_1",
+      'description': "Mean track residuals x in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_per_SignedModule_per_SignedLadder_PXLayer_2",
+      'description': "Mean track residuals x in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_per_SignedModule_per_SignedLadder_PXLayer_3",
+      'description': "Mean track residuals x in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_x_per_SignedModule_per_SignedLadder_PXLayer_4",
+      'description': "Mean track residuals x in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38bb - Profile Residuals y PXBarrel",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_per_SignedModule_per_SignedLadder_PXLayer_1",
+      'description': "Mean track residuals y in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_per_SignedModule_per_SignedLadder_PXLayer_2",
+      'description': "Mean track residuals y in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_per_SignedModule_per_SignedLadder_PXLayer_3",
+      'description': "Mean track residuals y in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_y_per_SignedModule_per_SignedLadder_PXLayer_4",
+      'description': "Mean track residuals y in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38ca - Mean Residuals x inner Modules per Layer",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Inner_PXLayer_1",
+      'description': "Mean track residuals x for inner Modules in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Inner_PXLayer_2",
+      'description': "Mean track residuals x for inner Modules in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Inner_PXLayer_3",
+      'description': "Mean track residuals x for inner Modules in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Inner_PXLayer_4",
+      'description': "Mean track residuals x for inner Modules in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38cb - Mean Residuals x outer Modules per Layer",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Outer_PXLayer_1",
+      'description': "Mean track residuals x for outer Modules in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Outer_PXLayer_2",
+      'description': "Mean track residuals x for outer Modules in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Outer_PXLayer_3",
+      'description': "Mean track residuals x for outer Modules in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_x_Outer_PXLayer_4",
+      'description': "Mean track residuals x for outer Modules in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38cc - Mean Residuals y inner Modules per Layer",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Inner_PXLayer_1",
+      'description': "Mean track residuals y for inner Modules in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Inner_PXLayer_2",
+      'description': "Mean track residuals y for inner Modules in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Inner_PXLayer_3",
+      'description': "Mean track residuals y for inner Modules in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Inner_PXLayer_4",
+      'description': "Mean track residuals y for inner Modules in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38cd - Mean Residuals y outer Modules per Layer",
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Outer_PXLayer_1",
+      'description': "Mean track residuals y for outer Modules in PXBarrel Layer 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Outer_PXLayer_2",
+      'description': "Mean track residuals y for outer Modules in PXBarrel Layer 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Outer_PXLayer_3",
+      'description': "Mean track residuals y for outer Modules in PXBarrel Layer 3",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXBarrel/residual_mean_y_Outer_PXLayer_4",
+      'description': "Mean track residuals y for outer Modules in PXBarrel Layer 4",
+      'draw': { 'withref': "no" }},]
+   )
+   
+pixellayout(dqmitems, "38da - Residuals x per Disk",
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_x_PXDisk_+1",
+      'description': "Track residuals x in PXForward Disk +1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_x_PXDisk_+2",
+      'description': "Track residuals x in PXForward Disk +2",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_x_PXDisk_+3",
+      'description': "Track residuals x in PXForward Disk +3",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_x_PXDisk_-1",
+      'description': "Track residuals x in PXForward Disk -1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_x_PXDisk_-2",
+      'description': "Track residuals x in PXForward Disk -2",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_x_PXDisk_-3",
+      'description': "Track residuals x in PXForward Disk -3",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38db - Residuals y per Disk",
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_y_PXDisk_+1",
+      'description': "Track residuals y in PXForward Disk +1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_y_PXDisk_+2",
+      'description': "Track residuals y in PXForward Disk +2",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_y_PXDisk_+3",
+      'description': "Track residuals y in PXForward Disk +3",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_y_PXDisk_-1",
+      'description': "Track residuals y in PXForward Disk -1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_y_PXDisk_-2",
+      'description': "Track residuals y in PXForward Disk -2",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_y_PXDisk_-3",
+      'description': "Track residuals y in PXForward Disk -3",
+      'draw': { 'withref': "no" }},]
+   )
+   
+pixellayout(dqmitems, "38e - Profile Residuals PXFoward",
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_x_per_PXDisk_per_SignedBladePanel_PXRing_1",
+      'description': "Mean track residuals x in PXFoward Ring 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_x_per_PXDisk_per_SignedBladePanel_PXRing_2",
+      'description': "Mean track residuals x in PXFoward Ring 2",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_y_per_PXDisk_per_SignedBladePanel_PXRing_1",
+      'description': "Mean track residuals y in PXFoward Ring 1",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_y_per_PXDisk_per_SignedBladePanel_PXRing_2",
+      'description': "Mean track residuals y in PXFoward Ring 2",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38fa - Mean Residuals InnerOuter Modules PXForward",
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_mean_x_Inner",
+      'description': "Mean track residuals x for inner Modules in PXFoward",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_mean_x_Outer",
+      'description': "Mean track residuals x for inner Modules in PXFoward",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_mean_y_Inner",
+      'description': "Mean track residuals y for inner Modules in PXFoward",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_mean_y_Outer",
+      'description': "Mean track residuals y for inner Modules in PXFoward",
+      'draw': { 'withref': "no" }},]
+   )
+
+pixellayout(dqmitems, "38fb - Mean Residuals pos.neg. Side PXForward",
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_mean_x_pos",
+      'description': "Mean track residuals x for pos. Side in PXFoward",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_mean_x_neg",
+      'description': "Mean track residuals x for neg. Side in PXFoward",
+      'draw': { 'withref': "no" }},],
+   [{ 'path': "PixelPhase1/Tracks/PXForward/residual_mean_y_pos",
+      'description': "Mean track residuals y for pos. Side in PXFoward",
+      'draw': { 'withref': "no" }},
+    { 'path': "PixelPhase1/Tracks/PXForward/residual_mean_y_neg",
+      'description': "Mean track residuals y for neg. Side in PXFoward",
+      'draw': { 'withref': "no" }},]
+   )
+
 
 pixellayout(dqmitems, "39a - ClusterSize Vs Eta (OnTrack) inner",
   [{ 'path': "PixelPhase1/Tracks/PXBarrel/sizeyvseta_on_track_inner_PXLayer_1",

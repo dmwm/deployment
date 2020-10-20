@@ -32,7 +32,7 @@ public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
       if ((o.name.find( "PixelPhase1/Phase1_MechanicalView" ) != std::string::npos || o.name.find( "PixelPhase1/Tracks" ) != std::string::npos || o.name.find( "PixelPhase1/FED" ) != std::string::npos || o.name.find( "PixelPhase1Timing/" ) != std::string::npos  || o.name.find("PixelPhase1/SiPixelQualityPCL") != std::string::npos)
-        && o.object && o.name.find( "Coord" ) != std::string::npos ) {
+        && o.object && (o.name.find( "Coord" ) != std::string::npos || o.name.find( "per_SignedModule_per_SignedLadder" ) != std::string::npos || o.name.find( "per_PXDisk_per_SignedBlade" ) != std::string::npos )) {
         return true;
       } else {
         return false;
@@ -79,6 +79,15 @@ public:
       if (w == 78 && h == 250) dress_occup_plot(obj, 0, 0, 0);
 
       //std::cout << "+++ if (w == " << w << " && h == " << h << ")\n";
+      
+      // Phase1, Layer 1-4 (Maps without coordinates)
+      if (w == 9 && h ==  13) dress_occup_plot(obj, 1, 0, 1,1,0);
+      if (w == 9 && h ==  29) dress_occup_plot(obj, 2, 0, 1,1,0);
+      if (w == 9 && h ==  45) dress_occup_plot(obj, 3, 0, 1,1,0);
+      if (w == 9 && h ==  65) dress_occup_plot(obj, 4, 0, 1,1,0);
+      // Phase1 FPIX Ring 1-2 (Maps without coordinates)
+      if (w == 7 && h ==  46) dress_occup_plot(obj, 0, 1, 1,1,0);
+      if (w == 7 && h ==  70) dress_occup_plot(obj, 0, 2, 1,1,0);
 
     }
 
@@ -230,20 +239,22 @@ private:
                   draw_line(x,  x,  y2,  y3, 1, 1, p2_color);
                 }
                 // Make a BOX around ROC 0
-                x1          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5 - 1/16.);
-                x2          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5);
-                float y1_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25);
-                float y2_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25 + xsign*ysign*0.25);
-                draw_line(x1, x2, y1_p1, y1_p1, 1);
-                //draw_line(x1, x2, y2_p1, y2_p1, 1);
-                draw_line(x1, x1, y1_p1, y2_p1, 1);
-                //draw_line(x2, x2, y1_p1, y2_p1, 1);
-                float y1_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25);
-                float y2_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25 - xsign*ysign*0.25);
-                draw_line(x1, x2, y1_p2, y1_p2, 1);
-                //draw_line(x1, x2, y2_p2, y2_p2, 1);
-                draw_line(x1, x1, y1_p2, y2_p2, 1);
-                //draw_line(x2, x2, y1_p2, y2_p2, 1);
+                if (mark_zero) {
+                  x1          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5 - 1/16.);
+                  x2          = xsign * (half_shift*0.5 + dsk - 1 + ring*0.5);
+                  float y1_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25);
+                  float y2_p1 = ysign * (half_shift*0.5 - 0.5 + scale*bld + sign*0.25 + xsign*ysign*0.25);
+                  draw_line(x1, x2, y1_p1, y1_p1, 1);
+                  //draw_line(x1, x2, y2_p1, y2_p1, 1);
+                  draw_line(x1, x1, y1_p1, y2_p1, 1);
+                  //draw_line(x2, x2, y1_p1, y2_p1, 1);
+                  float y1_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25);
+                  float y2_p2 = ysign * (half_shift*0.5 - 0.5 + scale*bld - sign*0.25 - xsign*ysign*0.25);
+                  draw_line(x1, x2, y1_p2, y1_p2, 1);
+                  //draw_line(x1, x2, y2_p2, y2_p2, 1);
+                  draw_line(x1, x1, y1_p2, y2_p2, 1);
+                  //draw_line(x2, x2, y1_p2, y2_p2, 1);
+                }
               }
             } else { // only one ring, 1 or 2
               for (int bld=1, nbld=5+ring*6; bld<=nbld; ++bld) {
@@ -274,20 +285,22 @@ private:
                   draw_line(x,  x,  y2,  y3, 1, 1, p2_color);
                 }
                 // Make a BOX around ROC 0
-                x1          = xsign * (half_shift*0.5 + dsk - 1/8.);
-                x2          = xsign * (half_shift*0.5 + dsk);
-                float y1_p1 = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.25);
-                float y2_p1 = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.25 + xsign*ysign*0.25);
-                draw_line(x1, x2, y1_p1, y1_p1, 1);
-                //draw_line(x1, x2, y2_p1, y2_p1, 1);
-                draw_line(x1, x1, y1_p1, y2_p1, 1);
-                //draw_line(x2, x2, y1_p1, y2_p1, 1);
-                float y1_p2 = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.25);
-                float y2_p2 = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.25 - xsign*ysign*0.25);
-                draw_line(x1, x2, y1_p2, y1_p2, 1);
-                //draw_line(x1, x2, y2_p2, y2_p2, 1);
-                draw_line(x1, x1, y1_p2, y2_p2, 1);
-                //draw_line(x2, x2, y1_p2, y2_p2, 1);
+                if (mark_zero) {
+                  x1          = xsign * (half_shift*0.5 + dsk - 1/8.);
+                  x2          = xsign * (half_shift*0.5 + dsk);
+                  float y1_p1 = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.25);
+                  float y2_p1 = ysign * (half_shift*0.5 - 0.5 + bld + sign*0.25 + xsign*ysign*0.25);
+                  draw_line(x1, x2, y1_p1, y1_p1, 1);
+                  //draw_line(x1, x2, y2_p1, y2_p1, 1);
+                  draw_line(x1, x1, y1_p1, y2_p1, 1);
+                  //draw_line(x2, x2, y1_p1, y2_p1, 1);
+                  float y1_p2 = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.25);
+                  float y2_p2 = ysign * (half_shift*0.5 - 0.5 + bld - sign*0.25 - xsign*ysign*0.25);
+                  draw_line(x1, x2, y1_p2, y1_p2, 1);
+                  //draw_line(x1, x2, y2_p2, y2_p2, 1);
+                  draw_line(x1, x1, y1_p2, y2_p2, 1);
+                  //draw_line(x2, x2, y1_p2, y2_p2, 1);
+                }
               }
             }
           }
