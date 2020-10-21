@@ -37,9 +37,11 @@ STATEDIR=$TOP/state/$ME
 CFGFILETR=$CFGDIR/config-transferor.py
 CFGFILEMON=$CFGDIR/config-monitor.py
 CFGFILEOUT=$CFGDIR/config-output.py
+CFGFILERCLEAN=$CFGDIR/config-ruleCleaner.py
 LOG_TRANS=ms-transferor
 LOG_MON=ms-monitor
 LOG_OUT=ms-output
+LOG_RCLEAN=ms-rulecleaner
 AUTHDIR=$TOP/current/auth/reqmgr2ms
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
@@ -106,6 +108,9 @@ sysboot()
 
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
   fi
+  if [ -f $CFGFILERCLEAN ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_RCLEAN-%Y%m%d-`hostname -s`.log 86400" $CFGFILERCLEAN
+  fi
 }
 
 
@@ -125,6 +130,9 @@ start()
 
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_OUT-%Y%m%d-`hostname -s`.log 86400" $CFGFILEOUT
   fi
+  if [ -f $CFGFILERCLEAN ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_RCLEAN-%Y%m%d-`hostname -s`.log 86400" $CFGFILERCLEAN
+  fi
 }
 
 
@@ -141,6 +149,9 @@ stop()
   if [ -f $CFGFILEOUT ]; then
     wmc-httpd -k -d $STATEDIR $CFGFILEOUT
   fi
+  if [ -f $CFGFILERCLEAN ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILERCLEAN
+  fi
 }
 
 
@@ -155,6 +166,9 @@ status()
   fi
   if [ -f $CFGFILEOUT ]; then
     wmc-httpd -s -d $STATEDIR $CFGFILEOUT
+  fi
+  if [ -f $CFGFILERCLEAN ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILERCLEAN
   fi
 }
 
