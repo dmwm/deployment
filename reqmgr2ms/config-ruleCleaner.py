@@ -23,17 +23,12 @@ sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
 RUCIO_ACCT = "wma_prod"
-RULE_LIFETIME = 30 * 24 * 60 * 60  # 30 days
 if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
-    SEND_NOTIFICATION=True
-    ENABLE_DATA_PLACEMENT=True
 else:
     RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
     RUCIO_URL="http://cmsrucio-int.cern.ch"
-    SEND_NOTIFICATION=False
-    ENABLE_DATA_PLACEMENT=False
 
 config = Configuration()
 
@@ -75,13 +70,9 @@ data.couch_wmstats_db = "wmstats"
 data.manager = 'WMCore.MicroService.Unified.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.limitRequestsPerCycle = 500
-# Allows or not some alert notifications to be sent to the production-admin egroup
-data.sendNotification = SEND_NOTIFICATION
 data.verbose = True
-data.interval = 60 * 60 * 1  # run it every hour
+data.interval = 60 * 60 * 8  # run it every 8 hours
 data.services = ['ruleCleaner']
-data.defaultGroup = "DataOps"
-data.excludeDataTier = []
 data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL

@@ -25,6 +25,7 @@
 ^/auth/complete/ms-transferor(?:/|$) vocms0742.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) vocms0742.cern.ch
 ^/auth/complete/ms-output(?:/|$) vocms0742.cern.ch
+^/auth/complete/ms-rulecleaner(?:/|$) vocms0742.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
