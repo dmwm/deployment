@@ -167,6 +167,8 @@ reqmgr2ms_monitors()
         </dev/null 2>&1 | rotatelogs $LOGDIR/ms-monitor_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
     process_monitor.sh /data/srv/state/reqmgr2ms/ms-output.pid ms_output ":18245" 15 \
         </dev/null 2>&1 | rotatelogs $LOGDIR/ms-output_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+    process_monitor.sh /data/srv/state/reqmgr2ms/ms-rulecleaner.pid ms_rulecleaner ":18244" 15 \
+        </dev/null 2>&1 | rotatelogs $LOGDIR/ms-rulecleaner_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
 
 wma_monitors()
