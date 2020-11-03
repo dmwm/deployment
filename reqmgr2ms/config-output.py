@@ -24,6 +24,7 @@ from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
 RUCIO_ACCT = "wmcore_output"
 RULE_LIFETIME = 30 * 24 * 60 * 60  # 30 days
+RULE_LIFETIME_RELVAL = 12 * 30 * 24 * 60 * 60  # 12 months
 if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
@@ -104,6 +105,7 @@ data.rucioDiskRuleWeight = "ddm_quota"
 data.rucioTapeExpression = "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
 data.useRucio = True
 data.rulesLifetime = RULE_LIFETIME
+data.ruleLifetimeRelVal = RULE_LIFETIME_RELVAL
 data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
