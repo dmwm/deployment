@@ -37,6 +37,7 @@
 ^/auth/complete/ms-transferor(?:/|$) vocms0731.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) vocms0731.cern.ch
 ^/auth/complete/ms-output(?:/|$) vocms0731.cern.ch
+^/auth/complete/ms-rulecleaner(?:/|$) vocms0731.cern.ch	
 ^/auth/complete/t0wmadatasvc(?:/|$) t0wmadatasvc.tzero.svc.cluster.local
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
