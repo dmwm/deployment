@@ -73,7 +73,7 @@ dataCacheTasks.log_file = '%s/logs/t0_reqmon/dataCacheTasks-%s-%s.log' % (__file
 # Production/testbed instance of logdb, must be a production/testbed back-end
 # Disable CherryPy thread tasks from testbed (vocms0731), as this will be started
 # from k8s and only one cherrypy instance can be run at a time to avoid issues with CouchDB
-if HOST.startswith("vocms0744") or HOST.startswith("vocms0117") or HOST.startswith("vocms0127"):
+if HOST.startswith("vocms0744") or HOST.startswith("vocms0117"):
     
     # LogDB task (update and clean up)
     logDBTasks = extentions.section_("logDBTasks")
