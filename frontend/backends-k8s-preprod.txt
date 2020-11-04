@@ -1,5 +1,4 @@
-^/auth/complete/t0_reqmon(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
-^/auth/complete/reqmon(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
+^/auth/complete/t0_reqmon(?:/|$) t0reqmon.tzero.svc.cluster.local 
 ^/auth/complete/reqmgr2(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
@@ -22,16 +21,23 @@
 ^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0731.cern.ch :affinity
 ^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0731.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0132.cern.ch :affinity
-^/auth/complete/crabcache(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/crabcache(?:/|$) crabcache.crab.svc.cluster.local
+^/auth/complete/crabserver(?:/|$) crabserver.crab.svc.cluster.local
+^/auth/complete/dbs/(?:int/global/DBSMigrate|prod/global/DBSMigrate|dev/global/DBSMigrate)(?:/|$) dbs-migrate.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/global/DBSReader|prod/global/DBSReader|dev/global/DBSReader)(?:/|$) dbs-global-r.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/global/DBSWriter|prod/global/DBSWriter|dev/global/DBSWriter)(?:/|$) dbs-global-w.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/phys03/DBSReader|prod/phys03/DBSReader|dev/phys03/DBSReader)(?:/|$) dbs-phys03-r.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/phys03/DBSWriter|prod/phys03/DBSWriter|dev/phys03/DBSWriter)(?:/|$) dbs-phys03-w.dbs.svc.cluster.local
 ^/auth/complete/confdb(?:/|$) vocms0731.cern.ch|vocms0132.cern.ch
-^/auth/complete/wmstatsserver(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/wmarchive(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/wmstatsserver(?:/|$) reqmon.dmwm.svc.cluster.local
+^/auth/complete/das(?:/|$) das-server.das.svc.cluster.local
+^/auth/complete/das2go(?:/|$) das-server.das.svc.cluster.local
+^/auth/complete/wmarchive(?:/|$) wmarchive.wma.svc.cluster.local
+^/auth/complete/exitcodes(?:/|$) exitcodes.http.svc.cluster.local
 ^/auth/complete/ms-transferor(?:/|$) vocms0731.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) vocms0731.cern.ch
 ^/auth/complete/ms-output(?:/|$) vocms0731.cern.ch
-^/auth/complete/ms-rulecleaner(?:/|$) vocms0731.cern.ch
+^/auth/complete/t0wmadatasvc(?:/|$) t0wmadatasvc.tzero.svc.cluster.local
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
@@ -52,6 +58,5 @@
 ^/auth/complete/scheddmon/0197/ vocms0197.cern.ch
 ^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
-^/auth/complete/httpgo(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/httpsgo(?:/|$) cmsweb-srv.cern.ch
-^ cmsweb-srv.cern.ch
+^/auth/complete/httpgo(?:/|$) httpgo.http.svc.cluster.local
+^/auth/complete/httpsgo(?:/|$) httpsgo.http.svc.cluster.local
