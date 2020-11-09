@@ -25,7 +25,6 @@ server.serviceName = 'Computing overview'
 server.options     = { 'thread_pool': 25, 'stack_size': 512*1024 }
 
 server.service('Computing overview', 'http://cmsweb.cern.ch/overview')
-server.service('Computing overview test', 'http://vocms0127.cern.ch/overview')
 
 server.source('ProdMon')
 server.source('FileLight')
