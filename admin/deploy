@@ -35,7 +35,7 @@ deploy_admin_post()
 
   local pxlabel pxskip certs
   case $host in
-    vocms0117 | vocms0127 | vocms013[245689] | vocms0734| vocms073[189] | vocms0143 | vocms074[0123456] | vocms016[01235] | vocms076[06] | vocms030[67] | vocms0318 )
+    vocms0117 | vocms013[245689] | vocms0734| vocms073[189] | vocms0143 | vocms074[0123456] | vocms016[01235] | vocms076[06] | vocms030[67] | vocms0318 )
       pxlabel=cmsweb_backends ;;
     * )
       pxlabel=devvm_$(echo $host | tr - _) ;;
@@ -73,7 +73,7 @@ deploy_admin_post()
   fi
 
   case $host:$root in
-    vocms0117:/data/srv | vocms0127:/data/srv | vocms0134:/data/srv | vocms0734:/data/srv | vocms0135:/data/srv | \
+    vocms0117:/data/srv | vocms0134:/data/srv | vocms0734:/data/srv | vocms0135:/data/srv | \
     vocms0158:/data/srv | vocms0160:/data/srv | vocms0760:/data/srv | vocms0162:/data/srv | vocms0164:/data/srv )
       klist -s # must have afs kerberos token
       LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive
