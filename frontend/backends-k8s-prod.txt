@@ -1,6 +1,5 @@
-^/auth/complete/t0_reqmon(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
+^/auth/complete/t0_reqmon(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/reqmgr2(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
-^/auth/complete/reqmon(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/phedex(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new)(?:/|$) cmsdqm.cern.ch
@@ -24,7 +23,7 @@
 ^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0742.cern.ch :affinity
 ^/auth/complete/crabcache(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/confdb(?:/|$) vocms0741.cern.ch|vocms0742.cern.ch :affinity
-^/auth/complete/wmstatsserver(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
+^/auth/complete/wmstatsserver(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/wmarchive(?:/|$) cmsweb-srv.cern.ch
