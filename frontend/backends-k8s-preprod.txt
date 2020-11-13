@@ -1,5 +1,5 @@
 ^/auth/complete/t0_reqmon(?:/|$) t0reqmon.tzero.svc.cluster.local 
-^/auth/complete/reqmgr2(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
+^/auth/complete/reqmgr2(?:/|$) reqmgr2.dmwm.svc.cluster.local
 ^/auth/complete/phedex(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new)(?:/|$) cmsdqm.cern.ch
