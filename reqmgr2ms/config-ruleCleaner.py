@@ -22,13 +22,18 @@ AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
-RUCIO_ACCT = "wma_prod"
 if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
+    RUCIO_WMA_ACCT="wma_prod"
 else:
     RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
     RUCIO_URL="http://cmsrucio-int.cern.ch"
+    RUCIO_WMA_ACCT="wma_test"
+
+RUCIO_MSTR_ACCT = "wmcore_transferor"
+RUCIO_ACCT = RUCIO_WMA_ACCT
+
 
 config = Configuration()
 
@@ -69,13 +74,17 @@ data.couch_host = COUCH_URL
 data.couch_wmstats_db = "wmstats"
 data.manager = 'WMCore.MicroService.Unified.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
+data.msOutputUrl = "%s/ms-output" % BASE_URL
 data.limitRequestsPerCycle = 500
 data.verbose = True
 data.interval = 60 * 60 * 8  # run it every 8 hours
 data.services = ['ruleCleaner']
 data.rucioAccount = RUCIO_ACCT
+data.rucioMstrAccount = RUCIO_MSTR_ACCT
+data.rucioWmaAccount = RUCIO_WMA_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
+data.enableRealMode = False
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
