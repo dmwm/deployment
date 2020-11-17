@@ -33,14 +33,11 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-CFGFILE=DBSDef.py
 CFGFILE_GR=DBSGlobalReader.py
 CFGFILE_GW=DBSGlobalWriter.py
 CFGFILE_P3R=DBSPhys03Reader.py
 CFGFILE_P3W=DBSPhys03Writer.py
 CFGFILE_MG=DBSMigrate.py
-JSONURL="@@JSONURL@@"
-JSONURL_DEF="@@JSONURL_DEF@@"
 JSONURL_GR="@@JSONURL_GR@@"
 JSONURL_GW="@@JSONURL_GW@@"
 JSONURL_P3R="@@JSONURL_P3R@@"
@@ -63,11 +60,6 @@ export DBS3_VERSION
 
 checkCfg()
 {
-
-if [ -f $CFGDIR/$CFGFILE ]; then
-    echo $CFGDIR/$CFGFILE 
-fi
-
 if [ -f $CFGDIR/$CFGFILE_GR ]; then
     echo $CFGDIR/$CFGFILE_GR 
 fi
@@ -94,10 +86,6 @@ fi
 # Start service conditionally on crond restart.
 sysboot()
 {
-  if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE" | wc -l) = 0 ]; then
-    start_dbs $CFGDIR/$CFGFILE
-  fi
-
   if [ $(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_GR" | wc -l) = 0 ]; then
     start_dbs $CFGDIR/$CFGFILE_GR
   fi
@@ -132,10 +120,6 @@ start_dbs()
 
 start()
 {
-  if [ -f $CFGDIR/$CFGFILE ]; then
-      start_dbs $CFGDIR/$CFGFILE
-  fi
-
   if [ -f $CFGDIR/$CFGFILE_GR ]; then
       start_dbs $CFGDIR/$CFGFILE_GR
   fi
@@ -171,10 +155,6 @@ stop_dbs()
 }
 stop()
 {
-  if [ -f $CFGDIR/$CFGFILE ]; then
-      stop_dbs $CFGDIR/$CFGFILE
-  fi
-
   if [ -f $CFGDIR/$CFGFILE_GR ]; then
       stop_dbs $CFGDIR/$CFGFILE_GR
   fi
@@ -211,10 +191,6 @@ status_dbs()
 status()
 {
 
-  if [ -f $CFGDIR/$CFGFILE ]; then
-      status_dbs $CFGDIR/$CFGFILE
-  fi      
-
   if [ -f $CFGDIR/$CFGFILE_GR ]; then
       status_dbs $CFGDIR/$CFGFILE_GR
   fi
@@ -240,34 +216,24 @@ status()
 
 setinstances()
 {
-  f=$(curl -ksL $JSONURL)
-  f_def=$(curl -ksL $JSONURL_DEF)
   f_gr=$(curl -ksL $JSONURL_GR)
   f_gw=$(curl -ksL $JSONURL_GW)
   f_p3r=$(curl -ksL $JSONURL_P3R)
   f_p3w=$(curl -ksL $JSONURL_P3W)
   f_mg=$(curl -ksL $JSONURL_MG)
-  if echo "$f" | python $CFGDIR/validate.py "def" &&
-     echo "$f_gr" | python $CFGDIR/validate.py "reader"  &&
+  if echo "$f_gr" | python $CFGDIR/validate.py "reader"  &&
      echo "$f_gw" | python $CFGDIR/validate.py "writer" &&
      echo "$f_p3r" | python $CFGDIR/validate.py "reader"  &&
      echo "$f_p3w" | python $CFGDIR/validate.py "writer" &&
-     echo "$f_mg" | python $CFGDIR/validate.py "migrate" &&
-     echo "$f_def" | python $CFGDIR/validate.py "reader&writer" ; then
+     echo "$f_mg" | python $CFGDIR/validate.py "migrate" ; then
    {
-    [ "$(echo $f)" == "$(cat $STATEDIR/view_instances.json)" ] &&  [ "$(echo $f_def)" == "$(cat $STATEDIR/view_instances_def.json)" ] && [ "$(echo $f_gr)" == "$(cat $STATEDIR/view_instances_gr.json)" ] && [ "$(echo $f_gw)" == "$(cat $STATEDIR/view_instances_gw.json)" ] && [ "$(echo $f_p3r)" == "$(cat $STATEDIR/view_instances_p3r.json)" ] && [ "$(echo $f_p3w)" == "$(cat $STATEDIR/view_instances_p3w.json)" ] && [ "$(echo $f_mg)" == "$(cat $STATEDIR/view_instances_mg.json)" ] 
+    [ "$(echo $f_gr)" == "$(cat $STATEDIR/view_instances_gr.json)" ] && [ "$(echo $f_gw)" == "$(cat $STATEDIR/view_instances_gw.json)" ] && [ "$(echo $f_p3r)" == "$(cat $STATEDIR/view_instances_p3r.json)" ] && [ "$(echo $f_p3w)" == "$(cat $STATEDIR/view_instances_p3w.json)" ] && [ "$(echo $f_mg)" == "$(cat $STATEDIR/view_instances_mg.json)" ] 
    } || {
-      echo $f > $STATEDIR/view_instances.json
-      echo $f_def > $STATEDIR/view_instances_def.json
       echo $f_gr > $STATEDIR/view_instances_gr.json
       echo $f_gw > $STATEDIR/view_instances_gw.json
       echo $f_p3r > $STATEDIR/view_instances_p3r.json
       echo $f_p3w > $STATEDIR/view_instances_p3w.json
       echo $f_mg > $STATEDIR/view_instances_mg.json
-      if [ X"$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE" | sort -n)" != X ]; then
-        stop_dbs $CFGDIR/$CFGFILE
-        start_dbs $CFGDIR/$CFGFILE
-      fi
       if [ X"$(pgrep -u $(id -u) -f "Root.py.*[=]$CFGDIR/$CFGFILE_GR" | sort -n)" != X ]; then
         stop_dbs $CFGDIR/$CFGFILE_GR
         start_dbs $CFGDIR/$CFGFILE_GR

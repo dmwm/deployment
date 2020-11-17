@@ -41,7 +41,7 @@ for v in d.values():
       print >> sys.stderr, "'%s' is not a list of instance names." % t
       sys.exit(1)
     for i in t:
-      if not re.match('^(prod|int|dev)/(global|phys0[123]|test)$', i):
+      if not re.match('^(prod|int|dev)/(global|phys03|test)$', i):
         print >> sys.stderr, "'%s' is an invalid instance name." % i
         sys.exit(1)
 sys.exit(0)

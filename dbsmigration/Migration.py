@@ -19,20 +19,13 @@ with open(os.path.join(TOPDIR, 'state/dbsmigration/view_instances.json'), 'r') a
 # instance name : connecturls, {reader needed roles, writer needed roles}
 if VARIANT == 'prod':
   db_mapping = {'prod/global': dbs3_pg_r,
-                'prod/phys01': dbs3_pp1_r,
-                'prod/phys02': dbs3_pp2_r,
                 'prod/phys03': dbs3_pp3_r,
-                'prod/caf'   : dbs3_pc_r,
                 'prod/test'  : dbs3_pt_i2}
 elif VARIANT == 'preprod':
   db_mapping = {'int/global': dbs3_ig_i2,
-                'int/phys01': dbs3_ip1_i2,
-                'int/phys02': dbs3_ip2_i2,
                 'int/phys03': dbs3_ip3_i2}
 elif VARIANT == 'dev':
   db_mapping = {'dev/global': dbs3_dg_i2,
-                'dev/phys01': dbs3_dp1_i2,
-                'dev/phys02': dbs3_dp2_i2,
                 'dev/phys03': dbs3_dp3_i2}
 elif VARIANT == 'k8s':
   db_mapping = {'int/global': dbs3_k8sg_r,
@@ -45,18 +38,11 @@ else:
                 'dev/phys03': dbs3_p_i2}
 
 thread_mapping = {'prod/global': 1,
-                  'prod/phys01': 1,
-                  'prod/phys02': 1,
                   'prod/phys03': 1,
-                  'prod/caf'   : 1,
                   'prod/test'  : 1,
                   'int/global' : 1,
-                  'int/phys01' : 1,
-                  'int/phys02' : 1,
                   'int/phys03' : 1,
                   'dev/global' : 1,
-                  'dev/phys01' : 1,
-                  'dev/phys02' : 1,
                   'dev/phys03' : 1}
 
 config = Configuration()
