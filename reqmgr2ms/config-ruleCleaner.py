@@ -32,7 +32,7 @@ else:
     RUCIO_WMA_ACCT="wma_test"
 
 RUCIO_MSTR_ACCT = "wmcore_transferor"
-RUCIO_ACCT = RUCIO_WMA_ACCT
+RUCIO_ACCT = RUCIO_MSTR_ACCT
 
 
 config = Configuration()
@@ -84,6 +84,7 @@ data.rucioMstrAccount = RUCIO_MSTR_ACCT
 data.rucioWmaAccount = RUCIO_WMA_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
+data.useRucio = True
 data.enableRealMode = False
 
 # heartbeat monitor task
