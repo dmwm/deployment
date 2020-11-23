@@ -121,7 +121,8 @@ ui_main.application = ui.index
 #ui_main.authz_defaults = {"role": None, "group": None, "site": None, "policy": "dangerously_insecure"}
 
 extentions = config.section_("extensions")
-if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117"):
+# testbed VM vocms0731 removed for k8s migration
+if HOST.startswith("vocms0766") or HOST.startswith("vocms0117"):
     # ACDC/workqueue cleanup threads
     couchCleanup = extentions.section_("couchCleanup")
     couchCleanup.object = "WMCore.ReqMgr.CherryPyThreads.CouchDBCleanup.CouchDBCleanup"
@@ -146,7 +147,8 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     parentageFixTask.central_logdb_url = LOG_DB_URL
     parentageFixTask.log_reporter = LOG_REPORTER
 
-if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117"):
+# testbed VM vocms0731 removed for k8s migration
+if HOST.startswith("vocms0766") or HOST.startswith("vocms0117"):
     # status change task 
     statusChangeTasks = extentions.section_("statusChangeTasks")
     statusChangeTasks.object = "WMCore.ReqMgr.CherryPyThreads.StatusChangeTasks.StatusChangeTasks"
@@ -194,7 +196,8 @@ if HOST.startswith("vocms0766") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
     # AMQ MonIT settings
-    if HOST.startswith("vocms0766") or HOST.startswith("vocms0731"):
+    # testbed VM vocms0731 removed for k8s migration
+    if HOST.startswith("vocms0766"):
         heartbeatMonitor.post_to_amq = True
     else:
         heartbeatMonitor.post_to_amq = False
