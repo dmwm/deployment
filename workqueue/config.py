@@ -98,7 +98,8 @@ def setWorkQueueCommonConfig(config):
     config.reqMgrConfig['log_reporter'] = LOG_REPORTER
 
 # Production instance of globalworkqueue, must be a production back-end
-if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswith("vocms0117"):
+# Testbed vm vocms0731 removed for k8s migration
+if HOST.startswith("vocms0740") or HOST.startswith("vocms0117"):
     extentions = config.section_("extensions")
     reqmgrInteraction = extentions.section_("reqmgrInteraction")
     reqmgrInteraction.object = "WMCore.GlobalWorkQueue.CherryPyThreads.ReqMgrInteractionTask.ReqMgrInteractionTask"
@@ -136,7 +137,7 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0731") or HOST.startswi
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
     # AMQ MonIT settings
-    if HOST.startswith("vocms0740") or HOST.startswith("vocms0731"):
+    if HOST.startswith("vocms0740"):
         heartbeatMonitor.post_to_amq = True
     else:
         heartbeatMonitor.post_to_amq = False
