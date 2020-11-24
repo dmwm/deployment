@@ -76,14 +76,11 @@ data.verbose = True
 data.interval = 600
 data.services = ['transferor']
 data.quotaUsage = 0.9
-data.quotaAccount = "DataOps"
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
-data.useRucio = True
 data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = "wmcore_transferor"
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
-data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
 data.toAddr = ["alan.malta@cern.ch", "todor.trendafilov.ivanov@cern.ch", "kenyi.paolo.hurtado.anampa@cern.ch"]
 data.warningTransferThreshold = 100. * (1000 ** 4) # 100 TB (terabyte)
 # if private_vm, just fallback to preprod DBS
@@ -91,12 +88,6 @@ if DBS_INS == "private_vm":
     data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
 else:
     data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
-# if production CMSWEB, set PhEDEx settings to also auto-approve requests
-# make it based on DBS_INS to avoid hard links in multiple places
-if DBS_INS == "prod":
-    data.phedexRequestOnly = False
-else:
-    data.phedexRequestOnly = True
 
 # heartbeat monitor task
 extentions = config.section_("extensions")

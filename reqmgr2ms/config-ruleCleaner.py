@@ -84,8 +84,7 @@ data.rucioMstrAccount = RUCIO_MSTR_ACCT
 data.rucioWmaAccount = RUCIO_WMA_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
-data.useRucio = True
-data.enableRealMode = False
+data.enableRealMode = True
 
 # heartbeat monitor task
 extentions = config.section_("extensions")

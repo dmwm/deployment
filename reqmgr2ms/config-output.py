@@ -81,7 +81,6 @@ data.sendNotification = SEND_NOTIFICATION
 data.verbose = True
 data.interval = 60 * 60 * 1  # run it every hour
 data.services = ['output']
-data.defaultGroup = "DataOps"
 # This tape pledges was extracted from WLCG Rebus and will be needed for the PhEDEx-based data placement
 # https://wlcg-rebus.cern.ch/core/pledge/list/?vo_name=CMS&year=2020&type=Tape
 # Note that a few sites are storing HI data as well, so we need to subtract the storage
@@ -103,25 +102,11 @@ data.rucioRSEAttribute = "ddm_quota"
 data.rucioDiskRuleWeight = "ddm_quota"
 # FIXME: remove T0 Tape once CTA is ready to receive output data placement
 data.rucioTapeExpression = "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
-data.useRucio = True
 data.rulesLifetime = RULE_LIFETIME
 data.ruleLifetimeRelVal = RULE_LIFETIME_RELVAL
 data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
-data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
-data.ddmUrl = "https://dynamo.mit.edu"
-# if private_vm, just fallback to preprod DBS
-if DBS_INS == "private_vm":
-    data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
-else:
-    data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
-# if production CMSWEB, set PhEDEx settings to also auto-approve requests
-# make it based on DBS_INS to avoid hard links in multiple places
-if DBS_INS == "prod":
-    data.phedexRequestOnly = False
-else:
-    data.phedexRequestOnly = True
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
