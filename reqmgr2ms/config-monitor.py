@@ -75,12 +75,6 @@ data.services = ['monitor']
 data.rucioAccount = "wmcore_transferor"
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
-data.phedexUrl = "https://cmsweb.cern.ch/phedex/datasvc/json/prod"
-# if private_vm, just fallback to preprod DBS
-if DBS_INS == "private_vm":
-    data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
-else:
-    data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
