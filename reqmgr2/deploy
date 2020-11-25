@@ -57,9 +57,6 @@ deploy_reqmgr2_post()
     echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux" \
          "http://localhost:${couch##*:}/reqmgr_auxiliary" \
          > $root/state/${couch%%:*}/stagingarea/reqmgr2
-    echo "couchapp push $reqmgrapp/data/couchapps/WMDataMining" \
-         "http://localhost:${couch##*:}/wmdatamining" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
     echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr" \
          "http://localhost:${couch##*:}/reqmgr_workload_cache" \
          >> $root/state/${couch%%:*}/stagingarea/reqmgr2
