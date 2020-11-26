@@ -254,12 +254,6 @@ case $STAGE in
         echo '  esac'
         echo '  chmod 750 $d'
         echo '  chmod -R 440 $d/*'
-        echo '  case $svc in'
-        echo '     workqueue )'
-        echo '       chmod -R 400 $d/dmwm-service-key.pem;;'
-        echo '     reqmgr2ms )'
-        echo '       chmod -R 400 $d/dmwm-service-key.pem;;'
-        echo '  esac'
         echo 'done'
         echo 'exit 0'
        ) | ssh cmsweb@$host bashs -l
