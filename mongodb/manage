@@ -45,7 +45,7 @@ sysboot()
   PID=$(cat $STATEDIR/db/mongod.lock 2>/dev/null)
   if [ X"$PID" = X ] || [ $(ps -o pid= -p $PID | wc -l) = 0 ]; then
     # must clean-up improper shutdown
-    rm -rf $STATEDIR/db/*
+    rm -f $STATEDIR/db/mongod.lock
     rm -f $PWD/stagingarea/*-schema-stamp
     start
   fi
@@ -61,7 +61,7 @@ start()
       cmd=""
   fi
   $cmd $MONGO_ROOT/bin/mongod --dbpath=$STATEDIR/db --storageEngine mmapv1 \
-      --port 8230 --quiet --nojournal --nohttpinterface --bind_ip 127.0.0.1 \
+      --port 8230 --quiet --nohttpinterface --bind_ip 127.0.0.1 \
       </dev/null 2>&1 | rotatelogs $LOGDIR/mongodb-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 
   n=0 started=false
