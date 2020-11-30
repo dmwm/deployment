@@ -1,5 +1,5 @@
 ^/auth/complete/t0_reqmon(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/reqmgr2(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
+^/auth/complete/reqmgr2(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/phedex(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0136.cern.ch|vocms0161.cern.ch|vocms0163.cern.ch|vocms0165.cern.ch|vocms0766.cern.ch :affinity
 ^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new)(?:/|$) cmsdqm.cern.ch
