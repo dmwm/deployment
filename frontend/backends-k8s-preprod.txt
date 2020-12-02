@@ -61,3 +61,4 @@
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
 ^/auth/complete/httpgo(?:/|$) httpgo.http.svc.cluster.local
 ^/auth/complete/httpsgo(?:/|$) httpsgo.http.svc.cluster.local
+^/auth/complete/dbs2go(?:/|$) dbs2go.dbs.svc.cluster.local
