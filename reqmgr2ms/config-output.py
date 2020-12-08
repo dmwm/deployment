@@ -100,8 +100,7 @@ data.enableRelValCustodial = False
 data.excludeDataTier = []
 data.rucioRSEAttribute = "ddm_quota"
 data.rucioDiskRuleWeight = "ddm_quota"
-# FIXME: remove T0 Tape once CTA is ready to receive output data placement
-data.rucioTapeExpression = "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
+data.rucioTapeExpression = "rse_type=TAPE\cms_type=test"  # "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
 data.rulesLifetime = RULE_LIFETIME
 data.ruleLifetimeRelVal = RULE_LIFETIME_RELVAL
 data.rucioAccount = RUCIO_ACCT
