@@ -34,10 +34,22 @@ ROOT=$(cd $(dirname $0)/../.. && pwd)
 CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
-CFGFILETR=$CFGDIR/config-transferor.py
-CFGFILEMON=$CFGDIR/config-monitor.py
-CFGFILEOUT=$CFGDIR/config-output.py
-CFGFILERCLEAN=$CFGDIR/config-ruleCleaner.py
+
+# Disable specific microservices in VM testbed for k8s migration
+# This will cause config file checks for transferor, monitor and
+# ruleCleaner to return false and services will not start
+if [[ $(hostname -s) == "vocms0731" ]]; then
+  CFGFILETR=$CFGDIR # force ms-transferor to be disabled
+  CFGFILEMON=$CFGDIR # force ms-monitor to be disabled
+  CFGFILEOUT=$CFGDIR/config-output.py
+  CFGFILERCLEAN=$CFGDIR # force ms-ruleCleaner to be disabled
+else
+  CFGFILETR=$CFGDIR/config-transferor.py
+  CFGFILEMON=$CFGDIR/config-monitor.py
+  CFGFILEOUT=$CFGDIR/config-output.py
+  CFGFILERCLEAN=$CFGDIR/config-ruleCleaner.py
+fi
+
 LOG_TRANS=ms-transferor
 LOG_MON=ms-monitor
 LOG_OUT=ms-output
