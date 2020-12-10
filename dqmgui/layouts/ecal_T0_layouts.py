@@ -121,6 +121,13 @@ ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/09 Channel Status Map',
 	   [{'path': 'EcalBarrel/EBIntegrityClient/EBIT channel status map', 'description': 'Map of channel status as given by the Ecal Channel Status Record. LEGEND:<br/>0: Channel ok,<br/>1: DAC settings problem, pedestal not in the design range,<br/>2: Channel with no laser, ok elsewhere,<br/>3: Noisy,<br/>4: Very noisy,<br/>5-7: Reserved for more categories of noisy channels,<br/>8: Channel at fixed gain 6 (or 6 and 1),<br/>9: Channel at fixed gain 1,<br/>10: Channel at fixed gain 0 (dead of type this),<br/>11: Non-responding isolated channel (dead of type other),<br/>12: Channel and one or more neigbors not responding (e.g.: in a dead VFE 5x1 channel),<br/>13: Channel in TT with no data link, TP data ok,<br/>14: Channel in TT with no data link and no TP data.'}],
 	   [{'path': 'EcalEndcap/EEIntegrityClient/EEIT EE - channel status map', 'description': 'Map of channel status as given by the Ecal Channel Status Record. LEGEND:<br/>0: Channel ok,<br/>1: DAC settings problem, pedestal not in the design range,<br/>2: Channel with no laser, ok elsewhere,<br/>3: Noisy,<br/>4: Very noisy,<br/>5-7: Reserved for more categories of noisy channels,<br/>8: Channel at fixed gain 6 (or 6 and 1),<br/>9: Channel at fixed gain 1,<br/>10: Channel at fixed gain 0 (dead of type this),<br/>11: Non-responding isolated channel (dead of type other),<br/>12: Channel and one or more neigbors not responding (e.g.: in a dead VFE 5x1 channel),<br/>13: Channel in TT with no data link, TP data ok,<br/>14: Channel in TT with no data link and no TP data.'},
 	    {'path': 'EcalEndcap/EEIntegrityClient/EEIT EE + channel status map', 'description': 'Map of channel status as given by the Ecal Channel Status Record. LEGEND:<br/>0: Channel ok,<br/>1: DAC settings problem, pedestal not in the design range,<br/>2: Channel with no laser, ok elsewhere,<br/>3: Noisy,<br/>4: Very noisy,<br/>5-7: Reserved for more categories of noisy channels,<br/>8: Channel at fixed gain 6 (or 6 and 1),<br/>9: Channel at fixed gain 1,<br/>10: Channel at fixed gain 0 (dead of type this),<br/>11: Non-responding isolated channel (dead of type other),<br/>12: Channel and one or more neigbors not responding (e.g.: in a dead VFE 5x1 channel),<br/>13: Channel in TT with no data link, TP data ok,<br/>14: Channel in TT with no data link and no TP data.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/10 FE MEM Status Flags',
+       [{'path': 'Ecal/MEM/StatusFlagsTask MEM front-end status bits',
+         'description': 'Front-end (FE) status counter for MEM boxes. Each x-axis tick corresponds to one SuperModule (SM) as indexed by DCC Id and contains two bins corresponding to the MEM boxes (DCC tower Ids = 69, 70). Nominal status is SUPPRESSED. EE+/-2,3,7,8 are not connected to MEM boxes and instead appear with status DISABLED. Mapping from DCC Id to SM name appears below.<br/><pre>01:EE-07  19:EB-10  37:EB+10<br/>02:EE-08  20:EB-11  38:EB+11<br/>03:EE-09  21:EB-12  39:EB+12<br/>04:EE-01  22:EB-13  40:EB+13<br/>05:EE-02  23:EB-14  41:EB+14<br/>06:EE-03  24:EB-15  42:EB+15<br/>07:EE-04  25:EB-16  43:EB+16<br/>08:EE-05  26:EB-17  44:EB+17<br/>09:EE-06  27:EB-18  45:EB+18<br/>10:EB-01  28:EB+01  46:EE+07<br/>11:EB-02  29:EB+02  47:EE+08<br/>12:EB-03  30:EB+03  48:EE+09<br/>13:EB-04  31:EB+04  49:EE+01<br/>14:EB-05  32:EB+05  50:EE+02<br/>15:EB-06  33:EB+06  51:EE+03<br/>16:EB-07  34:EB+07  52:EE+04<br/>17:EB-08  35:EB+08  53:EE+05<br/>18:EB-09  36:EB+09  54:EE+06</pre>'}])
+ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/11 MEM Integrity Errors',
+       [{'path': 'Ecal/MEM/IntegrityTask MEMErrors',
+         'description': 'Integrity error and error type counter for MEM boxes. Each x-axis tick corresponds to one SuperModule (SM) as indexed by DCC Id and contains two bins corresponding to the MEM boxes (DCC tower Ids = 69, 70). Nominally, this plot should be empty. Mapping from DCC Id to SM name appears below.<br/><pre>01:EE-07  19:EB-10  37:EB+10<br/>02:EE-08  20:EB-11  38:EB+11<br/>03:EE-09  21:EB-12  39:EB+12<br/>04:EE-01  22:EB-13  40:EB+13<br/>05:EE-02  23:EB-14  41:EB+14<br/>06:EE-03  24:EB-15  42:EB+15<br/>07:EE-04  25:EB-16  43:EB+16<br/>08:EE-05  26:EB-17  44:EB+17<br/>09:EE-06  27:EB-18  45:EB+18<br/>10:EB-01  28:EB+01  46:EE+07<br/>11:EB-02  29:EB+02  47:EE+08<br/>12:EB-03  30:EB+03  48:EE+09<br/>13:EB-04  31:EB+04  49:EE+01<br/>14:EB-05  32:EB+05  50:EE+02<br/>15:EB-06  33:EB+06  51:EE+03<br/>16:EB-07  34:EB+07  52:EE+04<br/>17:EB-08  35:EB+08  53:EE+05<br/>18:EB-09  36:EB+09  54:EE+06</pre>'}])
+
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/00 CRC',
 	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT CRC errors', 'description': 'Number of CRC errors.'}],
 	   [{'path': 'EcalEndcap/EERawDataTask/EERDT CRC errors', 'description': 'Number of CRC errors.'}])
@@ -162,6 +169,18 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       ecallayout(dqmitems,'Ecal/Layouts/01 Raw Data/By SuperModule/FEStatus/FE Status Flags %s' % channellabel,
                  [{'path': 'Ecal%s/%sStatusFlagsTask/FEStatus/%sSFT front-end status bits %s' % (detector, label, label, channellabel),
                    'description': 'FE status counter.'}])
+      ecallayout(dqmitems,'Ecal/Layouts/01 Raw Data/By SuperModule/Errors/TTId Integrity Errors/TTId Integrity Errors %s' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/TTId/%sIT TTId %s' % (detector, label, label, channellabel),
+                   'description': ''}])
+      ecallayout(dqmitems,'Ecal/Layouts/01 Raw Data/By SuperModule/Errors/TTBlockSize Integrity Errors/TTBlockSize Integrity Errors %s' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/TTBlockSize/%sIT TTBlockSize %s' % (detector, label, label, channellabel),
+                   'description': ''}])
+      ecallayout(dqmitems,'Ecal/Layouts/01 Raw Data/By SuperModule/Errors/ChId Integrity Errors/ChId Integrity Errors %s' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/ChId/%sIT ChId %s' % (detector, label, label, channellabel),
+                   'description': ''}])
+      ecallayout(dqmitems,'Ecal/Layouts/01 Raw Data/By SuperModule/Errors/Gain Integrity Errors/Gain Integrity Errors %s' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/Gain/%sIT gain %s' % (detector, label, label, channellabel),
+                   'description': ''}])
 
 #____________________ Layouts / 02 Occupancy ____________________
 ecallayout(dqmitems, 'Ecal/Layouts/02 Occupancy/00 Hot Cells',
@@ -1009,6 +1028,18 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
                    'description': '2D distribution of the trigger primitive Et.'}],
                  [{'path': 'Ecal%s/%sTriggerTowerTask/%sTTT EmulMatch %s' % (detector, label, label, channellabel),
                    'description': 'Counter for TP "timing" (= index withing the emulated TP whose Et matched that of the real TP).'}])
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/13 TTId Integrity Errors' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/TTId/%sIT TTId %s' % (detector, label, label, channellabel),
+                   'description': ''}])
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/14 TTBlockSize Integrity Errors' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/TTBlockSize/%sIT TTBlockSize %s' % (detector, label, label, channellabel),
+                   'description': ''}])
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/15 ChId Integrity Errors' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/ChId/%sIT ChId %s' % (detector, label, label, channellabel),
+                   'description': ''}])
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/16 Gain Integrity Errors' % channellabel,
+                 [{'path': 'Ecal%s/%sIntegrityTask/Gain/%sIT gain %s' % (detector, label, label, channellabel),
+                   'description': ''}])
       # Laser ___________
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/00 Quality L2 (Green)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserClient/%sLT laser quality L2 %s' % (detector, label, label, channellabel),

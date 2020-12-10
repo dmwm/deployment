@@ -1330,6 +1330,8 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
      !fullpath.Contains("Real vs Emulated") &&
      !fullpath.Contains("Occupancy") &&
      !fullpath.Contains("Cluster") &&
+     !fullpath.Contains("StatusFlags") &&
+     !fullpath.Contains("Integrity") &&
      !fullpath.Contains("TT Flags vs Et")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1400,6 +1402,22 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
     obj->GetYaxis()->SetRangeUser(-1.5, 0.);
     obj->GetYaxis()->SetNdivisions(15);
     gPad->SetGridy();
+    applyDefaults = false;
+  }
+  else if (TPRegexp("Ecal/MEM/StatusFlagsTask MEM front-end status bits").MatchB(fullpath)){
+    obj->GetXaxis()->SetNdivisions(54);
+    obj->GetXaxis()->SetLabelSize(0.02);
+    obj->GetXaxis()->SetTitle("DDCID");
+    obj->GetYaxis()->SetLabelSize(0.03);
+    obj->GetYaxis()->SetNdivisions(16, false);
+    applyDefaults = false;
+  }
+  else if (TPRegexp("Ecal/MEM/IntegrityTask MEMErrors").MatchB(fullpath)){
+    obj->GetXaxis()->SetNdivisions(54);
+    obj->GetXaxis()->SetLabelSize(0.02);
+    obj->GetXaxis()->SetTitle("DDCID");
+    obj->GetYaxis()->SetNdivisions(4, false);
+    obj->GetYaxis()->SetLabelSize(0.04);
     applyDefaults = false;
   }
 }
