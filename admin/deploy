@@ -76,7 +76,7 @@ deploy_admin_post()
     vocms0117:/data/srv | vocms0134:/data/srv | vocms0734:/data/srv | vocms0135:/data/srv | \
     vocms0158:/data/srv | vocms0160:/data/srv | vocms0760:/data/srv | vocms0162:/data/srv | vocms0164:/data/srv )
       klist -s # must have eos kerberos token
-      LOGDIR=/eos/project/c/cmsweb-http/logs/
+      LOGDIR=/eos/project/c/cmsweb-http/logs
       (acrontab -l | { fgrep -v -e " $host $project_config/" || true; } | \
         { grep -v " $host .*/archive-log-files" || true; }
        echo "0 3 * * * $host $project_config/LogSave $root $LOGDIR/$host") | acrontab

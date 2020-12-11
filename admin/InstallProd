@@ -248,7 +248,7 @@ case $STAGE in
         echo '  [ "$svc" != proxy ] || continue'
         echo '  case $svc in'
         echo '     wmcore-auth ) chown -R cmsweb:_config $d;;'
-        echo '     * ) chown -R cmsweb:_$svc $d;;'
+        echo '     * ) sudo chown -R cmsweb:_$svc $d;;'
         echo '  esac'
         echo '  chmod 750 $d'
         echo '  chmod -R 440 $d/*'
