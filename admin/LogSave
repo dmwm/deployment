@@ -2,7 +2,7 @@
 
 # Synchronise zipped log archives to AFS area.
 BASEDIR=${1-$(cd $(dirname $0)/../../.. && pwd)}
-ARCHDIR=${2-/afs/cern.ch/cms/cmsweb/log-archive/$(hostname -s | tr [:upper:] [:lower:])}
+ARCHDIR=${2-/eos/project/c/cmsweb-http/logs/$(hostname -s | tr [:upper:] [:lower:])}
 
 [ -d $BASEDIR/logs ] || { echo "$BASEDIR/logs: no such directory" 1>&2; exit 1; }
 { [ -d $ARCHDIR ] && [ -w $ARCHDIR ]; } || { "$ARCHDIR: not a writeable directory" 1>&2; exit 1; }

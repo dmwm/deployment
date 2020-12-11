@@ -334,7 +334,7 @@ case $STAGE in
     case $WHAT in
       save )
         for host in $HOSTS; do
-	  LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive/$host
+	  LOGDIR=/eos/project/c/cmsweb-http/logs/$host
           LOGSAVE="/data/srv/current/config/admin/LogSave /data/srv $LOGDIR"
 	  LOGARCH="/data/srv/current/config/admin/LogArchive /data/srv"
 
@@ -356,7 +356,7 @@ case $STAGE in
 
       restore )
         for host in $HOSTS; do
-	  LOGDIR=/afs/cern.ch/cms/cmsweb/log-archive/$host
+	  LOGDIR=/eos/project/c/cmsweb-http/logs/$host
 	  [ $(acrontab -l | egrep -c " $host .*/LogSave ") = 0 ]
 	  [ -d $LOGDIR.backup ]
 
