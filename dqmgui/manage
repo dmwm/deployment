@@ -68,6 +68,15 @@ export STAGE_HOST=${STAGE_HOST:-castorcms}
 export RFIO_USE_CASTOR_V2=YES
 export STAGE_SVCCLASS=archive
 
+# kerberos
+export keytab=/data/srv/current/auth/wmcore-auth/keytab
+principal=`klist -k "$keytab" | tail -1 | awk '{print $2}'`
+kinit $principal -k -t "$keytab" 2>&1 1>& /dev/null
+if [ $? == 1 ]; then
+    echo "Unable to perform kinit"
+    exit 1
+fi
+
 # Set Flavor for HOST:DOMAIN
 case $HOST:$DOMAIN in
   # Anything in the CMS network, will be automatically Online
@@ -738,10 +747,10 @@ indexbackup()
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
       vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/ixbackup/$D
+        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/$D
         ;;
       * )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/ixbackup/$D
+        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/testing/$D
         ;;
     esac
     # We run the backup everywhere when the backup method is called,
@@ -760,7 +769,6 @@ indexbackup()
           $DQM_DATA/ix128 \
           $CASTORDIR \
           cms-dqm-coreTeam@cern.ch \
-          --fullbackup 50 \
           </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1
       esac
   done
@@ -777,10 +785,10 @@ zipbackup()
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
       vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
+        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
         ;;
       * )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
+        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/testing/$D
         ;;
     esac
     # We run the backup everywhere when the backup method is called,
@@ -814,10 +822,10 @@ zipbackupcheck()
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
       vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/data/$D
+        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
         ;;
       * )
-        CASTORDIR=/castor/cern.ch/cms/store/dqm/testing/data/$D
+        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/testing/$D
         ;;
     esac
     # We run the backup everywhere when the backup method is called,
