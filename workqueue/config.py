@@ -44,6 +44,13 @@ except ImportError:
     AMQ_TOPIC=None
 
 RUCIO_ACCT = "wmcore_transferor"
+# Production service has to point to production Rucio, anything else will use pre-production
+if HOST.startswith("vocms0740") or HOST.startswith("vocms0117"):
+    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
+    RUCIO_URL="http://cms-rucio.cern.ch"
+else:
+    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
+    RUCIO_URL="http://cmsrucio-int.cern.ch"
 
 config = Configuration()
 
@@ -91,6 +98,8 @@ def setWorkQueueCommonConfig(config):
     config.queueParams['central_logdb_url'] = LOG_DB_URL
     config.queueParams['log_reporter'] = LOG_REPORTER
     config.queueParams['rucioAccount'] = RUCIO_ACCT
+    config.queueParams['rucioAuthUrl'] = RUCIO_AUTH_URL
+    config.queueParams['rucioUrl'] = RUCIO_URL
 
     config.reqMgrConfig = {}
     config.reqMgrConfig['reqmgr2_endpoint'] = REQMGR2
