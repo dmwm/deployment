@@ -35,10 +35,10 @@
 ^/auth/complete/das2go(?:/|$) das-server.das.svc.cluster.local
 ^/auth/complete/wmarchive(?:/|$) wmarchive.wma.svc.cluster.local
 ^/auth/complete/exitcodes(?:/|$) exitcodes.http.svc.cluster.local
-^/auth/complete/ms-transferor(?:/|$) vocms0731.cern.ch
-^/auth/complete/ms-monitor(?:/|$) vocms0731.cern.ch
+^/auth/complete/ms-transferor(?:/|$) ms-transferor.dmwm.svc.cluster.local
+^/auth/complete/ms-monitor(?:/|$) ms-monitor.dmwm.svc.cluster.local
 ^/auth/complete/ms-output(?:/|$) vocms0731.cern.ch
-^/auth/complete/ms-rulecleaner(?:/|$) vocms0731.cern.ch	
+^/auth/complete/ms-rulecleaner(?:/|$) ms-rulecleaner.dmwm.svc.cluster.local
 ^/auth/complete/t0wmadatasvc(?:/|$) t0wmadatasvc.tzero.svc.cluster.local
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
