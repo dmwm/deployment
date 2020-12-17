@@ -54,3 +54,4 @@
 ^/auth/complete/httpgo(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/httpsgo(?:/|$) cmsweb-srv.cern.ch
 ^ cmsweb-srv.cern.ch
+^/auth/complete/rucioconmon(?:/|$) cmsweb-srv.cern.ch
