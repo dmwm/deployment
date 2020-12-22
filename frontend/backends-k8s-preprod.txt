@@ -63,4 +63,3 @@
 ^/auth/complete/httpgo(?:/|$) httpgo.http.svc.cluster.local
 ^/auth/complete/httpsgo(?:/|$) httpsgo.http.svc.cluster.local
 ^/auth/complete/rucioconmon(?:/|$) monitor.ruciocm.svc.cluster.local
-^/imagebot(?:/|$) imagebot.http.svc.cluster.local
