@@ -26,10 +26,12 @@ if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
     RUCIO_WMA_ACCT="wma_prod"
+    ARCH_DELAY_HOURS = 24 * 2
 else:
     RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
     RUCIO_URL="http://cmsrucio-int.cern.ch"
     RUCIO_WMA_ACCT="wma_test"
+    ARCH_DELAY_HOURS = 6
 
 RUCIO_MSTR_ACCT = "wmcore_transferor"
 RUCIO_ACCT = RUCIO_MSTR_ACCT
@@ -78,7 +80,7 @@ data.msOutputUrl = "%s/ms-output" % BASE_URL
 data.wmstatsUrl = "%s/wmstatsserver" % BASE_URL
 data.logDBUrl = "%s/couchdb/wmstats_logdb" % BASE_URL
 data.logDBReporter = 'reqmgr2ms_ruleCleaner'
-data.archiveDelayHours = 24 * 3  # archive workflows after being for 3 days in the previous status
+data.archiveDelayHours = ARCH_DELAY_HOURS
 data.limitRequestsPerCycle = 500
 data.verbose = True
 data.interval = 60 * 60 * 8  # run it every 8 hours
