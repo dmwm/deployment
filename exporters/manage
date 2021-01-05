@@ -198,6 +198,10 @@ start()
             reqmgr2_monitors
             ;;
 
+       vocms0761 | vocms0762 | vocms0763 | vocms0764 | vocms0765 )
+            dbs_monitors
+            ;;
+
         vocms0740 )
             couchdb_monitors "workqueue,workqueue_inbox"
             ;;
@@ -298,6 +302,11 @@ status()
     # production nodes
     vocms0136 | vocms0161 | vocms0163 | vocms0165  | vocms0766 )
         # process exporter
+        process_status "process_exporter"
+        process_status "cpy_exporter"
+        ;;
+
+    vocms0761 | vocms0762 | vocms0763 | vocms0764  | vocms0765 )
         process_status "process_exporter"
         process_status "cpy_exporter"
         ;;
