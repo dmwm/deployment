@@ -81,7 +81,7 @@ data.rulesLifetime = RULE_LIFETIME
 data.rucioAccount = "wmcore_transferor"
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
-data.toAddr = ["alan.malta@cern.ch", "todor.trendafilov.ivanov@cern.ch", "kenyi.paolo.hurtado.anampa@cern.ch"]
+data.toAddr = ["alan.malta@cern.ch", "todor.trendafilov.ivanov@cern.ch", "kenyi.paolo.hurtado.anampa@cern.ch", "h.ozturk@cern.ch"]
 data.warningTransferThreshold = 100. * (1000 ** 4) # 100 TB (terabyte)
 # if private_vm, just fallback to preprod DBS
 if DBS_INS == "private_vm":
