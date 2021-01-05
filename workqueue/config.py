@@ -107,8 +107,8 @@ def setWorkQueueCommonConfig(config):
     config.reqMgrConfig['log_reporter'] = LOG_REPORTER
 
 # Production instance of globalworkqueue, must be a production back-end
-# Testbed vm vocms0731 removed for k8s migration
-if HOST.startswith("vocms0740") or HOST.startswith("vocms0117"):
+# Production vm vocms0740 and Testbed vm vocms0731 removed for k8s migration
+if HOST.startswith("vocms0117"):
     extentions = config.section_("extensions")
     reqmgrInteraction = extentions.section_("reqmgrInteraction")
     reqmgrInteraction.object = "WMCore.GlobalWorkQueue.CherryPyThreads.ReqMgrInteractionTask.ReqMgrInteractionTask"
@@ -146,10 +146,15 @@ if HOST.startswith("vocms0740") or HOST.startswith("vocms0117"):
     heartbeatMonitor.central_logdb_url = LOG_DB_URL
     heartbeatMonitor.log_reporter = LOG_REPORTER
     # AMQ MonIT settings
-    if HOST.startswith("vocms0740"):
-        heartbeatMonitor.post_to_amq = True
-    else:
-        heartbeatMonitor.post_to_amq = False
+    # Commenting this logic for disabling prod workqueue on vocms0740 for k8s migration
+    #if HOST.startswith("vocms0740"):
+    #    heartbeatMonitor.post_to_amq = True
+    #else:
+    #    heartbeatMonitor.post_to_amq = False
+
+    # Since testbed/prod workqueue VMs are disabled, this will always be False
+    heartbeatMonitor.post_to_amq = False
+
     heartbeatMonitor.user_amq = USER_AMQ
     heartbeatMonitor.pass_amq = PASS_AMQ
     heartbeatMonitor.topic_amq = AMQ_TOPIC
