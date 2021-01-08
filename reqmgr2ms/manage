@@ -35,10 +35,12 @@ CFGDIR=$(dirname $0)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 
-# Disable specific microservices in VM testbed for k8s migration
+# Disable specific microservices in VMs for k8s migration
 # This will cause config file checks for transferor, monitor and
 # ruleCleaner to return false and services will not start
-if [[ $(hostname -s) == "vocms0731" ]]; then
+# testbed: vocms0731
+# prod:    vocms0742
+if [[ $(hostname -s) == "vocms0731" || $(hostname -s) == "vocms0742" ]]; then
   CFGFILETR=$CFGDIR # force ms-transferor to be disabled
   CFGFILEMON=$CFGDIR # force ms-monitor to be disabled
   CFGFILEOUT=$CFGDIR/config-output.py
