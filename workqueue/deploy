@@ -61,7 +61,7 @@ deploy_workqueue_post()
 {
   # in practice, enabled it on private VMs, vocms0731 (preprod) and vocms0740 (prod)
   case $host in
-    vocms013[2689] | vocms073[89] | vocms074[123456] | vocms016[135] | vocms0766 )
+    vocms013[2689] | vocms073[89] | vocms074[123456] | vocms016[135] |  vocms076[123456]  )
       disable;;
     * )
       enable;;
