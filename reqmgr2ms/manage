@@ -43,7 +43,7 @@ STATEDIR=$TOP/state/$ME
 if [[ $(hostname -s) == "vocms0731" || $(hostname -s) == "vocms0742" ]]; then
   CFGFILETR=$CFGDIR # force ms-transferor to be disabled
   CFGFILEMON=$CFGDIR # force ms-monitor to be disabled
-  CFGFILEOUT=$CFGDIR/config-output.py
+  CFGFILEOUT=$CFGDIR # force ms-output to be disabled
   CFGFILERCLEAN=$CFGDIR # force ms-ruleCleaner to be disabled
 else
   CFGFILETR=$CFGDIR/config-transferor.py
