@@ -69,13 +69,16 @@ export RFIO_USE_CASTOR_V2=YES
 export STAGE_SVCCLASS=archive
 
 # kerberos
-export keytab=/data/srv/current/auth/wmcore-auth/keytab
-principal=`klist -k "$keytab" | tail -1 | awk '{print $2}'`
-kinit $principal -k -t "$keytab" 2>&1 1>& /dev/null
-if [ $? == 1 ]; then
-    echo "Unable to perform kinit"
-    exit 1
-fi
+# following lines are giving problems in lxplus installations at present January 2021
+# when trying to load any DQM GUI instance
+# commenting them works perfectly fine since users alrady have a kerberos token by default
+#export keytab=/data/srv/current/auth/wmcore-auth/keytab
+#principal=`klist -k "$keytab" | tail -1 | awk '{print $2}'`
+#kinit $principal -k -t "$keytab" 2>&1 1>& /dev/null
+#if [ $? == 1 ]; then
+#    echo "Unable to perform kinit"
+#    exit 1
+#fi
 
 # Set Flavor for HOST:DOMAIN
 case $HOST:$DOMAIN in
