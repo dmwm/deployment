@@ -31,7 +31,7 @@
 ^/auth/complete/wmarchive(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-transferor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-output(?:/|$) vocms0742.cern.ch
+^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-rulecleaner(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch

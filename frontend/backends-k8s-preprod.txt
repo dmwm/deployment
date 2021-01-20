@@ -37,7 +37,7 @@
 ^/auth/complete/exitcodes(?:/|$) exitcodes.http.svc.cluster.local
 ^/auth/complete/ms-transferor(?:/|$) ms-transferor.dmwm.svc.cluster.local
 ^/auth/complete/ms-monitor(?:/|$) ms-monitor.dmwm.svc.cluster.local
-^/auth/complete/ms-output(?:/|$) vocms0731.cern.ch
+^/auth/complete/ms-output(?:/|$) ms-output.dmwm.svc.cluster.local
 ^/auth/complete/ms-rulecleaner(?:/|$) ms-rulecleaner.dmwm.svc.cluster.local
 ^/auth/complete/t0wmadatasvc(?:/|$) t0wmadatasvc.tzero.svc.cluster.local
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
