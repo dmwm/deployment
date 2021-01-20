@@ -30,7 +30,7 @@
 ^/auth/complete/wmstatsserver(?:/|$) cmsweb-k8s-prodsrv.cern.ch
 ^/auth/complete/ms-transferor(?:/|$) cmsweb-k8s-prodsrv.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) cmsweb-k8s-prodsrv.cern.ch
-^/auth/complete/ms-output(?:/|$) vocms0742.cern.ch
+^/auth/complete/ms-output(?:/|$) cmsweb-k8s-prodsrv.cern.ch
 ^/auth/complete/ms-rulecleaner(?:/|$) cmsweb-k8s-prodsrv.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
