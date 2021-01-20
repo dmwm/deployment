@@ -73,7 +73,7 @@ deploy_reqmgr2ms_post()
 {
   # in practice, enabled on private VMs, vocms0731 (preprod) and vocms0742 (prod)
   case $host in
-    vocms013[2689] | vocms073[89] | vocms074[013456] | vocms016[135] | vocms0766 )
+    vocms013[2689] | vocms073[89] | vocms074[013456] | vocms016[135] | vocms076[123456]  )
       disable;;
     * )
       enable;;
