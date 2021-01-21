@@ -29,7 +29,6 @@
 ^/auth/complete/dbs/(?:int/global/DBSWriter|prod/global/DBSWriter|dev/global/DBSWriter)(?:/|$) dbs-global-w.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/phys03/DBSReader|prod/phys03/DBSReader|dev/phys03/DBSReader)(?:/|$) dbs-phys03-r.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/phys03/DBSWriter|prod/phys03/DBSWriter|dev/phys03/DBSWriter)(?:/|$) dbs-phys03-w.dbs.svc.cluster.local
-^/auth/complete/confdb(?:/|$) vocms0731.cern.ch|vocms0132.cern.ch
 ^/auth/complete/wmstatsserver(?:/|$) reqmon.dmwm.svc.cluster.local
 ^/auth/complete/das(?:/|$) das-server.das.svc.cluster.local
 ^/auth/complete/das2go(?:/|$) das-server.das.svc.cluster.local
