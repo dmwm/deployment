@@ -18,7 +18,6 @@ reqmgrCouchDB = "reqmgr_workload_cache"
 
 HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
-DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 
 REQMGR2 = "%s/reqmgr2" % BASE_URL

@@ -90,6 +90,7 @@ if DBS_INS == "private_vm":
     data.dbs_url = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSWriter"
 else:
     data.dbs_url = "%s/dbs/%s/global/DBSWriter" % (BASE_URL, DBS_INS)
+    data.dbs_url = data.dbs_url.replace("cmsweb.cern.ch", "cmsweb-prod.cern.ch")
 
 # web user interface
 ui = views.section_("ui")
