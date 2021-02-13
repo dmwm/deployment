@@ -8,14 +8,14 @@
 
 # Include older releases for deletion
 +r /srv*/
-+r /srv*/HG20[12][a-z]***
-+r /srv*/[bf]eHG201[2][a-z]***
++r /srv*/HG21[01][a-z]***
++r /srv*/[bf]eHG210[1][a-z]***
 
 # Include here anything else you may want to clean up
 +r /.deploy/***
 +r /cfg*/***
 +r /srv*/.deploy/
-+r /srv*/.deploy/20201[2]*.log
++r /srv*/.deploy/20210[1]*.log
 
 # Do not delete anything else
 -r /***
