@@ -318,8 +318,6 @@ export WMAGENT_ROOT
 export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
-export WMAGENT_USE_RUCIO=true
-echo "WMAgent with Rucio enabled: $WMAGENT_USE_RUCIO"
 
 
 #########################

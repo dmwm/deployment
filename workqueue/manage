@@ -43,12 +43,10 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
-export WMCORE_USE_RUCIO=true
 export YUI_ROOT
 export WMAGENT_CONFIG=${CFGFILE}
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export RUCIO_HOME=$CFGDIR
-echo "WorkQueue with Rucio enabled: $WMCORE_USE_RUCIO"
 
 export WMCORE_ROOT=$WORKQUEUE_ROOT/lib/python*/site-packages
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then

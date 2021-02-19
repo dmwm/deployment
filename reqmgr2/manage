@@ -45,7 +45,6 @@ WMCORE_BIN=$ROOT/apps/$ME/bin
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
-export WMCORE_USE_RUCIO=false
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export WMCORE_ROOT=$REQMGR2_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
