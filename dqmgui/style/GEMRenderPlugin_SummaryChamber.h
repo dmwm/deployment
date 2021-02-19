@@ -66,32 +66,25 @@ class SummaryChamber {
     static const unsigned short COLOR_GREY   = 17;
     static const unsigned short COLOR_YELLOW = 5;
     
-    std::unordered_map<uint32_t, ChamberID> bGEM_ChInfo;
-    std::unordered_map<uint32_t, TBox *>    bGEM_box;
-    std::unordered_map<uint32_t, TText *>  bGEM_label;
+    std::vector<TBox  *> m_listGEMBox;
+    std::vector<TText *> m_listGEMText;
     
-    Int_t m_nNumLayer, m_nNumChamber;
-    Float_t m_fScaleX, m_fScaleY;
+    Float_t m_fPosZeroX, m_fPosZeroY;
+    Float_t m_fWHist, m_fHHist;
 
-    TBox*  bBlank;
-    TBox*  bLegend[10];
-    TText* tLegend[10];
-    TText* tStatusTitle;
-    TText* tLegendTitle;
+    TBox*  m_bBlank;
+    TBox*  m_bLegend[10];
+    TText* m_tLegend[10];
 
   public:
-
     SummaryChamber();
     ~SummaryChamber();
+    void AddMoreGEMBox(int nNumBox);
+    void SetColor(float fVal, TBox *box, unsigned int &unStatusAll, unsigned int &unStatusBad);
     void drawStats(TH2*& me);
 
   private:
-
     void printLegendBox(const unsigned int& number, const std::string title, int color);
-    float GetXmin(ChamberID &id) const;
-    float GetXmax(ChamberID &id) const;
-    float GetYmin(ChamberID &id) const;
-    float GetYmax(ChamberID &id) const;
 
 };
 
