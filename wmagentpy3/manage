@@ -8,13 +8,13 @@ THIS_SCRIPT=$(readlink -f $0)
 PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
 ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
 
-INSTALL_AG="$ROOT_DIR/install/wmagent"
+INSTALL_AG="$ROOT_DIR/install/wmagentpy3"
 INSTALL_MYSQL="$ROOT_DIR/install/mysql"
 INSTALL_COUCH="$ROOT_DIR/install/couchdb"
 
 CONFIG_COUCH="$ROOT_DIR/config/couchdb"
 CONFIG_MYSQL="$ROOT_DIR/config/mysql"
-CONFIG_AG="$ROOT_DIR/config/wmagent"
+CONFIG_AG="$ROOT_DIR/config/wmagentpy3"
 CONFIG_RUCIO="$ROOT_DIR/config/rucio/etc/rucio.cfg"
 
 USING_AG=0
