@@ -1,0 +1,761 @@
+#!/bin/bash
+
+
+#
+# Global variables etc
+#
+THIS_SCRIPT=$(readlink -f $0)
+PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
+ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
+
+INSTALL_AG="$ROOT_DIR/install/wmagent"
+INSTALL_MYSQL="$ROOT_DIR/install/mysql"
+INSTALL_COUCH="$ROOT_DIR/install/couchdb"
+
+CONFIG_COUCH="$ROOT_DIR/config/couchdb"
+CONFIG_MYSQL="$ROOT_DIR/config/mysql"
+CONFIG_AG="$ROOT_DIR/config/wmagent"
+CONFIG_RUCIO="$ROOT_DIR/config/rucio/etc/rucio.cfg"
+
+USING_AG=0
+
+MYSQL_INIT_DONE=0
+COUCH_INIT_DONE=0
+AG_INIT_DONE=0
+
+
+MYSQL_DATABASE_AG=wmagent
+
+ORACLE_USER=
+ORACLE_PASS=
+ORACLE_TNS=
+
+MYSQL_USER=
+MYSQL_PASS=
+if [ -z "$DBSOCK" ]; then
+    MYSQL_SOCK=$INSTALL_MYSQL/logs/mysql.sock 
+else
+    MYSQL_SOCK=$DBSOCK
+fi
+
+GRAFANA_TOKEN=
+
+COUCH_USER=
+COUCH_PASS=
+
+COUCH_HOST=127.0.0.1
+COUCH_PORT=5984
+COUCH_HOST_NAME=localhost
+COUCH_CERT_FILE=
+COUCH_KEY_FILE=
+
+GLOBAL_WORKQUEUE_URL=
+LOCAL_WORKQUEUE_DBNAME=workqueue
+
+WORKLOAD_SUMMARY_URL=
+WORKLOAD_SUMMARY_DBNAME=workloadsummary
+WMSTATS_URL=
+REQMGR2_URL=
+ACDC_URL=
+DBS3_URL=
+PHEDEX_URL=
+DQM_URL=
+REQUESTCOUCH_URL=
+CENTRAL_LOGDB_URL=
+WMARCHIVE_URL=
+AMQ_CREDENTIALS=
+RUCIO_HOST=
+RUCIO_AUTH=
+RUCIO_ACCOUNT=
+
+#
+# Init checks
+#
+# are we using the agent?
+if [ -e $INSTALL_AG/.using ]; then USING_AG=1; else USING_AG=0; fi;
+
+# Flags to show which tools have been initialised
+if [ -e $INSTALL_AG/.init ]; then AG_INIT_DONE=1; else AG_INIT_DONE=0; fi;
+if [ -e $INSTALL_MYSQL/.init ]; then MYSQL_INIT_DONE=1; else MYSQL_INIT_DONE=0; fi;
+if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; fi;
+
+#callbacks to activate or show initialisation has been done
+activate_agent(){
+    touch $INSTALL_AG/.using
+    cp $WMCORE_ROOT/etc/WMAgentConfig.py $CONFIG_AG/config-template.py
+}
+
+inited_agent(){
+    touch $INSTALL_AG/.init
+}
+inited_couch(){
+    touch $INSTALL_COUCH/.init
+}
+inited_mysql(){
+    touch $INSTALL_MYSQL/.init
+}
+
+
+#
+# Passwords/Secrets handling
+#
+load_secrets_file(){
+    if [ "x$WMAGENT_SECRETS_LOCATION" == "x" ]; then
+        WMAGENT_SECRETS_LOCATION=$HOME/WMAgent.secrets;
+    fi
+    if [ ! -e $WMAGENT_SECRETS_LOCATION ]; then
+        echo "Password file: $WMAGENT_SECRETS_LOCATION does not exist"
+        echo "Either set WMAGENT_SECRETS_LOCATION to a valid file or check that $HOME/WMAgent.secrets exists"
+        exit 1;
+    fi
+
+    local MATCH_ORACLE_USER=`cat $WMAGENT_SECRETS_LOCATION | grep ORACLE_USER | sed s/ORACLE_USER=//`
+    local MATCH_ORACLE_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep ORACLE_PASS | sed s/ORACLE_PASS=//`
+    local MATCH_ORACLE_TNS=`cat $WMAGENT_SECRETS_LOCATION | grep ORACLE_TNS | sed s/ORACLE_TNS=//`
+    local MATCH_GRAFANA_TOKEN=`cat $WMAGENT_SECRETS_LOCATION | grep GRAFANA_TOKEN | sed s/GRAFANA_TOKEN=//`
+    local MATCH_MYSQL_USER=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_USER | sed s/MYSQL_USER=//`
+    local MATCH_MYSQL_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep MYSQL_PASS | sed s/MYSQL_PASS=//`
+    local MATCH_COUCH_USER=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_USER | sed s/COUCH_USER=//`
+    local MATCH_COUCH_PASS=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PASS | sed s/COUCH_PASS=//`
+    local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
+    local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
+    local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
+    local MATCH_GLOBAL_WORKQUEUE_URL=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_URL | sed s/GLOBAL_WORKQUEUE_URL=//`
+    local MATCH_LOCAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_DBNAME | sed s/LOCAL_WORKQUEUE_DBNAME=//`
+    local MATCH_WORKLOAD_SUMMARY_URL=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_URL | sed s/WORKLOAD_SUMMARY_URL=//`
+    local MATCH_WORKLOAD_SUMMARY_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_DBNAME | sed s/WORKLOAD_SUMMARY_DBNAME=//`
+    local MATCH_WMSTATS_URL=`cat $WMAGENT_SECRETS_LOCATION | grep WMSTATS_URL | sed s/WMSTATS_URL=//`
+    local MATCH_REQMGR2_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR2_URL | sed s/REQMGR2_URL=//`
+    local MATCH_ACDC_URL=`cat $WMAGENT_SECRETS_LOCATION | grep ACDC_URL | sed s/ACDC_URL=//`
+    local MATCH_DBS3_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DBS3_URL | sed s/DBS3_URL=//`
+    local MATCH_PHEDEX_URL=`cat $WMAGENT_SECRETS_LOCATION | grep PHEDEX_URL | sed s/PHEDEX_URL=//`
+    local MATCH_DQM_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DQM_URL | sed s/DQM_URL=//`
+    local MATCH_REQUESTCOUCH_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQUESTCOUCH_URL | sed s/REQUESTCOUCH_URL=//`
+    local MATCH_CENTRAL_LOGDB_URL=`cat $WMAGENT_SECRETS_LOCATION | grep CENTRAL_LOGDB_URL | sed s/CENTRAL_LOGDB_URL=//`
+    local MATCH_WMARCHIVE_URL=`cat $WMAGENT_SECRETS_LOCATION | grep WMARCHIVE_URL | sed s/WMARCHIVE_URL=//`
+    local MATCH_AMQ_CREDENTIALS=`cat $WMAGENT_SECRETS_LOCATION | grep AMQ_CREDENTIALS | sed s/AMQ_CREDENTIALS=//`
+    local MATCH_RUCIO_HOST=`cat $WMAGENT_SECRETS_LOCATION | grep RUCIO_HOST | sed s/RUCIO_HOST=//`
+    local MATCH_RUCIO_AUTH=`cat $WMAGENT_SECRETS_LOCATION | grep RUCIO_AUTH | sed s/RUCIO_AUTH=//`
+    local MATCH_RUCIO_ACCOUNT=`cat $WMAGENT_SECRETS_LOCATION | grep RUCIO_ACCOUNT | sed s/RUCIO_ACCOUNT=//`
+
+    # database settings (mysql or oracle)
+    if [ "x$MATCH_ORACLE_USER" == "x" ]; then
+        MYSQL_USER=${MATCH_MYSQL_USER:-wmagentmysql};
+        MYSQL_PASS=$MATCH_MYSQL_PASS;
+        if [ "x$MYSQL_PASS" == "x" ]; then
+            echo "Secrets file does not contain MYSQL_PASS";
+            exit 1
+        fi
+    else
+        ORACLE_USER=$MATCH_ORACLE_USER;
+        ORACLE_PASS=$MATCH_ORACLE_PASS;
+        ORACLE_TNS=$MATCH_ORACLE_TNS;
+        if [ "x$ORACLE_PASS" == "x" ] || [ "x$ORACLE_TNS" == "x" ]; then
+            echo "Secrets file doesnt contain ORACLE_PASS or ORACLE_TNS";
+            exit 1
+        fi
+    fi
+
+    GRAFANA_TOKEN=${MATCH_GRAFANA_TOKEN:-$GRAFANA_TOKEN};
+    if [ "x$GRAFANA_TOKEN" == "x" ]; then
+        echo "Secrets file doesnt contain GRAFANA_TOKEN";
+        exit 1
+    fi
+
+    # basic couch settings
+    COUCH_USER=${MATCH_COUCH_USER:-wmagentcouch};
+    COUCH_PASS=${MATCH_COUCH_PASS:-$COUCH_PASS};
+    if [ "x$COUCH_PASS" == "x" ]; then
+        echo "Secrets file doesnt contain COUCH_PASS";
+        exit 1
+    fi
+    
+    COUCH_PORT=${MATCH_COUCH_PORT:-$COUCH_PORT};
+    # if couch ssl certificate not specified check X509_USER_CERT and X509_USER_PROXY
+    COUCH_CERT_FILE=${MATCH_COUCH_CERT_FILE:-${X509_USER_CERT:-$X509_USER_PROXY}};
+
+    # if couch ssl key not specified check X509_USER_KEY and X509_USER_PROXY
+    COUCH_KEY_FILE=${MATCH_COUCH_KEY_FILE:-${X509_USER_KEY:-$X509_USER_PROXY}};
+
+    GLOBAL_WORKQUEUE_URL=${MATCH_GLOBAL_WORKQUEUE_URL:-$GLOBAL_WORKQUEUE_URL};
+
+    LOCAL_WORKQUEUE_DBNAME=${MATCH_LOCAL_WORKQUEUE_DBNAME:-$LOCAL_WORKQUEUE_DBNAME};
+
+    WORKLOAD_SUMMARY_URL=${MATCH_WORKLOAD_SUMMARY_URL:-$WORKLOAD_SUMMARY_URL};
+    
+    WMSTATS_URL=${MATCH_WMSTATS_URL:-$WMSTATS_URL}
+
+    REQMGR2_URL=${MATCH_REQMGR2_URL:-$REQMGR2_URL}
+    
+    ACDC_URL=${MATCH_ACDC_URL:-$ACDC_URL}
+    
+    DBS3_URL=${MATCH_DBS3_URL:-$DBS3_URL}
+    
+    PHEDEX_URL=${MATCH_PHEDEX_URL:-$PHEDEX_URL}
+    
+    DQM_URL=${MATCH_DQM_URL:-$DQM_URL}
+
+    REQUESTCOUCH_URL=${MATCH_REQUESTCOUCH_URL:-$REQUESTCOUCH_URL}
+    
+    CENTRAL_LOGDB_URL=${MATCH_CENTRAL_LOGDB_URL:-$CENTRAL_LOGDB_URL}
+    
+    WMARCHIVE_URL=${MATCH_WMARCHIVE_URL:-$WMARCHIVE_URL}
+
+    AMQ_CREDENTIALS=${MATCH_AMQ_CREDENTIALS:-$AMQ_CREDENTIALS}
+    RUCIO_HOST=${MATCH_RUCIO_HOST:-$RUCIO_HOST}
+    RUCIO_AUTH=${MATCH_RUCIO_AUTH:-$RUCIO_AUTH}
+    RUCIO_ACCOUNT=${MATCH_RUCIO_ACCOUNT:-$RUCIO_ACCOUNT}
+}
+
+print_settings(){
+    echo "INSTALL_AG=                $INSTALL_AG                "
+    echo "CONFIG_COUCH=              $CONFIG_COUCH              "
+    echo "CONFIG_MYSQL=              $CONFIG_MYSQL              "
+    echo "CONFIG_AG=                 $CONFIG_AG                 "
+    echo "MYSQL_DATABASE_AG=         $MYSQL_DATABASE_AG         "
+    echo "ORACLE_USER=               $ORACLE_USER               "
+    echo "ORACLE_PASS=               $ORACLE_PASS               "
+    echo "ORACLE_TNS=                $ORACLE_TNS                "
+    echo "GRAFANA_TOKEN=             $GRAFANA_TOKEN             "
+    echo "MYSQL_USER=                $MYSQL_USER                "
+    echo "MYSQL_PASS=                $MYSQL_PASS                "
+    echo "COUCH_USER=                $COUCH_USER                "
+    echo "COUCH_PASS=                $COUCH_PASS                "
+    echo "COUCH_PORT=                $COUCH_PORT                "
+    echo "COUCH_CERT_FILE=           $COUCH_CERT_FILE           "
+    echo "COUCH_KEY_FILE=            $COUCH_KEY_FILE            "
+    echo "GLOBAL_WORKQUEUE_URL=      $GLOBAL_WORKQUEUE_URL      "
+    echo "LOCAL_WORKQUEUE_DBNAME=    $LOCAL_WORKQUEUE_DBNAME    "
+    echo "WORKLOAD_SUMMARY_URL=      $WORKLOAD_SUMMARY_URL      "
+    echo "WORKLOAD_SUMMARY_DBNAME=   $WORKLOAD_SUMMARY_DBNAME   "
+    echo "WMSTATS_URL=               $WMSTATS_URL               "
+    echo "REQMGR2_URL=               $REQMGR2_URL               "
+    echo "ACDC_URL=                  $ACDC_URL                  "
+    echo "DBS3_URL=                  $DBS3_URL                  "
+    echo "PHEDEX_URL=                $PHEDEX_URL                "
+    echo "DQM_URL=                   $DQM_URL                   "
+    echo "REQUESTCOUCH_URL=          $REQUESTCOUCH_URL          "
+    echo "CENTRAL_LOGDB_URL=         $CENTRAL_LOGDB_URL         "
+    echo "WMARCHIVE_URL=             $WMARCHIVE_URL             "
+    echo "AMQ_CREDENTIALS=           $AMQ_CREDENTIALS           "
+    echo "RUCIO_HOST=                $RUCIO_HOST                "
+    echo "RUCIO_AUTH=                $RUCIO_AUTH                "
+    echo "RUCIO_ACCOUNT=             $RUCIO_ACCOUNT             "
+
+}
+
+
+#
+# Environment
+#
+
+. $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
+
+export WMAGENT_ROOT
+# WMAGENT_ROOT == WMCORE_ROOT now but in old rpms WMCORE_ROOT was seperate,
+# if WMCORE_ROOT already set export it, else set to WMAGENT_ROOT
+export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
+export YUI_ROOT
+export COUCHSKEL_ROOT
+
+
+#########################
+#  MySQL                #
+#########################
+
+#
+# first time startup routines for mysql
+# pre gets called before startup, post called after it
+init_mysql_db_pre(){
+    echo "Installing the mysql database area..."
+    mkdir -p $INSTALL_MYSQL/database
+    mkdir -p $INSTALL_MYSQL/logs
+    mysql_install_db --datadir=$INSTALL_MYSQL/database
+}
+init_mysql_db_post(){
+    #install the WMAgent stuff
+    echo "Installing the mysql schema..."
+    load_secrets_file;
+    local TIMEOUT=0;
+    while [ ! -e $MYSQL_SOCK ]
+    do
+        sleep 2;
+        TIMEOUT=$(($TIMEOUT+2))
+        if [ $TIMEOUT -ge 300 ]; then
+            echo "ERROR: Timeout waiting for mysqld to start."
+            exit 1;
+        fi
+    done
+    echo "Socket file exists, proceeding with schema install..."
+    mysqladmin -u root password $MYSQL_PASS --socket=$MYSQL_SOCK
+
+    inited_mysql;
+
+    # create the user & grant privs (same db user for all three components)
+    local SQLUSER="CREATE USER '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASS}';"
+    local SQLGRANT="GRANT ALL ON *.* TO $MYSQL_USER@localhost WITH GRANT OPTION;"
+
+    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "$SQLUSER"
+    mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "$SQLGRANT"
+
+    # create databases for agent
+    if [ $USING_AG -eq 1 ]; then
+        echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
+    fi
+}
+
+status_of_mysql(){
+    load_secrets_file;
+    if [ "x$MYSQL_USER" == "x" ]; then
+	echo "Not using MySQL..."
+	exit 1;
+    fi
+
+    echo "+ Status of MySQL"
+    if [ ! -e $INSTALL_MYSQL/logs/mysqld.pid ]; then
+        echo "++ MySQL process file not found"
+        return
+    fi
+    local MYSQL_PID=`cat $INSTALL_MYSQL/logs/mysqld.pid`
+    kill -0 $MYSQL_PID;
+    local MYSQL_STATUS=$?
+    if [ $MYSQL_STATUS -eq 0 ]; then
+        echo "++ MYSQL running with process: $MYSQL_PID";
+    else
+        echo "++ MYSQL process not running"
+    fi
+
+    echo "++" `mysqladmin -u root --password=$MYSQL_PASS --socket=$MYSQL_SOCK status`
+}
+
+#
+# Main startup method for MySQL.
+# Checks for initialisation
+start_mysql(){
+    load_secrets_file;
+    if [ "x$MYSQL_USER" == "x" ]; then
+	echo "Not using MySQL..."
+	exit 1;
+    fi
+
+    echo "Starting mysql..."
+
+    if [ $MYSQL_INIT_DONE -eq 0 ]; then
+	echo "MySQL has not been initialised... running pre initialisation";
+	init_mysql_db_pre;
+    fi
+
+    # Start mysqld to install the database schemas
+    #
+    echo "starting mysqld_safe..."
+    nohup mysqld_safe --defaults-extra-file=$CONFIG_MYSQL/my.cnf \
+                      --datadir=$INSTALL_MYSQL/database \
+                      --log-bin \
+                      --socket=$MYSQL_SOCK \
+                      --skip-networking --log-error=$INSTALL_MYSQL/logs/error.log \
+                      --pid-file=$INSTALL_MYSQL/logs/mysqld.pid > /dev/null 2>&1 < /dev/null &
+    local TIMEOUT=0;
+    echo "Checking MySQL Socket file exists..."
+    while [ ! -e $MYSQL_SOCK ]
+      do
+      sleep 2;
+      TIMEOUT=$(($TIMEOUT+2))
+      if [ $TIMEOUT -ge 300 ]; then
+	  echo "ERROR: Timeout waiting for mysqld to start."
+	  exit 1;
+      fi
+    done
+    echo "Socket file exists: $MYSQL_SOCK"
+
+    if [ $MYSQL_INIT_DONE -eq 0 ]; then
+        echo "MySQL has not been initialised... running post initialisation";
+        init_mysql_db_post;
+    fi
+    echo "Checking Server connection..."
+    mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "SHOW GLOBAL STATUS" > /dev/null;
+    if [ $? -ne 0 ]; then
+	echo "ERROR: checking mysql database is running, failed to execute SHOW GLOBAL STATUS"
+	exit 1
+    fi
+   echo "Connection OK"
+}
+
+#
+# stop MySQL
+#
+stop_mysql(){
+    load_secrets_file;
+    if [ "x$MYSQL_USER" == "x" ]; then
+	echo "Not using MySQL..."
+	exit 1;
+    fi
+
+    echo "stopping mysql..."
+    mysqladmin -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK shutdown &
+    wait $!
+    echo "Making sure the MySQL socket file is removed..."
+    local TIMEOUT=0;
+    while [ -e $MYSQL_SOCK ]
+      do
+      sleep 2;
+      TIMEOUT=$(($TIMEOUT+2))
+      if [ $TIMEOUT -ge 300 ]; then
+	  echo "ERROR: Timeout waiting for mysqld to shutdown."
+	  echo "ERROR: Socket file still exists: $MYSQL_SOCK"
+	  exit 1;
+      fi
+    done
+    echo "MySQL is shutdown."
+}
+
+#
+# Wipe out MySQL
+# Will cause next start to recreate databases
+clean_mysql(){
+    load_secrets_file;
+    if [ "x$MYSQL_USER" == "x" ]; then
+	echo "Not using MySQL..."
+	exit 1;
+    fi
+
+    echo "cleaning MySQL DB...";
+    if [ -e $INSTALL_MYSQL/logs/mysql.pid ]; then stop_mysql; fi;
+
+    /bin/rm -f $INSTALL_MYSQL/.init
+    /bin/rm -f $MYSQL_SOCK
+    /bin/rm -f $INSTALL_MYSQL/logs/mysqld.pid
+    /bin/rm -rf $INSTALL_MYSQL/database/*
+}
+
+#
+# Database prompt so that people can poke around in the db interactively
+#
+db_prompt(){
+    load_secrets_file;
+    if [ "x$MYSQL_USER" != "x" ]; then
+	case "$2" in
+	  "wmagent")
+	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_AG};;
+	  *)
+	      echo "Unknown arg to db_prompt: $2"
+	      echo "Should be one of unittest, wmagent"
+	      exit 1
+	esac
+    elif [ "x$ORACLE_USER" != "x" ]; then
+	sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_TNS
+    else
+	echo "No database configured..."
+	exit 1;
+    fi
+}
+
+#########################
+#  CouchDB              #
+#########################
+
+#
+# first time startup for couch: disable admin party and create user based on secrets file
+#
+init_couch_pre(){
+    echo "Initialising CouchDB on $COUCH_HOST:$COUCH_PORT..."
+    mkdir -p $INSTALL_COUCH/logs
+    mkdir -p $INSTALL_COUCH/database
+    perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_COUCH}" $CONFIG_COUCH/local.ini
+    # couch ini file requires IP based hostname
+    perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
+    if [ "x$COUCH_CERT_FILE" != "x" ] && [ "x$COUCH_KEY_FILE" != "x" ]; then
+	mkdir -p $INSTALL_COUCH/certs
+	perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+	perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
+	perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+	ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
+	ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
+    fi
+}
+
+init_couch_post(){
+    inited_couch;
+}
+
+status_of_couch(){
+    echo "+ Couch Status:"
+    if [ ! -e $INSTALL_COUCH/logs/couchdb.pid ]; then
+        echo "++ Couch process file not found"
+        return
+    fi
+    local COUCH_PID=`cat $INSTALL_COUCH/logs/couchdb.pid`
+    kill -0 $COUCH_PID;
+    local COUCH_STATUS=$?
+    if [ $COUCH_STATUS -eq 0 ]; then
+        echo "++ Couch running with process: $COUCH_PID";
+    else
+        echo "++ Couch process not running"
+    fi
+    echo "++" `curl -s $COUCH_HOST:$COUCH_PORT`
+}
+
+#
+# Startup couch
+#
+start_couch(){
+    load_secrets_file;
+    echo "starting couch..."
+    if [ $COUCH_INIT_DONE -eq 0 ]; then
+	echo "CouchDB has not been initialised... running pre initialisation";
+	init_couch_pre;
+    fi
+    couchdb -b -a $CONFIG_COUCH/local.ini \
+            -p $INSTALL_COUCH/logs/couchdb.pid \
+            -e $INSTALL_COUCH/logs/stderr.log \
+            -o /dev/null
+    if [ $COUCH_INIT_DONE -eq 0 ]; then
+	echo "CouchDB has not been initialised... running post initialisation"
+	init_couch_post;
+    fi
+}
+
+#
+# shutdown couch
+#
+stop_couch(){
+    echo "stopping couch...";
+    couchdb  -d  -p $INSTALL_COUCH/logs/couchdb.pid;
+}
+
+clean_couch(){
+    echo "cleaning couch installation..."
+    stop_couch
+    echo "removing files"
+    rm -f $INSTALL_COUCH/.init
+    rm -rf $INSTALL_COUCH/database/*
+}
+
+
+#
+# combined startup of all required services
+#
+start_services(){
+    load_secrets_file;
+    echo "Starting Services..."
+    #start up the services required by the agent
+    start_couch;
+    if [ "x$MYSQL_USER" != "x" ]; then
+	start_mysql;
+    fi
+}
+
+stop_services(){
+    load_secrets_file;
+    #shut down all services
+    echo "Shutting down services..."
+    stop_couch;
+    if [ "x$MYSQL_USER" != "x" ]; then
+	stop_mysql;
+    fi
+}
+
+##############################
+#  Agent stuff               #
+##############################
+
+# update the rucio.cfg file with the proper parameters from the secrets file
+init_rucio(){
+    sed -i "s+RUCIO_HOST_OVERWRITE+$RUCIO_HOST+" $CONFIG_RUCIO
+    sed -i "s+RUCIO_AUTH_OVERWRITE+$RUCIO_AUTH+" $CONFIG_RUCIO
+}
+
+# generate the agent config from the basic template
+init_wmagent(){
+    load_secrets_file;
+    init_rucio;
+
+    if [ "x$MYSQL_USER" != "x" ]; then
+        local database_options="--mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_AG \
+                          --mysql_socket=$MYSQL_SOCK "
+    elif [ "x$ORACLE_USER" != "x" ]; then
+        local database_options="--coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS "
+    else
+	echo "No database configured, should never have reached this point..."
+	exit 1;
+    fi
+
+	wmagent-mod-config $database_options \
+	                   --input=$CONFIG_AG/config-template.py \
+                       --output=$CONFIG_AG/config.py \
+                       --working_dir=$INSTALL_AG \
+                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
+                       --global_workqueue_url=$GLOBAL_WORKQUEUE_URL \
+                       --workqueue_db_name=$LOCAL_WORKQUEUE_DBNAME \
+                       --workload_summary_url=$WORKLOAD_SUMMARY_URL \
+                       --grafana_token=$GRAFANA_TOKEN \
+                       --wmstats_url=$WMSTATS_URL \
+                       --reqmgr2_url=$REQMGR2_URL \
+	                   --acdc_url=$ACDC_URL \
+	                   --dbs3_url=$DBS3_URL \
+	                   --phedex_url=$PHEDEX_URL \
+	                   --dqm_url=$DQM_URL \
+	                   --requestcouch_url=$REQUESTCOUCH_URL \
+	                   --central_logdb_url=$CENTRAL_LOGDB_URL \
+	                   --wmarchive_url=$WMARCHIVE_URL \
+	                   --amq_credentials=$AMQ_CREDENTIALS \
+	                   --rucio_account=$RUCIO_ACCOUNT \
+	                   --rucio_host=$RUCIO_HOST \
+	                   --rucio_auth=$RUCIO_AUTH
+
+    wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
+    export WMAGENT_CONFIG=$CONFIG_AG/config.py
+    wmagent-couchapp-init;
+    unset WMAGENT_CONFIG
+    inited_agent;
+}
+
+#
+# initialise the agent based on the project installed
+#
+init_agent(){
+    if [ $USING_AG -eq 1 ]; then
+        if [ $AG_INIT_DONE -eq 0 ]; then
+            echo "Initialising Agent..."
+            init_wmagent;
+        fi
+    fi
+}
+
+start_agent(){
+    init_agent;
+
+    if [ $USING_AG -eq 1 ]; then
+        echo "Starting WMAgent..."
+        wmcoreD --start --config=$CONFIG_AG/config.py
+    fi
+}
+
+stop_agent(){
+    if [ $USING_AG -eq 1 ]; then
+        echo "Shutting down WMAgent...";
+        wmcoreD --shutdown --config=$CONFIG_AG/config.py;
+    fi
+}
+
+status_of_agent(){
+    if [ $USING_AG -eq 1 ]; then
+        echo "Status of WMAgent:"
+        wmcoreD --status --config=$CONFIG_AG/config.py
+    fi
+}
+
+
+#
+# revert agent back to pre initialised state & wipe out
+# everything currently in existence.
+clean_agent(){
+    load_secrets_file;
+    stop_agent;
+
+    if [ $USING_AG -eq 1 ]; then
+        echo "Cleaning WMAgent..."
+        rm -rf $INSTALL_AG/*
+        rm -f $CONFIG_AG/config.py;
+        rm -f $INSTALL_AG/.init
+
+        if [ "x$MYSQL_USER" != "x" ]; then
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "drop database ${MYSQL_DATABASE_AG}"
+            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
+	    fi
+    fi
+}
+
+
+status(){
+    load_secrets_file;
+    status_of_couch;
+    if [ "x$MYSQL_USER" != "x" ]; then
+	status_of_mysql;
+    fi
+    status_of_agent;
+}
+
+clean_all(){
+    load_secrets_file;
+    if [ "x$MYSQL_USER" != "x" ]; then
+	clean_mysql;
+    fi
+    clean_couch;
+    clean_agent;
+}
+
+
+execute_command_agent(){
+    shift;
+    local RUNTHIS=$1
+    local WMCORE_BIN_DIR=$WMCORE_ROOT/bin
+    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
+        echo "$RUNTHIS is not a binary in WMCore/bin"
+        exit 1
+    fi
+    shift;
+    load_secrets_file;
+    export WMAGENT_CONFIG=$CONFIG_AG/config.py
+    echo "Executing $RUNTHIS $@ ..."
+    $RUNTHIS $@;
+}
+
+
+help(){
+    echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
+}
+
+
+
+#######################################################
+# Main
+#######################################################
+
+case $1 in
+  status)
+    status ;;
+  activate-agent)
+    activate_agent;;
+  start-services)
+    start_services;;
+  stop-services)
+    stop_services;;
+  start-mysql)
+    start_mysql;;
+  stop-mysql)
+    stop_mysql;;
+  clean-mysql)
+     clean_mysql;;
+  db-prompt)
+     db_prompt $@;;
+  mysql-prompt)
+     db_prompt $@;;
+  start-couch)
+     start_couch;;
+  stop-couch)
+     stop_couch;;
+  clean-couch)
+     clean_couch;;
+  init-agent)
+     init_agent;;
+  start-agent)
+     start_agent;;
+  stop-agent)
+     stop_agent;;
+  clean-agent)
+     clean_agent;;
+  clean-all)
+     clean_all;;
+  execute-agent)
+     execute_command_agent $@;;
+  help)
+    help ;;
+  version)
+    echo "Management script for WMAgent. No idea what version, at least 2 though" ;;
+  * )
+    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+    exit 1 ;;
+esac
