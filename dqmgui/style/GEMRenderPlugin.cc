@@ -155,10 +155,6 @@ private:
       }
 
     }
-    else if (TPRegexp("^GEM/digi/total_strips_per_event_[\\w\\W]+$").Match(o.name))
-    {
-      c->SetLogy(true);
-    }
     else
     {
       gStyle->SetOptStat(10);

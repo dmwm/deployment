@@ -31,110 +31,105 @@ uint32_t ChIdToInt(ChamberID &id) {
 
 
 SummaryChamber::SummaryChamber() {
-  m_fPosZeroX = 0.5;
-  m_fPosZeroY = 0.5;
+  m_nNumLayer = 0;
+  m_nNumChamber = 36;
   
-  AddMoreGEMBox(800);
+  m_fScaleX = 1.005;
+  m_fScaleY = 1.0;
   
-  m_bBlank = new TBox(m_fPosZeroX, m_fPosZeroY, m_fPosZeroX, m_fPosZeroY);
-  m_bBlank->SetFillColor(0);
-  m_bBlank->SetLineColor(1);
-  m_bBlank->SetLineStyle(1);
+  std::vector<ChamberID> listChPre;
   
-  for (int i = 0; i < 10; i++) {
-    m_bLegend[ i ] = new TBox(0.0, 0.0, 1.0, 1.0);
-    m_tLegend[ i ] = new TText(0.0, 0.0, "");
+  for ( Int_t nR = -1 ; nR <= 1 ; nR += 2 )
+  for ( Int_t nS = 1 ; nS <= 2 ; nS++ )
+  //for ( Int_t nS = 1 ; nS <= 1 ; nS++ ) // When watching only GE11
+  for ( Int_t nL = 1 ; nL <= 2 ; nL++ )
+  {
+    ChamberID idNew;
     
-    m_bLegend[ i ]->SetLineColor(1);
-    m_bLegend[ i ]->SetLineStyle(2);
+    idNew.nRegion  = nR;
+    idNew.nStation = nS;
+    idNew.nLayer   = nL;
+    idNew.nChamber = 0;
+    idNew.bIsDouble = ( nS == 2 );
     
-    m_tLegend[ i ]->SetTextAlign(22);
-    m_tLegend[ i ]->SetTextFont(42);
-    m_tLegend[ i ]->SetTextSize(0.015);
+    listChPre.push_back(idNew);
   }
+  
+  auto lambdaChamber = [](ChamberID a, ChamberID b)->bool {
+    Int_t nA = a.nRegion * ( 20 * a.nStation + a.nLayer ); // Maybe 10, not 20, is enough
+    Int_t nB = b.nRegion * ( 20 * b.nStation + b.nLayer );
+    return nA > nB;
+  };
+  
+  //std::sort(listChPre.begin(), listChPre.end(), lambdaChamber);
+  for ( unsigned int i = 0 ; i < (unsigned int)listChPre.size() ; i++ ) {
+    for ( unsigned int j = i + 1 ; j < (unsigned int)listChPre.size() ; j++ ) {
+      if ( !lambdaChamber(listChPre[ i ], listChPre[ j ]) ) {
+        auto objS = listChPre[ i ];
+        listChPre[ i ] = listChPre[ j ];
+        listChPre[ j ] = objS;
+      }
+    }
+  }
+  
+  for ( auto id : listChPre ) {
+    m_nNumLayer++;
+    id.nIdx = m_nNumLayer;
+    Int_t nNumChSub = ( !id.bIsDouble ? m_nNumChamber : m_nNumChamber / 2 );
+    
+    for ( Int_t nC = 1 ; nC <= nNumChSub ; nC++ ) {
+      id.nChamber = nC;
+      uint32_t nIdxFull = ChIdToInt(id);
+      bGEM_ChInfo[ nIdxFull ] = id;
+      
+      bGEM_box[ nIdxFull ]   = 0;
+      bGEM_label[ nIdxFull ] = 0;
+    }
+  }
+  
+  bBlank = new TBox(0.0, 0.0, 1.0 + m_fScaleX * m_nNumChamber, m_fScaleY * m_nNumLayer);
+  bBlank->SetFillColor(0);
+  bBlank->SetLineColor(1);
+  bBlank->SetLineStyle(1);
+  
+  for (int i = 0; i < 5; i++) {
+      bLegend[i] = 0;
+      tLegend[i] = 0;
+  }
+  
+  tStatusTitle = new TText(3.5 + m_fScaleX * m_nNumChamber, 17.5, "Status");
+  tStatusTitle->SetTextAlign(22);
+  tStatusTitle->SetTextFont(42);
+  tStatusTitle->SetTextSize(0.02);
+  
+  tLegendTitle = new TText(3.5 + m_fScaleX * m_nNumChamber, 13.5, "Legend");
+  tLegendTitle->SetTextAlign(22);
+  tLegendTitle->SetTextFont(42);
+  tLegendTitle->SetTextSize(0.02);
 }
 
 
 SummaryChamber::~SummaryChamber() {
-  for ( int i = 0 ; i < (int)m_listGEMBox.size() ; i++ ) {
-    delete m_listGEMBox[ i ];
-    delete m_listGEMText[ i ];
-  }
-  
-  for ( int i = 0 ; i < 10 ; i++ ) {
-    delete m_bLegend[ i ];
-    delete m_bLegend[ i ];
-  }
-  
-  delete m_bBlank;
+  delete bBlank;
+  delete tStatusTitle;
+  delete tLegendTitle;
 }
 
 
-void SummaryChamber::AddMoreGEMBox(int nNumBox) {
-  for ( int i = (int)m_listGEMBox.size() ; i < nNumBox ; i++ ) {
-    m_listGEMBox.push_back(nullptr);
-    m_listGEMText.push_back(nullptr);
-    m_listGEMBox[ i ]   = new TBox(0.0, 0.0, 1.0, 1.0);
-    m_listGEMText[ i ] = new TText(0.0, 0.0, "");
-    
-    m_listGEMBox[ i ]->SetLineColor(1);
-    m_listGEMBox[ i ]->SetLineStyle(2);
-    
-    m_listGEMText[ i ]->SetTextAlign(22);
-    m_listGEMText[ i ]->SetTextFont(42);
-    m_listGEMText[ i ]->SetTextSize(0.015);
-  }
-}
+// Transform chamber ID to local canvas coordinates
 
 
-void SummaryChamber::SetColor(float fVal, TBox *box, unsigned int &unStatusAll, unsigned int &unStatusBad) {
-  switch ((int)( fVal + 0.5 )) {
-    // No data, no error
-    case 0:
-      box->SetFillColor(COLOR_WHITE);
-      unStatusAll += 1;
-      break;
-    // Data, no error
-    case 1:
-      box->SetFillColor(COLOR_GREEN);
-      unStatusAll += 1;
-      break;
-    // Error, hot
-    case 2:
-      box->SetFillColor(COLOR_RED);
-      unStatusAll += 1;
-      unStatusBad += 1;
-      break;
-    // Standby
-    case 3:
-      box->SetFillColor(COLOR_YELLOW);
-      unStatusAll += 1;
-      unStatusBad += 1;
-      break;
-    //// Masked
-    //case 4:
-    //  box->SetFillColor(COLOR_GREY);
-    //  break;
-    //// Cold
-    //case 5:
-    //  box->SetFillColor(COLOR_BLUE);
-    //  unStatusAll += 1;
-    //  unStatusBad += 1;
-    //  break;
-  }
-}
+float SummaryChamber::GetXmin(ChamberID &id) const {return m_fScaleX * (id.nChamber-1) * (!id.bIsDouble ? 1.0 : 2.0);}
+float SummaryChamber::GetXmax(ChamberID &id) const {return m_fScaleX * (id.nChamber  ) * (!id.bIsDouble ? 1.0 : 2.0);}
+float SummaryChamber::GetYmin(ChamberID &id) const {return m_fScaleY * (id.nIdx-1);}
+float SummaryChamber::GetYmax(ChamberID &id) const {return m_fScaleY * (id.nIdx  );}
 
 
 void SummaryChamber::drawStats(TH2*& me) {
   gStyle->SetPalette(1, 0);
   
-  int nNbinsX = me->GetNbinsX();
-  int nNbinsY = me->GetNbinsY();
-  
-  // IMPORTANT NOTE: The position of the left-bottom corner of the histogram is (0.5, 0.5) 
-  //                 and that of the right-top corner is (nNbinsX + 0.5, nNbinsY + 0.5).
-  m_fWHist = nNbinsX;
-  m_fHHist = nNbinsY;
+  // Useless labels for the current layout
+  for ( int i = 0 ; i < me->GetNbinsX() ; i++ ) me->GetXaxis()->SetBinLabel(i + 1, "");
   
   /** Cosmetics... :P */
   me->GetXaxis()->SetTitle("Chamber");
@@ -145,73 +140,179 @@ void SummaryChamber::drawStats(TH2*& me) {
   me->GetXaxis()->SetTickLength(0.0);
   
   me->SetStats(false);
-  //me->Draw("axis");
+  me->Draw("");
   
-  //m_bBlank->SetX1(0.5);  // Already set
-  //m_bBlank->SetY1(0.5);
-  m_bBlank->SetX2(m_fPosZeroX + m_fWHist);
-  m_bBlank->SetY2(m_fPosZeroY + m_fHHist);
-  m_bBlank->SetFillStyle(1001);
-  m_bBlank->Draw("");
+  bBlank->SetFillStyle(1001);
+  bBlank->Draw("");
+  
+  std::bitset < 10 > legend;
+  legend.reset();
+  
+  /** VR: Making it floats and moving up */
+  float fXMin, fXMax, fYMin, fYMax;
+  float BinContent = 0;
+  int fillColor = 0;
   
   unsigned int status_all = 0, status_bad = 0;
   
-  int nNumTotalCh = 0;
-  for ( int j = 1 ; j <= nNbinsY ; j++ ) nNumTotalCh += (int)( me->GetBinContent(0, j) + 0.5 );
-  
-  if ( nNumTotalCh > (int)m_listGEMBox.size() ) AddMoreGEMBox(nNumTotalCh);
-  
-  int nIdxBox = 0;
-  float fHBox = m_fHHist / nNbinsY;
-  for ( int nIdxLa = 1 ; nIdxLa <= nNbinsY ; nIdxLa++ ) {
-    int nNumCh = (int)( me->GetBinContent(0, nIdxLa) + 0.5 );
-    float fY1 = m_fPosZeroY + fHBox * ( nIdxLa - 1 ), fY2 = m_fPosZeroY + fHBox * nIdxLa;
-    float fWBox = m_fWHist / nNumCh;
-    for ( int nIdxCh = 1 ; nIdxCh <= nNumCh ; nIdxCh++ ) {
-      float fX1 = m_fPosZeroX + fWBox * ( nIdxCh - 1 ), fX2 = m_fPosZeroX + fWBox * nIdxCh;
-      auto boxCurr = m_listGEMBox[ nIdxBox ];
-      auto texCurr = m_listGEMText[ nIdxBox ];
-      float fVal = me->GetBinContent(nIdxCh, nIdxLa);
-      
-      boxCurr->SetX1(fX1);
-      boxCurr->SetX2(fX2);
-      boxCurr->SetY1(fY1);
-      boxCurr->SetY2(fY2);
-      SetColor(fVal, boxCurr, status_all, status_bad);
-      boxCurr->Draw("l");
-      
-      texCurr->SetText(0.5 * ( fX1 + fX2 ), 0.5 * ( fY1 + fY2 ), Form("%i", nIdxCh));
-      texCurr->Draw();
-      
-      nIdxBox++;
+  int nT = 0;
+  for ( auto itemBox : bGEM_box ) {
+    nT++;
+    auto gid = bGEM_ChInfo[ itemBox.first ];
+    
+    fXMin = GetXmin(gid);
+    fXMax = GetXmax(gid);
+    fYMin = GetYmin(gid);
+    fYMax = GetYmax(gid);
+    
+    BinContent = 0;
+    fillColor = 0;
+    
+    /** VR: if the station/ring is an exceptional one (less chambers) we should
+     * correct x coordinates of source. Casts are just to avoid warnings :) */
+    BinContent = (float) me->GetBinContent(gid.nChamber, gid.nIdx);
+    
+    fillColor = int(BinContent);
+    if (fillColor < 0 || fillColor > 5) fillColor = 0;
+    legend.set(fillColor);
+    
+    switch (fillColor) {
+      // No data, no error
+      case 0:
+        fillColor = COLOR_WHITE;
+        status_all += 1;
+        break;
+      // Data, no error
+      case 1:
+        fillColor = COLOR_GREEN;
+        status_all += 1;
+        break;
+      // Error, hot
+      case 2:
+        fillColor = COLOR_RED;
+        status_all += 1;
+        status_bad += 1;
+        break;
+      // Cold
+      case 3:
+        fillColor = COLOR_BLUE;
+        status_all += 1;
+        status_bad += 1;
+        break;
+      // Masked
+      case 4:
+        fillColor = COLOR_GREY;
+        break;
+      // Standby
+      case 5:
+        fillColor = COLOR_YELLOW;
+        status_all += 1;
+        status_bad += 1;
+        break;
     }
+    
+    if (bGEM_box[ itemBox.first ] == 0) {
+      bGEM_box[ itemBox.first ] = new TBox(fXMin, fYMin, fXMax, fYMax);
+      
+      bGEM_box[ itemBox.first ]->SetLineColor(1);
+      bGEM_box[ itemBox.first ]->SetLineStyle(2);
+    }
+    
+    bGEM_box[ itemBox.first ]->SetFillColor(fillColor);
+    bGEM_box[ itemBox.first ]->Draw("l");
+    
+    if (bGEM_label[ itemBox.first ] == 0) {
+      TString strChamberID = Form("%d", gid.nChamber);
+      bGEM_label[ itemBox.first ] = new TText((fXMin + fXMax) / 2.0, (fYMin + fYMax) / 2.0, strChamberID);
+      
+      bGEM_label[ itemBox.first ]->SetTextAlign(22);
+      bGEM_label[ itemBox.first ]->SetTextFont(42);
+      bGEM_label[ itemBox.first ]->SetTextSize(0.015);
+    }
+    
+    bGEM_label[ itemBox.first ]->Draw();
   }
   
-  printLegendBox(0, "OK/No Data", COLOR_WHITE);
-  printLegendBox(1, "OK/Data", COLOR_GREEN);
-  printLegendBox(2, "Error", COLOR_RED);
-  printLegendBox(3, "Warning", COLOR_YELLOW);
+  unsigned int legendBoxIndex = 2;
+  std::string meTitle(me->GetTitle());
+  
+  tStatusTitle->Draw();
+  tLegendTitle->Draw();
+  
+  // Only standby plus possibly masked?
+  if (legend == 0x20 || legend == 0x30) {
+    meTitle.append(" (STANDBY)");
+    me->SetTitle(meTitle.c_str());
+    
+    printLegendBox(0, "BAD", COLOR_RED);
+    printLegendBox(legendBoxIndex++, "Standby", COLOR_YELLOW);
+  } else {
+    double status = 1.0;
+    
+    if (status_all > 0) {
+      status = status - (1.0 * status_bad) / (1.0 * status_all);
+      meTitle.append(" (%4.1f%%)");
+      TString statusStr = Form(meTitle.c_str(), status * 100.0);
+      me->SetTitle(statusStr);
+    }
+    
+    if (status >= 0.75) {
+      printLegendBox(0, "GOOD", COLOR_GREEN);
+    } else {
+      printLegendBox(0, "BAD", COLOR_RED);
+    }
+    
+    if (legend.test(0)) printLegendBox(legendBoxIndex++, "OK/No Data", COLOR_WHITE);
+    if (legend.test(1)) printLegendBox(legendBoxIndex++, "OK/Data", COLOR_GREEN);
+    if (legend.test(2)) printLegendBox(legendBoxIndex++, "Error/Hot", COLOR_RED);
+    if (legend.test(3)) printLegendBox(legendBoxIndex++, "Cold", COLOR_BLUE);
+    if (legend.test(4)) printLegendBox(legendBoxIndex++, "Masked", COLOR_GREY);
+    if (legend.test(5)) printLegendBox(legendBoxIndex++, "Standby", COLOR_YELLOW);
+  }
 }
 
 
 void SummaryChamber::printLegendBox(const unsigned int& number, const std::string title, int color) {
-  Float_t fRatioY = 1.0 / 24.0;
-  Int_t nNumItem = 4;
-  Float_t fBasisX = m_fPosZeroX + m_fWHist + 1.00;
-  Float_t fBasisY = m_fPosZeroY + m_fHHist * 0.50 + 0.5 * ( 2 * nNumItem - 1 ) * fRatioY * m_fHHist;
+  /*if (bLegend[number] == 0) {
+      bLegend[number] = new TBox(38, 17 - number * 2, 41, 17 - number * 2 - 1);
+      bLegend[number]->SetLineColor(1);
+      bLegend[number]->SetLineStyle(2);
+  }
+  bLegend[number]->SetFillColor(color);
+  bLegend[number]->Draw("l");
   
-  Float_t fX1 = fBasisX;
-  Float_t fX2 = fBasisX + 0.07 * m_fWHist;
-  Float_t fY1 = fBasisY - ( number + 1 ) * fRatioY * m_fHHist;
-  Float_t fY2 = fBasisY -   number       * fRatioY * m_fHHist;
+  if (tLegend[number] == 0) {
+      tLegend[number] = new TText((38 + 41) / 2.0, (2 * (17 - number * 2) - 1) / 2.0, title.c_str());
+      tLegend[number]->SetTextAlign(22);
+      tLegend[number]->SetTextFont(42);
+      tLegend[number]->SetTextSize(0.015);
+  } else {
+      tLegend[number]->SetText((38 + 41) / 2.0, (2 * (17 - number * 2) - 1) / 2.0, title.c_str());
+  }
+  tLegend[number]->Draw();*/
   
-  m_bLegend[ number ]->SetX1(fX1);
-  m_bLegend[ number ]->SetX2(fX2);
-  m_bLegend[ number ]->SetY1(fY1);
-  m_bLegend[ number ]->SetY2(fY2);
-  m_bLegend[ number ]->SetFillColor(color);
-  m_bLegend[ number ]->Draw("l");
+  Float_t fBasisX = m_nNumChamber + 0.7;
+  Float_t fBasisY = 6.0;
+  Float_t fRatioY = m_nNumLayer / 23.0;
   
-  m_tLegend[ number ]->SetText(0.5 * ( fX1 + fX2 ), 0.5 * ( fY1 + fY2 ), title.c_str());
-  m_tLegend[ number ]->Draw();
+  Int_t nNumItem = 6;
+  
+  if (bLegend[number] == 0) {
+      bLegend[number] = new TBox(fBasisX,     fRatioY * ( fBasisY + 2 * ( nNumItem - number ) ), 
+                                 fBasisX + 3, fRatioY * ( fBasisY + 2 * ( nNumItem - number ) - 1 ));
+      bLegend[number]->SetLineColor(1);
+      bLegend[number]->SetLineStyle(2);
+  }
+  bLegend[number]->SetFillColor(color);
+  bLegend[number]->Draw("l");
+  
+  if (tLegend[number] == 0) {
+      tLegend[number] = new TText(fBasisX + 1.5, fRatioY * ( fBasisY + 2 * ( nNumItem - number ) - 0.5 ), title.c_str());
+      tLegend[number]->SetTextAlign(22);
+      tLegend[number]->SetTextFont(42);
+      tLegend[number]->SetTextSize(0.015);
+  } else {
+      tLegend[number]->SetText(0, 0, title.c_str());
+  }
+  tLegend[number]->Draw();
 }
