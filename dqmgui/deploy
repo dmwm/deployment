@@ -90,6 +90,8 @@ deploy_dqmgui_post()
        echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'"
        # check/verification of the backup of the zipped root files
        echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
+       # Adding kinit script for EOS
+       echo "*/6 * * * * /data/srv/current/config/admin/kinit.sh"
       ) | acrontab
       ;;
     * )
