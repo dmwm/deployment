@@ -77,7 +77,7 @@ deploy_dqmgui_post()
        # check/verification of the backup of the zipped root files
        echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
        # Adding kinit script for EOS
-       echo "*/6 * * * * /data/srv/kinit.sh"
+       echo "*/6 * * * * /data/srv/current/config/admin/kinit.sh"
       ) | acrontab
       ;;
     # CC7 Offline and Relval GUIs
