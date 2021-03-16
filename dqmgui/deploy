@@ -78,6 +78,7 @@ deploy_dqmgui_post()
        echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
        # Adding kinit script for EOS
        echo "*/6 * * * * /data/srv/current/config/admin/kinit.sh"
+       echo "@reboot /data/srv/current/config/admin/kinit.sh"
       ) | acrontab
       ;;
     # CC7 Offline and Relval GUIs
@@ -92,6 +93,7 @@ deploy_dqmgui_post()
        echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
        # Adding kinit script for EOS
        echo "*/6 * * * * /data/srv/current/config/admin/kinit.sh"
+       echo "@reboot /data/srv/current/config/admin/kinit.sh"
       ) | acrontab
       ;;
     * )
