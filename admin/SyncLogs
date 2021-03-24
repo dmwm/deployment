@@ -3,9 +3,9 @@
 # Rsync append only .txt and .log files
 
 # Front-ends in the AI infrastructure
-for h in vocms0{117,734,135,158,760,162,164}; do
-  rsync --exclude 'access_log.txt' -rm -e "ssh -c aes128-ctr" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
-done
+#for h in vocms0{117,734,135,158,760,162,164}; do
+#  rsync --exclude 'access_log.txt' -rm -e "ssh -c aes128-ctr" --append -f '+s */' -f '+s *.txt' -f '+s *.log' -f '-s /***/*' cmsweb@$h:/data/srv/logs/ /build/srv-logs/$h/
+#done
 
 # Back-ends in the AI infrastructure
 for h in vocms0{731,132,136,161,163,165,738,739,740,741,742,766,743,744,745,746,761,762,763,764,765}; do
