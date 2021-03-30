@@ -1327,6 +1327,7 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
   TString fullpath(dqmObject.name.c_str());
 
   if(!fullpath.Contains("Timing") &&
+     !fullpath.Contains("TriggerTower") &&
      !fullpath.Contains("Real vs Emulated") &&
      !fullpath.Contains("Occupancy") &&
      !fullpath.Contains("Cluster") &&
@@ -1403,6 +1404,10 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
     obj->GetYaxis()->SetNdivisions(15);
     gPad->SetGridy();
     applyDefaults = false;
+  }
+  else if(TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT TP occupancy vs bx Real Digis").MatchB(fullpath) ||
+          TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Et vs bx Real Digis").MatchB(fullpath)) {
+    obj->GetXaxis()->SetTitleOffset(1.5);
   }
   else if (TPRegexp("Ecal/MEM/StatusFlagsTask MEM front-end status bits").MatchB(fullpath)){
     obj->GetXaxis()->SetNdivisions(54);
