@@ -107,6 +107,15 @@ data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 
+# DBS configuration
+data.dbsReadUrl = "%s/dbs/prod/global/DBSReader" % BASE_URL
+data.dbsWriteUrl = "%s/dbs/prod/global/DBSWriter" % BASE_URL
+data.allowedDbsStatuses = ["VALID", "INVALID", "PRODUCTION"]
+data.enableDbsStatusChange = False
+data.dbsStatus = {"valid": "VALID",
+                  "invalid": "INVALID",
+                  "production": "PRODUCTION"}
+
 # heartbeat monitor task
 extentions = config.section_("extensions")
 heartbeatMonitor = extentions.section_("heartbeatMonitor")
