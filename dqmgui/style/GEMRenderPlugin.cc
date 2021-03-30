@@ -122,10 +122,8 @@ private:
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
     assert(obj);
 
-    // NOTE
-    if (TPRegexp("^GEM/GEMEfficiency/\\w+Muon/Efficiency/muon_\\w+_(?:matched_)?ge(\\+|\\-)\\d1_(odd|even)$").MatchB(o.name))
+    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/muon_\\w+_GE(\\+|\\-)\\d1(?:_matched)?$").MatchB(o.name))
     {
-      // e.g. GEM/GEMEfficiency/StandaloneMuon/Efficiency/muon_eta_ge-11_odd
       obj->SetOption("hist E");
       gStyle->SetOptStat("euo");
 
@@ -139,9 +137,8 @@ private:
       }
 
     }
-    else if (TPRegexp("^GEM/GEMEfficiency/\\w+Muon/Resolution/(residual|pull)_\\w+_ge(\\+|\\-)\\d1_(odd|even)_ieta\\d$").MatchB(o.name))
+    else if (TPRegexp("^GEM/Efficiency/type\\d/Resolution/(residual|pull)_\\w+_GE(\\+|\\-)\\d1_R\\d$").MatchB(o.name))
     {
-      // e.g. GEM/GEMEfficiency/StandaloneMuon/Resolution/pull_x_ge-11_even_ieta1
       obj->SetOption("hist E");
       gStyle->SetOptStat("emruos");
 
@@ -183,31 +180,29 @@ private:
       drawTimeHisto(dynamic_cast<TH2F*>(o.object));
     }
 
-    if (TPRegexp("GEM/GEMEfficiency/\\w+Muon/Efficiency/detector_(?:matched_)?ge(\\+|\\-)\\d1$").MatchB(o.name))
+    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/detector_GE(\\+|\\-)\\d1(?:matched_)?$").MatchB(o.name))
     {
-      // e.g. GEM/GEMEfficiency/StandaloneMuon/Efficiency/detector_matched_ge-11
       obj->SetOption("colz");
       gStyle->SetOptStat("e");
     }
-    else if (TPRegexp("GEM/GEMEfficiency/\\w+Muon/Efficiency/eff_detector_ge(\\+|\\-)\\d1$").MatchB(o.name))
+    else if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_detector_GE(\\+|\\-)\\d1$").MatchB(o.name))
     {
-      // e.g. GEM/GEMEfficiency/StandaloneMuon/Efficiency/eff_detector_ge-11
       obj->SetOption("colz");
       gStyle->SetOptStat(0);
 
+      obj->SetNdivisions(-obj->GetNbinsX(), "Y"); // use a negative number to turn off ndivisios optimization.
+      obj->SetNdivisions(-obj->GetNbinsY(), "X");
+
       obj->SetMinimum(0.80);
       obj->SetMaximum(1.00);
+
+      gStyle->SetGridWidth(3);
     }
-    else if (TPRegexp("GEM/GEMEfficiency/\\w+Muon/Resolution/residual_phi_ge(\\+|\\-)\\d1_(odd|even)$").MatchB(o.name))
+    else if (TPRegexp("^GEM/Efficiency/type\\d/Resolution/residual_rphi_(mean|stddev|skewness)$").MatchB(o.name))
     {
-      // e.g. GEM/GEMEfficiency/StandaloneMuon/Resolution/residual_phi_ge-11_even
       obj->SetOption("colz text");
       obj->SetStats(false);
       gStyle->SetOptStat(0);
-
-      obj->Scale(1000); // rad to mrad
-      obj->GetYaxis()->SetBinLabel(1, "#splitline{Mean}{[mrad]}");
-      obj->GetYaxis()->SetBinLabel(2, "#splitline{Std. Dev.}{[mrad]}");
 
       obj->SetNdivisions(-obj->GetNbinsX(), "Y"); // use a negative number to turn off ndivisios optimization.
       obj->SetNdivisions(-obj->GetNbinsY(), "X");
@@ -226,7 +221,7 @@ private:
     TProfile* obj = dynamic_cast<TProfile*>(o.object);
     assert(obj);
 
-    if (TPRegexp("^GEM/GEMEfficiency/\\w+Muon/Efficiency/eff_muon_\\w+_ge(\\+|\\-)\\d1_(odd|even)").MatchB(o.name))
+    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_muon_\\w+_GE(\\+|\\-)\\d1").MatchB(o.name))
     {
       obj->SetOption("E");
       obj->SetStats(false);
