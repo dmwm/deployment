@@ -51,8 +51,8 @@ deploy_dqmgui_post()
      $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
      echo "17 2 * * * $cmd"
      # Adding kinit script for EOS
-     echo "*/6 * * * * sudo /data/srv/current/config/admin/kinit.sh"
-     echo "@reboot sudo /data/srv/current/config/admin/kinit.sh"
+     echo "*/6 * * * * /data/srv/current/config/admin/kinit.sh"
+     echo "@reboot /data/srv/current/config/admin/kinit.sh"
    }) | crontab -
 
   # Castor stageout acronjobs enabled only for the
