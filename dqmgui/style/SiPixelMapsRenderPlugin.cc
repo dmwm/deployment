@@ -31,7 +31,7 @@ class SiPixelMapsRenderPlugin : public DQMRenderPlugin
 public:
   virtual bool applies( const VisDQMObject & o, const VisDQMImgInfo & )
     {
-      if ((o.name.find( "PixelPhase1/Phase1_MechanicalView" ) != std::string::npos || o.name.find( "PixelPhase1/Tracks" ) != std::string::npos || o.name.find( "PixelPhase1/FED" ) != std::string::npos || o.name.find( "PixelPhase1Timing/" ) != std::string::npos  || o.name.find("PixelPhase1/SiPixelQualityPCL") != std::string::npos)
+      if ((o.name.find( "PixelPhase1/Phase1_MechanicalView" ) != std::string::npos || o.name.find( "PixelPhase1/Tracks" ) != std::string::npos || o.name.find( "PixelPhase1/FED" ) != std::string::npos || o.name.find( "PixelPhase1Timing/" ) != std::string::npos  || o.name.find("PixelPhase1/SiPixelQualityPCL") != std::string::npos || o.name.find( "PixelPhase1V/") != std::string::npos )
         && o.object && (o.name.find( "Coord" ) != std::string::npos || o.name.find( "per_SignedModule_per_SignedLadder" ) != std::string::npos || o.name.find( "per_PXDisk_per_SignedBlade" ) != std::string::npos )) {
         return true;
       } else {
