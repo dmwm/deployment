@@ -66,6 +66,7 @@ server.workspace('DQMContent', 30, 'Monte Carlo', 'MC Tk' , '^(Tk/|TrackerDigisV
                  'MCLayouts/Tk/04 - TrackingMCTruth',
                  'MCLayouts/Tk/05 - TrackingRecHits',
                 )
+server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Tk Phase-2' , '^(TrackerPhase2.*/|SiOuter.*)', 'MCLayouts/PhaseTk')
 server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Ecal' , '^Ecal.*/', 'MCLayouts/Ecal')
 server.workspace('DQMContent', 32, 'Monte Carlo', 'MC Hcal' , '(^Hcal(|NoiseRatesD|RecHitsD|DigisV|HitsV)|^CaloTowersD)/', 'MCLayouts/Hcal')
 server.workspace('DQMContent', 33, 'Monte Carlo', 'MC DT' , '^DT/', '')
