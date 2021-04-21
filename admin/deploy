@@ -58,8 +58,8 @@ deploy_admin_post()
   if $nogroups; then
     # single-user mode, e.g. DQM GUI at P5, when no sudo access is given
     (mkcrontab
-     echo "@reboot source $project_config/init.sh && $project_config/ServerMonitor -r"
-     echo "37 */12 * * * source $project_config/init.sh && $project_config/ServerMonitor -q -r"
+     # echo "@reboot source $project_config/init.sh && $project_config/ServerMonitor -r"
+     # echo "37 */12 * * * source $project_config/init.sh && $project_config/ServerMonitor -q -r"
      $pxskip || echo "3 */3 * * * $project_config/ProxyRenew $certs $root/current/auth/proxy $pxlabel cms"
      echo "7 */12 * * * $project_config/LogArchive $root") |
      crontab -
