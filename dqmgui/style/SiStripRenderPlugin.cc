@@ -130,6 +130,22 @@ private:
       ya->SetTitleSize(0.05);
       ya->SetLabelSize(0.04);
 
+      if( o.name.find( "TkHMap" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        return;
+      }
+
+      if( o.name.find( "Summary_ClusterPosition2D" )  != std::string::npos)
+      {
+        obj->SetStats( kFALSE );
+        gStyle->SetPalette(1,0);
+        obj->SetOption("colz");
+        return;
+      }
+
       if( o.name.find( "PedsEvolution" ) != std::string::npos)
       {
         gStyle->SetOptStat( 1111 );
