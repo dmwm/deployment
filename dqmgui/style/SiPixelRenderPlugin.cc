@@ -31,6 +31,8 @@ public:
         return true;
       if( o.name.find( "PixelPhase1/" ) == 0 )
         return true;
+      if( o.name.find( "PixelPhase1V/" ) == 0 )
+        return true;
       if( o.name.find( "PixelPhase1Timing/" ) != std::string::npos )
         return true;
       if( o.name.find( "TrackTimingPixelPhase1/Phase1_MechanicalView" ) != std::string::npos )
