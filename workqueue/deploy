@@ -72,12 +72,6 @@ deploy_workqueue_post()
   $nogroups || cmd="sudo -H -u _workqueue bashs -l -c \"${cmd}\""
   eval $cmd
 
-  # Tell couch to push workqueue apps on the next restart
-  for couch in couchdb:5984; do
-    echo "$project_config/manage pushcouchapp http://localhost:${couch##*:}" \
-      > $root/state/${couch%%:*}/stagingarea/workqueue
-  done
-  
   (mkcrontab; sysboot) | crontab -
 }
 
