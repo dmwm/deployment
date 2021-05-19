@@ -12,6 +12,7 @@
 ##H   stop            stop the service
 ##H   pushapps        push couch applications
 ##H   pushreps        push couch replications
+##H   updatecouchapps pull new couch applications from WMCore repo
 ##H   compact         compact database ARG
 ##H   compactviews    compact database views for design doc ARG ARG
 ##H   cleanviews      clean view named ARG
@@ -105,6 +106,13 @@ clean_views()
 # Push applications from staging area into couchdb.
 push_apps()
 {
+  local couchapps_path="/data/srv/state/couchdb/stagingarea/couchapps"
+
+  if [[ ! -d $couchapps_path ]]; then
+    echo "Couchapps not found. Installing from latest WMCore tag."
+    update_couchapps "latest"
+  fi
+
   n=0 started=false
   while [ $n -le 100 ]; do
     couchdb -p $STATEDIR/couchdb.pid -s &> /dev/null &&
@@ -116,17 +124,118 @@ push_apps()
   done
 
   if $started; then
-    for APP in $STATEDIR/stagingarea/*; do
-      [ -f $APP ] || continue
-      . $APP
-      for DB in $(egrep -o '5984/.*$' $APP | cut -d/ -f2); do
-        clean_views $DB
-      done
+    # acdc server
+    couchapp push -p $couchapps_path/ACDC -c http://localhost:5984/acdcserver
+    couchapp push -p $couchapps_path/GroupUser -c http://localhost:5984/acdcserver
+
+    # reqmgr2
+    couchapp push -p $couchapps_path/ReqMgrAux -c http://localhost:5984/reqmgr_auxiliary
+    couchapp push -p $couchapps_path/ReqMgr -c http://localhost:5984/reqmgr_workload_cache
+    couchapp push -p $couchapps_path/ConfigCache -c http://localhost:5984/reqmgr_config_cache
+
+    # reqmon
+    couchapp push -p $couchapps_path/WorkloadSummary -c http://localhost:5984/workloadsummary
+    couchapp push -p $couchapps_path/LogDB -c http://localhost:5984/wmstats_logdb
+    couchapp push -p $couchapps_path/WMStats -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl1 -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl2 -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl3 -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl4 -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl5 -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl6 -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WMStatsErl7 -c http://localhost:5984/wmstats
+
+    # t0_reqmon
+    couchapp push -p $couchapps_path/T0Request -c http://localhost:5984/t0_request
+    couchapp push -p $couchapps_path/WorkloadSummary -c http://localhost:5984/t0_workloadsummary
+    couchapp push -p $couchapps_path/LogDB -c http://localhost:5984/t0_logdb
+    couchapp push -p $couchapps_path/WMStats -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl1 -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl2 -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl3 -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl4 -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl5 -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl6 -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/WMStatsErl7 -c http://localhost:5984/tier0_wmstats
+
+    # workqueue
+    couchapp push -p $couchapps_path/WorkQueue -c http://localhost:5984/workqueue
+    couchapp push -p $couchapps_path/WorkQueue -c http://localhost:5984/workqueue_inbox
+
+    # clean views
+    local databases="acdcserver reqmgr_auxiliary reqmgr_workload_cache reqmgr_config_cache workloadsummary
+                    wmstats_logdb wmstats t0_request t0_workloadsummary t0_logdb tier0_wmstats"
+
+    for DB in $databases; do
+      clean_views $DB
     done
   else
     echo "couchdb did not start, not pushing application"
     exit 1
   fi
+}
+
+update_couchapps()
+{
+  local WMCORE_TAG=$1
+  [ -n $WMCORE_TAG ] ||
+    { echo "WMCore tag not provided. Please provide a WMCore tag."; exit 1; }
+
+  local couchapps_dir=/data/srv/state/couchdb/stagingarea
+  local tmp_dir=$couchapps_dir/tmp
+
+  # clean up and recreate $tmp_dir
+  rm -rf $tmp_dir
+  mkdir -p $tmp_dir
+
+  pushd $tmp_dir
+
+  if [[ $WMCORE_TAG == "latest" ]]; then
+    WMCORE_TAG=$(curl https://api.github.com/repos/dmwm/WMCore/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
+  fi
+
+  echo "Pulling couchapps version $1 from Github..."
+  wget https://github.com/dmwm/WMCore/archive/refs/tags/${WMCORE_TAG}.tar.gz ||
+    { echo "Error pulling couchapps version $1 from Github"; exit 3; }
+
+  tar --strip-components=2 -xzf ${WMCORE_TAG}.tar.gz WMCore-$WMCORE_TAG/src/couchapps ||
+    { echo "Error extracting couchapps tarball"; exit 3; }
+
+  # grab external dependencies for reqmon/t0_reqmon
+  echo "Pulling additional reqmon and t0_reqmon dependencies..."
+  cp -R $tmp_dir/couchapps/couchskel/vendor $tmp_dir/couchapps/WMStats
+  mkdir -p $tmp_dir/couchapps/WMStats/vendor/{jquery,datatables}/_attachments
+
+  # jquery-ui.min.js
+  echo "Downloading jquery-ui.min.js..."
+  wget https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js ||
+    { echo "Error downloading jquery-ui.min.js"; exit 3; }
+  cp jquery-ui.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery-ui.min.js
+
+  # jquery.min.js
+  echo "Downloading jquery.min.js..."
+  wget http://code.jquery.com/jquery-1.7.2.min.js ||
+    { echo "Error downloading jquery-1.7.2.min.js"; exit 3; }
+  cp jquery-1.7.2.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery.min.js
+
+  # Datatables
+  echo "Downloading Datatables..."
+  wget http://datatables.net/releases/DataTables-1.9.1.zip ||
+    { echo "Error downloading Datatables-1.9.1.zip"; exit 3; }
+  unzip DataTables-1.9.1.zip &> /dev/null
+  cp DataTables*/{media/js/jquery.dataTables.min,extras/ColVis/media/js/ColVis.min}.js $tmp_dir/couchapps/WMStats/vendor/datatables/_attachments
+
+  echo "Removing old couchapps..."
+  rm -rf $couchapps_dir/couchapps &> /dev/null
+
+  echo "Installing new couchapps..."
+  mv couchapps $couchapps_dir
+
+  popd
+  echo "Cleaning up!"
+  rm -rf $tmp_dir
 }
 
 replications()
@@ -351,6 +460,11 @@ case ${1:-status} in
   pushreps )
     check "$2"
     replications push
+    ;;
+
+  updatecouchapps )
+    check "$3"
+    update_couchapps $2
     ;;
 
   compact )

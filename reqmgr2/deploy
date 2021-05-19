@@ -50,21 +50,6 @@ deploy_reqmgr2_post()
       enable;;
     esac
 
-  # ReqMgr2 and old reqmgr specific couchdb stuff
-  # Tell couch to pick up reqmgr on the next restart
-  local reqmgrapp=$root/current/apps/reqmgr2
-  for couch in couchdb:5984; do
-    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgrAux" \
-         "http://localhost:${couch##*:}/reqmgr_auxiliary" \
-         > $root/state/${couch%%:*}/stagingarea/reqmgr2
-    echo "couchapp push $reqmgrapp/data/couchapps/ReqMgr" \
-         "http://localhost:${couch##*:}/reqmgr_workload_cache" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
-    echo "couchapp push $reqmgrapp/data/couchapps/ConfigCache" \
-         "http://localhost:${couch##*:}/reqmgr_config_cache" \
-         >> $root/state/${couch%%:*}/stagingarea/reqmgr2
-  done
-
   (mkcrontab; sysboot) | crontab -
 }
 
