@@ -246,10 +246,10 @@ print_settings(){
 
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
 
-export WMAGENT_ROOT
+export WMAGENTPY3_ROOT
 # WMAGENT_ROOT == WMCORE_ROOT now but in old rpms WMCORE_ROOT was seperate,
 # if WMCORE_ROOT already set export it, else set to WMAGENT_ROOT
-export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
+export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENTPY3_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
 
@@ -577,7 +577,7 @@ init_wmagent(){
 	exit 1;
     fi
 
-	wmagent-mod-config $database_options \
+    wmagent-mod-config $database_options \
 	                   --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
                        --working_dir=$INSTALL_AG \
@@ -600,8 +600,9 @@ init_wmagent(){
 	                   --rucio_auth=$RUCIO_AUTH
 
     wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
+
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
-    wmagent-couchapp-init;
+    wmagent-couchapp-init
     unset WMAGENT_CONFIG
     inited_agent;
 }
