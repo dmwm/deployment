@@ -1,4 +1,5 @@
 # vim: set ft=sh sw=2 ts=8 et :
+deploy_wmagentpy3_variants="default devtools"
 
 deploy_wmagentpy3_prep()
 {
@@ -7,6 +8,13 @@ deploy_wmagentpy3_prep()
 
 deploy_wmagentpy3_sw()
 {
+  case $variant in devtools )
+    deploy_pkg comp cms+wmcorepy3-devtools
+    deploy_pkg comp external+py3-psutil
+    pkgs="$pkgs wmcorepy3-devtools py3-psutil"
+    ;;
+  esac
+
   deploy_pkg comp cms+wmagentpy3
 
   mkdir -p $root/$cfgversion/install/wmagentpy3
@@ -26,4 +34,12 @@ deploy_wmagentpy3_sw()
 
   local rucio_config=$root/$cfgversion/config/wmagentpy3/rucio.cfg
   cp -f $rucio_config $root/$cfgversion/config/rucio/etc/
+}
+
+deploy_wmagentpy3_post()
+{
+  case $variant in devtools )
+    disable;
+    return ;;
+  esac
 }
