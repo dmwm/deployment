@@ -244,7 +244,7 @@ print_settings(){
 # Environment
 #
 
-. $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
+. $ROOT_DIR/apps/wmagentpy3/etc/profile.d/init.sh
 
 export WMAGENTPY3_ROOT
 # WMAGENT_ROOT == WMCORE_ROOT now but in old rpms WMCORE_ROOT was seperate,
