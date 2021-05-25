@@ -396,12 +396,14 @@ case $STAGE in
        maintenance_monit )
 	expire=`date -d '+2 hour' --rfc-3339=ns | tr ' ' 'T'`
 	msg="CMSWEB Outages for $STEM environment"
-	amhost="http://cms-monitoring.cern.ch:30093"
-	DATE=`date`
-	set -x
+        amhost='http://cms-monitoring.cern.ch:30093 http://cms-monitoring-ha1.cern.ch:30093 http://cms-monitoring-ha2.cern.ch:30093'
+        DATE=`date`
+        set -x
+        for url in $amhost; do
         # add silence and maintenance alerts
-        ( echo "/cvmfs/cms.cern.ch/cmsmon/amtool silence add --duration=2h --comment \"cmsweb maintenance\" tag=cmsweb --alertmanager.url=$amhost ; /cvmfs/cms.cern.ch/cmsmon/amtool alert add cmsweb_maintenance alertname='cmsweb maintenance' severity=maintenance tag=cmsweb alert=amtool env=\"$STEM\" instance=\"$HOSTS\" service=\"$PKGS\" --end=$expire --annotation=summary=\"$msg\" --annotation=date=\"$DATE\" --alertmanager.url=$amhost"
+        ( echo "/cvmfs/cms.cern.ch/cmsmon/amtool silence add --duration=4h --comment \"cmsweb maintenance\" tag=cmsweb --alertmanager.url=$url ; /cvmfs/cms.cern.ch/cmsmon/amtool alert add cmsweb_maintenance alertname='cmsweb maintenance' severity=maintenance tag=cmsweb alert=amtool env=\"$STEM\" instance=\"$HOSTS\" service=\"$PKGS\" --end=$expire --annotation=summary=\"$msg\" --annotation=date=\"$DATE\" --alertmanager.url=$url"
         ) | ssh -o PubkeyAuthentication=no $PXUSER@aiadm.cern.ch sh -l
+        done
         ;;
 
       production )

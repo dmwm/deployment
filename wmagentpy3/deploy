@@ -1,0 +1,45 @@
+# vim: set ft=sh sw=2 ts=8 et :
+deploy_wmagentpy3_variants="default devtools"
+
+deploy_wmagentpy3_prep()
+{
+  mkproj wmagentpy3
+}
+
+deploy_wmagentpy3_sw()
+{
+  case $variant in devtools )
+    deploy_pkg comp cms+wmcorepy3-devtools
+    deploy_pkg comp external+py3-psutil
+    pkgs="$pkgs wmcorepy3-devtools py3-psutil"
+    ;;
+  esac
+
+  deploy_pkg comp cms+wmagentpy3
+
+  mkdir -p $root/$cfgversion/install/wmagentpy3
+  mkdir -p $root/$cfgversion/install/mysql
+  mkdir -p $root/$cfgversion/install/couchdb
+
+  mkdir -p $root/$cfgversion/config/mysql
+  mkdir -p $root/$cfgversion/config/couchdb
+  mkdir -p $root/$cfgversion/config/rucio/etc
+
+  local couchdb_ini=$root/$cfgversion/config/wmagentpy3/local.ini
+  perl -p -i -e "s{deploy_project_root}{$root/$cfgversion/install}g" $couchdb_ini
+  cp -f $couchdb_ini $root/$cfgversion/config/couchdb/
+
+  local mysql_config=$root/$cfgversion/config/wmagentpy3/my.cnf
+  cp -f $mysql_config $root/$cfgversion/config/mysql/
+
+  local rucio_config=$root/$cfgversion/config/wmagentpy3/rucio.cfg
+  cp -f $rucio_config $root/$cfgversion/config/rucio/etc/
+}
+
+deploy_wmagentpy3_post()
+{
+  case $variant in devtools )
+    disable;
+    return ;;
+  esac
+}

@@ -533,7 +533,7 @@ ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/10 Amplitude Correlation, BX+1',
 	   [{'path': 'EcalEndcap/EETimingTask/EETMT in-time vs BX+1 amplitude EE -', 'description': 'Correlation between in-time amplitude and BX+1 out-of-time amplitude. Only events with kGood reconstruction flag set, energy above ( EB:1, EE:3 ) GeV, and chi2 less than ( EB:16, EE:50 ) are used.'},
 	    {'path': 'EcalEndcap/EETimingTask/EETMT in-time vs BX+1 amplitude EE +', 'description': 'Correlation between in-time amplitude and BX+1 out-of-time amplitude. Only events with kGood reconstruction flag set, energy above ( EB:1, EE:3 ) GeV, and chi2 less than ( EB:16, EE:50 ) are used.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/11 Timing vs BX',
-	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT Timing vs BX', 'description': 'Average hit timing in EB as a function of BX number. Only events with energy above 2.02 GeV and chi2 less than 16 are used.'}])
+	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT Timing vs BX', 'description': 'Average hit timing in EB as a function of BX number. BX ids start at 1. Only events with energy above 2.02 GeV and chi2 less than 16 are used.'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
@@ -598,13 +598,13 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/06 Non Single Timing',
 	   [{'path': 'EcalEndcap/EESummaryClient/EETTT EE - Trigger Primitives Non Single Timing summary', 'description': 'Fraction of events whose emulator TP timing did not agree with the majority. Towers with entries less than 3 are not considered.'},
 	    {'path': 'EcalEndcap/EESummaryClient/EETTT EE + Trigger Primitives Non Single Timing summary', 'description': 'Fraction of events whose emulator TP timing did not agree with the majority. Towers with entries less than 3 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/07 Occupancy vs BX',
-	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TP occupancy vs bx Real Digis', 'description': 'TP occupancy in different bunch crossing intervals. This plot is filled by data from physics data stream. It is normal to have very little entries in BX >= 3490.'}],
-	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TP occupancy vs bx Real Digis EE -', 'description': 'TP occupancy in different bunch crossing intervals. This plot is filled by data from physics data stream. It is normal to have very little entries in BX >= 3490.'},
-	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TP occupancy vs bx Real Digis EE +', 'description': 'TP occupancy in different bunch crossing intervals. This plot is filled by data from physics data stream. It is normal to have very little entries in BX >= 3490.'}])
+	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TP occupancy vs bx Real Digis', 'description': 'TP occupancy in different bunch crossing intervals. This plot is filled by data from physics data stream. BX ids start at 1. It is normal to have very little entries in BX >= 3490. The Customize button can be used to zoom in.'}],
+	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TP occupancy vs bx Real Digis EE -', 'description': 'TP occupancy in different bunch crossing intervals. This plot is filled by data from physics data stream. BX ids start at 1. It is normal to have very little entries in BX >= 3490. The Customize button can be used to zoom in.'},
+	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TP occupancy vs bx Real Digis EE +', 'description': 'TP occupancy in different bunch crossing intervals. This plot is filled by data from physics data stream. BX ids start at 1. It is normal to have very little entries in BX >= 3490. The Customize button can be used to zoom in.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/08 Et vs BX',
-	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT Et vs bx Real Digis', 'description': 'Mean TP Et in different bunch crossing intervals. This plot is filled by data from physics data stream. It is normal to have very little entries in BX >= 3490.'}],
-	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT Et vs bx Real Digis EE -', 'description': 'Mean TP Et in different bunch crossing intervals. This plot is filled by data from physics data stream. It is normal to have very little entries in BX >= 3490.'},
-	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT Et vs bx Real Digis EE +', 'description': 'Mean TP Et in different bunch crossing intervals. This plot is filled by data from physics data stream. It is normal to have very little entries in BX >= 3490.'}])
+	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT Et vs bx Real Digis', 'description': 'Mean TP Et in different bunch crossing intervals. This plot is filled by data from physics data stream. BX ids start at 1. It is normal to have very little entries in BX >= 3490.'}],
+	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT Et vs bx Real Digis EE -', 'description': 'Mean TP Et in different bunch crossing intervals. This plot is filled by data from physics data stream. BX ids start at 1. It is normal to have very little entries in BX >= 3490.'},
+	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT Et vs bx Real Digis EE +', 'description': 'Mean TP Et in different bunch crossing intervals. This plot is filled by data from physics data stream. BX ids start at 1. It is normal to have very little entries in BX >= 3490.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/09 Emulation Timing',
 	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT max TP matching index', 'description': 'Distribution of the index of emulated TP with the highest Et value.'}],
 	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT max TP matching index EE -', 'description': 'Distribution of the index of emulated TP with the highest Et value.'},
@@ -629,23 +629,25 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/14 ecalOccSent',
            [{'path': 'L1T/L1TStage2CaloLayer1/ECalDetail/ecalOccSent', 'description': 'The 2D plot shows ECAL TP occupancy sent by ECAL in iEta and iPhi coordinate of the ECAL trigger tower. Each entry represents the occupancy (multiplicity) of ECAL TP in (iEta, iPhi).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/15 ecalOccSentAndRecd',
            [{'path': 'L1T/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd', 'description': 'The 2D plot shows ECAL TP occupancy "sent" by ECAL and "received" at Layer-1 (fully matched), in iEta and iPhi coordinate of the ECAL trigger tower. Each entry represents the occupancy (multiplicity) of ECAL TPs in (iEta, iPhi). One can investigate the number of entries in 14 to 15 and 16 and check if the ECAL TP sent by ECAL is received at Layer-1.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/16 TT Flag-Readout Mismatch',
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/16 ecalOccRecdEtWgt',
+ [{'path':'L1T/L1TStage2CaloLayer1/ecalOccRecdEtWgt','description':'Et weighted map of ECAL TPs received by L1T Layer-1.'}])
+ #Added one additional L1T plot on the request of Trigger team 
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/17 TT Flag-Readout Mismatch',
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT flag mismatch', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE -', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT flag mismatch EE +', 'description': 'For events with medium- and high-interest TT flags, this plot maps the occupancy for towers with a mismatch in the number of readouts between the TPs and the Digis.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/17 TT Flags vs Et',
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/18 TT Flags vs Et',
 	   [{'path': 'EcalBarrel/EBSelectiveReadoutTask/EBSRT TT Flags vs Et', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}],
 	   [{'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE -', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'},
 	    {'path': 'EcalEndcap/EESelectiveReadoutTask/EESRT TT Flags vs Et EE +', 'description': '2D histograms of of TT flags of a corresponding to a given TT vs Et measured by that tower.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/18 Ratio_L1TEGamma_BX_0',
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/19 Ratio_L1TEGamma_BX_0',
            [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_0', 'description': 'Fraction of (L1T EGamma objects with pT >= 20 GeV found in BX 0) over (all L1T EGamma objects with pT >= 20 GeV found in a BX range of +/-2 BX around BX 0).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/19 Ratio_L1TEGamma_BX_minus1',
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/20 Ratio_L1TEGamma_BX_minus1',
            [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_minus1', 'description': 'Fraction of (L1T EGamma objects with pT >= 20 GeV found in BX -1) over (all L1T EGamma objects with pT >= 20 GeV found in a BX range of +/-2 BX around BX 0).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/20 noniso_bx_ieta_firstbunch',
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/21 noniso_bx_ieta_firstbunch',
            [{'path': 'L1T/L1TObjects/L1TEGamma/timing/First_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_firstbunch_ptmin20p0', 'description': 'L1T EGamma object BX relative to the BX of the L1_FirstCollisionInTrain algorithm vs. L1T EGamma object iEta, for events where the L1_FirstCollisionInTrain algorithm has fired within +/-2 BX around L1A BX 0. L1T EGamma objects must have pT >= 20 GeV. BX 0 in the histogram marks the first bunch in a bunch train.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/21 noniso_bx_ieta_lastbunch',
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/22 noniso_bx_ieta_lastbunch',
            [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Last_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_lastbunch_ptmin20p0', 'description': 'L1T EGamma object BX relative to the BX of the L1_LastCollisionInTrain algorithm vs. L1T EGamma object iEta, for events where the L1_LastCollisionInTrain algorithm has fired within +/-2 BX around L1A BX 0. L1T EGamma objects must have pT >= 20 GeV. BX 0 in the histogram marks the last bunch in a bunch train.'}])
-
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE

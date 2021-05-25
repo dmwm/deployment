@@ -74,7 +74,7 @@ data.object = 'WMCore.MicroService.Service.RestApiHub.RestApiHub'
 # The couch host is defined during deployment time.
 data.couch_host = COUCH_URL
 data.couch_wmstats_db = "wmstats"
-data.manager = 'WMCore.MicroService.Unified.MSManager.MSManager'
+data.manager = 'WMCore.MicroService.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.msOutputUrl = "%s/ms-output" % BASE_URL
 data.wmstatsUrl = "%s/wmstatsserver" % BASE_URL
@@ -91,6 +91,10 @@ data.rucioWmaAccount = RUCIO_WMA_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = True
+if DBS_INS == "private_vm":
+    data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
+else:
+    data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
 
 # heartbeat monitor task
 extentions = config.section_("extensions")

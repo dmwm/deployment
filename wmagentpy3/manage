@@ -8,28 +8,23 @@ THIS_SCRIPT=$(readlink -f $0)
 PROJ_DIR=$(dirname $(dirname $THIS_SCRIPT))
 ROOT_DIR=$(dirname $(dirname $(dirname $THIS_SCRIPT)))
 
-INSTALL_AG="$ROOT_DIR/install/wmagent"
-INSTALL_WQ="$ROOT_DIR/install/workqueue"
+INSTALL_AG="$ROOT_DIR/install/wmagentpy3"
 INSTALL_MYSQL="$ROOT_DIR/install/mysql"
 INSTALL_COUCH="$ROOT_DIR/install/couchdb"
 
 CONFIG_COUCH="$ROOT_DIR/config/couchdb"
 CONFIG_MYSQL="$ROOT_DIR/config/mysql"
-CONFIG_AG="$ROOT_DIR/config/wmagent"
-CONFIG_WQ="$ROOT_DIR/config/workqueue"
+CONFIG_AG="$ROOT_DIR/config/wmagentpy3"
 CONFIG_RUCIO="$ROOT_DIR/config/rucio/etc/rucio.cfg"
 
 USING_AG=0
-USING_WQ=0
 
 MYSQL_INIT_DONE=0
 COUCH_INIT_DONE=0
 AG_INIT_DONE=0
-WQ_INIT_DONE=0
 
 
 MYSQL_DATABASE_AG=wmagent
-MYSQL_DATABASE_WQ=workqueue
 
 ORACLE_USER=
 ORACLE_PASS=
@@ -54,23 +49,12 @@ COUCH_HOST_NAME=localhost
 COUCH_CERT_FILE=
 COUCH_KEY_FILE=
 
-REQMGR_HOSTNAME=
-REQMGR_PORT=8687
-
 GLOBAL_WORKQUEUE_URL=
-GLOBAL_WORKQUEUE_HOSTNAME=
-GLOBAL_WORKQUEUE_PORT=9996
-GLOBAL_WORKQUEUE_DBNAME=workqueue
-
-LOCAL_WORKQUEUE_PORT=9997
 LOCAL_WORKQUEUE_DBNAME=workqueue
 
 WORKLOAD_SUMMARY_URL=
-WORKLOAD_SUMMARY_HOSTNAME=
-WORKLOAD_SUMMARY_PORT=5984
 WORKLOAD_SUMMARY_DBNAME=workloadsummary
 WMSTATS_URL=
-REQMGR_URL=
 REQMGR2_URL=
 ACDC_URL=
 DBS3_URL=
@@ -86,13 +70,11 @@ RUCIO_ACCOUNT=
 #
 # Init checks
 #
-# which of the agent, workqueue are we using
+# are we using the agent?
 if [ -e $INSTALL_AG/.using ]; then USING_AG=1; else USING_AG=0; fi;
-if [ -e $INSTALL_WQ/.using ]; then USING_WQ=1; else USING_WQ=0; fi;
 
 # Flags to show which tools have been initialised
 if [ -e $INSTALL_AG/.init ]; then AG_INIT_DONE=1; else AG_INIT_DONE=0; fi;
-if [ -e $INSTALL_WQ/.init ]; then WQ_INIT_DONE=1; else WQ_INIT_DONE=0; fi;
 if [ -e $INSTALL_MYSQL/.init ]; then MYSQL_INIT_DONE=1; else MYSQL_INIT_DONE=0; fi;
 if [ -e $INSTALL_COUCH/.init ]; then COUCH_INIT_DONE=1; else COUCH_INIT_DONE=0; fi;
 
@@ -102,15 +84,8 @@ activate_agent(){
     cp $WMCORE_ROOT/etc/WMAgentConfig.py $CONFIG_AG/config-template.py
 }
 
-activate_workqueue(){
-    touch $INSTALL_WQ/.using
-    cp $WMCORE_ROOT/etc/GlobalWorkQueueConfig.py $CONFIG_WQ/config-template.py
-}
 inited_agent(){
     touch $INSTALL_AG/.init
-}
-inited_workqueue(){
-    touch $INSTALL_WQ/.init
 }
 inited_couch(){
     touch $INSTALL_COUCH/.init
@@ -144,20 +119,11 @@ load_secrets_file(){
     local MATCH_COUCH_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_PORT | sed s/COUCH_PORT=//`
     local MATCH_COUCH_CERT_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_CERT_FILE | sed s/COUCH_CERT_FILE=//`
     local MATCH_COUCH_KEY_FILE=`cat $WMAGENT_SECRETS_LOCATION | grep COUCH_KEY_FILE | sed s/COUCH_KEY_FILE=//`
-    local MATCH_REQMGR_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_HOSTNAME | sed s/REQMGR_HOSTNAME=//`
-    local MATCH_REQMGR_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_PORT | sed s/REQMGR_PORT=//`
     local MATCH_GLOBAL_WORKQUEUE_URL=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_URL | sed s/GLOBAL_WORKQUEUE_URL=//`
-    local MATCH_GLOBAL_WORKQUEUE_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_HOSTNAME | sed s/GLOBAL_WORKQUEUE_HOSTNAME=//`
-    local MATCH_GLOBAL_WORKQUEUE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_PORT | sed s/GLOBAL_WORKQUEUE_PORT=//`
-    local MATCH_GLOBAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep GLOBAL_WORKQUEUE_DBNAME | sed s/GLOBAL_WORKQUEUE_DBNAME=//`
-    local MATCH_LOCAL_WORKQUEUE_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_PORT | sed s/LOCAL_WORKQUEUE_PORT=//`
     local MATCH_LOCAL_WORKQUEUE_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep LOCAL_WORKQUEUE_DBNAME | sed s/LOCAL_WORKQUEUE_DBNAME=//`
     local MATCH_WORKLOAD_SUMMARY_URL=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_URL | sed s/WORKLOAD_SUMMARY_URL=//`
-    local MATCH_WORKLOAD_SUMMARY_HOSTNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_HOSTNAME | sed s/WORKLOAD_SUMMARY_HOSTNAME=//`
-    local MATCH_WORKLOAD_SUMMARY_PORT=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_PORT | sed s/WORKLOAD_SUMMARY_PORT=//`
     local MATCH_WORKLOAD_SUMMARY_DBNAME=`cat $WMAGENT_SECRETS_LOCATION | grep WORKLOAD_SUMMARY_DBNAME | sed s/WORKLOAD_SUMMARY_DBNAME=//`
     local MATCH_WMSTATS_URL=`cat $WMAGENT_SECRETS_LOCATION | grep WMSTATS_URL | sed s/WMSTATS_URL=//`
-    local MATCH_REQMGR_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR_URL | sed s/REQMGR_URL=//`
     local MATCH_REQMGR2_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR2_URL | sed s/REQMGR2_URL=//`
     local MATCH_ACDC_URL=`cat $WMAGENT_SECRETS_LOCATION | grep ACDC_URL | sed s/ACDC_URL=//`
     local MATCH_DBS3_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DBS3_URL | sed s/DBS3_URL=//`
@@ -209,29 +175,14 @@ load_secrets_file(){
     # if couch ssl key not specified check X509_USER_KEY and X509_USER_PROXY
     COUCH_KEY_FILE=${MATCH_COUCH_KEY_FILE:-${X509_USER_KEY:-$X509_USER_PROXY}};
 
-    REQMGR_HOSTNAME=${MATCH_REQMGR_HOSTNAME:-$REQMGR_HOSTNAME};
-    REQMGR_PORT=${MATCH_REQMGR_PORT:-$REQMGR_PORT};
-
     GLOBAL_WORKQUEUE_URL=${MATCH_GLOBAL_WORKQUEUE_URL:-$GLOBAL_WORKQUEUE_URL};
-    GLOBAL_WORKQUEUE_DBNAME=${MATCH_GLOBAL_WORKQUEUE_DBNAME:-$GLOBAL_WORKQUEUE_DBNAME};
-    if [ "x$GLOBAL_WORKQUEUE_URL" == "x" ]; then
-	  GLOBAL_WORKQUEUE_HOSTNAME=${MATCH_GLOBAL_WORKQUEUE_HOSTNAME:-$GLOBAL_WORKQUEUE_HOSTNAME};
-	  GLOBAL_WORKQUEUE_PORT=${MATCH_GLOBAL_WORKQUEUE_PORT:-$GLOBAL_WORKQUEUE_PORT};
-	  #if GLOBAL_WORKQUEUE_HOSTNAME is specified assume port and db name is specified too
-	  if [ "x$GLOBAL_WORKQUEUE_HOSTNAME" != "x" ]; then
-	    GLOBAL_WORKQUEUE_URL=http://$GLOBAL_WORKQUEUE_HOSTNAME:$GLOBAL_WORKQUEUE_PORT/$GLOBAL_WORKQUEUE_DBNAME;
-	  fi
-    fi
 
-    LOCAL_WORKQUEUE_PORT=${MATCH_LOCAL_WORKQUEUE_PORT:-$LOCAL_WORKQUEUE_PORT};
     LOCAL_WORKQUEUE_DBNAME=${MATCH_LOCAL_WORKQUEUE_DBNAME:-$LOCAL_WORKQUEUE_DBNAME};
 
     WORKLOAD_SUMMARY_URL=${MATCH_WORKLOAD_SUMMARY_URL:-$WORKLOAD_SUMMARY_URL};
     
     WMSTATS_URL=${MATCH_WMSTATS_URL:-$WMSTATS_URL}
-    
-    REQMGR_URL=${MATCH_REQMGR_URL:-$REQMGR_URL}
-    
+
     REQMGR2_URL=${MATCH_REQMGR2_URL:-$REQMGR2_URL}
     
     ACDC_URL=${MATCH_ACDC_URL:-$ACDC_URL}
@@ -254,13 +205,10 @@ load_secrets_file(){
 
 print_settings(){
     echo "INSTALL_AG=                $INSTALL_AG                "
-    echo "INSTALL_WQ=                $INSTALL_WQ                "
     echo "CONFIG_COUCH=              $CONFIG_COUCH              "
     echo "CONFIG_MYSQL=              $CONFIG_MYSQL              "
     echo "CONFIG_AG=                 $CONFIG_AG                 "
-    echo "CONFIG_WQ=                 $CONFIG_WQ                 "
     echo "MYSQL_DATABASE_AG=         $MYSQL_DATABASE_AG         "
-    echo "MYSQL_DATABASE_WQ=         $MYSQL_DATABASE_WQ         "
     echo "ORACLE_USER=               $ORACLE_USER               "
     echo "ORACLE_PASS=               $ORACLE_PASS               "
     echo "ORACLE_TNS=                $ORACLE_TNS                "
@@ -272,20 +220,11 @@ print_settings(){
     echo "COUCH_PORT=                $COUCH_PORT                "
     echo "COUCH_CERT_FILE=           $COUCH_CERT_FILE           "
     echo "COUCH_KEY_FILE=            $COUCH_KEY_FILE            "
-    echo "REQMGR_HOSTNAME=           $REQMGR_HOSTNAME           "
-    echo "REQMGR_PORT=               $REQMGR_PORT               "
     echo "GLOBAL_WORKQUEUE_URL=      $GLOBAL_WORKQUEUE_URL      "
-    echo "GLOBAL_WORKQUEUE_HOSTNAME= $GLOBAL_WORKQUEUE_HOSTNAME "
-    echo "GLOBAL_WORKQUEUE_PORT=     $GLOBAL_WORKQUEUE_PORT     "
-    echo "GLOBAL_WORKQUEUE_DBNAME=   $GLOBAL_WORKQUEUE_DBNAME   "
-    echo "LOCAL_WORKQUEUE_PORT=      $LOCAL_WORKQUEUE_PORT      "
     echo "LOCAL_WORKQUEUE_DBNAME=    $LOCAL_WORKQUEUE_DBNAME    "
     echo "WORKLOAD_SUMMARY_URL=      $WORKLOAD_SUMMARY_URL      "
-    echo "WORKLOAD_SUMMARY_HOSTNAME= $WORKLOAD_SUMMARY_HOSTNAME "
-    echo "WORKLOAD_SUMMARY_PORT=     $WORKLOAD_SUMMARY_PORT     "
     echo "WORKLOAD_SUMMARY_DBNAME=   $WORKLOAD_SUMMARY_DBNAME   "
     echo "WMSTATS_URL=               $WMSTATS_URL               "
-    echo "REQMGR_URL=                $REQMGR_URL                "
     echo "REQMGR2_URL=               $REQMGR2_URL               "
     echo "ACDC_URL=                  $ACDC_URL                  "
     echo "DBS3_URL=                  $DBS3_URL                  "
@@ -307,10 +246,10 @@ print_settings(){
 
 . $ROOT_DIR/apps/wmagent/etc/profile.d/init.sh
 
-export WMAGENT_ROOT
+export WMAGENTPY3_ROOT
 # WMAGENT_ROOT == WMCORE_ROOT now but in old rpms WMCORE_ROOT was seperate,
 # if WMCORE_ROOT already set export it, else set to WMAGENT_ROOT
-export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
+export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENTPY3_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
 
@@ -354,14 +293,10 @@ init_mysql_db_post(){
     mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "$SQLUSER"
     mysql -u root -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "$SQLGRANT"
 
-    # create databases for agent, wq
+    # create databases for agent
     if [ $USING_AG -eq 1 ]; then
         echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
         mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
-    fi
-    if [ $USING_WQ -eq 1 ]; then
-        echo "Installing WorkQueue Database: ${MYSQL_DATABASE_WQ}"
-        mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_WQ}"
     fi
 }
 
@@ -495,13 +430,11 @@ db_prompt(){
     load_secrets_file;
     if [ "x$MYSQL_USER" != "x" ]; then
 	case "$2" in
-	  "workqueue")
-	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_WQ};;
 	  "wmagent")
 	      mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --database=${MYSQL_DATABASE_AG};;
 	  *)
 	      echo "Unknown arg to db_prompt: $2"
-	      echo "Should be one of workqueue, wmagent"
+	      echo "Should be one of unittest, wmagent"
 	      exit 1
 	esac
     elif [ "x$ORACLE_USER" != "x" ]; then
@@ -644,7 +577,7 @@ init_wmagent(){
 	exit 1;
     fi
 
-	wmagent-mod-config $database_options \
+    wmagent-mod-config $database_options \
 	                   --input=$CONFIG_AG/config-template.py \
                        --output=$CONFIG_AG/config.py \
                        --working_dir=$INSTALL_AG \
@@ -667,71 +600,27 @@ init_wmagent(){
 	                   --rucio_auth=$RUCIO_AUTH
 
     wmcore-db-init --config $CONFIG_AG/config.py --create --modules=WMCore.WMBS,WMCore.Agent.Database,WMComponent.DBS3Buffer,WMCore.BossAir,WMCore.ResourceControl;
+
     export WMAGENT_CONFIG=$CONFIG_AG/config.py
-    wmagent-couchapp-init;
+    wmagent-couchapp-init
     unset WMAGENT_CONFIG
     inited_agent;
-}
-
-init_workqueue(){
-    load_secrets_file;
-    if [ "x$MYSQL_USER" != "x" ]; then
-	wmagent-mod-config --input=$CONFIG_WQ/config-template.py \
-                       --output=$CONFIG_WQ/config.py \
-                       --mysql_url=mysql://$MYSQL_USER:$MYSQL_PASS@localhost/$MYSQL_DATABASE_WQ \
-                       --mysql_socket=$MYSQL_SOCK \
-                       --working_dir=$INSTALL_WQ \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --reqmgr_port=$REQMGR_PORT \
-                       --reqmgr_hostname=$REQMGR_HOSTNAME \
-                       --workqueue_db_name=$GLOBAL_WORKQUEUE_DBNAME
-    elif [ "x$ORACLE_USER" != "x" ]; then
-	wmagent-mod-config --input=$CONFIG_WQ/config-template.py \
-                       --output=$CONFIG_WQ/config.py \
-                       --coredb_url=oracle://$ORACLE_USER:$ORACLE_PASS@$ORACLE_TNS \
-                       --working_dir=$INSTALL_WQ \
-                       --couch_url=http://$COUCH_USER:$COUCH_PASS@$COUCH_HOST_NAME:$COUCH_PORT \
-                       --reqmgr_port=$REQMGR_PORT \
-                       --reqmgr_hostname=$REQMGR_HOSTNAME \
-                       --workqueue_db_name=$GLOBAL_WORKQUEUE_DBNAME
-    else
-	echo "No database configured, should never have reached this point..."
-	exit 1;
-    fi
-    wmcore-db-init --config $CONFIG_WQ/config.py --create --modules=WMCore.Agent.Database
-    export WMAGENT_CONFIG=$CONFIG_WQ/config.py
-    wmagent-couchapp-init;
-    unset WMAGENT_CONFIG
-    inited_workqueue;
 }
 
 #
 # initialise the agent based on the project installed
 #
 init_agent(){
-
     if [ $USING_AG -eq 1 ]; then
         if [ $AG_INIT_DONE -eq 0 ]; then
             echo "Initialising Agent..."
             init_wmagent;
         fi
     fi
-
-    if [ $USING_WQ -eq 1 ]; then
-        if [ $WQ_INIT_DONE -eq 0 ]; then
-            echo "Initialising WorkQueue..."
-            init_workqueue;
-        fi
-    fi
 }
 
 start_agent(){
     init_agent;
-
-    if [ $USING_WQ -eq 1 ]; then
-        echo "Starting WorkQueue..."
-        wmcoreD --start --config=$CONFIG_WQ/config.py
-    fi
 
     if [ $USING_AG -eq 1 ]; then
         echo "Starting WMAgent..."
@@ -740,10 +629,6 @@ start_agent(){
 }
 
 stop_agent(){
-    if [ $USING_WQ -eq 1 ]; then
-        echo "Shutting down WorkQueue...";
-        wmcoreD --shutdown --config=$CONFIG_WQ/config.py;
-    fi
     if [ $USING_AG -eq 1 ]; then
         echo "Shutting down WMAgent...";
         wmcoreD --shutdown --config=$CONFIG_AG/config.py;
@@ -751,10 +636,6 @@ stop_agent(){
 }
 
 status_of_agent(){
-    if [ $USING_WQ -eq 1 ]; then
-        echo "Status of WorkQueue:"
-        wmcoreD --status --config=$CONFIG_WQ/config.py
-    fi
     if [ $USING_AG -eq 1 ]; then
         echo "Status of WMAgent:"
         wmcoreD --status --config=$CONFIG_AG/config.py
@@ -769,27 +650,16 @@ clean_agent(){
     load_secrets_file;
     stop_agent;
 
-    if [ $USING_WQ -eq 1 ]; then
-        echo "Cleaning WorkQueue..."
-        rm -rf $INSTALL_WQ/*
-        rm -f $CONFIG_WQ/config.py;
-        rm -f $INSTALL_WQ/.init
-
-	if [ "x$MYSQL_USER" != "x" ]; then
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "drop database ${MYSQL_DATABASE_WQ}"
-            mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_WQ}"
-	fi
-    fi
     if [ $USING_AG -eq 1 ]; then
         echo "Cleaning WMAgent..."
         rm -rf $INSTALL_AG/*
         rm -f $CONFIG_AG/config.py;
         rm -f $INSTALL_AG/.init
 
-	if [ "x$MYSQL_USER" != "x" ]; then
+        if [ "x$MYSQL_USER" != "x" ]; then
             mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "drop database ${MYSQL_DATABASE_AG}"
             mysql -u $MYSQL_USER -p$MYSQL_PASS --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
-	fi
+	    fi
     fi
 }
 
@@ -828,21 +698,6 @@ execute_command_agent(){
     $RUNTHIS $@;
 }
 
-execute_command_wq(){
-    shift;
-    local RUNTHIS=$1
-    local WMCORE_BIN_DIR=$WMCORE_ROOT/bin
-    if [ ! -e $WMCORE_BIN_DIR/$1 ]; then
-        echo "$RUNTHIS is not a binary in WMCore/bin"
-        exit 1
-    fi
-    shift;
-    load_secrets_file;
-    export WMAGENT_CONFIG=$CONFIG_WQ/config.py
-    echo "Executing $RUNTHIS $@ ..."
-    $RUNTHIS $@;
-}
-
 
 help(){
     echo "Documentation for this script can be found at: https://svnweb.cern.ch/trac/CMSDMWM/wiki/WMAgentManagement";
@@ -859,10 +714,6 @@ case $1 in
     status ;;
   activate-agent)
     activate_agent;;
-  activate-workqueue)
-    activate_workqueue;;
-  activate-crabserver)
-    activate_crabserver;;
   start-services)
     start_services;;
   stop-services)
@@ -885,8 +736,6 @@ case $1 in
      clean_couch;;
   init-agent)
      init_agent;;
-  init-workqueue)
-     init_workqueue;;
   start-agent)
      start_agent;;
   stop-agent)
@@ -897,8 +746,6 @@ case $1 in
      clean_all;;
   execute-agent)
      execute_command_agent $@;;
-  execute-workqueue)
-     execute_command_wq $@;;
   help)
     help ;;
   version)
