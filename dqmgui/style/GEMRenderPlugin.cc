@@ -42,7 +42,7 @@ public:
     }
   }
 
-  virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo & ) override
+  virtual void postDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &imgInfo ) override
   {
     if (o.object == nullptr)
       return;
@@ -73,7 +73,7 @@ public:
     }
     else if (dynamic_cast<TH2F*>(o.object))
     {
-      postDrawTH2F(c, o);
+      postDrawTH2F(c, o, imgInfo);
     }
     else if (dynamic_cast<TProfile*>(o.object))
     {
@@ -168,7 +168,7 @@ private:
     c->SetGridy();
   }
 
-  void postDrawTH2F(TCanvas *c, const VisDQMObject &o)
+  void postDrawTH2F(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &imgInfo)
   {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
@@ -215,6 +215,29 @@ private:
       gStyle->SetGridStyle(1);
       gStyle->SetGridWidth(3);
       gStyle->SetPaintTextFormat(".3f");
+    }
+    else if (TPRegexp("^GEM/recHit/rechit_wheel_[\\w\\W]+$").Match(o.name))
+    {
+      float fR = obj->GetYaxis()->GetBinLowEdge(obj->GetNbinsY() + 1) * 1.1;
+      float fRatioX = 1.0, fRatioY = 1.0, fRatio;
+      if ( imgInfo.width > 0 && imgInfo.height > 0 ) {
+        fRatio  = ( (float)imgInfo.width ) / ( (float)imgInfo.height );
+        fRatioX = ( fRatio >= 1.0 ? fRatio : 1.0 );
+        fRatioY = ( fRatio >= 1.0 ? 1.0    : 1.0 / fRatio );
+      }
+      auto hFrame = gPad->DrawFrame(-fR * fRatioX, -fR * fRatioY, fR * fRatioX, fR * fRatioY);
+      hFrame->SetTitle(obj->GetTitle());
+      hFrame->GetXaxis()->SetTitle(obj->GetXaxis()->GetTitle());
+      hFrame->GetYaxis()->SetTitle(obj->GetYaxis()->GetTitle());
+      obj->Draw("same colzpol");
+    }
+    else if (TPRegexp("^GEM/DAQStatus/vfat_statusSummary_[\\w\\W]+$").Match(o.name))
+    {
+      Int_t arrCol[ 2 ] = { 3, 2 };
+      gStyle->SetPalette(2, arrCol);
+      obj->SetMinimum(1.0);
+      obj->SetMaximum(2.0);
+      obj->SetOption("col");
     }
 
     c->SetGridx();
