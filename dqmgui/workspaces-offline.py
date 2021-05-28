@@ -215,7 +215,7 @@ server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')
 server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
 
 server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
-                 "GEM/Layouts/01 - Efficiency per Eta Partition",
+                 "GEM/Layouts/01 - Efficiency vs Chamber",
                  "GEM/Layouts/02 - Efficiency vs Muon PT",
                  "GEM/Layouts/03 - Efficiency vs Muon Eta",
                  "GEM/Layouts/04 - Resolution Summary",
