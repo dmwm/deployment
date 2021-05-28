@@ -83,6 +83,8 @@ public:
 
 private:
   SummaryChamber summaryCh;
+  const int kEntriesColor_ = kAzure - 5;
+  const int kEfficiencyColor_ = 46;
 
   void preDrawTH1F(TCanvas *, const VisDQMObject &o)
   {
@@ -124,33 +126,35 @@ private:
 
     if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/muon_\\w+_GE(\\+|\\-)\\d1(?:_matched)?$").MatchB(o.name))
     {
+      // offline
       obj->SetOption("hist E");
       gStyle->SetOptStat("euo");
 
-      obj->SetLineColor(602);
-      obj->SetFillColorAlpha(602, 0.3);
+      obj->SetLineColor(kEntriesColor_);
+      obj->SetFillColorAlpha(kEntriesColor_, 0.3);
+    }
+    else if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/(chamber|ieta)_GE(\\+|\\-)\\d1_L\\d(?:_matched)?$").MatchB(o.name))
+    {
+      // offline
+      obj->SetOption("P");
 
-      if (auto stats = dynamic_cast<TPaveStats*>(obj->GetListOfFunctions()->FindObject("stats")))
-      {
-        stats->SetY1NDC(0.905);
-        stats->SetY2NDC(1.0);
-      }
+      obj->SetMarkerStyle(4); //
+      obj->SetMarkerSize(2);
+      const int marker_color = TPRegexp("\\w_matched").MatchB(o.name) ? kEfficiencyColor_ : kEntriesColor_;
+      obj->SetMarkerColor(marker_color);
+      obj->SetLineColorAlpha(kEfficiencyColor_, 0.0);
 
+      applyBinNumbering(obj, "x");
     }
     else if (TPRegexp("^GEM/Efficiency/type\\d/Resolution/(residual|pull)_\\w+_GE(\\+|\\-)\\d1_R\\d$").MatchB(o.name))
     {
+      // Offline DQM
+
       obj->SetOption("hist E");
       gStyle->SetOptStat("emruos");
 
-      obj->SetLineColor(602);
-      obj->SetFillColorAlpha(602, 0.3);
-
-      if (auto stats = dynamic_cast<TPaveStats*>(obj->GetListOfFunctions()->FindObject("stats")))
-      {
-        stats->SetY1NDC(0.905);
-        stats->SetY2NDC(1.0);
-      }
-
+      obj->SetLineColor(kEntriesColor_);
+      obj->SetFillColorAlpha(kEntriesColor_, 0.3);
     }
     else if (TPRegexp("^GEM/digi/total_strips_per_event_[\\w\\W]+$").Match(o.name))
     {
@@ -180,36 +184,44 @@ private:
       drawTimeHisto(dynamic_cast<TH2F*>(o.object));
     }
 
-    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/detector_GE(\\+|\\-)\\d1(?:matched_)?$").MatchB(o.name))
+    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/detector_GE(\\+|\\-)\\d1_L\\d(?:_matched)?$").MatchB(o.name))
     {
+      // Offline DQM
       obj->SetOption("colz");
       gStyle->SetOptStat("e");
+
+      applyBinNumbering(obj, "x");
+      applyBinNumbering(obj, "y");
     }
-    else if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_detector_GE(\\+|\\-)\\d1$").MatchB(o.name))
+    else if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_detector_GE(\\+|\\-)\\d1_L\\d$").MatchB(o.name))
     {
+      // Offline DQM
       obj->SetOption("colz");
-      gStyle->SetOptStat(0);
-
-      obj->SetNdivisions(-obj->GetNbinsX(), "Y"); // use a negative number to turn off ndivisios optimization.
-      obj->SetNdivisions(-obj->GetNbinsY(), "X");
-
-      obj->SetMinimum(0.80);
+      obj->SetMinimum(0.00);
       obj->SetMaximum(1.00);
 
+      applyBinNumbering(obj, "x");
+      applyBinNumbering(obj, "y");
+
+      // turn off the stat box
+      gStyle->SetOptStat(0);
       gStyle->SetGridWidth(3);
     }
     else if (TPRegexp("^GEM/Efficiency/type\\d/Resolution/residual_rphi_(mean|stddev|skewness)$").MatchB(o.name))
     {
+      // Offline DQM
       obj->SetOption("colz text");
+      gStyle->SetPaintTextFormat(".3f");
+
+      // no stat box
       obj->SetStats(false);
       gStyle->SetOptStat(0);
 
-      obj->SetNdivisions(-obj->GetNbinsX(), "Y"); // use a negative number to turn off ndivisios optimization.
-      obj->SetNdivisions(-obj->GetNbinsY(), "X");
-
+      // grid
+      obj->SetNdivisions(-obj->GetNbinsX(), "X");
+      obj->SetNdivisions(-obj->GetNbinsY(), "Y");
       gStyle->SetGridStyle(1);
       gStyle->SetGridWidth(3);
-      gStyle->SetPaintTextFormat(".3f");
     }
     else if (TPRegexp("^GEM/recHit/rechit_wheel_[\\w\\W]+$").Match(o.name))
     {
@@ -244,16 +256,25 @@ private:
     TProfile* obj = dynamic_cast<TProfile*>(o.object);
     assert(obj);
 
-    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_muon_\\w+_GE(\\+|\\-)\\d1").MatchB(o.name))
+    // common cosmetics for the offlien DQM
+    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_[\\S]+$").MatchB(o.name))
     {
       obj->SetOption("E");
+
+      obj->SetMinimum(-0.02);
+      obj->SetMaximum(1.02);
+
+      obj->SetLineColor(kEfficiencyColor_);
+      obj->SetLineWidth(2);
+
+      // no stat box
       obj->SetStats(false);
       gStyle->SetOptStat(0);
+    }
 
-      obj->SetMinimum(-0.05);
-      obj->SetMaximum(1.05);
-      obj->SetLineColor(kRed);
-      obj->SetLineWidth(2);
+    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_(chamber|ieta)_GE(\\+|\\-)\\d1_L\\d$").MatchB(o.name))
+    {
+      applyBinNumbering(obj, "x");
     }
     else
     {
@@ -311,6 +332,27 @@ private:
 
     return 0;
   };
+
+  void applyBinNumbering(TH1* obj, const TString&& axis_name) {
+    TAxis* axis = nullptr;
+    if (axis_name.EqualTo("x"))
+      axis = obj->GetXaxis();
+    else if (axis_name.EqualTo("y"))
+      axis = obj->GetYaxis();
+    else
+      return;
+
+    if (axis == nullptr) {
+      return;
+    }
+
+    const int nbins = axis->GetNbins();
+    obj->SetNdivisions(-nbins, axis_name);
+    for (int bin = 1; bin <= nbins; bin++) {
+      const char* label = Form("%d", bin);
+      axis->SetBinLabel(bin, label);
+    }
+  }
 };
 
 //----------------------------------------------------------------------------------------------------

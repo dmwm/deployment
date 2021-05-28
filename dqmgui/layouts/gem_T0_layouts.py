@@ -2,15 +2,23 @@ def gemlayout(i, p, *rows): i["GEM/Layouts/" + p] = DQMItem(layout=rows)
 
 _GEM_OFF_LINK = '<a href="https://twiki.cern.ch/twiki/bin/view/CMS/GEMPPDOfflineDQM">Link to TWiki</a>'
 
-gemlayout(dqmitems, "01 - Efficiency per Eta Partition",
-    [{ "path": "GEM/Efficiency/type1/Efficiency/eff_detector_GE-11",
+gemlayout(dqmitems, "01 - Efficiency vs Chamber",
+    [{ "path": "GEM/Efficiency/type1/Efficiency/eff_chamber_GE-11_L2",
        "description": _GEM_OFF_LINK },
-     { "path": "GEM/Efficiency/type1/Efficiency/eff_detector_GE+11",
+     { "path": "GEM/Efficiency/type2/Efficiency/eff_chamber_GE-11_L2",
        "description": _GEM_OFF_LINK }],
-    [{ "path": "GEM/Efficiency/type2/Efficiency/eff_detector_GE-11",
+    [{ "path": "GEM/Efficiency/type1/Efficiency/eff_chamber_GE-11_L1",
        "description": _GEM_OFF_LINK },
-     { "path": "GEM/Efficiency/type2/Efficiency/eff_detector_GE+11",
-       "description": _GEM_OFF_LINK }]
+     { "path": "GEM/Efficiency/type2/Efficiency/eff_chamber_GE-11_L1",
+       "description": _GEM_OFF_LINK }],
+    [{ "path": "GEM/Efficiency/type1/Efficiency/eff_chamber_GE+11_L1",
+       "description": _GEM_OFF_LINK },
+     { "path": "GEM/Efficiency/type2/Efficiency/eff_chamber_GE+11_L1",
+       "description": _GEM_OFF_LINK }],
+    [{ "path": "GEM/Efficiency/type1/Efficiency/eff_chamber_GE+11_L2",
+       "description": _GEM_OFF_LINK },
+     { "path": "GEM/Efficiency/type2/Efficiency/eff_chamber_GE+11_L2",
+       "description": _GEM_OFF_LINK }],
 )
 
 gemlayout(dqmitems, "02 - Efficiency vs Muon PT",
