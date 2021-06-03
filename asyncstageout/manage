@@ -140,7 +140,6 @@ print_settings(){
 # Environment
 #
 
-. $ROOT_DIR/apps/pystack/etc/profile.d/init.sh
 . $ROOT_DIR/apps/couchdb/etc/profile.d/init.sh
 . $ROOT_DIR/apps/asyncstageout/etc/profile.d/init.sh
 
