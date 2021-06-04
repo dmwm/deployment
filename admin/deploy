@@ -12,7 +12,7 @@ deploy_admin_prep()
 
 deploy_admin_sw()
 {
-  local p pkgs="rotatelogs pystack py2-psutil"
+  local p pkgs="rotatelogs py2-psutil"
   case $variant in devtools )
     deploy_pkg comp cms+wmcore-devtools
     pkgs="$pkgs wmcore-devtools"
