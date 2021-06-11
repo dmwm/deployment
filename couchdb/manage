@@ -196,33 +196,33 @@ update_couchapps()
     WMCORE_TAG=$(curl https://api.github.com/repos/dmwm/WMCore/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
   fi
 
-  echo "Pulling couchapps version $1 from Github..."
-  wget https://github.com/dmwm/WMCore/archive/refs/tags/${WMCORE_TAG}.tar.gz ||
+  echo -e "\nPulling couchapps version $1 from Github..."
+  wget -nv https://github.com/dmwm/WMCore/archive/refs/tags/${WMCORE_TAG}.tar.gz ||
     { echo "Error pulling couchapps version $1 from Github"; exit 3; }
 
   tar --strip-components=2 -xzf ${WMCORE_TAG}.tar.gz WMCore-$WMCORE_TAG/src/couchapps ||
     { echo "Error extracting couchapps tarball"; exit 3; }
 
   # grab external dependencies for reqmon/t0_reqmon
-  echo "Pulling additional reqmon and t0_reqmon dependencies..."
+  echo -e "\nPulling additional reqmon and t0_reqmon dependencies..."
   cp -R $tmp_dir/couchapps/couchskel/vendor $tmp_dir/couchapps/WMStats
   mkdir -p $tmp_dir/couchapps/WMStats/vendor/{jquery,datatables}/_attachments
 
   # jquery-ui.min.js
-  echo "Downloading jquery-ui.min.js..."
-  wget https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js ||
+  echo -e "\nDownloading jquery-ui.min.js..."
+  wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js ||
     { echo "Error downloading jquery-ui.min.js"; exit 3; }
   cp jquery-ui.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery-ui.min.js
 
   # jquery.min.js
-  echo "Downloading jquery.min.js..."
-  wget http://code.jquery.com/jquery-1.7.2.min.js ||
+  echo -e "\nDownloading jquery.min.js..."
+  wget -nv http://code.jquery.com/jquery-1.7.2.min.js ||
     { echo "Error downloading jquery-1.7.2.min.js"; exit 3; }
   cp jquery-1.7.2.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery.min.js
 
   # Datatables
-  echo "Downloading Datatables..."
-  wget http://datatables.net/releases/DataTables-1.9.1.zip ||
+  echo -e "\nDownloading Datatables..."
+  wget -nv http://datatables.net/releases/DataTables-1.9.1.zip ||
     { echo "Error downloading Datatables-1.9.1.zip"; exit 3; }
   unzip DataTables-1.9.1.zip &> /dev/null
   cp DataTables*/{media/js/jquery.dataTables.min,extras/ColVis/media/js/ColVis.min}.js $tmp_dir/couchapps/WMStats/vendor/datatables/_attachments
