@@ -23,20 +23,7 @@ AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
-if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
-    RUCIO_URL="http://cms-rucio.cern.ch"
-    RUCIO_WMA_ACCT="wma_prod"
-    ARCH_DELAY_HOURS = 24 * 2
-else:
-    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
-    RUCIO_URL="http://cmsrucio-int.cern.ch"
-    RUCIO_WMA_ACCT="wma_test"
-    ARCH_DELAY_HOURS = 6
-
-RUCIO_MSTR_ACCT = "wmcore_transferor"
-RUCIO_ACCT = RUCIO_MSTR_ACCT
-
+RUCIO_ACCT = "wmcore_transferor"
 
 config = Configuration()
 
@@ -89,10 +76,6 @@ data.rucioWmaAccount = RUCIO_WMA_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = False
-if DBS_INS == "private_vm":
-    data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
-else:
-    data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
