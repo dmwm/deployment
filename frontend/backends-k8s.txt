@@ -28,6 +28,7 @@
 ^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-rulecleaner(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/ms-unmerged(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
 ^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
