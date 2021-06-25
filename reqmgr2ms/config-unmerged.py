@@ -17,7 +17,10 @@ LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2ms_unmerged"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
-# TODO - add CRIC url
+# Example RSEEXPR:
+# RSEEXPR = "rse_type=DISK&country=US&tier=3&cms_type=real"
+# RSEEXPR = "((rse_type=DISK\country=US)&tier=2)&cms_type=int"
+RSEEXPR = "*"
 
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
@@ -81,6 +84,7 @@ data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = False
+data.reseExpr = RSEEXPR
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
