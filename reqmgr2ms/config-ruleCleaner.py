@@ -33,8 +33,8 @@ else:
     RUCIO_WMA_ACCT="wma_test"
     ARCH_DELAY_HOURS = 6
 
+RUCIO_ACCT = RUCIO_WMA_ACCT
 RUCIO_MSTR_ACCT = "wmcore_transferor"
-RUCIO_ACCT = RUCIO_MSTR_ACCT
 
 
 config = Configuration()
