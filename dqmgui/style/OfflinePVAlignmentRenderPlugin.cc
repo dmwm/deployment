@@ -104,6 +104,15 @@ private:
   {
     TProfile2D* obj = dynamic_cast<TProfile2D*>( o.object );
     assert( obj );
+    
+    if( o.name.find("VsEtaVsPhi")!=std::string::npos ){
+      
+      obj->SetStats( kFALSE );
+      gStyle->SetPalette(1);
+      gPad->SetRightMargin(0.15);
+      obj->SetOption("colz");
+
+    }
 
   }
 
