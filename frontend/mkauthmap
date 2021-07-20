@@ -65,9 +65,10 @@ def request(uri):
     path = apimap[query] + path
     query = "json&preset=" + query
     url = urlunparse((scheme, netloc, path, '', query, frag))
+    print url
     cert = ('/etc/robots/robotcert.pem', '/etc/robots/robotkey.pem')
     try:
-        result = requests.get(url, cert=cert)]
+        result = requests.get(url, cert=cert)
         result.raise_for_status()
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:", errh)
