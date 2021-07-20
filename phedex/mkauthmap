@@ -58,7 +58,7 @@ def request(uri):
     url = urlunparse((scheme, netloc, path, '', query, frag))
     cert = ('/etc/robots/robotcert.pem', '/etc/robots/robotkey.pem')
     try:
-        result = requests.get(url, cert=cert)]
+        result = requests.get(url, cert=cert)
         result.raise_for_status()
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:", errh)
