@@ -71,12 +71,16 @@ def request(uri):
         result.raise_for_status()
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:", errh)
+        print ("URL", url)
     except requests.exceptions.ConnectionError as errc:
         print ("Error Connecting:", errc)
+        print ("URL", url)
     except requests.exceptions.Timeout as errt:
         print ("Timeout Error:", errt)
+        print ("URL", url)
     except requests.exceptions.RequestException as err:
         print ("Request error", err)
+        print ("URL", url)
     else:
         content = result.text
     return content
