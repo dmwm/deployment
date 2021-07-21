@@ -65,7 +65,7 @@ def request(uri):
     path = apimap[query] + path
     query = "json&preset=" + query
     url = urlunparse((scheme, netloc, path, '', query, frag))
-    cert = ('/afs/cern.ch/user/p/ppaparri/usercert.pem', '/afs/cern.ch/user/p/ppaparri/userkey.pem')
+    cert = ('/etc/robots/robotcert.pem', '/etc/robots/robotkey.pem'')
     try:
         result = requests.get(url, cert=cert)
         result.raise_for_status()
