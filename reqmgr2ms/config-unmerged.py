@@ -85,7 +85,7 @@ data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = False
-data.reseExpr = RSEEXPR
+data.rseExpr = RSEEXPR
 data.skipRSEs = ['T2_CH_CERN', 'T1_US_FNAL']
 data.dumpRse = False
 
