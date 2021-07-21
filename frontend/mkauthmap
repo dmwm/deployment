@@ -8,11 +8,10 @@ import os
 import os.path
 import re
 import sys
-import urllib2
+import requests
 from optparse import OptionParser
 from pprint import pprint  # to debug objects content
 from tempfile import mkstemp
-from urllib2 import URLError
 from urlparse import urlsplit, urlunparse
 
 # Global vars
@@ -55,7 +54,7 @@ def getFecthDetails(fname):
 
 def request(uri):
     content = ''
-    url = "http:" + uri
+    url = "https:" + uri
     apimap = {
         'roles': '/accounts/user',
         'site-names&rcsite_state=ANY': '/api/cms/site',
@@ -65,22 +64,25 @@ def request(uri):
     (scheme, netloc, path, query, frag) = urlsplit(url)
     path = apimap[query] + path
     query = "json&preset=" + query
-    req = urllib2.Request(urlunparse((scheme, netloc, path, '', query, frag)))
+    url = urlunparse((scheme, netloc, path, '', query, frag))
+    cert = ('/etc/robots/robotcert.pem', '/etc/robots/robotkey.pem'')
     try:
-        result = urllib2.urlopen(req)
-    except URLError as e:
-        if hasattr(e, 'reason'):
-            print 'Failed to reach a server. Reason: '
-            pprint(e.reason)
-            print 'URL: '
-            pprint(urlunparse((scheme, netloc, path, '', query, frag)))
-        elif hasattr(e, 'code'):
-            print 'The server couldn\'t fulfill the request. Error code: '
-            pprint(e.code)
-            print 'URL: '
-            pprint(urlunparse((scheme, netloc, path, '', query, frag)))
+        result = requests.get(url, cert=cert)
+        result.raise_for_status()
+    except requests.exceptions.HTTPError as errh:
+        print ("Http Error:", errh)
+        print ("URL", url)
+    except requests.exceptions.ConnectionError as errc:
+        print ("Error Connecting:", errc)
+        print ("URL", url)
+    except requests.exceptions.Timeout as errt:
+        print ("Timeout Error:", errt)
+        print ("URL", url)
+    except requests.exceptions.RequestException as err:
+        print ("Request error", err)
+        print ("URL", url)
     else:
-        content = result.read()
+        content = result.text
     return content
 
 
