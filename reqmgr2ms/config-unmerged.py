@@ -76,6 +76,7 @@ data.manager = 'WMCore.MicroService.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.wmstatsUrl = "%s/wmstatsserver" % BASE_URL
 data.limitRSEsPerInstance = 200
+data.limitFilesPerRSE = -1 # negative values mean NO Limit
 data.limitTiersPerInstance = ['T1', 'T2', 'T3']
 data.verbose = True
 data.interval = 60 * 60 * 8  # run it every 8 hours
@@ -85,6 +86,8 @@ data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = False
 data.rseExpr = RSEEXPR
+data.skipRSEs = ['T2_CH_CERN', 'T1_US_FNAL']
+data.dumpRse = False
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
