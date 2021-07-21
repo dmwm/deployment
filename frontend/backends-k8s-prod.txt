@@ -33,7 +33,7 @@
 ^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-rulecleaner(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-unmerged-T1(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-unmerged-T2-T3(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/ms-unmerged-T2-T3-US(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-unmerged-T2-T3-noUS(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch

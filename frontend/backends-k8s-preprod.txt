@@ -39,7 +39,7 @@
 ^/auth/complete/ms-output(?:/|$) ms-output.dmwm.svc.cluster.local
 ^/auth/complete/ms-rulecleaner(?:/|$) ms-rulecleaner.dmwm.svc.cluster.local
 ^/auth/complete/ms-unmerged-T1(?:/|$) ms-unmerged.dmwm.svc.cluster.local
-^/auth/complete/ms-unmerged-T2-T3(?:/|$) ms-unmerged.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged-T2-T3-US(?:/|$) ms-unmerged.dmwm.svc.cluster.local
 ^/auth/complete/ms-unmerged-T2-T3-noUS(?:/|$) ms-unmerged.dmwm.svc.cluster.local
 ^/auth/complete/t0wmadatasvc(?:/|$) t0wmadatasvc.tzero.svc.cluster.local
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
