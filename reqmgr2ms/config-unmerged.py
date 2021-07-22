@@ -20,7 +20,7 @@ AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 # Example RSEEXPR:
 # RSEEXPR = "rse_type=DISK&country=US&tier=3&cms_type=real"
 # RSEEXPR = "((rse_type=DISK\country=US)&tier=2)&cms_type=int"
-RSEEXPR = "*"
+RSEEXPR = "(cms_type=real|cms_type=int)&rse_type=DISK"
 
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
@@ -86,8 +86,15 @@ data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = False
 data.rseExpr = RSEEXPR
-data.skipRSEs = ['T2_CH_CERN', 'T1_US_FNAL']
+data.skipRSEs = ['T2_CH_CERN', 'T1_US_FNAL_Disk']
 data.dumpRse = False
+data.gfalLogLevel = 'warning'
+# possible values are:
+# {'normal': gfal2.verbose_level.normal,
+#  'warning': gfal2.verbose_level.warning,
+#  'verbose': gfal2.verbose_level.verbose,
+#  'debug': gfal2.verbose_level.debug,
+#  'trace': gfal2.verbose_level.trace}
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
