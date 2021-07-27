@@ -38,9 +38,9 @@
 ^/auth/complete/ms-monitor(?:/|$) ms-monitor.dmwm.svc.cluster.local
 ^/auth/complete/ms-output(?:/|$) ms-output.dmwm.svc.cluster.local
 ^/auth/complete/ms-rulecleaner(?:/|$) ms-rulecleaner.dmwm.svc.cluster.local
-^/auth/complete/ms-unmerged-T1(?:/|$) ms-unmerged-T1.dmwm.svc.cluster.local
-^/auth/complete/ms-unmerged-T2-T3-US(?:/|$) ms-unmerged-T2-T3-US.dmwm.svc.cluster.local
-^/auth/complete/ms-unmerged-T2-T3-noUS(?:/|$) ms-unmerged-T2-T3-noUS.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged-t1(?:/|$) ms-unmerged-t1.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged-t2-t3-us(?:/|$) ms-unmerged-t2-t3-us.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged-t2-t3(?:/|$) ms-unmerged-t2-t3.dmwm.svc.cluster.local
 ^/auth/complete/t0wmadatasvc(?:/|$) t0wmadatasvc.tzero.svc.cluster.local
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
