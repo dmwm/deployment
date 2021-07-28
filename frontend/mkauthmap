@@ -52,7 +52,7 @@ def getFecthDetails(fname):
         return url
 
 
-def request(uri):
+def request(uri, opts):
     content = ''
     url = "https:" + uri
     apimap = {
@@ -65,9 +65,9 @@ def request(uri):
     path = apimap[query] + path
     query = "json&preset=" + query
     url = urlunparse((scheme, netloc, path, '', query, frag))
-    cert = ('/etc/robots/robotcert.pem', '/etc/robots/robotkey.pem')
+    cert = (opts.cert, opts.key)
     try:
-        result = requests.get(url, cert=cert, verify='/etc/ssl/certs/CERN-bundle.pem')
+        result = requests.get(url, cert=cert, verify=opts.ca_cert)
         result.raise_for_status()
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:", errh)
@@ -189,6 +189,9 @@ opt = OptionParser(__doc__)
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
 opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opt.add_option("-v", "--verbose", action="store_true", help="increase output verbosity")
+opt.add_option("-e", "--cert", dest="cert", help="path to cert file")
+opt.add_option("-k", "--key", dest="key", help="path to cert key")
+opt.add_option("-b", "--ca-cert", dest="ca_cert", help="path to ca cert bundle")
 opts, args = opt.parse_args()
 # Checking command line options
 if not opts.conf:
@@ -199,11 +202,23 @@ if not opts.out:
     print >> sys.stderr, "Output file name is required"
     exit(1)
 
+if not opts.cert:
+    print >> sys.stderr, "Cert file name is required"
+    exit(1)
+
+if not opts.key:
+    print >> sys.stderr, "Cert key file name is required"
+    exit(1)
+
+if not opts.ca_cert:
+    print >> sys.stderr, "CA bundle file name is required"
+    exit(1)
+    
 ##Calling core functions
 uri = getFecthDetails(opts.conf)
-roles = request(uri)
+roles = request(uri, opts)
 # sites = request (uri.replace('roles','site-names'))
-sites = request(uri.replace('roles', 'site-names&rcsite_state=ANY'))
+sites = request(uri.replace('roles', 'site-names&rcsite_state=ANY'), opts)
 sitemap = buildSiteMap(sites)
 updateFile(opts, roles, sitemap)
 # content = request(uri)
