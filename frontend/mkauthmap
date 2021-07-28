@@ -65,9 +65,11 @@ def request(uri, opts):
     path = apimap[query] + path
     query = "json&preset=" + query
     url = urlunparse((scheme, netloc, path, '', query, frag))
-    cert = (opts.cert, opts.key)
+    cert = None
+    if opts.cert and opts.key:
+        cert = (opts.cert, opts.key)
     try:
-        result = requests.get(url, cert=cert, verify=opts.ca_cert)
+        result = requests.get(url, cert=cert, verify=opts.ca_cert or True)
         result.raise_for_status()
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:", errh)
@@ -200,18 +202,6 @@ if not opts.conf:
 
 if not opts.out:
     print >> sys.stderr, "Output file name is required"
-    exit(1)
-
-if not opts.cert:
-    print >> sys.stderr, "Cert file name is required"
-    exit(1)
-
-if not opts.key:
-    print >> sys.stderr, "Cert key file name is required"
-    exit(1)
-
-if not opts.ca_cert:
-    print >> sys.stderr, "CA bundle file name is required"
     exit(1)
     
 ##Calling core functions
