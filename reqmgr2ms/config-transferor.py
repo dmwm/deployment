@@ -78,6 +78,7 @@ data.services = ['transferor']
 data.quotaUsage = 0.9
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
 data.rulesLifetime = RULE_LIFETIME
+data.rucioRuleWeight = "ddm_quota"
 data.rucioAccount = "wmcore_transferor"
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
