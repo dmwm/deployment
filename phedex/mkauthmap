@@ -42,7 +42,7 @@ def getFecthDetails(fname):
         url = ml[5:]
         return url
 
-def request(uri):
+def request(uri, opts):
     content = ''
     url = "https:" + uri
     apimap = {
@@ -56,9 +56,11 @@ def request(uri):
     path = apimap[query] + path
     query = "json&preset=" + query
     url = urlunparse((scheme, netloc, path, '', query, frag))
-    cert = ('/etc/robots/robotcert.pem', '/etc/robots/robotkey.pem')
+    cert = None
+    if opts.cert and opts.key:
+        cert = (opts.cert, opts.key)
     try:
-        result = requests.get(url, cert=cert, verify='/etc/ssl/certs/CERN-bundle.pem')
+        result = requests.get(url, cert=cert, verify=opts.ca_cert or True)
         result.raise_for_status()
     except requests.exceptions.HTTPError as errh:
         print ("Http Error:", errh)
@@ -109,6 +111,10 @@ opt = OptionParser(__doc__)
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
 opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opt.add_option("-v", "--verbose", action="store_true", help="increase output verbosity")
+opt.add_option("-e", "--cert", dest="cert", help="path to cert file")
+opt.add_option("-k", "--key", dest="key", help="path to cert key")
+opt.add_option("-b", "--ca-cert", dest="ca_cert", help="path to ca cert bundle")
+
 opts, args = opt.parse_args()
 # Checking command line options
 if not opts.conf:
@@ -118,7 +124,6 @@ if not opts.conf:
 if not opts.out:
     print >> sys.stderr, "Output file name is required"
     exit(1)
-
 
 ##Calling core functions
 #Identifiying api to fetch
@@ -130,19 +135,19 @@ uri = getFecthDetails(opts.conf)
 
 if api == "group-responsibilities.json":
     uri = uri + "group-responsibilities"
-    ncontent = request(uri)
+    ncontent = request(uri, opts)
 
 if api == "people.json":
     uri = uri + "people"
-    ncontent = request(uri)
+    ncontent = request(uri, opts)
 
 if api == "site-names.json":
     uri = uri + "site-names&rcsite_state=ANY"
-    ncontent = request(uri)
+    ncontent = request(uri, opts)
 
 if api == "site-responsibilities.json":
     uri = uri + "site-responsibilities"
-    ncontent = request(uri)
+    ncontent = request(uri, opts)
 
 updateFile(opts, ncontent)
 exit(0)
