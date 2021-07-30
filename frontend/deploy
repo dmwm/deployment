@@ -160,7 +160,7 @@ deploy_frontend_post()
    case $host in vocms* ) silent= ;; * ) silent= ;; esac
    echo "*/4 * * * * . $root/current/apps/frontend/etc/profile.d/init.sh &&" \
         "PYTHONPATH=$root/current/auth/frontend:\$PYTHONPATH $project_config/mkauthmap" \
-        "$silent -c $project_config/mkauth.conf -o $PWD/etc/authmap.json"
+        "$silent -c $project_config/mkauth.conf -o $PWD/etc/authmap.json --cert /etc/robots/robotcert.pem --key /etc/robots/robotkey.pem --ca-cert /etc/ssl/certs/CERN-bundle.pem"
 
    case $variant:$host in
      prod:vocms0160 | prod:vocms0760 )
