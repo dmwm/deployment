@@ -443,6 +443,20 @@ private:
       if( o.name.find( "SUMOFF_charge_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(-5.); obj->SetMaximum(45.); }
       if( o.name.find( "SUMOFF_nclusters_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(-0.1); obj->SetMaximum(2.5); }
       if( o.name.find( "SUMOFF_size_OnTrack_Endcap" ) != std::string::npos ){ obj->SetMinimum(-0.1); obj->SetMaximum(4.); }
+      
+      //Specify title for residual plots
+      if( o.name.find( "Tracks/residual_x_PXBarrel") != std::string::npos ) obj->SetTitle("Barrel Pixel X-Residuals");
+      if( o.name.find( "Tracks/residual_y_PXBarrel") != std::string::npos ) obj->SetTitle("Barrel Pixel Y-Residuals");
+      if( o.name.find( "Tracks/residual_x_PXForward") != std::string::npos ) obj->SetTitle("Forward Pixel X-Residuals");
+      if( o.name.find( "Tracks/residual_y_PXForward") != std::string::npos ) obj->SetTitle("Forward Pixel Y-Residuals");
+      if( o.name.find( "PXBarrel/residual_x_PXLayer_1") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 1 X-Residuals");
+      if( o.name.find( "PXBarrel/residual_x_PXLayer_2") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 2 X-Residuals");
+      if( o.name.find( "PXBarrel/residual_x_PXLayer_3") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 3 X-Residuals");
+      if( o.name.find( "PXBarrel/residual_x_PXLayer_4") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 4 X-Residuals");
+      if( o.name.find( "PXBarrel/residual_y_PXLayer_1") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 1 Y-Residuals");
+      if( o.name.find( "PXBarrel/residual_y_PXLayer_2") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 2 Y-Residuals");
+      if( o.name.find( "PXBarrel/residual_y_PXLayer_3") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 3 Y-Residuals");
+      if( o.name.find( "PXBarrel/residual_y_PXLayer_4") != std::string::npos ) obj->SetTitle("Barrel Pixel Layer 4 Y-Residuals");
 
       if( o.name.find( "tbmmessage_FED" ) != std::string::npos )
         {
