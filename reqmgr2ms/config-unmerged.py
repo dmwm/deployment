@@ -29,9 +29,11 @@ from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL = "https://cms-rucio-auth.cern.ch"
     RUCIO_URL = "http://cms-rucio.cern.ch"
+    RUCIO_CONMON_URL = "https://cmsweb.cern.ch/rucioconmon/"
 else:
     RUCIO_AUTH_URL = "https://cmsrucio-auth-int.cern.ch"
     RUCIO_URL = "http://cmsrucio-int.cern.ch"
+    RUCIO_CONMON_URL = "https://cmsweb-testbed.cern.ch/rucioconmon/"
 
 RUCIO_ACCT = "wmcore_transferor"
 
@@ -81,6 +83,7 @@ data.limitTiersPerInstance = ['T1', 'T2', 'T3']
 data.verbose = True
 data.interval = 60 * 60 * 8  # run it every 8 hours
 data.services = ['unmerged']
+data.rucioConMon = RUCIO_CONMON_URL
 data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
