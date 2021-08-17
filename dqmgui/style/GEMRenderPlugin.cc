@@ -5,6 +5,7 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TProfile.h"
+#include "TProfile2D.h"
 #include "TCanvas.h"
 #include "TPaveStats.h"
 
@@ -16,6 +17,12 @@ class GEMRenderPlugin : public DQMRenderPlugin
 {
 
 public:
+  int nInitColorStatus;
+  
+  GEMRenderPlugin() : DQMRenderPlugin() {
+    nInitColorStatus = -1;
+  };
+  
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &) override
   {
     if ((o.name.find( "GEM/" ) != std::string::npos))
@@ -78,6 +85,10 @@ public:
     else if (dynamic_cast<TProfile*>(o.object))
     {
       postDrawTProfile(c, o);
+    }
+    else if (dynamic_cast<TProfile2D*>(o.object))
+    {
+      postDrawTProfile2D(c, o);
     }
   }
 
@@ -152,7 +163,11 @@ private:
       }
 
     }
-    else if (TPRegexp("^GEM/digi/total_strips_per_event_[\\w\\W]+$").Match(o.name))
+    else if (TPRegexp("^GEM/Digis/digis_per_[\\w\\W]+$").Match(o.name))
+    {
+      c->SetLogy(true);
+    }
+    else if (TPRegexp("^GEM/RecHits/rechits_per_[\\w\\W]+$").Match(o.name))
     {
       c->SetLogy(true);
     }
@@ -169,16 +184,6 @@ private:
   {
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
-
-    if (o.name.find("GEM/StatusDigi") != std::string::npos)
-    {
-      obj->SetStats(false);
-    }
-
-    if (o.name.find("GEM/StatusDigi/per_time_") != std::string::npos)
-    {
-      drawTimeHisto(dynamic_cast<TH2F*>(o.object));
-    }
 
     if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/detector_GE(\\+|\\-)\\d1(?:matched_)?$").MatchB(o.name))
     {
@@ -211,7 +216,7 @@ private:
       gStyle->SetGridWidth(3);
       gStyle->SetPaintTextFormat(".3f");
     }
-    else if (TPRegexp("^GEM/recHit/rechit_wheel_[\\w\\W]+$").Match(o.name))
+    else if (TPRegexp("^GEM/RecHits/rphi_occ_[\\w\\W]+$").Match(o.name))
     {
       float fR = obj->GetYaxis()->GetBinLowEdge(obj->GetNbinsY() + 1) * 1.1;
       float fRatioX = 1.0, fRatioY = 1.0, fRatio;
@@ -226,13 +231,54 @@ private:
       hFrame->GetYaxis()->SetTitle(obj->GetYaxis()->GetTitle());
       obj->Draw("same colzpol");
     }
-    else if (TPRegexp("^GEM/DAQStatus/vfat_statusSummary_[\\w\\W]+$").Match(o.name))
+    else if (TPRegexp("^GEM/EventInfo/vfat_statusSummary_[\\w\\W]+$").Match(o.name))
     {
-      Int_t arrCol[ 2 ] = { 3, 2 };
-      gStyle->SetPalette(2, arrCol);
+      Int_t arrCol[ 3 ] = { 3, 2, 5 };  // 1: Green(=3), 2: Red(=2), 3: Yellow(=5)
+      gStyle->SetPalette(3, arrCol);
       obj->SetMinimum(1.0);
-      obj->SetMaximum(2.0);
+      obj->SetMaximum(3.0);
       obj->SetOption("col");
+    }
+    
+    if (TPRegexp("^GEM/DAQStatus/[\\w\\W]+_status$").Match(o.name) || 
+        TPRegexp("^GEM/DAQStatus/[\\w\\W]+_status_[\\w\\W]+$").Match(o.name)) 
+    {
+      Int_t nNumGood = 20;
+      
+      if ( nInitColorStatus < 0 ) {
+        Double_t arrdS[ 4 ] = { 0.0, ( 990.0 - nNumGood ) / 990, ( 990.0 - nNumGood + 1.0 ) / 990, 1.0 };
+        Double_t arrdR[ 4 ] = { 1.0, 1.0, 1.0, 0.0 };
+        Double_t arrdG[ 4 ] = { 1.0, 0.0, 1.0, 1.0 };
+        Double_t arrdB[ 4 ] = { 0.0, 0.0, 0.0, 0.0 };
+        nInitColorStatus = TColor::CreateGradientColorTable(5, arrdS, arrdR, arrdG, arrdB, 990);
+      }
+      
+      auto nColorInit = nInitColorStatus;
+      Int_t arrnPalette[ 990 ];
+      for ( Int_t i = 0 ; i < 990 ; i++ ) arrnPalette[ i ] = nColorInit + i;
+      gStyle->SetPalette(990, arrnPalette);
+      
+      Float_t fMax = obj->GetMaximum();
+      obj->SetMaximum(fMax * 990.0 / ( 990.0 - nNumGood ));
+      Float_t fL = fMax * ( 990.0 - nNumGood + 1 ) / ( 990.0 - nNumGood );
+      for ( Int_t i = 0 ; i < obj->GetNbinsX() ; i++ ) {
+        Float_t fVal = obj->GetBinContent(i + 1, 1);
+        if ( fVal < 1.0 ) continue;
+        obj->SetBinContent(i + 1, 1, fL + fVal * ( nNumGood - 1 ) / ( 990.0 - nNumGood ));
+      }
+      
+      if ( TPRegexp("^GEM/DAQStatus/oh_status_[\\w\\W]+$").Match(o.name) ) {
+        c->SetLeftMargin(0.200);
+      } else {
+        c->SetLeftMargin(0.135);
+      }
+    }
+    
+    if (TPRegexp("^GEM/DAQStatus/amc13_status$").Match(o.name)) {
+      obj->GetXaxis()->SetBinLabel(1, "GE11-M");
+    }
+    if (TPRegexp("^GEM/DAQStatus/amc_status_GE11-N$").Match(o.name)) {
+      obj->SetTitle("AMC Status GE11-M");
     }
 
     c->SetGridx();
@@ -259,6 +305,19 @@ private:
     {
       obj->SetOption("E");
       gStyle->SetOptStat(10);
+    }
+
+    c->SetGridx();
+    c->SetGridy();
+  }
+
+  void postDrawTProfile2D(TCanvas *c, const VisDQMObject &o)
+  {
+    TProfile2D* obj = dynamic_cast<TProfile2D*>(o.object);
+    assert(obj);
+    if (TPRegexp("^GEM/RecHits/rechit_average_[\\w\\W]+$").Match(o.name))
+    {
+      obj->SetOption("colz");
     }
 
     c->SetGridx();

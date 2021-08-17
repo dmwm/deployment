@@ -143,6 +143,7 @@ void SummaryChamber::drawStats(TH2*& me) {
   me->GetXaxis()->SetTicks("0");
   me->GetXaxis()->SetNdivisions(0);
   me->GetXaxis()->SetTickLength(0.0);
+  me->GetYaxis()->SetTitle("");
   
   me->SetStats(false);
   //me->Draw("axis");
