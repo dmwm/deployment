@@ -48,6 +48,150 @@ EXCEPTIONS="wmstats"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+
+# Specific files required for WorkQueue, from the YUI JavaScript/CSS library
+files_needed_from_yui=('build/animation/animation-min.js'
+    'build/assets/skins/sam/ajax-loader.gif'
+    'build/assets/skins/sam/asc.gif'
+    'build/assets/skins/sam/autocomplete.css'
+    'build/assets/skins/sam/back-h.png'
+    'build/assets/skins/sam/back-v.png'
+    'build/assets/skins/sam/bar-h.png'
+    'build/assets/skins/sam/bar-v.png'
+    'build/assets/skins/sam/bg-h.gif'
+    'build/assets/skins/sam/bg-v.gif'
+    'build/assets/skins/sam/blankimage.png'
+    'build/assets/skins/sam/button.css'
+    'build/assets/skins/sam/calendar.css'
+    'build/assets/skins/sam/carousel.css'
+    'build/assets/skins/sam/check0.gif'
+    'build/assets/skins/sam/check1.gif'
+    'build/assets/skins/sam/check2.gif'
+    'build/assets/skins/sam/colorpicker.css'
+    'build/assets/skins/sam/container.css'
+    'build/assets/skins/sam/datatable.css'
+    'build/assets/skins/sam/desc.gif'
+    'build/assets/skins/sam/dt-arrow-dn.png'
+    'build/assets/skins/sam/dt-arrow-up.png'
+    'build/assets/skins/sam/editor-knob.gif'
+    'build/assets/skins/sam/editor-sprite-active.gif'
+    'build/assets/skins/sam/editor-sprite.gif'
+    'build/assets/skins/sam/editor.css'
+    'build/assets/skins/sam/header_background.png'
+    'build/assets/skins/sam/hue_bg.png'
+    'build/assets/skins/sam/imagecropper.css'
+    'build/assets/skins/sam/layout.css'
+    'build/assets/skins/sam/layout_sprite.png'
+    'build/assets/skins/sam/loading.gif'
+    'build/assets/skins/sam/logger.css'
+    'build/assets/skins/sam/menu-button-arrow-disabled.png'
+    'build/assets/skins/sam/menu-button-arrow.png'
+    'build/assets/skins/sam/menu.css'
+    'build/assets/skins/sam/menubaritem_submenuindicator.png'
+    'build/assets/skins/sam/menubaritem_submenuindicator_disabled.png'
+    'build/assets/skins/sam/menuitem_checkbox.png'
+    'build/assets/skins/sam/menuitem_checkbox_disabled.png'
+    'build/assets/skins/sam/menuitem_submenuindicator.png'
+    'build/assets/skins/sam/menuitem_submenuindicator_disabled.png'
+    'build/assets/skins/sam/paginator.css'
+    'build/assets/skins/sam/picker_mask.png'
+    'build/assets/skins/sam/profilerviewer.css'
+    'build/assets/skins/sam/progressbar.css'
+    'build/assets/skins/sam/resize.css'
+    'build/assets/skins/sam/simpleeditor.css'
+    'build/assets/skins/sam/skin.css'
+    'build/assets/skins/sam/slider.css'
+    'build/assets/skins/sam/split-button-arrow-active.png'
+    'build/assets/skins/sam/split-button-arrow-disabled.png'
+    'build/assets/skins/sam/split-button-arrow-focus.png'
+    'build/assets/skins/sam/split-button-arrow-hover.png'
+    'build/assets/skins/sam/split-button-arrow.png'
+    'build/assets/skins/sam/sprite.png'
+    'build/assets/skins/sam/sprite.psd'
+    'build/assets/skins/sam/tabview.css'
+    'build/assets/skins/sam/treeview-loading.gif'
+    'build/assets/skins/sam/treeview-sprite.gif'
+    'build/assets/skins/sam/treeview.css'
+    'build/assets/skins/sam/wait.gif'
+    'build/assets/skins/sam/yuitest.css'
+    'build/connection/connection-min.js'
+    'build/connection/connection_core-min.js'
+    'build/container/assets/alrt16_1.gif'
+    'build/container/assets/blck16_1.gif'
+    'build/container/assets/close12_1.gif'
+    'build/container/assets/container-core.css'
+    'build/container/assets/container.css'
+    'build/container/assets/hlp16_1.gif'
+    'build/container/assets/info16_1.gif'
+    'build/container/assets/skins/sam/container-skin.css'
+    'build/container/assets/skins/sam/container.css'
+    'build/container/assets/tip16_1.gif'
+    'build/container/assets/warn16_1.gif'
+    'build/container/container-min.js'
+    'build/container/container_core-min.js'
+    'build/datasource/datasource-min.js'
+    'build/datatable/assets/datatable-core.css'
+    'build/datatable/assets/datatable.css'
+    'build/datatable/assets/skins/sam/datatable-skin.css'
+    'build/datatable/assets/skins/sam/datatable.css'
+    'build/datatable/assets/skins/sam/dt-arrow-dn.png'
+    'build/datatable/assets/skins/sam/dt-arrow-up.png'
+    'build/datatable/datatable-min.js'
+    'build/dragdrop/dragdrop-min.js'
+    'build/element/element-min.js'
+    'build/fonts/fonts-min.css'
+    'build/fonts/fonts.css'
+    'build/json/json-min.js'
+    'build/layout/assets/layout-core.css'
+    'build/layout/assets/skins/sam/layout-skin.css'
+    'build/layout/assets/skins/sam/layout.css'
+    'build/layout/assets/skins/sam/layout_sprite.png'
+    'build/layout/layout-min.js'
+    'build/menu/assets/menu-core.css'
+    'build/menu/assets/menu.css'
+    'build/menu/assets/menu_down_arrow.png'
+    'build/menu/assets/menu_down_arrow_disabled.png'
+    'build/menu/assets/menu_up_arrow.png'
+    'build/menu/assets/menu_up_arrow_disabled.png'
+    'build/menu/assets/menubaritem_submenuindicator.png'
+    'build/menu/assets/menubaritem_submenuindicator_disabled.png'
+    'build/menu/assets/menubaritem_submenuindicator_selected.png'
+    'build/menu/assets/menuitem_checkbox.png'
+    'build/menu/assets/menuitem_checkbox_disabled.png'
+    'build/menu/assets/menuitem_checkbox_selected.png'
+    'build/menu/assets/menuitem_submenuindicator.png'
+    'build/menu/assets/menuitem_submenuindicator_disabled.png'
+    'build/menu/assets/menuitem_submenuindicator_selected.png'
+    'build/menu/assets/skins/sam/menu-skin.css'
+    'build/menu/assets/skins/sam/menu.css'
+    'build/menu/assets/skins/sam/menubaritem_submenuindicator.png'
+    'build/menu/assets/skins/sam/menubaritem_submenuindicator_disabled.png'
+    'build/menu/assets/skins/sam/menuitem_checkbox.png'
+    'build/menu/assets/skins/sam/menuitem_checkbox_disabled.png'
+    'build/menu/assets/skins/sam/menuitem_submenuindicator.png'
+    'build/menu/assets/skins/sam/menuitem_submenuindicator_disabled.png'
+    'build/menu/menu-min.js'
+    'build/paginator/assets/paginator-core.css'
+    'build/paginator/assets/skins/sam/paginator-skin.css'
+    'build/paginator/assets/skins/sam/paginator.css'
+    'build/paginator/paginator-min.js'
+    'build/progressbar/assets/progressbar-core.css'
+    'build/progressbar/assets/skins/sam/back-h.png'
+    'build/progressbar/assets/skins/sam/back-v.png'
+    'build/progressbar/assets/skins/sam/bar-h.png'
+    'build/progressbar/assets/skins/sam/bar-v.png'
+    'build/progressbar/assets/skins/sam/progressbar-skin.css'
+    'build/progressbar/assets/skins/sam/progressbar.css'
+    'build/progressbar/progressbar-min.js'
+    'build/reset-fonts-grids/reset-fonts-grids.css'
+    'build/resize/assets/resize-core.css'
+    'build/resize/assets/skins/sam/layout_sprite.png'
+    'build/resize/assets/skins/sam/resize-skin.css'
+    'build/resize/assets/skins/sam/resize.css'
+    'build/resize/resize-min.js'
+    'build/utilities/utilities.js'
+    'build/yahoo-dom-event/yahoo-dom-event.js')
+
 # Start service conditionally on crond restart.
 sysboot()
 {
@@ -116,7 +260,7 @@ push_apps()
   n=0 started=false
   while [ $n -le 100 ]; do
     couchdb -p $STATEDIR/couchdb.pid -s &> /dev/null &&
-      curl -s localhost:5984 | grep -q '"version":"1.[0-9.]*"' && 
+      curl -s localhost:5984 | grep -q '"version":"1.[0-9.]*"' &&
       started=true && break
     echo "waiting for couchdb..."
     sleep 1
@@ -196,36 +340,52 @@ update_couchapps()
     WMCORE_TAG=$(curl https://api.github.com/repos/dmwm/WMCore/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
   fi
 
-  echo "Pulling couchapps version $1 from Github..."
-  wget https://github.com/dmwm/WMCore/archive/refs/tags/${WMCORE_TAG}.tar.gz ||
+  echo -e "\nPulling couchapps version $1 from Github..."
+  wget -nv https://github.com/dmwm/WMCore/archive/refs/tags/${WMCORE_TAG}.tar.gz ||
     { echo "Error pulling couchapps version $1 from Github"; exit 3; }
 
   tar --strip-components=2 -xzf ${WMCORE_TAG}.tar.gz WMCore-$WMCORE_TAG/src/couchapps ||
     { echo "Error extracting couchapps tarball"; exit 3; }
 
   # grab external dependencies for reqmon/t0_reqmon
-  echo "Pulling additional reqmon and t0_reqmon dependencies..."
+  echo -e "\nPulling additional reqmon and t0_reqmon dependencies..."
   cp -R $tmp_dir/couchapps/couchskel/vendor $tmp_dir/couchapps/WMStats
   mkdir -p $tmp_dir/couchapps/WMStats/vendor/{jquery,datatables}/_attachments
 
   # jquery-ui.min.js
-  echo "Downloading jquery-ui.min.js..."
-  wget https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js ||
+  echo -e "\nDownloading jquery-ui.min.js..."
+  wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js ||
     { echo "Error downloading jquery-ui.min.js"; exit 3; }
   cp jquery-ui.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery-ui.min.js
 
   # jquery.min.js
-  echo "Downloading jquery.min.js..."
-  wget http://code.jquery.com/jquery-1.7.2.min.js ||
+  echo -e "\nDownloading jquery.min.js..."
+  wget -nv http://code.jquery.com/jquery-1.7.2.min.js ||
     { echo "Error downloading jquery-1.7.2.min.js"; exit 3; }
   cp jquery-1.7.2.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery.min.js
 
   # Datatables
-  echo "Downloading Datatables..."
-  wget http://datatables.net/releases/DataTables-1.9.1.zip ||
+  echo -e "\nDownloading Datatables..."
+  wget -nv http://datatables.net/releases/DataTables-1.9.1.zip ||
     { echo "Error downloading Datatables-1.9.1.zip"; exit 3; }
   unzip DataTables-1.9.1.zip &> /dev/null
   cp DataTables*/{media/js/jquery.dataTables.min,extras/ColVis/media/js/ColVis.min}.js $tmp_dir/couchapps/WMStats/vendor/datatables/_attachments
+
+  # YUI library, required by WorkQueue
+  # List of required files at: https://github.com/dmwm/WMCore/blob/master/bin/wmagent-couchapp-init#L135
+  # TODO: can we copy the whole library instead of specific files?!?
+  echo -e "\nDownloading YUI..."
+  wget -nv https://yui.github.io/yui2/archives/yui_2.9.0.zip ||
+    { echo "Error downloading yui_2.9.0.zip"; exit 3; }
+  unzip yui_2.9.0.zip &> /dev/null
+  mkdir -p $tmp_dir/couchapps/WorkQueue/vendor/yui/_attachments
+  pushd yui
+  for yui_file in "${files_needed_from_yui[@]}"
+  do
+    # copy the file itself and the parent directories
+    cp --parents ${yui_file} $tmp_dir/couchapps/WorkQueue/vendor/yui/_attachments/
+  done
+  popd
 
   echo "Removing old couchapps..."
   rm -rf $couchapps_dir/couchapps &> /dev/null
@@ -275,10 +435,10 @@ replications()
   fi
 }
 
-# Trigger database compaction. 
+# Trigger database compaction.
 # - If "all", then compact ALL databases.
 # - If "all_but_exceptions", then compact all views but the ones listed in EXCEPTIONS
-# - Otherwise, the database must be provided 
+# - Otherwise, the database must be provided
 compact()
 {
   local database=$1

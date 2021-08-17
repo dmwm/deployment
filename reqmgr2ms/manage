@@ -36,8 +36,8 @@ LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 
 # Disable specific microservices in VMs for k8s migration
-# This will cause config file checks for transferor, monitor and
-# ruleCleaner to return false and services will not start
+# This will cause config file checks for transferor, monitor,
+# ruleCleaner and unmerged to return false and services will not start
 # testbed: vocms0731
 # prod:    vocms0742
 if [[ $(hostname -s) == "vocms0731" || $(hostname -s) == "vocms0742" ]]; then
@@ -45,17 +45,20 @@ if [[ $(hostname -s) == "vocms0731" || $(hostname -s) == "vocms0742" ]]; then
   CFGFILEMON=$CFGDIR # force ms-monitor to be disabled
   CFGFILEOUT=$CFGDIR # force ms-output to be disabled
   CFGFILERCLEAN=$CFGDIR # force ms-ruleCleaner to be disabled
+  CFGFILEUNMERGED=$CFGDIR # force ms-unmerged to be disabled
 else
   CFGFILETR=$CFGDIR/config-transferor.py
   CFGFILEMON=$CFGDIR/config-monitor.py
   CFGFILEOUT=$CFGDIR/config-output.py
   CFGFILERCLEAN=$CFGDIR/config-ruleCleaner.py
+  CFGFILEUNMERGED=$CFGDIR/config-unmerged.py
 fi
 
 LOG_TRANS=ms-transferor
 LOG_MON=ms-monitor
 LOG_OUT=ms-output
 LOG_RCLEAN=ms-rulecleaner
+LOG_UNMERGED=ms-unmerged
 AUTHDIR=$TOP/current/auth/reqmgr2ms
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
@@ -124,6 +127,10 @@ sysboot()
   if [ -f $CFGFILERCLEAN ]; then
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_RCLEAN-%Y%m%d-`hostname -s`.log 86400" $CFGFILERCLEAN
   fi
+  if [ -f $CFGFILEUNMERGED ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -v -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_UNMERGED-%Y%m%d-`hostname -s`.log 86400" $CFGFILEUNMERGED
+  fi
+
 }
 
 
@@ -146,6 +153,9 @@ start()
   if [ -f $CFGFILERCLEAN ]; then
     LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_RCLEAN-%Y%m%d-`hostname -s`.log 86400" $CFGFILERCLEAN
   fi
+  if [ -f $CFGFILEUNMERGED ]; then
+    LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/$LOG_UNMERGED-%Y%m%d-`hostname -s`.log 86400" $CFGFILEUNMERGED
+  fi
 }
 
 
@@ -165,6 +175,10 @@ stop()
   if [ -f $CFGFILERCLEAN ]; then
     wmc-httpd -k -d $STATEDIR $CFGFILERCLEAN
   fi
+  if [ -f $CFGFILEUNMERGED ]; then
+    wmc-httpd -k -d $STATEDIR $CFGFILEUNMERGED
+  fi
+
 }
 
 
@@ -182,6 +196,9 @@ status()
   fi
   if [ -f $CFGFILERCLEAN ]; then
     wmc-httpd -s -d $STATEDIR $CFGFILERCLEAN
+  fi
+  if [ -f $CFGFILEUNMERGED ]; then
+    wmc-httpd -s -d $STATEDIR $CFGFILEUNMERGED
   fi
 }
 

@@ -1,5 +1,5 @@
 """
-MicroService RuleCleaner configuration file.
+MicroService Unmerged configuration file.
 """
 
 import socket
@@ -14,36 +14,36 @@ BASE_URL = "@@BASE_URL@@"
 DBS_INS = "@@DBS_INS@@"
 COUCH_URL = "%s/couchdb" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
-LOG_REPORTER = "reqmgr2ms_ruleCleaner"
+LOG_REPORTER = "reqmgr2ms_unmerged"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
+# Example RSEEXPR:
+# RSEEXPR = "rse_type=DISK&country=US&tier=3&cms_type=real"
+# RSEEXPR = "((rse_type=DISK\country=US)&tier=2)&cms_type=int"
+RSEEXPR = "(cms_type=real|cms_type=int)&rse_type=DISK"
 
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
 if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
-    RUCIO_URL="http://cms-rucio.cern.ch"
-    RUCIO_WMA_ACCT="wma_prod"
-    ARCH_DELAY_HOURS = 24 * 2
+    RUCIO_AUTH_URL = "https://cms-rucio-auth.cern.ch"
+    RUCIO_URL = "http://cms-rucio.cern.ch"
+    RUCIO_CONMON_URL = "https://cmsweb.cern.ch/rucioconmon/"
 else:
-    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
-    RUCIO_URL="http://cmsrucio-int.cern.ch"
-    RUCIO_WMA_ACCT="wma_test"
-    ARCH_DELAY_HOURS = 6
+    RUCIO_AUTH_URL = "https://cmsrucio-auth-int.cern.ch"
+    RUCIO_URL = "http://cmsrucio-int.cern.ch"
+    RUCIO_CONMON_URL = "https://cmsweb-testbed.cern.ch/rucioconmon/"
 
-RUCIO_ACCT = RUCIO_WMA_ACCT
-RUCIO_MSTR_ACCT = "wmcore_transferor"
-
+RUCIO_ACCT = "wmcore_transferor"
 
 config = Configuration()
 
 main = config.section_("main")
 srv = main.section_("server")
 srv.thread_pool = 30
-main.application = "ms-rulecleaner"
-main.port = 8244  # main application port it listens on
+main.application = "ms-unmerged"
+main.port = 8242  # main application port it listens on
 main.index = 'ui' # Configuration requires index attribute
 
 # Security configuration
@@ -59,7 +59,7 @@ sec.key_file = "%s/auth/wmcore-auth/header-auth-key" % ROOTDIR
 app = config.section_(main.application)
 app.admin = "cms-service-webtools@cern.ch"
 app.description = "CMS Workload Management MicroServices"
-app.title = "CMS MicroService RuleCleaner"
+app.title = "CMS MicroService Unmerged"
 
 # define different views for our application
 views = config.section_("views")
@@ -76,25 +76,28 @@ data.couch_host = COUCH_URL
 data.couch_wmstats_db = "wmstats"
 data.manager = 'WMCore.MicroService.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
-data.msOutputUrl = "%s/ms-output" % BASE_URL
 data.wmstatsUrl = "%s/wmstatsserver" % BASE_URL
-data.logDBUrl = "%s/couchdb/wmstats_logdb" % BASE_URL
-data.logDBReporter = 'reqmgr2ms_ruleCleaner'
-data.archiveDelayHours = ARCH_DELAY_HOURS
-data.limitRequestsPerCycle = 500
+data.limitRSEsPerInstance = 200
+data.limitFilesPerRSE = -1 # negative values mean NO Limit
+data.limitTiersPerInstance = ['T1', 'T2', 'T3']
 data.verbose = True
 data.interval = 60 * 60 * 8  # run it every 8 hours
-data.services = ['ruleCleaner']
+data.services = ['unmerged']
+data.rucioConMon = RUCIO_CONMON_URL
 data.rucioAccount = RUCIO_ACCT
-data.rucioMstrAccount = RUCIO_MSTR_ACCT
-data.rucioWmaAccount = RUCIO_WMA_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
-data.enableRealMode = True
-if DBS_INS == "private_vm":
-    data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
-else:
-    data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
+data.enableRealMode = False
+data.rseExpr = RSEEXPR
+data.skipRSEs = ['T2_CH_CERN', 'T1_US_FNAL_Disk']
+data.dumpRse = False
+data.gfalLogLevel = 'warning'
+# possible values are:
+# {'normal': gfal2.verbose_level.normal,
+#  'warning': gfal2.verbose_level.warning,
+#  'verbose': gfal2.verbose_level.verbose,
+#  'debug': gfal2.verbose_level.debug,
+#  'trace': gfal2.verbose_level.trace}
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
@@ -103,7 +106,7 @@ heartbeatMonitor.object = "WMCore.MicroService.CherryPyThreads.HeartbeatMonitor.
 heartbeatMonitor.wmstats_url = "%s/%s" % (data.couch_host, data.couch_wmstats_db)
 heartbeatMonitor.wmstatsSvc_url = "%s/wmstatsserver" % BASE_URL
 heartbeatMonitor.heartbeatCheckDuration = 60 * 10  # every 10 min
-heartbeatMonitor.log_file = '%s/logs/reqmgr2ms/heartbeatMonitor_rulecleaner-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
+heartbeatMonitor.log_file = '%s/logs/reqmgr2ms/heartbeatMonitor_unmerged-%s-%s.log' % (__file__.rsplit('/', 4)[0], HOST.split('.', 1)[0], time.strftime("%Y%m%d"))
 heartbeatMonitor.central_logdb_url = LOG_DB_URL
 heartbeatMonitor.log_reporter = LOG_REPORTER
 # AMQ MonIT settings

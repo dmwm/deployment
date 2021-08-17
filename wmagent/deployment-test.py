@@ -194,7 +194,6 @@ class DeploymentTest:
             os.path.join(self.installDir, "current", "apps", "couchdb"),
             os.path.join(self.installDir, "current", "apps", "mysql"),
             os.path.join(self.installDir, "current", "apps", "wmagent"),
-            os.path.join(self.installDir, "current", "apps", "pystack"),
             os.path.join(self.installDir, "current", "config", "wmagent"),
             os.path.join(self.installDir, "current", "config", "reqmgr"),
             os.path.join(self.installDir, "current", "config", "workqueue"),
