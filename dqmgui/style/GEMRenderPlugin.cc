@@ -189,7 +189,7 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
 
-    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/detector_GE(\\+|\\-)\\d1(?:matched_)?$").MatchB(o.name))
+    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/detector_GE(\\+|\\-)\\d1_L\\d(?:_matched)?$").MatchB(o.name))
     {
       // Offline DQM
       obj->SetOption("colz");
