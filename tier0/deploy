@@ -11,15 +11,15 @@ deploy_tier0_sw()
 
   mkdir -p $root/$cfgversion/install/tier0
   mkdir -p $root/$cfgversion/install/couchdb
+  mkdir -p $root/$cfgversion/config/couchdb
 
   local couchdb_ini=$root/$cfgversion/config/tier0/local.ini
-  perl -p -i -e "s{deploy_project_root}{$root/current/install}g" $couchdb_ini
-
-  mkdir -p $root/$cfgversion/config/couchdb
-  cp -f $couchdb_ini $root/$cfgversion/config/couchdb
+  local couchdb_configs=$root/$cfgversion/config/tier0
+  sed -i "s+deploy_project_root+$root/$cfgversion/install+" $couchdb_configs/local.ini
+  cp -f $couchdb_configs/local.ini $root/$cfgversion/config/couchdb/
+  cp -f $couchdb_configs/default.ini $root/$cfgversion/config/couchdb/
 
   mkdir -p $root/$cfgversion/config/rucio/etc
   local rucio_config=$root/$cfgversion/config/tier0/rucio.cfg
   cp -f $rucio_config $root/$cfgversion/config/rucio/etc/
-
 }

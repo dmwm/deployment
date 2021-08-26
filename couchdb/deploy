@@ -19,24 +19,20 @@ deploy_couchdb_sw()
 
   case $variant in
     default )
-      deploy_pkg -l couchdb -a couchdb/hmackey.ini comp external+couchdb16
+      deploy_pkg -l couchdb -a couchdb/hmackey.ini comp external+couchdb31
       $authlink || setgroup ug+rx,o-rwx _config $project_auth/hmackey.ini
       ;;
     * )
       deploy_pkg -a couchdb/hmackey.ini comp external+couchdb
-      perl -p -i -e "s|bind_address = 0.0.0.0|bind_address = 127.0.0.1|g" $root/$cfgversion/config/$project/local.ini
-      (echo
-       echo "[ssl]"
-       echo "cert_file = $project_state/proxy/proxy.cert"
-       echo "key_file = $project_state/proxy/proxy.cert"
-       echo "cacert_file = $project_state/proxy/proxy.cert"
-       echo
-       echo "[replicator]"
-       echo "max_replication_retry_count = infinity"
-      ) >> $root/$cfgversion/config/$project/local.ini
       ;;
   esac
+
   perl -p -i -e "s|{ROOT}|$root|g" $root/$cfgversion/config/$project/local.ini
+
+  # BAD code for the hmackey that does not work when read from a separate file
+  local hmacKey=`tail -n1 $project_auth/hmackey.ini`
+  sed -i '/^validate_hmac=.*/a $hmacKey' $root/$cfgversion/config/$project/local.ini
+
 }
 
 deploy_couchdb_post()
@@ -79,6 +75,14 @@ deploy_couchdb_post()
 
 deploy_couchdb_auth()
 {
+  cp $privauthdir/$project/couch_creds $project_auth/couch_creds
+  setgroup ug+rx,o-rwx _config $project_auth/couch_creds || true
+  local COUCH_USER=`cat $project_auth/couch_creds | grep COUCH_USER | sed s/COUCH_USER=//`
+  local COUCH_PASS=`cat $project_auth/couch_creds | grep COUCH_PASS | sed s/COUCH_PASS=//`
+  sed -i "s+;user = pass+$COUCH_USER = $COUCH_PASS+" $root/$cfgversion/config/$project/local.ini
+  # Update the monitoring script as well
+  sed -i "s+@@@USER:@@@PASS+$COUCH_USER:$COUCH_PASS+" $root/$cfgversion/config/$project/monitoring.ini
+
   perl -e \
     'undef $/; print "[couch_cms_auth]\n";
      print "hmac_secret = ", unpack("h*", <STDIN>), "\n"' < \
