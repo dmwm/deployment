@@ -25,6 +25,8 @@
 ^/auth/complete/crabserver(?:/|$) crabserver.crab.svc.cluster.local
 ^/auth/complete/dbsproxy(?:/|$) dbsproxy.dbs.svc.cluster.local
 ^/auth/complete/dbs2go(?:/|$) dbs2go.dbs.svc.cluster.local
+^/auth/complete/dbs2go-writer(?:/|$) dbs2go-writer.dbs.svc.cluster.local
+^/auth/complete/dbs2go-migrate(?:/|$) dbs2go-migrate.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/global/DBSMigrate|prod/global/DBSMigrate|dev/global/DBSMigrate)(?:/|$) dbs-migrate.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/global/DBSReader|prod/global/DBSReader|dev/global/DBSReader)(?:/|$) dbs-global-r.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/global/DBSWriter|prod/global/DBSWriter|dev/global/DBSWriter)(?:/|$) dbs-global-w.dbs.svc.cluster.local

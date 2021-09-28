@@ -1000,6 +1000,9 @@ ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/08 Timing mean',
 ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/09 Timing rms',
 	   [{'path': 'Ecal/Trends/TimingClient EB timing rms', 'description': 'Trend of timing rms. Plots simple average of all channel timing rms at each lumisection.'}],
 	   [{'path': 'Ecal/Trends/TimingClient EE timing rms', 'description': 'Trend of timing rms. Plots simple average of all channel timing rms at each lumisection.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/10 TTF4 Flag',
+	    [{'path': 'Ecal/Trends/TrigPrimClient EB number of TTs with TTF4 set', 'description':'Trend of the total number of TTs in this partition with TTF4 flag set.'}],
+	    [{'path': 'Ecal/Trends/TrigPrimClient EE number of TTs with TTF4 set', 'description':'Trend of the total number of TTs in this partition with TTF4 flag set.'}])
 
 #____________________ Layouts / 12 By SuperModule ____________________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE

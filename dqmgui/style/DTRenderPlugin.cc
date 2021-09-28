@@ -257,6 +257,7 @@ private:
         obj->GetYaxis()->SetNdivisions(6,true);
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
+        obj->SetMaximum(100);
         c->SetGrid(1,1);
         obj->GetXaxis()->SetTitleOffset(1.15);
         c->SetBottomMargin(0.1);
