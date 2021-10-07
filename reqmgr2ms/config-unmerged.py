@@ -31,8 +31,8 @@ if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_URL = "http://cms-rucio.cern.ch"
     RUCIO_CONMON_URL = "https://cmsweb.cern.ch/rucioconmon/"
 else:
-    RUCIO_AUTH_URL = "https://cmsrucio-auth-int.cern.ch"
-    RUCIO_URL = "http://cmsrucio-int.cern.ch"
+    RUCIO_AUTH_URL = "https://cms-rucio-auth-int.cern.ch"
+    RUCIO_URL = "http://cms-rucio-int.cern.ch"
     RUCIO_CONMON_URL = "https://cmsweb-testbed.cern.ch/rucioconmon/"
 
 RUCIO_ACCT = "wmcore_transferor"
