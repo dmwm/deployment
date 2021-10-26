@@ -16,7 +16,7 @@ GEMLayout(dqmitems, 'Common/01 AMC13 status',
 
 
 GEMLayout(dqmitems, 'Common/02 AMC status GE11-M', 
-    [{'path': 'GEM/DAQStatus/amc_status_GE11-N', 'description': 'For more information (... under construction)'}], 
+    [{'path': 'GEM/DAQStatus/amc_status_GE11-M', 'description': 'For more information (... under construction)'}], 
     )
 
 

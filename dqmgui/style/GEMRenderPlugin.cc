@@ -126,6 +126,11 @@ private:
 
     obj->SetOption("colz");
 
+    if (TPRegexp("^GEM/EventInfo/chamberStatus_inLumi_[\\w\\W]+$").MatchB(o.name))
+    {
+      drawLumiFunction(obj);
+    }
+
     gPad->SetGridx();
     gPad->SetGridy();
   }
@@ -274,6 +279,14 @@ private:
       obj->SetMaximum(3.0);
       obj->SetOption("col");
     }
+    else if (TPRegexp("^GEM/EventInfo/chamberStatus_inLumi_[\\w\\W]+$").Match(o.name))
+    {
+      Int_t arrCol[ 3 ] = { 3, 2, 5 };  // 1: Green(=3), 2: Red(=2), 3: Yellow(=5)
+      gStyle->SetPalette(3, arrCol);
+      obj->SetMinimum(1.0);
+      obj->SetMaximum(3.0);
+      obj->SetOption("col");
+    }
     
     if (TPRegexp("^GEM/DAQStatus/[\\w\\W]+_status$").Match(o.name) || 
         TPRegexp("^GEM/DAQStatus/[\\w\\W]+_status_[\\w\\W]+$").Match(o.name)) 
@@ -307,13 +320,6 @@ private:
       } else {
         c->SetLeftMargin(0.135);
       }
-    }
-    
-    if (TPRegexp("^GEM/DAQStatus/amc13_status$").Match(o.name)) {
-      obj->GetXaxis()->SetBinLabel(1, "GE11-M");
-    }
-    if (TPRegexp("^GEM/DAQStatus/amc_status_GE11-N$").Match(o.name)) {
-      obj->SetTitle("AMC Status GE11-M");
     }
 
     c->SetGridx();
@@ -368,51 +374,16 @@ private:
     c->SetGridy();
   }
 
-  int drawTimeHisto(TH2F *h2Curr)
+  void drawLumiFunction(TH2F *h2Curr)
   {
-    std::string strNewName = std::string(h2Curr->GetName()).substr(std::string("per_time_").size());
-    std::string strTmpPrefix = "tmp_";
-
     Int_t nNbinsX = h2Curr->GetNbinsX();
-    Int_t nNbinsY = h2Curr->GetNbinsY();
     Int_t nNbinsXActual = 0;
 
-    for ( nNbinsXActual = 0 ; nNbinsXActual < nNbinsX ; nNbinsXActual++ )
+    for ( ; nNbinsXActual < nNbinsX ; nNbinsXActual++ )
     {
       if ( h2Curr->GetBinContent(nNbinsXActual + 1, 0) <= 0 ) break;
     }
-
-    std::string strTitle = std::string(h2Curr->GetTitle());
-
-    //std::string strAxisX = h2Curr->GetXaxis()->GetTitle();
-    std::string strAxisX = "Bin per " + std::to_string((Int_t)h2Curr->GetBinContent(0, 0)) + " events";
-    std::string strAxisY = h2Curr->GetYaxis()->GetTitle();
-    //strTitle += ";" + strAxisX + ";" + strAxisY;
-
-    strTitle = "";
-    TH2F *h2New = new TH2F(( strTmpPrefix + strNewName ).c_str(), strTitle.c_str(),
-        nNbinsXActual, 0.0, (Double_t)nNbinsXActual, nNbinsY, 0.0, (Double_t)nNbinsY);
-
-    h2New->GetXaxis()->SetTitle(strAxisX.c_str());
-    h2New->GetYaxis()->SetTitle(strAxisY.c_str());
-
-    for ( Int_t i = 1 ; i <= nNbinsY ; i++ )
-    {
-      std::string strLabel = h2Curr->GetYaxis()->GetBinLabel(i);
-      if ( !strLabel.empty() ) h2New->GetYaxis()->SetBinLabel(i, strLabel.c_str());
-    }
-
-    for ( Int_t j = 0 ; j <= nNbinsY ; j++ )
-    {
-      for ( Int_t i = 1 ; i <= nNbinsXActual ; i++ )
-      {
-        h2New->SetBinContent(i, j, h2Curr->GetBinContent(i, j));
-      }
-    }
-
-    h2New->Draw("colz");
-
-    return 0;
+    h2Curr->GetXaxis()->SetRange(1, nNbinsXActual);
   };
 
   void applyBinNumbering(TH1* obj, const TString&& axis_name) {
