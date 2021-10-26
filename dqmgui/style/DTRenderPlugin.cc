@@ -1343,7 +1343,7 @@ private:
         mb2Label->SetTextSize(0.11);
         mb2Label->Draw("same");
 
-        static TLine *lineMB3 = new TLine(0,18,nBinsX,18);
+        static TLine *lineMB3 = new TLine(0,19,nBinsX,19);
         lineMB3->Draw("same");
         static TLatex *mb3Label = new TLatex(2,13.5,"MB3");
         mb3Label->SetTextColor(15);
