@@ -89,7 +89,7 @@ data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = False
 data.rseExpr = RSEEXPR
-data.skipRSEs = ['T2_CH_CERN', 'T1_US_FNAL_Disk']
+data.skipRSEs = ['T1_UK_RAL_Disk', 'T2_US_Caltech_Ceph']
 data.dumpRse = False
 data.gfalLogLevel = 'warning'
 # possible values are:
