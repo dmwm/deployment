@@ -8,7 +8,7 @@
 ^/auth/complete/dqm/(?:offline|offline-new)(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
 ^/auth/complete/dqm/autodqm(?:/|$) autodqm.dqm.svc.cluster.local
-^/auth/complete/dqm/dqm-square-k8(?:/|$) dqm-square.dqm.svc.cluster.local
+^/auth/complete/dqm/dqm-square-k8(?:/|$) dqm-square-k8.dqm.svc.cluster.local
 ^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0132.cern.ch :affinity
