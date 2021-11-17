@@ -26,8 +26,8 @@ deploy_reqmgr2ms_sw()
   else :; fi
 
   # use rucio testbed for anything that is not production
-  rucio_host_url=http://cmsrucio-int.cern.ch
-  rucio_auth_url=https://cmsrucio-auth-int.cern.ch
+  rucio_host_url=http://cms-rucio-int.cern.ch
+  rucio_auth_url=https://cms-rucio-auth-int.cern.ch
   case $variant in
     prod )
         base_url="https://cmsweb.cern.ch"

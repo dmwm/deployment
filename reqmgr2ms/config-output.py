@@ -31,8 +31,8 @@ if BASE_URL == "https://cmsweb.cern.ch":
     SEND_NOTIFICATION=True
     ENABLE_DATA_PLACEMENT=True
 else:
-    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
-    RUCIO_URL="http://cmsrucio-int.cern.ch"
+    RUCIO_AUTH_URL="https://cms-rucio-auth-int.cern.ch"
+    RUCIO_URL="http://cms-rucio-int.cern.ch"
     SEND_NOTIFICATION=False
     ENABLE_DATA_PLACEMENT=False
 

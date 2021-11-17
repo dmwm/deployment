@@ -2,11 +2,13 @@
 ^/auth/complete/reqmgr2(?:/|$) reqmgr2.dmwm.svc.cluster.local
 ^/auth/complete/phedex(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
-^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new|dqm-square)(?:/|$) cmsdqm.cern.ch
+^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new|dqm-square|dqm-square-origin)(?:/|$) cmsdqm.cern.ch
 ^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|offline-test-new|relval-test|relval-test-new)(?:/|$) vocms0731.cern.ch
 ^/auth/complete/dqm/(?:offline|offline-new)(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
+^/auth/complete/dqm/autodqm(?:/|$) autodqm.dqm.svc.cluster.local
+^/auth/complete/dqm/dqm-square-k8(?:/|$) dqm-square-k8.dqm.svc.cluster.local
 ^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0132.cern.ch :affinity
 ^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0132.cern.ch :affinity
@@ -67,5 +69,6 @@
 ^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
 ^/auth/complete/httpgo(?:/|$) httpgo.http.svc.cluster.local
+^/auth/complete/registry-notification(?:/|$) registry-notification.http.svc.cluster.local
 ^/auth/complete/httpsgo(?:/|$) httpsgo.http.svc.cluster.local
 ^/auth/complete/rucioconmon(?:/|$) monitor.ruciocm.svc.cluster.local
