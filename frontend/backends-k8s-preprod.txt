@@ -26,6 +26,7 @@
 ^/auth/complete/crabcache(?:/|$) crabcache.crab.svc.cluster.local
 ^/auth/complete/crabserver(?:/|$) crabserver.crab.svc.cluster.local
 ^/auth/complete/dbsproxy(?:/|$) dbsproxy.dbs.svc.cluster.local
+^/auth/complete/cmsamqproxy(?:/|$) cmsamqproxy.http.svc.cluster.local
 ^/auth/complete/dbs2go(?:/|$) dbs2go.dbs.svc.cluster.local
 ^/auth/complete/dbs2go-writer(?:/|$) dbs2go-writer.dbs.svc.cluster.local
 ^/auth/complete/dbs2go-migrate(?:/|$) dbs2go-migrate.dbs.svc.cluster.local
