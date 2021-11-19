@@ -82,7 +82,7 @@ server.workspace('DQMContent', 42, 'Monte Carlo', 'MC Muon' , '^Muon/', '')
 server.workspace('DQMContent', 43, 'Monte Carlo', 'MC Jet' , '^Jet/', '')
 server.workspace('DQMContent', 44, 'Monte Carlo', 'MC MET' , '^MET/', '')
 server.workspace('DQMContent', 45, 'Monte Carlo', 'MC BTag' , '^BTag/', '')
-server.workspace('DQMContent', 46, 'Monte Carlo', 'MC Tau' , '^.*Tau.*/', 'RecoTauV/ZTT')
+server.workspace('DQMContent', 46, 'Monte Carlo', 'MC Tau' , '^.*Tau.*/', 'RecoTauV/Layouts')
 server.workspace('DQMContent', 47, 'Monte Carlo', 'MC PFlow' , '^ParticleFlow/', 'MCLayouts/PFlow',
                  'MCLayouts/PFlow/01 - Jet Pt Resolution - Barrel',
                  'MCLayouts/PFlow/02 - Jet Pt Resolution - Endcap',
