@@ -48,8 +48,8 @@ if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
     RUCIO_URL="http://cms-rucio.cern.ch"
 else:
-    RUCIO_AUTH_URL="https://cmsrucio-auth-int.cern.ch"
-    RUCIO_URL="http://cmsrucio-int.cern.ch"
+    RUCIO_AUTH_URL="https://cms-rucio-auth-int.cern.ch"
+    RUCIO_URL="http://cms-rucio-int.cern.ch"
 
 config = Configuration()
 

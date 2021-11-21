@@ -31,8 +31,8 @@ if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_URL = "http://cms-rucio.cern.ch"
     RUCIO_CONMON_URL = "https://cmsweb.cern.ch/rucioconmon/"
 else:
-    RUCIO_AUTH_URL = "https://cmsrucio-auth-int.cern.ch"
-    RUCIO_URL = "http://cmsrucio-int.cern.ch"
+    RUCIO_AUTH_URL = "https://cms-rucio-auth-int.cern.ch"
+    RUCIO_URL = "http://cms-rucio-int.cern.ch"
     RUCIO_CONMON_URL = "https://cmsweb-testbed.cern.ch/rucioconmon/"
 
 RUCIO_ACCT = "wmcore_transferor"
@@ -89,7 +89,7 @@ data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.enableRealMode = False
 data.rseExpr = RSEEXPR
-data.skipRSEs = ['T2_CH_CERN', 'T1_US_FNAL_Disk']
+data.skipRSEs = ['T2_US_Caltech_Ceph']
 data.dumpRse = False
 data.gfalLogLevel = 'warning'
 # possible values are:
