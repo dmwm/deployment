@@ -1516,7 +1516,7 @@ private:
 
   void postDrawTH1( TCanvas *, const VisDQMObject &o )
     {
-      if( o.name.find("EventLenght") != std::string::npos || o.name.find("EventLength") != std::string::npos )
+      if( o.name.find("_EventLength") != std::string::npos )
       {
         TH1F * histo =  dynamic_cast<TH1F*>( o.object );
         int nBins = histo->GetNbinsX();
