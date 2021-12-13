@@ -77,6 +77,9 @@ data.couch_wmstats_db = "wmstats"
 data.manager = 'WMCore.MicroService.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.wmstatsUrl = "%s/wmstatsserver" % BASE_URL
+# VMs still rely on a local MongoDB instance
+data.mongoDBUrl = "mongodb://localhost"
+data.mongoDBPort = 8230
 data.limitRSEsPerInstance = 200
 data.limitFilesPerRSE = -1 # negative values mean NO Limit
 data.limitTiersPerInstance = ['T1', 'T2', 'T3']
