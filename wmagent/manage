@@ -343,7 +343,9 @@ init_mysql_db_post(){
         fi
     done
     echo "Socket file exists, proceeding with schema install..."
-    mysqladmin -u root password $MYSQL_PASS --socket=$MYSQL_SOCK
+
+    # set mariadb root password
+    mysql --socket=$MYSQL_SOCK --execute "ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('$MYSQL_PASS');"
 
     inited_mysql;
 
