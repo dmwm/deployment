@@ -338,6 +338,12 @@ init_mysql_db_post(){
 
     inited_mysql;
 
+    # create a user - different than root and current unix user - and grant privileges
+    if [ "$MYSQL_USER" != "$USER" ]; then
+        mysql -u root --socket=$MYSQL_SOCK --execute "CREATE USER '${MYSQL_USER}'@'localhost'"
+        mysql -u root --socket=$MYSQL_SOCK --execute "GRANT ALL ON *.* TO $MYSQL_USER@localhost WITH GRANT OPTION"
+    fi
+
     # create databases for agent, wq
     if [ $USING_AG -eq 1 ]; then
         echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
