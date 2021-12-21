@@ -170,7 +170,7 @@ load_secrets_file(){
 
     # database settings (mysql or oracle)
     if [ "x$MATCH_ORACLE_USER" == "x" ]; then
-        MYSQL_USER=${MATCH_MYSQL_USER:-wmagentmysql};
+        MYSQL_USER=${MATCH_MYSQL_USER:-$USER};
     else
         ORACLE_USER=$MATCH_ORACLE_USER;
         ORACLE_PASS=$MATCH_ORACLE_PASS;
@@ -340,18 +340,18 @@ init_mysql_db_post(){
 
     # create a user - different than root and current unix user - and grant privileges
     if [ "$MYSQL_USER" != "$USER" ]; then
-        mysql -u root --socket=$MYSQL_SOCK --execute "CREATE USER '${MYSQL_USER}'@'localhost'"
-        mysql -u root --socket=$MYSQL_SOCK --execute "GRANT ALL ON *.* TO $MYSQL_USER@localhost WITH GRANT OPTION"
+        mysql -u $USER --socket=$MYSQL_SOCK --execute "CREATE USER '${MYSQL_USER}'@'localhost'"
+        mysql -u $USER --socket=$MYSQL_SOCK --execute "GRANT ALL ON *.* TO $MYSQL_USER@localhost WITH GRANT OPTION"
     fi
 
     # create databases for agent, wq
     if [ $USING_AG -eq 1 ]; then
         echo "Installing WMAgent Database: ${MYSQL_DATABASE_AG}"
-        mysql -u $MYSQL_USER --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
+        mysql -u $USER --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_AG}"
     fi
     if [ $USING_WQ -eq 1 ]; then
         echo "Installing WorkQueue Database: ${MYSQL_DATABASE_WQ}"
-        mysql -u $MYSQL_USER --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_WQ}"
+        mysql -u $USER --socket=$MYSQL_SOCK --execute "create database ${MYSQL_DATABASE_WQ}"
     fi
 }
 
