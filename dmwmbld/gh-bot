@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, subprocess, github, re, sys, datetime
+import os, subprocess, github, re, sys, datetime, json
 from pprint import pprint #to debug objects content
 def readfile(filename):
   f = open(filename,'r')
@@ -29,13 +29,15 @@ def generate_index_page(pr, status, cfgdir, statedir):
 # the architectures.
 def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, logurl, cfgdir, authfile):
   # get the relevant pull requests
-  valid_comp_users = readfile(usersfile).rstrip()
+
+  f = open(usersfile)
+  data = json.load(f)
 
   #PRs = [i for i in gh.GetPullRequests(owner, repo) \
   #         if i['base']['label'] == owner+':'+branch]
 
   PRs = [i for i in gh.GetPullRequests(owner, repo) \
-           if ((i['base']['label'] == owner+':'+branch)) and ((i['user']['login'].encode('ascii', 'ignore') in valid_comp_users)) ]
+           if ((i['base']['label'] == owner+':'+branch)) and ((i['user']['login'].encode('ascii', 'ignore') in data["users_list"].__str__())) ]
 
 
 
@@ -134,7 +136,7 @@ if __name__ == '__main__':
   logdir = "%s/logs/%s" % (rootdir, appname)
   cfgdir = "%s/current/config/%s" % (rootdir, appname)
   authfile = "%s/current/auth/%s/github-api-token" % (rootdir, appname)
-  usersfile = "%s/current/config/%s/userlist.txt" % (rootdir, appname)
+  usersfile = "%s/current/config/%s/userlist.json" % (rootdir, appname)
 
   opt = OptionParser()
   opt.add_option("-O", "--owner", dest="owner", default="cms-sw",
