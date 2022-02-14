@@ -30,14 +30,14 @@ def generate_index_page(pr, status, cfgdir, statedir):
 def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, logurl, cfgdir, authfile):
   # get the relevant pull requests
 
-  f = open(usersfile)
-  data = json.load(f)
+  valid_comp_users = json.load(open(usersfile))
+
 
   #PRs = [i for i in gh.GetPullRequests(owner, repo) \
   #         if i['base']['label'] == owner+':'+branch]
 
   PRs = [i for i in gh.GetPullRequests(owner, repo) \
-           if ((i['base']['label'] == owner+':'+branch)) and ((i['user']['login'].encode('ascii', 'ignore') in data["users_list"].__str__())) ]
+           if ((i['base']['label'] == owner+':'+branch)) and ((i['user']['login'].encode('ascii', 'ignore') in valid_comp_users)) ]
 
 
 
