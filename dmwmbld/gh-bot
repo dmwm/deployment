@@ -30,7 +30,7 @@ def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, 
   # get the relevant pull requests
   valid_comp_users = json.load(open(usersfile))
   PRs = [i for i in gh.GetPullRequests(owner, repo) \
-           if ((i['base']['label'] == owner+':'+branch)) and ((i['user']['login'].encode('ascii', 'ignore') in valid_comp_users)) ]
+           if ((i['base']['label'] == owner+':'+branch) and (i['user']['login'].encode('ascii', 'ignore') in valid_comp_users)) ]
   print 'Pull Requests to test:' 
   for pr in PRs:
     print "#%s," % pr['number'], pr['title']
