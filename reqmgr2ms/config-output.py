@@ -81,23 +81,15 @@ data.sendNotification = SEND_NOTIFICATION
 data.verbose = True
 data.interval = 60 * 60 * 1  # run it every hour
 data.services = ['output']
-# This tape pledges was extracted from WLCG Rebus and will be needed for the PhEDEx-based data placement
-# https://wlcg-rebus.cern.ch/core/pledge/list/?vo_name=CMS&year=2020&type=Tape
-# Note that a few sites are storing HI data as well, so we need to subtract the storage
-# usage for those sites by the amount of Heavy Ion data (or increase the quota here ;))
-# Numbers are: FNAL 15.3 PB, IN2P3: 3.0 PB, JINR: 1.1 PB
-# Note that these values are in TeraBytes (TB) and will only be used ih the PhEDEx era
-data.tapePledges = {"T0_CH_CERN_MSS": 99000,
-                    "T1_US_FNAL_MSS": 88000 + 15300,
-                    "T1_IT_CNAF_MSS": 28600,
-                    "T1_DE_KIT_MSS": 22000,
-                    "T1_FR_CCIN2P3_MSS": 18700 + 3000,
-                    "T1_UK_RAL_MSS": 17600,
-                    "T1_RU_JINR_MSS": 10000 + 1100,
-                    "T1_ES_PIC_MSS": 8800}
 data.enableDataPlacement = ENABLE_DATA_PLACEMENT
 data.enableRelValCustodial = False
 data.excludeDataTier = []
+# RelVal output data placement policy, note that "default" corresponds
+# to the destination in case the datatier name is not defined in the policy
+# Note: when multiple destinations are provided, each one gets a copy of the data.
+data.relvalPolicy = [{"datatier": "GEN-SIM", "destinations": ["T2_CH_CERN"]},
+                     {"datatier": "ALCARECO", "destinations": ["T2_CH_CERN"]},
+                     {"datatier": "default", "destinations": ["T2_CH_CERN"]}]
 data.rucioRSEAttribute = "ddm_quota"
 data.rucioDiskRuleWeight = "ddm_quota"
 data.rucioTapeExpression = "rse_type=TAPE\cms_type=test"  # "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
@@ -106,6 +98,12 @@ data.ruleLifetimeRelVal = RULE_LIFETIME_RELVAL
 data.rucioAccount = RUCIO_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
+# if private_vm, just fallback to preprod DBS
+if DBS_INS == "private_vm":
+    data.dbsUrl = "https://cmsweb-testbed.cern.ch/dbs/int/global/DBSReader"
+else:
+    data.dbsUrl = "%s/dbs/%s/global/DBSReader" % (BASE_URL, DBS_INS)
+    data.dbsUrl = data.dbsUrl.replace("cmsweb.cern.ch", "cmsweb-prod.cern.ch")
 
 # heartbeat monitor task
 extentions = config.section_("extensions")
