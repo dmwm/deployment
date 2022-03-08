@@ -32,9 +32,6 @@
 ^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-rulecleaner(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-unmerged/(?:.*rse_type=t1)(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-unmerged/(?:.*rse_type=t2t3us)(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/ms-unmerged/(?:.*rse_type=t2t3)(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-unmerged(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/scheddmon/068/ vocms068.cern.ch
 ^/auth/complete/scheddmon/069/ vocms069.cern.ch
