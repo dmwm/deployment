@@ -79,7 +79,10 @@ fi
 
 check4db ()
 {
-python <<EOF
+pythonExec=python
+[[ $(python -V 2>&1) =~ Python\ *2.* ]] && pythonExec=python3
+
+$pythonExec <<EOF
 from pymongo import MongoClient, errors
 client = MongoClient('127.0.0.1', port=8230)
 try:
