@@ -256,7 +256,7 @@ private:
       obj->SetMaximum(2.0);
       obj->SetOption("col");
     }
-    else if (TPRegexp("^GEM/RecHits/rphi_occ_[\\w\\W]+$").Match(o.name))
+    else if (TPRegexp("^GEM/[\\w\\W]+/rphi_occ_[\\w\\W]+$").Match(o.name))
     {
       float fR = obj->GetYaxis()->GetBinLowEdge(obj->GetNbinsY() + 1) * 1.1;
       float fRatioX = 1.0, fRatioY = 1.0, fRatio;
@@ -267,24 +267,24 @@ private:
       }
       auto hFrame = gPad->DrawFrame(-fR * fRatioX, -fR * fRatioY, fR * fRatioX, fR * fRatioY);
       hFrame->SetTitle(obj->GetTitle());
-      hFrame->GetXaxis()->SetTitle(obj->GetXaxis()->GetTitle());
-      hFrame->GetYaxis()->SetTitle(obj->GetYaxis()->GetTitle());
+      hFrame->GetXaxis()->SetTitle("X [cm]");
+      hFrame->GetYaxis()->SetTitle("Y [cm]");
       obj->Draw("same colzpol");
     }
     else if (TPRegexp("^GEM/EventInfo/vfat_statusSummary_[\\w\\W]+$").Match(o.name))
     {
-      Int_t arrCol[ 3 ] = { 3, 2, 5 };  // 1: Green(=3), 2: Red(=2), 3: Yellow(=5)
-      gStyle->SetPalette(3, arrCol);
+      Int_t arrCol[ 4 ] = { 3, 2, 5, 801 };  // 1: Green(=3), 2: Red(=2), 3: Yellow(=5), 4: Orange(=801)
+      gStyle->SetPalette(4, arrCol);
       obj->SetMinimum(1.0);
-      obj->SetMaximum(3.0);
+      obj->SetMaximum(4.0);
       obj->SetOption("col");
     }
     else if (TPRegexp("^GEM/EventInfo/chamberStatus_inLumi_[\\w\\W]+$").Match(o.name))
     {
-      Int_t arrCol[ 3 ] = { 3, 2, 5 };  // 1: Green(=3), 2: Red(=2), 3: Yellow(=5)
-      gStyle->SetPalette(3, arrCol);
+      Int_t arrCol[ 4 ] = { 3, 2, 5, 801 };  // 1: Green(=3), 2: Red(=2), 3: Yellow(=5), 4: Orange(=801)
+      gStyle->SetPalette(4, arrCol);
       obj->SetMinimum(1.0);
-      obj->SetMaximum(3.0);
+      obj->SetMaximum(4.0);
       obj->SetOption("col");
     }
     

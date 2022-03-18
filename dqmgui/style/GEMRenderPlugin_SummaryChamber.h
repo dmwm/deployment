@@ -62,6 +62,7 @@ class SummaryChamber {
     static const unsigned short COLOR_WHITE  = 0;
     static const unsigned short COLOR_GREEN  = 3;
     static const unsigned short COLOR_RED    = 2;
+    static const unsigned short COLOR_ORANGE = 801;
     static const unsigned short COLOR_BLUE   = 4;
     static const unsigned short COLOR_GREY   = 17;
     static const unsigned short COLOR_YELLOW = 5;

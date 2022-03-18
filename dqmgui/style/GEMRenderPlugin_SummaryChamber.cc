@@ -105,9 +105,15 @@ void SummaryChamber::SetColor(float fVal, TBox *box, unsigned int &unStatusAll, 
       unStatusAll += 1;
       unStatusBad += 1;
       break;
-    // Standby
+    // Warning
     case 3:
       box->SetFillColor(COLOR_YELLOW);
+      unStatusAll += 1;
+      unStatusBad += 1;
+      break;
+    // Error, mild
+    case 4:
+      box->SetFillColor(COLOR_ORANGE);
       unStatusAll += 1;
       unStatusBad += 1;
       break;
@@ -188,10 +194,11 @@ void SummaryChamber::drawStats(TH2*& me) {
     }
   }
   
-  printLegendBox(0, "OK/No Data", COLOR_WHITE);
-  printLegendBox(1, "OK/Data", COLOR_GREEN);
+  printLegendBox(0, "No Data", COLOR_WHITE);
+  printLegendBox(1, "Good", COLOR_GREEN);
   printLegendBox(2, "Error", COLOR_RED);
-  printLegendBox(3, "Warning", COLOR_YELLOW);
+  printLegendBox(3, "Error", COLOR_ORANGE);
+  printLegendBox(4, "Warning", COLOR_YELLOW);
 }
 
 
