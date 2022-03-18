@@ -7,7 +7,7 @@ deploy_dmwmbld_prep()
 }
 
 logurl="https://cern.ch/cms-dmwm-builds/"
-webdir=/afs/cern.ch/user/d/dmwmbld/www
+webdir=/eos/user/d/dmwmbld/www
 
 deploy_dmwmbld_sw()
 {

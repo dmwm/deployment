@@ -562,8 +562,8 @@ const std::vector<std::string> DQMInfoRenderPlugin::summaryMapOrder_({
   "<thin_line>",
   "RPC",
   "<thin_line>",
-  "GEM-",
-  "GEM+",
+  "GEMm",
+  "GEMp",
   "<thin_line>",
   "CT-PPS", // Simply not implemented yet
             // Will need to be implemented with this label in the CMSSW

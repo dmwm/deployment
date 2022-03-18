@@ -1,5 +1,5 @@
 /*!
-  \file SiPixelMapsRenderPlugin
+  \file SiPhase2TrackerRenderPlugin
   \brief RenderPlugin for Tracker Phase-2 Validation plots
 
   \author Marco Musich
@@ -20,7 +20,7 @@
 #include "TLine.h"
 #include <cassert>
 
-class SiPhaseTrackerRenderPlugin : public DQMRenderPlugin
+class SiPhase2TrackerRenderPlugin : public DQMRenderPlugin
 {
 
 public:
@@ -30,19 +30,10 @@ public:
 
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
   {
-    if(o.name.find( "TrackerPhase2ITCluster/" ) != std::string::npos)
+    if(o.name.find( "TrackerPhase2IT" ) != std::string::npos)
       return true;
 
-    if(o.name.find( "TrackerPhase2ITDigi/" ) != std::string::npos)
-      return true;
-
-    if(o.name.find( "TrackerPhase2ITRecHit/" ) != std::string::npos)
-      return true;
-
-    if(o.name.find( "TrackerPhase2OTCluster/" ) != std::string::npos)
-      return true;
-
-    if(o.name.find( "TrackerPhase2OTDigi/" ) != std::string::npos)
+    if(o.name.find( "TrackerPhase2OT" ) != std::string::npos)
       return true;
 
     else return false;
@@ -105,49 +96,18 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
 
-    if( o.name.find("Global_Position")!= std::string::npos){
-      obj->SetStats( kFALSE );
-      gStyle->SetPalette(1,0);
-      obj->SetOption("colz");
-      return;
-    }
-
-    if( o.name.find("Local_Position")!= std::string::npos){
-      obj->SetStats( kFALSE );
-      gStyle->SetPalette(1,0);
-      obj->SetOption("colz");
-      return;
-    }
-
-    if( o.name.find("LocalPosition")!= std::string::npos){
-      obj->SetStats( kFALSE );
-      gStyle->SetPalette(1,0);
-      obj->SetOption("colz");
-      return;
-    }
-
-    if( o.name.find("Global_ClusterPosition")!= std::string::npos){
-      obj->SetStats( kFALSE );
-      gStyle->SetPalette(1,0);
-      obj->SetOption("colz");
-      return;
-    }
-
-    if( o.name.find("Local_ClusterPosition")!= std::string::npos){
-      obj->SetStats( kFALSE );
-      gStyle->SetPalette(1,0);
-      obj->SetOption("colz");
-      return;
-    }
-
-    if( o.name.find("XPosVsYPos")!= std::string::npos){
-      obj->SetStats( kFALSE );
-      gStyle->SetPalette(1,0);
-      obj->SetOption("colz");
-      return;
-    }
-
-    if( o.name.find("RPosVsZPos")!= std::string::npos){
+    if( o.name.find("Global_Position")!= std::string::npos
+	|| o.name.find("GlobalPosition")!= std::string::npos
+	|| o.name.find("Local_Position")!= std::string::npos
+	|| o.name.find("LocalPosition")!= std::string::npos
+	|| o.name.find("Global_ClusterPosition")!= std::string::npos
+	|| o.name.find("Local_ClusterPosition")!= std::string::npos
+	|| o.name.find("PositionOfDigis")!= std::string::npos
+        || o.name.find("MissedDigi")!= std::string::npos
+	|| o.name.find("XPosVsYPos")!= std::string::npos
+	|| o.name.find("RPosVsZPos")!= std::string::npos
+	|| o.name.find("Delta_X_vs")!= std::string::npos
+	|| o.name.find("Delta_Y_vs")!= std::string::npos){
       obj->SetStats( kFALSE );
       gStyle->SetPalette(1,0);
       obj->SetOption("colz");
@@ -199,4 +159,4 @@ void postDrawTProfile2D(TCanvas *, const VisDQMObject &o)
   }
 };
 
-static SiPhaseTrackerRenderPlugin instance;
+static SiPhase2TrackerRenderPlugin instance;
