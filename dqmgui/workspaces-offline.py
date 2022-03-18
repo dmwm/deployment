@@ -239,9 +239,9 @@ server.workspace('DQMContent', 61, 'POG', 'JetMet', '^JetMET/', '')
 server.workspace('DQMContent', 62, 'POG', 'EGamma', '^Egamma/', '')
 
 server.workspace('DQMContent', 63, 'POG', 'Btag', '^Btag/', '',
-                 'Btag/Layouts/00 - Jet Property',
+                 'Btag/Layouts/00 - Jet Properties',
                  'Btag/Layouts/01 - Tracks in Jet',
-                 'Btag/Layouts/02 - Vertex Property',
+                 'Btag/Layouts/02 - Secondary Vertex Properties',
                  'Btag/Layouts/03 - Flight Distance Summary',
                  'Btag/Layouts/04 - Discriminator Summary',
                  'Btag/Layouts/05 - 2D-Impact Parameter',
