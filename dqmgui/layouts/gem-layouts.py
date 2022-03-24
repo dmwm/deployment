@@ -10,177 +10,197 @@ GEMLayout(dqmitems, 'Common/00 Summary',
     )
 
 
-GEMLayout(dqmitems, 'Common/01 AMC13 status', 
+GEMLayout(dqmitems, 'Common/01 GE11-M-L1 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE11-M-L1', 'description': 'Lumi-based chamber status in GE11-M-L1'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/02 GE11-M-L2 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE11-M-L2', 'description': 'Lumi-based chamber status in GE11-M-L2'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/03 GE11-P-L1 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE11-P-L1', 'description': 'Lumi-based chamber status in GE11-P-L1'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/04 GE11-P-L2 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE11-P-L2', 'description': 'Lumi-based chamber status in GE11-P-L2'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/05 AMC13 status', 
     [{'path': 'GEM/DAQStatus/amc13_status', 'description': 'For more information (... under construction)'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/02 AMC status GE11-M', 
+GEMLayout(dqmitems, 'Common/06 AMC status GE11-M', 
     [{'path': 'GEM/DAQStatus/amc_status_GE11-M', 'description': 'For more information (... under construction)'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/03 AMC status GE11-P', 
+GEMLayout(dqmitems, 'Common/07 AMC status GE11-P', 
     [{'path': 'GEM/DAQStatus/amc_status_GE11-P', 'description': 'For more information (... under construction)'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/04 GE11-M-L1 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/08 GE11-M-L1 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-M-L1', 'description': 'OptoHybrid status in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/05 GE11-M-L2 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/09 GE11-M-L2 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-M-L2', 'description': 'OptoHybrid status in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/06 GE11-P-L1 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/10 GE11-P-L1 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-P-L1', 'description': 'OptoHybrid status in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/07 GE11-P-L2 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/11 GE11-P-L2 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-P-L2', 'description': 'OptoHybrid status in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/08 GE11-M-L1 VFAT status', 
+GEMLayout(dqmitems, 'Common/12 GE11-M-L1 VFAT status', 
     [{'path': 'GEM/DAQStatus/vfat_status_GE11-M-L1', 'description': 'VFAT status in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/09 GE11-M-L2 VFAT status', 
+GEMLayout(dqmitems, 'Common/13 GE11-M-L2 VFAT status', 
     [{'path': 'GEM/DAQStatus/vfat_status_GE11-M-L2', 'description': 'VFAT status in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/10 GE11-P-L1 VFAT status', 
+GEMLayout(dqmitems, 'Common/14 GE11-P-L1 VFAT status', 
     [{'path': 'GEM/DAQStatus/vfat_status_GE11-P-L1', 'description': 'VFAT status in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/11 GE11-P-L2 VFAT status', 
+GEMLayout(dqmitems, 'Common/15 GE11-P-L2 VFAT status', 
     [{'path': 'GEM/DAQStatus/vfat_status_GE11-P-L2', 'description': 'VFAT status in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/12 GE11-M-L1 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/16 GE11-M-L1 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-M-L1', 'description': 'VFAT status (chamber vs. VFAT) in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/13 GE11-M-L2 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/17 GE11-M-L2 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-M-L2', 'description': 'VFAT status (chamber vs. VFAT) in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/14 GE11-P-L1 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/18 GE11-P-L1 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-P-L1', 'description': 'VFAT status (chamber vs. VFAT) in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/15 GE11-P-L2 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/19 GE11-P-L2 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-P-L2', 'description': 'VFAT status (chamber vs. VFAT) in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/16 GE11-M-L1 recHit wheel occupancy', 
+GEMLayout(dqmitems, 'Common/20 GE11-M-L1 recHit wheel occupancy', 
     [{'path': 'GEM/RecHits/rphi_occ_GE11-M-L1', 'description': 'recHit wheel occupancy in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/17 GE11-M-L2 recHit wheel occupancy', 
+GEMLayout(dqmitems, 'Common/21 GE11-M-L2 recHit wheel occupancy', 
     [{'path': 'GEM/RecHits/rphi_occ_GE11-M-L2', 'description': 'recHit wheel occupancy in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/18 GE11-P-L1 recHit wheel occupancy', 
+GEMLayout(dqmitems, 'Common/22 GE11-P-L1 recHit wheel occupancy', 
     [{'path': 'GEM/RecHits/rphi_occ_GE11-P-L1', 'description': 'recHit wheel occupancy in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/19 GE11-P-L2 recHit wheel occupancy', 
+GEMLayout(dqmitems, 'Common/23 GE11-P-L2 recHit wheel occupancy', 
     [{'path': 'GEM/RecHits/rphi_occ_GE11-P-L2', 'description': 'recHit wheel occupancy in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/20 GE11-M-L1 digi occupancy', 
+GEMLayout(dqmitems, 'Common/24 GE11-M-L1 digi occupancy', 
     [{'path': 'GEM/Digis/det_GE11-M-L1', 'description': 'Digi occupancy in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/21 GE11-M-L2 digi occupancy', 
+GEMLayout(dqmitems, 'Common/25 GE11-M-L2 digi occupancy', 
     [{'path': 'GEM/Digis/det_GE11-M-L2', 'description': 'Digi occupancy in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/22 GE11-P-L1 digi occupancy', 
+GEMLayout(dqmitems, 'Common/26 GE11-P-L1 digi occupancy', 
     [{'path': 'GEM/Digis/det_GE11-P-L1', 'description': 'Digi occupancy in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/23 GE11-P-L2 digi occupancy', 
+GEMLayout(dqmitems, 'Common/27 GE11-P-L2 digi occupancy', 
     [{'path': 'GEM/Digis/det_GE11-P-L2', 'description': 'Digi occupancy in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/24 GE11-M-L1 recHit occupancy', 
+GEMLayout(dqmitems, 'Common/28 GE11-M-L1 recHit occupancy', 
     [{'path': 'GEM/RecHits/det_GE11-M-L1', 'description': 'RecHits occupancy in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/25 GE11-M-L2 recHit occupancy', 
+GEMLayout(dqmitems, 'Common/29 GE11-M-L2 recHit occupancy', 
     [{'path': 'GEM/RecHits/det_GE11-M-L2', 'description': 'RecHits occupancy in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/26 GE11-P-L1 recHit occupancy', 
+GEMLayout(dqmitems, 'Common/30 GE11-P-L1 recHit occupancy', 
     [{'path': 'GEM/RecHits/det_GE11-P-L1', 'description': 'RecHits occupancy in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/27 GE11-P-L2 recHit occupancy', 
+GEMLayout(dqmitems, 'Common/31 GE11-P-L2 recHit occupancy', 
     [{'path': 'GEM/RecHits/det_GE11-P-L2', 'description': 'RecHits occupancy in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/28 GE11-M-L1 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/32 GE11-M-L1 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-M-L1', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/29 GE11-M-L2 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/33 GE11-M-L2 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-M-L2', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/30 GE11-P-L1 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/34 GE11-P-L1 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-P-L1', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/31 GE11-P-L2 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/35 GE11-P-L2 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-P-L2', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/32 GE11-M-L1 Large Cluster Occupancy', 
+GEMLayout(dqmitems, 'Common/36 GE11-M-L1 Large Cluster Occupancy', 
     [{'path': 'GEM/RecHits/largeCls_occ_GE11-M-L1', 'description': 'Large Cluster (>5) Occupancy (iEta vs Chamber) in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/33 GE11-M-L2 Large Cluster Occupancy', 
+GEMLayout(dqmitems, 'Common/37 GE11-M-L2 Large Cluster Occupancy', 
     [{'path': 'GEM/RecHits/largeCls_occ_GE11-M-L2', 'description': 'Large Cluster (>5) Occupancy (iEta vs Chamber) in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/34 GE11-P-L1 Large Cluster Occupancy', 
+GEMLayout(dqmitems, 'Common/38 GE11-P-L1 Large Cluster Occupancy', 
     [{'path': 'GEM/RecHits/largeCls_occ_GE11-P-L1', 'description': 'Large Cluster (>5) Occupancy (iEta vs Chamber) in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/35 GE11-P-L2 Large Cluster Occupancy', 
+GEMLayout(dqmitems, 'Common/39 GE11-P-L2 Large Cluster Occupancy', 
     [{'path': 'GEM/RecHits/largeCls_occ_GE11-P-L2', 'description': 'Large Cluster (>5) Occupancy (iEta vs Chamber) in GE11-P-L2'}], 
     )
 
