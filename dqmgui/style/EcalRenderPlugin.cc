@@ -1193,7 +1193,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
   }
   else if(TPRegexp("E[BE]SummaryClient/E[BE]POT (|EE [+-] )pedestal G12 RMS map").MatchB(fullpath) ||
           TPRegexp("E[BE]PedestalOnlineClient/E[BE]POT pedestal rms map G12 E[BE][+-][0-1][0-9]").MatchB(fullpath)){
-    obj->GetZaxis()->SetRangeUser(0., 5.);
+    obj->GetZaxis()->SetRangeUser(1., 4.);
   }
   else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT event size vs DCC").MatchB(fullpath)){
     gPad->SetLogy(true);
