@@ -19,15 +19,20 @@
 #include "TPaveStats.h"
 #include "TList.h"
 #include "TLine.h"
+#include "TLatex.h"
 #include <cassert>
 
 class SiPixelLorentzAnglePCLRenderPlugin : public DQMRenderPlugin
 {
+  
+  int palette_kry[256];
+  int palette_yrk[256];
 
 public:
 
   virtual void initialise (int, char **)
-  {}
+  {
+  }
 
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
   {
@@ -83,13 +88,20 @@ public:
 
 private:
 
-  void preDrawTH1F(TCanvas *, const VisDQMObject &o)
+  void preDrawTH1F(TCanvas *c, const VisDQMObject &o)
   {
     TH1F* obj = dynamic_cast<TH1F*>( o.object );
     assert( obj );  
+
+    if( o.name.find("h_LAbySector")!= std::string::npos ||
+	o.name.find("h_bySector")!= std::string::npos ||
+	o.name.find("h_deltaLAbySector")!= std::string::npos){
+      c->SetBottomMargin(0.25);
+      return;
+    }
   }
 
-  void preDrawTH2F(TCanvas *, const VisDQMObject &o)
+  void preDrawTH2F(TCanvas *c, const VisDQMObject &o)
   {
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
@@ -107,6 +119,38 @@ private:
       obj->SetOption("colz");
       return;
     }
+
+    if( o.name.find("h2_byLayer")!= std::string::npos){
+      c->SetRightMargin(0.20);
+      obj->SetStats( kFALSE );
+      obj->SetContour(256);
+      gStyle->SetPalette(57,0);
+      obj->SetOption("colz");
+   
+      TAxis* xa = obj->GetXaxis();
+      TAxis* ya = obj->GetYaxis();
+      TAxis* za = obj->GetZaxis();
+
+      xa->SetTitleOffset(0.9);
+      xa->SetTitleSize(0.05);
+      xa->SetLabelSize(0.04);
+      xa->CenterTitle();
+      
+      ya->SetTitleOffset(0.9);
+      ya->SetTitleSize(0.05);
+      ya->SetLabelSize(0.04);
+      ya->CenterTitle();
+      
+      za->SetTitleOffset(1.2);
+      za->SetTitleSize(0.05);
+      za->SetLabelSize(0.04);
+      za->CenterTitle();
+
+      gPad->Update();
+
+      return;
+    }
+
   }
 
   void preDrawTProfile(TCanvas *, const VisDQMObject &o)
@@ -153,7 +197,7 @@ private:
     double e5 = 0.;
     double chi2 = 0.;
     int ndf = 0;
-    double prob = 0.;
+    //double prob = 0.;
 
     TF1* fit = (TF1*)obj->GetListOfFunctions()->FindObject("f1");
     if(fit!=nullptr){
@@ -179,7 +223,7 @@ private:
       e5 = fit->GetParError(5);
       chi2 = fit->GetChisquare();
       ndf  = fit->GetNDF();
-      prob = fit->GetProb();
+      //prob = fit->GetProb();
 
       f1->SetParameter(0,p0);
       f1->SetParError(0, e0);
@@ -224,13 +268,42 @@ private:
 
 	pt->AddText(Form("tan#theta_{L}: %.3f",tan_LA));
 	pt->AddText(Form("#chi^{2}/ndf: %.2f/%i",chi2,ndf));
-	pt->AddText(Form("Fit Prob: %.2f",prob));
+	//pt->AddText(Form("Fit Prob: %.2f",prob));  generally 0
 	pt->SetTextColor( obj->GetLineColor() );
 	pt->SetX1NDC( .12 );
 	pt->SetX2NDC( .35 );
 	pt->SetY1NDC( .73 );
 	pt->SetY2NDC( .87 );
 	pt->Draw("same");
+      }
+    }
+
+    if( o.name.find("h_LAbySector")!= std::string::npos ||
+	o.name.find("h_bySector")!= std::string::npos ||
+	o.name.find("h_deltaLAbySector")!= std::string::npos){
+      gPad->Update();
+
+      TAxis* xa = obj->GetXaxis();
+      xa->LabelsOption("v");
+      xa->SetLabelSize(0.03);
+      xa->SetTitleOffset(2.5);
+
+      float bounds[4]={7.5,15.5,23.5,31.5};
+    
+      TLatex Tl;
+      Tl.SetTextAlign(11);
+      Tl.SetTextColor(kRed);
+      Tl.SetTextSize(0.04);
+
+      TLine tl[4];
+      for(unsigned int i=0;i<4;i++){
+	tl[i].SetLineColor(kRed);
+	tl[i].SetLineWidth(3);
+	tl[i].SetLineStyle(7);
+	tl[i].DrawLine(bounds[i],gPad->GetUymin(),bounds[i],gPad->GetUymax());
+
+	Tl.DrawLatexNDC(0.01+gPad->GetLeftMargin()+0.167*i,0.86,Form("Layer %i",i+1));
+
       }
     }
   }
