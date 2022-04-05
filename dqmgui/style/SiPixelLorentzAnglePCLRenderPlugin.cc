@@ -25,9 +25,6 @@
 class SiPixelLorentzAnglePCLRenderPlugin : public DQMRenderPlugin
 {
   
-  int palette_kry[256];
-  int palette_yrk[256];
-
 public:
 
   virtual void initialise (int, char **)
@@ -289,21 +286,23 @@ private:
       xa->SetTitleOffset(2.5);
 
       float bounds[4]={7.5,15.5,23.5,31.5};
-    
+      
       TLatex Tl;
       Tl.SetTextAlign(11);
       Tl.SetTextColor(kRed);
       Tl.SetTextSize(0.04);
 
       TLine tl[4];
-      for(unsigned int i=0;i<4;i++){
+      unsigned int max = (obj->GetNbinsX() >= 32) ? 4 : 3; // poor man's switch for phase0/phase1
+
+      for(unsigned int i=0;i<max;i++){
 	tl[i].SetLineColor(kRed);
 	tl[i].SetLineWidth(3);
 	tl[i].SetLineStyle(7);
 	tl[i].DrawLine(bounds[i],gPad->GetUymin(),bounds[i],gPad->GetUymax());
 
-	Tl.DrawLatexNDC(0.01+gPad->GetLeftMargin()+0.167*i,0.86,Form("Layer %i",i+1));
-
+	float interval = ((bounds[i]-7.5)/float(obj->GetNbinsX()))*(1- gPad->GetRightMargin()- gPad->GetLeftMargin());
+	Tl.DrawLatexNDC(0.01+gPad->GetLeftMargin()+interval,0.86,Form("Layer %i",i+1));
       }
     }
   }
