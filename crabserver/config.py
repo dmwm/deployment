@@ -40,4 +40,6 @@ data.workflowManager = 'HTCondorDataWorkflow'
 data.extconfigurl = 'http://gitlab.cern.ch/crab3/CRAB3ServerConfig/raw/master/cmsweb-rest-config.json'
 
 data.loggingLevel = 10
-data.loggingFile = '%s/logs/crabserver/CRAB-%s.log' % (__file__.rsplit('/', 4)[0], time.strftime("%Y%m%d"))
+data.loggingFile = '%s/logs/crabserver/CRAB-%s.log' % (__file__.rsplit('/', 4)[0], myhost)
+data.ketpLogDays = 7
+
