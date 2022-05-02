@@ -40,20 +40,20 @@ config.Webtools.port = 8255
 config.Webtools.thread_pool = 15
 config.Webtools.log_screen = False
 config.Webtools.proxy_base = 'True'
-config.Webtools.application = 'dbs'
+config.Webtools.application = 'dbspy'
 config.Webtools.environment = 'production'
 
-config.component_('dbs')
-config.dbs.templates = os.path.join(ROOTDIR, 'apps/dbs/statics')
-config.dbs.title = 'DBS Server'
-config.dbs.description = 'CMS DBS Service'
-config.dbs.section_('views')
-config.dbs.admin = 'cmsdbs'
-config.dbs.default_expires = 900
-config.dbs.instances = view_mapping[VARIANT]["DBSWriter"]
+config.component_('dbspy')
+config.dbspy.templates = os.path.join(ROOTDIR, 'apps/dbs/statics')
+config.dbspy.title = 'DBS Server'
+config.dbspy.description = 'CMS DBS Service'
+config.dbspy.section_('views')
+config.dbspy.admin = 'cmsdbs'
+config.dbspy.default_expires = 900
+config.dbspy.instances = view_mapping[VARIANT]["DBSWriter"]
 
 ### Create views for DBSReader, DBSWriter and DBSMigrate
-active = config.dbs.views.section_('active')
+active = config.dbspy.views.section_('active')
 for viewname, access in [('DBSWriter','writer')]:
   if view_mapping[VARIANT][viewname]:
     active.section_(viewname)
@@ -67,7 +67,7 @@ for viewname, access in [('DBSWriter','writer')]:
     view.section_('security')
     dbinst=view.database.section_('instances')
     secinst=view.security.section_('instances')
-    for instance_name in config.dbs.instances:
+    for instance_name in config.dbspy.instances:
       dbconf = dbinst.section_(instance_name)
       dbconf.throllting_limit = 15
       #dbconf.throllting_time = 1
