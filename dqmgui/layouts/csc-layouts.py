@@ -43,6 +43,22 @@ csclayout(dqmitems,"02 EMU Summary/EMU Test11 - CSCs without Data Blocks",
   [{'path': "CSC/Summary/CSC_wo_CFEB_Fract", 'description': "Histogram shows how often CSC events come without CFEB data. For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_wo_CFEB_Fract\">here</a>."},
    {'path': "CSC/Summary/CSC_Format_Warnings_Fract", 'description': "Histogram shows occurrences when SCA cells were filled due to too-high rate of LCTs and/or LCT-L1A coincidences. In conditions of cosmic ray runs, appearance of entries is indicative of hardware problems, or more specifically hot CFEBs. This typically happens due to a loose CFEB-TMB cable generating a flood of CLCT pre-triggers (CBEBs are the only board that are readout on coincidence between pre-CLCT and L1A). For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_Format_Warnings_Fract\">here</a>."}])
 
+csclayout(dqmitems,"02 EMU Summary/EMU Test12 - CSCs with Run3 Data Format firmware",
+    [{'path': "CSC/Summary/CSC_TMB_Run3_Data_Format", 'description': "Histogram shows chambers with (O)TMB Run3 Data Format"},
+     {'path': "CSC/Summary/CSC_TMB_Run3_CCLUT_Mode", 'description': "Histogram shows chambers with (O)TMB Run3 CCLUT enabled"}],
+    [{'path': "CSC/Summary/CSC_ALCT_Run3_Format", 'description': "Histogram shows chambers with ALCT Run3 Data Format"},
+     None])
+
+csclayout(dqmitems,"02 EMU Summary/EMU Test13 - CSCs with Run3 HMT Shower Data",
+    [{'path': "CSC/Summary/CSC_LCT_HMT_Reporting", 'description': "Histogram shows Run3 combined HMT bits sent to MPC readout occupancies"},
+     {'path': "CSC/Summary/CSC_Cathode_HMT_Reporting", 'description': "Histogram shows Run3 Cathode HMT bits (O)TMB readout occupancies"}],
+    [{'path': "CSC/Summary/CSC_Anode_HMT_Reporting", 'description': "Histogram shows Run3 Anode HMT bits (O)TMB readout occupancies"},
+     {'path': "CSC/Summary/CSC_Anode_HMT_ALCT_Reporting", 'description': "Histogram shows Run3 Anode HMT bits from ALCT sent to (O)TMB readout occupancies"}])
+
+csclayout(dqmitems,"02 EMU Summary/EMU Test13 - ME11-GE11 GEM VFATs Occupancies",
+    [{'path': "CSC/Summary/Plus_endcap_GEM_VFAT_occupancy", 'description': "Histogram shows Run3 GEM z+ VFATs occupancies"}],
+    [{'path': "CSC/Summary/Minus_endcap_GEM_VFAT_occupancy", 'description': "Histogram shows Run3 GEM z- VFATs occupancies"}])
+
 csclayout(dqmitems,"03 Shifter/Chamber Errors and Warnings (Statistically Significant)",
     [{'path': "CSC/Summary/CSC_STATS_format_err", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_format_err\">here</a>."},
      {'path': "CSC/Summary/CSC_STATS_l1sync_err", 'description': "For more information please click <a href=\"https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftCSC#CSC_STATS_l1sync_err\">here</a>."}],

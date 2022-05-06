@@ -989,6 +989,39 @@ public:
         chamberMap.draw(obj2);
         return;
       }
+    if (reMatch(".*/CSC_LCT_HMT_Reporting$", o.name)
+       || reMatch(".*/CSC_Anode_HMT_Reporting$", o.name)
+       || reMatch(".*/CSC_Cathode_HMT_Reporting$", o.name)
+       || reMatch(".*/CSC_Anode_HMT_ALCT_Reporting$", o.name)
+       || reMatch(".*/CSC_TMB_Run3_Data_Format$", o.name)
+       || reMatch(".*/CSC_TMB_Run3_CCLUT_Mode$", o.name)
+       || reMatch(".*/CSC_ALCT_Run3_Format$", o.name))
+      {
+        /** Applying definition [chamberMap] **/
+        obj->SetStats(false);
+        gStyle->SetOptStat("e");
+        obj->SetOption("colz");
+        gPad->SetGridx();
+        gPad->SetGridy();
+        /** Applying histogram **/
+        TH2* obj2 = dynamic_cast<TH2*>(obj);
+        chamberMap.draw(obj2);
+        return;
+      }
+    if (reMatch(".*/Plus_endcap_GEM_VFAT_occupancy$", o.name)
+       || reMatch(".*/Minus_endcap_GEM_VFAT_occupancy$", o.name))
+      {
+        /** Applying histogram **/
+        obj->SetStats(true);
+        gStyle->SetOptStat("e");
+        obj->SetOption("colz");
+        gPad->SetGridx();
+        gPad->SetGridy();
+        obj->SetNdivisions(obj->GetNbinsX(),"X");
+        obj->GetXaxis()->CenterLabels(true);
+        obj->SetLabelSize(0.02,"X");
+        return;
+      }
     if (reMatch(".*/All_Readout_Errors$", o.name))
       {
         /** Applying histogram **/
