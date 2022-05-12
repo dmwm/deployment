@@ -215,7 +215,8 @@ server.workspace('DQMContent', 40, 'Muons', 'CSC', '^CSC/', '',
 
 server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')
 
-server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
+#server.workspace('DQMContent', 42, 'Muons', 'RPC', '^RPC/', '')
+server.workspace('DQMContent', 42, 'Muons', 'RPC', '^(RPC/|L1T/L1TStage2EMTF/rpc)', '')
 
 server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
                  "GEM/Layouts/01 - Efficiency vs Chamber",
