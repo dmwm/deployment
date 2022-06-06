@@ -22,7 +22,7 @@
 ^/auth/complete/crabcache(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/crabserver(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/wmstatsserver(?:/|$) cmsweb-srv.cern.ch
-^/auth/complete/wmstats(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/wmstats2go(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/t0wmadatasvc(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/t0_reqmon(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/reqmgr2(?:/|$) cmsweb-srv.cern.ch
