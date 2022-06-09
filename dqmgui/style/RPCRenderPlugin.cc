@@ -6,6 +6,8 @@
 #include "TColor.h"
 #include <iostream>
 #include <cassert>
+#include <sstream>
+#include <fstream>
 #include "TLine.h"
 #include "TText.h"
 #include "TPaletteAxis.h"
@@ -29,23 +31,23 @@ public:
       return false;
     }
 
-  virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
+    virtual void preDraw( TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo & )
     {
       c->cd();
 
       if( dynamic_cast<TH2*>( o.object ) ){
         preDrawTH2( c, o );
       }else if( dynamic_cast<TH1*>( o.object ) )   {
-	preDrawTH1(c, o);
+        preDrawTH1(c, o);
       }
 
- }
+  }
 
   virtual void postDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &)
-    {
+  {
 
-      if(dynamic_cast<TH2*>( o.object ) ) postDrawTH2(c,o);
-    }
+    if(dynamic_cast<TH2*>( o.object ) ) postDrawTH2(c,o);
+  }
 
 private:
 
@@ -53,9 +55,9 @@ private:
     TH1* obj = dynamic_cast<TH1*>( o.object );
     assert( obj );
 
-   if(o.name.find("BX") != std::string::npos){
-	  obj->StatOverflows(false);
-   }
+    if(o.name.find("BX") != std::string::npos){
+      obj->StatOverflows(false);
+    }
 
   }
 
@@ -88,8 +90,63 @@ private:
 
       if(o.name.find("SummaryMap") != std::string::npos)
       {
-        dqm::utils::reportSummaryMapPalette(obj);
-	return;
+        if(o.name.find("reportSummaryMap") != std::string::npos)
+        {
+          //Normalization of summary map
+          double rpc_map[16][13];
+          //std::ifstream rpc_map_file("../../MYDEV/config/dqmgui/style/RPC_report_summary_map_normalization.csv");
+          std::ifstream rpc_map_file("../../MYDEV/config/dqmgui/style/RPC_report_summary_map_normalization2.csv");
+          obj->SetMaximum(1.0);
+
+          for( int nr = 0; nr < 13; nr++ )
+          {
+            std::string line;
+            std::getline(rpc_map_file, line);
+            if ( !rpc_map_file.good() ) break;
+            std::stringstream iss(line);
+
+            for( int nc = 0; nc < 16; nc++ )
+            {
+              std::string val;
+              std::getline(iss, val, ',');
+              std::stringstream convertor(val);
+              convertor >> rpc_map[nc][nr];
+            }
+          }
+
+          int xbins = obj->GetNbinsX();
+          int ybins = obj->GetNbinsY();
+          for( int i = 1; i <= xbins; i++ ){
+            for( int j = 1; j <= ybins; j++){
+              double tem = obj->GetBinContent(i, j);
+              if(rpc_map[i][j] > 0 and tem > 0){
+                double newTemp = tem / rpc_map[i][j];
+                if( newTemp > 1.0 ) newTemp = 1.0;
+                obj->SetBinContent(i, j, newTemp);
+              }
+            }
+          }
+          gStyle->SetPaintTextFormat(".3f");
+          dqm::utils::reportSummaryMapPalette(obj);
+        } else if(o.name.find("noisySummaryMap") != std::string::npos) {
+
+          obj->SetMinimum(0.0);
+          obj->SetMaximum(3.0);
+
+          int colorPaletteEff[5];
+          colorPaletteEff[0] = 400; // Y
+          colorPaletteEff[1] = 807; // O
+          colorPaletteEff[2] = 807; // R
+          colorPaletteEff[3] = 632; // R
+          colorPaletteEff[4] = 632; // R
+
+          gStyle->SetPalette(5, colorPaletteEff);
+          gStyle->SetPaintTextFormat(".3f");
+          obj->SetOption( "colz text" );
+        } else {
+          dqm::utils::reportSummaryMapPalette(obj);
+        }
+        return;
       }
 
       if( o.name.find("Occupancy") != std::string::npos )
@@ -99,6 +156,7 @@ private:
           obj->SetStats( kFALSE );
         } else {
           obj->SetStats( kTRUE );
+          gStyle->SetOptStat( 10 );
         }
         return;
       }
@@ -135,9 +193,9 @@ private:
       line.DrawLine(11.5, 17.5, 12.5, 17.5);
 
       for(int x=1; x<13; x++) {
-	for (int y=18; y<22; y++) {
-	  if(x!=4) obj->SetBinContent(x,y,-1);
-	}
+        for (int y=18; y<22; y++) {
+          if(x!=4) obj->SetBinContent(x,y,-1);
+        }
       }
 
       obj->SetBinContent(9,16,-1);
@@ -150,7 +208,7 @@ private:
     if(o.name.find("SummaryMap") != std::string::npos)
       {//report summary map
 
-	TLine line;// draw lines to delimitate Barrel and Endcaps
+        TLine line;// draw lines to delimitate Barrel and Endcaps
         line.SetLineWidth(1);
         line.DrawLine(-3.5, 0.5, -3.5, 6.5);
         line.DrawLine(-7.5, 6.5,-3.5, 6.5 );
@@ -190,11 +248,23 @@ private:
         //rb3
         line.DrawLine(43, 9.5, 43, 13.5);
 
-       //  gPad->Update();
-//         TPaletteAxis *palette;
-//         palette = (TPaletteAxis*)obj->GetListOfFunctions()->FindObject("palette");
-//         palette->GetAxis()->SetLabelSize(0.024);
-//         gPad->Update();
+        gStyle->SetOptStat( 10 );
+
+        //gPad->Update();
+        //TPaletteAxis *palette;
+        //palette = (TPaletteAxis*)obj->GetListOfFunctions()->FindObject("palette");
+        //palette->GetAxis()->SetLabelSize(0.024);
+        //gPad->Update();
+      }
+
+      if(o.name.find("Occupancy") != std::string::npos && o.name.find("SummaryByRings") != std::string::npos && o.name.find("Disk") != std::string::npos)
+      {
+        gStyle->SetOptStat( 10 );
+      }
+
+      if(o.name.find("Occupancy") != std::string::npos && o.name.find("SummaryHistograms") != std::string::npos && o.name.find("_for_") == std::string::npos)
+      {
+        gStyle->SetOptStat( 10 );
       }
 
       if(o.name.find("OccupancyNormByGeoAndRPCEvents")!= std::string::npos)
@@ -211,38 +281,25 @@ private:
         //obj->GetXaxis()->SetNdivisions(-510);
         obj->GetYaxis()->SetLabelSize(0.03);
         obj->GetYaxis()->SetLabelOffset(0.005);
-	// obj->GetYaxis()->SetNdivisions(-510);
+        // obj->GetYaxis()->SetNdivisions(-510);
         return;
       }
 
-      if(o.name.find("ClusterSizeIn1Bin") != std::string::npos)
+      if(o.name.find("ClusterSize_") != std::string::npos)
       {
-        obj->SetMinimum(-1.e-15);
-        obj->SetMaximum(1.0);
-
-        int colorPalette[20];
-        for(int i=0; i<15; i++)
-        {
-          colorPalette[i]=416;
-        }
-        colorPalette[15]= 400; // Yallow
-        colorPalette[16]= 807; // Orange
-        colorPalette[17]= 632; // Red
-        colorPalette[18]= 632;
-        colorPalette[19]= 632;
-
-        gStyle->SetPalette(20, colorPalette);
+        obj->SetStats( kTRUE );
+        gStyle->SetOptStat( 10 );
         return;
       }
 
- if(o.name.find("ClusterSizeMean") != std::string::npos)
+      if(o.name.find("ClusterSizeMean") != std::string::npos)
       {
         obj->SetMinimum(0.0);
         obj->SetMaximum(5.0);
 
         int colorPalette_m[5];
 
-	colorPalette_m[0]=400;
+        colorPalette_m[0]=400;
         colorPalette_m[1]= 416; // Yallow
         colorPalette_m[2]= 416; // Orange
         colorPalette_m[3]= 807; // Red
@@ -302,46 +359,15 @@ private:
         return;
       }
 
-       if(o.name.find("RPC_System_Quality_Overview") != std::string::npos)
+      if(o.name.find("RPC_System_Quality_Overview") != std::string::npos)
       {
-	gStyle->SetPaintTextFormat(".2f");
+        gStyle->SetPaintTextFormat(".2f");
 
         obj->GetXaxis()->SetTitle("Fraction of RPC States");
-	obj->SetOption("text");
-	obj->SetStats( kTRUE );
-	return;
+        obj->SetOption("text");
+        obj->SetStats( kTRUE );
+        return;
 
-	}
-
-      if(o.name.find("RPCChamberQuality") != std::string::npos)
-      {
-        obj->SetMinimum(0.5);
-        obj->SetMaximum(7.5);
-
-        int colorPalette3[7];
-
-	colorPalette3[0]=416; // Gren OK
-        colorPalette3[1]=860; // Blue OFF
-        colorPalette3[2]= 400; // Yallow Noisily Strip
-        colorPalette3[3]= 807; // Orange Noisily Chamber
-        colorPalette3[4]= 616;  // Pink Partly Dead
-        colorPalette3[5]= 632; // red Dead
-        colorPalette3[6]= 432; // Bad Shape
-
-        gStyle->SetPalette(7, colorPalette3);
-
-       //  c->cd();
-//         gPad->Update();
-
-//         TPaletteAxis *palette;
-//         palette = (TPaletteAxis*)obj->GetListOfFunctions()->FindObject("palette");
-//         palette->GetAxis()->SetLabelSize(0);
-
-// 	palette->GetAxis()->SetTitle("OK        OFF        Nois.St       Nois.Ch   Part.Dead       Dead    Bad.Shape");
-
-//         palette->SetTitleOffset(0.25);
-//         palette->SetTitleSize(0.025);
-	return;
       }
 
       if(o.name.find("VStatus_Wheel") != std::string::npos)
@@ -356,35 +382,35 @@ private:
         colorPalette4[2]= 400; // Yallow Error
         gStyle->SetPalette(3, colorPalette4);
 
-	c->cd();
-	gPad->Update();
+        c->cd();
+        gPad->Update();
 
-	TPaletteAxis *palette;
-	palette = (TPaletteAxis*)obj->GetListOfFunctions()->FindObject("palette");
-	palette->GetAxis()->SetLabelSize(0);
-	palette->GetAxis()->SetTitle("OFF                                     ON                                 Error                    ");
-	palette->SetTitleOffset(0.3);
-	palette->SetTitleSize(0.025);
+        TPaletteAxis *palette;
+        palette = (TPaletteAxis*)obj->GetListOfFunctions()->FindObject("palette");
+        palette->GetAxis()->SetLabelSize(0);
+        palette->GetAxis()->SetTitle("OFF                                     ON                                 Error                    ");
+        palette->SetTitleOffset(0.3);
+        palette->SetTitleSize(0.025);
 
-	return;
+        return;
       }
 
       if(o.name.find("RPCNoisyStrips") != std::string::npos) {
 
-	obj->SetMinimum(-0.5);
-	obj->SetMaximum(5.5);
+        obj->SetMinimum(-0.5);
+        obj->SetMaximum(5.5);
 
-	int colorPalette5[6];
-	colorPalette5[0] = 416; // G
-	colorPalette5[1] = 400; // Y
-	colorPalette5[2] = 400; // Y
-	colorPalette5[3] = 807; // O
-	colorPalette5[4] = 632; // R
-	colorPalette5[5] = 632; // R
+        int colorPalette5[6];
+        colorPalette5[0] = 416; // G
+        colorPalette5[1] = 400; // Y
+        colorPalette5[2] = 400; // Y
+        colorPalette5[3] = 807; // O
+        colorPalette5[4] = 632; // R
+        colorPalette5[5] = 632; // R
 
-	gStyle->SetPalette(6, colorPalette5);
+        gStyle->SetPalette(6, colorPalette5);
 
-	return;
+        return;
       }
 
       if(o.name.find("NumberOfDigi_Mean") != std::string::npos)
@@ -407,23 +433,23 @@ private:
       //for Offline DQM
       if(o.name.find("Efficiency_Roll") != std::string::npos)
       {
-	//obj->Reset();
-	obj->SetMinimum(0.0);
+        //obj->Reset();
+        obj->SetMinimum(0.0);
         obj->SetMaximum(100.0);
 
         int colorPaletteEff[10];
-	colorPaletteEff[0] = 632; // R
-	colorPaletteEff[1] = 632; // R
-	colorPaletteEff[2] = 632; // R
-	colorPaletteEff[3] = 632; // R
-	colorPaletteEff[4] = 632; // R
-	colorPaletteEff[5] = 632; // R
-	colorPaletteEff[6] = 632; // R
-	colorPaletteEff[7] = 807; // O
-	colorPaletteEff[8] = 400; // Y
-	colorPaletteEff[9] = 416; // G
+        colorPaletteEff[0] = 632; // R
+        colorPaletteEff[1] = 632; // R
+        colorPaletteEff[2] = 632; // R
+        colorPaletteEff[3] = 632; // R
+        colorPaletteEff[4] = 632; // R
+        colorPaletteEff[5] = 632; // R
+        colorPaletteEff[6] = 632; // R
+        colorPaletteEff[7] = 807; // O
+        colorPaletteEff[8] = 400; // Y
+        colorPaletteEff[9] = 416; // G
 
-	gStyle->SetPalette(10, colorPaletteEff);
+        gStyle->SetPalette(10, colorPaletteEff);
         return;
       }
 
