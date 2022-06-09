@@ -487,17 +487,6 @@ l1t_quickCollection(dqmitems, "54 - Input vs Output misMatch Ratios (clockwise f
     'description': "This should be empty at all times.",
     'draw': { 'withref': "no" }
   }])
-l1t_quickCollection(dqmitems, "55 - uGMT Zero Suppression misMatch Ratio (left: all events, right: fat events)",
-  [{
-    'path': "L1T/L1TStage2uGMT/zeroSuppression/AllEvts/mismatchRatio",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  },
-  {
-    'path': "L1T/L1TStage2uGMT/zeroSuppression/FatEvts/mismatchRatio",
-    'description': "This should be empty at all times.",
-    'draw': { 'withref': "no" }
-  }])
 l1t_quickCollection(dqmitems, "56 - BMTF Zero Suppression misMatch Ratio (left: all events, right: fat events)",
   [{
     'path': "L1T/L1TStage2BMTF/zeroSuppression/AllEvts/mismatchRatio",

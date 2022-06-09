@@ -89,7 +89,6 @@ server.workspace('DQMContent', 10, 'Trigger', 'L1T', '^(L1T|L1T2016)/', '',
                  'L1T/Layouts/Stage2-QuickCollection/52 - uGT Muon Inputs Board 2-6 misMatch Ratios',
                  'L1T/Layouts/Stage2-QuickCollection/53 - uGMT Muon Copy 1-5 misMatch Ratios',
                  'L1T/Layouts/Stage2-QuickCollection/54 - Input vs Output misMatch Ratios (clockwise from top left: uGT vs. uGMT, uGT vs. caloL2, uGMT vs. EMTF, uGMT vs. OMTF, uGMT vs. BMTF)',
-                 'L1T/Layouts/Stage2-QuickCollection/55 - uGMT Zero Suppression misMatch Ratio (left: all events, right: fat events)',
                  'L1T/Layouts/Stage2-QuickCollection/56 - BMTF Zero Suppression misMatch Ratio (left: all events, right: fat events)',
                 )
 
