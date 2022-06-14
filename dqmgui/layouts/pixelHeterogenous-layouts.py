@@ -7,8 +7,8 @@ pixelHeterolayout(dqmitems, "000 - Compare number of RecHits",
    )
 
 pixelHeterolayout(dqmitems, "00a - Compare number of tracks",
-   [{ 'path':  "SiPixelHeterogeneous/PixelTracksGPUvsCPU/nTracks",
-      'description': "No of pixel tracks GPU vs CPU",
+   [{ 'path':  "SiPixelHeterogeneous/PixelTracksGPUvsCPU/nLooseAndAboveTracks",
+      'description': "No of pixel tracks with quality >= loose GPU vs CPU",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
 
@@ -271,8 +271,8 @@ pixelHeterolayout(dqmitems, "09b - Compare track properties",
      { 'path': "SiPixelHeterogeneous/PixelTracksGPUvsCPU/nRecHits",
       'description': "Compare number of rechits per track",
       'draw': { 'withref': "no" }}],
-   [{ 'path': "SiPixelHeterogeneous/PixelTracksGPUvsCPU/nLooseAndAboveTracks",
-      'description': "Number of tracks with quality >= loose",
+   [{ 'path': "SiPixelHeterogeneous/PixelTracksGPUvsCPU/nTracks",
+      'description': "Number of tracks (no qualiry cut)",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "SiPixelHeterogeneous/PixelTracksGPUvsCPU/nLooseAndAboveTracks_matched",
       'description': "Number of tracks with quality >= loose on CPU matched to GPU track",
