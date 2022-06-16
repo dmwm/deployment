@@ -284,7 +284,6 @@ server.workspace('DQMContent', 40, 'Muons', 'DT', '^DT/', '',
                  'DT/Layouts/00-Summary/06-SynchNoiseSummary',
                 )
 
-#server.workspace('DQMContent', 41, 'Muons', 'RPC', '^RPC/', '',
 server.workspace('DQMContent', 41, 'Muons', 'RPC', '^(RPC/|L1T/L1TStage2EMTF/rpc)', ''
                  'RPC/Layouts/00-Summary_Map',
                  'RPC/Layouts/01-Noisy_summary_Map',

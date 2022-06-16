@@ -94,7 +94,6 @@ private:
         {
           //Normalization of summary map
           double rpc_map[16][13];
-          //std::ifstream rpc_map_file("../../MYDEV/config/dqmgui/style/RPC_report_summary_map_normalization.csv");
           std::ifstream rpc_map_file("../../MYDEV/config/dqmgui/style/RPC_report_summary_map_normalization2.csv");
           obj->SetMaximum(1.0);
 
@@ -128,6 +127,7 @@ private:
           }
           gStyle->SetPaintTextFormat(".3f");
           dqm::utils::reportSummaryMapPalette(obj);
+          obj->SetOption( "colz text" );
         } else if(o.name.find("noisySummaryMap") != std::string::npos) {
 
           obj->SetMinimum(0.0);
@@ -219,6 +219,15 @@ private:
         line.DrawLine(3.5, 0.5, 3.5, 6.5);
         line.DrawLine(3.5, 6.5,7.5, 6.5 );
         line.DrawLine(7.5, 0.5,7.5, 6.5 );
+
+        if(o.name.find("noisySummaryMap") != std::string::npos)
+        {
+          TText* t_text = new TText();
+          t_text->SetTextSize(0.035);
+          t_text->DrawText(3.0, 11, "Average number of");
+          t_text->DrawText(3.0, 10.3, "possible noisy strips");
+          t_text->DrawText(3.0, 9.6, "per roll");
+        }
         return;
       }
 

@@ -3,7 +3,7 @@ def rpclayout(i, p, *rows): i["RPC/Layouts/" + p] = DQMItem(layout=rows)
 ########### define varialbles for frequently used strings #############
 rpclink = '   >>> <a href="https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC">Description</a>'
 summary = "summary map for rpc, this is NOT an efficiency measurement. Each bin is normalized to 1 considering disconnected chamber"
-noise = "Noisy strip map for rpc, counted if a occupancy of single strip is greater than 3.5 times the average of a chamber"
+noise = "Average number of noisy strip per roll, counted if a occupancy of single strip is greater than 3.5 times the average of a chamber"
 rpcevents = "Events processed by the RPC DQM"
 fed = "FED Fatal Errors"
 top = "RPC TOP Summary Histogram <br><font color=green><b>GREEN</b> - Good Chamber </font><br> <font color=blue><b>BLUE</b> - Chamber OFF</font><br> <font color=yellow><b>YELLOW</b> - Noisy Strip </font><br> <font color=orange><b>ORANGE</b> - Noisy Chamber </font><br> <font color=pink><b>PINK</b> - Partly Dead Chamber </font><br> <font color=red><b>RED</b> - Fully Dead Chamber </font><br> <font color=aqua><b>LIGHT BLUE</b> - Bad Occupancy Shape </font> <br>"
