@@ -210,6 +210,7 @@
 #  AUTH_GRID_MAPS     List of files with additional cert VO memberships.
 #  AUTH_REVOKED       List of files containing revoked users.
 #  AUTH_JSON_MAP      File containing CRIC authn/authz info from mkauthmap.
+#  AUTH_COUCHDB       File containing CouchDB credentials.
 
 package cmsauth;
 use strict;
@@ -645,6 +646,11 @@ sub init($)
     close(F);
   }
 
+  # FIXME: Load the CouchDB secrets file and define the user and role variable
+  # meant to read it in from AUTH_COUCHDB environment variable
+  $couch_username = "blah"
+  $couch_userrole = "blah"
+
   # Remember authn/authz json file if any.
   $authz_json_file = $r->dir_config->get("AUTH_JSON_MAP");
 
@@ -806,6 +812,10 @@ sub authz_complete($$$%)
 		       (map { ($_, $hdrs{$_}) } @h));
     $hdrs{"cms-authn-hmac"} = secret_hmac("authz-headers", $auth);
     $r->headers_in->set($_ => $hdrs{$_}) for keys %hdrs;
+    # Alan: make sure these headers are sent to the backend to allow
+    # CouchDB 3.x database access via Proxy Authentication
+    $hdrs{"x-auth-couchdb-username"} = $couch_username;
+    $hdrs{"x-auth-couchdb-roles"} = $couch_userrole;
   }
 
   $r->internal_redirect("/auth/complete" . $ir->unparsed_uri);
