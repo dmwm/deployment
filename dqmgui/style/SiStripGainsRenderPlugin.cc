@@ -14,6 +14,8 @@
 #include "TPaveStats.h"
 #include "TH1F.h"
 #include "TH2D.h"
+#include "TH2S.h"
+#include "TH2I.h"
 #include "TStyle.h"
 #include "TCanvas.h"
 #include "TColor.h"
@@ -52,6 +54,8 @@ public:
         preDrawTH2D( c, o );
       } else if( dynamic_cast<TH2S*>( o.object ) ) {
         preDrawTH2S( c, o );
+      } else if( dynamic_cast<TH2I*>( o.object ) ) {
+        preDrawTH2I( c, o );
       } else if( dynamic_cast<TH1D*>( o.object ) ) {
         preDrawTH1D( c, o );
       }
@@ -68,6 +72,8 @@ public:
         postDrawTH2D( c, o );
       } else if( dynamic_cast<TH2S*>( o.object ) ) {
         postDrawTH2S( c, o );
+      } else if( dynamic_cast<TH2I*>( o.object ) ) {
+        postDrawTH2I( c, o );
       } else if( dynamic_cast<TH1D*>( o.object ) ) {
         postDrawTH1D( c, o );
       }
@@ -113,6 +119,16 @@ private:
       obj->SetOption("colz");
     }
 
+  void preDrawTH2I( TCanvas *, const VisDQMObject &o )
+    {
+      TH2I* obj = dynamic_cast<TH2I*>( o.object );
+      assert( obj );
+
+      if (o.name.find("EventStats")!=std::string::npos) {    
+	obj->SetMarkerSize(2.);
+	obj->SetOption("text");
+      }
+    }
 
   void preDrawTH2D( TCanvas *, const VisDQMObject &o )
     {
@@ -508,6 +524,12 @@ private:
               }
         }
     }
+
+  void postDrawTH2I( TCanvas *, const VisDQMObject &o )
+  {
+    TH2I* obj = dynamic_cast<TH2I*>( o.object );
+    assert( obj );
+  }
 
 
   void postDrawTH2D( TCanvas *, const VisDQMObject &o )
