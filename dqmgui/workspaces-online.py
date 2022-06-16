@@ -198,6 +198,33 @@ server.workspace('DQMContent', 21, 'Tracker', 'SiStrip', '^(SiStrip|Tracking)/',
                  'SiStrip/Layouts/34 - FED Errors Vs Id Vs Lumi',
                 )
 
+
+server.workspace('DQMContent', 22, 'Tracker', 'SiPixelHeterogeneous', '^SiPixelHeterogeneous/', '',
+                 'SiPixelHeterogeneous/Layouts/000 - Compare number of RecHits',
+                 'SiPixelHeterogeneous/Layouts/00a - Compare number of tracks',
+                 'SiPixelHeterogeneous/Layouts/00b - Compare number of vertices',
+                 'SiPixelHeterogeneous/Layouts/01a - Compare rechit charge in Barrel',
+                 'SiPixelHeterogeneous/Layouts/01b - Compare rechit charge in Endcap',
+                 'SiPixelHeterogeneous/Layouts/02a - Compare rechit x-position in Barrel',
+                 'SiPixelHeterogeneous/Layouts/02b - Compare rechit x-position in Endcap',
+                 'SiPixelHeterogeneous/Layouts/03a - Compare rechit y-position in Barrel',
+                 'SiPixelHeterogeneous/Layouts/03b - Compare rechit y-position in Endcap',
+                 'SiPixelHeterogeneous/Layouts/04a - Compare rechit size x in Barrel',
+                 'SiPixelHeterogeneous/Layouts/04b - Compare rechit size x in Endcap',
+                 'SiPixelHeterogeneous/Layouts/05a - Compare rechit size y in Barrel',
+                 'SiPixelHeterogeneous/Layouts/05b - Compare rechit size y in Endcap',
+                 'SiPixelHeterogeneous/Layouts/06 - Difference in rechit charge',
+                 'SiPixelHeterogeneous/Layouts/07 - Difference in rechit position',
+                 'SiPixelHeterogeneous/Layouts/08 - Difference in rechit size',
+                 'SiPixelHeterogeneous/Layouts/09a - Compare track properties',
+                 'SiPixelHeterogeneous/Layouts/09b - Compare track properties',
+                 'SiPixelHeterogeneous/Layouts/10 - Track matching phase space',
+                 'SiPixelHeterogeneous/Layouts/11 - Differences in track properties',
+                 'SiPixelHeterogeneous/Layouts/12a - Compare vertices',
+                 'SiPixelHeterogeneous/Layouts/12b - Compare vertices',
+                 'SiPixelHeterogeneous/Layouts/12c - Differences in vertex properties',
+                )
+
 # Calorimeter workspaces:
 server.workspace('DQMContent', 30, 'Calorimeters', 'Ecal', '(^Ecal(|Barrel|Endcap|Calibration)/|^L1T/L1TStage2CaloLayer1/ecalOccRecdEtWgt|^L1T/L1TStage2CaloLayer1/ECalDetail/ecalOccSent|^L1T/L1TStage2CaloLayer1/ECalDetail/ecalOccSentAndRecd|^HLT/ObjectMonitor/MainShifter/di-Electron_Mass|^L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_0|^L1T/L1TObjects/L1TEGamma/timing/Ratio_L1TEGamma_BX_minus1|^L1T/L1TObjects/L1TEGamma/timing/First_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_firstbunch_ptmin20p0|^L1T/L1TObjects/L1TEGamma/timing/Last_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_lastbunch_ptmin20p0)', 'Ecal/Layouts',
                  'Ecal/Layouts/00 Summary',
