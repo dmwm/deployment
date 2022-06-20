@@ -646,10 +646,17 @@ sub init($)
     close(F);
   }
 
-  # FIXME: Load the CouchDB secrets file and define the user and role variable
-  # meant to read it in from AUTH_COUCHDB environment variable
-  $couch_username = "blah"
-  $couch_userrole = "blah"
+  # Parse the configuration CouchDB credentials, to be used in the backend headers
+  if (! open(F, "< $AUTH_COUCHDB"))
+  {
+    $r->log->error("Authentication CouchDB file $AUTH_COUCHDB cannot be opened!");
+    die;
+  }
+  # Read lines into array for post processing
+  chomp(my @linesArray = <F>);
+  close(F);
+  $couch_username = split('=', $linesArray[0])[1];
+  $couch_userrole = split('=', $linesArray[1])[1];
 
   # Remember authn/authz json file if any.
   $authz_json_file = $r->dir_config->get("AUTH_JSON_MAP");

@@ -79,9 +79,14 @@ deploy_frontend_post()
   perl -p -i -e "s|cmsweb.cern.ch|$issuer|g" \
       $project_config/x509_scitokens_issuer/00-defaults.cfg
 
+  # Move CouchDB header credentials over under the frontend configuration
+  cp $privauthdir/$project/couch_creds $project_auth/couch_creds
+  setgroup ug+rx,o-rwx $user $project_auth/couch_creds || true
+
   # Generate apache httpd server configuration
   (. $root/current/apps/frontend/etc/profile.d/init.sh
    export AUTH_JSON_MAP=$PWD/etc/authmap.json
+   export AUTH_COUCHDB=$project_auth/couch_creds
    export HOST_MAP_FILE=$project_config/$backends
    export CONFIG_DIR=$project_config
    mkserver                                           \
