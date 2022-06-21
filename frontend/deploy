@@ -69,6 +69,11 @@ deploy_frontend_post()
   # This hack is needed while supporting old and new deployment procedures
   $nogroups || { sudo chown -R $USER:_config $PWD/{*.conf,htdocs,etc} || true; }
 
+  # Move CouchDB header credentials over under the frontend configuration
+  # This goes under state/frontend/etc/
+  cp /data/auth/$project/couch_creds $PWD/etc/couch_creds
+  setgroup ug+rx,o-rwx _config $PWD/etc/couch_creds || true
+
   # fix path in x509_scitokens_issuer configs before we'll make server configuration
   perl -p -i -e "s|\@STATEDIR\@|$project_state|g" \
     $project_config/x509_scitokens_issuer/x509_scitokens_issuer_app.json
@@ -79,14 +84,10 @@ deploy_frontend_post()
   perl -p -i -e "s|cmsweb.cern.ch|$issuer|g" \
       $project_config/x509_scitokens_issuer/00-defaults.cfg
 
-  # Move CouchDB header credentials over under the frontend configuration
-  cp /data/auth/$project/couch_creds $project_auth/couch_creds
-  setgroup ug+rx,o-rwx _config $project_auth/couch_creds || true
-
   # Generate apache httpd server configuration
   (. $root/current/apps/frontend/etc/profile.d/init.sh
    export AUTH_JSON_MAP=$PWD/etc/authmap.json
-   export AUTH_COUCHDB=$project_auth/couch_creds
+   export AUTH_COUCHDB=$PWD/etc/couch_creds
    export HOST_MAP_FILE=$project_config/$backends
    export CONFIG_DIR=$project_config
    mkserver                                           \
