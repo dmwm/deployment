@@ -252,6 +252,7 @@ my %host_exempt = ();
 my $server_name;
 my %vocms;
 my %revoked = (HOST => {}, LOGIN => {}, DN => {});
+my $couch_cred_file = $ENV{'AUTH_COUCHDB'};
 
 my $troubledoc = <<'END_OF_DOC';
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -647,16 +648,16 @@ sub init($)
   }
 
   # Parse the configuration CouchDB credentials, to be used in the backend headers
-  if (! open(F, "< $AUTH_COUCHDB"))
+  if (! open(F, "< $couch_cred_file"))
   {
-    $r->log->error("Authentication CouchDB file $AUTH_COUCHDB cannot be opened!");
+    $r->log->error("Authentication CouchDB file $couch_cred_file cannot be opened!");
     die;
   }
   # Read lines into array for post processing
   chomp(my @linesArray = <F>);
   close(F);
-  $couch_username = split('=', $linesArray[0])[1];
-  $couch_userrole = split('=', $linesArray[1])[1];
+  my $couch_username = split('=', $linesArray[0])[1];
+  my $couch_userrole = split('=', $linesArray[1])[1];
 
   # Remember authn/authz json file if any.
   $authz_json_file = $r->dir_config->get("AUTH_JSON_MAP");

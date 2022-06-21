@@ -72,7 +72,7 @@ deploy_frontend_post()
   # Move CouchDB header credentials over under the frontend configuration
   # This goes under state/frontend/etc/
   cp /data/auth/$project/couch_creds $PWD/etc/couch_creds
-  setgroup ug+rx,o-rwx _config $PWD/etc/couch_creds || true
+  setgroup ug+rw,o-rwx _config $PWD/etc/couch_creds || true
 
   # fix path in x509_scitokens_issuer configs before we'll make server configuration
   perl -p -i -e "s|\@STATEDIR\@|$project_state|g" \
