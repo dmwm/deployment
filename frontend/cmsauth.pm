@@ -253,6 +253,8 @@ my $server_name;
 my %vocms;
 my %revoked = (HOST => {}, LOGIN => {}, DN => {});
 my $couch_cred_file = $ENV{'AUTH_COUCHDB'};
+my $couch_username;
+my $couch_userrole;
 
 my $troubledoc = <<'END_OF_DOC';
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -656,8 +658,8 @@ sub init($)
   # Read lines into array for post processing
   chomp(my @linesArray = <F>);
   close(F);
-  my $couch_username = split('=', $linesArray[0])[1];
-  my $couch_userrole = split('=', $linesArray[1])[1];
+  $couch_username = split('=', $linesArray[0])[1];
+  $couch_userrole = split('=', $linesArray[1])[1];
 
   # Remember authn/authz json file if any.
   $authz_json_file = $r->dir_config->get("AUTH_JSON_MAP");
