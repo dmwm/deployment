@@ -80,8 +80,8 @@ deploy_frontend_post()
       $project_config/x509_scitokens_issuer/00-defaults.cfg
 
   # Move CouchDB header credentials over under the frontend configuration
-  cp $privauthdir/$project/couch_creds $project_auth/couch_creds
-  setgroup ug+rx,o-rwx $user $project_auth/couch_creds || true
+  cp /data/auth/$project/couch_creds $project_auth/couch_creds
+  setgroup ug+rx,o-rwx _config $project_auth/couch_creds || true
 
   # Generate apache httpd server configuration
   (. $root/current/apps/frontend/etc/profile.d/init.sh
