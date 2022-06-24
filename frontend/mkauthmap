@@ -34,7 +34,11 @@ def convertToHeadersStyle(siteInfo):
      - all lower case
      - whitespaces and underscores replaced by dashes
     """
-    result = siteInfo.replace('_', '-').replace(' ', '-')
+    try:
+        result = siteInfo.replace('_', '-').replace(' ', '-')
+    except AttributeError as e:
+        print('ERROR: ', e)
+        result = 'none'
     return result.lower()
 
 
