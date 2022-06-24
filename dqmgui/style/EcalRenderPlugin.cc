@@ -1333,6 +1333,7 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
      !fullpath.Contains("Cluster") &&
      !fullpath.Contains("StatusFlags") &&
      !fullpath.Contains("Integrity") &&
+     !fullpath.Contains("GpuTask") &&
      !fullpath.Contains("TT Flags vs Et")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1423,6 +1424,13 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
     obj->GetXaxis()->SetTitle("DDCID");
     obj->GetYaxis()->SetNdivisions(4, false);
     obj->GetYaxis()->SetLabelSize(0.04);
+    applyDefaults = false;
+  }
+  else if(TPRegexp("E[BE]GpuTask/(.*)/E[BE]GT(.*)map2D").MatchB(fullpath)){
+    obj->GetXaxis()->SetNdivisions(510);
+    obj->GetYaxis()->SetNdivisions(510);
+    gPad->SetGrid(false, false);
+    gPad->SetLogz();
     applyDefaults = false;
   }
 }
