@@ -37,14 +37,22 @@ CFGDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=$TOP/logs/$ME
 STATEDIR=$TOP/state/$ME
 KEYFILE=$ROOT/auth/$ME/hmackey.ini
+COUCH_CREDS=$ROOT/auth/$ME/couch_creds
+EXCEPTIONS="wmstats"
+
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/kerberos/bin
-export STAGE_HOST=${STAGE_HOST:-castorcms}
-export STAGE_SVCCLASS=archive
 
-EXCEPTIONS="wmstats"
+# Does the credential file exist and is it readable?
+if [ ! -r $COUCH_CREDS ]; then
+   echo "Variable COUCH_CREDS needs to be defined"
+   exit 1
+fi
+COUCH_USER=`cat $COUCH_CREDS | grep COUCH_USER | sed s/COUCH_USER=//`
+COUCH_PASS=`cat $COUCH_CREDS | grep COUCH_PASS | sed s/COUCH_PASS=//`
+COUCH_CREDS_URL="http://$COUCH_USER:$COUCH_PASS@localhost:5984"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
@@ -195,7 +203,8 @@ files_needed_from_yui=('build/animation/animation-min.js'
 # Start service conditionally on crond restart.
 sysboot()
 {
-  if couchdb -p $STATEDIR/couchdb.pid -s; then :; else
+  num_procs=$(get_num_couch_process)
+  if [ -z "$num_procs" ]; then
     start
   fi
 }
@@ -204,10 +213,11 @@ sysboot()
 start()
 {
   cd $STATEDIR
-  couchdb -A $CFGDIR/ -a $KEYFILE -b \
-    -o /dev/null \
-    -e $LOGDIR/$(date +%Y%m%d-%H%M%S).stderr \
-    -p $STATEDIR/couchdb.pid </dev/null >/dev/null 2>&1
+  echo -n "Which couchdb: "
+  which couchdb
+  echo "  With configuration directory: $CFGDIR"
+  echo "  With logdir: $LOGDIR"
+  nohup couchdb -couch_ini $CFGDIR >> ${LOGDIR}/couch.log 2>&1 &
 
   push_apps
   replications push
@@ -216,18 +226,28 @@ start()
 # Stop the service.
 stop()
 {
-  couchdb -d -p $STATEDIR/couchdb.pid
+  echo "Stopping CouchDB service..."
+  # FIXME: grepping for couchdb31 is fragile!!!
+  for couch_pid in $(ps aux | grep couchdb31 | grep -v grep | awk '{print $2}'); do
+    echo "  killing CouchDB process... ${pid}"
+    kill -9 $couch_pid || true
+  done
+}
+
+# check the number of beam/couchdb processes
+get_num_couch_process()
+{
+  local num_proc=`ps aux | grep beam | grep -v grep`
+  echo $num_proc
 }
 
 # Check if the server is running.
 status()
 {
-  couchdb -p $STATEDIR/couchdb.pid -s
-
-  curl -s localhost:5984 | grep -q '"version":"1.[0-9.]*"' ||
+  curl -s localhost:5984/_up | grep -q '"status":"ok"' ||
     { echo "CouchDB is not correctly responding to requests"; return; }
 
-  local TASKS=$(curl -s localhost:5984/_active_tasks)
+  local TASKS=$(curl -s $COUCH_CREDS_URL/_active_tasks)
   [ "$TASKS" = '[]' ] && TASKS="No active tasks (e.g. compactions)"
   echo $TASKS
 
@@ -242,7 +262,7 @@ clean_views()
   [ -n "$database" ] ||
     { echo "You must specify the database you wish to clean the views "; exit 1; }
 
-  curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_view_cleanup | \
+  curl -s -H "Content-Type: application/json" -X POST $COUCH_CREDS_URL/$database/_view_cleanup | \
        grep -q '{"ok":true}' ||
     { echo "An error occured while cleaning the views. Please look in the CouchDB logs."; exit 3; }
 }
@@ -259,8 +279,7 @@ push_apps()
 
   n=0 started=false
   while [ $n -le 100 ]; do
-    couchdb -p $STATEDIR/couchdb.pid -s &> /dev/null &&
-      curl -s localhost:5984 | grep -q '"version":"1.[0-9.]*"' &&
+    curl -s localhost:5984/_up | grep -q '"status":"ok"' &&
       started=true && break
     echo "waiting for couchdb..."
     sleep 1
@@ -269,44 +288,35 @@ push_apps()
 
   if $started; then
     # acdc server
-    couchapp push -p $couchapps_path/ACDC -c http://localhost:5984/acdcserver
-    couchapp push -p $couchapps_path/GroupUser -c http://localhost:5984/acdcserver
+    for ddoc in "ACDC" "GroupUser"; do
+      couchapp push -p $couchapps_path/$ddoc -c $COUCH_CREDS_URL/acdcserver
+    done
 
     # reqmgr2
-    couchapp push -p $couchapps_path/ReqMgrAux -c http://localhost:5984/reqmgr_auxiliary
-    couchapp push -p $couchapps_path/ReqMgr -c http://localhost:5984/reqmgr_workload_cache
-    couchapp push -p $couchapps_path/ConfigCache -c http://localhost:5984/reqmgr_config_cache
+    couchapp push -p $couchapps_path/ReqMgrAux -c $COUCH_CREDS_URL/reqmgr_auxiliary
+    couchapp push -p $couchapps_path/ReqMgr -c $COUCH_CREDS_URL/reqmgr_workload_cache
+    couchapp push -p $couchapps_path/ConfigCache -c $COUCH_CREDS_URL/reqmgr_config_cache
 
     # reqmon
-    couchapp push -p $couchapps_path/WorkloadSummary -c http://localhost:5984/workloadsummary
-    couchapp push -p $couchapps_path/LogDB -c http://localhost:5984/wmstats_logdb
-    couchapp push -p $couchapps_path/WMStats -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl1 -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl2 -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl3 -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl4 -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl5 -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl6 -c http://localhost:5984/wmstats
-    couchapp push -p $couchapps_path/WMStatsErl7 -c http://localhost:5984/wmstats
+    couchapp push -p $couchapps_path/WorkloadSummary -c $COUCH_CREDS_URL/workloadsummary
+    couchapp push -p $couchapps_path/LogDB -c $COUCH_CREDS_URL/wmstats_logdb
+    for ddoc in "WMStats" "WMStatsErl" "WMStatsErl1" "WMStatsErl2" "WMStatsErl3" \
+      "WMStatsErl4" "WMStatsErl5" "WMStatsErl6" "WMStatsErl7"; do
+      couchapp push -p $couchapps_path/$ddoc -c $COUCH_CREDS_URL/wmstats
+    done
 
     # t0_reqmon
-    couchapp push -p $couchapps_path/T0Request -c http://localhost:5984/t0_request
-    couchapp push -p $couchapps_path/WorkloadSummary -c http://localhost:5984/t0_workloadsummary
-    couchapp push -p $couchapps_path/LogDB -c http://localhost:5984/t0_logdb
-    couchapp push -p $couchapps_path/WMStats -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl1 -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl2 -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl3 -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl4 -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl5 -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl6 -c http://localhost:5984/tier0_wmstats
-    couchapp push -p $couchapps_path/WMStatsErl7 -c http://localhost:5984/tier0_wmstats
+    couchapp push -p $couchapps_path/T0Request -c $COUCH_CREDS_URL/t0_request
+    couchapp push -p $couchapps_path/WorkloadSummary -c $COUCH_CREDS_URL/t0_workloadsummary
+    couchapp push -p $couchapps_path/LogDB -c $COUCH_CREDS_URL/t0_logdb
+    for ddoc in "WMStats" "WMStatsErl" "WMStatsErl1" "WMStatsErl2" "WMStatsErl3" \
+      "WMStatsErl4" "WMStatsErl5" "WMStatsErl6" "WMStatsErl7"; do
+      couchapp push -p $couchapps_path/$ddoc -c $COUCH_CREDS_URL/tier0_wmstats
+    done
 
     # workqueue
-    couchapp push -p $couchapps_path/WorkQueue -c http://localhost:5984/workqueue
-    couchapp push -p $couchapps_path/WorkQueue -c http://localhost:5984/workqueue_inbox
+    couchapp push -p $couchapps_path/WorkQueue -c $COUCH_CREDS_URL/workqueue
+    couchapp push -p $couchapps_path/WorkQueue -c $COUCH_CREDS_URL/workqueue_inbox
 
     # clean views
     local databases="acdcserver reqmgr_auxiliary reqmgr_workload_cache reqmgr_config_cache workloadsummary
@@ -401,7 +411,7 @@ update_couchapps()
 replications()
 {
   [ "$1" = "push" ] && local status=false || local status=true
-  local all_reps=$(curl -s localhost:5984/_replicator/_all_docs?include_docs=true \
+  local all_reps=$(curl -s $COUCH_CREDS_URL/_replicator/_all_docs?include_docs=true \
                    | grep '^{"id":"[^_]' | awk -F\" '{print $4,$14,$28,$32,$38,$42}')
   local req_reps=$(cat $STATEDIR/replication/* 2>/dev/null || echo "")
 
@@ -413,7 +423,7 @@ replications()
         echo "Replication 'id=$ID source=$SRC target=$DST filter=$FILTER' unknown."
         if ! $status; then
           echo -n "Removing it... "
-          curl -s -X DELETE localhost:5984/_replicator/$ID?rev=$REV
+          curl -s -X DELETE $COUCH_CREDS_URL/_replicator/$ID?rev=$REV
         fi
       fi
     done
@@ -427,7 +437,7 @@ replications()
         echo "Replication 'id=$ID source=$SRC target=$DST filter=$FILTER' not pushed."
         if ! $status; then
           echo -n "Pushing it... "
-          curl -s -X PUT localhost:5984/_replicator/$ID \
+          curl -s -X PUT $COUCH_CREDS_URL/_replicator/$ID \
                -d "{\"source\":\"$SRC\", \"target\":\"$DST\", \"continuous\":true, \"filter\":\"$FILTER\"}"
         fi
       fi
@@ -463,10 +473,10 @@ compact()
 compact_database()
 {
   local database=$1
-  curl -s localhost:5984/$database | grep -q '"compact_running":true' &&
+  curl -s $COUCH_CREDS_URL/$database | grep -q '"compact_running":true' &&
     { echo "$database is already compacting"; exit 5; }
 
-  curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_compact | \
+  curl -s -H "Content-Type: application/json" -X POST $COUCH_CREDS_URL/$database/_compact | \
         grep -q '{"ok":true}' ||
     { echo "An error occured triggering compaction. Please look in the CouchDB logs."; exit 7; }
 }
@@ -492,14 +502,14 @@ compact_views()
       if [[ $EXCEPTIONS == *$db* && "$database" = all_but_exceptions ]]; then
         continue
       fi
-      curl -s "localhost:5984/$db/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
+      curl -s "$COUCH_CREDS_URL/$db/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
         awk -F\" '/"id":"_design/ {print $4}' |
         while read dbview; do
           compact_view $db ${dbview#*/}
 	done
     done
   elif [ "$designdoc" = all ]; then
-    curl -s "localhost:5984/$database/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
+    curl -s "$COUCH_CREDS_URL/$database/_all_docs?startkey=%22_design%22&endkey=%22_design/zzzzzzzz%22" |
       awk -F\" '/"id":"_design/ {print $4}' |
       while read dbview; do
         compact_view $database ${dbview#*/}
@@ -515,10 +525,10 @@ compact_view()
   local database=$1
   local designdoc=$2
 
-  curl -s localhost:5984/$database/_design/$designdoc/_info | grep -q '"compact_running":true' &&
+  curl -s $COUCH_CREDS_URL/$database/_design/$designdoc/_info | grep -q '"compact_running":true' &&
     { echo "$database/$designdoc is already compacting"; exit 5; }
 
-  curl -s -H "Content-Type: application/json" -X POST http://localhost:5984/$database/_compact/$designdoc | \
+  curl -s -H "Content-Type: application/json" -X POST $COUCH_CREDS_URL/$database/_compact/$designdoc | \
         grep -q '{"ok":true}' ||
     { echo "An error occured triggering view compaction. Please look in the CouchDB logs."; exit 7; }
 }

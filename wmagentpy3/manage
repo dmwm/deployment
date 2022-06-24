@@ -444,20 +444,22 @@ db_prompt(){
 #
 init_couch_pre(){
     echo "Initialising CouchDB on $COUCH_HOST:$COUCH_PORT..."
+    echo "  With installation directory: $INSTALL_COUCH"
+    echo "  With configuration directory: $CONFIG_COUCH"
     mkdir -p $INSTALL_COUCH/logs
     mkdir -p $INSTALL_COUCH/database
     perl -p -i -e "s{deploy_project_root/couchdb}{$INSTALL_COUCH}" $CONFIG_COUCH/local.ini
     # couch ini file requires IP based hostname
-    perl -p -i -e "s{bind_address = 0.0.0.0}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
-    perl -p -i -e "s{port = 5984}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
-    perl -p -i -e "s{;admin = mysecretpassword}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{bind_address = 127.0.0.1}{bind_address = $COUCH_HOST}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{port = 6994}{port = $COUCH_PORT}g" $CONFIG_COUCH/local.ini
+    perl -p -i -e "s{unittestagent = passwd}{$COUCH_USER = $COUCH_PASS}g" $CONFIG_COUCH/local.ini
     if [ "x$COUCH_CERT_FILE" != "x" ] && [ "x$COUCH_KEY_FILE" != "x" ]; then
-	mkdir -p $INSTALL_COUCH/certs
-	perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
-	perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
-	perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
-	ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
-	ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
+        mkdir -p $INSTALL_COUCH/certs
+        perl -p -i -e "s{;cert_file =.*}{cert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+        perl -p -i -e "s{;key_file =.*}{key_file = $INSTALL_COUCH/certs/key.pem}g" $CONFIG_COUCH/local.ini
+        perl -p -i -e "s{;cacert_file =.*}{cacert_file = $INSTALL_COUCH/certs/cert.pem}g" $CONFIG_COUCH/local.ini
+        ln -s $COUCH_CERT_FILE $INSTALL_COUCH/certs/cert.pem
+        ln -s $COUCH_KEY_FILE $INSTALL_COUCH/certs/key.pem
     fi
 }
 
@@ -466,19 +468,8 @@ init_couch_post(){
 }
 
 status_of_couch(){
+    load_secrets_file;
     echo "+ Couch Status:"
-    if [ ! -e $INSTALL_COUCH/logs/couchdb.pid ]; then
-        echo "++ Couch process file not found"
-        return
-    fi
-    local COUCH_PID=`cat $INSTALL_COUCH/logs/couchdb.pid`
-    kill -0 $COUCH_PID;
-    local COUCH_STATUS=$?
-    if [ $COUCH_STATUS -eq 0 ]; then
-        echo "++ Couch running with process: $COUCH_PID";
-    else
-        echo "++ Couch process not running"
-    fi
     echo "++" `curl -s $COUCH_HOST:$COUCH_PORT`
 }
 
@@ -492,10 +483,11 @@ start_couch(){
 	echo "CouchDB has not been initialised... running pre initialisation";
 	init_couch_pre;
     fi
-    couchdb -b -a $CONFIG_COUCH/local.ini \
-            -p $INSTALL_COUCH/logs/couchdb.pid \
-            -e $INSTALL_COUCH/logs/stderr.log \
-            -o /dev/null
+    echo -n "Which couchdb: "
+    which couchdb
+    echo "  With installation directory: $INSTALL_COUCH"
+    echo "  With configuration directory: $CONFIG_COUCH"
+    nohup couchdb -couch_ini $CONFIG_COUCH >> $INSTALL_COUCH/logs/couch.log 2>&1 &
     if [ $COUCH_INIT_DONE -eq 0 ]; then
 	echo "CouchDB has not been initialised... running post initialisation"
 	init_couch_post;
@@ -506,8 +498,11 @@ start_couch(){
 # shutdown couch
 #
 stop_couch(){
-    echo "stopping couch...";
-    couchdb  -d  -p $INSTALL_COUCH/logs/couchdb.pid;
+    echo "Stopping CouchDB service..."
+    for couch_pid in $(ps aux | grep couch | grep -v grep | awk '{print $2}'); do
+        echo "  killing CouchDB process... ${pid}"
+        kill -9 $couch_pid
+    done
 }
 
 clean_couch(){

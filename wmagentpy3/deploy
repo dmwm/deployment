@@ -26,8 +26,10 @@ deploy_wmagentpy3_sw()
   mkdir -p $root/$cfgversion/config/rucio/etc
 
   local couchdb_ini=$root/$cfgversion/config/wmagentpy3/local.ini
-  perl -p -i -e "s{deploy_project_root}{$root/$cfgversion/install}g" $couchdb_ini
-  cp -f $couchdb_ini $root/$cfgversion/config/couchdb/
+  local couchdb_configs=$root/$cfgversion/config/wmagentpy3
+  sed -i "s+deploy_project_root+$root/$cfgversion/install+" $couchdb_configs/local.ini
+  cp -f $couchdb_configs/local.ini $root/$cfgversion/config/couchdb/
+  cp -f $couchdb_configs/default.ini $root/$cfgversion/config/couchdb/
 
   local mysql_config=$root/$cfgversion/config/wmagentpy3/my.cnf
   cp -f $mysql_config $root/$cfgversion/config/mysql/
