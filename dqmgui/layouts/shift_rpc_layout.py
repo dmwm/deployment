@@ -6,19 +6,24 @@ rpclink = "   >>> <a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftRPC>D
 fed = "FED Fatal Errors";
 rpcevents = "Events processed by the RPC DQM"
 occupancy = "Occupancy per sector"
+noise = "Average number of noisy strip per roll, counted if a occupancy of single strip is greater than 3.5 times the average of a chamber"
 
 ################### Links to Histograms #################################
 shiftrpclayout(dqmitems, "00-Summary_Map",
-               [{ 'path': "RPC/EventInfo/reportSummaryMap", 'description': summary + rpclink }])
+              [{ 'path': "RPC/EventInfo/reportSummaryMap", 'description': summary + rpclink }])
+
+#Noisy summary
+shiftrpclayout(dqmitems, "01-Noisy_summary_Map",
+              [{ 'path': "RPC/EventInfo/noisySummaryMap", 'description': noise + rpclink }])
 
 #FED Fatal
-shiftrpclayout(dqmitems, "01-Fatal_FED_Errors",
-               [{ 'path': "RPC/FEDIntegrity_EvF/FEDFatal", 'description': fed + rpclink }])
+shiftrpclayout(dqmitems, "02-Fatal_FED_Errors",
+              [{ 'path': "RPC/FEDIntegrity_EvF/FEDFatal", 'description': fed + rpclink }])
 
 #RPC Events
-shiftrpclayout(dqmitems, "02-RPC_Events",
-               [{ 'path': "RPC/AllHits/RPCEvents", 'description': rpcevents + rpclink }])
+shiftrpclayout(dqmitems, "04-RPC_Events",
+              [{ 'path': "RPC/AllHits/RPCEvents", 'description': rpcevents + rpclink }])
 
-shiftrpclayout(dqmitems, "03-RPC_Occupancy",
-               [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Barrel", 'description': occupancy + rpclink  }],
-               [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Endcap", 'description': occupancy + rpclink }])
+shiftrpclayout(dqmitems, "04-RPC_Occupancy",
+              [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Barrel", 'description': occupancy + rpclink  }],
+              [{ 'path': "RPC/AllHits/SummaryHistograms/Occupancy_for_Endcap", 'description': occupancy + rpclink }])
