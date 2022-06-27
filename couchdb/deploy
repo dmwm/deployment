@@ -20,7 +20,6 @@ deploy_couchdb_sw()
   case $variant in
     default )
       deploy_pkg -l couchdb -a couchdb/hmackey.ini comp external+couchdb31
-      $authlink || setgroup ug+rx,o-rwx _config $project_auth/hmackey.ini
       ;;
     * )
       deploy_pkg -a couchdb/hmackey.ini comp external+couchdb
@@ -30,6 +29,7 @@ deploy_couchdb_sw()
   perl -p -i -e "s|{ROOT}|$root|g" $root/$cfgversion/config/$project/local.ini
 
   # BAD code for the hmackey that does not work when read from a separate file
+  $authlink || setgroup ug+rx,o-rwx _config $project_auth/hmackey.ini
   local hmacKey=`tail -n1 $project_auth/hmackey.ini`
   sed -i '/^validate_hmac=.*/a $hmacKey' $root/$cfgversion/config/$project/local.ini
 
