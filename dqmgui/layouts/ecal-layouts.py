@@ -475,6 +475,19 @@ ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/21 Cluster Energy vs Seed Energy',
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy vs seed crystal energy', 'description': 'Relation between super cluster energy and its seed crystal energy.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/22 di-Electron Mass',
 	   [{'path': 'HLT/ObjectMonitor/MainShifter/di-Electron_Mass', 'description': 'HLT di-electron mass [from HLT DQM].'}])
+
+#____________________ Layouts / 04 Energy / PiZero ____________________
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/PiZero/00 Pi0 Invariant Mass',
+	   [{'path': 'EcalBarrel/EBPiZeroTask/EBPZT Pi0 Invariant Mass', 'description': 'Pi0 Invariant Mass in EB'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/PiZero/01 Pi0 Pt 1st most energetic photon',
+	   [{'path': 'EcalBarrel/EBPiZeroTask/EBPZT Pi0 Pt 1st most energetic photon', 'description': 'Pt 1st most energetic Pi0 photon in EB'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/PiZero/02 Pi0 Pt 2nd most energetic photon',
+	   [{'path': 'EcalBarrel/EBPiZeroTask/EBPZT Pi0 Pt 2nd most energetic photon', 'description': 'Pt 2nd most energetic Pi0 photon in EB'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/PiZero/03 Pi0 Pt',
+	   [{'path': 'EcalBarrel/EBPiZeroTask/EBPZT Pi0 Pt', 'description': 'Pi0 Pt in EB'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/PiZero/04 Pi0 Iso',
+	   [{'path': 'EcalBarrel/EBPiZeroTask/EBPZT Pi0 Iso', 'description': 'Pt 2nd most energetic Pi0 photon in EB'}])
+
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
   for sign in ['-', '+']: # Loop over z-side
