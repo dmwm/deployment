@@ -13,7 +13,7 @@ deploy_exporters_prep()
 
 deploy_exporters_sw()
 {
-  deploy_pkg comp cms+exporters
+  deploy_pkg -a exporters/couchdb_config.ini comp cms+exporters
 }
 
 deploy_exporters_post()
@@ -22,4 +22,10 @@ deploy_exporters_post()
   (mkcrontab
    echo "@reboot sudo bashs -l -c \"$project_config/manage sysboot 'I did read documentation'\""
   ) | crontab -
+}
+
+deploy_exporters_auth()
+{
+  cp $privauthdir/$project/couchdb_config.ini $project_auth/couchdb_config.ini
+  setgroup ug+r,o-rwx _config $project_auth/couchdb_config.ini || true
 }
