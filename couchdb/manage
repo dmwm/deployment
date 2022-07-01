@@ -245,8 +245,9 @@ get_num_couch_process()
 status()
 {
   curl -s localhost:5984/_up | grep -q '"status":"ok"' ||
-    { echo "CouchDB is not correctly responding to requests"; return; }
+    { echo -e "$ME is ${COLOR_WARN}NOT RUNNING${COLOR_NORMAL}."; return; }
 
+  echo -e "$ME is ${COLOR_OK}RUNNING${COLOR_NORMAL}"
   local TASKS=$(curl -s $COUCH_CREDS_URL/_active_tasks)
   [ "$TASKS" = '[]' ] && TASKS="No active tasks (e.g. compactions)"
   echo $TASKS
