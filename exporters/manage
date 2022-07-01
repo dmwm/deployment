@@ -31,6 +31,8 @@ STATEDIR=$TOP/state/$ME
 COLOR_OK="\\033[0;32m"
 COLOR_WARN="\\033[0;31m"
 COLOR_NORMAL="\\033[0;39m"
+CFGDIR=$(cd $(dirname $0) && pwd)
+COUCH_CONFIG=$CFGDIR/couchdb_config.ini
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
@@ -68,6 +70,15 @@ check()
   if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
     echo "$0: cannot complete operation, please check documentation." 1>&2
     exit 2;
+  fi
+}
+
+# Checks if secret file exists
+check_couch_config()
+{ 
+  if [[ ! -f $COUCH_CONFIG ]]; then
+    echo "[ERROR] $COUCH_CONFIG does not exist. Exiting.."
+    exit 1;
   fi
 }
 
@@ -152,7 +163,8 @@ couchdb_monitors()
 {
     # start couchdb exporters
     wait4proc "couchdb" # check for pattern that couchdb is running
-    couchdb_exporter -couchdb.uri="http://localhost:5984" -logtostderr=true \
+    check_couch_config # check for $COUCH_CONFIG
+    couchdb_exporter -couchdb.uri="http://localhost:5984" -logtostderr=true --config=$COUCH_CONFIG \
         -databases=$1 -databases.views=false -telemetry.address=":15984" \
         </dev/null 2>&1 | rotatelogs $LOGDIR/couchdb_exporter-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
 }
