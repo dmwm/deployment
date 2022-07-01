@@ -1334,6 +1334,7 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
      !fullpath.Contains("StatusFlags") &&
      !fullpath.Contains("Integrity") &&
      !fullpath.Contains("GpuTask") &&
+     !fullpath.Contains("PiZeroTask") &&
      !fullpath.Contains("TT Flags vs Et")) return;
 
   TH1* obj(static_cast<TH1*>(dqmObject.object));
@@ -1432,6 +1433,9 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
     gPad->SetGrid(false, false);
     gPad->SetLogz();
     applyDefaults = false;
+  }
+  else if(TPRegexp("E[BE]PiZeroTask/E[BE]PZT").MatchB(fullpath)){
+    gPad->SetLogy(0);
   }
 }
 
