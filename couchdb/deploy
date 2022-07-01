@@ -19,8 +19,9 @@ deploy_couchdb_sw()
 
   case $variant in
     default )
-      deploy_pkg -l couchdb -a couchdb/hmackey.ini comp external+couchdb31
+      deploy_pkg -l couchdb -a couchdb/hmackey.ini -a couchdb/couch_creds comp external+couchdb31
       $authlink || setgroup ug+rx,o-rwx _config $project_auth/hmackey.ini
+      $authlink || setgroup ug+rx,o-rwx _config $project_auth/couch_creds
       ;;
     * )
       deploy_pkg -a couchdb/hmackey.ini comp external+couchdb
@@ -29,10 +30,17 @@ deploy_couchdb_sw()
 
   sed -i "s+{ROOT}+$root+" $root/$cfgversion/config/$project/local.ini
   sed -i "s+bind_address = 127.0.0.1+bind_address = 0.0.0.0+" $root/$cfgversion/config/$project/local.ini
+  chmod o-rwx $root/$cfgversion/config/$project/local.ini
 }
 
 deploy_couchdb_post()
 {
+  local COUCH_USER=`cat $project_auth/couch_creds | grep COUCH_USER | sed s/COUCH_USER=//`
+  local COUCH_PASS=`cat $project_auth/couch_creds | grep COUCH_PASS | sed s/COUCH_PASS=//`
+  sed -i "s+;user = pass+$COUCH_USER = $COUCH_PASS+" $root/$cfgversion/config/$project/local.ini
+  # Update the monitoring script as well
+  sed -i "s+@@@USER:@@@PASS+$COUCH_USER:$COUCH_PASS+" $root/$cfgversion/config/$project/monitoring.ini
+
   (mkcrontab
    case $host in
      vocms013[689] | vocms073[89] |vocms016[135] | vocms0741 | vocms076[123456] )
@@ -67,15 +75,4 @@ deploy_couchdb_post()
     * )
       ;;
   esac
-}
-
-deploy_couchdb_auth()
-{
-  cp $privauthdir/$project/couch_creds $project_auth/couch_creds
-  setgroup ug+rx,o-rwx _config $project_auth/couch_creds || true
-  local COUCH_USER=`cat $project_auth/couch_creds | grep COUCH_USER | sed s/COUCH_USER=//`
-  local COUCH_PASS=`cat $project_auth/couch_creds | grep COUCH_PASS | sed s/COUCH_PASS=//`
-  sed -i "s+;user = pass+$COUCH_USER = $COUCH_PASS+" $root/$cfgversion/config/$project/local.ini
-  # Update the monitoring script as well
-  sed -i "s+@@@USER:@@@PASS+$COUCH_USER:$COUCH_PASS+" $root/$cfgversion/config/$project/monitoring.ini
 }
