@@ -20,8 +20,8 @@ deploy_couchdb_sw()
   case $variant in
     default )
       deploy_pkg -l couchdb -a couchdb/hmackey.ini -a couchdb/couch_creds comp external+couchdb31
-      $authlink || setgroup ug+rx,o-rwx _config $project_auth/hmackey.ini
-      $authlink || setgroup ug+rx,o-rwx _config $project_auth/couch_creds
+      setgroup ug+rx,o-rwx _config $project_auth/hmackey.ini
+      setgroup ug+rx,o-rwx _config $project_auth/couch_creds
       ;;
     * )
       deploy_pkg -a couchdb/hmackey.ini comp external+couchdb
