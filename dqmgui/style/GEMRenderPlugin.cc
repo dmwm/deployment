@@ -161,35 +161,56 @@ private:
     TH1F* obj = dynamic_cast<TH1F*>(o.object);
     assert(obj);
 
-    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/muon_\\w+_GE\\d{1,2}-(P|M)(?:_matched)?$").MatchB(o.name))
+    if (TPRegexp("^GEM/Efficiency/\\w+/muon_\\w+(?:_match)?_GE\\d{1,2}-(P|M)$").MatchB(o.name))
     {
-      // e.g. "GEM/Efficiency/type1/Efficiency/muon_eta_GE11-M"
-      // offline
+      // e.g. "GEM/Efficiency/muonSTA/muon_eta_GE11-M"
       obj->SetOption("hist E");
-      gStyle->SetOptStat("euo");
+      gStyle->SetOptStat("e");
 
       obj->SetLineColor(kEntriesColor_);
       obj->SetFillColorAlpha(kEntriesColor_, 0.3);
 
     }
-    else if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/(chamber|ieta)_GE\\d{1,2}-(P|M)-L\\d(?:_matched)?$").MatchB(o.name))
+    else if (TPRegexp("^GEM/Efficiency/\\w+/(chamber|ieta)(?:_match)?_GE\\d{1,2}-(P|M)-L\\d$").MatchB(o.name))
     {
-      // e.g. "GEM/Efficiency/type1/Efficiency/chamber_GE21-P-L2"
-      // offline
+      // ex) "GEM/Efficiency/{muonSTA,muonGLB,GEMCSCSegment}/{chamber,ieta}_GE21-P-L2"
       obj->SetOption("P");
 
       obj->SetMarkerStyle(4); //
       obj->SetMarkerSize(2);
-      const int marker_color = TPRegexp("\\w_matched").MatchB(o.name) ? kEfficiencyColor_ : kEntriesColor_;
-      obj->SetMarkerColor(marker_color);
-      obj->SetLineColorAlpha(kEfficiencyColor_, 0.0);
+      obj->SetMarkerColor(kEntriesColor_);
+      obj->SetLineColorAlpha(kEntriesColor_, 0.0);
 
       applyBinNumbering(obj, "x");
     }
-    else if (TPRegexp("^GEM/Efficiency/type\\d/Resolution/(residual|pull)_\\w+_GE(\\+|\\-)\\d1_R\\d$").MatchB(o.name))
+    else if (TPRegexp("^GEM/Efficiency/\\w+/eff_[\\S]+$").MatchB(o.name))
     {
-      // Offline DQM
+      // common cosmetics for the offlien DQM
+      obj->SetOption("E");
+      obj->SetMinimum(0.0);
+      obj->SetMaximum(1.0);
+      obj->SetLineColor(kEfficiencyColor_);
+      obj->SetLineWidth(2);
+      obj->SetMarkerStyle(kFullSquare);
+      obj->SetMarkerColor(kBlack);
 
+      // no stat box
+      obj->SetStats(false);
+      gStyle->SetOptStat(0);
+
+      if (TPRegexp("^GEM/Efficiency/\\w+/eff_(chamber|ieta)_GE\\d{1,2}-(P|M)-L\\d$").MatchB(o.name))
+      {
+        // e.g. "GEM/Efficiency/type1/Efficiency/eff_chamber_GE21-P-L2"
+        applyBinNumbering(obj, "x");
+      }
+      else
+      {
+        obj->SetOption("E");
+        gStyle->SetOptStat(10);
+      }
+    }
+    else if (TPRegexp("^GEM/Efficiency/\\w+/residual_\\w+_GE\\d{1,2}-(P|M)-E\\d{1,2}$").MatchB(o.name))
+    {
       obj->SetOption("hist E");
       gStyle->SetOptStat("emruos");
 
@@ -218,20 +239,18 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>(o.object);
     assert(obj);
 
-    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/detector_GE\\d{1,2}-(P|M)-L\\d(?:_matched)?$").MatchB(o.name))
+    if (TPRegexp("^GEM/Efficiency/\\w+/chamber_ieta(?:_match)?_GE\\d{1,2}-(P|M)-L\\d$").MatchB(o.name))
     {
       // e.g. "GEM/Efficiency/type1/Efficiency/detector_GE11-P-L1"
-      // Offline DQM
       obj->SetOption("colz");
       gStyle->SetOptStat("e");
 
       applyBinNumbering(obj, "x");
       applyBinNumbering(obj, "y");
     }
-    else if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_detector_GE\\d{1,2}-(P|M)-L\\d$").MatchB(o.name))
+    else if (TPRegexp("^GEM/Efficiency/\\w+/eff_chamber_ieta_GE\\d{1,2}-(P|M)-L\\d$").MatchB(o.name))
     {
       // e.g. "GEM/Efficiency/type1/Efficiency/eff_detector_GE11-P-L1"
-      // Offline DQM
       obj->SetOption("colz");
       obj->SetMinimum(0.00);
       obj->SetMaximum(1.00);
@@ -241,49 +260,6 @@ private:
 
       // turn off the stat box
       gStyle->SetOptStat(0);
-      gStyle->SetGridWidth(3);
-    }
-    else if (TPRegexp("^GEM/Efficiency/type\\d/Resolution/residual_rphi_(mean|stddev|skewness)$").MatchB(o.name))
-    {
-      // Offline DQM
-      obj->SetOption("colz text");
-
-      const TString name{o.name};
-      if (name.EndsWith("mean"))
-      {
-        obj->SetMaximum(0.2);
-        obj->SetMinimum(-0.2);
-      } else if (name.EndsWith("skewness"))
-      {
-        obj->SetMaximum(1);
-        obj->SetMinimum(-1);
-      }
-
-      const int kNumColors = 255;
-      obj->SetContour(kNumColors);
-
-      const int kNumEndPointColors = 3;
-      // blue-white-red palette for mean and skewness
-      Double_t stops[kNumEndPointColors] = {0., .5, 1.};
-      if (name.EndsWith("stddev")) {
-        // white-red palette for stddev
-        stops[1] = 0.0;
-      }
-      Double_t red[kNumEndPointColors]   = {0., 1., 1.};
-      Double_t green[kNumEndPointColors] = {0., 1., 0.};
-      Double_t blue[kNumEndPointColors]  = {1., 1., 0.};
-      TColor::CreateGradientColorTable(kNumEndPointColors, stops, red, green, blue, kNumColors);
-
-      gStyle->SetPaintTextFormat(".3f");
-
-      // no stat box
-      obj->SetStats(false);
-      gStyle->SetOptStat(0);
-
-      // grid
-      obj->SetNdivisions(-obj->GetNbinsX(), "X");
-      obj->SetNdivisions(-obj->GetNbinsY(), "Y");
-      gStyle->SetGridStyle(1);
       gStyle->SetGridWidth(3);
     }
     else if (TPRegexp("^GEM/recHit/rechit_wheel_[\\w\\W]+$").Match(o.name))
@@ -404,33 +380,6 @@ private:
   {
     TProfile* obj = dynamic_cast<TProfile*>(o.object);
     assert(obj);
-
-    // common cosmetics for the offlien DQM
-    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_[\\S]+$").MatchB(o.name))
-    {
-      obj->SetOption("E");
-
-      obj->SetMinimum(-0.02);
-      obj->SetMaximum(1.02);
-
-      obj->SetLineColor(kEfficiencyColor_);
-      obj->SetLineWidth(2);
-
-      // no stat box
-      obj->SetStats(false);
-      gStyle->SetOptStat(0);
-    }
-
-    if (TPRegexp("^GEM/Efficiency/type\\d/Efficiency/eff_(chamber|ieta)_GE\\d{1,2}-(P|M)-L\\d$").MatchB(o.name))
-    {
-      // e.g. "GEM/Efficiency/type1/Efficiency/eff_chamber_GE21-P-L2"
-      applyBinNumbering(obj, "x");
-    }
-    else
-    {
-      obj->SetOption("E");
-      gStyle->SetOptStat(10);
-    }
 
     c->SetGridx();
     c->SetGridy();
