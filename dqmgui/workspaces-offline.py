@@ -218,11 +218,21 @@ server.workspace('DQMContent', 41, 'Muons', 'DT', '^DT/', '')
 server.workspace('DQMContent', 42, 'Muons', 'RPC', '^(RPC/|L1T/L1TStage2EMTF/rpc)', '')
 
 server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
-                 "GEM/Layouts/01 - Efficiency vs Chamber",
-                 "GEM/Layouts/02 - Efficiency vs Muon PT",
-                 "GEM/Layouts/03 - Efficiency vs Muon Eta",
-                 "GEM/Layouts/04 - Resolution Summary",
-                )
+                 'GEM/Layouts/00 Summary Map',
+                 'GEM/Layouts/01 GE11-M-L1 RecHit Occupancy',
+                 'GEM/Layouts/02 GE11-M-L2 RecHit Occupancy',
+                 'GEM/Layouts/03 GE11-P-L1 RecHit Occupancy',
+                 'GEM/Layouts/04 GE11-P-L2 RecHit Occupancy',
+                 'GEM/Layouts/05 GE11-M-L1 RecHit Average Cluster Size',
+                 'GEM/Layouts/06 GE11-M-L2 RecHit Average Cluster Size',
+                 'GEM/Layouts/07 GE11-P-L1 RecHit Average Cluster Size',
+                 'GEM/Layouts/08 GE11-P-L2 RecHit Average Cluster Size',
+                 'GEM/Layouts/09 GE11-M-L1 Chamber Efficiency',
+                 'GEM/Layouts/10 GE11-M-L2 Chamber Efficiency',
+                 'GEM/Layouts/11 GE11-P-L1 Chamber Efficiency',
+                 'GEM/Layouts/12 GE11-P-L2 Chamber Efficiency',
+                 'GEM/Layouts/13 GE21-P-L2 DIGI Occupancy',
+                 )
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')
