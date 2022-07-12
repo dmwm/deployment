@@ -351,23 +351,27 @@ ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/01 RMS Map',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'},
 	    {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/02 Reconstructed',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/02 Mean Map',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal G12 Mean map', 'description': '2D distribution of the presample mean.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal G12 Mean map', 'description': '2D distribution of the presample mean.'},
+            {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal G12 Mean map', 'description': '2D distribution of the presample mean.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/03 Reconstructed',
 	   [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit occupancy', 'description': 'Rec hit occupancy.'}],
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC single crystal cluster seed occupancy map', 'description': 'Occupancy map of the occurrence of super clusters with only one constituent'}],
 	   [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit occupancy EE -', 'description': 'Rec hit occupancy.'},
 	    {'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit occupancy EE +', 'description': 'Rec hit occupancy.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC single crystal cluster seed occupancy map EE -', 'description': 'Occupancy map of the occurrence of super clusters with only one constituent'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT SC single crystal cluster seed occupancy map EE +', 'description': 'Occupancy map of the occurrence of super clusters with only one constituent'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/03 Trend',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 Trend',
 	   [{'path': 'Ecal/Trends/PresampleClient EB pedestal mean max - min', 'description': 'Trend of presample spread in EB / EE. Y value indicates the difference between maximum and minimum presample mean values within the subdetector.'},
 	    {'path': 'Ecal/Trends/PresampleClient EB pedestal rms max', 'description': 'Trend of presample RMS averaged over all channels in EB / EE.'}],
 	   [{'path': 'Ecal/Trends/PresampleClient EE pedestal mean max - min', 'description': 'Trend of presample spread in EB / EE. Y value indicates the difference between maximum and minimum presample mean values within the subdetector.'},
 	    {'path': 'Ecal/Trends/PresampleClient EE pedestal rms max', 'description': 'Trend of presample RMS averaged over all channels in EB / EE.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 EB Rechit Occupancy Near vs Far',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/05 EB Rechit Occupancy Near vs Far',
            [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: near vs far barrel.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 EE Rechit Occupancy z- vs z+',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/05 EE Rechit Occupancy z- vs z+',
            [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: z- vs z+.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/05 Rechit Occupancy difference',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/06 Rechit Occupancy difference',
            [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: far - near.'}],
            [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: z+ - z-.'}])
 # By SuperModule _______________
