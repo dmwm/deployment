@@ -3,20 +3,20 @@
 ^/auth/complete/dqm/(?:dev|offline-test|offline-test-new|relval-test|relval-test-new)(?:/|$) vocms0731.cern.ch
 ^/auth/complete/dqm/(?:offline|offline-new)(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
-^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0740.cern.ch :affinity
-^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0740.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0743.cern.ch :affinity
-^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0743.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0743.cern.ch :affinity
-^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats)(?:/|$) vocms0744.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_workloadsummary|t0_workloadsummary)(?:/|$) vocms0744.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_request|t0_request)(?:/|$) vocms0744.cern.ch :affinity
-^/auth/complete/(?:couchdb/t0_logdb|t0_logdb)(?:/|$) vocms0744.cern.ch :affinity
-^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0742.cern.ch :affinity
-^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0742.cern.ch :affinity
-^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0742.cern.ch :affinity
-^/auth/complete/(?:couchdb/acdcserver|acdcserver)(?:/|$) vocms0742.cern.ch :affinity
-^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0742.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_workloadsummary|t0_workloadsummary)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_request|t0_request)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_logdb|t0_logdb)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/acdcserver|acdcserver)(?:/|$) vocms0xxx.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0xxx.cern.ch :affinity
 ^/auth/complete/das(?:/|$) cmsweb-k8s-prodsrv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-k8s-prodsrv.cern.ch
 ^/auth/complete/exitcodes(?:/|$) cmsweb-k8s-prodsrv.cern.ch
