@@ -37,13 +37,11 @@
 ^/auth/complete/dbspy/(?:int/global/DBSWriter|prod/global/DBSWriter|dev/global/DBSWriter)(?:/|$) dbs-global-w.dbs.svc.cluster.local
 ^/auth/complete/dbspy/(?:int/phys03/DBSReader|prod/phys03/DBSReader|dev/phys03/DBSReader)(?:/|$) dbs-phys03-r.dbs.svc.cluster.local
 ^/auth/complete/dbspy/(?:int/phys03/DBSWriter|prod/phys03/DBSWriter|dev/phys03/DBSWriter)(?:/|$) dbs-phys03-w.dbs.svc.cluster.local
-^/auth/complete/dbspy/(?:int/global/DBSMigrate|prod/global/DBSMigrate|dev/global/DBSMigrate)(?:/|$) dbs-migrate.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/global/DBSMigrate|prod/global/DBSMigrate|dev/global/DBSMigrate)(?:/|$) dbs-migrate.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/global/DBSReader|prod/global/DBSReader|dev/global/DBSReader)(?:/|$) dbs2go-global-r.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/global/DBSWriter|prod/global/DBSWriter|dev/global/DBSWriter)(?:/|$) dbs2go-global-w.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/phys03/DBSReader|prod/phys03/DBSReader|dev/phys03/DBSReader)(?:/|$) dbs2go-phys03-r.dbs.svc.cluster.local
 ^/auth/complete/dbs/(?:int/phys03/DBSWriter|prod/phys03/DBSWriter|dev/phys03/DBSWriter)(?:/|$) dbs2go-phys03-w.dbs.svc.cluster.local
-^/auth/complete/dbs/(?:int/global/DBSMigrate)(?:/|$) dbs2go-global-m.dbs.svc.cluster.local
-^/auth/complete/dbs/(?:int/phys03/DBSMigrate)(?:/|$) dbs2go-phys03-m.dbs.svc.cluster.local
 ^/auth/complete/wmstatsserver(?:/|$) reqmon.dmwm.svc.cluster.local
 ^/auth/complete/wmstats2go(?:/|$) wmstats.dmwm.svc.cluster.local
 ^/auth/complete/das(?:/|$) das-server.das.svc.cluster.local
