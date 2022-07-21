@@ -28,6 +28,8 @@
 ^/auth/complete/reqmgr2(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/das2go(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/dbspy(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/dbs(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/wmarchive(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-transferor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
