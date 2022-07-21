@@ -261,7 +261,7 @@ for sector in sectors:
   for station in pixelstations:
     row = list()
     row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/"+
-        "ROCs_hits_multiplicity_per_event vs LS")
+        "ROCs hits multiplicity per event vs LS")
     rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, "ROC hits per event vs LS "+sector, *rows)
