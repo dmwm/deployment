@@ -227,8 +227,8 @@ start()
 stop()
 {
   echo "Stopping CouchDB service..."
-  # FIXME: grepping for couchdb31 is fragile!!!
-  for couch_pid in $(ps aux | grep couchdb31 | grep -v grep | awk '{print $2}'); do
+  # FIXME: grepping for couchdb is fragile!!!
+  for couch_pid in $(ps aux | grep couchdb | grep -v grep | awk '{print $2}'); do
     echo "  killing CouchDB process... ${pid}"
     kill -9 $couch_pid || true
   done
