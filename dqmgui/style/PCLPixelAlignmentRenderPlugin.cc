@@ -11,6 +11,7 @@
 #include "TPaveStats.h"
 #include "TList.h"
 #include "TLine.h"
+#include "TString.h"
 #include <cassert>
 
 class PCLPixelAlignmentRenderPlugin : public DQMRenderPlugin
@@ -19,18 +20,18 @@ class PCLPixelAlignmentRenderPlugin : public DQMRenderPlugin
   std::array<double,6> cut_;
   std::array<double,6> maxMoveCut_;
   std::array<double,6> maxErrorCut_;
-  		
+
 public:
 
   virtual void initialise (int, char **)
   {
-	
-	
+
+
   }
 
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
   {
-    if(o.name.find( "SiPixelAli/" ) != std::string::npos)return true;
+    if(o.name.find( "SiPixelAli" ) != std::string::npos)return true;
     else return false;
   }
 
@@ -38,9 +39,17 @@ public:
   {
     c->cd();
 
+    // Check if HG alignment is used
+    bool isHG = (o.name.find( "SiPixelAliHG" ) != std::string::npos);
+
+
     if( dynamic_cast<TH1F*>( o.object ) )
     {
-      this->preDrawTH1F( c, o );
+      if (isHG){
+        this->preDrawTH1FHG( c, o );
+      }else{
+        this->preDrawTH1F( c, o );
+      }
     }
     else if( dynamic_cast<TH2F*>( o.object ) )
     {
@@ -48,11 +57,11 @@ public:
     }
     else if( dynamic_cast<TProfile*>( o.object ) )
     {
-      this->preDrawTProfile( c, o );
+      if (!isHG) this->preDrawTProfile( c, o );
     }
     else if( dynamic_cast<TProfile2D*>( o.object ) )
     {
-      this->preDrawTProfile2D( c, o );
+      if (!isHG) this->preDrawTProfile2D( c, o );
     }
   }
 
@@ -61,9 +70,9 @@ public:
     c->cd();
 
     if( o.name.find("SiPixelAli")!= std::string::npos && o.name.find("PedeExitCode") != std::string::npos){
-      // Clear the default string from the canvas 
+      // Clear the default string from the canvas
       c->Clear();
-      
+
       TObjString* tos = dynamic_cast<TObjString*>( o.object );
       auto exitCode = TString((tos->GetString())(0,6));
       TText *t = new TText(.5, .5, tos->GetString());
@@ -74,16 +83,23 @@ public:
       // all exit codes <  10 are normal endings
       // all exit codes >= 10 indicated an aborted measurement
       if(exitCode.Atoi()>=10){
-	t->SetTextColor(kRed);
+        t->SetTextColor(kRed);
       } else {
-	t->SetTextColor(kGreen+2);
+        t->SetTextColor(kGreen+2);
       }
       t->Draw();
     }
 
+    // Check if HG alignment is used
+    bool isHG = (o.name.find( "SiPixelAliHG" ) != std::string::npos);
+
     if( dynamic_cast<TH1F*>( o.object ) )
     {
-      this->postDrawTH1F( c, o );
+      if (isHG){
+          this->postDrawTH1FHG( c, o );
+        }else{
+          this->postDrawTH1F( c, o );
+       }
     }
     else if( dynamic_cast<TH2F*>( o.object ) )
     {
@@ -91,11 +107,11 @@ public:
     }
     else if( dynamic_cast<TProfile*>( o.object ) )
     {
-      this->postDrawTProfile( c, o );
+      if (!isHG) this->postDrawTProfile( c, o );
     }
     else if( dynamic_cast<TProfile2D*>( o.object ) )
     {
-      this->postDrawTProfile2D( c, o );
+      if (!isHG) this->postDrawTProfile2D( c, o );
     }
   }
 
@@ -121,24 +137,24 @@ private:
     c->SetLeftMargin(0.11);
     c->SetRightMargin(0.09);
 
-    // dirty trick to ensure compatibility 
+    // dirty trick to ensure compatibility
     // with old histogram format
 
     const int& nBins = obj->GetNbinsX();
     if(nBins>11){
       for(size_t i=0;i<6;i++){
-	cut_[i] = obj->GetBinContent(8+5*i);
-	sigCut_[i] = obj->GetBinContent(9+5*i);
-	maxMoveCut_[i] = obj->GetBinContent(10+5*i);
-	maxErrorCut_[i] = obj->GetBinContent(11+5*i);
+        cut_[i] = obj->GetBinContent(8+5*i);
+        sigCut_[i] = obj->GetBinContent(9+5*i);
+        maxMoveCut_[i] = obj->GetBinContent(10+5*i);
+        maxErrorCut_[i] = obj->GetBinContent(11+5*i);
       }
     } else {
 
       for(size_t i=0;i<6;i++){
-	cut_[i] = obj->GetBinContent(8);
-	sigCut_[i] = obj->GetBinContent(9);
-	maxMoveCut_[i] = obj->GetBinContent(10);
-	maxErrorCut_[i] = obj->GetBinContent(11);
+        cut_[i] = obj->GetBinContent(8);
+        sigCut_[i] = obj->GetBinContent(9);
+        maxMoveCut_[i] = obj->GetBinContent(10);
+        maxErrorCut_[i] = obj->GetBinContent(11);
       }
     }
 
@@ -150,20 +166,20 @@ private:
     double min = 1000;
 
     for (int i = 1; i < 7; i++){
-      
+
       if (obj->GetBinContent(i) < min) min = obj->GetBinContent(i);
       if (obj->GetBinContent(i) > max) max = obj->GetBinContent(i);
-      
+
       if (fabs(obj->GetBinContent(i)) > maxMoveCut_[i-1]) obj->SetFillColor(kRed);
       else if (obj->GetBinContent(i) > cut_[i-1]){
-	
-	if (obj->GetBinError(i) > maxErrorCut_[i-1]){
-	  obj->SetFillColor(kRed);
-	}
-	else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
-	 
-	  obj->SetFillColor(kGreen+3);
-	}
+
+  if (obj->GetBinError(i) > maxErrorCut_[i-1]){
+    obj->SetFillColor(kRed);
+  }
+  else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
+
+    obj->SetFillColor(kGreen+3);
+  }
       }
     }
 
@@ -183,15 +199,67 @@ private:
     obj->GetYaxis()->SetTitleSize(0.06);
     obj->GetYaxis()->SetLabelSize(0.06);
 
-    double maxCut_ = *std::max_element(cut_.begin(),cut_.end()); 
+    double maxCut_ = *std::max_element(cut_.begin(),cut_.end());
 
     obj->GetYaxis()->SetRangeUser(std::min(min-20,-maxCut_-20),std::max(max+20,maxCut_+20));
 
     obj->SetStats(kFALSE);
     obj->SetFillStyle(3017);
     obj->SetOption("histe");
-    
+
   }
+
+  void preDrawTH1FHG(TCanvas *c, const VisDQMObject &o)
+  {
+    gStyle->SetCanvasBorderMode(0);
+    gStyle->SetPadBorderMode(0);
+    gStyle->SetPadBorderSize(0);
+
+    gStyle->SetOptStat(111110);
+    gStyle->SetTitleSize(0.06,"");
+    gStyle->SetTitleX(0.18);
+
+    c->SetTopMargin(0.08);
+    c->SetBottomMargin(0.14);
+    c->SetLeftMargin(0.11);
+    c->SetRightMargin(0.09);
+
+
+    TH1F* obj = dynamic_cast<TH1F*>( o.object );
+    assert( obj );
+
+    int nBins = obj->GetNbinsX();
+
+    double cutValue = obj->GetBinContent(nBins - 3);
+
+    double max_ = -1;
+    double min_ = 1;
+    int alignableCount = 0;
+
+    for (int i = 1; i <= nBins-5; i++){
+      double content = obj->GetBinContent(i);
+
+      if (content > max_){
+        max_ = obj->GetBinContent(i);
+      }
+      if (content < min_){
+        min_ = obj->GetBinContent(i);
+      }
+      alignableCount++;
+    }
+
+    obj->GetYaxis()->SetRangeUser(std::min(min_-20,-cutValue-20)*1.2,std::max(max_+20,cutValue+20)*1.2);
+    obj->GetXaxis()->SetRangeUser(0,alignableCount);
+
+    obj->SetMarkerStyle(20);
+    obj->SetMarkerSize(0.6);
+    obj->SetStats(kFALSE);
+    obj->SetOption("PE");
+
+
+  }
+
+
 
   void preDrawTH2F(TCanvas *, const VisDQMObject &o)
   {
@@ -230,27 +298,27 @@ private:
 
     obj->SetStats( kFALSE );
 
-    // dirty trick to ensure compatibility 
+    // dirty trick to ensure compatibility
     // with old histogram format
 
     const int& nBins = obj->GetNbinsX();
     if(nBins>11){
       for(size_t i=0;i<6;i++){
-	cut_[i] = obj->GetBinContent(8+5*i);
-	sigCut_[i] = obj->GetBinContent(9+5*i);
-	maxMoveCut_[i] = obj->GetBinContent(10+5*i);
-	maxErrorCut_[i] = obj->GetBinContent(11+5*i);
+        cut_[i] = obj->GetBinContent(8+5*i);
+        sigCut_[i] = obj->GetBinContent(9+5*i);
+        maxMoveCut_[i] = obj->GetBinContent(10+5*i);
+        maxErrorCut_[i] = obj->GetBinContent(11+5*i);
       }
     } else {
 
       for(size_t i=0;i<6;i++){
-	cut_[i] = obj->GetBinContent(8);
-	sigCut_[i] = obj->GetBinContent(9);
-	maxMoveCut_[i] = obj->GetBinContent(10);
-	maxErrorCut_[i] = obj->GetBinContent(11);
+        cut_[i] = obj->GetBinContent(8);
+        sigCut_[i] = obj->GetBinContent(9);
+        maxMoveCut_[i] = obj->GetBinContent(10);
+        maxErrorCut_[i] = obj->GetBinContent(11);
       }
     }
-                    
+
     TLine* line = new TLine();
     line->SetBit(kCanDelete);
     line->SetLineWidth(2);
@@ -276,35 +344,135 @@ private:
     for (int i = 1; i < 7; i++){
 
       if (fabs(obj->GetBinContent(i)) > maxMoveCut_[i-1]){
-	hitMax = true;	
-      }		
+        hitMax = true;
+      }
       else if (fabs(obj->GetBinContent(i)) > cut_[i-1]){
-	moved = true;
-	if (obj->GetBinError(i) > maxErrorCut_[i-1]){
-	  hitMaxError = true;
-	}
-	else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
-	  sigMove = true;
-	}
+        moved = true;
+        if (obj->GetBinError(i) > maxErrorCut_[i-1]){
+          hitMaxError = true;
+        }
+        else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
+          sigMove = true;
+        }
       }
     }
     if (hitMax){
       obj->SetFillColor(kRed);
-      t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");	
+      t_text->DrawText(0.25,0.8, "Exceeds Maximum Movement");
     }
-    else if (moved) {	
+    else if (moved) {
       if (hitMaxError){
-	obj->SetFillColor(kRed);
-	t_text->DrawText(0.25,0.8, "Movement uncertainty exceeds maximum");
+        obj->SetFillColor(kRed);
+        t_text->DrawText(0.25,0.8, "Movement uncertainty exceeds maximum");
       }
       else if (sigMove){
-	obj->SetFillColor(kOrange);
-	t_text->DrawText(0.25,0.8, "Significant movement observed");
+        obj->SetFillColor(kOrange);
+        t_text->DrawText(0.25,0.8, "Significant movement observed");
       }
     }
     else t_text->DrawText(0.25,0.8, "Movement within limits");
-    
+
     return;
+  }
+
+    void postDrawTH1FHG(TCanvas *, const VisDQMObject &o)
+  {
+    TH1F* obj = dynamic_cast<TH1F*>( o.object );
+    assert( obj );
+
+    int nBins = obj->GetNbinsX();
+
+    double cutValue = obj->GetBinContent(nBins - 3);
+    double significance = obj->GetBinContent(nBins - 2);
+    double maxMove = obj->GetBinContent(nBins - 1);
+    double maxError = obj->GetBinContent(nBins);
+
+    TLine* line = new TLine();
+    line->SetBit(kCanDelete);
+    line->SetLineWidth(2);
+    line->SetLineColor(kRed+2);
+
+    line->DrawLine(0, cutValue, nBins-5, cutValue);
+    line->DrawLine(0, -cutValue, nBins-5, -cutValue);
+
+    line->SetLineColor(kBlue+2);
+    line->DrawLine(0, 0, nBins-5, 0);
+
+
+    int alignableCount = 0; // number of alignables
+    int aboveCutCount = 0; // number of alignables above threshold cut
+    int aboveSigCount = 0; // number that fulfill prior condition and are significant
+    int withinMaxMoveCount = 0; // number that fulfill prior condition and within movement bounds
+    int withinMaxErrorCount = 0; // number that fulfill prior condition and within error bounds
+
+
+    for (int i = 1; i <= nBins-5; i++){
+      double content = obj->GetBinContent(i);
+      double error = obj->GetBinError(i);
+
+
+      alignableCount++;
+      if(std::abs(content) > cutValue){
+        aboveCutCount++;
+        if(error==0){
+          continue;
+        }
+        if (std::abs(content/error) > significance){
+          aboveSigCount++;
+          if(std::abs(content) < maxMove){
+            withinMaxMoveCount++;
+            if(error < maxError){
+              withinMaxErrorCount++;
+            }
+          }
+        }
+      }
+    }
+
+    double fraction = 0.25;
+    bool aboveCut =       ((double)aboveCutCount / (double)alignableCount >= fraction ) ;
+    bool aboveSig =       ((double)aboveSigCount / (double)alignableCount  >= fraction);
+    bool withinMaxMove =  ((double)withinMaxMoveCount / (double)alignableCount >= fraction);
+    bool withinMaxError = ((double)withinMaxErrorCount / (double)alignableCount >= fraction);
+
+    TText* t_text = new TText();
+    t_text->SetBit(kCanDelete);
+    t_text->SetNDC(true);
+    if(withinMaxError){
+      // Green
+      obj->SetMarkerColor(kOrange);
+      obj->SetLineColor(kOrange);
+      t_text->DrawText(0.2,0.87, "Enough significant movements observed");
+      
+    }else if(withinMaxMove){
+      // Red, too large max error
+      obj->SetMarkerColor(kRed);
+      obj->SetLineColor(kRed);
+      t_text->DrawText(0.2,0.87, "Significant movements exceed max error");
+      t_text->DrawText(0.2,0.83, TString::Format("Within max error: %.0f%%",100*((double)withinMaxErrorCount / (double)alignableCount)));
+      
+    }else if(aboveSig){
+      // Red, too large movements
+      obj->SetMarkerColor(kRed);
+      obj->SetLineColor(kRed);
+      t_text->DrawText(0.2,0.87, "Significant movements exceed max movement");
+      t_text->DrawText(0.2,0.83, TString::Format("Within max movement: %.0f%%",100*((double)withinMaxMoveCount / (double)alignableCount)));
+    }else if(aboveCut){
+      // Orange, not significant movements
+      obj->SetMarkerColor(kGreen+1);
+      obj->SetLineColor(kGreen+1);
+      t_text->DrawText(0.2,0.87, "Movements above threshold not significant");
+      t_text->DrawText(0.2,0.83, TString::Format("Above significance: %.0f%%",100*((double)aboveSigCount / (double)alignableCount)));
+
+    }else{
+      // Grey, movements not above threshold
+      obj->SetMarkerColor(kGray);
+      obj->SetLineColor(kGray);
+      t_text->DrawText(0.2,0.87, "Not enough movements above threshold");
+      t_text->DrawText(0.2,0.83, TString::Format("Above threshold: %.0f%%",100*((double)aboveCutCount / (double)alignableCount)));
+    }
+
+
   }
 
   void postDrawTH2F(TCanvas *, const VisDQMObject &o)
