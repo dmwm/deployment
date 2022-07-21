@@ -173,13 +173,13 @@ private:
       if (fabs(obj->GetBinContent(i)) > maxMoveCut_[i-1]) obj->SetFillColor(kRed);
       else if (obj->GetBinContent(i) > cut_[i-1]){
 
-  if (obj->GetBinError(i) > maxErrorCut_[i-1]){
-    obj->SetFillColor(kRed);
-  }
-  else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
+        if (obj->GetBinError(i) > maxErrorCut_[i-1]){
+          obj->SetFillColor(kRed);
+        }
+        else if (fabs(obj->GetBinContent(i))/obj->GetBinError(i) > sigCut_[i-1]){
 
-    obj->SetFillColor(kGreen+3);
-  }
+          obj->SetFillColor(kGreen+3);
+        }
       }
     }
 
