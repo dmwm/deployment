@@ -86,34 +86,31 @@ private:
     if (o.name.find("SummaryMap") != std::string::npos) {
       if (o.name.find("reportSummaryMap") != std::string::npos) {
         //Normalization of summary map
-        double rpc_map[16][13];
-        std::ifstream rpc_map_file("../../MYDEV/config/dqmgui/style/RPC_report_summary_map_normalization2.csv");
+        double rpc_map[12][15] = {{1,1,1,1,-1,0.705882353,0.705882353,0.882352941,1,0.882352941,-1,1,1,1,1},
+                                  {1,1,1,1,-1,1,0.294117647,0.647058824,1,1,-1,1,1,1,1},
+                                  {1,1,1,1,-1,0.882352941,0.294117647,0.882352941,0.882352941,1,-1,1,1,1,1},
+                                  {1,1,1,1,-1,0.380952381,0.619047619,0.714285714,0.619047619,0.904761905,-1,1,1,1,1},
+                                  {1,1,1,1,-1,1,0.764705882,0.529411765,0.882352941,0.764705882,-1,1,1,1,1},
+                                  {1,1,1,1,-1,0.647058824,0.764705882,0.470588235,1,0.882352941,-1,1,1,1,1},
+                                  {-1,-1,-1,-1,-1,0.647058824,0.882352941,0.588235294,0.764705882,0.764705882,-1,-1,-1,-1,-1},
+                                  {-1,-1,-1,-1,-1,0.764705882,0.764705882,0.764705882,0.764705882,0.882352941,-1,-1,-1,-1,-1},
+                                  {-1,-1,-1,-1,-1,0.866666667,0.733333333,1,1,0.866666667,-1,-1,-1,-1,-1},
+                                  {-1,-1,-1,-1,-1,0.764705882,0.411764706,0.588235294,0.882352941,0.882352941,-1,-1,-1,-1,-1},
+                                  {-1,-1,-1,-1,-1,0.866666667,0.6,0.733333333,1,0.866666667,-1,-1,-1,-1,-1},
+                                  {-1,-1,-1,-1,-1,1,0.764705882,0.764705882,1,0.764705882,-1,-1,-1,-1,-1}};
+
         obj->SetMaximum(1.0);
-
-        for (int nr = 0; nr < 13; nr++) {
-          std::string line;
-          std::getline(rpc_map_file, line);
-          if (!rpc_map_file.good()) break;
-          std::stringstream iss(line);
-
-          for (int nc = 0; nc < 16; nc++) {
-            std::string val;
-            std::getline(iss, val, ',');
-            std::stringstream convertor(val);
-            convertor >> rpc_map[nc][nr];
-          }
-        }
 
         int xbins = obj->GetNbinsX();
         int ybins = obj->GetNbinsY();
-        for (int i = 1; i <= xbins; i++) {
-          for (int j = 1; j <= ybins; j++) {
-            double tem = obj->GetBinContent(i, j);
+        for (int i = 0; i < xbins; i++) {
+          for (int j = 0; j < ybins; j++) {
+            double tem = obj->GetBinContent(i+1, j+1);
 
-            if (rpc_map[i][j] > 0 and tem > 0) {
-              double newTemp = tem / rpc_map[i][j];
+            if (rpc_map[j][i] > 0 and tem > 0) {
+              double newTemp = tem / rpc_map[j][i];
               if (newTemp > 1.0) newTemp = 1.0;
-              obj->SetBinContent(i, j, newTemp);
+              obj->SetBinContent(i+1, j+1, newTemp);
             }
           }
         }
