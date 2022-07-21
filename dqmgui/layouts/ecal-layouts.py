@@ -351,23 +351,27 @@ ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/01 RMS Map',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'},
 	    {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/02 Reconstructed',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/02 Mean Map',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal G12 Mean map', 'description': '2D distribution of the presample mean.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal G12 Mean map', 'description': '2D distribution of the presample mean.'},
+            {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal G12 Mean map', 'description': '2D distribution of the presample mean.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/03 Reconstructed',
 	   [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit occupancy', 'description': 'Rec hit occupancy.'}],
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC single crystal cluster seed occupancy map', 'description': 'Occupancy map of the occurrence of super clusters with only one constituent'}],
 	   [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit occupancy EE -', 'description': 'Rec hit occupancy.'},
 	    {'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit occupancy EE +', 'description': 'Rec hit occupancy.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC single crystal cluster seed occupancy map EE -', 'description': 'Occupancy map of the occurrence of super clusters with only one constituent'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT SC single crystal cluster seed occupancy map EE +', 'description': 'Occupancy map of the occurrence of super clusters with only one constituent'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/03 Trend',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 Trend',
 	   [{'path': 'Ecal/Trends/PresampleClient EB pedestal mean max - min', 'description': 'Trend of presample spread in EB / EE. Y value indicates the difference between maximum and minimum presample mean values within the subdetector.'},
 	    {'path': 'Ecal/Trends/PresampleClient EB pedestal rms max', 'description': 'Trend of presample RMS averaged over all channels in EB / EE.'}],
 	   [{'path': 'Ecal/Trends/PresampleClient EE pedestal mean max - min', 'description': 'Trend of presample spread in EB / EE. Y value indicates the difference between maximum and minimum presample mean values within the subdetector.'},
 	    {'path': 'Ecal/Trends/PresampleClient EE pedestal rms max', 'description': 'Trend of presample RMS averaged over all channels in EB / EE.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 EB Rechit Occupancy Near vs Far',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/05 EB Rechit Occupancy Near vs Far',
            [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: near vs far barrel.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/04 EE Rechit Occupancy z- vs z+',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/05 EE Rechit Occupancy z- vs z+',
            [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy correlation', 'description': 'Filtered rechit occupancy correlation: z- vs z+.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/05 Rechit Occupancy difference',
+ecallayout(dqmitems, 'Ecal/Layouts/03 Noise/06 Rechit Occupancy difference',
            [{'path': 'EcalBarrel/EBOccupancyTask/EBOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: far - near.'}],
            [{'path': 'EcalEndcap/EEOccupancyTask/EEOT rec hit thr occupancy z+(far) - z-(near)', 'description': 'Filtered rechit occupancy difference: z+ - z-.'}])
 # By SuperModule _______________
@@ -513,15 +517,15 @@ ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/02 RMS',
 	   [{'path': 'EcalEndcap/EESummaryClient/EETMT EE - timing rms 1D summary', 'description': 'Distribution of per-channel timing RMS. Channels with entries less than 1 (or 8 in forward region) are not considered.'},
 	    {'path': 'EcalEndcap/EESummaryClient/EETMT EE + timing rms 1D summary', 'description': 'Distribution of per-channel timing RMS. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/03 Map EB',
-	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT timing map', 'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 7.0 ns are discarded. The timing error threshold is 3.0 ns. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}],
+	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT timing map', 'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 7.0 ns are discarded. The timing error threshold is 3.0 ns. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}],
 	   [{'path': 'EcalBarrel/EBTimingClient/EBTMT timing projection eta', 'description': 'Projection of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'},
 	    {'path': 'EcalBarrel/EBTimingClient/EBTMT timing projection phi', 'description': 'Projection of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/04 Map EE -',
-	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing map EE -', 'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 7.0 ns are discarded. The timing error threshold is 3.0 ns. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}],
+	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing map EE -', 'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 7.0 ns are discarded. The timing error threshold is 3.0 ns. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}],
 	   [{'path': 'EcalEndcap/EETimingClient/EETMT timing projection eta EE -', 'description': 'Projection of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'},
 	    {'path': 'EcalEndcap/EETimingClient/EETMT timing projection phi EE -', 'description': 'Projection of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/05 Map EE +',
-	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing map EE +', 'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 7.0 ns are discarded. The timing error threshold is 3.0 ns. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}],
+	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing map EE +', 'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 7.0 ns are discarded. The timing error threshold is 3.0 ns. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}],
 	   [{'path': 'EcalEndcap/EETimingClient/EETMT timing projection eta EE +', 'description': 'Projection of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'},
 	    {'path': 'EcalEndcap/EETimingClient/EETMT timing projection phi EE +', 'description': 'Projection of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/06 Forward-Backward',
@@ -530,9 +534,9 @@ ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/06 Forward-Backward',
 	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing EE+ - EE-', 'description': 'Forward-backward asymmetry of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'},
 	    {'path': 'EcalEndcap/EETimingTask/EETMT timing EE+ vs EE-', 'description': 'Forward-backward correlation of per-channel mean timing. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/07 Distribution',
-	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT timing 1D summary', 'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}],
-	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing 1D summary EE -', 'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'},
-	    {'path': 'EcalEndcap/EETimingTask/EETMT timing 1D summary EE +', 'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}])
+	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT timing 1D summary', 'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}],
+	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing 1D summary EE -', 'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'},
+	    {'path': 'EcalEndcap/EETimingTask/EETMT timing 1D summary EE +', 'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/05 Timing/08 Vs Amptlitude',
 	   [{'path': 'EcalBarrel/EBTimingTask/EBTMT timing vs amplitude summary', 'description': 'Correlation between hit timing and energy. Only hits with GOOD or OUT_OF_TIME reconstruction flags are used.'}],
 	   [{'path': 'EcalEndcap/EETimingTask/EETMT timing vs amplitude summary EE -', 'description': 'Correlation between hit timing and energy. Only hits with GOOD or OUT_OF_TIME reconstruction flags are used.'},
@@ -558,10 +562,10 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
                    'description': 'Summary of the timing data quality. A channel is red if its mean timing is off by more than 2.0 or RMS is greater than 6.0. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
       ecallayout(dqmitems,'Ecal/Layouts/05 Timing/By SuperModule/Distribution/Distribution %s' % channellabel,
                  [{'path': 'Ecal%s/%sTimingTask/%sTMT timing 1D %s' % (detector, label, label, channellabel),
-                   'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}])
+                   'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}])
       ecallayout(dqmitems,'Ecal/Layouts/05 Timing/By SuperModule/Mean/Mean %s' % channellabel,
                  [{'path': 'Ecal%s/%sTimingTask/%sTMT timing %s' % (detector, label, label, channellabel),
-                   'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 25.0 ns are discarded. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}],
+                   'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 25.0 ns are discarded. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}],
                  [{'path': 'Ecal%s/%sTimingClient/%sTMT timing mean %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of per-channel timing mean. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
       ecallayout(dqmitems,'Ecal/Layouts/05 Timing/By SuperModule/RMS/RMS %s' % channellabel,
@@ -1052,10 +1056,10 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
                    'description': 'Summary of the timing data quality. A channel is red if its mean timing is off by more than 2.0 or RMS is greater than 6.0. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/08 Timing All' % channellabel,
                  [{'path': 'Ecal%s/%sTimingTask/%sTMT timing 1D %s' % (detector, label, label, channellabel),
-                   'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}])
+                   'description': 'Distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}])
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/09 Timing Mean' % channellabel,
                  [{'path': 'Ecal%s/%sTimingTask/%sTMT timing %s' % (detector, label, label, channellabel),
-                   'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 25.0 ns are discarded. The energy thresholds are 2.02, 4.60, and 6.70 for EB, EE, and forward region in EE respectively.'}],
+                   'description': '2D distribution of the mean rec hit timing. Only hits with GOOD or OUT_OF_TIME reconstruction flags and energy above threshold are used. Hits with |t| > 25.0 ns are discarded. The energy thresholds are 2.02, 4.60, and 12.0 for EB, EE, and forward region in EE respectively.'}],
 		 [{'path': 'Ecal%s/%sTimingClient/%sTMT timing mean %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of per-channel timing mean. Channels with entries less than 1 (or 8 in forward region) are not considered.'}])
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/10 Timing RMS' % channellabel,

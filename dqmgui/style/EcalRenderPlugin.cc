@@ -1187,8 +1187,14 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
 
     applyDefaults = false;
   }
-  else if(TPRegexp("E[BE]Pedestal(|Online)Task/Gain[0-9]+/E[BE]PO?T pedestal E[BE][+-][0-1][0-9] G[0-9]+").MatchB(fullpath)){
+  else if(TPRegexp("EBPedestal(|Online)Task/Gain[0-9]+/EBPO?T pedestal EB[+-][0-1][0-9] G[0-9]+").MatchB(fullpath) ||
+          TPRegexp("EBSummaryClient/EBPOT pedestal G12 Mean map").MatchB(fullpath) ){
     obj->GetZaxis()->SetRangeUser(160., 240.);
+    gStyle->SetPalette(pedestalPalette.size(), &(pedestalPalette[0]));
+  }
+   else if(TPRegexp("EEPedestal(|Online)Task/Gain[0-9]+/EEPO?T pedestal EE[+-][0-1][0-9] G[0-9]+").MatchB(fullpath) || 
+	  TPRegexp("EESummaryClient/EEPOT (|EE [+-] )pedestal G12 Mean map").MatchB(fullpath)){
+    obj->GetZaxis()->SetRangeUser(160., 260.);
     gStyle->SetPalette(pedestalPalette.size(), &(pedestalPalette[0]));
   }
   else if(TPRegexp("E[BE]SummaryClient/E[BE]POT (|EE [+-] )pedestal G12 RMS map").MatchB(fullpath) ||
