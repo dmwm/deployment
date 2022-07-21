@@ -24,8 +24,8 @@ shiftdtlayout(dqmitems, "03-TM-TriggerCorrFractionSummary",
 # shiftdtlayout(dqmitems, "06-DCC-Trigger2ndFactionSummary",
 #   [{ 'path': "DT/03-LocalTrigger/DCC/DCC_2ndFractionSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
 
-shiftdtlayout(dqmitems, "04-NoiseChannelsSummary",
-              [{ 'path': "DT/05-Noise/NoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
+#shiftdtlayout(dqmitems, "04-NoiseChannelsSummary",
+#              [{ 'path': "DT/05-Noise/NoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
 
-shiftdtlayout(dqmitems, "05-SynchNoiseSummary",
+shiftdtlayout(dqmitems, "04-SynchNoiseSummary",
               [{ 'path': "DT/05-Noise/SynchNoise/SynchNoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
