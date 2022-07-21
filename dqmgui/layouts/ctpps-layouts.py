@@ -103,7 +103,7 @@ diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cy
 def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p] = DQMItem(layout=rows)
 
 # layouts with no overlays
-TimingPlots = [ "activity per BX 0 25", "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "tracks", "HPTDC Errors", "MH in channels" ]
+TimingPlots = [ "activity per BX 0-25", "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "tracks", "HPTDC Errors", "MH in channels" ]
 TimingDrawOpt = [{'ytype':"log"}, {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'withref':"no"}, {'drawopts':"colztext"}, {'drawopts':"colztext"}]
 TimingDescription = [ "It should be similar to activity of CMS", "It should be with peaks at 0 and 4", 'Most of the event should be in "both"',
 "It should be peaked around 5 ns", "It should be a broad distribution peaked around 12 ns",
