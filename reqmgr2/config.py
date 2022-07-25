@@ -4,10 +4,11 @@ Everything configurable in ReqMgr is defined here.
 """
 
 import socket
-import time
 import sys
-from WMCore.Configuration import Configuration
+import time
 from os import path
+
+from WMCore.Configuration import Configuration
 
 HOST = socket.gethostname().lower()
 BASE_URL = "@@BASE_URL@@"
@@ -17,6 +18,16 @@ REQMGR2_URL = "%s/reqmgr2" % BASE_URL
 LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2"
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
+
+# Admin group/roles: facops/web-service, reqmgr/admin, reqmgr/developer
+ADMIN_GROUP = ['reqmgr', 'facops']
+ADMIN_ROLES = ['admin', 'developer', 'web-service']
+# Ops group/roles: dataops/production-operator
+OPS_GROUP = ['dataops']
+OPS_ROLES = ['production-operator']
+# Offline group/roles: reqmgr/data-manager
+PPD_GROUP = ['reqmgr']
+PPD_ROLES = ['data-manager']
 
 ROOTDIR = __file__.rsplit('/', 3)[0]
 # load AMQ credentials
@@ -76,7 +87,21 @@ data.couch_acdc_db = "acdcserver"
 data.couch_workqueue_db = "workqueue"
 data.central_logdb_url = LOG_DB_URL
 data.log_reporter = LOG_REPORTER
-
+# roles and groups authorized to perform some write actions in ReqMgr2
+# NOTE: it needs to have "admin", "ops" and "ppd" group permissions
+data.authorized_roles = {"admin": {'role': ADMIN_ROLES, 'group': ADMIN_GROUP},
+                         "ops": {'role': list(set(ADMIN_ROLES + OPS_ROLES)),
+                                 'group': list(set(ADMIN_GROUP + OPS_GROUP))},
+                         "ppd": {'role': list(set(ADMIN_ROLES + OPS_ROLES + PPD_ROLES)),
+                                 'group': list(set(ADMIN_GROUP + OPS_GROUP + PPD_GROUP))}}
+data.authz_by_status = [{"permission": "admin",
+                         "statuses": ["acquired", "running-open", "running-closed", "completed", "aborted-completed",
+                                      "failed", "rejected-archived", "aborted-archived", "normal-archived"]},
+                        {"permission": "ops",
+                         "statuses": ["assigned", "staging", "staged", "force-complete",
+                                      "closed-out", "announced"]},
+                        {"permission": "ppd",
+                         "statuses": ["new", "assignment-approved", "rejected", "aborted", "NO_STATUS"]}]
 # number of past days since when to display requests in the default view
 data.default_view_requests_since_num_days = 30 # days
 # resource to fetch CMS software versions and scramarch info from
