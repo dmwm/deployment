@@ -303,9 +303,9 @@ start_couch(){
 #
 stop_couch(){
     echo "Stopping CouchDB service..."
-    for couch_pid in $(ps aux | grep couch | grep -v grep | awk '{print $2}'); do
-        echo "  killing CouchDB process... ${pid}"
-        kill -9 $couch_pid
+    for couch_pid in $(ps aux | grep couchdb | egrep -v 'grep|\/manage|ps aux' | awk '{print $2}'); do
+        echo "  killing CouchDB process... ${couch_pid}"
+        kill -9 $couch_pid || true
     done
 }
 
