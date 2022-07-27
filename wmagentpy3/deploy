@@ -29,7 +29,6 @@ deploy_wmagentpy3_sw()
   local couchdb_configs=$root/$cfgversion/config/wmagentpy3
   sed -i "s+deploy_project_root+$root/$cfgversion/install+" $couchdb_configs/local.ini
   cp -f $couchdb_configs/local.ini $root/$cfgversion/config/couchdb/
-  cp -f $couchdb_configs/default.ini $root/$cfgversion/config/couchdb/
 
   local mysql_config=$root/$cfgversion/config/wmagentpy3/my.cnf
   cp -f $mysql_config $root/$cfgversion/config/mysql/
