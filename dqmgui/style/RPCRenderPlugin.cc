@@ -28,6 +28,7 @@ public:
     if (o.name.find( "RPC/FEDIntegrity" ) != std::string::npos) return true;
     if (o.name.find("RPC/EventInfo") != std::string::npos) return true;
     if (o.name.find("RPC/AllHits") != std::string::npos) return true;
+    if (o.name.find( "RPC/Segment_TnP") != std::string::npos) return true;
     return false;
   }
 
@@ -55,6 +56,12 @@ private:
     if (o.name.find("BX") != std::string::npos) {
       obj->StatOverflows(false);
     }
+    if (o.name.find("RPC_chamberEff_Barrel_1D") != std::string::npos ||
+        o.name.find("RPC_chamberEff_Endcap_1D") != std::string::npos) {
+      obj->SetMinimum(0.);
+      c->SetGrid(1,1);
+    }
+
   }
 
   void preDrawTH2(TCanvas *c, const VisDQMObject &o) {
@@ -148,6 +155,34 @@ private:
       }
       return;
     }
+    if (o.name.find("RPC_chamberEff_Barrel_W") != std::string::npos) {
+        dqm::utils::reportSummaryMapPalette(obj);
+        obj->GetXaxis()->SetNdivisions(-21,true);
+        obj->GetYaxis()->SetNdivisions(-12,true);
+        obj->SetMinimum(0.);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        obj->SetOption("text,colz");
+        obj->SetMarkerSize( 2 );
+        gStyle->SetPaintTextFormat("1.2f");
+        c->SetGrid(1,1);
+      return;
+    }
+
+    if (o.name.find("RPC_chamberEff_Endcap_Sta") != std::string::npos) {
+        dqm::utils::reportSummaryMapPalette(obj);
+        obj->GetXaxis()->SetNdivisions(-6,true);
+        obj->GetYaxis()->SetNdivisions(36,true);
+        obj->SetMinimum(0.);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        obj->SetOption("text45,colz");
+        obj->SetMarkerSize( 2 );
+        gStyle->SetPaintTextFormat("1.2f");
+        c->SetGrid(1,1);
+      return;
+    }
+
   }
 
   void postDrawTH2(TCanvas *c __attribute__ ((unused)), const VisDQMObject &o) {
