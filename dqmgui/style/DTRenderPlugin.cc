@@ -45,6 +45,7 @@ public:
          (o.name.find( "DT/B" ) != std::string::npos) ||
          (o.name.find( "DT/C" ) != std::string::npos) ||
          (o.name.find( "DT/L" ) != std::string::npos) ||
+	 (o.name.find( "DT/Segment_TnP" ) != std::string::npos) ||
          (o.name.find( "Everything/AlCaReco/DtCalibSynch/0" ) != std::string::npos))
         return true;
 
@@ -968,6 +969,21 @@ private:
         return;
       }
 
+      if( o.name.find( "DT_chamberEff_W" ) != std::string::npos )
+      {
+        dqm::utils::reportSummaryMapPalette(obj);
+        obj->GetXaxis()->SetNdivisions(-14,true);
+        obj->GetYaxis()->SetNdivisions(-4,true);
+        obj->SetMinimum(0.);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        obj->SetOption("text,colz");
+        obj->SetMarkerSize( 2 );
+        gStyle->SetPaintTextFormat("1.2f");
+        c->SetGrid(1,1);
+        return;
+      }
+
       /*
         if(o.name.find("SetRange_2D") != std::string::npos)
         {
@@ -1252,6 +1268,14 @@ private:
         if(obj->Integral() != 0) c->SetLogy(1);
         return;
       }
+      
+      if(o.name.find("DT_chamberEff_allCh") != std::string::npos)
+      {
+        obj->SetMinimum(0.);
+        c->SetGrid(1,1);
+        return;
+      }
+
     }
 
   void postDrawTProfile2D( TCanvas *, const VisDQMObject & )
