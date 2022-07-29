@@ -57,7 +57,9 @@ private:
       obj->StatOverflows(false);
     }
     if (o.name.find("RPC_chamberEff_Barrel_1D") != std::string::npos ||
-        o.name.find("RPC_chamberEff_Endcap_1D") != std::string::npos) {
+        o.name.find("RPC_chamberEff_Barrel_allCh_1D") != std::string::npos ||
+        o.name.find("RPC_chamberEff_Endcap_1D") != std::string::npos ||
+        o.name.find("RPC_chamberEff_Endcap_allCh_1D") != std::string::npos) {
       obj->SetMinimum(0.);
       c->SetGrid(1,1);
     }
