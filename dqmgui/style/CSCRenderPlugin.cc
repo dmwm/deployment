@@ -22,6 +22,7 @@
 #include "CSCRenderPlugin_EventDisplay.h"
 #include "CSCRenderPlugin_EmuEventDisplay.h"
 #include "CSC_TPE_hAll.h"
+#include "utils.h"
 
 #include <math.h>
 #include <string>
@@ -2802,6 +2803,42 @@ public:
         obj->SetOption("colz");
         return;
       }
+    if (reMatch(".*Segment_TnP/Task/CSC_chamberEff_allCh$", o.name))
+      {
+        TH2* tmp = dynamic_cast<TH2*>(obj);
+        dqm::utils::reportSummaryMapPalette(tmp);
+        tmp->GetXaxis()->SetNdivisions(-9,true);
+        tmp->GetYaxis()->SetNdivisions(-4,true);
+        tmp->SetMinimum(0.);
+        tmp->GetXaxis()->CenterLabels();
+        tmp->GetYaxis()->CenterLabels();
+        tmp->SetOption("text,colz");
+        tmp->SetMarkerSize( 2 );
+        gStyle->SetPaintTextFormat("1.2f");
+        c->SetGrid(1,1);
+        return;
+      }
+    if (reMatch(".*CSC_nFailingProbe_allCh$", o.name) ||
+        reMatch(".*CSC_nPassingProbe_allCh$", o.name))
+      {
+        TH2* tmp = dynamic_cast<TH2*>(obj);
+        tmp->GetXaxis()->SetNdivisions(-9,true);
+        tmp->GetYaxis()->SetNdivisions(-4,true);
+        tmp->SetMinimum(0.);
+        tmp->GetXaxis()->CenterLabels();
+        tmp->GetYaxis()->CenterLabels();
+        tmp->SetOption("colz");
+        c->SetGrid(1,1);
+        return;
+      }
+
+    if (reMatch(".*CSC_chamberEff_allCh_1D$", o.name))
+      {
+        obj->SetMinimum(0.);
+        c->SetGrid(1,1);
+        return;
+      }
+
 
   }
 
