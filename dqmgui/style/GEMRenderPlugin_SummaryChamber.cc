@@ -131,6 +131,7 @@ void SummaryChamber::SetColor(float fVal, TBox *box, unsigned int &unStatusAll, 
 }
 
 
+#include <iostream>  // TEST
 void SummaryChamber::drawStats(TH2*& me) {
   gStyle->SetPalette(1, 0);
   
@@ -172,6 +173,13 @@ void SummaryChamber::drawStats(TH2*& me) {
   float fHBox = m_fHHist / nNbinsY;
   for ( int nIdxLa = 1 ; nIdxLa <= nNbinsY ; nIdxLa++ ) {
     int nNumCh = (int)( me->GetBinContent(0, nIdxLa) + 0.5 );
+    if ( nNumCh > 108 ) {  // A buggy situation; need to fix the information forcefully
+      nNumCh = 36;
+      std::string strLabel = me->GetYaxis()->GetBinLabel(nIdxLa);
+      if ( strLabel.find("GE21") != std::string::npos ) {
+        nNumCh = 18;
+      }
+    }
     float fY1 = m_fPosZeroY + fHBox * ( nIdxLa - 1 ), fY2 = m_fPosZeroY + fHBox * nIdxLa;
     float fWBox = m_fWHist / nNumCh;
     for ( int nIdxCh = 1 ; nIdxCh <= nNumCh ; nIdxCh++ ) {
@@ -197,7 +205,7 @@ void SummaryChamber::drawStats(TH2*& me) {
   printLegendBox(0, "No Data", COLOR_WHITE);
   printLegendBox(1, "Good", COLOR_GREEN);
   printLegendBox(2, "Error", COLOR_RED);
-  printLegendBox(3, "Error", COLOR_ORANGE);
+  printLegendBox(3, "Intermittent error", COLOR_ORANGE);
   printLegendBox(4, "Warning", COLOR_YELLOW);
 }
 
