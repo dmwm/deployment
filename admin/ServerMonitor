@@ -174,7 +174,6 @@ class SystemMonitor(Monitor):
       cpu_info = proc.cpu_times()
       data['processes'] += 1
       proc_pid = proc.pid
-      ofiles = len(proc.open_files())
       oom_score = 0
       try:
         with open('/proc/%s/oom_score' % proc_pid) as fdesc:
@@ -218,7 +217,7 @@ class SystemMonitor(Monitor):
         elif field == 'io':
           addfield(data, field, safefield('io', proc.io_counters))
         elif field == 'files':
-          addfield(data, field, ofiles)
+          addfield(data, field, len(proc.open_files()))
         elif field == 'procpid':
           addfield(data, field, proc_pid)
         elif field == 'oomscore':
