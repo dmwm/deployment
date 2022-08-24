@@ -400,18 +400,25 @@ private:
 
 
     int alignableCount = 0; // number of alignables
+    // THRESHOLD
     int aboveCutCount = 0; // number of alignables above threshold cut
     int aboveSigCount = 0; // number that fulfill prior condition and are significant
-    int withinMaxMoveCount = 0; // number that fulfill prior condition and within movement bounds
-    int withinMaxErrorCount = 0; // number that fulfill prior condition and within error bounds
-
+    // VETO
+    int aboveMaxMoveCount = 0; // number outside movement bounds
+    int aboveMaxErrorCount = 0; // number outside error bounds
 
     for (int i = 1; i <= nBins-5; i++){
       double content = obj->GetBinContent(i);
       double error = obj->GetBinError(i);
 
-
       alignableCount++;
+      if(std::abs(content) > maxMove){
+        aboveMaxMoveCount++;
+      }
+      if(error > maxError){
+        aboveMaxErrorCount++;
+      }
+      
       if(std::abs(content) > cutValue){
         aboveCutCount++;
         if(error==0){
@@ -419,46 +426,40 @@ private:
         }
         if (std::abs(content/error) > significance){
           aboveSigCount++;
-          if(std::abs(content) < maxMove){
-            withinMaxMoveCount++;
-            if(error < maxError){
-              withinMaxErrorCount++;
-            }
-          }
         }
       }
+      
     }
 
     double fraction = 0.25;
     bool aboveCut =       ((double)aboveCutCount / (double)alignableCount >= fraction ) ;
     bool aboveSig =       ((double)aboveSigCount / (double)alignableCount  >= fraction);
-    bool withinMaxMove =  ((double)withinMaxMoveCount / (double)alignableCount >= fraction);
-    bool withinMaxError = ((double)withinMaxErrorCount / (double)alignableCount >= fraction);
+    bool vetoMaxMove =  aboveMaxMoveCount > 0;
+    bool vetoMaxError = aboveMaxErrorCount > 0;
 
     TText* t_text = new TText();
     t_text->SetBit(kCanDelete);
     t_text->SetNDC(true);
-    if(withinMaxError){
-      // Green
-      obj->SetMarkerColor(kOrange);
-      obj->SetLineColor(kOrange);
-      t_text->DrawText(0.2,0.87, "Enough significant movements observed");
-      
-    }else if(withinMaxMove){
+    
+    
+    if(vetoMaxMove){
       // Red, too large max error
       obj->SetMarkerColor(kRed);
       obj->SetLineColor(kRed);
-      t_text->DrawText(0.2,0.87, "Significant movements exceed max error");
-      t_text->DrawText(0.2,0.83, TString::Format("Within max error: %.0f%%",100*((double)withinMaxErrorCount / (double)alignableCount)));
-      
-    }else if(aboveSig){
-      // Red, too large movements
+      t_text->DrawText(0.2,0.87, "Movements exceed max movement, veto");
+    }else if(vetoMaxError){
+      // Red, too large max error
       obj->SetMarkerColor(kRed);
       obj->SetLineColor(kRed);
-      t_text->DrawText(0.2,0.87, "Significant movements exceed max movement");
-      t_text->DrawText(0.2,0.83, TString::Format("Within max movement: %.0f%%",100*((double)withinMaxMoveCount / (double)alignableCount)));
+      t_text->DrawText(0.2,0.87, "Errors exceed max error, veto");
+    }else if(aboveSig){
+      // Orange
+      obj->SetMarkerColor(kOrange);
+      obj->SetLineColor(kOrange);
+      t_text->DrawText(0.2,0.87, "Enough significant movements observed");
+
     }else if(aboveCut){
-      // Orange, not significant movements
+      // Green, movements above threshold not significant
       obj->SetMarkerColor(kGreen+1);
       obj->SetLineColor(kGreen+1);
       t_text->DrawText(0.2,0.87, "Movements above threshold not significant");
