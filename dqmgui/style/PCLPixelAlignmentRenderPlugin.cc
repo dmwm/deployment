@@ -412,6 +412,7 @@ private:
       double error = obj->GetBinError(i);
   
       if (content == 0 && error == 0){
+        obj->SetBinContent(i, 0.00001);
         continue;
       }
   
@@ -442,36 +443,44 @@ private:
     t_text->SetBit(kCanDelete);
     t_text->SetNDC(true);
     
+    TString alignableType;
+    std::string axisTitle = obj->GetXaxis()->GetTitle();
+    if (axisTitle.find( "Panel" ) != std::string::npos){
+      alignableType = "panels";
+    }else{
+      alignableType = "ladders";
+    }
     
     if(vetoMaxMove){
       // Red, too large max error
       obj->SetMarkerColor(kRed);
       obj->SetLineColor(kRed);
-      t_text->DrawText(0.2,0.87, "Movements exceed max movement, veto");
+      t_text->DrawText(0.05,0.87, "Movements exceed max movement, veto");
     }else if(vetoMaxError){
       // Red, too large max error
       obj->SetMarkerColor(kRed);
       obj->SetLineColor(kRed);
-      t_text->DrawText(0.2,0.87, "Errors exceed max error, veto");
+      t_text->DrawText(0.05,0.87, "Errors exceed max error, veto");
     }else if(aboveSig){
       // Orange
       obj->SetMarkerColor(kOrange);
       obj->SetLineColor(kOrange);
-      t_text->DrawText(0.2,0.87, "Enough significant movements observed");
+      t_text->DrawText(0.13,0.87, "Significant movements above threshold");
+      t_text->DrawText(0.13,0.83, TString::Format("%.1f%% of %d aligned %s",100*((double)aboveSigCount / (double)alignableCount), alignableCount,alignableType.Data()));
 
     }else if(aboveCut){
       // Green, movements above threshold not significant
       obj->SetMarkerColor(kGreen+1);
       obj->SetLineColor(kGreen+1);
-      t_text->DrawText(0.2,0.87, "Movements above threshold not significant");
-      t_text->DrawText(0.2,0.83, TString::Format("Above significance: %.1f%%",100*((double)aboveSigCount / (double)alignableCount)));
+      t_text->DrawText(0.13,0.87, "Movements above threshold not significant");
+      t_text->DrawText(0.13,0.83, TString::Format("Above significance: %.1f%% of %d aligned %s",100*((double)aboveSigCount / (double)alignableCount), alignableCount,alignableType.Data()));
 
     }else{
       // Grey, movements not above threshold
-      obj->SetMarkerColor(kGray);
-      obj->SetLineColor(kGray);
-      t_text->DrawText(0.2,0.87, "Not enough movements above threshold");
-      t_text->DrawText(0.2,0.83, TString::Format("Above threshold: %.1f%%",100*((double)aboveCutCount / (double)alignableCount)));
+      obj->SetMarkerColor(kGray+2);
+      obj->SetLineColor(kGray+2);
+      t_text->DrawText(0.13,0.87, "Movements within threshold");
+      t_text->DrawText(0.13,0.83, TString::Format("Above threshold: %.1f%% of %d aligned %s",100*((double)aboveCutCount / (double)alignableCount), alignableCount,alignableType.Data()));
     }
 
 
