@@ -410,7 +410,11 @@ private:
     for (int i = 1; i <= nBins-5; i++){
       double content = obj->GetBinContent(i);
       double error = obj->GetBinError(i);
-
+  
+      if (content == 0 && error == 0){
+        continue;
+      }
+  
       alignableCount++;
       if(std::abs(content) > maxMove){
         aboveMaxMoveCount++;
@@ -419,12 +423,9 @@ private:
         aboveMaxErrorCount++;
       }
       
-      if(std::abs(content) > cutValue){
+      if(std::abs(content) >= cutValue){
         aboveCutCount++;
-        if(error==0){
-          continue;
-        }
-        if (std::abs(content/error) > significance){
+        if (std::abs(content/error) >= significance){
           aboveSigCount++;
         }
       }
@@ -463,14 +464,14 @@ private:
       obj->SetMarkerColor(kGreen+1);
       obj->SetLineColor(kGreen+1);
       t_text->DrawText(0.2,0.87, "Movements above threshold not significant");
-      t_text->DrawText(0.2,0.83, TString::Format("Above significance: %.0f%%",100*((double)aboveSigCount / (double)alignableCount)));
+      t_text->DrawText(0.2,0.83, TString::Format("Above significance: %.1f%%",100*((double)aboveSigCount / (double)alignableCount)));
 
     }else{
       // Grey, movements not above threshold
       obj->SetMarkerColor(kGray);
       obj->SetLineColor(kGray);
       t_text->DrawText(0.2,0.87, "Not enough movements above threshold");
-      t_text->DrawText(0.2,0.83, TString::Format("Above threshold: %.0f%%",100*((double)aboveCutCount / (double)alignableCount)));
+      t_text->DrawText(0.2,0.83, TString::Format("Above threshold: %.1f%%",100*((double)aboveCutCount / (double)alignableCount)));
     }
 
 
