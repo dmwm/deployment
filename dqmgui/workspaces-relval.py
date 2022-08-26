@@ -57,6 +57,35 @@ server.workspace('DQMContent', 24, 'Data', 'MET' , '^MET/', '')
 server.workspace('DQMContent', 25, 'Data', 'BTag' , '^BTag/', '')
 server.workspace('DQMContent', 26, 'Data', 'Tau' , '^Tau/', '')
 server.workspace('DQMContent', 27, 'Data', 'PFlow' , '^ParticleFlow/', '')
+server.workspace('DQMContent', 28, 'Data', 'TkAlignment', '', 'DataLayouts/TkAli',
+                 'DataLayouts/TkAli/00 - Vertex and vertex tracks quality',
+                 'DataLayouts/TkAli/01 - Impact parameters and errors',
+                 'DataLayouts/TkAli/02 - Impact parameters projections (pT>1 GeV)',
+                 'DataLayouts/TkAli/03 - Impact parameters projections (pT>10 GeV)',
+                 'DataLayouts/TkAli/04 - 2D impact parameters projections',
+                 'DataLayouts/TkAli/38 - PixelPhase1 Residuals',
+                 'DataLayouts/TkAli/38aa - Residuals x per Layer',
+                 'DataLayouts/TkAli/38ab - Residuals y per Layer',
+                 'DataLayouts/TkAli/38ba - Profile Residuals x PXBarrel',
+                 'DataLayouts/TkAli/38bb - Profile Residuals y PXBarrel',
+                 'DataLayouts/TkAli/38ca - Mean Residuals x inner Modules per Layer',
+                 'DataLayouts/TkAli/38cb - Mean Residuals x outer Modules per Layer',
+                 'DataLayouts/TkAli/38cc - Mean Residuals y inner Modules per Layer',
+                 'DataLayouts/TkAli/38cd - Mean Residuals y outer Modules per Layer',
+                 'DataLayouts/TkAli/38da - Residuals x per Disk',
+                 'DataLayouts/TkAli/38db - Residuals y per Disk',
+                 'DataLayouts/TkAli/38e - Profile Residuals PXFoward',
+                 'DataLayouts/TkAli/38fa - Mean Residuals InnerOuter Modules PXForward',
+                 'DataLayouts/TkAli/38fb - Mean Residuals pos.neg. Side PXForward',
+                 'DataLayouts/TkAli/42a - Barycenter coordinates',
+                 'DataLayouts/TkAli/42b - Barycenter coordinates',
+                 'DataLayouts/TkAli/21 - TIB Residuals',
+                 'DataLayouts/TkAli/22 - TOB Residuals',
+                 'DataLayouts/TkAli/23 - TID+ Residuals',
+                 'DataLayouts/TkAli/24 - TID- Residuals',
+                 'DataLayouts/TkAli/25 - TEC+ Residual',
+                 'DataLayouts/TkAli/26 - TEC- Residual',
+                )
 
 # Monte Carlo workspaces:
 server.workspace('DQMContent', 30, 'Monte Carlo', 'MC Tk' , '^(Tk/|TrackerDigisV|TrackerHitsV|TrackerRecHitsV|Pixel|SiStrip|Tracking)', 'MCLayouts/Tk',

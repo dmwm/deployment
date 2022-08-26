@@ -20,6 +20,8 @@ LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "tk"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "smp"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "aliOfflinePV"))
 LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "recotau"))
+LAYOUTS += glob("%s/layouts/%s_relval-layouts.py" % (CONFIGDIR, "tkali"))
+
 
 
 modules = ("Monitoring.DQM.GUI",)
