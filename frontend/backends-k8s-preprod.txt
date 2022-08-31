@@ -1,4 +1,4 @@
-^/auth/complete/t0_reqmon(?:/|$) t0reqmon.tzero.svc.cluster.local 
+^/auth/complete/t0_reqmon(?:/|$) t0reqmon.tzero.svc.cluster.local
 ^/auth/complete/reqmgr2(?:/|$) reqmgr2.dmwm.svc.cluster.local
 ^/auth/complete/phedex(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
@@ -79,6 +79,7 @@
 ^/auth/complete/scheddmon/0197/ vocms0197.cern.ch
 ^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
+^/auth/complete/scheddmon/crab-preprod-scd03/ crab-preprod-scd03.cern.ch
 ^/auth/complete/httpgo(?:/|$) httpgo.http.svc.cluster.local
 ^/auth/complete/registry-notification(?:/|$) registry-notification.http.svc.cluster.local
 ^/auth/complete/httpsgo(?:/|$) httpsgo.http.svc.cluster.local
