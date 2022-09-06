@@ -63,6 +63,11 @@ deploy_couchdb_post()
          vocms0742 ) tohost=vocms0743 hour=3;;
          vocms0743 ) tohost=vocms0744 hour=4;;
          vocms0744 ) tohost=vocms0740 hour=5;;
+         vocms0841 ) tohost=vocms0842 hour=2;;
+         vocms0842 ) tohost=vocms0843 hour=3;;
+         vocms0843 ) tohost=vocms0844 hour=4;;
+         vocms0844 ) tohost=vocms0841 hour=5;;
+
                  * ) tohost=;;
        esac
        [ -z "$tohost" ] ||
