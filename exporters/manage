@@ -217,10 +217,7 @@ start()
             dbs_monitors
             ;;
 
-        vocms0740 )
-            couchdb_monitors "workqueue,workqueue_inbox"
-            ;;
-        vocms0841 )
+        vocms0740 | vocms0841 | vocms0842 | vocms0843 | vocms0844 )
             couchdb_monitors "workqueue,workqueue_inbox"
             ;;
 
@@ -237,28 +234,16 @@ start()
             reqmgr2ms_monitors
             ;;
 
-        vocms0842 )
-            das2go_monitors
-            mongodb_monitors
-            couchdb_monitors "reqmgr_workload_cache,reqmgr_config_cache,acdcserver,reqmgr_auxiliary"
-            reqmgr2ms_monitors
-            ;;
 
         vocms0743 )
             couchdb_monitors "wmstats,workloadsummary,wmstats_logdb"
             ;;
 
-        vocms0843 )
-            couchdb_monitors "wmstats,workloadsummary,wmstats_logdb"
-            ;;
 
         vocms0744 )
             couchdb_monitors "tier0_wmstats,t0_workloadsummary,t0_request,t0_logdb"
             ;;
 
-        vocms0844 )
-            couchdb_monitors "tier0_wmstats,t0_workloadsummary,t0_request,t0_logdb"
-            ;;
 
         vocms0158 | vocms0760 | vocms0162 | vocms0164 )
             apache_monitors
