@@ -52,26 +52,26 @@ l1toccupancy(dqmitems,"22 - uGT # of prescaled algo accepts relative to # of all
 def l1tefficiency(i, p, *rows): i["00 Shift/L1T/Efficiency/" + p] = DQMItem(layout=rows)
 
 l1tefficiency(dqmitems, "00 - Reco Muon L1T Efficiency",
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_25_etaMin0_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_22_etaMin0_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_15_etaMin0_etaMax2p4_qualDouble", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_7_etaMin0_etaMax2p4_qualDouble", 'description': "", 'draw': { 'withref': "yes" }}],
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_eta_25_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_eta_22_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_eta_15_qualDouble", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_eta_7_qualDouble", 'description': "", 'draw': { 'withref': "yes" }}],
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_25_etaMin0_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_22_etaMin0_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_15_etaMin0_etaMax2p4_qualDouble", 'description': "", 'draw': { 'withref': "yes" }},
    {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_7_etaMin0_etaMax2p4_qualDouble", 'description': "", 'draw': { 'withref': "yes" }}])
 
 l1tefficiency(dqmitems, "01 - Reco Muon L1T Efficiency per Track Finder Region",
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_25_etaMin0_etaMax0p83_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_25_etaMin0p83_etaMax1p24_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_25_etaMin1p24_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }}],
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_25_etaMin0_etaMax0p83_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_25_etaMin0p83_etaMax1p24_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_25_etaMin1p24_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }}],
-  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_25_etaMin0_etaMax0p83_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_25_etaMin0p83_etaMax1p24_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
-   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_25_etaMin1p24_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }}])
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_22_etaMin0_etaMax0p83_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_22_etaMin0p83_etaMax1p24_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_pt_22_etaMin1p24_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_22_etaMin0_etaMax0p83_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_22_etaMin0p83_etaMax1p24_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_phi_22_etaMin1p24_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }}],
+  [{'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_22_etaMin0_etaMax0p83_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_22_etaMin0p83_etaMax1p24_qualSingle", 'description': "", 'draw': { 'withref': "yes" }},
+   {'path': "L1T/L1TObjects/L1TMuon/L1TriggerVsReco/eff_vtx_22_etaMin1p24_etaMax2p4_qualSingle", 'description': "", 'draw': { 'withref': "yes" }}])
 
 # remove the photon plots for the time being
 #l1tefficiency(dqmitems, "02 - Reco Photon L1T Efficiency",
