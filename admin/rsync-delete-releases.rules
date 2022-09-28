@@ -8,8 +8,8 @@
 
 # Include older releases for deletion
 +r /srv*/
-+r /srv*/HG22[07][a-z]***
-+r /srv*/[bf]eHG220[7][a-z]***
++r /srv*/HG22[08][a-z]***
++r /srv*/[bf]eHG220[8][a-z]***
 
 # Include here anything else you may want to clean up
 +r /.deploy/***
