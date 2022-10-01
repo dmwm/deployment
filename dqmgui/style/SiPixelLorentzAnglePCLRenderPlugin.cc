@@ -103,6 +103,15 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
 
+    if( o.name.find("h_bySectFitQuality") != std::string::npos){
+      gPad->SetGrid();
+      dqm::utils::reportSummaryMapPalette(obj);
+      obj->SetMarkerSize(1.5);
+      obj->SetStats( kFALSE );
+      obj->SetOption("colztext");
+      return;
+    }
+
     if( o.name.find("h_drift_depth")!= std::string::npos){
       obj->SetStats( kFALSE );
       gStyle->SetPalette(1,0);
