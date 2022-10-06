@@ -74,7 +74,7 @@ data.object = 'WMCore.MicroService.Service.RestApiHub.RestApiHub'
 # The couch host is defined during deployment time.
 data.couch_host = COUCH_URL
 data.couch_wmstats_db = "wmstats"
-data.manager = 'WMCore.MicroService.MSManager.MSManager'
+data.manager = 'WMCore.MicroService.MSCore.MSManager.MSManager'
 data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.msOutputUrl = "%s/ms-output" % BASE_URL
 data.wmstatsUrl = "%s/wmstatsserver" % BASE_URL
