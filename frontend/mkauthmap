@@ -119,14 +119,16 @@ def rolesToLower(dataDict):
 def validateMapKeys(dataDict):
     """
     Given a python dictionary with the final user information, validate
-    that each entry contains only keys supported by our frontend.
+    that each entry contains only keys supported by our frontend by removing any extra entries.
     """
-    supportedKeys = set(['DN', 'ID', 'LOGIN', 'NAME', 'ROLES'])
+    neededKeys = set(['DN', 'ID', 'LOGIN', 'NAME', 'ROLES'])
     for entry in dataDict:
-        if set(entry.keys()) != supportedKeys:
-            print >> sys.stderr, "Found keys not supported: %s" % (set(entry.keys()) != supportedKeys)
+        if not all(elem in entry.keys() for elem in neededKeys):
+            print >> sys.stderr, "Needed keys not found in response: %s" % (neededKeys - set(entry.keys()))
             print >> sys.stderr, "It needs to be reported to the CRIC developers!"
             exit(3)
+        for key in set(entry.keys()) - neededKeys:
+            entry.pop(key)
 
 
 def updateFile(opts, roles, sitemap):
