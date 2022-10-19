@@ -259,7 +259,7 @@ private:
       {
 	c->SetGrid(false, false);
 
-	ya->SetRangeUser(-5.5,5.5);
+	ya->SetRangeUser(-6.5,5.5);
 
 	gStyle->SetOptStat(10);
 	gStyle->SetEndErrorSize(0.);
