@@ -59,5 +59,6 @@
 ^/auth/complete/scheddmon/crab-preprod-scd03/ crab-preprod-scd03.cern.ch
 ^/auth/complete/httpgo(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/httpsgo(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/httppy(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/rucioconmon(?:/|$) cmsweb-srv.cern.ch
 ^ cmsweb-srv.cern.ch
