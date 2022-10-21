@@ -24,8 +24,16 @@ public:
 
   virtual bool applies(const VisDQMObject &o, const VisDQMImgInfo &)
   {
-    if(o.name.find( "OfflinePV/Alignment/" ) != std::string::npos)return true;
-    else return false;
+    if( (o.name.find( "OfflinePV/offlinePrimaryVertices/" ) != std::string::npos) ||
+	(o.name.find( "OfflinePV/Resolution/" ) != std::string::npos) ||
+	(o.name.find( "OfflinePV/Alignment/" ) != std::string::npos) ||
+        (o.name.find( "hltPixelVertices/Alignment/" ) != std::string::npos) ||
+	(o.name.find( "hltTrimmedPixelVertices/Alignment/" ) != std::string::npos) ||
+        (o.name.find( "hltVerticesPFFilter/Alignment/" ) != std::string::npos)){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   virtual void preDraw(TCanvas *c, const VisDQMObject &o, const VisDQMImgInfo &, VisDQMRenderInfo &)
@@ -88,6 +96,10 @@ private:
     TH2F* obj = dynamic_cast<TH2F*>( o.object );
     assert( obj );
 
+    obj->SetStats( kFALSE );
+    gStyle->SetPalette(1);
+    gPad->SetRightMargin(0.15);
+    obj->SetOption("colz");
   }
 
   void preDrawTProfile(TCanvas *, const VisDQMObject &o)
@@ -118,6 +130,9 @@ private:
 
   void postDrawTH1F(TCanvas *, const VisDQMObject &o)
   {
+    if (o.name.find( "OfflinePV/Alignment/" ) == std::string::npos)
+      return;
+
     TH1F* obj = dynamic_cast<TH1F*>( o.object );
     assert( obj );
     
