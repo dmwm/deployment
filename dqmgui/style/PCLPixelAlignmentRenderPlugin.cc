@@ -69,25 +69,47 @@ public:
   {
     c->cd();
 
-    if( o.name.find("SiPixelAli")!= std::string::npos && o.name.find("PedeExitCode") != std::string::npos){
-      // Clear the default string from the canvas
-      c->Clear();
+    if( o.name.find("SiPixelAli")!= std::string::npos){
+      if(o.name.find("PedeExitCode") != std::string::npos){
+        // Clear the default string from the canvas
+        c->Clear();
 
-      TObjString* tos = dynamic_cast<TObjString*>( o.object );
-      auto exitCode = TString((tos->GetString())(0,6));
-      TText *t = new TText(.5, .5, tos->GetString());
-      t->SetTextFont(63);
-      t->SetTextAlign(22);
-      t->SetTextSize(18);
-      // from Pede manual: http://www.desy.de/~kleinwrt/MP2/doc/html/exit_code_page.html
-      // all exit codes <  10 are normal endings
-      // all exit codes >= 10 indicated an aborted measurement
-      if(exitCode.Atoi()>=10){
-        t->SetTextColor(kRed);
-      } else {
-        t->SetTextColor(kGreen+2);
+        TObjString* tos = dynamic_cast<TObjString*>( o.object );
+        auto exitCode = TString((tos->GetString())(0,6));
+        TText *t = new TText(.5, .5, tos->GetString());
+        t->SetTextFont(63);
+        t->SetTextAlign(22);
+        t->SetTextSize(18);
+        // from Pede manual: http://www.desy.de/~kleinwrt/MP2/doc/html/exit_code_page.html
+        // all exit codes <  10 are normal endings
+        // all exit codes >= 10 indicated an aborted measurement
+        if(exitCode.Atoi()>=10){
+          t->SetTextColor(kRed);
+        } else {
+          t->SetTextColor(kGreen+2);
+        }
+        t->Draw();
       }
-      t->Draw();
+      if(o.name.find("IsVetoed") != std::string::npos){
+        // Clear the default string from the canvas
+        c->Clear();
+
+        TObjString* tos = dynamic_cast<TObjString*>( o.object );
+        auto strIsVetoed = TString((tos->GetString()));
+        TText *t = new TText(.5, .5, strIsVetoed);
+        t->SetTextFont(63);
+        t->SetTextAlign(22);
+        t->SetTextSize(50);
+        // Print the three different options (Veto,Update,N/A) in three different colors
+        if(strIsVetoed.Contains("Vetoed")){
+          t->SetTextColor(kRed);
+        } else if(strIsVetoed.Contains("Updated")){
+          t->SetTextColor(kGreen+2);
+        } else{
+          t->SetTextColor(kGray+1);
+        }
+        t->Draw();
+      }
     }
 
     // Check if HG alignment is used
@@ -455,12 +477,12 @@ private:
       // Red, too large max error
       obj->SetMarkerColor(kRed);
       obj->SetLineColor(kRed);
-      t_text->DrawText(0.05,0.87, "Movements exceed max movement, veto");
+      t_text->DrawText(0.13,0.87, "Movements exceed max movement, veto");
     }else if(vetoMaxError){
       // Red, too large max error
       obj->SetMarkerColor(kRed);
       obj->SetLineColor(kRed);
-      t_text->DrawText(0.05,0.87, "Errors exceed max error, veto");
+      t_text->DrawText(0.13,0.87, "Errors exceed max error, veto");
     }else if(aboveSig){
       // Orange
       obj->SetMarkerColor(kOrange);
