@@ -25,9 +25,9 @@ If CONFIG-FILE is given, it's assumed to consist of lines in format
 'gitlab URL' to provide the url of the blacklist file.
 The VONAME given in CONFIG-FILE must match the value given with --vo option."""
 
-import sys, re, urllib2, httplib, os, os.path, traceback
+import sys, re, urllib.request, urllib.error, urllib.parse, http.client, os, os.path, traceback
 from xml.sax import saxutils, handler as sax_handler, parseString
-from urlparse import urlsplit, urlunparse
+from urllib.parse import urlsplit, urlunparse
 from optparse import OptionParser
 from tempfile import mkstemp
 
@@ -36,9 +36,9 @@ opts = None
 args = None
 
 # Utility adapter to activate X509 client authentication with HTTPS.
-class HTTPSCertAuth(httplib.HTTPSConnection):
+class HTTPSCertAuth(http.client.HTTPSConnection):
   def __init__(self, host, *args, **kwargs):
-    httplib.HTTPSConnection.__init__(self, host, key_file = opts.key,
+    http.client.HTTPSConnection.__init__(self, host, key_file = opts.key,
 				     cert_file = opts.cert, **kwargs)
 
 class HTTPSCertAuthenticate(urllib2.AbstractHTTPHandler):
@@ -59,7 +59,7 @@ class GridMapData(sax_handler.ContentHandler):
 
   def endElement(self, name):
     if self.save:
-      self.users.add(unicode(self.name).encode("utf-8"))
+      self.users.add(str(self.name).encode("utf-8"))
     self.save = False
 
   def characters(self, content):
@@ -75,9 +75,9 @@ def request(url):
   (scheme, netloc, path, query, frag) = urlsplit(url)
   query = "method=getGridmapUsers" + ((query and "&container=" + query) or "")
   path += "/services/VOMSCompatibility"
-  req = urllib2.Request(urlunparse((scheme, netloc, path, '', query, frag)))
+  req = urllib.request.Request(urlunparse((scheme, netloc, path, '', query, frag)))
   req.add_header("User-agent", ident)
-  result = urllib2.build_opener(HTTPSCertAuthenticate()).open(req)
+  result = urllib.request.build_opener(HTTPSCertAuthenticate()).open(req)
   return result.read()
 
 # Parse VOMS SOAP response to extract member subject strings. Returns
@@ -105,15 +105,15 @@ opt.add_option("--git-token-path", dest="git_token_path", default="", metavar="N
 opts, args = opt.parse_args()
 
 if not opts.key or not os.path.exists(opts.key):
-  print >>sys.stderr, "no certificate private key file found"
+  print("no certificate private key file found", file=sys.stderr)
   sys.exit(1)
 
 if not opts.cert or not os.path.exists(opts.cert):
-  print >>sys.stderr, "no certificate public key file found"
+  print("no certificate public key file found", file=sys.stderr)
   sys.exit(1)
 
 if not opts.out:
-  print >>sys.stderr, "output file name is required"
+  print("output file name is required", file=sys.stderr)
   sys.exit(1)
 
 # Any remaining command line arguments are URIs to process. If we were given
@@ -127,11 +127,11 @@ if opts.conf:
     m = re.match(r"^group (vomss?:\S+) (\S+)$", line)
     n = re.match(r"^gitlab (https?:\S+)$", line)
     if not m and not n:
-      print "%s: %d: line not understood" % (opts.conf, nline)
+      print("%s: %d: line not understood" % (opts.conf, nline))
       sys.exit(1)
     if m:
       if m.group(2) != opts.vo:
-        print "%s: %d: vo %s differs from expected %s" % (m.group(2), opts.vo)
+        print("%s: %d: vo %s differs from expected %s" % (m.group(2), opts.vo))
         sys.exit(1)
       uris.append(m.group(1))
     if n:
@@ -140,12 +140,12 @@ if opts.conf:
           token = f.read()
           gitlab_url = n.group(1) + '&access_token=' + token
       except IOError:
-        print "Reading error at %s. Wrong path defined or file doesn't exist." % opts.git_token_path
+        print("Reading error at %s. Wrong path defined or file doesn't exist." % opts.git_token_path)
 
 blacklisted_dns = []
 if gitlab_url:
   try:
-    blacklisted_dns = urllib2.urlopen(gitlab_url).read().split('\n')
+    blacklisted_dns = urllib.request.urlopen(gitlab_url).read().split('\n')
   except Exception:
     print('List of blacklisted DNs couldn\'t be fetched from GitLab.')
     traceback.print_exc()
@@ -164,9 +164,9 @@ outfile = os.fdopen(fd, "w")
 for user in users:
   if user in blacklisted_dns:
     continue
-  print >> outfile, '"%s" %s' % (user, opts.vo)
+  print('"%s" %s' % (user, opts.vo), file=outfile)
 outfile.close()
-os.chmod(tmpname, 0666 & ~myumask)
+os.chmod(tmpname, 0o666 & ~myumask)
 if os.path.exists(opts.out):
   os.remove(opts.out)
 os.rename(tmpname, opts.out)
