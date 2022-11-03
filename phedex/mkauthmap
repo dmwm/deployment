@@ -12,7 +12,7 @@ import requests
 from optparse import OptionParser
 from pprint import pprint  # to debug objects content
 from tempfile import mkstemp
-from urlparse import urlsplit, urlunparse
+from urllib.parse import urlsplit, urlunparse
 
 # Global vars
 opts = ''
@@ -36,7 +36,7 @@ def getFecthDetails(fname):
     for line in content:
         m = re.match(r"^url (cric?:\S+)$", line.strip())
         if not m:
-            print "%s: %d: line not understood" % (fname, line)
+            print("%s: %d: line not understood" % (fname, line))
             sys.exit(1)
         ml = m.group(1)
         url = ml[5:]
@@ -63,17 +63,17 @@ def request(uri, opts):
         result = requests.get(url, cert=cert, verify=opts.ca_cert or True)
         result.raise_for_status()
     except requests.exceptions.HTTPError as errh:
-        print ("Http Error:", errh)
-        print ("URL", url)
+        print("Http Error:", errh)
+        print("URL", url)
     except requests.exceptions.ConnectionError as errc:
-        print ("Error Connecting:", errc)
-        print ("URL:", url)
+        print("Error Connecting:", errc)
+        print("URL:", url)
     except requests.exceptions.Timeout as errt:
-        print ("Timeout Error:", errt)
-        print ("URL", url)
+        print("Timeout Error:", errt)
+        print("URL", url)
     except requests.exceptions.RequestException as err:
-        print ("Request error", err)
-        print ("URL:", url)
+        print("Request error", err)
+        print("URL:", url)
     else:
         content = result.text
     return content
@@ -86,7 +86,7 @@ def updateFile(opts, jsondata):
             with open(opts.out) as fp:
                 oldjsondata = fp.read()
         except IOError:
-            print "File %s does not exist yet." % opts.out
+            print("File %s does not exist yet." % opts.out)
             oldjsondata = ''
 
         if jsondata != oldjsondata:
@@ -97,11 +97,11 @@ def updateFile(opts, jsondata):
               tmpfile.write(jsondata)
               tmpfile.close()
             except(IOError, OSError) as e: 
-              print "An error ocurred:"
+              print("An error ocurred:")
               pprint(e)
 
             myumask = current_umask()
-            os.chmod(tmpname, 0666 & ~myumask)
+            os.chmod(tmpname, 0o666 & ~myumask)
             os.rename(tmpname, opts.out)
 
 
@@ -118,11 +118,11 @@ opt.add_option("-b", "--ca-cert", dest="ca_cert", help="path to ca cert bundle")
 opts, args = opt.parse_args()
 # Checking command line options
 if not opts.conf:
-    print >> sys.stderr, "Config file name file is required"
+    print("Config file name file is required", file=sys.stderr)
     exit(1)
 
 if not opts.out:
-    print >> sys.stderr, "Output file name is required"
+    print("Output file name is required", file=sys.stderr)
     exit(1)
 
 ##Calling core functions
