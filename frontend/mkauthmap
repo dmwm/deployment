@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """mkauthmap -c url.conf -o FILE
 Queries CRIC roles .json and put it into FILE
 """
