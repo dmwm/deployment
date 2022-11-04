@@ -1,0 +1,5 @@
+{
+   "issuer":"https://cmsweb.cern.ch",
+   "jwks_uri":"https://cmsweb.cern.ch/oauth2/certs",
+   "token_endpoint":"https://cmsweb.cern.ch/token"
+}

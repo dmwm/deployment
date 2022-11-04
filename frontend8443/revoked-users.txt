@@ -1,0 +1,7 @@
+# Exception file to temporarily revoke access by certain users or hosts.
+# This applies only to URLs which use cmsauth authentication.  The lines
+# should start with 'dn', 'login' or 'host', and the rest should be the
+# corresponding parameter to block access to. Examples:
+# dn: /DC=.../DC=.../OU=.../OU=.../CN=foobar/CN=12345/CN=Foo Bar
+# host: 123.456.789.012
+# login: foobar

@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""mkauthmap -c url.conf -o FILE
+Queries CRIC roles .json and put it into FILE
+"""
+
+import json
+import os
+import os.path
+import re
+import sys
+import requests
+from optparse import OptionParser
+from pprint import pprint  # to debug objects content
+from tempfile import mkstemp
+from urllib.parse import urlsplit, urlunparse
+
+# Global vars
+opts = ''
+args = ''
+roles = ''
+sitemap = {}
+sites = ''
+
+
+def current_umask():
+    """Get current umask"""
+    val = os.umask(0)
+    os.umask(val)
+    return val
+
+
+def convertToHeadersStyle(siteInfo):
+    """  
+     - all lower case
+     - whitespaces and underscores replaced by dashes
+    """
+    try:
+        result = siteInfo.replace('_', '-').replace(' ', '-')
+    except AttributeError as e:
+        print(('ERROR: ', e))
+        result = 'none'
+    return result.lower()
+
+
+def getFecthDetails(fname):
+    with open(fname) as fp:
+        content = fp.readlines()
+
+    for line in content:
+        m = re.match(r"^url (cric?:\S+)$", line.strip())
+        if not m:
+            print("%s: %d: line not understood" % (fname, line))
+            sys.exit(1)
+        ml = m.group(1)
+        url = ml[5:]
+        return url
+
+
+def request(uri, opts):
+    content = ''
+    url = "https:" + uri
+    apimap = {
+        'roles': '/accounts/user',
+        'site-names&rcsite_state=ANY': '/api/cms/site',
+        'people': '/accounts/user',
+        'site-responsibilities': '/api/accounts/user'
+    }
+    (scheme, netloc, path, query, frag) = urlsplit(url)
+    path = apimap[query] + path
+    query = "json&preset=" + query
+    url = urlunparse((scheme, netloc, path, '', query, frag))
+    cert = None
+    if opts.cert and opts.key:
+        cert = (opts.cert, opts.key)
+    try:
+        result = requests.get(url, cert=cert, verify=opts.ca_cert or True)
+        result.raise_for_status()
+    except requests.exceptions.HTTPError as errh:
+        print(("Http Error:", errh))
+        print(("URL", url))
+    except requests.exceptions.ConnectionError as errc:
+        print(("Error Connecting:", errc))
+        print(("URL", url))
+    except requests.exceptions.Timeout as errt:
+        print(("Timeout Error:", errt))
+        print(("URL", url))
+    except requests.exceptions.RequestException as err:
+        print(("Request error", err))
+        print(("URL", url))
+    else:
+        content = result.text
+    return content
+
+
+def buildSiteMap(sites):
+    # Following the format of 'roles' API, all names are prepended by 'site:'
+    sitemap = {}
+    for entry in json.loads(sites)['result']:
+        if entry[0] == 'phedex':
+            sitename = "site:" + convertToHeadersStyle(entry[1])
+            nodename = "site:" + convertToHeadersStyle(entry[2])
+            if sitename in sitemap:
+                sitemap[sitename].append(nodename)
+            else:
+                sitemap[sitename] = [nodename]
+    return sitemap
+
+
+def rolesToLower(dataDict):
+    """
+    Receives a python dictionary with all the user entries and convert
+    all group/user ROLES information to lower case, updating it in place
+    """
+    for entry in dataDict:
+        for role, groups in list(entry['ROLES'].items()):
+            entry['ROLES'][role] = [item.lower() for item in groups]
+
+
+def validateMapKeys(dataDict):
+    """
+    Given a python dictionary with the final user information, validate
+    that each entry contains only keys supported by our frontend by removing any extra entries.
+    """
+    neededKeys = set(['DN', 'ID', 'LOGIN', 'NAME', 'ROLES'])
+    for entry in dataDict:
+        if not all(elem in list(entry.keys()) for elem in neededKeys):
+            print("Needed keys not found in response: %s" % (neededKeys - set(entry.keys())), file=sys.stderr)
+            print("It needs to be reported to the CRIC developers!", file=sys.stderr)
+            exit(3)
+        for key in set(entry.keys()) - neededKeys:
+            entry.pop(key)
+
+
+def updateFile(opts, roles, sitemap):
+    """
+    If sitemap argument is given, decode the CRIC roles API output, extend phedex 
+    related groups by adding roles with phedex node names mapped via CRIC site-names API
+    and converted to headers style; then convert the data structure back to a json string.
+    """
+    if not roles or not sitemap:
+        print("Either roles or sitemap is empty, aborting...", file=sys.stderr)
+        exit(2)
+
+    struct = json.loads(roles)
+    for entry in struct:
+        # Only extend the groups interesting to PhEDEx:
+        for group in ['data-manager', 'site-admin', 'phedex-contact']:
+            group_roles = []
+            if group in entry['ROLES']:
+                group_roles.extend(entry['ROLES'][group])
+                for r in entry['ROLES'][group]:
+                    if not r.startswith('site:'):
+                        continue
+                    if r in sitemap:
+                        group_roles.extend(sitemap[r])
+                        if opts.verbose:
+                            print("Added role: %s for user %s and group %s " % \
+                                  (sitemap[r], entry['NAME'], group))
+                    else:
+                        if opts.verbose:
+                            print("WARNING: role %s is missing from the sitemap" % r)
+                entry['ROLES'][group] = group_roles
+    # make sure we only have the expected arguments in the mapping
+    validateMapKeys(struct)
+    # now convert all group/roles to lower
+    rolesToLower(struct)
+    # Generate stable JSON representation.
+    enc = json.JSONEncoder(sort_keys=True)
+    jsondata = "[\n " + ",\n ".join(enc.encode(entry) for entry in struct) + "\n]\n"
+
+    # compare this against the current one (create it if it does not exist)
+    try:
+        with open(opts.out) as fp:
+            oldjsondata = fp.read()
+    except IOError:
+        print("File %s does not exist yet." % opts.out)
+        oldjsondata = ''
+
+    if jsondata != oldjsondata:
+        # then let's write out a new file and replace the current one
+        # print "Info: json content has changed, updating it ..."
+        try:
+            fd, tmpname = mkstemp(dir=os.path.dirname(opts.out))
+            tmpfile = os.fdopen(fd, "w")
+            tmpfile.write(jsondata)
+            tmpfile.close()
+        except(IOError, OSError) as e:
+            print("An error ocurred:")
+            pprint(e)
+
+        myumask = current_umask()
+        os.chmod(tmpname, 0o666 & ~myumask)
+        os.rename(tmpname, opts.out)
+        # print "Done!"  ##Main
+# Getting command line options
+opt = OptionParser(__doc__)
+opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
+opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
+opt.add_option("-v", "--verbose", action="store_true", help="increase output verbosity")
+opt.add_option("-e", "--cert", dest="cert", help="path to cert file")
+opt.add_option("-k", "--key", dest="key", help="path to cert key")
+opt.add_option("-b", "--ca-cert", dest="ca_cert", help="path to ca cert bundle")
+opts, args = opt.parse_args()
+# Checking command line options
+if not opts.conf:
+    print("Config file name file is required", file=sys.stderr)
+    exit(1)
+
+if not opts.out:
+    print("Output file name is required", file=sys.stderr)
+    exit(1)
+    
+##Calling core functions
+uri = getFecthDetails(opts.conf)
+roles = request(uri, opts)
+# sites = request (uri.replace('roles','site-names'))
+sites = request(uri.replace('roles', 'site-names&rcsite_state=ANY'), opts)
+sitemap = buildSiteMap(sites)
+updateFile(opts, roles, sitemap)
+# content = request(uri)
+# updateFile(opts, content)
+exit(0)
