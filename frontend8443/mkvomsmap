@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """ mkvomsmap -o OUTPUT --cert CERT --key KEY [--vo VONAME]
                   [-c CONFIG-FILE] [--git-token-path GIT_TOKEN] [URI...]
 
@@ -41,7 +41,7 @@ class HTTPSCertAuth(http.client.HTTPSConnection):
     http.client.HTTPSConnection.__init__(self, host, key_file = opts.key,
 				     cert_file = opts.cert, **kwargs)
 
-class HTTPSCertAuthenticate(urllib2.AbstractHTTPHandler):
+class HTTPSCertAuthenticate(urllib.request.AbstractHTTPHandler):
   def default_open(self, req):
     return self.do_open(HTTPSCertAuth, req)
 
@@ -59,7 +59,7 @@ class GridMapData(sax_handler.ContentHandler):
 
   def endElement(self, name):
     if self.save:
-      self.users.add(str(self.name).encode("utf-8"))
+      self.users.add(str(self.name))
     self.save = False
 
   def characters(self, content):
@@ -145,7 +145,7 @@ if opts.conf:
 blacklisted_dns = []
 if gitlab_url:
   try:
-    blacklisted_dns = urllib.request.urlopen(gitlab_url).read().split('\n')
+    blacklisted_dns = str(urllib.request.urlopen(gitlab_url).read()).split('\n')
   except Exception:
     print('List of blacklisted DNs couldn\'t be fetched from GitLab.')
     traceback.print_exc()
