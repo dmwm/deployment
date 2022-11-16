@@ -92,7 +92,7 @@ deploy_frontend_post()
    $user                                              \
    -o "$opts"                                         \
    -p $project_config/mpm.conf                        \
-   -c $project_config/frontend.conf                   \
+   -c $project_config/frontend8443.conf               \
    -d $project_config/htdocs                          \
    -e "$APACHE24_SETUP_ROOT/etc/env.d/*.sh"           \
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
