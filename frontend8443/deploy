@@ -13,7 +13,7 @@ deploy_frontend_prep()
 
 deploy_frontend_sw()
 {
-  deploy_pkg -a frontend/sitedbread.py comp cms+frontend
+  deploy_pkg -a frontend8443/sitedbread.py comp cms+frontend
 
   $authlink || if grep -q Oracle $project_auth/sitedbread.py; then :; else
     deploy_frontend_fakeauth $project_auth/users.db
@@ -64,7 +64,7 @@ deploy_frontend_post()
       opts="-DTEST" name="" issuer="`hostname`"
       backends=backends-dev.txt ;;
   esac
-  if $nogroups; then user="-u $(id -un):$(id -gn)"; else user="-u _frontend:_frontend"; fi
+  if $nogroups; then user="-u $(id -un):$(id -gn)"; else user="-u _frontend8443:_frontend8443"; fi
 
   # This hack is needed while supporting old and new deployment procedures
   $nogroups || { sudo chown -R $USER:_config $PWD/{*.conf,htdocs,etc} || true; }
@@ -80,7 +80,7 @@ deploy_frontend_post()
       $project_config/x509_scitokens_issuer/00-defaults.cfg
 
   # Generate apache httpd server configuration
-  (. $root/current/apps/frontend/etc/profile.d/init.sh
+  (. $root/current/apps/frontend8443/etc/profile.d/init.sh
    export AUTH_JSON_MAP=$PWD/etc/authmap.json
    export HOST_MAP_FILE=$project_config/$backends
    export CONFIG_DIR=$project_config
@@ -92,7 +92,7 @@ deploy_frontend_post()
    $user                                              \
    -o "$opts"                                         \
    -p $project_config/mpm.conf                        \
-   -c $project_config/frontend.conf                   \
+   -c $project_config/frontend8443.conf               \
    -d $project_config/htdocs                          \
    -e "$APACHE24_SETUP_ROOT/etc/env.d/*.sh"           \
    -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
@@ -106,10 +106,10 @@ deploy_frontend_post()
   rm -f $PWD/etc/keys/authz-headers
   setgroup -R ugo+r,go-w _config $PWD/{*.conf,htdocs,etc/env.d,etc/keys}
   setgroup ugo+r,go-w _config $PWD/{etc/,etc/{httpd,options.txt}}
-  setgroup ug+rw,o-w _frontend $PWD/var
+  setgroup ug+rw,o-w _frontend8443 $PWD/var
 
   ### x509-scitokens-issuer setup
-  (. $root/current/apps/frontend/etc/profile.d/init.sh
+  (. $root/current/apps/frontend8443/etc/profile.d/init.sh
 
   chmod 644 $project_config/x509_scitokens_issuer/x509_scitokens_issuer_app.json
 
