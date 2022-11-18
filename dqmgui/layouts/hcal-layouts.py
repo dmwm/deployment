@@ -11,15 +11,11 @@ hcallayout(dqmitems, 'EtEmul/TP/TTSubdet/HBHE', [{'path':'Hcal/TPTask/EtEmul/TTS
 
 hcallayout(dqmitems, 'EtEmul/TP/TTSubdet/HF', [{'path':'Hcal/TPTask/EtEmul/TTSubdet/HF', 'description':"""Et Emulator Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'OccupancyEmul/TP/Electronics/VME', [{'path':'Hcal/TPTask/OccupancyEmul/Electronics/VME', 'description':"""Occupancy Distributions for Emulator <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'OccupancyEmul/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/OccupancyEmul/Electronics/uTCA', 'description':"""Occupancy Distributions for Emulator <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'EtCutEmulvsBX/TP/TTSubdet/HBHE', [{'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HBHE', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'EtCutEmulvsBX/TP/TTSubdet/HF', [{'path':'Hcal/TPTask/EtCutEmulvsBX/TTSubdet/HF', 'description':"""Et Emulator vs BX (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'BcnMsm/RAW/Electronics/VME', [{'path':'Hcal/RawTask/BcnMsm/Electronics/VME', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'BcnMsm/RAW/Electronics/uTCA', [{'path':'Hcal/RawTask/BcnMsm/Electronics/uTCA', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
@@ -151,8 +147,6 @@ hcallayout(dqmitems, 'OccupancyvsLS/DIGI/Subdet/HF', [{'path':'Hcal/DigiTask/Occ
 
 hcallayout(dqmitems, 'OccupancyvsLS/DIGI/Subdet/HO', [{'path':'Hcal/DigiTask/OccupancyvsLS/Subdet/HO', 'description':"""Occupancy vs LS.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'FGMsm/TP/Electronics/VME', [{'path':'Hcal/TPTask/FGMsm/Electronics/VME', 'description':"""Distribution of channels with mismatched Fine Grain Bit <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'FGMsm/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/FGMsm/Electronics/uTCA', 'description':"""Distribution of channels with mismatched Fine Grain Bit <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'EtCorrRatio/TP', [{'path':'Hcal/TPTask/EtCorrRatio/EtCorrRatio', 'description':"""Et Correlation Ratio. It is always min(etd, ete)/max(etd, ete).  Correlation Ratio is defined as min(Et_d,Et_e)/max(Et_d, Et_e) - namely, as the min/max between emulator and data Et. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
@@ -176,8 +170,6 @@ hcallayout(dqmitems, 'OccupancyCutvsiphi/DIGI/SubdetPM/HFP', [{'path':'Hcal/Digi
 hcallayout(dqmitems, 'OccupancyCutvsiphi/DIGI/SubdetPM/HOM', [{'path':'Hcal/DigiTask/OccupancyCutvsiphi/SubdetPM/HOM', 'description':"""Occupancy vs iphi (Cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyCutvsiphi/DIGI/SubdetPM/HOP', [{'path':'Hcal/DigiTask/OccupancyCutvsiphi/SubdetPM/HOP', 'description':"""Occupancy vs iphi (Cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'EtMsm/TP/Electronics/VME', [{'path':'Hcal/TPTask/EtMsm/Electronics/VME', 'description':"""Distribution of channels with mismatched Et  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'EtMsm/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/EtMsm/Electronics/uTCA', 'description':"""Distribution of channels with mismatched Et  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
@@ -216,8 +208,6 @@ hcallayout(dqmitems, 'SumQvsBX/DIGI/SubdetPM/HFP', [{'path':'Hcal/DigiTask/SumQv
 hcallayout(dqmitems, 'SumQvsBX/DIGI/SubdetPM/HOM', [{'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HOM', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'SumQvsBX/DIGI/SubdetPM/HOP', [{'path':'Hcal/DigiTask/SumQvsBX/SubdetPM/HOP', 'description':"""Signal Amplitude vs BX (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'EtData/TP/Electronics/VME', [{'path':'Hcal/TPTask/EtData/Electronics/VME', 'description':"""Et Data Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'EtData/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/EtData/Electronics/uTCA', 'description':"""Et Data Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
@@ -263,11 +253,7 @@ hcallayout(dqmitems, 'Occupancy/DIGI/FED/FED730', [{'path':'Hcal/DigiTask/Occupa
 
 hcallayout(dqmitems, 'Occupancy/DIGI/FED/FED731', [{'path':'Hcal/DigiTask/Occupancy/FED/FED731', 'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'OccupancyCutData/TP/Electronics/VME', [{'path':'Hcal/TPTask/OccupancyCutData/Electronics/VME', 'description':"""Occupancy Distributions for Data with a cut on Et <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'OccupancyCutData/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/OccupancyCutData/Electronics/uTCA', 'description':"""Occupancy Distributions for Data with a cut on Et <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'EtEmul/TP/Electronics/VME', [{'path':'Hcal/TPTask/EtEmul/Electronics/VME', 'description':"""Et Emulator Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'EtEmul/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/EtEmul/Electronics/uTCA', 'description':"""Et Emulator Distributions.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
@@ -367,8 +353,6 @@ hcallayout(dqmitems, 'MsnCutEmulvsBX/TP/TTSubdet/HBHE', [{'path':'Hcal/TPTask/Ms
 
 hcallayout(dqmitems, 'MsnCutEmulvsBX/TP/TTSubdet/HF', [{'path':'Hcal/TPTask/MsnCutEmulvsBX/TTSubdet/HF', 'description':"""Number of Channels missing from Emulator w.r.t. Data vs BX. (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'OccupancyCut/DIGI/Electronics/VME', [{'path':'Hcal/DigiTask/OccupancyCut/Electronics/VME', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'OccupancyCut/DIGI/Electronics/uTCA', [{'path':'Hcal/DigiTask/OccupancyCut/Electronics/uTCA', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyCutvsiphivsLS/DIGI/SubdetPM/HBM', [{'path':'Hcal/DigiTask/OccupancyCutvsiphivsLS/SubdetPM/HBM', 'description':"""Occupancy Distribution iphi vs LS (Cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
@@ -423,8 +407,6 @@ hcallayout(dqmitems, 'TimingCut/DIGI/SubdetPM/HOM', [{'path':'Hcal/DigiTask/Timi
 
 hcallayout(dqmitems, 'TimingCut/DIGI/SubdetPM/HOP', [{'path':'Hcal/DigiTask/TimingCut/SubdetPM/HOP', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'EvnMsm/RAW/Electronics/VME', [{'path':'Hcal/RawTask/EvnMsm/Electronics/VME', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'EvnMsm/RAW/Electronics/uTCA', [{'path':'Hcal/RawTask/EvnMsm/Electronics/uTCA', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'SumQvsLS/DIGI/SubdetPM/HBM', [{'path':'Hcal/DigiTask/SumQvsLS/SubdetPM/HBM', 'description':"""Signal Amplitude vs LS (cut is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
@@ -452,8 +434,6 @@ hcallayout(dqmitems, 'OccupancyCutvsLS/DIGI/Subdet/HF', [{'path':'Hcal/DigiTask/
 hcallayout(dqmitems, 'OccupancyCutvsLS/DIGI/Subdet/HO', [{'path':'Hcal/DigiTask/OccupancyCutvsLS/Subdet/HO', 'description':"""Occupancy Cut vs LS <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'MsnEmul/TP', [{'path':'Hcal/TPTask/MsnEmul/MsnEmul', 'description':"""Distribution of channels missing from Emulator w.r.t. Data <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'TimingCut/DIGI/Electronics/VME', [{'path':'Hcal/DigiTask/TimingCut/Electronics/VME', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'TimingCut/DIGI/Electronics/uTCA', [{'path':'Hcal/DigiTask/TimingCut/Electronics/uTCA', 'description':"""Charge Weighted DIGI Timing (Cut on the signal amplitude is applied).  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
@@ -544,8 +524,6 @@ hcallayout(dqmitems, 'OccupancyEmul/TP', [{'path':'Hcal/TPTask/OccupancyEmul/Occ
 hcallayout(dqmitems, 'EtCutEmulvsLS/TP/TTSubdet/HBHE', [{'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HBHE', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'EtCutEmulvsLS/TP/TTSubdet/HF', [{'path':'Hcal/TPTask/EtCutEmulvsLS/TTSubdet/HF', 'description':"""Et Emulator vs LS (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'OccupancyCutEmul/TP/Electronics/VME', [{'path':'Hcal/TPTask/OccupancyCutEmul/Electronics/VME', 'description':"""Occupancy Distributions for Emulator with a cut on Et <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyCutEmul/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/OccupancyCutEmul/Electronics/uTCA', 'description':"""Occupancy Distributions for Emulator with a cut on Et <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
@@ -643,8 +621,6 @@ hcallayout(dqmitems, 'DigiSizevsLS/DIGI/FED/FED731', [{'path':'Hcal/DigiTask/Dig
 
 hcallayout(dqmitems, 'LETDC/QIE10', [{'path':'Hcal/QIE10Task/LETDC/LETDC', 'description':"""QIE10 Leading Edge TDC Distribution <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#QIE10_Task'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'MsnData/TP/Electronics/VME', [{'path':'Hcal/TPTask/MsnData/Electronics/VME', 'description':"""Distribution of channels missing from Data w.r.t. Emulator <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'MsnData/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/MsnData/Electronics/uTCA', 'description':"""Distribution of channels missing from Data w.r.t. Emulator <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyCut/DIGI/depth/depth1', [{'path':'Hcal/DigiTask/OccupancyCut/depth/depth1', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
@@ -654,8 +630,6 @@ hcallayout(dqmitems, 'OccupancyCut/DIGI/depth/depth2', [{'path':'Hcal/DigiTask/O
 hcallayout(dqmitems, 'OccupancyCut/DIGI/depth/depth3', [{'path':'Hcal/DigiTask/OccupancyCut/depth/depth3', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyCut/DIGI/depth/depth4', [{'path':'Hcal/DigiTask/OccupancyCut/depth/depth4', 'description':"""Occupancy after a cut.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'Occupancy/DIGI/Electronics/VME', [{'path':'Hcal/DigiTask/Occupancy/Electronics/VME', 'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'Occupancy/DIGI/Electronics/uTCA', [{'path':'Hcal/DigiTask/Occupancy/Electronics/uTCA', 'description':"""Occupancy.  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
@@ -687,8 +661,6 @@ hcallayout(dqmitems, 'BadQuality/RAW/depth/depth3', [{'path':'Hcal/RawTask/BadQu
 
 hcallayout(dqmitems, 'BadQuality/RAW/depth/depth4', [{'path':'Hcal/RawTask/BadQuality/depth/depth4', 'description':"""Channels that were marked as Bad Quality by Unpacker. It includes, but not limited to, CapId nonrotation, validity bits checks, etc...Statistics over the whole Run is combined. Either all LSs up to the current one or up to end of the Run <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'EtCorrRatio/TP/Electronics/VME', [{'path':'Hcal/TPTask/EtCorrRatio/Electronics/VME', 'description':"""Et Correlation Ratio. It is always min(etd, ete)/max(etd, ete).  Correlation Ratio is defined as min(Et_d,Et_e)/max(Et_d, Et_e) - namely, as the min/max between emulator and data Et. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'EtCorrRatio/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/EtCorrRatio/Electronics/uTCA', 'description':"""Et Correlation Ratio. It is always min(etd, ete)/max(etd, ete).  Correlation Ratio is defined as min(Et_d,Et_e)/max(Et_d, Et_e) - namely, as the min/max between emulator and data Et. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyEmulvsLS/TP/TTSubdet/HBHE', [{'path':'Hcal/TPTask/OccupancyEmulvsLS/TTSubdet/HBHE', 'description':"""Emul Occupancy vs LS (no cuts applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
@@ -704,8 +676,6 @@ hcallayout(dqmitems, 'SumQ/DIGI/depth/depth3', [{'path':'Hcal/DigiTask/SumQ/dept
 hcallayout(dqmitems, 'SumQ/DIGI/depth/depth4', [{'path':'Hcal/DigiTask/SumQ/depth/depth4', 'description':"""Signal Amplitude  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Digi_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyData/TP', [{'path':'Hcal/TPTask/OccupancyData/OccupancyData', 'description':"""Occupancy Distributions for Data <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'OccupancyData/TP/Electronics/VME', [{'path':'Hcal/TPTask/OccupancyData/Electronics/VME', 'description':"""Occupancy Distributions for Data <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'OccupancyData/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/OccupancyData/Electronics/uTCA', 'description':"""Occupancy Distributions for Data <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
@@ -853,8 +823,6 @@ hcallayout(dqmitems, 'Shape/DIGI/FED/FED731', [{'path':'Hcal/DigiTask/Shape/FED/
 
 hcallayout(dqmitems, 'EtMsm/TP', [{'path':'Hcal/TPTask/EtMsm/EtMsm', 'description':"""Distribution of channels with mismatched Et  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'MsnEmul/TP/Electronics/VME', [{'path':'Hcal/TPTask/MsnEmul/Electronics/VME', 'description':"""Distribution of channels missing from Emulator w.r.t. Data <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'MsnEmul/TP/Electronics/uTCA', [{'path':'Hcal/TPTask/MsnEmul/Electronics/uTCA', 'description':"""Distribution of channels missing from Emulator w.r.t. Data <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#TP_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'KnownBadChannels/RunInfo/depth/depth1', [{'path':'Hcal/RunInfo/KnownBadChannels/depth/depth1', 'description':"""Channels that come from Hcal Channel Quality Object from Conditions. <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Run_Info'>Details...</a>"""}])
@@ -989,8 +957,6 @@ hcallayout(dqmitems, 'TimingCutvsieta/RECO/Subdet/HF', [{'path':'HcalReco/RecHit
 
 hcallayout(dqmitems, 'TimingCutvsieta/RECO/Subdet/HO', [{'path':'HcalReco/RecHitTask/TimingCutvsieta/Subdet/HO', 'description':"""Timing @RECO vs ieta (cut is applied) <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'OccupancyCut/RECO/Electronics/VME', [{'path':'HcalReco/RecHitTask/OccupancyCut/Electronics/VME', 'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'OccupancyCut/RECO/Electronics/uTCA', [{'path':'HcalReco/RecHitTask/OccupancyCut/Electronics/uTCA', 'description':"""Occupancy Distribution (cut is applied on energy)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'Occupancyvsiphi/RECO/SubdetPM/HBM', [{'path':'HcalReco/RecHitTask/Occupancyvsiphi/SubdetPM/HBM', 'description':"""Occupancy vs iphi (no cuts applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
@@ -1025,11 +991,7 @@ hcallayout(dqmitems, 'Occupancyvsieta/RECO/Subdet/HF', [{'path':'HcalReco/RecHit
 
 hcallayout(dqmitems, 'Occupancyvsieta/RECO/Subdet/HO', [{'path':'HcalReco/RecHitTask/Occupancyvsieta/Subdet/HO', 'description':"""Occupancy vs ieta (no cuts applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
-hcallayout(dqmitems, 'TimingCut/RECO/Electronics/VME', [{'path':'HcalReco/RecHitTask/TimingCut/Electronics/VME', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
-
 hcallayout(dqmitems, 'TimingCut/RECO/Electronics/uTCA', [{'path':'HcalReco/RecHitTask/TimingCut/Electronics/uTCA', 'description':"""Timing @RECO (cut is applied)  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
-
-hcallayout(dqmitems, 'Occupancy/RECO/Electronics/VME', [{'path':'HcalReco/RecHitTask/Occupancy/Electronics/VME', 'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, 'Occupancy/RECO/Electronics/uTCA', [{'path':'HcalReco/RecHitTask/Occupancy/Electronics/uTCA', 'description':"""Occupancy Distribution  <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#RecHit_Task_Description'>Details...</a>"""}])
 
@@ -1474,7 +1436,7 @@ hcallayout(dqmitems, '02 RAW Bad Quality depth',
 	]
 )
 
-hcallayout(dqmitems, '03 RAW Bcn(Evn) Mismatches', [{'path':'Hcal/RawTask/BcnMsm/Electronics/VME', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/BcnMsm/Electronics/uTCA', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}], [{'path':'Hcal/RawTask/EvnMsm/Electronics/VME', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/EvnMsm/Electronics/uTCA', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
+hcallayout(dqmitems, '03 RAW Bcn(Evn) Mismatches', [{'path':'Hcal/RawTask/BcnMsm/Electronics/uTCA', 'description':"""BX Mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}, {'path':'Hcal/RawTask/EvnMsm/Electronics/uTCA', 'description':"""Event Number mismatches between individual uHTR and AMC13 <a href='https://twiki.cern.ch/twiki/bin/view/CMS/HcalDQMRun2TaskDescription#Raw_Task_Description'>Details...</a>"""}])
 
 hcallayout(dqmitems, '04 DIGI Occupancy', 
 	[
