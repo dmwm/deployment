@@ -47,6 +47,7 @@ export YUI_ROOT
 export WMAGENT_CONFIG=${CFGFILE}
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export RUCIO_HOME=$CFGDIR
+export CRYPTOGRAPHY_ALLOW_OPENSSL_102=1
 
 export WMCORE_ROOT=$WORKQUEUE_ROOT/lib/python*/site-packages
 if [ -e $AUTHDIR/dmwm-service-cert.pem ] && [ -e $AUTHDIR/dmwm-service-key.pem ]; then
