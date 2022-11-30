@@ -66,6 +66,7 @@ COLOR_NORMAL="\\033[0;39m"
 
 . $ROOT/apps/$ME/etc/profile.d/init.sh
 
+export CRYPTOGRAPHY_ALLOW_OPENSSL_102=1
 export PYTHONPATH=$ROOT/auth/$ME:$PYTHONPATH
 export WMCORE_ROOT=$REQMGR2MS_ROOT/lib/python*/site-packages
 export REQMGR_CACHE_DIR=$STATEDIR
