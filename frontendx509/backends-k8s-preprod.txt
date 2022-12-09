@@ -1,0 +1,88 @@
+^/auth/complete/t0_reqmon(?:/|$) t0reqmon.tzero.svc.cluster.local
+^/auth/complete/reqmgr2(?:/|$) reqmgr2.dmwm.svc.cluster.local
+^/auth/complete/phedex(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
+^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
+^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new|dqm-square|dqm-square-origin)(?:/|$) cmsdqm.cern.ch
+^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
+^/auth/complete/dqm/(?:dev|offline-test|offline-test-new|relval-test|relval-test-new)(?:/|$) vocms0731.cern.ch
+^/auth/complete/dqm/(?:offline|offline-new)(?:/|$) vocms0738.cern.ch
+^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
+^/auth/complete/dqm/autodqm(?:/|$) autodqm.dqm.svc.cluster.local
+^/auth/complete/dqm/newdqmgui?:/|$) newdqmgui.dqm.svc.cluster.local
+^/auth/complete/dqm/dqm-square-k8(?:/|$) dqm-square-k8.dqm.svc.cluster.local
+^/auth/complete/dqm/dqmgui/offline-k8(?:/|$) dqmgui-offline-k8.dqm.svc.cluster.local
+^/auth/complete/dqm/dqmgui/relval-k8(?:/|$) dqmgui-relval-k8.dqm.svc.cluster.local
+^/auth/complete/dqm/dqmgui/dev-k8(?:/|$) dqmgui-dev-k8.dqm.svc.cluster.local
+^/auth/complete/(?:couchdb/wmdatamining|wmdatamining)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_workload_cache|reqmgr_workload_cache)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_config_cache|reqmgr_config_cache)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/acdcserver|acdcserver)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/tier0_wmstats|tier0_wmstats)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_workloadsummary|t0_workloadsummary)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_request|t0_request)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/t0_logdb|t0_logdb)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats|wmstats)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/workloadsummary|workloadsummary)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/wmstats_logdb|wmstats_logdb)(?:/|$) vocms0731.cern.ch :affinity
+^/auth/complete/(?:couchdb/reqmgr_auxiliary|couchdb)(?:/|$) vocms0132.cern.ch :affinity
+^/auth/complete/crabcache(?:/|$) crabcache.crab.svc.cluster.local
+^/auth/complete/crabserver(?:/|$) crabserver.crab.svc.cluster.local
+^/auth/complete/dbsproxy(?:/|$) dbsproxy.dbs.svc.cluster.local
+^/auth/complete/cmsamqproxy(?:/|$) cmsamqproxy.http.svc.cluster.local
+^/auth/complete/dbs2go(?:/|$) dbs2go.dbs.svc.cluster.local
+^/auth/complete/dbs2go-writer(?:/|$) dbs2go-writer.dbs.svc.cluster.local
+^/auth/complete/dbs2go-migrate(?:/|$) dbs2go-migrate.dbs.svc.cluster.local
+^/auth/complete/dbspy/(?:int/global/DBSReader|prod/global/DBSReader|dev/global/DBSReader)(?:/|$) dbs-global-r.dbs.svc.cluster.local
+^/auth/complete/dbspy/(?:int/global/DBSWriter|prod/global/DBSWriter|dev/global/DBSWriter)(?:/|$) dbs-global-w.dbs.svc.cluster.local
+^/auth/complete/dbspy/(?:int/phys03/DBSReader|prod/phys03/DBSReader|dev/phys03/DBSReader)(?:/|$) dbs-phys03-r.dbs.svc.cluster.local
+^/auth/complete/dbspy/(?:int/phys03/DBSWriter|prod/phys03/DBSWriter|dev/phys03/DBSWriter)(?:/|$) dbs-phys03-w.dbs.svc.cluster.local
+^/auth/complete/dbspy/(?:int/global/DBSMigrate|prod/global/DBSMigrate|dev/global/DBSMigrate)(?:/|$) dbs-migrate.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/global/DBSReader|prod/global/DBSReader|dev/global/DBSReader)(?:/|$) dbs2go-global-r.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/global/DBSWriter|prod/global/DBSWriter|dev/global/DBSWriter)(?:/|$) dbs2go-global-w.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/phys03/DBSReader|prod/phys03/DBSReader|dev/phys03/DBSReader)(?:/|$) dbs2go-phys03-r.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/phys03/DBSWriter|prod/phys03/DBSWriter|dev/phys03/DBSWriter)(?:/|$) dbs2go-phys03-w.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/global/DBSMigrate)(?:/|$) dbs2go-global-m.dbs.svc.cluster.local
+^/auth/complete/dbs/(?:int/phys03/DBSMigrate)(?:/|$) dbs2go-phys03-m.dbs.svc.cluster.local
+^/auth/complete/wmstatsserver(?:/|$) reqmon.dmwm.svc.cluster.local
+^/auth/complete/wmstats2go(?:/|$) wmstats.dmwm.svc.cluster.local
+^/auth/complete/das(?:/|$) das-server.das.svc.cluster.local
+^/auth/complete/das2go(?:/|$) das-server.das.svc.cluster.local
+^/auth/complete/wmarchive(?:/|$) wmarchive.wma.svc.cluster.local
+^/auth/complete/exitcodes(?:/|$) exitcodes.http.svc.cluster.local
+^/auth/complete/ms-transferor(?:/|$) ms-transferor.dmwm.svc.cluster.local
+^/auth/complete/ms-monitor(?:/|$) ms-monitor.dmwm.svc.cluster.local
+^/auth/complete/ms-output(?:/|$) ms-output.dmwm.svc.cluster.local
+^/auth/complete/ms-rulecleaner(?:/|$) ms-rulecleaner.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged/(?:.*rse_type=t1)(?:/|$) ms-unmer-t1.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged/(?:.*rse_type=t2t3us)(?:/|$) ms-unmer-t2t3us.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged/(?:.*rse_type=t2t3)(?:/|$) ms-unmer-t2t3.dmwm.svc.cluster.local
+^/auth/complete/ms-unmerged(?:/|$) ms-unmer-t1.dmwm.svc.cluster.local
+^/auth/complete/t0wmadatasvc(?:/|$) t0wmadatasvc.tzero.svc.cluster.local
+^/auth/complete/scheddmon/068/ vocms068.cern.ch
+^/auth/complete/scheddmon/069/ vocms069.cern.ch
+^/auth/complete/scheddmon/0106/ vocms0106.cern.ch
+^/auth/complete/scheddmon/0109/ vocms0109.cern.ch
+^/auth/complete/scheddmon/0114/ vocms0114.cern.ch
+^/auth/complete/scheddmon/0121/ vocms0121.cern.ch
+^/auth/complete/scheddmon/0122/ vocms0122.cern.ch
+^/auth/complete/scheddmon/059/ vocms059.cern.ch
+^/auth/complete/scheddmon/0107/ vocms0107.cern.ch
+^/auth/complete/scheddmon/0137/ vocms0137.cern.ch
+^/auth/complete/scheddmon/0144/ vocms0144.cern.ch
+^/auth/complete/scheddmon/0155/ vocms0155.cern.ch
+^/auth/complete/scheddmon/0119/ vocms0119.cern.ch
+^/auth/complete/scheddmon/0120/ vocms0120.cern.ch
+^/auth/complete/scheddmon/0194/ vocms0194.cern.ch
+^/auth/complete/scheddmon/0195/ vocms0195.cern.ch
+^/auth/complete/scheddmon/0196/ vocms0196.cern.ch
+^/auth/complete/scheddmon/0197/ vocms0197.cern.ch
+^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
+^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
+^/auth/complete/scheddmon/crab-preprod-scd03/ crab-preprod-scd03.cern.ch
+^/auth/complete/httpgo(?:/|$) httpgo.http.svc.cluster.local
+^/auth/complete/registry-notification(?:/|$) registry-notification.http.svc.cluster.local
+^/auth/complete/httpsgo(?:/|$) httpsgo.http.svc.cluster.local
+^/auth/complete/rucioconmon(?:/|$) monitor.ruciocm.svc.cluster.local
+^/auth/complete/httppy(?:/|$) httppy.http.svc.cluster.local

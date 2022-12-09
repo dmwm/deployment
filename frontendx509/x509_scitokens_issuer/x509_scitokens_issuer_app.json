@@ -1,0 +1,9 @@
+{
+"CONFIG_FILE_GLOB": "@STATEDIR@/x509_scitokens_issuer/*.cfg",
+"LIFETIME": 3600,
+"ISSUER_KEY": "@STATEDIR@/x509_scitokens_issuer/issuer_key.jwks",
+"RULES": "@STATEDIR@/x509_scitokens_issuer/rules.json",
+"DN_MAPPING": "@STATEDIR@/x509_scitokens_issuer/dn_mapping.json",
+"CMS": true,
+"ENABLED": true
+}

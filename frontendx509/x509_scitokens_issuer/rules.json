@@ -1,0 +1,6 @@
+{
+  "rules": [
+      {"match": "fqan:/users", "scopes": ["read:/store", "write:/store/user/{username}"]},
+      {"match": "fqan:/cms", "scopes": ["read:/store", "write:/store/user/{username}"]}
+  ]
+}
