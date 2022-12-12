@@ -39,7 +39,7 @@ case ${1:-status} in
   start | restart )
     echo "stopping httpd service ..."
     $STATEDIR/etc/httpd stop
-    ipids=`ipcs -s | awk '/apache|frontend/ {print $2}'`
+    ipids=`ipcs -s | awk '/apache|frontendx509/ {print $2}'`
     if [ -n "$ipids" ]; then
         echo "for i in $ipids; do (sudo ipcrm -s $i); done"
         for i in `ipcs -s | awk '/apache/ {print $2}'`; do (sudo ipcrm -s $i); done
