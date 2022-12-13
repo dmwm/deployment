@@ -13,7 +13,7 @@ deploy_frontend_prep()
 
 deploy_frontend_sw()
 {
-  deploy_pkg -a frontendx509/sitedbread.py comp cms+frontend
+  deploy_pkg -a frontendx509/sitedbread.py comp cms+frontendx509
 
   $authlink || if grep -q Oracle $project_auth/sitedbread.py; then :; else
     deploy_frontend_fakeauth $project_auth/users.db
