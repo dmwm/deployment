@@ -1,22 +1,22 @@
 # vim: set ft=sh sw=2 ts=8 et :
-deploy_frontend_variants="default prod preprod dev"
-deploy_frontend_deps()
+deploy_frontendx509_variants="default prod preprod dev"
+deploy_frontendx509_deps()
 {
   deploy $stage wmcore-auth
 }
 
-deploy_frontend_prep()
+deploy_frontendx509_prep()
 {
   mkproj var etc/keys{,/{auth-{hn,csrf,sid,pass},cert-cookie,host-map}}
   setgroup ug+rw,o-w _config $PWD{,/etc{,/keys}}
 }
 
-deploy_frontend_sw()
+deploy_frontendx509_sw()
 {
   deploy_pkg -a frontendx509/sitedbread.py comp cms+frontendx509
 
   $authlink || if grep -q Oracle $project_auth/sitedbread.py; then :; else
-    deploy_frontend_fakeauth $project_auth/users.db
+    deploy_frontendx509_fakeauth $project_auth/users.db
   fi
 
   # New mod_perl2 version contains breaking api changes, fix it here
@@ -31,7 +31,7 @@ deploy_frontend_sw()
   esac
 }
 
-deploy_frontend_post()
+deploy_frontendx509_post()
 {
   local certs
   if [ -r $root/certs/hostkey.pem ]; then
@@ -185,7 +185,7 @@ deploy_frontend_post()
   chmod 644 $PWD/etc/httpd.plist
   $nogroups || sudo chown root:$(id -gn) $PWD/etc/httpd.plist
 
-  # Set to start frontend system wide
+  # Set to start frontendx509 system wide
   if $nogroups; then
     :
   elif [ -d /etc/rc.d/init.d ]; then
@@ -205,13 +205,13 @@ deploy_frontend_post()
   fi
 }
 
-deploy_frontend_auth()
+deploy_frontendx509_auth()
 {
   echo "import sqlite3"
   echo "db = { 'type': sqlite3, 'database': '$project_auth/users.db' }"
 }
 
-deploy_frontend_fakeauth()
+deploy_frontendx509_fakeauth()
 {
   [ ! -f $1 ] || return 0
 
