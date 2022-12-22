@@ -52,4 +52,5 @@
 ^/auth/complete/httpgo(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/httpsgo(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/httppy(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/wflow-dbs(?:/|$) cmsweb-srv.cern.ch
 ^ cmsweb-srv.cern.ch
