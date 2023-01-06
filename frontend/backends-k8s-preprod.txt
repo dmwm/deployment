@@ -87,3 +87,4 @@
 ^/auth/complete/httpsgo(?:/|$) httpsgo.http.svc.cluster.local
 ^/auth/complete/rucioconmon(?:/|$) monitor.ruciocm.svc.cluster.local
 ^/auth/complete/httppy(?:/|$) httppy.http.svc.cluster.local
+^/auth/complete/wflow-dbs(?:/|$) wflow-dbs.dmwm.svc.cluster.local
