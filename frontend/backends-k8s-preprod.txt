@@ -55,6 +55,7 @@
 ^/auth/complete/ms-transferor(?:/|$) ms-transferor.dmwm.svc.cluster.local
 ^/auth/complete/ms-monitor(?:/|$) ms-monitor.dmwm.svc.cluster.local
 ^/auth/complete/ms-output(?:/|$) ms-output.dmwm.svc.cluster.local
+^/auth/complete/ms-pileup(?:/|$) ms-pileup.dmwm.svc.cluster.local
 ^/auth/complete/ms-rulecleaner(?:/|$) ms-rulecleaner.dmwm.svc.cluster.local
 ^/auth/complete/ms-unmerged/(?:.*rse_type=t1)(?:/|$) ms-unmer-t1.dmwm.svc.cluster.local
 ^/auth/complete/ms-unmerged/(?:.*rse_type=t2t3us)(?:/|$) ms-unmer-t2t3us.dmwm.svc.cluster.local
