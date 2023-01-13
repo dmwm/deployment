@@ -230,6 +230,7 @@ export WMAGENT_ROOT=$T0_ROOT
 # if WMCORE_ROOT already set export it, else set to WMAGENT_ROOT
 export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENT_ROOT}
 export YUI_ROOT
+export CRYPTOGRAPHY_ALLOW_OPENSSL_102=true
 
 #
 # Database prompt so that people can poke around in the db interactively
