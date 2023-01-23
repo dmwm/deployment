@@ -69,8 +69,8 @@ variant=$1
 case $variant in
   prod)
     frontends="vocms0158,vocms0162,vocms0164,vocms0760"
-    backends="vocms0136,vocms0161,vocms0163,vocms0165,vocms0738,vocms0739,vocms0740,vocms0741,vocms0742,vocms0766,vocms0743,vocms0744,vocms0746,vocms0761,vocms0762,vocms0763,vocms0764,vocms0765"
-    couches="vocms0740,vocms0741,vocms0742,vocms0743,vocms0744"
+    backends="vocms0136,vocms0738,vocms0739,vocms0741,vocms0766,vocms0746"
+    couches="vocms0841,vocms0842,vocms0843,vocms0844"
     ;;
   preprod|dev)
     frontends="vocms0734,vocms0135"
