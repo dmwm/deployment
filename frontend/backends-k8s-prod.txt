@@ -3,7 +3,8 @@
 ^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new|dqm-square|dqm-square-origin)(?:/|$) cmsdqm.cern.ch
 ^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|offline-test-new|relval-test|relval-test-new)(?:/|$) vocms0731.cern.ch
-^/auth/complete/dqm/(?:offline|offline-new)(?:/|$) vocms0738.cern.ch
+^/auth/complete/dqm/(?:offline-new)(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/dqm/(?:offline)(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
 ^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0841.cern.ch :affinity
 ^/auth/complete/(?:couchdb/workqueue_inbox|workqueue_inbox)(?:/|$) vocms0841.cern.ch :affinity
