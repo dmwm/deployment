@@ -5,6 +5,9 @@
   font-family:arial,helvetica,clean,sans-serif;
   line-height:1.22em;
 }
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Corben', Georgia, Times, serif;
+}
 
 input {
   margin: 2px;
@@ -14,6 +17,7 @@ input {
 body {
   background-image:url(../img/bk.gif);
   background-repeat: repeat;
+  font-family: 'Nobile', Helvetica, Arial, sans-serif;
 }
 
 ul {
@@ -49,11 +53,21 @@ p {
 .box {
   color:#553;
   padding-top: 20px;
+  color: LightCoral;
+  font-family: 'Nobile', Helvetica, Arial, sans-serif;
+  
+}
+
+.box .heading
+{
+font-weight: bold;
+
 }
 
 .boxTitle {
   float:right;
   margin-right:50px;
+
 }
 
 .boxSubtitle {
