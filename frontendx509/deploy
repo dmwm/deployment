@@ -81,23 +81,23 @@ deploy_frontendx509_post()
   echo "root: $root, project_logs: $project_logs, APACHE24_ROOT:$APACHE24_ROOT"
   echo "user: $user, opts: $opts, project_config: $project_config, FRONTEND_ROOT: $FRONTEND_ROOT, MOD_PERL24_ROOT: $MOD_PERL24_ROOT"
   # Generate apache httpd server configuration
-  (. $root/current/apps/frontendx509/etc/profile.d/init.sh 
-   export AUTH_JSON_MAP=$PWD/etc/authmap.json 
-   export HOST_MAP_FILE=$project_config/$backends 
-   export CONFIG_DIR=$project_config 
-   mkserver                                           
-   $name                                              
-   -r $PWD                                            
-   -l $project_logs                                   
-   -a $APACHE24_ROOT                                  
-   $user                                              
-   -o "$opts"                                         
-   -p $project_config/mpm.conf                        
-   -c $project_config/frontendx509.conf               
-   -d $project_config/htdocs                          
-   -e "$APACHE24_SETUP_ROOT/etc/env.d/*.sh"           
-   -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 
-   -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so 
+   (. $root/current/apps/frontendx509/etc/profile.d/init.sh
+   export AUTH_JSON_MAP=$PWD/etc/authmap.json
+   export HOST_MAP_FILE=$project_config/$backends
+   export CONFIG_DIR=$project_config
+   mkserver                                           \
+   $name                                              \
+   -r $PWD                                            \
+   -l $project_logs                                   \
+   -a $APACHE24_ROOT                                  \
+   $user                                              \
+   -o "$opts"                                         \
+   -p $project_config/mpm.conf                        \
+   -c $project_config/frontend.conf                   \
+   -d $project_config/htdocs                          \
+   -e "$APACHE24_SETUP_ROOT/etc/env.d/*.sh"           \
+   -e "$FRONTEND_ROOT/etc/env.d/*.sh"                 \
+   -m perl_module:$MOD_PERL24_ROOT/modules/mod_perl.so \
    -m wsgi_module:$MOD_WSGI24_ROOT/modules/mod_wsgi.so)
 # we may use mod_gridsite for x509_scitoken_issuer, if so take line below,
 # uncomment it, and put it one line above (after mod_perl)
