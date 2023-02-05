@@ -60,9 +60,9 @@ def request(uri, opts):
     content = ''
     url = "https:" + uri
     apimap = {
-        'roles': '/accounts/user',
+        'roles': '/api/accounts/user',
         'site-names&rcsite_state=ANY': '/api/cms/site',
-        'people': '/accounts/user',
+        'people': '/api/accounts/user',
         'site-responsibilities': '/api/accounts/user'
     }
     (scheme, netloc, path, query, frag) = urlsplit(url)
