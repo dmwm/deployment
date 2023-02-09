@@ -54,6 +54,14 @@ start()
   LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "|rotatelogs $LOGDIR/crabserver-%Y%m%d-`hostname -s`.log 86400" $CFGFILE
 }
 
+# Start the service but write logs to named pipe
+# Will replace the start() later when everything works.
+start2()
+{
+  echo "starting $ME"
+  LD_PRELOAD=$JEMALLOC_ROOT/lib/libjemalloc.so wmc-httpd -r -d $STATEDIR -l "$STATEDIR/crabserver-fifo" $CFGFILE
+}
+
 # Stop the service.
 stop()
 {
@@ -88,6 +96,13 @@ case ${1:-status} in
     echo $2
     stop
     start
+    ;;
+
+  start2 | restart2 )
+    check "$2"
+    echo $2
+    stop
+    start2
     ;;
 
   status )
