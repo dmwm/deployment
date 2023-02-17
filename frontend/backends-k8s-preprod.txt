@@ -4,9 +4,9 @@
 ^/auth/complete/phedex/datasvc(?:/|$) vocms0132.cern.ch|vocms0731.cern.ch :affinity
 ^/auth/complete/dqm/(?:online|online-playback|online-test|online-new|online-playback-new|online-test-new|dqm-square|dqm-square-origin)(?:/|$) cmsdqm.cern.ch
 ^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
-^/auth/complete/dqm/(?:dev|offline-test|offline-test-new|relval-test|relval-test-new)(?:/|$) vocms0731.cern.ch
+^/auth/complete/dqm/(?:dev|offline-test|relval-test|relval-test-new)(?:/|$) vocms0731.cern.ch
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
-^/auth/complete/dqm/offline-new(?:/|$) offline-new.dqm.svc.cluster.local
+^/auth/complete/dqm/offline-test-new(?:/|$) newdqmgui.dqm.svc.cluster.local
 ^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
 ^/auth/complete/dqm/autodqm(?:/|$) autodqm.dqm.svc.cluster.local
 ^/auth/complete/dqm/newdqmgui(?:/|$) newdqmgui.dqm.svc.cluster.local
@@ -55,6 +55,7 @@
 ^/auth/complete/ms-transferor(?:/|$) ms-transferor.dmwm.svc.cluster.local
 ^/auth/complete/ms-monitor(?:/|$) ms-monitor.dmwm.svc.cluster.local
 ^/auth/complete/ms-output(?:/|$) ms-output.dmwm.svc.cluster.local
+^/auth/complete/ms-pileup(?:/|$) ms-pileup.dmwm.svc.cluster.local
 ^/auth/complete/ms-rulecleaner(?:/|$) ms-rulecleaner.dmwm.svc.cluster.local
 ^/auth/complete/ms-unmerged/(?:.*rse_type=t1)(?:/|$) ms-unmer-t1.dmwm.svc.cluster.local
 ^/auth/complete/ms-unmerged/(?:.*rse_type=t2t3us)(?:/|$) ms-unmer-t2t3us.dmwm.svc.cluster.local

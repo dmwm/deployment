@@ -244,7 +244,7 @@ export WMAGENTPY3_ROOT
 export WMCORE_ROOT=${WMCORE_ROOT:-$WMAGENTPY3_ROOT}
 export YUI_ROOT
 export COUCHSKEL_ROOT
-
+export CRYPTOGRAPHY_ALLOW_OPENSSL_102=true
 
 #########################
 #  MySQL                #
