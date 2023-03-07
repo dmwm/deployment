@@ -216,6 +216,7 @@ pixelstations = [ "station 210", "station 220" ]
 pixstationsf=["sector 45/station 210/","sector 45/station 220/","sector 56/station 210/","sector 56/station 220/"]
 pix_planes  = [ "0","1","2" ]
 pix_planes2 = [ "3","4","5" ]
+feds = [ "1462","1463" ]
 
 def CTPPSTrackingPixelLayout(i, p, *rows): i["CTPPS/TrackingPixel/Layouts/" + p] = DQMItem(layout=rows)
 
@@ -291,3 +292,18 @@ for plot in ["hits position"]:
       rows.append(row)
 
       CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
+
+for fed in feds:
+  rows = list()
+  row = list()
+  row.append("CTPPS/TrackingPixel/Errors in FED"+fed)
+  rows.append(row)
+  row = list()
+  row.append("CTPPS/TrackingPixel/TBM Message in FED"+fed)
+  rows.append(row)
+  row = list()
+  row.append("CTPPS/TrackingPixel/TBM Type in FED"+fed)
+  rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, "Errors in FED "+fed, *rows)
+
