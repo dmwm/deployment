@@ -34,6 +34,7 @@
 ^/auth/complete/ms-transferor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-monitor(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-output(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/ms-pileup-tasks(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-pileup(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-rulecleaner(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/ms-unmerged(?:/|$) cmsweb-srv.cern.ch
