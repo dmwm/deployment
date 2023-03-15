@@ -8,7 +8,7 @@ sectors = [ "sector 45", "sector 56" ]
 pixelstations = [ "station 210", "station 220" ]
 pix_planes  = [ "0","1","2" ]
 pix_planes2 = [ "3","4","5" ]
-
+pix_feds = [ "1462","1463" ]
 
 # layouts with no overlays
 for plot in [ "active planes", "vfats with any problem", "track XY profile" ]:
@@ -92,6 +92,20 @@ for plot in ["hits position"]:
       rows.append(row)
 
       CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
+
+for fed in pix_feds:
+  rows = list()
+  row = list()
+  row.append("CTPPS/TrackingPixel/Errors in FED"+fed)
+  rows.append(row)
+  row = list()
+  row.append("CTPPS/TrackingPixel/TBM Message in FED"+fed)
+  rows.append(row)
+  row = list()
+  row.append("CTPPS/TrackingPixel/TBM Type in FED"+fed)
+  rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, "Errors in FED "+fed, *rows)
 
 ####################################################################################################
 # Diamond layouts
