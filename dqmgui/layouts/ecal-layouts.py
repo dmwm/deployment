@@ -1324,3 +1324,29 @@ ecallayout(dqmitems, 'Ecal/Layouts/13 By Lumisection/09 TTF4 vs Masking Status',
 	   [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT TTF4 vs Masking Status by lumi',      'description': 'Summarizes whether a TT was permanently masked in either the TPG TT or Strips DB record, or had an instance of TT Flag>=4 (due to link error/hamming code error/automasking of unstable link/automasking of a hot TT):<br/>GRAY: no TTF4, permanently masked in DB,<br/>BLACK: has TTF4, permanently masked in DB,<br/>BLUE: has TTF4, NOT permanently masked in DB. Updated each lumisection.'}],
 	   [{'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE - by lumi', 'description': 'Summarizes whether a TT was permanently masked in either the TPG TT or Strips DB record, or had an instance of TT Flag>=4 (due to link error/hamming code error/automasking of unstable link/automasking of a hot TT):<br/>GRAY: no TTF4, permanently masked in DB,<br/>BLACK: has TTF4, permanently masked in DB,<br/>BLUE: has TTF4, NOT permanently masked in DB. Updated each lumisection.'},
 	    {'path': 'EcalEndcap/EETriggerTowerTask/EETTT TTF4 vs Masking Status EE + by lumi', 'description': 'Summarizes whether a TT was permanently masked in either the TPG TT or Strips DB record, or had an instance of TT Flag>=4 (due to link error/hamming code error/automasking of unstable link/automasking of a hot TT):<br/>GRAY: no TTF4, permanently masked in DB,<br/>BLACK: has TTF4, permanently masked in DB,<br/>BLUE: has TTF4, NOT permanently masked in DB. Updated each lumisection.'}])
+#____________________ Layouts / 14 MLDQM  ____________________
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/01 ML Quality',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBOT ML quality summary', 'description': 'ML quality EB.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EEOT EE - ML quality summary', 'description': 'ML quality EE-.'},
+            {'path': 'EcalEndcap/EESummaryClient/EEOT EE + ML quality summary', 'description': 'ML quality EE+.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/02 ML Loss',
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT AE Loss', 'description': 'ML AE Loss EB.'}],
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT AE Loss EE -', 'description': 'ML AE Loss EE-.'},
+            {'path': 'EcalEndcap/EEOccupancyTask/EEOT AE Loss EE +', 'description': 'ML AE Loss EE+.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/03 ML Reco',
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT AE Reco', 'description': 'ML AE Reconstructed occupancy EB.'}],
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT AE Reco EE -', 'description': 'ML AE Reconstructed occupancy EE-.'},
+            {'path': 'EcalEndcap/EEOccupancyTask/EEOT AE Reco EE +', 'description': 'ML AE Reconstructed occupancy EE+.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/04 ML BadTowerCount Normalized',
+           [{'path': 'EcalBarrel/EBOccupancyTask/EBOT ML bad tower count normalized', 'description': 'EB ML bad tower count normalized by no.of LS'}],
+           [{'path': 'EcalEndcap/EEOccupancyTask/EEOT ML bad tower count normalized EE -', 'description': 'EE- ML bad tower count normalized by no.of LS'},
+            {'path': 'EcalEndcap/EEOccupancyTask/EEOT ML bad tower count normalized EE +', 'description': 'EE+ ML bad tower count normalized by no.of LS'}])
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/05 Bad Towers per Lumisection',
+           [{'path': 'Ecal/Trends/Number of bad towers from MLDQM EB', 'description': 'Number of bad towers in EB per lumisection from MLDQM'}],
+           [{'path': 'Ecal/Trends/Number of bad towers from MLDQM EE', 'description': 'Number of bad towers in EE per lumisection from MLDQM'}])
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/06 Number of Events per Lumisection',
+           [{'path': 'Ecal/Trends/Number of Events per Lumisection', 'description': 'Number of Events per Lumisection'}])
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/07 Number of Events used per ML image',
+           [{'path': 'Ecal/Trends/Number of Events used per ML image', 'description': 'Number of Events used per ML image'}])
+ecallayout(dqmitems, 'Ecal/Layouts/14 MLDQM/08 PU per Lumisection',
+           [{'path': 'Ecal/Trends/PU per Lumisection', 'description': 'PU per Lumisection'}])
