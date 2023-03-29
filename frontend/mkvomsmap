@@ -145,7 +145,7 @@ if opts.conf:
 blacklisted_dns = []
 if gitlab_url:
   try:
-    blacklisted_dns = str(urllib.request.urlopen(gitlab_url).read()).split('\n')
+    blacklisted_dns = str(urllib.request.urlopen(gitlab_url).read().decode("utf-8")).split('\n')
   except Exception:
     print('List of blacklisted DNs couldn\'t be fetched from GitLab.')
     traceback.print_exc()
