@@ -13,7 +13,7 @@ rateSummarylayout(
 def hlt_secondaryObjMonFolder(i, path, name):
   i["HLT/Layouts/secondaryObjectMonitor/%s" % name] = \
     DQMItem(layout=[[path]])
-hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/TrackEta_ImpactPoint_GenTk", "TrackEta_ImpactPoint_GenTk")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/tracks/GeneralProperties/TrackEta_ImpactPoint_GenTk", "TrackEta_ImpactPoint_GenTk")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/bJet_phi", "bJet_phi")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Photon_eta","Photon_eta")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/Photon_phi","Photon_phi")
@@ -29,11 +29,11 @@ hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/CaloMET_phi","CaloM
 hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/PFMET_phi","PFMET_phi")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/bJet_phi","bJet_phi")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/ObjectMonitor/Backup/bJet_eta","bJet_eta")
-hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/TrackEta_ImpactPoint_GenTk","TrackEta_ImpactPoint_GenTk__iter2Merged")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/tracks/GeneralProperties/TrackEta_ImpactPoint_GenTk","TrackEta_ImpactPoint_GenTk__tracks")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/pixelTracks/GeneralProperties/TrackEta_ImpactPoint_GenTk","TrackEta_ImpactPoint_GenTk__pixelTracks")
-hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/TrackPhi_ImpactPoint_GenTk","MergedTrackPhi_ImpactPoint_GenTk__iter2Merged")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/tracks/GeneralProperties/TrackPhi_ImpactPoint_GenTk","MergedTrackPhi_ImpactPoint_GenTk__tracks")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/pixelTracks/GeneralProperties/TrackPhi_ImpactPoint_GenTk","TrackPhi_ImpactPoint_GenTk__pixelTracks")
-hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/iter2Merged/GeneralProperties/NumberOfTracks_GenTk","NumberOfTracks_GenTk__iter2Merged")
+hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/tracks/GeneralProperties/NumberOfTracks_GenTk","NumberOfTracks_GenTk__tracks")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/Tracking/pixelTracks/GeneralProperties/NumberOfTracks_GenTk","NumberOfTracks_GenTk__pixelTracks")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TIB/Summary_ClusterCharge_OffTrack__TIB","Summary_ClusterCharge_OffTrack__TIB")
 hlt_secondaryObjMonFolder(dqmitems,"HLT/SiStrip/MechanicalView/TIB/Summary_ClusterStoNCorr_OnTrack__TIB","Summary_ClusterStoNCorr_OnTrack__TIB")
