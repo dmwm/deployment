@@ -11,7 +11,7 @@
 # on the log file name. Old logs are moved to the archive, recent logs are
 # updated in the zip file but a copy of the file is kept on disk. An acron
 # job then syncs the archived logs to AFS area shortly after this runs.
-
+THRESHOLD=90
 
 #sudo su
 echo "start"
@@ -26,7 +26,10 @@ echo $BASEDIR
 for applogs in $(find $BASEDIR -depth -type d); do
   [ -d $applogs ] || continue
   [ -f $applogs/.noarchive ] && continue
-
+  usage=$(df -P $applogs | tail -1 | awk '{print $5}')
+  if [ ${usage%?} -ge $THRESHOLD ]; then
+    echo "Warning: available disk space on $applogs is low ($usage used)."
+  fi
 echo $applogs
 
 case $applogs in
