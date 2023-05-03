@@ -5,3 +5,4 @@
 # dn: /DC=.../DC=.../OU=.../OU=.../CN=foobar/CN=12345/CN=Foo Bar
 # host: 123.456.789.012
 # login: foobar
+host: 35.233.43.205
