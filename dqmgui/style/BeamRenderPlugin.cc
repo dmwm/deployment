@@ -23,7 +23,8 @@ class BeamRenderPlugin : public DQMRenderPlugin {
 
 public:
   virtual bool applies( const VisDQMObject &o, const VisDQMImgInfo & ) {
-    if ((o.name.find( "BeamMonitor/" )               == std::string::npos) &&
+    if ((o.name.find( "BeamMonitor/" )              == std::string::npos) &&
+	(o.name.find( "BeamMonitorHLT/" )            == std::string::npos) &&
 	(o.name.find( "BeamMonitor_PixelLess/" )     == std::string::npos) &&
 	(o.name.find( "TrackingHLTBeamspotStream/" ) == std::string::npos))
       return false;
@@ -107,12 +108,19 @@ private:
     xa->SetLabelSize(0.045);
     ya->SetLabelSize(0.045);
 
-    if ( o.name.find( "fitResults" )  != std::string::npos ||
-	 o.name.find( "pvResults" )  != std::string::npos ||
+    if ( o.name.find( "pvResults" )  != std::string::npos ||
 	 o.name.find( "_bx" )  != std::string::npos ) {
       c->SetGrid();
       obj->SetStats( kFALSE );
       obj->SetMarkerSize(2.);
+      return;
+    }
+
+    if ( o.name.find( "fitResults" )  != std::string::npos) {
+      c->SetGrid();
+      obj->SetStats( kFALSE );
+      obj->SetMarkerSize(2.);
+      obj->SetOption("text");
       return;
     }
 
