@@ -85,6 +85,8 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 			gStyle->SetOptStat(0);
 			obj->SetStats(kFALSE);
 			gStyle->SetPalette(1);
+			if(o.name.find("ROCs hits multiplicity per event vs LS") != std::string::npos)
+			  gPad->SetLogz(1);
 		}
 
 		void postDrawTH1F(TCanvas *c, const VisDQMObject &)
