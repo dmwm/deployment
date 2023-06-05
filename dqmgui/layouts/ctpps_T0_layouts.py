@@ -98,7 +98,7 @@ for cond in [ "2 RPs cond", "4 RPs cond" ]:
 # Diamond layouts
 ####################################################################################################
 
-diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 56/station 220cyl/cyl_hr" ]
+diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 45/station 220/nr_hr","sector 56/station 220cyl/cyl_hr", "sector 56/station 220/nr_hr" ]
 
 def CTPPSTimingDiamondLayout(i, p, *rows): i["CTPPS/TimingDiamond/Layouts/" + p] = DQMItem(layout=rows)
 
@@ -234,7 +234,7 @@ for plot in ["hit multiplicity in planes"]:
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
 
-for plot in ["number of fired planes per event","ROCs hits multiplicity per event","track intercept point","number of tracks per event"]:
+for plot in ["number of fired planes per event","ROCs hits multiplicity per event","track intercept point","number of tracks per event","Error Code"]:
   rows = list()
   row = list()
   for station in pixelstations:
@@ -265,7 +265,7 @@ for sector in sectors:
         "ROCs hits multiplicity per event vs LS")
     rows.append(row)
 
-  CTPPSTrackingPixelLayout(dqmitems, "ROC hits per event vs LS "+sector, *rows)
+  CTPPSTrackingPixelLayout(dqmitems, "ROC hits vs LS "+sector, *rows)
 
 for plot in ["Pixel planes activity"]:
   rows = list()
@@ -293,17 +293,15 @@ for plot in ["hits position"]:
 
       CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
 
-for fed in feds:
-  rows = list()
-  row = list()
-  row.append("CTPPS/TrackingPixel/Errors in FED"+fed)
-  rows.append(row)
-  row = list()
-  row.append("CTPPS/TrackingPixel/TBM Message in FED"+fed)
-  rows.append(row)
-  row = list()
-  row.append("CTPPS/TrackingPixel/TBM Type in FED"+fed)
-  rows.append(row)
 
-  CTPPSTrackingPixelLayout(dqmitems, "Errors in FED "+fed, *rows)
+for plot in ["Errors in FED"]:
+  rows = list()
+  for fed in feds:
+    row = list()
+    row.append("CTPPS/TrackingPixel/Errors in FED"+fed)
+    rows.append(row)
+
+  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
+
+
 
