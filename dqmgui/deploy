@@ -74,11 +74,11 @@ deploy_dqmgui_post()
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
        # backup of the index
-       echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'"
+       echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" 2>&1 | mailx -s 'dev DQM GUI Index Backup'  cmsweb-operator@cern.ch
        # backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'"
+       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" 2>&1 | mailx -s 'dev DQM GUI Zip Backup'  cmsweb-operator@cern.ch
        # check/verification of the backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
+       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" 2>&1 | mailx -s 'dev DQM GUI Zip Backup Check'  cmsweb-operator@cern.ch
       ) | acrontab
       ;;
     # CC7 Offline and Relval GUIs
@@ -86,11 +86,11 @@ deploy_dqmgui_post()
       klist -s # must have afs kerberos token
       (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
        # backup of the index
-       echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'"
+       echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo 'Offline DQM GUI Index Backup' || echo 'RelVal DQM GUI Index Backup')  cmsweb-operator@cern.ch
        # backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'"
+       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo 'Offline DQM GUI Zip Backup' || echo 'RelVal DQM GUI Zip Backup')  cmsweb-operator@cern.ch
        # check/verification of the backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'"
+       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo 'Offline DQM GUI Zip Backup Check' || echo 'RelVal DQM GUI Zip Backup Check')  cmsweb-operator@cern.ch
       ) | acrontab
       ;;
     * )
