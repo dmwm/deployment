@@ -203,6 +203,7 @@ server.workspace('DQMContent', 22, 'Tracker', 'SiPixelHeterogeneous', '^SiPixelH
                  'SiPixelHeterogeneous/Layouts/000 - Compare number of RecHits',
                  'SiPixelHeterogeneous/Layouts/00a - Compare number of tracks',
                  'SiPixelHeterogeneous/Layouts/00b - Compare number of vertices',
+                 'SiPixelHeterogeneous/Layouts/00c - Compare number of FE errors per FEDid',
                  'SiPixelHeterogeneous/Layouts/01a - Compare rechit charge in Barrel',
                  'SiPixelHeterogeneous/Layouts/01b - Compare rechit charge in Endcap',
                  'SiPixelHeterogeneous/Layouts/02a - Compare rechit x-position in Barrel',
