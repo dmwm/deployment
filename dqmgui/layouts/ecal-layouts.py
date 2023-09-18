@@ -766,7 +766,7 @@ ecallayout(dqmitems, 'Ecal/Layouts/07 Selective Readout/16 ZS Flag Readout',
 
 #____________________ Layouts / 08 Laser ____________________
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/00 Calibration Event Rate',
-	   [{'path': 'EcalCalibration/EventInfo/Calibration event rate', 'description': 'Status of each element of the calibration sequence. This histogram shows the fraction of a calibration element being triggered in the laser or LED sequence. Green laser + Blue laser + IR laser = 1. LED 1+ LED 2 = 1.'}])
+	   [{'path': 'EcalCalibration/EventInfo/Calibration event rate', 'description': 'Status of each element of the calibration sequence. This histogram shows the fraction of a calibration element being triggered in the laser or LED sequence. Green laser + Blue laser + Green2 laser = 1. LED 1+ LED 2 = 1.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/01 Quality Summary L2 (Green)',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBLT laser quality summary L2', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EELT EE - laser quality summary L2', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'},
@@ -775,6 +775,10 @@ ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/01 Quality Summary L3 (Blue)',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBLT laser quality summary L3', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EELT EE - laser quality summary L3', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'},
 	    {'path': 'EcalEndcap/EESummaryClient/EELT EE + laser quality summary L3', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/01 Quality Summary L4 (Green2)',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBLT laser quality summary L4', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1, or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EELT EE - laser quality summary L4', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1, or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'},
+            {'path': 'EcalEndcap/EESummaryClient/EELT EE + laser quality summary L4', 'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1, or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/02 Amplitude L2 (Green)',
 	   [{'path': 'EcalBarrel/EBLaserTask/Laser2/EBLT amplitude map L2', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}],
 	   [{'path': 'EcalEndcap/EELaserTask/Laser2/EELT amplitude map L2 EE -', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'},
@@ -783,12 +787,21 @@ ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/02 Amplitude L3 (Blue)',
 	   [{'path': 'EcalBarrel/EBLaserTask/Laser3/EBLT amplitude map L3', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}],
 	   [{'path': 'EcalEndcap/EELaserTask/Laser3/EELT amplitude map L3 EE -', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'},
 	    {'path': 'EcalEndcap/EELaserTask/Laser3/EELT amplitude map L3 EE +', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}])
+
+ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/02 Amplitude L4 (Green2)',
+           [{'path': 'EcalBarrel/EBLaserTask/Laser4/EBLT amplitude map L4', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}],
+           [{'path': 'EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE -', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'},
+            {'path': 'EcalEndcap/EELaserTask/Laser4/EELT amplitude map L4 EE +', 'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}])
+
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/03 Amplitude RMS L2 (Green)',
 	   [{'path': 'EcalBarrel/EBLaserClient/EBLT amplitude rms L2', 'description': '2D distribution of the amplitude RMS. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EELaserClient/EELT amplitude rms L2', 'description': '2D distribution of the amplitude RMS. Channels with less than 3 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/03 Amplitude RMS L3 (Blue)',
 	   [{'path': 'EcalBarrel/EBLaserClient/EBLT amplitude rms L3', 'description': '2D distribution of the amplitude RMS. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EELaserClient/EELT amplitude rms L3', 'description': '2D distribution of the amplitude RMS. Channels with less than 3 are not considered.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/03 Amplitude RMS L4 (Green2)',
+           [{'path': 'EcalBarrel/EBLaserClient/EBLT amplitude rms L4', 'description': '2D distribution of the amplitude RMS. Channels with less than 3 are not considered.'}],
+           [{'path': 'EcalEndcap/EELaserClient/EELT amplitude rms L4', 'description': '2D distribution of the amplitude RMS. Channels with less than 3 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/04 Occupancy',
 	   [{'path': 'EcalBarrel/EBOccupancyTask/EBOT laser digi occupancy', 'description': 'Laser signal digi occupancy. Channels are filled regardless of the existance of the actual laser pulses.'}],
 	   [{'path': 'EcalEndcap/EEOccupancyTask/EEOT laser digi occupancy EE -', 'description': 'Laser signal digi occupancy. Channels are filled regardless of the existance of the actual laser pulses.'},
@@ -799,12 +812,19 @@ ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/05 Timing Spread L2 (Green)',
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/05 Timing Spread L3 (Blue)',
 	   [{'path': 'EcalBarrel/EBLaserClient/EBLT laser timing rms map L3', 'description': '2D distribution of the laser timing RMS. Z scale is in LHC clocks. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EELaserClient/EELT laser timing rms map L3', 'description': '2D distribution of the laser timing RMS. Z scale is in LHC clocks. Channels with less than 3 are not considered.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/05 Timing Spread L4 (Green2)',
+           [{'path': 'EcalBarrel/EBLaserClient/EBLT laser timing rms map L4', 'description': '2D distribution of the laser timing RMS. Z scale is in LHC clocks. Channels with less than 3 are not considered.'}],
+           [{'path': 'EcalEndcap/EELaserClient/EELT laser timing rms map L4', 'description': '2D distribution of the laser timing RMS. Z scale is in LHC clocks. Channels with less than 3 are not considered.'}])
+
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/06 PN Quality Summary L2 (Green)',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L2', 'description': 'Summary of the laser data quality in the PN diodes. A channel is red if mean / expected < 0.1 or RMS / expected > 1.0. Expected amplitudes are 800.0, 800.0, 800.0, 800.0 for laser 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EELT PN laser quality summary L2', 'description': 'Summary of the laser data quality in the PN diodes. A channel is red if mean / expected < 0.1 or RMS / expected > 1.0. Expected amplitudes are 800.0, 800.0, 800.0, 800.0 for laser 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/06 PN Quality Summary L3 (Blue)',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L3', 'description': 'Summary of the laser data quality in the PN diodes. A channel is red if mean / expected < 0.1 or RMS / expected > 1.0. Expected amplitudes are 800.0, 800.0, 800.0, 800.0 for laser 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EELT PN laser quality summary L3', 'description': 'Summary of the laser data quality in the PN diodes. A channel is red if mean / expected < 0.1 or RMS / expected > 1.0. Expected amplitudes are 800.0, 800.0, 800.0, 800.0 for laser 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/08 Laser/06 PN Quality Summary L4 (Green2)',
+           [{'path': 'EcalBarrel/EBSummaryClient/EBLT PN laser quality summary L4', 'description': 'Summary of the laser data quality in the PN diodes. A channel is red if mean / expected < 0.1 or RMS / expected > 1.0. Expected amplitudes are 800.0, 800.0, 800.0, 800.0 for laser 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}],
+           [{'path': 'EcalEndcap/EESummaryClient/EELT PN laser quality summary L4', 'description': 'Summary of the laser data quality in the PN diodes. A channel is red if mean / expected < 0.1 or RMS / expected > 1.0. Expected amplitudes are 800.0, 800.0, 800.0, 800.0 for laser 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
   for sign in ['-', '+']: # Loop over z-side
@@ -851,23 +871,23 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
                  [{'path': 'Ecal%s/%sLaserTask/Laser3/%sLT shape %s L3' % (detector, label, label, channellabel),
                    'description': 'Laser mean pulse shape. One slice corresponds to one readout tower (5x5 crystals). In general, a slice is filled only when a laser pulse was observed in the tower. When no laser signal was observed for longer than 3 lumi sections, the slices start to get filled with 0 amplitude, causing the shape to flatten.'}])
       # Laser4 ___________
-      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (IR)/Quality/Quality %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (Green2)/Quality/Quality %s' % channellabel,
                  [{'path': 'Ecal%s/%sLaserClient/%sLT laser quality L4 %s' % (detector, label, label, channellabel),
                    'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (IR)/Amplitude/Amplitude %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (Green2)/Amplitude/Amplitude %s' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT amplitude %s L4' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}],
                  [{'path': 'Ecal%s/%sLaserClient/%sLT amplitude L4 %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of the mean amplitude seen in each crystal. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (IR)/Timing/Timing %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (Green2)/Timing/Timing %s' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT timing %s L4' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean laser timing. Z scale is in LHC clocks. Due to the difference in pulse shape between laser and physics events, fit-based reconstruction is not completely reliable in extracting the timing. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the timing to spread randomly.'}],
                  [{'path': 'Ecal%s/%sLaserClient/%sLT laser timing mean L4 %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of the timing in each crystal channel. X scale is in LHC clocks. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (IR)/APD Over PN/APD Over PN %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (Green2)/APD Over PN/APD Over PN %s' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT amplitude over PN %s L4' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean APD/PN value (event mean of per-event ratio).'}])
-      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (IR)/Shape/Shape %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (Green2)/Shape/Shape %s' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT shape %s L4' % (detector, label, label, channellabel),
                    'description': 'Laser mean pulse shape. One slice corresponds to one readout tower (5x5 crystals). In general, a slice is filled only when a laser pulse was observed in the tower. When no laser signal was observed for longer than 3 lumi sections, the slices start to get filled with 0 amplitude, causing the shape to flatten.'}])
       # Exclude EE[+-]01,04,05,06,09
@@ -880,7 +900,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser3 (Blue)/PN Amplitude/Amplitude %s' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser3/PN/Gain16/%sLT PNs amplitude %s G16 L3' % (detector, label, label, channellabel),
                    'description': 'Mean laser pulse amplitude in the PN diodes. In general, a PN channel is filled only when a laser pulse was observed in the crystals that are associated to the diode. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (IR)/PN Amplitude/Amplitude %s' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/08 Laser/Laser4 (Green2)/PN Amplitude/Amplitude %s' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/PN/Gain16/%sLT PNs amplitude %s G16 L4' % (detector, label, label, channellabel),
                    'description': 'Mean laser pulse amplitude in the PN diodes. In general, a PN channel is filled only when a laser pulse was observed in the crystals that are associated to the diode. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}])
 
@@ -1098,7 +1118,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/00 Quality L3 (Blue)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserClient/%sLT laser quality L3 %s' % (detector, label, label, channellabel),
                    'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/00 Quality L4 (IR)' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/00 Quality L4 (Green2)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserClient/%sLT laser quality L4 %s' % (detector, label, label, channellabel),
                    'description': 'Summary of the laser data quality. A channel is red either if mean / expected < 0.1 (0.01 for Fwd regions), or if mean / expected > 2.06, or if RMS / expected > 0.3, or if mean timing is off from expected by 1.0. Expected amplitudes and timings are 1700.0, 1300.0, 1700.0, 1700.0 and 4.2, 3.7, 4.2, 4.2 for lasers 1, 2, 3, and 4 respectively. Channels with less than 3 are not considered.'}])
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/01 Amplitude L2 (Green)' % channellabel,
@@ -1111,7 +1131,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
                    'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}],
                  [{'path': 'Ecal%s/%sLaserClient/%sLT amplitude L3 %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of the mean amplitude seen in each crystal. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/01 Amplitude L4 (IR)' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/01 Amplitude L4 (Green2)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT amplitude %s L4' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean laser amplitude. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the mean to drop.'}],
                  [{'path': 'Ecal%s/%sLaserClient/%sLT amplitude L4 %s' % (detector, label, label, channellabel),
@@ -1130,7 +1150,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
                    'description': 'Distribution of the timing in each crystal channel. X scale is in LHC clocks. Channels with less than 3 are not considered.'}],
                  [{'path': 'Ecal%s/%sLaserClient/%sLT laser timing rms L3 %s' % (detector, label, label, channellabel),
                    'description': 'Distribution of the timing RMS in each crystal channel. X scale is in LHC clocks. Channels with less than 3 are not considered.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/02 Timing L4 (IR)' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/02 Timing L4 (Green2)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT timing %s L4' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean laser timing. Z scale is in LHC clocks. Due to the difference in pulse shape between laser and physics events, fit-based reconstruction is not completely reliable in extracting the timing. In general, a channel is filled only when a laser pulse was observed in it. When no laser signal was observed for longer than 3 lumi sections, the channels start to get filled with 0 amplitude, causing the timing to spread randomly.'}],
                  [{'path': 'Ecal%s/%sLaserClient/%sLT laser timing mean L4 %s' % (detector, label, label, channellabel),
@@ -1143,7 +1163,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/03 APD Over PN L3 (Blue)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser3/%sLT amplitude over PN %s L3' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean APD/PN value (event mean of per-event ratio).'}])
-      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/03 APD Over PN L4 (IR)' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/03 APD Over PN L4 (Green2)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT amplitude over PN %s L4' % (detector, label, label, channellabel),
                    'description': '2D distribution of the mean APD/PN value (event mean of per-event ratio).'}])
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/04 Shape L2 (Green)' % channellabel,
@@ -1152,7 +1172,7 @@ for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]
       ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/04 Shape L3 (Blue)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser3/%sLT shape %s L3' % (detector, label, label, channellabel),
                    'description': 'Laser mean pulse shape. One slice corresponds to one readout tower (5x5 crystals). In general, a slice is filled only when a laser pulse was observed in the tower. When no laser signal was observed for longer than 3 lumi sections, the slices start to get filled with 0 amplitude, causing the shape to flatten.'}])
-      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/04 Shape L4 (IR)' % channellabel,
+      ecallayout(dqmitems,'Ecal/Layouts/12 By SuperModule/%s/Laser/04 Shape L4 (Green2)' % channellabel,
                  [{'path': 'Ecal%s/%sLaserTask/Laser4/%sLT shape %s L4' % (detector, label, label, channellabel),
                    'description': 'Laser mean pulse shape. One slice corresponds to one readout tower (5x5 crystals). In general, a slice is filled only when a laser pulse was observed in the tower. When no laser signal was observed for longer than 3 lumi sections, the slices start to get filled with 0 amplitude, causing the shape to flatten.'}])
       # Pedestal ___________
