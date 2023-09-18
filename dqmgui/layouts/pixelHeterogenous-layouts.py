@@ -18,6 +18,12 @@ pixelHeterolayout(dqmitems, "00b - Compare number of vertices",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
 
+pixelHeterolayout(dqmitems, "00c - Compare number of FE errors per FEDid",
+   [{ 'path':  "SiPixelHeterogeneous/PixelErrorCompareGPUvsCPU/FEErrorVsFEDIdUnbalance",
+      'description': "Unbalance of Pixel FED Raw Data errors in GPU vs CPU",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
+   )
+
 pixelHeterolayout(dqmitems, "01a - Compare rechit charge in Barrel",
    [{ 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/recHitsBLay1Charge",
       'description': "Compare rechit charge in layer 1 of pixel barrel",
