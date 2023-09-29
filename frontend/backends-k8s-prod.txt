@@ -4,6 +4,8 @@
 ^/auth/complete/dqm/hcal-online(?:/|$) cmshcaldqm.cern.ch
 ^/auth/complete/dqm/(?:dev|offline-test|offline-test-new|relval-test|relval-test-new)(?:/|$) vocms0731.cern.ch
 ^/auth/complete/dqm/(?:offline-new)(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/dqm/(?:mini_back)(?:/|$) cmsweb-srv.cern.ch
+^/auth/complete/dqm/(?:mini)(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/dqm/(?:offline)(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
 ^/auth/complete/(?:couchdb/workqueue|workqueue)(?:/|$) vocms0841.cern.ch :affinity
