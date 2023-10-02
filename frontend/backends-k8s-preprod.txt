@@ -8,6 +8,8 @@
 ^/auth/complete/dqm/offline(?:/|$) vocms0738.cern.ch
 ^/auth/complete/dqm/offline-test-new(?:/|$) newdqmgui.dqm.svc.cluster.local
 ^/auth/complete/dqm/(?:relval|relval-new)(?:/|$) vocms0739.cern.ch
+^/auth/complete/dqm/mini(?:/|$) minidqm.dqm.svc.cluster.local
+^/auth/complete/dqm/mini_back(?:/|$) minidqm.dqm.svc.cluster.local
 ^/auth/complete/dqm/autodqm(?:/|$) autodqm.dqm.svc.cluster.local
 ^/auth/complete/dqm/newdqmgui(?:/|$) newdqmgui.dqm.svc.cluster.local
 ^/auth/complete/dqm/dqm-square-k8(?:/|$) dqm-square-k8.dqm.svc.cluster.local
