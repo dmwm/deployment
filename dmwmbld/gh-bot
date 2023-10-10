@@ -26,13 +26,19 @@ def generate_index_page(pr, status, cfgdir, statedir):
 # Test builds for pull requests against an specific branch in the gh repo.
 # Update the pull req status according to overall result of tests on all
 # the architectures.
+def check_context(gh, pull_request, owner, repo, branch):
+    statuses_url = pull_request['statuses_url']
+    # You can use the 'statuses_url' to fetch and check the context or status of the pull request
+    statuses = gh.GetStatus(statuses_url)
+    
+    # Check if there's a status with context equal to "cms/bot"
+    return any(status['state'] == 'success' and status.get('context') == 'cmsbot/test' for status in statuses)
 def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, logurl, cfgdir, authfile):
   # get the relevant pull requests
   valid_comp_users = json.load(open(usersfile))
   PRs = [i for i in gh.GetPullRequests(owner, repo) \
-           if ((i['base']['label'] == owner + ':' + branch) and
-           (i['user']['login'].encode('ascii', 'ignore') in valid_comp_users) and
-           any(label['name'] == 'cmsbot/test' for label in i.get_labels()))]
+        if (i['base']['ref'] == 'comp_gcc630' and ((i['user']['login'].encode('ascii', 'ignore') in valid_comp_users) or check_context(gh, i, owner, repo, branch)))]
+
   print 'Pull Requests to test:' 
   for pr in PRs:
     print "#%s," % pr['number'], pr['title']
