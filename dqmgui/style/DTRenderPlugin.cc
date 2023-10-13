@@ -1082,6 +1082,16 @@ private:
         return;
       }
 
+      if( o.name.find("LocalTrigger-TM/TM_TrigEffPhi_All") != std::string::npos || o.name.find("LocalTrigger-TM/TM_TrigEffCorrPhi_All") != std::string::npos )
+      {
+        if(obj->GetEntries() != 0) c->SetLogy(1);
+        gStyle->SetOptStat( 1111111 );
+        obj->SetStats( kTRUE );
+
+        return;
+      }
+
+	    
       if( o.name.find("ROSEventLength") != std::string::npos || o.name.find("ROSEventLenght") != std::string::npos )
       {
         if(obj->GetEntries() != 0) c->SetLogy(1);
