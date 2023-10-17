@@ -37,8 +37,9 @@ def pull_req_tester(gh, owner, repo, branch, arch, all_archs, statedir, logdir, 
   # get the relevant pull requests
   valid_comp_users = json.load(open(usersfile))
   PRs = [i for i in gh.GetPullRequests(owner, repo) \
-        if (i['base']['ref'] == 'comp_gcc630' and ((i['user']['login'].encode('ascii', 'ignore') in valid_comp_users) or check_context(gh, i, owner, repo, branch)))]
-
+           if (((i['base']['label'] == owner + ':' + branch) and
+           (i['user']['login'].encode('ascii', 'ignore') in valid_comp_users)) or
+           (any(label['name'] == 'cmsbot/test' for label in i.get_labels())))]
   print 'Pull Requests to test:' 
   for pr in PRs:
     print "#%s," % pr['number'], pr['title']
