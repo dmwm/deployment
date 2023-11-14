@@ -1,20 +1,17 @@
 # vim: set ft=sh sw=2 ts=8 et :
 deploy_dqmgui_variants="default bare online"
-deploy_dqmgui_deps()
-{
+deploy_dqmgui_deps() {
   deploy $stage backend
   [ $variant == online ] && deploy $stage admin default || deploy $stage admin $variant
   case $variant in
-    bare | online )
-      ;;
-    * )
-      deploy $stage wmcore-auth
-      ;;
+  bare | online) ;;
+  *)
+    deploy $stage wmcore-auth
+    ;;
   esac
 }
 
-deploy_dqmgui_prep()
-{
+deploy_dqmgui_prep() {
   extra=
   for d in online offline relval dev; do
     extra="$extra $d $d/sessions $d/agents $d/data $d/uploads $d/zipped $project_logs/$d"
@@ -23,37 +20,38 @@ deploy_dqmgui_prep()
     done
   done
   mkproj $extra backup
-  [ ! $variant == online ] &&  mkproxy
+  [ ! $variant == online ] && mkproxy
   $nogroups || chmod g+ws */data */zipped */agents/*
 }
 
-deploy_dqmgui_sw()
-{
+deploy_dqmgui_sw() {
   deploy_pkg -a dqmgui/GoogleAPI.py comp cms+dqmgui
 }
 
-deploy_dqmgui_post()
-{
+deploy_dqmgui_post() {
   case $host in
-    vocms013[26] |vocms0143 | vocms074[0123456] | vocms016[135] | vocms0307 | vocms0318 | vocms076[123456] | vocms084[1234] )
-      disable
-      ;;
-    * )
-      enable
-      ;;
+  vocms074[0123456] | vocms016[135] | vocms0307 | vocms0318 | vocms076[123456] | vocms084[1234])
+    disable
+    ;;
+  *)
+    enable
+    ;;
   esac
 
-  case $variant in bare ) return ;; esac
+  case $variant in bare) return ;; esac
 
-  (mkcrontab; sysboot
-   [ ! -f $root/enabled/$project ] || {
-     cmd="$project_config/daily"
-     $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
-     echo "17 2 * * * $cmd"
-     # Adding kinit script for EOS
-     echo "*/6 * * * * /data/srv/current/config/admin/kinit.sh"
-     echo "@reboot /data/srv/current/config/admin/kinit.sh"
-   }) | crontab -
+  (
+    mkcrontab
+    sysboot
+    [ ! -f $root/enabled/$project ] || {
+      cmd="$project_config/daily"
+      $nogroups || cmd="sudo -H -u _dqmgui bashs -l -c '$cmd'"
+      echo "17 2 * * * $cmd"
+      # Adding kinit script for EOS
+      echo "*/6 * * * * /data/srv/current/config/admin/kinit.sh"
+      echo "@reboot /data/srv/current/config/admin/kinit.sh"
+    }
+  ) | crontab -
 
   # Castor stageout acronjobs enabled only for the
   # official offline, relval and dev instances
@@ -62,39 +60,33 @@ deploy_dqmgui_post()
   # We will have to add vocms073[89] here
   ###################################### END TODO FOR CC7
   case $host:$root in
-    # SLC6 Offline and Relval GUIs
-    vocms013[89]:/data/srv )
-      klist -s # must have afs kerberos token
-      # For the SLC6 servers, we actually explicitely _remove_ their acron entries
-      (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
-      ) | acrontab
-      ;;
-    # SLC6 dev machine - One day this should become CC7
-    vocms0731:/data/srv )
-      klist -s # must have afs kerberos token
-      (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
-       # backup of the index
-       echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" 2>&1 | mailx -s 'dev DQM GUI Index Backup'  cmsweb-operator@cern.ch
-       # backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" 2>&1 | mailx -s 'dev DQM GUI Zip Backup'  cmsweb-operator@cern.ch
-       # check/verification of the backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" 2>&1 | mailx -s 'dev DQM GUI Zip Backup Check'  cmsweb-operator@cern.ch
-      ) | acrontab
-      ;;
-    # CC7 Offline and Relval GUIs
-    vocms073[89]:/data/srv )
-      klist -s # must have afs kerberos token
-      (acrontab -l | { egrep -v -e " $host.*$project_config/" || true; }
-       # backup of the index
-       echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'" 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo 'Offline DQM GUI Index Backup' || echo 'RelVal DQM GUI Index Backup')  cmsweb-operator@cern.ch
-       # backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'" 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo 'Offline DQM GUI Zip Backup' || echo 'RelVal DQM GUI Zip Backup')  cmsweb-operator@cern.ch
-       # check/verification of the backup of the zipped root files
-       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'" 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo 'Offline DQM GUI Zip Backup Check' || echo 'RelVal DQM GUI Zip Backup Check')  cmsweb-operator@cern.ch
-      ) | acrontab
-      ;;
-    * )
-      ;;
+  # Dev machine
+  vocms0731:/data/srv)
+    klist -s # must have afs kerberos token
+    (
+      acrontab -l | { grep -E -v -e " $host.*$project_config/" || true; }
+      # backup of the index
+      echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation' 2>&1 | mailx -s \"dev DQM GUI Index Backup\" cmsweb-operator@cern.ch"
+      # backup of the zipped root files
+      echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation' 2>&1 | mailx -s \"dev DQM GUI Zip Backup\" cmsweb-operator@cern.ch"
+      # check/verification of the backup of the zipped root files
+      echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation' 2>&1 | mailx -s \"dev DQM GUI Zip Backup Check\" cmsweb-operator@cern.ch"
+    ) | acrontab
+    ;;
+  # Offline and Relval GUIs
+  vocms073[89]:/data/srv)
+    klist -s # must have afs kerberos token
+    (
+      acrontab -l | { grep -E -v -e " $host.*$project_config/" || true; }
+      # backup of the index
+      echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation' 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo \"Offline DQM GUI Index Backup\" || echo \"RelVal DQM GUI Index Backup\") cmsweb-operator@cern.ch"
+      # backup of the zipped root files
+      echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation' 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo \"Offline DQM GUI Zip Backup\" || echo \"RelVal DQM GUI Zip Backup\") cmsweb-operator@cern.ch"
+      # check/verification of the backup of the zipped root files
+      echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation' 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo \"Offline DQM GUI Zip Backup Check\" || echo \"RelVal DQM GUI Zip Backup Check\") cmsweb-operator@cern.ch"
+    ) | acrontab
+    ;;
+  *) ;;
   esac
 
   # Trigger plugins and layouts rebuild if server is enabled.
@@ -110,8 +102,8 @@ deploy_dqmgui_post()
 
 deploy_dqmgui_auth() {
   case $1 in
-    */GoogleAPI.py)
-      cat <<- \EOF
+  */GoogleAPI.py)
+    cat <<-\EOF
 api_key=None
 EOF
     ;;
