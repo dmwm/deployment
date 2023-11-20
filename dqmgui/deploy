@@ -30,7 +30,7 @@ deploy_dqmgui_sw() {
 
 deploy_dqmgui_post() {
   case $host in
-  vocms074[0123456] | vocms016[135] | vocms0307 | vocms0318 | vocms076[123456] | vocms084[1234])
+  vocms074[0123456] | vocms0307 | vocms0318 | vocms076[123456] | vocms084[1234])
     disable
     ;;
   *)
@@ -54,7 +54,10 @@ deploy_dqmgui_post() {
   ) | crontab -
 
   # Castor stageout acronjobs enabled only for the
-  # official offline, relval and dev instances
+  # official offline, relval and dev instances.
+  # If a job fails (i.e. exit code not 0 or 3, for some reason, or
+  # not 4, which is the case that another job of the same name is already
+  # running), send an e-mail to cmsweb-operator.
   ###################################### START TODO FOR CC7
   # Now the acron jobs are only created for the SLC servers
   # We will have to add vocms073[89] here
@@ -66,26 +69,40 @@ deploy_dqmgui_post() {
     (
       acrontab -l | { grep -E -v -e " $host.*$project_config/" || true; }
       # backup of the index
-      echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation' 2>&1 | mailx -s \"dev DQM GUI Index Backup\" cmsweb-operator@cern.ch"
+      echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"dev DQM GUI Index Backup, exit code: \$ret\" -a $project_logs/dev/agent-castorindexbackup-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
       # backup of the zipped root files
-      echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation' 2>&1 | mailx -s \"dev DQM GUI Zip Backup\" cmsweb-operator@cern.ch"
+      echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"dev DQM GUI Zip Backup, exit code: \$ret\" -a $project_logs/dev/agent-castorzipbackup-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
       # check/verification of the backup of the zipped root files
-      echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation' 2>&1 | mailx -s \"dev DQM GUI Zip Backup Check\" cmsweb-operator@cern.ch"
+      echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"dev DQM GUI Zip Backup Check, exit code: \$ret\" -a $project_logs/dev/agent-castorzipbackupcheck-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
     ) | acrontab
     ;;
-  # Offline and Relval GUIs
-  vocms073[89]:/data/srv)
+  # Offline GUI
+  vocms0738:/data/srv)
     klist -s # must have afs kerberos token
     (
       acrontab -l | { grep -E -v -e " $host.*$project_config/" || true; }
       # backup of the index
-      echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation' 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo \"Offline DQM GUI Index Backup\" || echo \"RelVal DQM GUI Index Backup\") cmsweb-operator@cern.ch"
+      echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"Offline DQM GUI Index Backup, exit code: \$ret\" -a $project_logs/offline/agent-castorindexbackup-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
       # backup of the zipped root files
-      echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation' 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo \"Offline DQM GUI Zip Backup\" || echo \"RelVal DQM GUI Zip Backup\") cmsweb-operator@cern.ch"
+      echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup| mailx -s \"Offline DQM GUI Zip Backup, exit code: \$ret\" -a $project_logs/offline/agent-castorzipbackup-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
       # check/verification of the backup of the zipped root files
-      echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation' 2>&1 | mailx -s $([[ $host = vocms0738 ]] && echo \"Offline DQM GUI Zip Backup Check\" || echo \"RelVal DQM GUI Zip Backup Check\") cmsweb-operator@cern.ch"
+      echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"Offline DQM GUI Zip Backup Check, exit code: \$ret\" -a $project_logs/offline/agent-castorzipbackupcheck-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
     ) | acrontab
     ;;
+  # RelVal GUI
+  vocms0739:/data/srv)
+    klist -s # must have afs kerberos token
+    (
+      acrontab -l | { grep -E -v -e " $host.*$project_config/" || true; }
+      # backup of the index
+      echo "0 7 * * * $host $project_config/manage indexbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"RelVal DQM GUI Index Backup, exit code: \$ret\" -a $project_logs/relval/agent-castorindexbackup-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
+      # backup of the zipped root files
+      echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup| mailx -s \"RelVal DQM GUI Zip Backup, exit code: \$ret\" -a $project_logs/relval/agent-castorzipbackup-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
+      # check/verification of the backup of the zipped root files
+      echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"RelVal DQM GUI Zip Backup Check, exit code: \$ret\" -a $project_logs/relval/agent-castorzipbackupcheck-$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
+    ) | acrontab
+    ;;
+  # Any other machine: do nothing
   *) ;;
   esac
 
