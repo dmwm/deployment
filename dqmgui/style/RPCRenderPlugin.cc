@@ -53,6 +53,8 @@ private:
     TH1* obj = dynamic_cast<TH1*>(o.object);
     assert(obj);
 
+    obj->GetXaxis()->SetLabelSize(0.05);
+    obj->GetYaxis()->SetLabelSize(0.045);
     if (o.name.find("BX") != std::string::npos) {
       obj->StatOverflows(false);
     }
@@ -87,6 +89,8 @@ private:
     obj->SetStats(kFALSE);
     obj->GetXaxis()->SetNdivisions(-510);
     obj->GetYaxis()->SetNdivisions(-510);
+    obj->GetXaxis()->SetLabelSize(0.05);
+    obj->GetYaxis()->SetLabelSize(0.045);
     obj->GetXaxis()->CenterLabels();
     obj->GetYaxis()->CenterLabels();
     c->SetGridx();
