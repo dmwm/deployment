@@ -29,3 +29,7 @@ shiftdtlayout(dqmitems, "03-TM-TriggerCorrFractionSummary",
 
 shiftdtlayout(dqmitems, "04-SynchNoiseSummary",
               [{ 'path': "DT/05-Noise/SynchNoise/SynchNoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftDT>Description and Instructions</a>" }])
+
+shiftdtlayout(dqmitems, "05-NoiseSummary",
++  [{ 'path': "DT/05-Noise/NoiseSummary", 'description': "<a href=https://twiki.cern.ch/twiki/bin/view/CMS/DQMShiftOfflineDT>Description for the <b>Central DQM Offline shifter</b></a>" }])
+
