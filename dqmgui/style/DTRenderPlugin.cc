@@ -1088,7 +1088,7 @@ private:
         if(obj->GetEntries() != 0) c->SetLogy(1);
         gStyle->SetOptStat( 1111111 );
         obj->SetStats( kTRUE );
-        obj->SetDrawOptions("hist");
+        obj->SetDrawOption("hist");
 
         return;
       }
