@@ -258,7 +258,8 @@ private:
         obj->GetYaxis()->SetNdivisions(6,true);
         obj->GetXaxis()->CenterLabels();
         obj->GetYaxis()->CenterLabels();
-        obj->SetMaximum(100);
+        obj->SetMaximum(50);
+        if(o.name.find("Noise/NoiseSummary_W") != std::string::npos) obj->SetMaximum(20);
         c->SetGrid(1,1);
         obj->GetXaxis()->SetTitleOffset(1.15);
         c->SetBottomMargin(0.1);
@@ -1087,6 +1088,7 @@ private:
         if(obj->GetEntries() != 0) c->SetLogy(1);
         gStyle->SetOptStat( 1111111 );
         obj->SetStats( kTRUE );
+        obj->SetDrawOption("hist");
 
         return;
       }
@@ -1222,7 +1224,7 @@ private:
       if( o.name.find( "NoiseRateSummary" ) != std::string::npos )
       {
         if(obj->GetEntries() != 0) c->SetLogy(1);
-        if(obj->GetEntries() != 0) c->SetLogx(1);
+        //if(obj->GetEntries() != 0) c->SetLogx(1);
         return;
       }
 
