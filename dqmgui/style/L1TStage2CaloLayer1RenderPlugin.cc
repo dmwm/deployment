@@ -308,7 +308,7 @@ private:
 
       if( name.find( "ByLumi" ) != std::string::npos )
       {
-        if ( isnan(i.xaxis.min) && isnan(i.xaxis.max) )
+        if ( std::isnan(i.xaxis.min) && std::isnan(i.xaxis.max) )
         {
           double currentLumi = obj->GetBinContent(0);
           if ( currentLumi != 0. ) obj->GetXaxis()->SetRangeUser(1, currentLumi+2);
@@ -323,20 +323,20 @@ private:
       }
       if( o.name.find( "maxEvt" ) != std::string::npos && o.name.find("MismatchDetail") == std::string::npos )
       {
-        if ( isnan(i.yaxis.max) )
+        if ( std::isnan(i.yaxis.max) )
         {
           // Setting min to 0 breaks log scale unless user sets min>0
           // Not sure how to let ROOT choose min
-          auto miny = (isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
+          auto miny = (std::isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
           obj->GetYaxis()->SetRangeUser(miny, 8856);
         }
       }
       if( name.find( "dataEmulSummary" ) != std::string::npos )
       {
         gStyle->SetOptStat(11);
-        if ( isnan(i.yaxis.max) )
+        if ( std::isnan(i.yaxis.max) )
         {
-          auto miny = (isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
+          auto miny = (std::isnan(i.yaxis.min)) ? 0. : i.yaxis.min;
           obj->GetYaxis()->SetRangeUser(miny, 0.1);
         }
       }

@@ -1,7 +1,7 @@
 if __name__=="__main__":
 	class DQMItem:
 		def __init__(self,layout):
-			print layout
+			print(layout)
 	dqmitems={}
 
 def hcallayout(i, p, *rows): i['Hcal/Layouts/' + p] = DQMItem(layout=rows)

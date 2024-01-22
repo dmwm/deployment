@@ -1,7 +1,7 @@
 if __name__=="__main__":
 	class DQMItem:
 		def __init__(self,layout):
-			print layout
+			print(layout)
 	dqmitems={}
 
 def shifthcallayout(i, p, *rows): i['00 Shift/Hcal/' + p] = DQMItem(layout=rows)
