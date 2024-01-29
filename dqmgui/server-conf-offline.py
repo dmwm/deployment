@@ -20,10 +20,16 @@ modules = ("Monitoring.DQM.GUI",)
 # server.instrument  = 'igprof -d -t python -mp'
 server.port = 8080
 server.serverDir = STATEDIR
-server.logFile = "%s/weblog.log" % LOGDIR
-server.title = "CMS data quality"
-# For convenience, we change the service name, depending on the server:
+# For convenience, we change some config, depending on the server:
 hostname = socket.gethostname().lower().split(".")[0]
+server.logFile = (
+    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+    "%s/weblog-%%Y%%m%%d.log" % LOGDIR
+    if "vocms" in hostname
+    else "%s/weblog.log" % LOGDIR
+)
+server.title = "CMS data quality"
+
 # Offline production servers
 if hostname == "vocms0738":
     server.serviceName = "Offline"
