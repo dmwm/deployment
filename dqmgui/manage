@@ -33,7 +33,7 @@
 
 echo_e=-e
 bsdstart=bsdstart
-case $(uname) in Darwin )
+case $(uname) in Darwin)
   md5sum() { md5 -r ${1+"$@"}; }
   echo_e=
   bsdstart=start
@@ -68,57 +68,69 @@ export STAGE_HOST=${STAGE_HOST:-castorcms}
 export RFIO_USE_CASTOR_V2=YES
 export STAGE_SVCCLASS=archive
 
-# kerberos
+# kerberos auth
 # following lines are giving problems in lxplus installations at present January 2021
 # when trying to load any DQM GUI instance
 # commenting them works perfectly fine since users alrady have a kerberos token by default
-export keytab=/data/srv/current/auth/wmcore-auth/keytab
-principal=`klist -k "$keytab" | tail -1 | awk '{print $2}'`
-kinit $principal -k -t "$keytab" 2>&1 1>& /dev/null
-if [ $? == 1 ]; then
+_kerberos_init() {
+  # TODO: This might need to be adjusted in the future
+  export keytab=/data/srv/current/auth/wmcore-auth/keytab
+  principal=$(klist -k "$keytab" | tail -1 | awk '{print $2}')
+  kinit $principal -k -t "$keytab" 2>&1 1>&/dev/null
+  if [ $? = 1 ]; then
     echo "Unable to perform kinit."
     echo "If you are installing a DQM GUI on lxplus or any other private machine, please comment lines from this block and proceed as usual"
     exit 1
-fi
-
+  fi
+}
 # Set Flavor for HOST:DOMAIN
 case $HOST:$DOMAIN in
-  # Anything in the CMS network, will be automatically Online
-  *:cms )       FLAVOR=online ;;
-  # On the production machines in the CERN network, flavor is based on the
-  # machine and they get an alternate user
-  vocms0138:* ) FLAVOR=offline;                ALTERNATIVE_USER='cmsweb' ;;
-  vocms0738:* ) FLAVOR=offline;                ALTERNATIVE_USER='cmsweb' ;;
-  vocms0139:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
-  vocms0739:* ) FLAVOR=relval;                 ALTERNATIVE_USER='cmsweb' ;;
-  vocms0731:* ) FLAVOR=offline-relval-testing; ALTERNATIVE_USER='cmsweb' ;;
-  # Private instances get the dev flavor, unless specified differently
-  *:cern.ch )   FLAVOR=dev;;
+# Anything in the CMS network, will be automatically Online
+*:cms) FLAVOR=online ;;
+# On the production machines in the CERN network, flavor is based on the
+# machine and they get an alternate user
+vocms0738:*)
+  FLAVOR=offline
+  ALTERNATIVE_USER='cmsweb'
+  _kerberos_init
+  ;;
+vocms0739:*)
+  FLAVOR=relval
+  ALTERNATIVE_USER='cmsweb'
+  _kerberos_init
+  ;;
+vocms0731:*)
+  FLAVOR=offline-relval-testing
+  ALTERNATIVE_USER='cmsweb'
+  _kerberos_init
+  ;;
+# Private instances get the dev flavor, unless specified differently
+*:cern.ch) FLAVOR=dev ;;
 esac
-
 # Select the right configuration based on FLAVOR
-getconfigs(){
-case $FLAVOR in
-  online )                 CONFIGS="online";;
-  offline )                CONFIGS="offline";;
-  relval )                 CONFIGS="relval";;
-  offline-relval-testing ) CONFIGS="offline relval dev";;
-  dev )                    CONFIGS="dev";;
-esac
+getconfigs() {
+  case $FLAVOR in
+  online) CONFIGS="online" ;;
+  offline) CONFIGS="offline" ;;
+  relval) CONFIGS="relval" ;;
+  offline-relval-testing) CONFIGS="offline relval dev" ;;
+  dev) CONFIGS="dev" ;;
+  esac
 }
 
-message()
-{
+message() {
   $QUIET && return
   case $1 in
-    -n ) shift; printf "%s" "$*" ;;
-    * ) echo ${1+"$@"} ;;
+  -n)
+    shift
+    printf "%s" "$*"
+    ;;
+  *) echo ${1+"$@"} ;;
   esac
 }
 
 # Procedure witch will check if a process is not already running before starting it
-refuseproc()
-{
+refuseproc() {
   local title="$1" pat="$2" reason="$3"
   if [ $(pgrep -u $(id -u) -f "$pat" | wc -l) != 0 ]; then
     echo "$title: $reason because processes matching '$pat' are still running" 1>&2
@@ -126,15 +138,24 @@ refuseproc()
   fi
 }
 
-statproc()
-{
+statproc() {
   local user=$(id -u) title pat
   while [ $# -ge 1 ]; do
     case $1 in
-      -u ) user=$2; shift; shift ;;
-      -- ) shift; break ;;
-      -* ) echo "$0 (statproc): bad option '$1'" 1>&2; exit 1 ;;
-      *  ) break ;;
+    -u)
+      user=$2
+      shift
+      shift
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      echo "$0 (statproc): bad option '$1'" 1>&2
+      exit 1
+      ;;
+    *) break ;;
     esac
   done
   title="$1" pat="$2"
@@ -146,15 +167,24 @@ statproc()
   fi
 }
 
-sdproc()
-{
+sdproc() {
   local user=$(id -u) title pat
   while [ $# -ge 1 ]; do
     case $1 in
-      -u ) user=$2; shift; shift ;;
-      -- ) shift; break ;;
-      -* ) echo "$0 (sdproc): bad option '$1'" 1>&2; exit 1 ;;
-      *  ) break ;;
+    -u)
+      user=$2
+      shift
+      shift
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      echo "$0 (sdproc): bad option '$1'" 1>&2
+      exit 1
+      ;;
+    *) break ;;
     esac
   done
   title="$1" pat="$2"
@@ -166,16 +196,17 @@ sdproc()
   newline="\n"
 }
 
-
-killproc()
-{
+killproc() {
   local T title pat nextmsg
   T=1 title="$1" pat="$2"
   nextmsg="${newline}Stopping ${title}:"
   for pid in $(pgrep -u $(id -u) -f "$pat" | sort -rn); do
     psline=$(ps -o pid=,$bsdstart=,args= $pid |
-             perl -n -e 'print join(" ", (split)[0..4])')
-    [ -n "$nextmsg" ] && { message $echo_e "$nextmsg"; nextmsg=; }
+      perl -n -e 'print join(" ", (split)[0..4])')
+    [ -n "$nextmsg" ] && {
+      message $echo_e "$nextmsg"
+      nextmsg=
+    }
     message -n "Stopping $pid ($psline):"
     for sig in TERM TERM QUIT KILL; do
       message -n " SIG$sig"
@@ -191,30 +222,35 @@ killproc()
   done
 }
 
-startagent()
-{
+startagent() {
   local edition=
   case $1 in
-    -e ) edition=$2; shift;shift
+  -e)
+    edition=$2
+    shift
+    shift
+    ;;
   esac
-  local logstem=${1}; shift
-  ([ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
-   set -x; date; exec "$@") </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 &
+  local logstem=${1}
+  shift
+  (
+    [ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
+    set -x
+    date
+    exec "$@"
+  ) </dev/null >>$LOGDIR/$logstem-$(hostname -s).log 2>&1 &
 }
 
 # Start service conditionally on crond restart.
-sysboot()
-{
+sysboot() {
   if [ $(pgrep -u $(id -u) -f "[/]monGui $CFGDIR" | wc -l) = 0 ]; then
     start
   fi
 }
 
 # Start the service.
-start()
-{
+start() {
   cd $STATEDIR
-  message "starting $ME/$FLAVOR ${1:-(default)}"
 
   # First start webserver
   # This is the core of the GUI, so it's always started
@@ -228,102 +264,111 @@ start()
   start_collector $1
 }
 
-start_webserver()
-{
+start_webserver() {
   case $HOST:${1:-webserver} in
-    *:*webserver* )
-      for CONFIG in $CONFIGS; do
-        [ ! -d $STATEDIR/$CONFIG/ix128 ] && \
-          (echo Creating index $STATEDIR/$CONFIG/ix128; visDQMIndex create $STATEDIR/$CONFIG/ix128)
-        monControl start all from $CFGDIR/server-conf-$CONFIG.py
-      done ;;
+  *:*webserver*)
+    for CONFIG in $CONFIGS; do
+      [ ! -d $STATEDIR/$CONFIG/ix128 ] &&
+        (
+          visDQMIndex create $STATEDIR/$CONFIG/ix128
+        )
+      monControl start all from $CFGDIR/server-conf-$CONFIG.py
+    done
+    ;;
   esac
 }
 
-start_agents()
-{
+start_agents() {
   case $HOST:${1:-agents} in
-    ##### ONLINE: online server srv-c2f11-29-01
-    # alias: dqm-prod-local
-    # the first online server runs
-    # - the only receive daemon in the online world, distributing to all the
-    #   rest
-    # - the import daemon
-    # - the sound alert daemon
-    # agent dropboxes are on a shared environment
-    # note that no zip or backup daemons are run, root files from the online
-    # are pulled from the offline and backed up there
-    srv-c2f11-29-01:*agents* )
-      start_agents_dqm_prod_local ;;
-    ##### ONLINE: online server srv-c2f11-29-02
-    # alias: dqm-prod-offsite
-    # the second online server runs
-    # - the import daemon
-    # agent dropboxes are on a shared environment
-    # note that no zip or backup daemons are run, root files from the online
-    # are pulled from the offline and backed up there
-    srv-c2f11-29-02:*agents* )
-      start_agents_dqm_prod_offsite ;;
-    ##### ONLINE: online server srv-c2f11-29-03
-    # alias: dqm-integration
-    # the playback online server runs
-    # - the receive daemon
-    # - the import daemon
-    # agent dropboxes are local to the machine
-    # nothing gets backed up
-    srv-c2f11-29-03:*agents* )
-      start_agents_dqm_integration ;;
-    ##### ONLINE: online server srv-c2f11-29-04
-    # alias: dqm-test
-    # the second online server runs
-    # - the import daemon
-    # agent dropboxes are on a shared environment
-    # nothing gets backed up
-    srv-c2f11-29-04:*agents* )
-      start_agents_dqm_test ;;
-    ##### OFFLINE: offline servers vocms0138 (SLC6) and vocms0738 (CC7)
-    # The offline server runs
-    # - the standard receive and import daemons
-    # - the quota and version control daemons
-    # - the zip and zipfreeze daemons
-    # - the online sync and create info daemon that copies root data from the
-    #   online to offline
-    # note that the agents to copy zip to castor, verify zip from castor and
-    # copy index to castor run as tasks under acron.
-    vocms0138:*agents* | vocms0738:*agents* )
-      start_agents_offline ;;
-    ##### OFFLINE: relval server vocms0139 (SLC6) and vocms0739 (CC7)
-    # The Relval server runs
-    # - the standard receive and import daemons
-    # - the quota and version control daemons
-    # - the zip and zipfreeze daemons
-    # Note that the agents to copy zip to Castor, verify zip from Castor and
-    # copy index to Castor run as tasks under acron.
-    vocms0139:*agents* | vocms0739:*agents* )
-      start_agents_relval ;;
-    ##### OFFLINE: test server vocms0131
-    # This server runs 3 gui's in 3 flavors: dev, offline and relval
-    # The test server runs
-    # - the standard receive and import daemons
-    # - the quota and version control daemons
-    # Only for the dev flavor it runs:
-    # - the zip and zipfreeze daemons
-    # - the acron tasks that do the backups to Castor
-    # We also keep a local backup of the index (rsynced by the import
-    # daemon).
-    vocms0731:*agents* )
-      start_agents_offline_relval_test ;;
-    ##### PRIVATE or DEVELOPMENT instances
-    # The private or development servers run
-    # - the standard receive and import daemons
-    # - the quota and version control daemons
-    *:*agents* )
-      start_agents_local_development ;;
+  ##### ONLINE: online server dqmsrv-c2a06-07-01
+  # alias: dqm-prod-local
+  # the first online server runs
+  # - the only receive daemon in the online world, distributing to all the
+  #   rest
+  # - the import daemon
+  # - the sound alert daemon
+  # agent dropboxes are on a shared environment
+  # note that no zip or backup daemons are run, root files from the online
+  # are pulled from the offline and backed up there
+  srv-c2f11-29-01:*agents* | dqmsrv-c2a06-07-01:*agents*)
+    start_agents_dqm_prod_local
+    ;;
+  ##### ONLINE: online server srv-c2f11-29-02
+  # alias: dqm-prod-offsite
+  # the second online server runs
+  # - the import daemon
+  # agent dropboxes are on a shared environment
+  # note that no zip or backup daemons are run, root files from the online
+  # are pulled from the offline and backed up there
+  srv-c2f11-29-02:*agents*)
+    start_agents_dqm_prod_offsite
+    ;;
+  ##### ONLINE: online server dqmsrv-c2a06-08-01
+  # alias: dqm-integration
+  # the playback online server runs
+  # - the receive daemon
+  # - the import daemon
+  # agent dropboxes are local to the machine
+  # nothing gets backed up
+  srv-c2f11-29-03:*agents* | dqmsrv-c2a06-08-01:*agents*)
+    start_agents_dqm_integration
+    ;;
+  ##### ONLINE: online server srv-c2f11-29-04
+  # alias: dqm-test
+  # the second online server runs
+  # - the import daemon
+  # agent dropboxes are on a shared environment
+  # nothing gets backed up
+  srv-c2f11-29-04:*agents*)
+    start_agents_dqm_test
+    ;;
+  ##### OFFLINE: offline server vocms0738 (CC7)
+  # The offline server runs
+  # - the standard receive and import daemons
+  # - the quota and version control daemons
+  # - the zip and zipfreeze daemons
+  # - the online sync and create info daemon that copies root data from the
+  #   online to offline
+  # note that the agents to copy zip to castor, verify zip from castor and
+  # copy index to castor run as tasks under acron.
+  vocms0738:*agents*)
+    start_agents_offline
+    ;;
+  ##### OFFLINE: relval server vocms0739 (CC7)
+  # The Relval server runs
+  # - the standard receive and import daemons
+  # - the quota and version control daemons
+  # - the zip and zipfreeze daemons
+  # Note that the agents to copy zip to Castor, verify zip from Castor and
+  # copy index to Castor run as tasks under acron.
+  vocms0739:*agents*)
+    start_agents_relval
+    ;;
+  ##### OFFLINE: test server vocms0731
+  # This server runs 3 gui's in 3 flavors: dev, offline and relval
+  # The test server runs
+  # - the standard receive and import daemons
+  # - the quota and version control daemons
+  # Only for the dev flavor it runs:
+  # - the zip and zipfreeze daemons
+  # - the acron tasks that do the backups to Castor
+  # We also keep a local backup of the index (rsynced by the import
+  # daemon).
+  vocms0731:*agents*)
+    start_agents_offline_relval_test
+    ;;
+  ##### PRIVATE or DEVELOPMENT instances
+  # The private or development servers run
+  # - the standard receive and import daemons
+  # - the quota and version control daemons
+  *:*agents*)
+    start_agents_local_development
+    ;;
   esac
 }
 
-start_agents_dqm_prod_local()
-{
+# Used to be for srv...01, now dqmsrv-c2a06-07-01
+start_agents_dqm_prod_local() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
   DQM_DATA=/dqmdata/dqm
@@ -332,13 +377,11 @@ start_agents_dqm_prod_local()
     visDQMReceiveDaemon \
     $DQM_DATA/uploads \
     $DQM_DATA/repository/original \
-    $DQM_DATA/agents/import-srv-c2f11-29-01 \
-    $DQM_DATA/agents/import-srv-c2f11-29-02 \
-    $DQM_DATA/agents/import-srv-c2f11-29-04
+    $DQM_DATA/agents/import-dqmsrv-c2a06-07-01
 
   startagent $D/agent-import-128 \
     visDQMImportDaemon \
-    $DQM_DATA/agents/import-srv-c2f11-29-01 \
+    $DQM_DATA/agents/import-dqmsrv-c2a06-07-01 \
     $DQM_DATA/repository/original \
     $STATEDIR/online/ix128 \
     --rsync \
@@ -351,15 +394,15 @@ start_agents_dqm_prod_local()
     50555 600 2 \
     cms-dqm-onlineAlarm@cern.ch \
     http://localhost:8031/disabled
-    
+
   startagent $D/agent-sound-manager \
     visDQMSoundAlarmManager \
     http://localhost:8030/dqm/online/ \
     8031
 }
 
-start_agents_dqm_prod_offsite()
-{
+# Used to be srv...02
+start_agents_dqm_prod_offsite() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
   DQM_DATA=/dqmdata/dqm
@@ -371,8 +414,8 @@ start_agents_dqm_prod_offsite()
     $STATEDIR/online/ix128
 }
 
-start_agents_dqm_integration()
-{
+# srv...03, now dqmsrv-c2a06-08-01
+start_agents_dqm_integration() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
   DQM_DATA=$STATEDIR/online
@@ -381,7 +424,7 @@ start_agents_dqm_integration()
     visDQMReceiveDaemon \
     $DQM_DATA/uploads \
     $DQM_DATA/data \
-    $DQM_DATA/agents/register \
+    $DQM_DATA/agents/register
 
   startagent $D/agent-import-128 \
     visDQMImportDaemon \
@@ -390,21 +433,20 @@ start_agents_dqm_integration()
     $STATEDIR/online/ix128
 }
 
-start_agents_dqm_test()
-{
+start_agents_dqm_test() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
   DQM_DATA=/dqmdata/dqm
 
   startagent $D/agent-import-128 \
     visDQMImportDaemon \
-    $DQM_DATA/agents/import-srv-c2f11-29-04 \
+    $DQM_DATA/agents/import-dqmsrv-c2a06-08-01 \
     $DQM_DATA/repository/original \
     $STATEDIR/online/ix128
 }
 
-start_agents_offline()
-{
+# vocms0738
+start_agents_offline() {
   refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
   for D in $CONFIGS; do
     D=${D}
@@ -469,8 +511,8 @@ start_agents_offline()
   done
 }
 
-start_agents_relval()
-{
+# vocms0739
+start_agents_relval() {
   refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
   for D in $CONFIGS; do
     D=${D}
@@ -521,8 +563,8 @@ start_agents_relval()
   done
 }
 
-start_agents_offline_relval_test()
-{
+# vocms0731
+start_agents_offline_relval_test() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   for D in $CONFIGS; do
     D=${D}
@@ -594,8 +636,7 @@ start_agents_offline_relval_test()
   done
 }
 
-start_agents_local_development()
-{
+start_agents_local_development() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   for D in $CONFIGS; do
     D=${D}
@@ -627,42 +668,48 @@ start_agents_local_development()
   done
 }
 
-start_collector()
-{
+start_collector() {
   # Note that the setup of the port to which a specific server is listening is
   # not done here, but instead in the specific server config file.
   case $FLAVOR:$HOST:${1:-collector} in
-    # Online servers: Collector for the first one, no collector for the other two:
-    online:srv-c2f11-29-01:*collector* )
-      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 & ;;
-    online:srv-c2f11-29-02:*collector* ) ;;
-    online:srv-c2f11-29-04:*collector* ) ;;
-    # Playback server: Gets its own collector:
-    online:srv-c2f11-29-03:*collector* )
-      DQMCollector --listen 9090 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 & ;;
-    # Hcal server: Gets its own collector:
-    online:fu-c2f11-21-03:*collector* )
-      DQMCollector --listen 9091 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 & ;;
-    # Rest/default: Standard collector:
-    online:*:*collector* )
-      DQMCollector --listen 9190 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 & ;;
-    *:*:*collector* )
-      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1 & ;;
+  # Online servers: Collector for the first one, no collector for the other two:
+  online:dqmsrv-c2a06-07-01:*collector*)
+    DQMCollector --listen 9090 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
+    ;;
+  # Playback server: Gets its own collector:
+  online:dqmsrv-c2a06-08-01:*collector*)
+    DQMCollector --listen 9090 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
+    ;;
+  # Hcal/Ecal server: Gets its own collector (checks hostname & username):
+  online:dqmfu-c2b02-46-01:*collector*)
+    if echo "$USER" | grep -qi "hcal"; then
+      DQMCollector --listen 9091 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
+    elif echo "$USER" | grep -qi "ecal"; then
+      DQMCollector --listen 9090 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
+    fi
+    ;;
+  # Rest/default: Standard collector:
+  online:*:*collector*)
+    DQMCollector --listen 9190 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
+    ;;
+  *:*:*collector*)
+    DQMCollector --listen 8061 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
+    ;;
   esac
 }
 
 # Stop the service.
 # When starting, the order is: server - agents - collector
 # When stopping, the order is: collector - agents - server
-stop()
-{
+stop() {
   message "stopping $ME/$FLAVOR ${1:-(default)}"
   # Collector
-  case ${1:-collector} in *collector* )
-    killproc "$ME collector" "DQMCollector" ;;
+  case ${1:-collector} in *collector*)
+    killproc "$ME collector" "DQMCollector"
+    ;;
   esac
   # Agents
-  case ${1:-agents} in *agents* )
+  case ${1:-agents} in *agents*)
     killproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQM.*Manager"
     # The visDQMZipCastorStager and visDQMZipCastorVerifier agents keep their
     # status in a persisted file. When we restart (and hence stop) these
@@ -672,69 +719,78 @@ stop()
     for CONFIG in $CONFIGS; do
       rm -rf $STATEDIR/$CONFIG/agents/stageout/new.pickle
       rm -rf $STATEDIR/$CONFIG/agents/verify/state.pickle
-    done ;;
+    done
+    ;;
   esac
   # Server (render processes are killed with the server)
-  case ${1:-webserver} in *webserver* )
+  case ${1:-webserver} in *webserver*)
     for CONFIG in $CONFIGS; do
       monControl stop all from $CFGDIR/server-conf-$CONFIG.py
-    done ;;
+    done
+    ;;
   esac
 }
 
 # Check if the server is running.
-status()
-{
+status() {
   # Collector
-  case ${1:-collector} in *collector* )
-    statproc "$ME collector" "DQMCollector" ;;
+  case ${1:-collector} in *collector*)
+    statproc "$ME collector" "DQMCollector"
+    ;;
   esac
   # Agents
-  case ${1:-agents} in *agents* )
-    statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip" ;;
+  case ${1:-agents} in *agents*)
+    statproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip"
+    ;;
   esac
   # Server
-  case ${1:-webserver} in *webserver* )
-    statproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  case ${1:-webserver} in *webserver*)
+    statproc "$ME webserver" "[/]monGui $CFGDIR"
+    ;;
   esac
   # Part of the server are the render processes
-  case ${1:-renderer} in *renderer* )
-    statproc "$ME renderer" "visDQMRender" ;;
+  case ${1:-renderer} in *renderer*)
+    statproc "$ME renderer" "visDQMRender"
+    ;;
   esac
-  # Extra thing to check: loggers
-  case ${1:-logger} in *logger* )
-    statproc "$ME loggers" "rotatelogs" ;;
-  esac
+  # Now managed by rotatelogs
+  # case ${1:-logger} in *logger*)
+  #   statproc "$ME loggers" "logrotate"
+  #   ;;
+  # esac
 }
 
 # Give details of server components
-detailstatus()
-{
+detailstatus() {
   # Collector
-  case ${1:-collector} in *collector* )
-    sdproc "$ME collector" "DQMCollector" ;;
+  case ${1:-collector} in *collector*)
+    sdproc "$ME collector" "DQMCollector"
+    ;;
   esac
   # Agents
-  case ${1:-agents} in *agents* )
-    sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip" ;;
+  case ${1:-agents} in *agents*)
+    sdproc "$ME file agents" "visDQM.*Daemon|visDQM.*Castor.*|visDQMIndex|zip"
+    ;;
   esac
   # Server
-  case ${1:-webserver} in *webserver* )
-    sdproc "$ME webserver" "[/]monGui $CFGDIR" ;;
+  case ${1:-webserver} in *webserver*)
+    sdproc "$ME webserver" "[/]monGui $CFGDIR"
+    ;;
   esac
   # Part of the server are the render processes
-  case ${1:-renderer} in *renderer* )
-    sdproc "$ME renderer" "visDQMRender" ;;
+  case ${1:-renderer} in *renderer*)
+    sdproc "$ME renderer" "visDQMRender"
+    ;;
   esac
-  # Extra thing to check: loggers
-  case ${1:-logger} in *logger* )
-    sdproc "$ME loggers" "rotatelogs" ;;
-  esac
+  # Now managed by rotatelogs
+  # case ${1:-logger} in *logger*)
+  #   sdproc "$ME loggers" "logrotate"
+  #   ;;
+  # esac
 }
 
 # (Re)compile render plugins.
-compile()
-{
+compile() {
   for CONFIG in $CONFIGS; do
     monControl rebuild all from $CFGDIR/server-conf-$CONFIG.py
   done
@@ -742,8 +798,7 @@ compile()
 
 # Backup index to castor
 # The backup is incremental, with a full backup at regular intervals
-indexbackup()
-{
+indexbackup() {
   refuseproc "castor index backup" "visDQMIndexCastorStager"
 
   for D in $CONFIGS; do
@@ -751,37 +806,36 @@ indexbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
-        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/$D
-        ;;
-      * )
-        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/testing/$D
-        ;;
+    vocms0731:dev | vocms0738:offline | vocms0739:relval)
+      CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/$D
+      ;;
+    *)
+      CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/testing/$D
+      ;;
     esac
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0731:offline | vocms0731:relval )
-	;;
-      * )
-        DQM_DATA=$STATEDIR/$D
-        LOGSTEM=$D/agent-castorindexbackup
-        # Start the process not as an agent, but directly in the current thread.
-        # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
-        # The backup is incremental, but we do a full backup every 50 days.
-        visDQMIndexCastorStager \
-          $DQM_DATA/agents/ixstageout \
-          $DQM_DATA/ix128 \
-          $CASTORDIR \
-          cms-dqm-coreTeam@cern.ch \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1
-      esac
+    vocms0731:offline | vocms0731:relval) ;;
+    *)
+      DQM_DATA=$STATEDIR/$D
+      LOGSTEM=$D/agent-castorindexbackup
+      # Start the process not as an agent, but directly in the current thread.
+      # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
+      # The backup is incremental, but we do a full backup every 50 days.
+      visDQMIndexCastorStager \
+        $DQM_DATA/agents/ixstageout \
+        $DQM_DATA/ix128 \
+        $CASTORDIR \
+        cms-dqm-coreTeam@cern.ch \
+        </dev/null 2>&1 >$LOGDIR/$LOGSTEM-$(printf '%(%Y%m%d)T' -1)-$(hostname -s).log
+      ;;
+    esac
   done
 }
 
 # Backup new root files (zipped) to castor
-zipbackup()
-{
+zipbackup() {
   refuseproc "castor root file backup" "visDQMZipCastorStager"
 
   for D in $CONFIGS; do
@@ -789,36 +843,35 @@ zipbackup()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
-        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
-        ;;
-      * )
-        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/testing/$D
-        ;;
+    vocms0731:dev | vocms0738:offline | vocms0739:relval)
+      CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
+      ;;
+    *)
+      CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/testing/$D
+      ;;
     esac
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0731:offline | vocms0731:relval )
-	;;
-      * )
-        DQM_DATA=$STATEDIR/$D
-        LOGSTEM=$D/agent-castorzipbackup
-        # Start the process not as an agent, but directly in the current thread.
-        # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
-        visDQMZipCastorStager \
-          $DQM_DATA/agents/stageout \
-          $DQM_DATA/zipped \
-          $CASTORDIR \
-          $DQM_DATA/agents/verify \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1
+    vocms0731:offline | vocms0731:relval) ;;
+    *)
+      DQM_DATA=$STATEDIR/$D
+      LOGSTEM=$D/agent-castorzipbackup
+      # Start the process not as an agent, but directly in the current thread.
+      # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
+      visDQMZipCastorStager \
+        $DQM_DATA/agents/stageout \
+        $DQM_DATA/zipped \
+        $CASTORDIR \
+        $DQM_DATA/agents/verify \
+        </dev/null 2>&1 >$LOGDIR/$LOGSTEM-$(printf '%(%Y%m%d)T' -1)-$(hostname -s).log
+      ;;
     esac
   done
 }
 
 # Check / verify the backup of the zipped root files to castor
-zipbackupcheck()
-{
+zipbackupcheck() {
   refuseproc "castor root file backup check" "visDQMZipCastorVerifier"
 
   for D in $CONFIGS; do
@@ -826,55 +879,67 @@ zipbackupcheck()
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-      vocms0731:dev | vocms0138:offline | vocms0139:relval | vocms0738:offline | vocms0739:relval )
-        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
-        ;;
-      * )
-        CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/testing/$D
-        ;;
+    vocms0731:dev | vocms0738:offline | vocms0739:relval)
+      CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
+      ;;
+    *)
+      CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/testing/$D
+      ;;
     esac
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-      vocms0731:offline | vocms0731:relval )
-	;;
-      * )
-        DQM_DATA=$STATEDIR/$D
-        LOGSTEM=$D/agent-castorzipbackupcheck
-        # Start the original agent process, however, not as an agent, but directly in the current thread.
-        # The agent was modified in such a way that it exits after each cycle.
-        # It is supposed to be started from/by acrontab.
-        visDQMZipCastorVerifier \
-          $DQM_DATA/agents/verify \
-          cms-dqm-coreTeam@cern.ch \
-          $DQM_DATA/zipped \
-          $CASTORDIR \
-          24 \
-          $DQM_DATA/agents/clean \
-          </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-`hostname -s`.log 86400 >/dev/null 2>&1
+    vocms0731:offline | vocms0731:relval) ;;
+    *)
+      DQM_DATA=$STATEDIR/$D
+      LOGSTEM=$D/agent-castorzipbackupcheck
+      # Start the original agent process, however, not as an agent, but directly in the current thread.
+      # The agent was modified in such a way that it exits after each cycle.
+      # It is supposed to be started from/by acrontab.
+      visDQMZipCastorVerifier \
+        $DQM_DATA/agents/verify \
+        cms-dqm-coreTeam@cern.ch \
+        $DQM_DATA/zipped \
+        $CASTORDIR \
+        24 \
+        $DQM_DATA/agents/clean \
+        </dev/null 2>&1 >$LOGDIR/$LOGSTEM-$(printf '%(%Y%m%d)T' -1)-$(hostname -s).log
+      ;;
     esac
   done
 }
 
 # Verify the security string.
-check()
-{
+check() {
   CHECK=$(echo "$1" | md5sum | awk '{print $1}')
   if [ $CHECK != 94e261a5a70785552d34a65068819993 ]; then
     echo "$0: cannot complete operation, please check documentation." 1>&2
-    exit 2;
+    exit 2
   fi
 }
 
 # Main routine, perform action requested on command line.
 while [ $# -ge 1 ]; do
   case $1 in
-    -q ) QUIET=true; shift ;;
-    -f ) FLAVOR=$2; shift;shift;;
-    -h ) set -- help ;;
-    -- ) shift; break ;;
-    -* ) echo "$0: unrecognised option '$1'" 1>&2; exit 1;;
-    *  ) break ;;
+  -q)
+    QUIET=true
+    shift
+    ;;
+  -f)
+    FLAVOR=$2
+    shift
+    shift
+    ;;
+  -h) set -- help ;;
+  --)
+    shift
+    break
+    ;;
+  -*)
+    echo "$0: unrecognised option '$1'" 1>&2
+    exit 1
+    ;;
+  *) break ;;
   esac
 done
 newline=""
@@ -887,91 +952,93 @@ getconfigs
 CURRENT_USER=$(id -un)
 if [ -n "$ALTERNATIVE_USER" ]; then
   case $1 in
-    indexbackup | zipbackup | zipbackupcheck )
-      if [ "$CURRENT_USER" != "$ALTERNATIVE_USER" ]; then
-        echo "ERROR: Trying to start $1 as normal user, use ALTERNATIVE_USER instead." 1>&2
-        exit 1
-      fi ;;
-    * )
-      if [ "$CURRENT_USER" = "$ALTERNATIVE_USER" ]; then
-        echo "ERROR: Trying to run as ALTERNATIVE_USER, use normal user instead." 1>&2
-        exit 1
-      fi ;;
+  indexbackup | zipbackup | zipbackupcheck)
+    if [ "$CURRENT_USER" != "$ALTERNATIVE_USER" ]; then
+      echo "ERROR: Trying to start $1 as normal user, use ALTERNATIVE_USER instead." 1>&2
+      exit 1
+    fi
+    ;;
+  *)
+    if [ "$CURRENT_USER" = "$ALTERNATIVE_USER" ]; then
+      echo "ERROR: Trying to run as ALTERNATIVE_USER, use normal user instead." 1>&2
+      exit 1
+    fi
+    ;;
   esac
 fi
 
 case ${1:-status} in
-  sysboot )
-    sysboot
-    ;;
+sysboot)
+  sysboot
+  ;;
 
-  start | restart )
-    check "$2"
-    stop
-    start
-    ;;
+start | restart)
+  check "$2"
+  stop
+  start
+  ;;
 
-  status )
-    status
-    ;;
+status)
+  status
+  ;;
 
-  dstatus )
-    detailstatus
-    ;;
+dstatus)
+  detailstatus
+  ;;
 
-  stop )
-    check "$2"
-    stop
-    ;;
+stop)
+  check "$2"
+  stop
+  ;;
 
-  compile )
-    compile
-    ;;
+compile)
+  compile
+  ;;
 
-  xstart | xrestart )
-    check "$3"
-    stop "$2"
-    start "$2"
-    ;;
+xstart | xrestart)
+  check "$3"
+  stop "$2"
+  start "$2"
+  ;;
 
-  xstatus)
-    status "$2"
-    ;;
+xstatus)
+  status "$2"
+  ;;
 
-  xdstatus )
-    detailstatus "$2"
-    ;;
+xdstatus)
+  detailstatus "$2"
+  ;;
 
-  xstop )
-    check "$3"
-    stop "$2"
-    ;;
+xstop)
+  check "$3"
+  stop "$2"
+  ;;
 
-  indexbackup )
-    check "$2"
-    indexbackup
-    ;;
+indexbackup)
+  check "$2"
+  indexbackup
+  ;;
 
-  zipbackup )
-    check "$2"
-    zipbackup
-    ;;
+zipbackup)
+  check "$2"
+  zipbackup
+  ;;
 
-  zipbackupcheck )
-    check "$2"
-    zipbackupcheck
-    ;;
+zipbackupcheck)
+  check "$2"
+  zipbackupcheck
+  ;;
 
-  help )
-    perl -ne '/^##H/ && do { s/^##H ?//; print }' < $0
-    ;;
+help)
+  perl -ne '/^##H/ && do { s/^##H ?//; print }' <$0
+  ;;
 
-  version )
-    echo "$DQMGUI_VERSION"
-    ;;
+version)
+  echo "$DQMGUI_VERSION"
+  ;;
 
-  * )
-    echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
-    exit 1
-    ;;
+*)
+  echo "$0: unknown action '$1', please try '$0 help' or documentation." 1>&2
+  exit 1
+  ;;
 esac

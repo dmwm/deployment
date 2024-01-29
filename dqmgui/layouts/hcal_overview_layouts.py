@@ -2,8 +2,8 @@
 if __name__=="__main__":
     class DQMItem:
         def __init__(self,layout):
-            print layout
-            print
+            print(layout)
+            print()
 
     dqmitems={}
 
