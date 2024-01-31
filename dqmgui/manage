@@ -233,12 +233,23 @@ startagent() {
   esac
   local logstem=${1}
   shift
-  (
-    [ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
-    set -x
-    date
-    exec "$@"
-  ) </dev/null >>$LOGDIR/$logstem-$(hostname -s).log 2>&1 &
+  # Keep old way for vocms machines, until they are updated
+  # TODO: Remove after migration of vocms machines to newer OS
+  if echo $HOST | grep -q "vocms"; then
+    (
+      [ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
+      set -x
+      date
+      exec "$@"
+    ) </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1 &
+  else
+    (
+      [ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
+      set -x
+      date
+      exec "$@"
+    ) </dev/null >>$LOGDIR/$logstem-$(hostname -s).log 2>&1 &
+  fi
 }
 
 # Start service conditionally on crond restart.
@@ -290,18 +301,8 @@ start_agents() {
   # agent dropboxes are on a shared environment
   # note that no zip or backup daemons are run, root files from the online
   # are pulled from the offline and backed up there
-  srv-c2f11-29-01:*agents* | dqmsrv-c2a06-07-01:*agents*)
+  dqmsrv-c2a06-07-01:*agents*)
     start_agents_dqm_prod_local
-    ;;
-  ##### ONLINE: online server srv-c2f11-29-02
-  # alias: dqm-prod-offsite
-  # the second online server runs
-  # - the import daemon
-  # agent dropboxes are on a shared environment
-  # note that no zip or backup daemons are run, root files from the online
-  # are pulled from the offline and backed up there
-  srv-c2f11-29-02:*agents*)
-    start_agents_dqm_prod_offsite
     ;;
   ##### ONLINE: online server dqmsrv-c2a06-08-01
   # alias: dqm-integration
@@ -310,17 +311,8 @@ start_agents() {
   # - the import daemon
   # agent dropboxes are local to the machine
   # nothing gets backed up
-  srv-c2f11-29-03:*agents* | dqmsrv-c2a06-08-01:*agents*)
+  dqmsrv-c2a06-08-01:*agents*)
     start_agents_dqm_integration
-    ;;
-  ##### ONLINE: online server srv-c2f11-29-04
-  # alias: dqm-test
-  # the second online server runs
-  # - the import daemon
-  # agent dropboxes are on a shared environment
-  # nothing gets backed up
-  srv-c2f11-29-04:*agents*)
-    start_agents_dqm_test
     ;;
   ##### OFFLINE: offline server vocms0738 (CC7)
   # The offline server runs
@@ -688,6 +680,11 @@ start_collector() {
       DQMCollector --listen 9090 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
     fi
     ;;
+  # "Old" procedure (with rotatelogs) for vocms* machines
+  # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+  *:vocms*:*collector*)
+    DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/$FLAVOR/collector-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1 &
+    ;;
   # Rest/default: Standard collector:
   online:*:*collector*)
     DQMCollector --listen 9190 </dev/null >>$LOGDIR/$FLAVOR/collector-$(hostname -s).log 2>&1 &
@@ -754,10 +751,13 @@ status() {
     ;;
   esac
   # Now managed by rotatelogs
-  # case ${1:-logger} in *logger*)
-  #   statproc "$ME loggers" "logrotate"
-  #   ;;
-  # esac
+  case ${1:-logger} in *logger*)
+    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+    if echo $HOST | grep -q "vocms"; then
+      statproc "$ME loggers" "rotatelogs"
+    fi
+    ;;
+  esac
 }
 
 # Give details of server components
@@ -783,10 +783,13 @@ detailstatus() {
     ;;
   esac
   # Now managed by rotatelogs
-  # case ${1:-logger} in *logger*)
-  #   sdproc "$ME loggers" "logrotate"
-  #   ;;
-  # esac
+  case ${1:-logger} in *logger*)
+    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+    if echo $HOST | grep -q "vocms"; then
+      sdproc "$ME loggers" "rotatelogs"
+    fi
+    ;;
+  esac
 }
 
 # (Re)compile render plugins.
@@ -817,6 +820,22 @@ indexbackup() {
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
     vocms0731:offline | vocms0731:relval) ;;
+
+    # Keep "old" procedure in vocms machines.
+    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+    vocms073*:*)
+      DQM_DATA=$STATEDIR/$D
+      LOGSTEM=$D/agent-castorindexbackup
+      # Start the process not as an agent, but directly in the current thread.
+      # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
+      # The backup is incremental, but we do a full backup every 50 days.
+      visDQMIndexCastorStager \
+        $DQM_DATA/agents/ixstageout \
+        $DQM_DATA/ix128 \
+        $CASTORDIR \
+        cms-dqm-coreTeam@cern.ch \
+        </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1
+      ;;
     *)
       DQM_DATA=$STATEDIR/$D
       LOGSTEM=$D/agent-castorindexbackup
@@ -854,6 +873,20 @@ zipbackup() {
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
     vocms0731:offline | vocms0731:relval) ;;
+    # Keep "old" procedure in vocms machines.
+    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+    vocms073*:*)
+      DQM_DATA=$STATEDIR/$D
+      LOGSTEM=$D/agent-castorzipbackup
+      # Start the process not as an agent, but directly in the current thread.
+      # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
+      visDQMZipCastorStager \
+        $DQM_DATA/agents/stageout \
+        $DQM_DATA/zipped \
+        $CASTORDIR \
+        $DQM_DATA/agents/verify \
+        </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1
+      ;;
     *)
       DQM_DATA=$STATEDIR/$D
       LOGSTEM=$D/agent-castorzipbackup
@@ -890,6 +923,22 @@ zipbackupcheck() {
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
     vocms0731:offline | vocms0731:relval) ;;
+    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+    vocms073*:*)
+      DQM_DATA=$STATEDIR/$D
+      LOGSTEM=$D/agent-castorzipbackupcheck
+      # Start the original agent process, however, not as an agent, but directly in the current thread.
+      # The agent was modified in such a way that it exits after each cycle.
+      # It is supposed to be started from/by acrontab.
+      visDQMZipCastorVerifier \
+        $DQM_DATA/agents/verify \
+        cms-dqm-coreTeam@cern.ch \
+        $DQM_DATA/zipped \
+        $CASTORDIR \
+        24 \
+        $DQM_DATA/agents/clean \
+        </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1
+      ;;
     *)
       DQM_DATA=$STATEDIR/$D
       LOGSTEM=$D/agent-castorzipbackupcheck

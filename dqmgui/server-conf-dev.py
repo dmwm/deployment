@@ -15,6 +15,7 @@ LAYOUTS += glob("%s/layouts/shift_*_relval_layout.py" % CONFIGDIR)
 LAYOUTS += glob("%s/layouts/*_relval-layouts.py" % CONFIGDIR)
 
 modules = ("Monitoring.DQM.GUI",)
+hostname = socket.gethostname().lower().split(".")[0]
 
 # server.instrument  = 'valgrind --num-callers=999 `cmsvgsupp` --error-limit=no'
 # server.instrument  = 'valgrind --tool=helgrind --num-callers=999 --error-limit=no'
@@ -22,7 +23,12 @@ modules = ("Monitoring.DQM.GUI",)
 # server.instrument  = 'igprof -d -t python -mp'
 server.port = 8060
 server.serverDir = STATEDIR
-server.logFile = "%s/weblog.log" % LOGDIR
+server.logFile = (
+    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
+    "%s/weblog-%%Y%%m%%d.log" % LOGDIR
+    if "vocms" in hostname
+    else "%s/weblog.log" % LOGDIR
+)
 server.baseUrl = "/dqm/dev"
 server.title = "CMS data quality"
 server.serviceName = "CERN Development"
