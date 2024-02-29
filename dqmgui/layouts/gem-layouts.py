@@ -30,153 +30,268 @@ GEMLayout(dqmitems, 'Common/04 GE11-P-L2 Lumi-based chamber status',
     )
 
 
-GEMLayout(dqmitems, 'Common/05 GE21-P-L2 Lumi-based chamber status', 
-    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-P-L2', 'description': 'Lumi-based chamber status in GE21-P-L2'}], 
+GEMLayout(dqmitems, 'Common/05 GE21-P-L2-M1 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-P-L2-M1', 'description': 'Lumi-based chamber status in GE21-P-L2-M1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/06 AMC13 status', 
+
+GEMLayout(dqmitems, 'Common/06 GE21-P-L2-M2 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-P-L2-M2', 'description': 'Lumi-based chamber status in GE21-P-L2-M2'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/07 GE21-P-L2-M3 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-P-L2-M3', 'description': 'Lumi-based chamber status in GE21-P-L2-M3'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/08 GE21-P-L2-M4 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-P-L2-M4', 'description': 'Lumi-based chamber status in GE21-P-L2-M4'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/09 GE21-M-L2-M1 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L2-M1', 'description': 'Lumi-based chamber status in GE21-M-L2-M1'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/10 GE21-M-L2-M2 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L2-M2', 'description': 'Lumi-based chamber status in GE21-M-L2-M2'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/11 GE21-M-L2-M3 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L2-M3', 'description': 'Lumi-based chamber status in GE21-M-L2-M3'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/12 GE21-M-L2-M4 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L2-M4', 'description': 'Lumi-based chamber status in GE21-M-L2-M4'}], 
+    )
+
+
+
+
+GEMLayout(dqmitems, 'Common/13 AMC13 status', 
     [{'path': 'GEM/DAQStatus/amc13_status', 'description': 'For more information (... under construction)'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/07 AMC status GE11-M', 
+GEMLayout(dqmitems, 'Common/14 AMC status GE11-M', 
     [{'path': 'GEM/DAQStatus/amc_status_GE11-M', 'description': 'For more information (... under construction)'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/08 AMC status GE11-P', 
+GEMLayout(dqmitems, 'Common/15 AMC status GE11-P', 
     [{'path': 'GEM/DAQStatus/amc_status_GE11-P', 'description': 'For more information (... under construction)'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/09 AMC status GE21-P', 
+GEMLayout(dqmitems, 'Common/16 AMC status GE21-P', 
     [{'path': 'GEM/DAQStatus/amc_status_GE21-P', 'description': 'For more information (... under construction)'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/10 GE11-M-L1 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/17 GE11-M-L1 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-M-L1', 'description': 'OptoHybrid status in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/11 GE11-M-L2 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/18 GE11-M-L2 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-M-L2', 'description': 'OptoHybrid status in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/12 GE11-P-L1 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/19 GE11-P-L1 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-P-L1', 'description': 'OptoHybrid status in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/13 GE11-P-L2 OptoHybrid status', 
+GEMLayout(dqmitems, 'Common/20 GE11-P-L2 OptoHybrid status', 
     [{'path': 'GEM/DAQStatus/oh_status_GE11-P-L2', 'description': 'OptoHybrid status in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/14 GE21-P-L2 OptoHybrid status', 
-    [{'path': 'GEM/DAQStatus/oh_status_GE21-P-L2', 'description': 'OptoHybrid status in GE21-P-L2'}], 
+GEMLayout(dqmitems, 'Common/21 GE21-P-L2-M1 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-P-L2-M1', 'description': 'OptoHybrid status in GE21-P-L2-M1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/15 GE11-M-L1 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/22 GE21-P-L2-M2 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-P-L2-M2', 'description': 'OptoHybrid status in GE21-P-L2-M2'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/23 GE21-P-L2-M3 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-P-L2-M3', 'description': 'OptoHybrid status in GE21-P-L2-M3'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/24 GE21-P-L2-M4 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-P-L2-M4', 'description': 'OptoHybrid status in GE21-P-L2-M4'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/25 GE21-M-L2-M1 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L2-M1', 'description': 'OptoHybrid status in GE21-M-L2-M1'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/26 GE21-M-L2-M2 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L2-M2', 'description': 'OptoHybrid status in GE21-M-L2-M2'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/27 GE21-M-L2-M3 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L2-M3', 'description': 'OptoHybrid status in GE21-M-L2-M3'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/28 GE21-M-L2-M4 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L2-M4', 'description': 'OptoHybrid status in GE21-M-L2-M4'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/29 GE11-M-L1 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-M-L1', 'description': 'VFAT status (chamber vs. VFAT) in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/16 GE11-M-L2 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/30 GE11-M-L2 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-M-L2', 'description': 'VFAT status (chamber vs. VFAT) in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/17 GE11-P-L1 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/31 GE11-P-L1 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-P-L1', 'description': 'VFAT status (chamber vs. VFAT) in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/18 GE11-P-L2 VFAT status (chamber vs. VFAT)', 
+GEMLayout(dqmitems, 'Common/32 GE11-P-L2 VFAT status (chamber vs. VFAT)', 
     [{'path': 'GEM/EventInfo/vfat_statusSummary_GE11-P-L2', 'description': 'VFAT status (chamber vs. VFAT) in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/19 GE21-P-L2 VFAT status (chamber vs. VFAT)', 
-    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-P-L2', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2'}], 
+
+GEMLayout(dqmitems, 'Common/33 GE21-P-L2-M1 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-P-L2-M1', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/20 GE11-M-L1 recHit xy occupancy', 
+
+GEMLayout(dqmitems, 'Common/34 GE21-P-L2-M2 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-P-L2-M2', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M2'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/35 GE21-P-L2-M3 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-P-L2-M3', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M3'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/36 GE21-P-L2-M4 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-P-L2-M4', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M4'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/37 GE21-M-L2-M1 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L2-M1', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M1'}], 
+    )
+
+
+GEMLayout(dqmitems, 'Common/38 GE21-M-L2-M2 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L2-M2', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M2'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/39 GE21-M-L2-M3 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L2-M3', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M3'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/40 GE21-M-L2-M4 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L2-M4', 'description': 'VFAT status (chamber vs. VFAT) in GE21-P-L2-M4'}], 
+    )
+
+
+
+GEMLayout(dqmitems, 'Common/41 GE11-M-L1 recHit xy occupancy', 
     [{'path': 'GEM/RecHits/occ_xy_GE11-M-L1', 'description': 'recHit xy occupancy in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/21 GE11-M-L2 recHit xy occupancy', 
+GEMLayout(dqmitems, 'Common/42 GE11-M-L2 recHit xy occupancy', 
     [{'path': 'GEM/RecHits/occ_xy_GE11-M-L2', 'description': 'recHit xy occupancy in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/22 GE11-P-L1 recHit xy occupancy', 
+GEMLayout(dqmitems, 'Common/43 GE11-P-L1 recHit xy occupancy', 
     [{'path': 'GEM/RecHits/occ_xy_GE11-P-L1', 'description': 'recHit xy occupancy in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/23 GE11-P-L2 recHit xy occupancy', 
+GEMLayout(dqmitems, 'Common/44 GE11-P-L2 recHit xy occupancy', 
     [{'path': 'GEM/RecHits/occ_xy_GE11-P-L2', 'description': 'recHit xy occupancy in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/24 GE21-P-L2 recHit xy occupancy', 
+GEMLayout(dqmitems, 'Common/45 GE21-P-L2 recHit xy occupancy', 
     [{'path': 'GEM/RecHits/occ_xy_GE21-P-L2', 'description': 'recHit xy occupancy in GE21-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/25 GE11-M-L1 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/46 GE11-M-L1 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-M-L1', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/26 GE11-M-L2 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/47 GE11-M-L2 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-M-L2', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/27 GE11-P-L1 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/48 GE11-P-L1 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-P-L1', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/28 GE11-P-L2 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/49 GE11-P-L2 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE11-P-L2', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE11-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/29 GE21-P-L2 RecHit Average Cluster Size', 
+GEMLayout(dqmitems, 'Common/50 GE21-P-L2 RecHit Average Cluster Size', 
     [{'path': 'GEM/RecHits/rechit_average_GE21-P-L2', 'description': 'RecHit Average Cluster Size (iEta vs Chamber) in GE21-P-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/30 GE11-M-L1 GEM-CSC segment efficiency', 
+GEMLayout(dqmitems, 'Common/51 GE11-M-L1 GEM-CSC segment efficiency', 
     [{'path': 'GEM/Efficiency/GEMCSCSegment/eff_chamber_GE11-M-L1', 'description': 'GEM-CSC segment efficiency in GE11-M-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/31 GE11-M-L2 GEM-CSC segment efficiency', 
+GEMLayout(dqmitems, 'Common/52 GE11-M-L2 GEM-CSC segment efficiency', 
     [{'path': 'GEM/Efficiency/GEMCSCSegment/eff_chamber_GE11-M-L2', 'description': 'GEM-CSC segment efficiency in GE11-M-L2'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/32 GE11-P-L1 GEM-CSC segment efficiency', 
+GEMLayout(dqmitems, 'Common/53 GE11-P-L1 GEM-CSC segment efficiency', 
     [{'path': 'GEM/Efficiency/GEMCSCSegment/eff_chamber_GE11-P-L1', 'description': 'GEM-CSC segment efficiency in GE11-P-L1'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/33 GE11-P-L2 GEM-CSC segment efficiency', 
+GEMLayout(dqmitems, 'Common/54 GE11-P-L2 GEM-CSC segment efficiency', 
     [{'path': 'GEM/Efficiency/GEMCSCSegment/eff_chamber_GE11-P-L2', 'description': 'GEM-CSC segment efficiency in GE11-P-L2'}], 
-    )
-
-
-GEMLayout(dqmitems, 'Common/34 GE21-P-L2 GEM-CSC segment efficiency', 
-    [{'path': 'GEM/Efficiency/GEMCSCSegment/eff_chamber_GE21-P-L2', 'description': 'GEM-CSC segment efficiency in GE21-P-L2'}], 
     )
 
 
@@ -1038,15 +1153,48 @@ GEMLayout(dqmitems, 'GE+11 L2/34 GE11-P-35L2-S',
     )
 
 
-GEMLayout(dqmitems, 'GE+11 L2/35 GE11-P-36L2-L', 
-    [{'path': 'GEM/DAQStatus/VFATStatus_GE11-P-L2/vfat_status_GE11-P-36L2-L', 'description': 'VFAT status'}], 
-    [{'path': 'GEM/Digis/occupancy_GE11-P-L2/occ_GE11-P-36L2-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE11-P-L2/cls_GE11-P-36L2-L', 'description': 'VFAT vs ClusterSize'}], 
+GEMLayout(dqmitems, 'GE+21 L2/00 GE21-P-16L2-M1-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-P-L2/vfat_status_GE21-P-16L2-M1-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-P-L2/occ_GE21-P-16L2-M1-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-P-L2/cls_GE21-P-16L2-M1-L', 'description': 'VFAT vs ClusterSize'}], 
     )
 
 
-GEMLayout(dqmitems, 'GE+21 L2/00 GE21-P-16L2-L', 
-    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-P-L2/vfat_status_GE21-P-16L2-L', 'description': 'VFAT status'}], 
-    [{'path': 'GEM/Digis/occupancy_GE21-P-L2/occ_GE21-P-16L2-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-P-L2/cls_GE21-P-16L2-L', 'description': 'VFAT vs ClusterSize'}], 
+GEMLayout(dqmitems, 'GE+21 L2/01 GE21-P-16L2-M2-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-P-L2/vfat_status_GE21-P-16L2-M2-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-P-L2/occ_GE21-P-16L2-M2-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-P-L2/cls_GE21-P-16L2-M2-L', 'description': 'VFAT vs ClusterSize'}], 
+    )
+
+
+GEMLayout(dqmitems, 'GE+21 L2/02 GE21-P-16L2-M3-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-P-L2/vfat_status_GE21-P-16L2-M3-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-P-L2/occ_GE21-P-16L2-M3-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-P-L2/cls_GE21-P-16L2-M3-L', 'description': 'VFAT vs ClusterSize'}], 
+    )
+
+GEMLayout(dqmitems, 'GE+21 L2/03 GE21-P-16L2-M4-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-P-L2/vfat_status_GE21-P-16L2-M4-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-P-L2/occ_GE21-P-16L2-M4-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-P-L2/cls_GE21-P-16L2-M$-L', 'description': 'VFAT vs ClusterSize'}], 
+    )
+
+GEMLayout(dqmitems, 'GE+21 L2/00 GE21-M-16L2-M1-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-M-L2/vfat_status_GE21-M-16L2-M1-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-M-L2/occ_GE21-M-16L2-M1-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-M-L2/cls_GE21-M-16L2-M1-L', 'description': 'VFAT vs ClusterSize'}], 
+    )
+
+
+GEMLayout(dqmitems, 'GE+21 L2/01 GE21-M-16L2-M2-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-M-L2/vfat_status_GE21-M-16L2-M2-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-M-L2/occ_GE21-M-16L2-M2-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-M-L2/cls_GE21-M-16L2-M2-L', 'description': 'VFAT vs ClusterSize'}], 
+    )
+
+
+GEMLayout(dqmitems, 'GE+21 L2/02 GE21-M-16L2-M3-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-M-L2/vfat_status_GE21-M-16L2-M3-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-M-L2/occ_GE21-M-16L2-M3-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-M-L2/cls_GE21-M-16L2-M3-L', 'description': 'VFAT vs ClusterSize'}], 
+    )
+
+GEMLayout(dqmitems, 'GE+21 L2/03 GE21-M-16L2-M4-L', 
+    [{'path': 'GEM/DAQStatus/VFATStatus_GE21-M-L2/vfat_status_GE21-M-16L2-M4-L', 'description': 'VFAT status'}], 
+    [{'path': 'GEM/Digis/occupancy_GE21-M-L2/occ_GE21-M-16L2-M4-L', 'description': 'Digi occupancy'}, {'path': 'GEM/RecHits/clusterSize_GE21-M-L2/cls_GE21-M-16L2-M$-L', 'description': 'VFAT vs ClusterSize'}], 
     )
 
 
