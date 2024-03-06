@@ -61,6 +61,8 @@
 ^/auth/complete/scheddmon/0198/ vocms0198.cern.ch
 ^/auth/complete/scheddmon/0199/ vocms0199.cern.ch
 ^/auth/complete/scheddmon/crab-preprod-scd03/ crab-preprod-scd03.cern.ch
+^/auth/complete/scheddmon/crab-sched-901/ crab-sched-901.cern.ch
+^/auth/complete/scheddmon/crab-sched-903/ crab-sched-903.cern.ch
 ^/auth/complete/httpgo(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/httpsgo(?:/|$) cmsweb-srv.cern.ch
 ^/auth/complete/httppy(?:/|$) cmsweb-srv.cern.ch
