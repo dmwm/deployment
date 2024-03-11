@@ -215,7 +215,7 @@ private:
 
   void preDrawTH2( TCanvas *c, const VisDQMObject &o )
     {
-      TH2F* obj = dynamic_cast<TH2F*>( o.object );
+      TH2* obj = dynamic_cast<TH2*>( o.object );
       assert( obj );
 
       // This applies to all
