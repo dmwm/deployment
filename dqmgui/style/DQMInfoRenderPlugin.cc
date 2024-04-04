@@ -215,7 +215,8 @@ class DQMInfoRenderPlugin : public DQMRenderPlugin {
       for (int binYOrig = 1; binYOrig <= maxBinY; binYOrig++) {
         std::string current_label(source.GetYaxis()->GetBinLabel(binYOrig));
         boost::trim(current_label);
-        if (current_label == wanted_label) {
+        if (current_label == wanted_label
+	    || ((current_label.find("eV") != std::string::npos) && (wanted_label.find("eV") !=std::string::npos))) {
           binYNew++;
           for (int binX = 1; binX < maxBinX; binX++) {
             // We go to 1 less than maxBinX, because, remember that we added
