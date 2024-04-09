@@ -74,6 +74,8 @@ deploy_dqmgui_post() {
       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"dev DQM GUI Zip Backup, exit code: \$ret\" -a $project_logs/dev/agent-castorzipbackup-\$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
       # check/verification of the backup of the zipped root files
       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"dev DQM GUI Zip Backup Check, exit code: \$ret\" -a $project_logs/dev/agent-castorzipbackupcheck-\$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
+      # Monitor index size
+      echo "0 6 * * * $host $project_config/manage indexmonitor 'I did read documentation'"
     ) | acrontab
     ;;
   # Offline GUI
@@ -87,6 +89,8 @@ deploy_dqmgui_post() {
       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup| mailx -s \"Offline DQM GUI Zip Backup, exit code: \$ret\" -a $project_logs/offline/agent-castorzipbackup-\$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
       # check/verification of the backup of the zipped root files
       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"Offline DQM GUI Zip Backup Check, exit code: \$ret\" -a $project_logs/offline/agent-castorzipbackupcheck-\$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
+      # Monitor index size
+      echo "0 6 * * * $host $project_config/manage indexmonitor 'I did read documentation'"
     ) | acrontab
     ;;
   # RelVal GUI
@@ -100,6 +104,8 @@ deploy_dqmgui_post() {
       echo "*/15 * * * * $host $project_config/manage zipbackup 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup| mailx -s \"RelVal DQM GUI Zip Backup, exit code: \$ret\" -a $project_logs/relval/agent-castorzipbackup-\$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
       # check/verification of the backup of the zipped root files
       echo "*/15 * * * * $host $project_config/manage zipbackupcheck 'I did read documentation'; ret=\$?; if [ \$ret -ne 3 ] && [ \$ret -ne 0 ] && [ \$ret -ne 4 ]; then echo Error during backup | mailx -s \"RelVal DQM GUI Zip Backup Check, exit code: \$ret\" -a $project_logs/relval/agent-castorzipbackupcheck-\$(printf '%(%Y%m%d)T' -1)-$host.log cmsweb-operator@cern.ch; fi"
+      # Monitor index size
+      echo "0 6 * * * $host $project_config/manage indexmonitor 'I did read documentation'"
     ) | acrontab
     ;;
   # Any other machine: do nothing

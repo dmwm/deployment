@@ -13,6 +13,7 @@
 ##H   stop            stop the service
 ##H   compile         refresh render plugins
 ##H   indexbackup     backup the index to CASTOR
+##H   indexmonitor    check how full the index is and send an email if a threshold is exceeded
 ##H   zipbackup       backup new root files to CASTOR
 ##H   zipbackupcheck  check if the backup of the root files to castor was successful
 ##H
@@ -129,7 +130,7 @@ message() {
   esac
 }
 
-# Procedure witch will check if a process is not already running before starting it
+# Procedure which will check if a process is not already running before starting it
 refuseproc() {
   local title="$1" pat="$2" reason="$3"
   if [ $(pgrep -u $(id -u) -f "$pat" | wc -l) != 0 ]; then
@@ -799,6 +800,14 @@ compile() {
   done
 }
 
+# Monitor index size and send email alerts
+indexmonitor() {
+  refuseproc "index monitoring" "visDQMIndexMonitoring"
+  for D in $CONFIGS; do
+    visDQMIndexMonitoring FLAVOR="$D" INSTALLATION_DIR="$TOP"
+  done
+}
+
 # Backup index to castor
 # The backup is incremental, with a full backup at regular intervals
 indexbackup() {
@@ -1001,7 +1010,7 @@ getconfigs
 CURRENT_USER=$(id -un)
 if [ -n "$ALTERNATIVE_USER" ]; then
   case $1 in
-  indexbackup | zipbackup | zipbackupcheck)
+  indexmonitor | indexbackup | zipbackup | zipbackupcheck)
     if [ "$CURRENT_USER" != "$ALTERNATIVE_USER" ]; then
       echo "ERROR: Trying to start $1 as normal user, use ALTERNATIVE_USER instead." 1>&2
       exit 1
@@ -1066,6 +1075,11 @@ xstop)
 indexbackup)
   check "$2"
   indexbackup
+  ;;
+
+indexmonitor)
+  check "$2"
+  indexmonitor
   ;;
 
 zipbackup)
