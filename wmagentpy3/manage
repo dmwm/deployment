@@ -57,6 +57,7 @@ WMSTATS_URL=
 REQMGR2_URL=
 ACDC_URL=
 DBS3_URL=
+DBS3_READER_URL=
 DQM_URL=
 REQUESTCOUCH_URL=
 CENTRAL_LOGDB_URL=
@@ -127,6 +128,7 @@ load_secrets_file(){
     local MATCH_REQMGR2_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQMGR2_URL | sed s/REQMGR2_URL=//`
     local MATCH_ACDC_URL=`cat $WMAGENT_SECRETS_LOCATION | grep ACDC_URL | sed s/ACDC_URL=//`
     local MATCH_DBS3_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DBS3_URL | sed s/DBS3_URL=//`
+    local MATCH_DBS3_READER_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DBS3_READER_URL | sed s/DBS3_READER_URL=//`
     local MATCH_DQM_URL=`cat $WMAGENT_SECRETS_LOCATION | grep DQM_URL | sed s/DQM_URL=//`
     local MATCH_REQUESTCOUCH_URL=`cat $WMAGENT_SECRETS_LOCATION | grep REQUESTCOUCH_URL | sed s/REQUESTCOUCH_URL=//`
     local MATCH_CENTRAL_LOGDB_URL=`cat $WMAGENT_SECRETS_LOCATION | grep CENTRAL_LOGDB_URL | sed s/CENTRAL_LOGDB_URL=//`
@@ -185,6 +187,8 @@ load_secrets_file(){
     
     DBS3_URL=${MATCH_DBS3_URL:-$DBS3_URL}
 
+    DBS3_READER_URL=${MATCH_DBS3_READER_URL:-$DBS3_READER_URL}
+
     DQM_URL=${MATCH_DQM_URL:-$DQM_URL}
 
     REQUESTCOUCH_URL=${MATCH_REQUESTCOUCH_URL:-$REQUESTCOUCH_URL}
@@ -225,6 +229,7 @@ print_settings(){
     echo "REQMGR2_URL=               $REQMGR2_URL               "
     echo "ACDC_URL=                  $ACDC_URL                  "
     echo "DBS3_URL=                  $DBS3_URL                  "
+    echo "DBS3_READER_URL=           $DBS3_READER_URL           "
     echo "DQM_URL=                   $DQM_URL                   "
     echo "REQUESTCOUCH_URL=          $REQUESTCOUCH_URL          "
     echo "CENTRAL_LOGDB_URL=         $CENTRAL_LOGDB_URL         "
@@ -581,6 +586,7 @@ init_wmagent(){
                        --reqmgr2_url=$REQMGR2_URL \
 	                   --acdc_url=$ACDC_URL \
 	                   --dbs3_url=$DBS3_URL \
+	                   --dbs3_reader_url=$DBS3_READER_URL \
 	                   --dqm_url=$DQM_URL \
 	                   --requestcouch_url=$REQUESTCOUCH_URL \
 	                   --central_logdb_url=$CENTRAL_LOGDB_URL \
