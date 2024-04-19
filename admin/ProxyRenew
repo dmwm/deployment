@@ -164,7 +164,7 @@ for proxy in proxy-*.cert; do
 
   if voms-proxy-init -rfc -valid $h:$m -voms "$voms" \
                      -cert "$proxy.new.cert" -key "$proxy.new.key" \
-                     -out "$proxy.voms" -bits 1024 -quiet >> $errlog 2>&1; then
+                     -out "$proxy.voms" -bits 2048 -quiet >> $errlog 2>&1; then
     actime=$(voms-proxy-info -file "$proxy.voms" -actimeleft)
     if [ X"$actime" != X ]; then
       mv -f "$proxy.voms" "$proxy.new"
