@@ -268,8 +268,26 @@ private:
         return;
       }
       // Summary map
-      if( o.name.find( "reportSummaryMap" ) != std::string::npos ||
-	  o.name.find( "CertificationSummaryMap" ) != std::string::npos ||
+      if( o.name.find( "reportSummaryMap" ) != std::string::npos)
+      {
+        dqm::utils::reportSummaryMapPalette(obj);
+        obj->GetXaxis()->SetNdivisions(13,true);
+        obj->GetYaxis()->SetNdivisions(6,true);
+        obj->GetXaxis()->CenterLabels();
+        obj->GetYaxis()->CenterLabels();
+        
+        int colorError1[5];
+        colorError1[0] = 632; // kRed
+        colorError1[1] = 810; // Dark orange
+        colorError1[2] = 800; // kOrange
+        colorError1[3] = 400; //kYellow
+        colorError1[4] = 416;// kGreen
+        gStyle->SetPalette(5, colorError1);
+
+        c->SetGrid(1,1);
+        return;
+      }
+      if( o.name.find( "CertificationSummaryMap" ) != std::string::npos ||
 	  o.name.find( "DAQSummaryMap" ) != std::string::npos)
       {
         dqm::utils::reportSummaryMapPalette(obj);
