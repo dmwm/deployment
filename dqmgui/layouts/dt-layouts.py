@@ -84,6 +84,10 @@ for wheel in range(-2, 3):
     name = f"05-TriggerSynch/Peak-Mean/01-Peak-Mean_Out_Wh{wheel}_TM"
     histo_name = f"DT/03-LocalTrigger-TM/Wheel{wheel}/TM_ResidualBXPhiOut_W{wheel}"
     dtlayout(dqmitems, name,[{ 'path': histo_name}])
+    name = f"05-TriggerSynch/01-CorrectBX_Theta_Wh{wheel}_TM"
+    histo_name = f"DT/03-LocalTrigger-TM/Wheel{wheel}/TM_CorrectBXTheta_W{wheel}"
+    dtlayout(dqmitems, name,[{ 'path': histo_name}])
+
 
 #### TRIGGER BASICS ##############################################################################
 
@@ -175,6 +179,15 @@ for wheel in range(-2, 3):
 for wheel in range(-2, 3):
     for station in range (1, 5):
         for sector in range (1, 13):
-            name = f"11-QualityPhi/Wheel{wheel}/Sector{sector}_Station{station}"
+            name = f"11-TriggerQualityVsPhi/Wheel{wheel}/Sector{sector}_Station{station}"
             histo_name = f"DT/03-LocalTrigger-TM/Wheel{wheel}/Sector{sector}/Station{station}/LocalTriggerPhiIn/TM_QualvsPhirad_In_W{wheel}_Sec{sector}_St{station}"
+            dtlayout(dqmitems, name,[{ 'path': histo_name}])
+
+#### TRIGGER THETA #################################################################################
+
+for wheel in range(-2, 3):
+    for station in range (1, 4):
+        for sector in range (1, 13):
+            name = f"12-TriggerTheta/Wheel{wheel}/Sector{sector}_Station{station}"
+            histo_name = f"DT/03-LocalTrigger-TM/Wheel{wheel}/Sector{sector}/Station{station}/LocalTriggerTheta/TM_PositionvsQual_W{wheel}_Sec{sector}_St{station}"
             dtlayout(dqmitems, name,[{ 'path': histo_name}])

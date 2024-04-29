@@ -104,13 +104,13 @@ elif HOSTALIAS == "dqmfu-c2b02-46-01":  # ECAL/HCAL DQMFU
         SERVICENAME = "Online Ecal"
         BASEURL = "/dqm/ecal-online"
 
-elif HOSTALIAS == "dqmfu-c2b03-46-01":  # Muon DQMFU                                                                                              
+elif HOSTALIAS == "dqmfu-c2b03-46-01":  # Muon DQMFU
     if "dtdqm" in USERNAME:
-        COLLPORT = 9090
+        COLLPORT = 9190
         SERVERPORT = 9010
         SERVICENAME = "Online DT"
         BASEURL = "/dqm/dt-online"
-
+    
 # Server configuration.
 modules = ("Monitoring.DQM.GUI",)
 
