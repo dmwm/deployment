@@ -97,3 +97,7 @@ font-weight: bolder;
   color:#823631;
 
 }
+
+.note {
+    text-align: right; /* Adjust the value as needed */
+}
