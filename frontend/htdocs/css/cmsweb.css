@@ -99,5 +99,6 @@ font-weight: bolder;
 }
 
 .note {
-    text-align: right; /* Adjust the value as needed */
+    text-align: right; 
+    color:#823631;
 }
