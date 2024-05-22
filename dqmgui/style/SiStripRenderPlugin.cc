@@ -458,6 +458,7 @@ private:
           name.find( "TrackPtHighPurity_" ) != std::string::npos or
           name.find( "TrackPtTight_" ) != std::string::npos or
           name.find( "TrackPtLoose_" ) != std::string::npos or
+          name.find( "DistanceOfClosestApproachToBS_GenTk" ) != std::string::npos or
           name.find( "TrackP_" ) != std::string::npos or
           name.find( "NumberOfSeeds_") != std::string::npos or
           name.find( "SeedPt_") != std::string::npos

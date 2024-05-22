@@ -275,6 +275,7 @@ server.workspace('DQMContent', 64, 'POG', 'Tracking', '^(Tracking|AlcaBeamMonito
                  'Tracking/Layouts/05 - Track pT and eta vs Quality',
 		 'Tracking/Layouts/06a - Tracks Quality',
                  'Tracking/Layouts/06b - Tracks from Vertex',
+                 'Tracking/Layouts/06c - Distance wrt Beam Spot'
 		# 'Tracking/Layouts/07 - Vertex reconstruction',
 		# 'Tracking/Layouts/08 - Tracking Efficiency',
                 )
