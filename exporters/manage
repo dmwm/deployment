@@ -227,7 +227,7 @@ start()
             wma_monitors
             ;;
 
-        vocms0742 | vocms0842 | vocms0847)
+        vocms0742 | vocms0842 | vocms0847 )
             couchdb_monitors "reqmgr_workload_cache,reqmgr_config_cache,acdcserver,reqmgr_auxiliary"
             ;;
 
