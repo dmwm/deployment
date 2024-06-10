@@ -237,7 +237,7 @@ start()
             ;;
 
 
-        vocms0744 | vocms0844 | vocms0849)
+        vocms0744 | vocms0844 | vocms0849 )
             couchdb_monitors "tier0_wmstats,t0_workloadsummary,t0_request,t0_logdb"
             ;;
 
