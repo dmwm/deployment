@@ -114,26 +114,10 @@ def updateFile(opts, roles, sitemap):
     struct = json.loads(roles)
     output_lines = []
 
-    # Process roles and extend them based on the sitemap
-    for entry in struct:
-        for group in ['data-manager', 'site-admin', 'phedex-contact']:
-            if group in entry['ROLES']:
-                group_roles = []
-                group_roles.extend(entry['ROLES'][group])
-                for r in group_roles:
-                    if not r.startswith('site:'):
-                        continue
-                    if r in sitemap:
-                        entry['ROLES'][group].extend(sitemap[r])
-                        if opts.verbose:
-                            print(f"Added role: {sitemap[r]} for user {entry['NAME']} and group {group}")
-                    else:
-                        if opts.verbose:
-                            print(f"WARNING: role {r} is missing from the sitemap")
 
   # Validate keys and normalize roles
-    validateMapKeys(struct)
-    rolesToLower(struct)
+    #validateMapKeys(struct)
+    #rolesToLower(struct)
 
     # Generate output lines in the required format
     for entry in struct:
@@ -164,18 +148,6 @@ def updateFile(opts, roles, sitemap):
         except (IOError, OSError) as e:
             print("An error occurred during file operation:")
             print(e)
-
-def validateMapKeys(dataDict):
-    neededKeys = {'DN', 'ID', 'LOGIN', 'NAME', 'ROLES'}
-    for entry in dataDict:
-        if not neededKeys <= entry.keys():
-            print("Needed keys not found in response", file=sys.stderr)
-            exit(3)
-
-def rolesToLower(dataDict):
-    for entry in dataDict:
-        for role, groups in entry['ROLES'].items():
-            entry['ROLES'][role] = [group.lower() for group in groups]
 
 def current_umask():
     return os.umask(0)
