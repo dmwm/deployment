@@ -106,51 +106,92 @@ def buildSiteMap(sites):
     return sitemap
 
 
+def rolesToLower(dataDict):
+    """
+    Receives a python dictionary with all the user entries and convert
+    all group/user ROLES information to lower case, updating it in place
+    """
+    for entry in dataDict:
+        for role, groups in list(entry['ROLES'].items()):
+            entry['ROLES'][role] = [item.lower() for item in groups]
+
+
+def validateMapKeys(dataDict):
+    """
+    Given a python dictionary with the final user information, validate
+    that each entry contains only keys supported by our frontend by removing any extra entries.
+    """
+    neededKeys = set(['DN', 'ID', 'LOGIN', 'NAME', 'ROLES'])
+    for entry in dataDict:
+        if not all(elem in list(entry.keys()) for elem in neededKeys):
+            print("Needed keys not found in response: %s" % (neededKeys - set(entry.keys())), file=sys.stderr)
+            print("It needs to be reported to the CRIC developers!", file=sys.stderr)
+            exit(3)
+        for key in set(entry.keys()) - neededKeys:
+            entry.pop(key)
+
+
 def updateFile(opts, roles, sitemap):
+    """
+    If sitemap argument is given, decode the CRIC roles API output, extend phedex 
+    related groups by adding roles with phedex node names mapped via CRIC site-names API
+    and converted to headers style; then convert the data structure back to a json string.
+    """
     if not roles or not sitemap:
         print("Either roles or sitemap is empty, aborting...", file=sys.stderr)
         exit(2)
 
     struct = json.loads(roles)
-    output_lines = []
-
-
-  # Validate keys and normalize roles
-    #validateMapKeys(struct)
-    #rolesToLower(struct)
-
-    # Generate output lines in the required format
     for entry in struct:
-        dn = entry['DN']
-        output_line = f'"{dn}" cms'
-        output_lines.append(output_line)
+        # Only extend the groups interesting to PhEDEx:
+        for group in ['data-manager', 'site-admin', 'phedex-contact']:
+            group_roles = []
+            if group in entry['ROLES']:
+                group_roles.extend(entry['ROLES'][group])
+                for r in entry['ROLES'][group]:
+                    if not r.startswith('site:'):
+                        continue
+                    if r in sitemap:
+                        group_roles.extend(sitemap[r])
+                        if opts.verbose:
+                            print("Added role: %s for user %s and group %s " % \
+                                  (sitemap[r], entry['NAME'], group))
+                    else:
+                        if opts.verbose:
+                            print("WARNING: role %s is missing from the sitemap" % r)
+                entry['ROLES'][group] = group_roles
+    # make sure we only have the expected arguments in the mapping
+    validateMapKeys(struct)
+    # now convert all group/roles to lower
+    rolesToLower(struct)
+    # Generate stable JSON representation.
+    enc = json.JSONEncoder(sort_keys=True)
+    jsondata = "[\n " + ",\n ".join(enc.encode(entry) for entry in struct) + "\n]\n"
 
-    # Serialize to a plain string with newline characters
-    output_data = "\n".join(output_lines) + "\n"
-
-    # Read the existing file to compare content
+    # compare this against the current one (create it if it does not exist)
     try:
-        with open(opts.out, 'r', encoding='utf-8') as fp:
-            old_data = fp.read()
+        with open(opts.out) as fp:
+            oldjsondata = fp.read()
     except IOError:
-        print(f"File {opts.out} does not exist yet.")
-        old_data = ''
+        print("File %s does not exist yet." % opts.out)
+        oldjsondata = ''
 
-    # If data has changed, write out a new file
-    if output_data != old_data:
+    if jsondata != oldjsondata:
+        # then let's write out a new file and replace the current one
+        # print "Info: json content has changed, updating it ..."
         try:
             fd, tmpname = mkstemp(dir=os.path.dirname(opts.out))
-            with os.fdopen(fd, "w", encoding='utf-8') as tmpfile:
-                tmpfile.write(output_data)
-            os.chmod(tmpname, 0o666 & ~current_umask())
-            os.rename(tmpname, opts.out)
-            print("Info: json content has changed, updating it...")
-        except (IOError, OSError) as e:
-            print("An error occurred during file operation:")
-            print(e)
+            tmpfile = os.fdopen(fd, "w")
+            tmpfile.write(jsondata)
+            tmpfile.close()
+        except(IOError, OSError) as e:
+            print("An error ocurred:")
+            pprint(e)
 
-def current_umask():
-    return os.umask(0)
+        myumask = current_umask()
+        os.chmod(tmpname, 0o666 & ~myumask)
+        os.rename(tmpname, opts.out)
+        # print "Done!"  ##Main
 # Getting command line options
 opt = OptionParser(__doc__)
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
