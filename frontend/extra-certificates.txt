@@ -1,2 +1,13 @@
 "/DC=ch/DC=cern/OU=computers/CN=tier0/vocms69.cern.ch" cms
 "/DC=ch/DC=cern/OU=computers/CN=dmwm/cmsweb.cern.ch" cms
+"/DC=org/DC=cilogon/C=US/O=Fermi National Accelerator Laboratory/OU=People/CN=Aram Hayrapetyan/CN=UID:ahayrape" cms
+"/DC=org/DC=terena/DC=tcs/C=DE/O=Deutsches Elektronen-Synchrotron DESY/CN=Andreas Hinzmann hinzmann@desy.de" cms
+"/DC=org/DC=terena/DC=tcs/C=DE/O=Universitaet Hamburg/CN=Schwandt, Dr. Joern BAF6630@uni-hamburg.de" cms
+"/DC=org/DC=terena/DC=tcs/C=DE/O=Deutsches Elektronen-Synchrotron DESY/CN=Joern Bach bachjoer@desy.de" cms
+"/DC=org/DC=terena/DC=tcs/C=DE/O=Deutsches Elektronen-Synchrotron DESY/CN=Coll Saravia, Lucia Ximena lcollsar@desy.de" cms
+"/DC=org/DC=terena/DC=tcs/C=FR/O=Centre national de la recherche scientifique/CN=VAUCELLE Paul s4nfzzm2@cnrs.fr" cms
+"/C=DE/O=GridGermany/OU=Karlsruhe Institute of Technology/CN=Erik Hettwer Benitez" cms
+"/C=DE/O=GridGermany/OU=Karlsruhe Institute of Technology/OU=KIT/CN=Moritz Molch" cms
+"/C=DE/O=GridGermany/OU=RWTH Aachen/CN=Markus Karl Merschmeyer" cms
+"/C=DE/O=GridGermany/OU=RWTH Aachen/CN=Sara-Aurora Borcea" cms
+"/C=DE/O=GridGermany/OU=RWTH Aachen/CN=Zheng Zhang" cms
