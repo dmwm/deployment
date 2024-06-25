@@ -25,7 +25,7 @@ hostname = socket.gethostname().lower().split(".")[0]
 server.logFile = (
     # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
     "%s/weblog-%%Y%%m%%d.log" % LOGDIR
-    if "vocms" in hostname
+    if hostname in ["vocms0731", "vocms0738", "vocms0739"]
     else "%s/weblog.log" % LOGDIR
 )
 server.title = "CMS data quality"
@@ -35,7 +35,7 @@ if hostname == "vocms0738":
     server.serviceName = "Offline"
     server.baseUrl = "/dqm/offline"
 # Relval test server
-elif hostname == "vocms0731":
+elif hostname == "vocms0731" or hostname == "vocms0730":
     server.serviceName = "Offline Test"
     server.baseUrl = "/dqm/offline-test"
 # Any local instance of the relval flavor
