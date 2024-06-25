@@ -14,19 +14,8 @@ pixellayout(dqmitems, "00b - PixelPhase1_Error_Summary",
       'description': "Number of Errors of each type per FED. Channel 0 is assigned for errors where the channel number is not known.",
       'draw': { 'withref': "no" }}]
    )
-pixellayout(dqmitems, "00c - PixelPhase1_Error_Summary",
-   [{ 'path': "PixelPhase1/FED/errors_per_LinkInFed_per_FED",
-      'description': "Total number of errors in a map of FED channels (y-axis) vs. FED (x-axis). Channel 0 is assigned for errors where the channel number is not known.",
-      'draw': { 'withref': "no" }}]
-   )
 
-pixellayout(dqmitems, "01a - PixelPhase1_Event_Rate",
-  [{ 'path': "PixelPhase1/Phase1_MechanicalView/eventrate_per_BX",
-     'description': "Event rate per bunch crossing",
-     'draw': { 'withref': "no" }}]
-  )
-
-pixellayout(dqmitems, "01b - PixelPhase1 DeadROC Summary",
+pixellayout(dqmitems, "01b - Dead ROCs (Collisions only)",
   [{ 'path': "PixelPhase1/deadRocTotal",
      'description': "Number of total dead ROCs summary",
      'draw': { 'withref': "no" }}]
@@ -44,32 +33,17 @@ pixellayout(dqmitems, "01c - PixelPhase1 Cluster Size vs Cluster Eta",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
    )
 
-pixellayout(dqmitems, "02 - PixelPhase1_Digi_ADC_Barrel",
+pixellayout(dqmitems, "02 - PixelPhase1_Digi_Number",
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_PXBarrel",
       'description': "Number of digis per event in PXBarrel",
       'draw': { 'withref': "no" }},
-    { 'path': "PixelPhase1/Phase1_MechanicalView/adc_PXBarrel",
-      'description': "Adc distribution of digis per event per barrel module",
+    { 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_PXForward",
+      'description': "Number of digis per event in Forward",
       'draw': { 'withref': "no" }}],
    [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_per_LumiBlock_PXBarrel",
       'description': "Mean adc value per lumisection",
       'draw': { 'withref': "no" }},
-    { 'path': "PixelPhase1/Phase1_MechanicalView/adc_per_LumiBlock_PXBarrel",
-      'description': "Mean adc value per lumisection",
-      'draw': { 'withref': "no" }}]
-   )
-
-pixellayout(dqmitems, "03 - PixelPhase1_Digi_ADC_Endcap",
-   [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_PXForward",
-      'description': "Number of digis per event in Forward",
-      'draw': { 'withref': "no" }},
-    { 'path': "PixelPhase1/Phase1_MechanicalView/adc_PXForward",
-      'description': "Adc distribution of digis per event per forward module",
-      'draw': { 'withref': "no" }}],
-   [{ 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_per_LumiBlock_PXForward",
-      'description': "Mean adc value per lumisection",
-      'draw': { 'withref': "no" }},
-    { 'path': "PixelPhase1/Phase1_MechanicalView/adc_per_LumiBlock_PXForward",
+    { 'path': "PixelPhase1/Phase1_MechanicalView/num_digis_per_LumiBlock_PXForward",
       'description': "Mean adc value per lumisection",
       'draw': { 'withref': "no" }}]
    )
@@ -486,7 +460,7 @@ pixellayout(dqmitems, "30 - PixelPhase1 Cluster Occupancy: BladePanel vs Disk en
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
 
-pixellayout(dqmitems, "31 - ntracks",
+pixellayout(dqmitems, "41 - ntracks",
   [{ 'path': "PixelPhase1/Tracks/ntracks",
      'description': "Number of Tracks in all pixel det",
      'draw': {'withref' : "no"}},
@@ -922,7 +896,7 @@ pixellayout(dqmitems, "40b - Cluster size (on-track) per Disk",
   'draw': { 'withref': "no"}}],
   )
 
-pixellayout(dqmitems, "41a - Dead Channels per ROC per Barrel Layer",
+pixellayout(dqmitems, "31a - Dead Channels per ROC per Barrel Layer",
   [{ 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedModuleCoord_per_SignedLadderCoord_PXLayer_1",
      'description': "Dead Channels per ROC in PXLayer 1",
      'draw': {'withref' : "no"}},
@@ -937,7 +911,7 @@ pixellayout(dqmitems, "41a - Dead Channels per ROC per Barrel Layer",
      'draw': {'withref' : "no"}}],
   )
 
-pixellayout(dqmitems, "41b - Dead Channels per ROC per Forward Ring",
+pixellayout(dqmitems, "31b - Dead Channels per ROC per Forward Ring",
   [{ 'path': "PixelPhase1/FED/Dead Channels per ROC_per_SignedDiskCoord_per_SignedBladePanelCoord_PXRing_1",
      'description': "Dead Channels per ROC in PXRing 1",
      'draw': {'withref' : "no"}},
@@ -977,4 +951,4 @@ pixellayout(dqmitems, "42b - Barycenter coordinates",
      { 'path': "PixelPhase1/Barycenter/barycenters_FPIX_zp_xp",
      'description': "Barycenter coordinates derived from PXForward z+,x+",
      'draw': {'withref' : "no"}}],
-  )
+)

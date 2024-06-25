@@ -1,18 +1,28 @@
 def sistriplayout(i, p, *rows): i["SiStrip/Layouts/" + p] = DQMItem(layout=rows)
 
 sistriplayout(dqmitems, "00 - SiStrip ReportSummary",
- [{ 'path': "SiStrip/MechanicalView/detFractionReportMap",
-    'description': "Fraction of Good Detector Modules plotted in different parts of the Tracker - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "no" }},
-  { 'path': "SiStrip/MechanicalView/sToNReportMap",
-    'description': "Accepted S/N Ratios in different parts of the Tracker. The values are 1 if the ratio is within the accepted range otherwise it is 0  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}],
  [{ 'path': "SiStrip/EventInfo/reportSummaryMap",
     'description': "Overall Report Summary where detector fraction and S/N flags are combined together -  <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "no" }}])
-sistriplayout(dqmitems, "01 - FED-Detected Errors Summary",
+sistriplayout(dqmitems, "01a - FED Errors vs FED ID",
+ [{ 'path': "SiStrip/ReadoutView/FEDErrorsVsId",
+    'description': "Type of FED errors vs FED ID",
+    'draw': {'withref': "no" }}])
+sistriplayout(dqmitems, "01b - APV error vs FED ID", 
+  [{'path': "SiStrip/ReadoutView/FedIdVsApvId",
+   'description': "APV error: FED ID vs APV ID - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}])
+sistriplayout(dqmitems, "01c - Detailed FED-Detected Errors",
+ [{ 'path': "SiStrip/ReadoutView/FED/VsId/AnyDAQProblems",
+    'description': "FED IDs having DAQ problem - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
+  { 'path': "SiStrip/ReadoutView/FED/VsId/CorruptBuffers",
+    'description': "FED IDs having corrupt FED buffers - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
+  { 'path': "SiStrip/ReadoutView/FE/VsId/AnyFEProblems",
+    'description': "FED IDs having overflowed, missing or with bad majority address FE units - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}])
+sistriplayout(dqmitems, "01d - FED-Detected Errors Summary",
  [{ 'path': "SiStrip/ReadoutView/FED/nFEDErrors",
     'description': "# of FEDs with any FED level error per event - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a>"}],
  [{ 'path': "SiStrip/ReadoutView/Fiber/nBadActiveChannelStatusBits",
     'description': "# of active channels with bad status bits per event - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a>"}])
-sistriplayout(dqmitems, "02 - FED-Detected Errors",
+sistriplayout(dqmitems, "01e - FED-Detected Errors",
  [{ 'path': "SiStrip/ReadoutView/Fiber/VsId/BadActiveChannelStatusBits",
   'description': "FED IDs having connected channels, with a detected tickmark, with APV/Link errors - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
   { 'path': "SiStrip/ReadoutView/Fiber/VsId/BadChannelStatusBits",
@@ -38,7 +48,7 @@ sistriplayout(dqmitems, "03 - # of Cluster Trend",
      'description': "Total # of Clusters in TEC -ve side with event time in Seconds  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
    {  'path':"SiStrip/MechanicalView/TEC/PLUS/TotalNumberOfClusterProfile__TEC__PLUS",
      'description': "Total # of Clusters in TEC +ve side with event time in Seconds  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}])
-sistriplayout(dqmitems, "04 - OnTrackCluster (StoN)",
+sistriplayout(dqmitems, "04a - OnTrackCluster (StoN)",
   [{ 'path': "SiStrip/MechanicalView/TIB/Summary_ClusterStoNCorr_OnTrack__TIB",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TIB  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
    { 'path': "SiStrip/MechanicalView/TOB/Summary_ClusterStoNCorr_OnTrack__TOB",
@@ -51,6 +61,19 @@ sistriplayout(dqmitems, "04 - OnTrackCluster (StoN)",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TEC -ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
    { 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterStoNCorr_OnTrack__TEC__PLUS",
      'description': "Signal-to-Noise (corrected for the angle) for On-Track clusters in TEC +ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
+sistriplayout(dqmitems, "04b - Cluster Charge per CM (On-Track)",
+  [{ 'path': "SiStrip/MechanicalView/TIB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TIB",
+     'description': "Charge per CM TIB ", 'draw': { 'withref': "yes" }},
+   { 'path': "SiStrip/MechanicalView/TOB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TOB",
+     'description': "Charge per CM TOB", 'draw': { 'withref': "yes" }}],
+   [{ 'path': "SiStrip/MechanicalView/TID/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__MINUS",
+     'description': "Charge per CM TID MINUS ", 'draw': { 'withref': "yes" }},
+   { 'path': "SiStrip/MechanicalView/TID/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__PLUS",
+     'description': "Charge per CM TID PLUS  ", 'draw': { 'withref': "yes" }}],
+  [{ 'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__MINUS",
+     'description': "Charge per CM TEC MINUS  ", 'draw': { 'withref': "yes" }},
+   { 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__PLUS",
+     'description': "Charge per CM TEC PLUS ", 'draw': { 'withref': "yes" }}])
 sistriplayout(dqmitems, "05 - OffTrackCluster (Total Number)",
   [{ 'path': "SiStrip/MechanicalView/TIB/Summary_TotalNumberOfClusters_OffTrack__TIB",
      'description': "Total Number of Off-Track clusters in TIB  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
@@ -64,22 +87,6 @@ sistriplayout(dqmitems, "05 - OffTrackCluster (Total Number)",
      'description': "TotalNumberOf Off-Track clusters in TEC -ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
    { 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_TotalNumberOfClusters_OffTrack__TEC__PLUS",
      'description': "TotalNumberOf Off-Track clusters in TEC +ve side - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }}])
-
-sistriplayout(dqmitems, "06a - FED Errors vs FED ID",
- [{ 'path': "SiStrip/ReadoutView/FEDErrorsVsId",
-    'description': "Type of FED errors vs FED ID",
-    'draw': {'withref': "no" }}])
-
-sistriplayout(dqmitems, "06b - Detailed FED-Detected Errors",
- [{ 'path': "SiStrip/ReadoutView/FED/VsId/AnyDAQProblems",
-    'description': "FED IDs having DAQ problem - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
-  { 'path': "SiStrip/ReadoutView/FED/VsId/CorruptBuffers",
-    'description': "FED IDs having corrupt FED buffers - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "},
-  { 'path': "SiStrip/ReadoutView/FE/VsId/AnyFEProblems",
-    'description': "FED IDs having overflowed, missing or with bad majority address FE units - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}],
- [{'path': "SiStrip/ReadoutView/FedIdVsApvId",
-   'description': "APV error: FED ID vs APV ID - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> "}])
-
 sistriplayout(dqmitems, "07 - OnTrackClusters(Total Number)",
   [{ 'path': "SiStrip/MechanicalView/TIB/Summary_TotalNumberOfClusters_OnTrack__TIB",
      'description': "Total Number of On-Track clusters in TIB  - <a href=https://twiki.cern.ch/twiki/bin/view/CMS/SiStripOfflineDQMInstructions>SiStripOfflineDQMInstructions</a> ", 'draw': { 'withref': "yes" }},
@@ -328,37 +335,9 @@ sistriplayout(dqmitems, "26 - TEC- Residual",
      'description': "Hit Residual in TEC- Wheel #8"},
    { 'path': "SiStrip/MechanicalView/TEC/MINUS/wheel_9/HitResiduals_TEC__wheel__9",
      'description': "Hit Residual in TEC- Wheel #9"}])
-sistriplayout(dqmitems, "27 - APVe Timing",
-  [{ 'path': "SiStrip/ReadoutView/FE/APVe/FETimeDiffTECB",
-     'description': "Timing difference FE - TEC-"},
-   { 'path': "SiStrip/ReadoutView/FE/APVe/FETimeDiffTECF",
-     'description': "Timing difference FE - TEC+"}],
-  [{ 'path': "SiStrip/ReadoutView/FE/APVe/FETimeDiffTIB",
-     'description': "Timing difference FE - TIB"},
-   { 'path': "SiStrip/ReadoutView/FE/APVe/FETimeDiffTOB",
-     'description': "Timing difference FE - TOB"}])
-sistriplayout(dqmitems, "28 Strip Clusters Vs Pixel Clusters",
- [{ 'path': "SiStrip/MechanicalView/StripClusVsPixClus",
-     'description': "Total number of clusters in Strip versus the total number of clusters in Pixels", 'draw': { 'withref': "no" }}])
-sistriplayout(dqmitems, "29 - Cluster Charge per CM (On-Track)",
-  [{ 'path': "SiStrip/MechanicalView/TIB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TIB",
-     'description': "Charge per CM TIB ", 'draw': { 'withref': "yes" }},
-   { 'path': "SiStrip/MechanicalView/TOB/Summary_ClusterChargePerCMfromOrigin_OnTrack__TOB",
-     'description': "Charge per CM TOB", 'draw': { 'withref': "yes" }}],
-   [{ 'path': "SiStrip/MechanicalView/TID/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__MINUS",
-     'description': "Charge per CM TID MINUS ", 'draw': { 'withref': "yes" }},
-   { 'path': "SiStrip/MechanicalView/TID/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TID__PLUS",
-     'description': "Charge per CM TID PLUS  ", 'draw': { 'withref': "yes" }}],
-  [{ 'path':"SiStrip/MechanicalView/TEC/MINUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__MINUS",
-     'description': "Charge per CM TEC MINUS  ", 'draw': { 'withref': "yes" }},
-   { 'path':"SiStrip/MechanicalView/TEC/PLUS/Summary_ClusterChargePerCMfromOrigin_OnTrack__TEC__PLUS",
-     'description': "Charge per CM TEC PLUS ", 'draw': { 'withref': "yes" }}])
-
-
-
 
 #  LocalWords:  TotalNumberOfClusterProfile
-sistriplayout(dqmitems, "29 - Cluster & Digi occupancy per FED",
+sistriplayout(dqmitems, "06 - Cluster & Digi occupancy per FED",
  [{ 'path': "SiStrip/MechanicalView/NumberOfDigisinFED_v_FEDID",
     'description': "Digi occupancy per FED in the Strip detector", 'draw': { 'withref': "no" }},
   { 'path': "SiStrip/MechanicalView/NumberOfClustersinFED_v_FEDID",
