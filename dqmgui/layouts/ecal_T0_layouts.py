@@ -450,27 +450,30 @@ ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/13 Super Cluster Energy Low',
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14 Super Cluster Raw Energy Low',
        [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}],
        [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/15 Super Cluster Seed Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/15 Super Cluster Raw Energy High',
+       [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy (high scale)', 'description': 'Energy distribution (raw) of the super clusters (high scale).'}],
+       [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy (high scale)', 'description': 'Energy distribution (raw) of the super clusters (high scale).'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/16 Super Cluster Seed Energy',
        [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}],
        [{'path': 'EcalEndcap/EEClusterTask/EECLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/16 Super Cluster R9',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/17 Super Cluster R9',
        [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
        [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/17 Super Cluster R9 Raw',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/18 Super Cluster R9 Raw',
        [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
        [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/18 Super Cluster R9 Full',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/19 Super Cluster R9 Full',
        [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
        [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/19 Super Cluster R9 Full Raw',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/20 Super Cluster R9 Full Raw',
        [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
        [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/20 Super Cluster Size',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/21 Super Cluster Size',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'},
 	    {'path': 'EcalBarrel/EBClusterTask/EBCLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/21 Cluster Energy vs Seed Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/22 Cluster Energy vs Seed Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy vs seed crystal energy', 'description': 'Relation between super cluster energy and its seed crystal energy.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy vs seed crystal energy', 'description': 'Relation between super cluster energy and its seed crystal energy.'}])
 
