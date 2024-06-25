@@ -73,8 +73,9 @@ class RecoTauVRenderPlugin : public DQMRenderPlugin {
             // checks that object indeed exists
             if(o.name.find("_pt") != std::string::npos){
                 obj->GetXaxis()->SetTitle("pt (GeV)");
-                Double_t bins[12] = {-20,0,20,40,60,80,100,120,140,160,180,200};
-                TH1F* newobj = (TH1F*) obj->Rebin(11,"rebinned",bins);
+                //Double_t bins[12] = {-20,0,20,40,60,80,100,120,140,160,180,200};
+                //TH1F* newobj = (TH1F*) obj->Rebin(11,"rebinned",bins);
+		TH1F* newobj = (TH1F*) obj->Rebin(2);
                 newobj->SetMaximum(newobj->GetMaximum()*1.2);
                 newobj->Draw();
                 c->Modified();
@@ -116,7 +117,7 @@ class RecoTauVRenderPlugin : public DQMRenderPlugin {
                     obj->GetXaxis()->SetTitle("Decay Mode");
                 }
             }
-            if(o.name.find("DeepTau2017v2p1VS") != std::string::npos){
+            if(o.name.find("DeepTau2018v2p5VS") != std::string::npos){
                 if(o.name.find("VSeraw") != std::string::npos){
                     obj->GetXaxis()->SetTitle("raw DeepTauvsElectron");
                 }else if(o.name.find("VSjetraw") != std::string::npos){
@@ -124,7 +125,7 @@ class RecoTauVRenderPlugin : public DQMRenderPlugin {
                 }else if(o.name.find("VSmuraw") != std::string::npos){
                     obj->GetXaxis()->SetTitle("raw DeepTauvsMuon");
                 }
-                TH1F* newobj = (TH1F*) obj->Rebin(10);
+                TH1F* newobj = (TH1F*) obj->Rebin(2);
                 newobj->Draw();
                 c->Modified();
                 return;
