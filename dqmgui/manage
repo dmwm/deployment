@@ -101,11 +101,11 @@ vocms0730:*)
   FLAVOR=offline-relval-testing
   _kerberos_init
   ;;
-vocmsNEWOFFLINE:*)
+vocms0736:*)
   FLAVOR=offline
   _kerberos_init
   ;;
-vocmsNEWRELVAL:*)
+vocms0737:*)
   FLAVOR=relval
   _kerberos_init
   ;;
@@ -331,7 +331,7 @@ start_agents() {
   #   online to offline
   # note that the agents to copy zip to castor, verify zip from castor and
   # copy index to castor run as tasks under acron.
-  vocms0738:*agents* | vocmsNEWOFFLINE:*agents*)
+  vocms0738:*agents* | vocms0736:*agents*)
     start_agents_offline
     ;;
   ##### OFFLINE: relval server vocms0739 (CC7)
@@ -341,7 +341,7 @@ start_agents() {
   # - the zip and zipfreeze daemons
   # Note that the agents to copy zip to Castor, verify zip from Castor and
   # copy index to Castor run as tasks under acron.
-  vocms0739:*agents* | vocmsNEWRELVAL:*agents*)
+  vocms0739:*agents* | vocms0737:*agents*)
     start_agents_relval
     ;;
   ##### OFFLINE: test server vocms0731, vocms0730
@@ -445,7 +445,7 @@ start_agents_dqm_test() {
     $STATEDIR/online/ix128
 }
 
-# vocms0738, vocmsNEWOFFLINE
+# vocms0738, vocms0736
 start_agents_offline() {
   refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
   for D in $CONFIGS; do
@@ -510,7 +510,7 @@ start_agents_offline() {
   done
 }
 
-# vocms0739, vocmsNEWRELVAL
+# vocms0739, vocms0737
 start_agents_relval() {
   refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
   for D in $CONFIGS; do
@@ -827,7 +827,7 @@ indexbackup() {
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocmsNEWOFFLINE:offline | vocmsNEWRELVAL:relval)
+    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocms0736:offline | vocms0737:relval)
       CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/$D
       ;;
     *)
@@ -880,7 +880,7 @@ zipbackup() {
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocmsNEWOFFLINE:offline | vocmsNEWRELVAL:relval)
+    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocms0736:offline | vocms0737:relval)
       CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
       ;;
     *)
@@ -930,7 +930,7 @@ zipbackupcheck() {
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocmsNEWOFFLINE:offline | vocmsNEWRELVAL:relval)
+    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocms0736:offline | vocms0737:relval)
       CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
       ;;
     *)

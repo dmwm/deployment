@@ -31,7 +31,7 @@ server.logFile = (
 server.title = "CMS data quality"
 
 # Offline production servers
-if hostname == "vocms0738" or hostname == "vocmsNEWOFFLINE":
+if hostname == "vocms0738" or hostname == "vocms0736":
     server.serviceName = "Offline"
     server.baseUrl = "/dqm/offline"
 # Relval test server

@@ -43,7 +43,7 @@ server.logFile = (
     else "%s/weblog.log" % LOGDIR
 )
 # Relval production servers
-if hostname == "vocms0739" or hostname == "vocmsNEWRELVAL":
+if hostname == "vocms0739" or hostname == "vocms0737":
     server.serviceName = "RelVal"
     server.baseUrl = "/dqm/relval"
 # Relval test server
