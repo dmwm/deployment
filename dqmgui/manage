@@ -813,7 +813,9 @@ compile() {
 indexmonitor() {
   refuseproc "index monitoring" "visDQMIndexMonitoring"
   for D in $CONFIGS; do
-    visDQMIndexMonitoring FLAVOR="$D" INSTALLATION_DIR="$TOP"
+    DQM_DATA=$STATEDIR/$D
+    LOGSTEM=$D/agent-indexmonitor
+    visDQMIndexMonitoring FLAVOR="$D" INSTALLATION_DIR="$TOP" ALERT_THRESHOLD="0.95" >>"$LOGDIR/$LOGSTEM-$(hostname -s).log" 2>&1
   done
 }
 
@@ -865,7 +867,7 @@ indexbackup() {
         $DQM_DATA/ix128 \
         $CASTORDIR \
         cms-dqm-coreTeam@cern.ch \
-        </dev/null 2>&1 >>$LOGDIR/$LOGSTEM-$(hostname -s).log
+        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
       ;;
     esac
   done
@@ -915,7 +917,7 @@ zipbackup() {
         $DQM_DATA/zipped \
         $CASTORDIR \
         $DQM_DATA/agents/verify \
-        </dev/null 2>&1 >>$LOGDIR/$LOGSTEM-$(hostname -s).log
+        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
       ;;
     esac
   done
@@ -970,7 +972,7 @@ zipbackupcheck() {
         $CASTORDIR \
         24 \
         $DQM_DATA/agents/clean \
-        </dev/null 2>&1 >$LOGDIR/$LOGSTEM-$(printf '%(%Y%m%d)T' -1)-$(hostname -s).log
+        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
       ;;
     esac
   done
