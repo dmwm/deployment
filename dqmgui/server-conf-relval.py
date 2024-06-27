@@ -43,7 +43,7 @@ server.logFile = (
     else "%s/weblog.log" % LOGDIR
 )
 # Relval production servers
-if hostname == "vocms0739":
+if hostname == "vocms0739" or hostname == "vocms0737":
     server.serviceName = "RelVal"
     server.baseUrl = "/dqm/relval"
 # Relval test server
@@ -70,8 +70,9 @@ server.extend(
     STATEDIR,
     [
         "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere",
-        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=batinkov/CN=739757/CN=Atanas Ivanov Batinkov",
-        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=bvanbesi/CN=759373/CN=Broen van Besien",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=dpapagia/CN=857294/CN=Dimitrios Papagiannis",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=dpapagia/CN=857294/CN=Dimitris Papagiannis",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=gamoreir/CN=844403/CN=Gabriel Moreira Da Silva Campos",
     ],
 )
 server.source("DQMUnknown")
