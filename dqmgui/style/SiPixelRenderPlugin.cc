@@ -332,6 +332,11 @@ private:
           //if(obj->GetNbinsX()==7) gPad->SetLeftMargin(0.3);
           dqm::utils::reportSummaryMapPalette(obj2);
 	  obj->SetOption("colztext");
+
+	  const int NCont = 10;
+	  double contours[NCont] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9};
+	  obj->SetContour(NCont, contours);
+	
           return;
         }
     }
