@@ -31,7 +31,7 @@ server.logFile = (
 server.title = "CMS data quality"
 
 # Offline production servers
-if hostname == "vocms0738":
+if hostname == "vocms0738" or hostname == "vocms0736":
     server.serviceName = "Offline"
     server.baseUrl = "/dqm/offline"
 # Relval test server
@@ -58,8 +58,9 @@ server.extend(
     STATEDIR,
     [
         "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere",
-        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=batinkov/CN=739757/CN=Atanas Ivanov Batinkov",
-        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=bvanbesi/CN=759373/CN=Broen van Besien",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=dpapagia/CN=857294/CN=Dimitrios Papagiannis",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=dpapagia/CN=857294/CN=Dimitris Papagiannis",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=gamoreir/CN=844403/CN=Gabriel Moreira Da Silva Campos",
     ],
 )
 server.source("DQMUnknown")
