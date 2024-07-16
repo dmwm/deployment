@@ -867,7 +867,7 @@ indexbackup() {
         $DQM_DATA/ix128 \
         $CASTORDIR \
         cms-dqm-coreTeam@cern.ch \
-        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
+        </dev/null >>"$LOGDIR/$LOGSTEM-$(hostname -s).log" 2>&1
       ;;
     esac
   done
@@ -917,7 +917,7 @@ zipbackup() {
         $DQM_DATA/zipped \
         $CASTORDIR \
         $DQM_DATA/agents/verify \
-        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
+        </dev/null >>"$LOGDIR/$LOGSTEM-$(hostname -s).log" 2>&1
       ;;
     esac
   done
@@ -972,7 +972,7 @@ zipbackupcheck() {
         $CASTORDIR \
         24 \
         $DQM_DATA/agents/clean \
-        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
+        </dev/null >>"$LOGDIR/$LOGSTEM-$(hostname -s).log" 2>&1
       ;;
     esac
   done
