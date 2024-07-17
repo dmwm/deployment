@@ -39,15 +39,15 @@ hostname = socket.gethostname().lower().split(".")[0]
 server.logFile = (
     # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
     "%s/weblog-%%Y%%m%%d.log" % LOGDIR
-    if "vocms" in hostname
+    if hostname in ["vocms0731", "vocms0738", "vocms0739"]
     else "%s/weblog.log" % LOGDIR
 )
 # Relval production servers
-if hostname == "vocms0739":
+if hostname == "vocms0739" or hostname == "vocms0737":
     server.serviceName = "RelVal"
     server.baseUrl = "/dqm/relval"
 # Relval test server
-elif hostname == "vocms0731":
+elif hostname == "vocms0731" or hostname == "vocms0730":
     server.serviceName = "RelVal Test"
     server.baseUrl = "/dqm/relval-test"
 # Any local instance of the relval flavor
@@ -70,8 +70,9 @@ server.extend(
     STATEDIR,
     [
         "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=rovere/CN=653292/CN=Marco Rovere",
-        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=batinkov/CN=739757/CN=Atanas Ivanov Batinkov",
-        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=bvanbesi/CN=759373/CN=Broen van Besien",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=dpapagia/CN=857294/CN=Dimitrios Papagiannis",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=dpapagia/CN=857294/CN=Dimitris Papagiannis",
+        "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=gamoreir/CN=844403/CN=Gabriel Moreira Da Silva Campos",
     ],
 )
 server.source("DQMUnknown")

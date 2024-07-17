@@ -396,6 +396,8 @@ server.workspace('DQMContent', 43, 'Muons', 'GEM', '^GEM/', '',
                  'GEM/Layouts/Common/56 GE11-P-L1 GEM-CSC segment efficiency', 
                  'GEM/Layouts/Common/57 GE11-P-L2 GEM-CSC segment efficiency',
                 )
+# ParticleFlow workspaces
+server.workspace('DQMContent', 44, 'ParticleFlow', 'ParticleFlow', '^ParticleFlow/', '')
 
 # CTPPS workspaces:
 server.workspace('DQMContent', 50, 'CTPPS', 'TrackingStrip', '^CTPPS/(TrackingStrip|common)/', 'CTPPS/TrackingStrip/Layouts')

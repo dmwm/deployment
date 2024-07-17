@@ -1,173 +1,182 @@
 #!/usr/bin/env python3
-""" mkvomsmap -o OUTPUT --cert CERT --key KEY [--vo VONAME]
-                  [-c CONFIG-FILE] [--git-token-path GIT_TOKEN] [URI...]
+"""mkvomsmap -c url.conf -o FILE
+Queries CRIC roles .json and put it into FILE
+"""
 
-Queries VOMS for member data and writes out a gridmap file into OUTPUT
-as VONAME memberships (default: 'cms'). The CERT and KEY should normally
-be the host certificate and key, respectively. Queries all given URIs
-and combines all their results into one combined output list.
 
-Users who's DNs appear in the blacklist file are not included in the output.
-The blacklist file is maintained and hosted in GitLab and in order to access
-it a valid path with a file including the GIT_TOKEN must be provided.
-
-The output file is written in a manner which guarantees it will not be
-removed or truncated in case of a failure, however it may disappear for
-a very short time while the new file is moved in place.
-
-The URIs should be of the form:
-
-  vomss://voms2.cern.ch:8443/voms/cms?/cms/Role=production
-  vomss://voms2.cern.ch:8443/voms/cms?/cms
-
-If CONFIG-FILE is given, it's assumed to consist of lines in format
-'group URI VONAME', compatible with edg-mkgridmap, and a line in format
-'gitlab URL' to provide the url of the blacklist file.
-The VONAME given in CONFIG-FILE must match the value given with --vo option."""
-
-import sys, re, urllib.request, urllib.error, urllib.parse, http.client, os, os.path, traceback
-from xml.sax import saxutils, handler as sax_handler, parseString
-from urllib.parse import urlsplit, urlunparse
+import json
+import os
+import os.path
+import re
+import sys
+import requests
 from optparse import OptionParser
+from pprint import pprint  # to debug objects content
 from tempfile import mkstemp
+from urllib.parse import urlsplit, urlunparse
 
-ident = "mkvomsmap/1.0 python/%d.%d.%d" % sys.version_info[:3]
-opts = None
-args = None
+# Global vars
+opts = ''
+args = ''
+roles = ''
+sitemap = {}
+sites = ''
 
-# Utility adapter to activate X509 client authentication with HTTPS.
-class HTTPSCertAuth(http.client.HTTPSConnection):
-  def __init__(self, host, *args, **kwargs):
-    http.client.HTTPSConnection.__init__(self, host, key_file = opts.key,
-				     cert_file = opts.cert, **kwargs)
 
-class HTTPSCertAuthenticate(urllib.request.AbstractHTTPHandler):
-  def default_open(self, req):
-    return self.do_open(HTTPSCertAuth, req)
-
-# SAX parser for VOMS SOAP reply for "getGridmapUsers" call. We ignore
-# the SOAPy features and simply just look for "getGridmapUsersReturn" XML
-# elements. Their element contents are subject strings of VO members.
-class GridMapData(sax_handler.ContentHandler):
-  users = set()
-  save = False
-  name = ""
-
-  def startElement(self, name, attrs):
-    self.save = (name == "getGridmapUsersReturn")
-    self.name = ""
-
-  def endElement(self, name):
-    if self.save:
-      self.users.add(str(self.name))
-    self.save = False
-
-  def characters(self, content):
-    if self.save: self.name += content
-
-# Make VOMS request to retrieve members in gridmap style. This simply
-# transforms "voms" to "http" and "vomss" to "https" in the URI, then
-# mangles the URI a bit to make "getGridmapUsers" call, and returns
-# the XML body of the response. Note that we rely on exceptions being
-# thrown if anything goes wrong with the request.
-def request(url):
-  if url.startswith("voms"): url = "http" + url[4:]
-  (scheme, netloc, path, query, frag) = urlsplit(url)
-  query = "method=getGridmapUsers" + ((query and "&container=" + query) or "")
-  path += "/services/VOMSCompatibility"
-  req = urllib.request.Request(urlunparse((scheme, netloc, path, '', query, frag)))
-  req.add_header("User-agent", ident)
-  result = urllib.request.build_opener(HTTPSCertAuthenticate()).open(req)
-  return result.read()
-
-# Parse VOMS SOAP response to extract member subject strings. Returns
-# a set of the member names.
-def parse(body):
-  data = GridMapData()
-  parseString(body, data)
-  return data.users
-
-# Get current umask.
 def current_umask():
-  val = os.umask(0)
-  os.umask(val)
-  return val
+    """Get current umask"""
+    val = os.umask(0)
+    os.umask(val)
+    return val
 
-# Parse command line options.
-myumask = current_umask()
+
+def convertToHeadersStyle(siteInfo):
+    """  
+     - all lower case
+     - whitespaces and underscores replaced by dashes
+    """
+    try:
+        result = siteInfo.replace('_', '-').replace(' ', '-')
+    except AttributeError as e:
+        print(('ERROR: ', e))
+        result = 'none'
+    return result.lower()
+
+
+def getFecthDetails(fname):
+    with open(fname) as fp:
+        content = fp.readlines()
+
+    for line in content:
+        m = re.match(r"^url (cric?:\S+)$", line.strip())
+        if not m:
+            print("%s: %d: line not understood" % (fname, line))
+            sys.exit(1)
+        ml = m.group(1)
+        url = ml[5:]
+        return url
+
+
+def request(uri, opts):
+    content = ''
+    url = "https:" + uri
+    apimap = {
+        'roles': '/api/accounts/user',
+        'site-names&rcsite_state=ANY': '/api/cms/site',
+        'people': '/api/accounts/user',
+        'site-responsibilities': '/api/accounts/user'
+    }
+    (scheme, netloc, path, query, frag) = urlsplit(url)
+    path = apimap[query] + path
+    query = "json&preset=" + query
+    url = urlunparse((scheme, netloc, path, '', query, frag))
+    cert = None
+    if opts.cert and opts.key:
+        cert = (opts.cert, opts.key)
+    try:
+        result = requests.get(url, cert=cert, verify=opts.ca_cert or True)
+        result.raise_for_status()
+    except requests.exceptions.HTTPError as errh:
+        print(("Http Error:", errh))
+        print(("URL", url))
+    except requests.exceptions.ConnectionError as errc:
+        print(("Error Connecting:", errc))
+        print(("URL", url))
+    except requests.exceptions.Timeout as errt:
+        print(("Timeout Error:", errt))
+        print(("URL", url))
+    except requests.exceptions.RequestException as err:
+        print(("Request error", err))
+        print(("URL", url))
+    else:
+        content = result.text
+    return content
+
+
+def buildSiteMap(sites):
+    # Following the format of 'roles' API, all names are prepended by 'site:'
+    sitemap = {}
+    for entry in json.loads(sites)['result']:
+        if entry[0] == 'phedex':
+            sitename = "site:" + convertToHeadersStyle(entry[1])
+            nodename = "site:" + convertToHeadersStyle(entry[2])
+            if sitename in sitemap:
+                sitemap[sitename].append(nodename)
+            else:
+                sitemap[sitename] = [nodename]
+    return sitemap
+
+
+def updateFile(opts, roles, sitemap):
+    if not roles or not sitemap:
+        print("Either roles or sitemap is empty, aborting...", file=sys.stderr)
+        exit(2)
+
+    struct = json.loads(roles)
+    output_lines = []
+
+
+  # Validate keys and normalize roles
+    #validateMapKeys(struct)
+    #rolesToLower(struct)
+
+    # Generate output lines in the required format
+    for entry in struct:
+        dn = entry['DN']
+        output_line = f'"{dn}" cms'
+        output_lines.append(output_line)
+
+    # Serialize to a plain string with newline characters
+    output_data = "\n".join(output_lines) + "\n"
+
+    # Read the existing file to compare content
+    try:
+        with open(opts.out, 'r', encoding='utf-8') as fp:
+            old_data = fp.read()
+    except IOError:
+        print(f"File {opts.out} does not exist yet.")
+        old_data = ''
+
+    # If data has changed, write out a new file
+    if output_data != old_data:
+        try:
+            fd, tmpname = mkstemp(dir=os.path.dirname(opts.out))
+            with os.fdopen(fd, "w", encoding='utf-8') as tmpfile:
+                tmpfile.write(output_data)
+            os.chmod(tmpname, 0o666 & ~current_umask())
+            os.rename(tmpname, opts.out)
+            print("Info: json content has changed, updating it...")
+        except (IOError, OSError) as e:
+            print("An error occurred during file operation:")
+            print(e)
+
+def current_umask():
+    return os.umask(0)
+# Getting command line options
 opt = OptionParser(__doc__)
-opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
 opt.add_option("-c", "--conf", dest="conf", metavar="FILE", help="configuration file")
-opt.add_option("--cert", dest="cert", metavar="FILE", help="certificate file")
-opt.add_option("--key", dest="key", metavar="FILE", help="private key file")
-opt.add_option("--vo", dest="vo", default="cms", metavar="NAME", help="VO name")
-opt.add_option("--git-token-path", dest="git_token_path", default="", metavar="NAME", help="path of file containing GitLab access token")
+opt.add_option("-o", "--out", dest="out", metavar="FILE", help="output file")
+opt.add_option("-v", "--verbose", action="store_true", help="increase output verbosity")
+opt.add_option("-e", "--cert", dest="cert", help="path to cert file")
+opt.add_option("-k", "--key", dest="key", help="path to cert key")
+opt.add_option("-b", "--ca-cert", dest="ca_cert", help="path to ca cert bundle")
 opts, args = opt.parse_args()
-
-if not opts.key or not os.path.exists(opts.key):
-  print("no certificate private key file found", file=sys.stderr)
-  sys.exit(1)
-
-if not opts.cert or not os.path.exists(opts.cert):
-  print("no certificate public key file found", file=sys.stderr)
-  sys.exit(1)
+# Checking command line options
+if not opts.conf:
+    print("Config file name file is required", file=sys.stderr)
+    exit(1)
 
 if not opts.out:
-  print("output file name is required", file=sys.stderr)
-  sys.exit(1)
-
-# Any remaining command line arguments are URIs to process. If we were given
-# a configuration file, parse it too and add to the URI list.
-uris = args
-gitlab_url = ''
-if opts.conf:
-  nline = 0
-  for line in open(opts.conf, "r"):
-    nline += 1
-    m = re.match(r"^group (vomss?:\S+) (\S+)$", line)
-    n = re.match(r"^gitlab (https?:\S+)$", line)
-    if not m and not n:
-      print("%s: %d: line not understood" % (opts.conf, nline))
-      sys.exit(1)
-    if m:
-      if m.group(2) != opts.vo:
-        print("%s: %d: vo %s differs from expected %s" % (m.group(2), opts.vo))
-        sys.exit(1)
-      uris.append(m.group(1))
-    if n:
-      try:
-        with open(opts.git_token_path) as f:
-          token = f.read()
-          gitlab_url = n.group(1) + '&access_token=' + token
-      except IOError:
-        print("Reading error at %s. Wrong path defined or file doesn't exist." % opts.git_token_path)
-
-blacklisted_dns = []
-if gitlab_url:
-  try:
-    blacklisted_dns = str(urllib.request.urlopen(gitlab_url).read().decode("utf-8")).split('\n')
-  except Exception:
-    print('List of blacklisted DNs couldn\'t be fetched from GitLab.')
-    traceback.print_exc()
-
-# Fetch VOMS membership info. Combine all of them into single set of users.
-users = set()
-for uri in uris:
-  users |= parse(request(uri))
-
-# Now write this out, first in a temporary file in the same directory as
-# the final output file, then move the output file into place. This avoids
-# wiping out the file in case the disk fills up or some other error occurs.
-fd, tmpname = mkstemp(dir = os.path.dirname(opts.out))
-outfile = os.fdopen(fd, "w")
-# Iterate over voms data. `users` is a list of user DNs.
-for user in users:
-  if user in blacklisted_dns:
-    continue
-  print('"%s" %s' % (user, opts.vo), file=outfile)
-outfile.close()
-os.chmod(tmpname, 0o666 & ~myumask)
-if os.path.exists(opts.out):
-  os.remove(opts.out)
-os.rename(tmpname, opts.out)
-sys.exit(0)
+    print("Output file name is required", file=sys.stderr)
+    exit(1)
+    
+##Calling core functions
+uri = getFecthDetails(opts.conf)
+roles = request(uri, opts)
+# sites = request (uri.replace('roles','site-names'))
+sites = request(uri.replace('roles', 'site-names&rcsite_state=ANY'), opts)
+sitemap = buildSiteMap(sites)
+updateFile(opts, roles, sitemap)
+# content = request(uri)
+# updateFile(opts, content)
+exit(0)
