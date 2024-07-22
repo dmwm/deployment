@@ -74,7 +74,9 @@ export STAGE_SVCCLASS=archive
 # when trying to load any DQM GUI instance
 # commenting them works perfectly fine since users alrady have a kerberos token by default
 _kerberos_init() {
-  bash "$TOP/current/config/dqmgui/kinit.sh"
+  # Use source here so that the exit command works and
+  # can terminate execution when needed.
+  source "$TOP/current/config/dqmgui/kinit.sh"
 }
 # Set Flavor for HOST:DOMAIN
 case $HOST:$DOMAIN in
@@ -867,7 +869,7 @@ indexbackup() {
         $DQM_DATA/ix128 \
         $CASTORDIR \
         cms-dqm-coreTeam@cern.ch \
-        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
+        </dev/null >>"$LOGDIR/$LOGSTEM-$(hostname -s).log" 2>&1
       ;;
     esac
   done
@@ -917,7 +919,7 @@ zipbackup() {
         $DQM_DATA/zipped \
         $CASTORDIR \
         $DQM_DATA/agents/verify \
-        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
+        </dev/null >>"$LOGDIR/$LOGSTEM-$(hostname -s).log" 2>&1
       ;;
     esac
   done
@@ -972,7 +974,7 @@ zipbackupcheck() {
         $CASTORDIR \
         24 \
         $DQM_DATA/agents/clean \
-        </dev/null 2>&1 >>"$LOGDIR/$LOGSTEM-$(hostname -s).log"
+        </dev/null >>"$LOGDIR/$LOGSTEM-$(hostname -s).log" 2>&1
       ;;
     esac
   done

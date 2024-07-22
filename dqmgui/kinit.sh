@@ -5,6 +5,7 @@ export keytab=""
 
 # Skip the .service principals
 principal=$(klist -k "$keytab" | grep -v '.service' | tail -1 | grep -oE '[[:alnum:]_-]+@CERN\.CH')
+kdestroy -A >/dev/null 2>&1
 kinit $principal -k -t "$keytab" 2>&1 1>&/dev/null
 if [ $? = 1 ]; then
     echo "Unable to perform kinit for ${principal}."
