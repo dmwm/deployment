@@ -74,7 +74,9 @@ export STAGE_SVCCLASS=archive
 # when trying to load any DQM GUI instance
 # commenting them works perfectly fine since users alrady have a kerberos token by default
 _kerberos_init() {
-  bash "$TOP/current/config/dqmgui/kinit.sh"
+  # Use source here so that the exit command works and
+  # can terminate execution when needed.
+  source "$TOP/current/config/dqmgui/kinit.sh"
 }
 # Set Flavor for HOST:DOMAIN
 case $HOST:$DOMAIN in
