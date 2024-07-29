@@ -51,4 +51,81 @@ shiftpixelP1layout(dqmitems,"07 - PixelPhase1 Dead Channels per ROC: BladePannel
       'description': "Profile of number of dead Channels per ROC by signed blade pannel (y-axis) vs signed disk (x-axis) in ring 2 of endcap",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
    )
+shiftpixelP1layout(dqmitems, "08 - Compare number of objects GPUvsCPU",
+   [{ 'path':  "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/nHits",
+      'description': "No of RecHits GPU vs CPU",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    { 'path':  "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/nLooseAndAboveTracks",
+      'description': "No of pixel tracks with quality >= loose GPU vs CPU",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    { 'path':  "SiPixelHeterogeneous/PixelVertexCompareGPUvsCPU/nVertex",
+      'description': "No of reconstructed vertices GPU vs CPU",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
+    )
 
+shiftpixelP1layout(dqmitems, "09 - FED error unbalance GPUvsCPU",
+   [{ 'path':  "SiPixelHeterogeneous/PixelErrorCompareGPUvsCPU/FEErrorVsFEDIdUnbalance",
+      'description': "Unbalance of Pixel FED Raw Data errors in GPU vs CPU",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}]
+   )
+
+
+shiftpixelP1layout(dqmitems, "10 - Compare track properties",
+   [{ 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/eta",
+      'description': "Compare track #eta",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }},
+    { 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/phi",
+      'description': "Compare track #phi",
+      'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   [{ 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/pt",
+      'description': "Compare track pt",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ztype': 'log' }},
+    { 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/nRecHits",
+      'description': "Compare number of rechits per track",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ztype': 'log' }}]
+   )
+
+shiftpixelP1layout(dqmitems, "11 - Compare vertices",
+    [{ 'path': "SiPixelHeterogeneous/PixelVertexCompareGPUvsCPU/chi2oNdof",
+       'description': "Compare Vertex chi-squared/Ndof",
+       'draw': { 'withref': "no", 'drawopts': "COLZ", 'ztype': 'log' }},
+     { 'path': "SiPixelHeterogeneous/PixelVertexCompareGPUvsCPU/vz",
+       'description': "Compare vertex z",
+       'draw': { 'withref': "no", 'drawopts': "COLZ" }}],
+   [{ 'path': "SiPixelHeterogeneous/PixelVertexCompareGPUvsCPU/ntrk",
+      'description': "Compare number of tracks associated to a vertex",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ztype': 'log' }},
+    { 'path': "SiPixelHeterogeneous/PixelVertexCompareGPUvsCPU/ptsq",
+      'description': "Compare vertex pt squared",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ztype': 'log' }}]
+   )
+
+shiftpixelP1layout(dqmitems, "12 - Difference in rechit position",
+   [{ 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsposXDiffBpix",
+      'description': "x-position difference in Barrel",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ytype': 'log' }},
+    { 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsposXDiffFpix",
+      'description': "x-position difference in Forward",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ytype': 'log' }}],
+   [{ 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsposYDiffBpix",
+      'description': "y-position difference in Barrel",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ytype': 'log' }},
+    { 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsposYDiffFpix",
+      'description': "y-position difference in Forward",
+      'draw': { 'withref': "no", 'drawopts': "COLZ", 'ytype': 'log' }}]
+   )
+
+shiftpixelP1layout(dqmitems, "13 - Difference in rechit size",
+   [{ 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsizeXDiffBpix",
+      'description': "size x difference in Barrel",
+      'draw': { 'withref': "no" }},
+    { 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsizeXDiffFpix",
+      'description': "size x difference in Forward",
+      'draw': { 'withref': "no" }}],
+   [{ 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsizeYDiffBpix",
+      'description': "size y difference in Barrel",
+      'draw': { 'withref': "no" }},
+    { 'path': "SiPixelHeterogeneous/PixelRecHitsCompareGPUvsCPU/rechitsizeYDiffFpix",
+      'description': "size y difference in Forward",
+      'draw': { 'withref': "no" }}]
+   )
