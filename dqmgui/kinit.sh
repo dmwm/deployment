@@ -8,7 +8,7 @@ principal=$(klist -k "$keytab" | grep -v '.service' | tail -1 | grep -oE '[[:aln
 kdestroy -A >/dev/null 2>&1
 
 # Try up to # tries times to run kinit.
-tries=${1:-1}
+tries=${1:-2}
 while [ $tries -gt 0 ]; do
     if ! kinit $principal -k -t "$keytab" 2>&1 1>&/dev/null; then
         tries=$((tries - 1))
