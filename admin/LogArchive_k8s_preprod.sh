@@ -34,40 +34,29 @@ echo $applogs
 
 case $applogs in
     */frontend-logs )
-      # Extract the date from the first log file found (for naming the archive)
-      log_file=$(find $applogs -name '*.log_*_[0-9]*' -print | head -n 1)
+      # Find and archive all logs
+      find $applogs -type f -name '*.log_*_[0-9]*' -print |
+      while read f; do
+        # Extract the date (YYYYMMDD) from the log filename
+        log_date=$(echo "$f" | sed -E 's/.*_([0-9]{8})$/\1/')
 
-      if [ -n "$log_file" ]; then
-        # Extract the date (YYYYMMDD) from the filename
-        archive_date=$(echo "$log_file" | sed -E 's/.*_([0-9]{8})$/\1/')
-      else
-        # Default to today's date if no log file is found
-        archive_date=$(date +%Y%m%d)
-      fi
+        # Skip today's logs
+        if [ "$log_date" = "$(date +%Y%m%d)" ]; then
+          continue
+        fi
 
-      # Name the zip file
-      archive_name="aps-xps_logs_${archive_date}.zip"
+        # Name the zip file according to the log file's date
+        archive_name="aps-xps_logs_${log_date}.zip"
 
-      # Compress all log files matching the pattern and older than 1 day
-      find $applogs -name '*.log_*_[0-9]*' -mtime +1 -print |
-        while read f; do
-          case $f in *.zip ) continue ;; esac
-          ionice -c3 zip -9Trmuoqj "${applogs}/${archive_name}" "$f" ||
-            { echo "$f: failed to archive logs: $?" 1>&2; exit 3; }
-        done
-
-      # Archive new logs without removing them
-      find $applogs -name '*.log_*_[0-9]*' -print |
-        while read f; do
-          case $f in *.zip ) continue ;; esac
-          ionice -c3 zip -9Truoqj "${applogs}/${archive_name}" "$f" ||
-            { echo "$f: failed to archive logs: $?" 1>&2; exit 4; }
-        done
+        # Archive the file and delete it after archiving
+        ionice -c3 zip -9Tmjq "${applogs}/${archive_name}" "$f" ||
+          { echo "$f: failed to archive logs: $?" 1>&2; exit 4; }
+      done
 
       # Remove zip archives older than 14 days
       find $applogs -name 'aps-xps_logs_*.zip' -mtime +14 -exec rm -f {} \;
-      ;;
 
+      ;;
     * )
       # Standard server directory, archive to bundles of about 500 MB.
       # Pick a ZIP archive. Find the last zip archive that is <500 MB.
