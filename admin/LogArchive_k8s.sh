@@ -34,28 +34,29 @@ echo $applogs
 
 case $applogs in
     */frontend-logs )
-      # Find and archive all logs
-      find $applogs -type f -name '*.log_*_[0-9]*' -print |
-      while read f; do
-        # Extract the date from the log filename
-        log_date=$(echo "$f" | sed -E 's/.*_([0-9]{8})$/\1/')
+      # Compress old logs.
+      find $applogs -name '*_log_*' -mtime +1 -print |
+        while read f; do
+          case $f in *.zip ) continue ;; esac
+          temp1=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
+          kind=$(n=1; echo $temp1 | awk -v m="$n" '{print substr($0,m,40);}')
+          temp2=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
+	  month=$(n=27; echo $temp2 | awk -v m="$n" '{print substr($0,m,6);}')
+          ionice -c3 zip -9Trmuoqj ${kind}_${month}.zip $f ||
+            { echo "$f: failed to archive logs: $?" 1>&2; exit 3; }
+        done
 
-        # Skip today's logs
-        if [ "$log_date" = "$(date +%Y%m%d)" ]; then
-          continue
-        fi
-
-        # Name the zip file according to the log file's date
-        archive_name="aps-xps_logs_${log_date}.zip"
-
-        # Archive the file and delete it after archiving
-        ionice -c3 zip -9Tmjq "${applogs}/${archive_name}" "$f" ||
-          { echo "$f: failed to archive logs: $?" 1>&2; exit 4; }
-      done
-
-      # Remove zip archives older than 14 days
-      find $applogs -name 'aps-xps_logs_*.zip' -mtime +14 -exec rm -f {} \;
-
+      # Add remaining (new) logs but don't remove them.
+      find $applogs -name '*_log_*' -print |
+        while read f; do
+          case $f in *.zip ) continue ;; esac
+          temp1=$(echo $f | sed 's/_[0-9]*\(.txt\)*$//')
+          kind=$(n=1; echo $temp1 | awk -v m="$n" '{print substr($0,m,40);}')
+          temp2=$(echo $f | sed 's/.*_log_//; s/..\(\.txt\)*$//')
+	  month=$(n=27; echo $temp2 | awk -v m="$n" '{print substr($0,m,6);}')
+  	  ionice -c3 zip -9Truoqj ${kind}_${month}.zip $f ||
+            { echo "$f: failed to archive logs: $?" 1>&2; exit 4; }
+        done
       ;;
 
     * )
