@@ -22,7 +22,10 @@ if [ $(find $STATEDIR -maxdepth 2 -type d -name sessions | wc -l) = 0 ]; then
   exit 1
 fi
 
-mkdir $STATEDIR/.nodaily || { echo "$0: daily cannot run"; exit 1; }
+mkdir $STATEDIR/.nodaily || {
+  echo "$0: daily cannot run"
+  exit 1
+}
 trap "rmdir $STATEDIR/.nodaily" 0 1 2 15
 
 ######################################################################
@@ -39,7 +42,7 @@ for i in offline relval dev; do
   if [ -d $ZIPREPO ] && [ -d $CLEANDIR ]; then
     for cf in $(find $CLEANDIR -name \*.zinfo); do
       set -e
-      ZIPPATH=$ZIPREPO/$(python -c "a=eval(file('$cf').read());print a['zpath']")
+      ZIPPATH=$ZIPREPO/$(python3 -c "with open('$cf', 'r') as f: a = eval(f.read()); print(a['zpath'])")
       if [ -e $ZIPPATH ]; then
         rm $ZIPPATH $cf
       else
@@ -49,3 +52,11 @@ for i in offline relval dev; do
     done
   fi
 done
+
+######################################################################
+# Monitor index size
+"$TOP/current/config/dqmgui/manage" indexmonitor 'I did read documentation'
+
+######################################################################
+# Rotate logs
+/usr/sbin/logrotate "$TOP/current/apps/dqmgui/128/etc/logrotate.conf" --state "$TOP/state/dqmgui/logrotate.state" --verbose --log "$TOP/logs/dqmgui/logrotate.log"

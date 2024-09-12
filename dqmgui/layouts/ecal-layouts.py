@@ -22,9 +22,9 @@ ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/00 Summary',
 	   [{'path': 'EcalEndcap/EESummaryClient/EE global summary EE -', 'description': 'Summary of the data quality. A channel is red if it is red in any one of RawData, Integrity, Timing, TriggerPrimitives, and HotCells task. A cluster of bad towers in this plot will cause the ReportSummary for the FED to go to 0 in online DQM.'},
 	    {'path': 'EcalEndcap/EESummaryClient/EE global summary EE +', 'description': 'Summary of the data quality. A channel is red if it is red in any one of RawData, Integrity, Timing, TriggerPrimitives, and HotCells task. A cluster of bad towers in this plot will cause the ReportSummary for the FED to go to 0 in online DQM.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/01 FE Status',
-	   [{'path': 'EcalBarrel/EBSummaryClient/EBSFT front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has nonzero events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}],
-	   [{'path': 'EcalEndcap/EESummaryClient/EESFT EE - front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has nonzero events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'},
-	    {'path': 'EcalEndcap/EESummaryClient/EESFT EE + front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has nonzero events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}])
+	   [{'path': 'EcalBarrel/EBSummaryClient/EBSFT front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has 400 or more events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}],
+	   [{'path': 'EcalEndcap/EESummaryClient/EESFT EE - front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has 400 or more events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'},
+	    {'path': 'EcalEndcap/EESummaryClient/EESFT EE + front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has 400 or more events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/02 Integrity',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBIT integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors. Also, an entire SuperModule can show red if there are more than 50 DCC-SRP or DCC-TCC Desync errors.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EEIT EE - integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors. Also, an entire SuperModule can show red if there are more than 50 DCC-SRP or DCC-TCC Desync errors.'}, 
@@ -89,9 +89,9 @@ ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/14 Error Trends',
 
 #____________________ Layouts / 01 Raw Data ____________________
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/00 FEStatus Summary',
-	   [{'path': 'EcalBarrel/EBSummaryClient/EBSFT front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has nonzero events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}],
-	   [{'path': 'EcalEndcap/EESummaryClient/EESFT EE - front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has nonzero events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'},
-	    {'path': 'EcalEndcap/EESummaryClient/EESFT EE + front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has nonzero events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}])
+	   [{'path': 'EcalBarrel/EBSummaryClient/EBSFT front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has 400 or more events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}],
+	   [{'path': 'EcalEndcap/EESummaryClient/EESFT EE - front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has 400 or more events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'},
+	    {'path': 'EcalEndcap/EESummaryClient/EESFT EE + front-end status summary', 'description': 'Summary of the raw data (DCC and front-end) quality. A channel is red if it has 400 or more events with FE status that is different from any of ENABLED, DISABLED, SUPPRESSED, FIFOFULL, FIFOFULL_L1ADESYNC, and FORCEDZS. A FED can also go red if its number of L1A desynchronization errors is greater than 1.0 * log10(total entries).'}])
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/01 Total FE Sync Errors',
 	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT total FE synchronization errors', 'description': 'Total number of synchronization errors (L1A & BX mismatches) between DCC and FE.'}],
 	   [{'path': 'EcalEndcap/EERawDataTask/EERDT total FE synchronization errors', 'description': 'Total number of synchronization errors (L1A & BX mismatches) between DCC and FE.'}])
@@ -464,30 +464,33 @@ ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/13 Super Cluster Energy Low',
 ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14 Super Cluster Raw Energy Low',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/15 Super Cluster Seed Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/15 Super Cluster Raw Energy High',
+       [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy (high scale)', 'description': 'Energy distribution (raw) of the super clusters (high scale).'}],
+       [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy (high scale)', 'description': 'Energy distribution (raw) of the super clusters (high scale).'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/16 Super Cluster Seed Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/16 Super Cluster R9',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/17 Super Cluster R9',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/17 Super Cluster R9 Raw',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/18 Super Cluster R9 Raw',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/18 Super Cluster R9 Full',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/19 Super Cluster R9 Full',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/19 Super Cluster R9 Full Raw',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/20 Super Cluster R9 Full Raw',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/20 Super Cluster Size',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/21 Super Cluster Size',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'},
 	    {'path': 'EcalBarrel/EBClusterTask/EBCLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/21 Cluster Energy vs Seed Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/22 Cluster Energy vs Seed Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy vs seed crystal energy', 'description': 'Relation between super cluster energy and its seed crystal energy.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy vs seed crystal energy', 'description': 'Relation between super cluster energy and its seed crystal energy.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/22 di-Electron Mass',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/23 di-Electron Mass',
 	   [{'path': 'HLT/ObjectMonitor/MainShifter/di-Electron_Mass', 'description': 'HLT di-electron mass [from HLT DQM].'}])
 
 #____________________ Layouts / 04 Energy / PiZero ____________________

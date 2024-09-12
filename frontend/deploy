@@ -154,9 +154,8 @@ deploy_frontend_post()
   case $host in * ) enable ;; esac
   (mkcrontab | { egrep -v -e '^(PATH|X509_[A-Z_]*)=' || true; }
    echo "@reboot sudo bashs -l -c \"$project_config/manage restart 'I did read documentation'\""
-   echo "13 */3 * * * $project_config/mkvomsmap --key $certs/hostkey.pem" \
-        "--cert $certs/hostcert.pem -c $project_config/mkgridmap.conf" \
-        "-o $PWD/etc/voms-gridmap.txt  $project_auth/gitlab_token.txt ; [ \$? -ne 0 ] && /bin/bash /data/alerts.sh"
+   echo "13 */3 * * * $project_config/mkvomsmap" \
+        "$silent -c $project_config/mkauth.conf -o $PWD/etc/voms-gridmap.txt --cert /etc/robots/robotcert.pem --key /etc/robots/robotkey.pem --ca-cert /etc/ssl/certs/CERN-bundle.pem ; [ \$? -ne 0 ] && /bin/bash /data/alerts.sh"
    case $host in vocms* ) silent= ;; * ) silent= ;; esac
    echo "*/4 * * * * $project_config/mkauthmap" \
         "$silent -c $project_config/mkauth.conf -o $PWD/etc/authmap.json --cert /etc/robots/robotcert.pem --key /etc/robots/robotkey.pem --ca-cert /etc/ssl/certs/CERN-bundle.pem ; [ \$? -ne 0 ] && /bin/bash /data/alerts.sh"
