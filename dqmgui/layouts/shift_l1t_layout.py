@@ -54,3 +54,4 @@ l1tlayout(dqmitems,"24 - Ratio L1TJet BX FirstBunch minus1",
     [{'path': "L1T/L1TObjects/L1TJet/timing/First_bunch/Ratio_L1TJet_BX_FirstBunch_minus1", 'description': "Fraction of L1T Jet objects found in BX -1 over all L1T Jet objects found in a BX range of +/-2 BX around BX 0.", 'draw': { 'withref': "no" }}])
 l1tlayout(dqmitems,"25 - Ratio L1TEGamma ptmin 20p0 gev BX FirstBunch minus1",
     [{'path': "L1T/L1TObjects/L1TEGamma/timing/First_bunch/Ratio_L1TEGamma_ptmin_20p0_gev_BX_FirstBunch_minus1", 'description': "Fraction of L1T EGamma objects with pT >= 20 GeV found in BX -1 over all L1T EGamma objects with pT >= 20 GeV found in a BX range of +/-2 BX around BX 0", 'draw': { 'withref': "no" }}])
+

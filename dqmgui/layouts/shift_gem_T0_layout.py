@@ -66,9 +66,94 @@ GEMLayout(dqmitems, '12 GE11-P-L2 Chamber Efficiency',
           [{'path': 'GEM/Efficiency/muonSTA/eff_chamber_GE11-P-L2',
             'description': _GEM_OFF_TWIKI}])
 
+GEMLayout(dqmitems, '13 GE11-M-L1 Eta Efficiency',
+          [{'path': 'GEM/Efficiency/muonGLB/eff_ieta_GE11-M-L1',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '14 GE11-M-L2 Eta Efficiency',
+          [{'path': 'GEM/Efficiency/muonGLB/eff_ieta_GE11-M-L2',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '15 GE11-P-L1 Eta Efficiency',
+          [{'path': 'GEM/Efficiency/muonGLB/eff_ieta_GE11-P-L1',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '16 GE11-P-L2 Eta Efficiency',
+          [{'path': 'GEM/Efficiency/muonGLB/eff_ieta_GE11-P-L2',
+            'description': _GEM_OFF_TWIKI}])
+
+###############################################################################
+# Residual distribution
+###############################################################################
+
+GEMLayout(dqmitems, '17 GE11-M-E1 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E1',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '18 GE11-M-E2 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E2',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '19 GE11-M-E3 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E3',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '20 GE11-M-E4 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E4',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '21 GE11-M-E5 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E5',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '22 GE11-M-E6 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E6',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '23 GE11-M-E7 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E7',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '24 GE11-M-E8 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-M-E8',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '25 GE11-P-E1 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E1',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '26 GE11-P-E2 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E2',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '27 GE11-P-E3 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E3',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '28 GE11-P-E4 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E4',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '29 GE11-P-E5 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E5',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '30 GE11-P-E6 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E6',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '31 GE11-P-E7 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E7',
+            'description': _GEM_OFF_TWIKI}])
+
+GEMLayout(dqmitems, '32 GE11-P-E8 Residual phi',
+          [{'path': 'GEM/Efficiency/muonGLB/residual_phi_GE11-P-E8',
+            'description': _GEM_OFF_TWIKI}])
+
 ###############################################################################
 # Misc
 ###############################################################################
-GEMLayout(dqmitems, '13 GE21-P-L2 DIGI Occupancy',
+GEMLayout(dqmitems, '33 GE21-P-L2 DIGI Occupancy',
           [{'path': 'GEM/Digis/occ_GE21-P-L2',
             'description': _GEM_OFF_TWIKI}])
+
