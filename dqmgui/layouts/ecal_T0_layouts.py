@@ -97,9 +97,9 @@ ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/02 FE Errors in this LS',
 	   [{'path': 'EcalEndcap/EERawDataTask/EERDT FE synchronization errors by lumi', 'description': 'Total number of synchronization errors (L1A & BX mismatches) between DCC and FE in this lumi section.'},
 	    {'path': 'EcalEndcap/EEStatusFlagsTask/FEStatus/EESFT weighted frontend errors by lumi', 'description': 'Total number of front-ends in error status in this lumi section.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/03 Integrity Summary',
-	   [{'path': 'EcalBarrel/EBSummaryClient/EBIT integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors.'}],
-	   [{'path': 'EcalEndcap/EESummaryClient/EEIT EE - integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors.'},
-	    {'path': 'EcalEndcap/EESummaryClient/EEIT EE + integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors.'}])
+	   [{'path': 'EcalBarrel/EBSummaryClient/EBIT integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors. Also, an entire SuperModule can show red if more than 0.01 of its entries have DCC-SRP or DCC-TCC Desync errors.'}],
+	   [{'path': 'EcalEndcap/EESummaryClient/EEIT EE - integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors. Also, an entire SuperModule can show red if more than 0.01 of its entries have DCC-SRP or DCC-TCC Desync errors.'},
+	    {'path': 'EcalEndcap/EESummaryClient/EEIT EE + integrity quality summary', 'description': 'Summary of the data integrity. A channel is red if more than 0.01 of its entries have integrity errors. Also, an entire SuperModule can show red if more than 0.01 of its entries have DCC-SRP or DCC-TCC Desync errors.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/04 Total Integrity Errors',
 	   [{'path': 'EcalBarrel/EBSummaryClient/EBIT integrity quality errors summary', 'description': 'Total number of integrity errors for each FED.'}],
 	   [{'path': 'EcalEndcap/EESummaryClient/EEIT integrity quality errors summary', 'description': 'Total number of integrity errors for each FED.'}])
@@ -127,6 +127,16 @@ ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/10 FE MEM Status Flags',
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/11 MEM Integrity Errors',
        [{'path': 'Ecal/MEM/IntegrityTask MEMErrors',
          'description': 'Integrity error and error type counter for MEM boxes. Each x-axis tick corresponds to one SuperModule (SM) as indexed by DCC Id and contains two bins corresponding to the MEM boxes (DCC tower Ids = 69, 70). Nominally, this plot should be empty. Mapping from DCC Id to SM name appears below.<br/><pre>01:EE-07  19:EB-10  37:EB+10<br/>02:EE-08  20:EB-11  38:EB+11<br/>03:EE-09  21:EB-12  39:EB+12<br/>04:EE-01  22:EB-13  40:EB+13<br/>05:EE-02  23:EB-14  41:EB+14<br/>06:EE-03  24:EB-15  42:EB+15<br/>07:EE-04  25:EB-16  43:EB+16<br/>08:EE-05  26:EB-17  44:EB+17<br/>09:EE-06  27:EB-18  45:EB+18<br/>10:EB-01  28:EB+01  46:EE+07<br/>11:EB-02  29:EB+02  47:EE+08<br/>12:EB-03  30:EB+03  48:EE+09<br/>13:EB-04  31:EB+04  49:EE+01<br/>14:EB-05  32:EB+05  50:EE+02<br/>15:EB-06  33:EB+06  51:EE+03<br/>16:EB-07  34:EB+07  52:EE+04<br/>17:EB-08  35:EB+08  53:EE+05<br/>18:EB-09  36:EB+09  54:EE+06</pre>'}])
+ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/12 DCC-TCC Desync Trend',
+        [{'path': 'Ecal/Trends/RawDataTask number of EBRDT bunch crossing TCC errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and TCC in EB.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EBRDT L1A TCC errors', 'description': 'Trend of the number of L1A value mismatches between DCC and TCC in EB.'}],
+        [{'path': 'Ecal/Trends/RawDataTask number of EERDT bunch crossing TCC errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and TCC in EE.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EERDT L1A TCC errors', 'description': 'Trend of the number of L1A value mismatches between DCC and TCC in EE.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/13 DCC-SRP Desync Trend',
+        [{'path': 'Ecal/Trends/RawDataTask number of EBRDT bunch crossing SRP errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and SRP in EB.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EBRDT L1A SRP errors', 'description': 'Trend of the number of L1A value mismatches between DCC and SRP in EB'}],
+        [{'path': 'Ecal/Trends/RawDataTask number of EERDT bunch crossing SRP errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and SRP in EE.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EERDT L1A SRP errors', 'description': 'Trend of the number of L1A value mismatches between DCC and SRP in EE'}])
 
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/Desync Errors/00 CRC',
 	   [{'path': 'EcalBarrel/EBRawDataTask/EBRDT CRC errors', 'description': 'Number of CRC errors.'}],
@@ -991,6 +1001,17 @@ ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/08 Timing mean',
 ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/09 Timing rms',
 	   [{'path': 'Ecal/Trends/TimingClient EB timing rms', 'description': 'Trend of timing rms. Plots simple average of all channel timing rms at each lumisection.'}],
 	   [{'path': 'Ecal/Trends/TimingClient EE timing rms', 'description': 'Trend of timing rms. Plots simple average of all channel timing rms at each lumisection.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/10 DCC-TCC Desync Trend',
+        [{'path': 'Ecal/Trends/RawDataTask number of EBRDT bunch crossing TCC errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and TCC in EB.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EBRDT L1A TCC errors', 'description': 'Trend of the number of L1A value mismatches between DCC and TCC in EB.'}],
+        [{'path': 'Ecal/Trends/RawDataTask number of EERDT bunch crossing TCC errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and TCC in EE.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EERDT L1A TCC errors', 'description': 'Trend of the number of L1A value mismatches between DCC and TCC in EE.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/11 DCC-SRP Desync Trend',
+        [{'path': 'Ecal/Trends/RawDataTask number of EBRDT bunch crossing SRP errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and SRP in EB.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EBRDT L1A SRP errors', 'description': 'Trend of the number of L1A value mismatches between DCC and SRP in EB'}],
+        [{'path': 'Ecal/Trends/RawDataTask number of EERDT bunch crossing SRP errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and SRP in EE.'},
+         {'path': 'Ecal/Trends/RawDataTask number of EERDT L1A SRP errors', 'description': 'Trend of the number of L1A value mismatches between DCC and SRP in EE'}])
+
 
 #____________________ Layouts / 12 By SuperModule ____________________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
