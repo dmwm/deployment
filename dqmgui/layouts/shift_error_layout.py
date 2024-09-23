@@ -53,5 +53,8 @@ errorlayout(dqmitems, "12 - HCAL LED Misfires",
   ])
 
 errorlayout(dqmitems, "13 - HCAL Bad CapID rotation",
-  [{'path':"Hcal/DigiTask/CapID/CapID_BadvsLSmod60", 'description': "Bad CapID values vs FED vs LSmod60", 'draw': { 'withref': "no" }}
+  [{'path':"Hcal/DigiTask/CapID/CapID_BadvsLSmod10", 'description': "Bad CapID values vs FED vs LSmod10", 'draw': { 'withref': "no" }}
+  ])
+errorlayout(dqmitems, "14 - HCAL Bad Quality Events",
+  [{'path':"Hcal/RawTask/BadQ_FEDvsLSmod10/BadQ_FEDvsLSmod10", 'description': "Bad Quality Events values vs FED vs LSmod10", 'draw': { 'withref': "no" }}
   ])
