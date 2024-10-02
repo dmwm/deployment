@@ -286,13 +286,13 @@ pixelHeterolayout(dqmitems, "09b - Compare track properties",
    )
 
 pixelHeterolayout(dqmitems, "10 - Track matching phase space",
-    [{ 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/phiztrkAllHost",
+    [{ 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/phiztrkAllReference",
       'description': "phi-z map of CPU tracks(with >= loose quality)",
       'draw': { 'withref': "no" }},
-     { 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/phiztrkAllHostmatched",
+     { 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/phiztrkAllReferencematched",
       'description': "phi-z map of CPU tracks(with >= loose quality) matched to a GPU track",
       'draw': { 'withref': "no" }}],
-   [{ 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/ptetatrkAllHost",
+   [{ 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/ptetatrkAllReference",
       'description': "pt-eta map of CPU tracks(with >= loose quality)",
       'draw': { 'withref': "no", 'drawopts': "COLZ" }},
     { 'path': "SiPixelHeterogeneous/PixelTrackCompareGPUvsCPU/nLooseAndAboveTracks_matched",
@@ -330,7 +330,6 @@ pixelHeterolayout(dqmitems, "12a - Compare vertices",
       'draw': { 'withref': "no" }}]
    )
 
-
 pixelHeterolayout(dqmitems, "12b - Compare vertices",
     [{ 'path': "SiPixelHeterogeneous/PixelVertexCompareGPUvsCPU/vz",
       'description': "Compare vertex z",
@@ -342,5 +341,3 @@ pixelHeterolayout(dqmitems, "12b - Compare vertices",
       'description': "Compare vertex y",
       'draw': { 'withref': "no" }}]
    )
-
-
