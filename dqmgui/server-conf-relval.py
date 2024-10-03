@@ -36,18 +36,13 @@ server.serverDir = STATEDIR
 server.title = "CMS data quality"
 # For convenience, we change the service name, depending on the server:
 hostname = socket.gethostname().lower().split(".")[0]
-server.logFile = (
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    "%s/weblog-%%Y%%m%%d.log" % LOGDIR
-    if hostname in ["vocms0731", "vocms0738", "vocms0739"]
-    else "%s/weblog.log" % LOGDIR
-)
+server.logFile = "%s/weblog.log" % LOGDIR
 # Relval production servers
-if hostname == "vocms0739" or hostname == "vocms0737":
+if hostname == "vocms0737":
     server.serviceName = "RelVal"
     server.baseUrl = "/dqm/relval"
 # Relval test server
-elif hostname == "vocms0731" or hostname == "vocms0730":
+elif hostname == "vocms0730":
     server.serviceName = "RelVal Test"
     server.baseUrl = "/dqm/relval-test"
 # Any local instance of the relval flavor

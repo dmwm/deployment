@@ -22,20 +22,15 @@ server.port = 8080
 server.serverDir = STATEDIR
 # For convenience, we change some config, depending on the server:
 hostname = socket.gethostname().lower().split(".")[0]
-server.logFile = (
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    "%s/weblog-%%Y%%m%%d.log" % LOGDIR
-    if hostname in ["vocms0731", "vocms0738", "vocms0739"]
-    else "%s/weblog.log" % LOGDIR
-)
+server.logFile = "%s/weblog.log" % LOGDIR
 server.title = "CMS data quality"
 
 # Offline production servers
-if hostname == "vocms0738" or hostname == "vocms0736":
+if hostname == "vocms0736":
     server.serviceName = "Offline"
     server.baseUrl = "/dqm/offline"
 # Relval test server
-elif hostname == "vocms0731" or hostname == "vocms0730":
+elif hostname == "vocms0730":
     server.serviceName = "Offline Test"
     server.baseUrl = "/dqm/offline-test"
 # Any local instance of the relval flavor

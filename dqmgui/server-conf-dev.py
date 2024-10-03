@@ -23,12 +23,7 @@ hostname = socket.gethostname().lower().split(".")[0]
 # server.instrument  = 'igprof -d -t python -mp'
 server.port = 8060
 server.serverDir = STATEDIR
-server.logFile = (
-    "%s/weblog-%%Y%%m%%d.log" % LOGDIR
-    if hostname in ["vocms0731", "vocms0738", "vocms0739"]
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    else "%s/weblog.log" % LOGDIR
-)
+server.logFile = "%s/weblog.log" % LOGDIR
 server.baseUrl = "/dqm/dev"
 server.title = "CMS data quality"
 server.serviceName = "CERN Development"
