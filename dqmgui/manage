@@ -84,21 +84,6 @@ case $HOST:$DOMAIN in
 *:cms) FLAVOR=online ;;
 # On the production machines in the CERN network, flavor is based on the
 # machine and they get an alternate user
-vocms0738:*)
-  FLAVOR=offline
-  ALTERNATIVE_USER='cmsweb'
-  _kerberos_init
-  ;;
-vocms0739:*)
-  FLAVOR=relval
-  ALTERNATIVE_USER='cmsweb'
-  _kerberos_init
-  ;;
-vocms0731:*)
-  FLAVOR=offline-relval-testing
-  ALTERNATIVE_USER='cmsweb'
-  _kerberos_init
-  ;;
 vocms0730:*)
   FLAVOR=offline-relval-testing
   _kerberos_init
@@ -240,26 +225,12 @@ startagent() {
   esac
   local logstem=${1}
   shift
-  # Keep old way for vocms machines, until they are updated
-  # TODO: Remove after migration of vocms machines to newer OS
-  case $HOST in
-  vocms0731 | vocms0738 | vocms0739)
-    (
-      [ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
-      set -x
-      date
-      exec "$@"
-    ) </dev/null 2>&1 | rotatelogs $LOGDIR/$logstem-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1 &
-    ;;
-  *)
-    (
-      [ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
-      set -x
-      date
-      exec "$@"
-    ) </dev/null >>$LOGDIR/$logstem-$(hostname -s).log 2>&1 &
-    ;;
-  esac
+  (
+    [ ! -z $edition ] && source $ROOT/apps/dqmgui/$edition/etc/profile.d/env.sh
+    set -x
+    date
+    exec "$@"
+  ) </dev/null >>$LOGDIR/$logstem-$(hostname -s).log 2>&1 &
 }
 
 # Start service conditionally on crond restart.
@@ -324,7 +295,7 @@ start_agents() {
   dqmsrv-c2a06-08-01:*agents*)
     start_agents_dqm_integration
     ;;
-  ##### OFFLINE: offline server vocms0738 (CC7)
+  ##### OFFLINE: offline server
   # The offline server runs
   # - the standard receive and import daemons
   # - the quota and version control daemons
@@ -333,20 +304,20 @@ start_agents() {
   #   online to offline
   # note that the agents to copy zip to castor, verify zip from castor and
   # copy index to castor run as tasks under acron.
-  vocms0738:*agents* | vocms0736:*agents*)
+  vocms0736:*agents*)
     start_agents_offline
     ;;
-  ##### OFFLINE: relval server vocms0739 (CC7)
+  ##### OFFLINE: relval server
   # The Relval server runs
   # - the standard receive and import daemons
   # - the quota and version control daemons
   # - the zip and zipfreeze daemons
   # Note that the agents to copy zip to Castor, verify zip from Castor and
   # copy index to Castor run as tasks under acron.
-  vocms0739:*agents* | vocms0737:*agents*)
+  vocms0737:*agents*)
     start_agents_relval
     ;;
-  ##### OFFLINE: test server vocms0731, vocms0730
+  ##### OFFLINE: test server
   # This server runs 3 gui's in 3 flavors: dev, offline and relval
   # The test server runs
   # - the standard receive and import daemons
@@ -356,7 +327,7 @@ start_agents() {
   # - the acron tasks that do the backups to Castor
   # We also keep a local backup of the index (rsynced by the import
   # daemon).
-  vocms0731:*agents* | vocms0730:*agents*)
+  vocms0730:*agents*)
     start_agents_offline_relval_test
     ;;
   ##### PRIVATE or DEVELOPMENT instances
@@ -369,7 +340,7 @@ start_agents() {
   esac
 }
 
-# Used to be for srv...01, now dqmsrv-c2a06-07-01
+# dqmsrv-c2a06-07-01
 start_agents_dqm_prod_local() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
@@ -416,7 +387,7 @@ start_agents_dqm_prod_offsite() {
     $STATEDIR/online/ix128
 }
 
-# srv...03, now dqmsrv-c2a06-08-01
+# dqmsrv-c2a06-08-01
 start_agents_dqm_integration() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
@@ -447,7 +418,7 @@ start_agents_dqm_test() {
     $STATEDIR/online/ix128
 }
 
-# vocms0738, vocms0736
+# vocms0736
 start_agents_offline() {
   refuseproc "file agents" "visDQMIndex|[^/]zip +|OnlineSync|visDQMCreateInfo" "refusing to restart"
   for D in $CONFIGS; do
@@ -512,7 +483,7 @@ start_agents_offline() {
   done
 }
 
-# vocms0739, vocms0737
+# vocms0737
 start_agents_relval() {
   refuseproc "file agents" "visDQMIndex|[^/]zip +" "refusing to restart"
   for D in $CONFIGS; do
@@ -563,7 +534,7 @@ start_agents_relval() {
   done
 }
 
-# vocms0731, vocms0730
+# vocms0730
 start_agents_offline_relval_test() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   for D in $CONFIGS; do
@@ -687,11 +658,6 @@ start_collector() {
         DQMCollector --listen 9090 </dev/null >>$LOGDIR/$CONFIG/collector-$(hostname -s).log 2>&1 &
       fi
       ;;
-    # "Old" procedure (with rotatelogs) for vocms* machines
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    *:vocms0731*:*collector* | *:vocms0738*:*collector* | *:vocms0739*:*collector*)
-      DQMCollector --listen 8061 </dev/null 2>&1 | rotatelogs $LOGDIR/$CONFIG/collector-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1 &
-      ;;
     # Rest/default: Standard collector:
     online:*:*collector*)
       DQMCollector --listen 9190 </dev/null >>$LOGDIR/$CONFIG/collector-$(hostname -s).log 2>&1 &
@@ -758,16 +724,6 @@ status() {
     statproc "$ME renderer" "visDQMRender"
     ;;
   esac
-  # Now managed by rotatelogs
-  case ${1:-logger} in *logger*)
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    case $HOST in
-    vocms0731 | vocms0738 | vocms0739)
-      statproc "$ME loggers" "rotatelogs"
-      ;;
-    esac
-    ;;
-  esac
 }
 
 # Give details of server components
@@ -790,16 +746,6 @@ detailstatus() {
   # Part of the server are the render processes
   case ${1:-renderer} in *renderer*)
     sdproc "$ME renderer" "visDQMRender"
-    ;;
-  esac
-  # Now managed by rotatelogs
-  case ${1:-logger} in *logger*)
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    case $HOST in
-    vocms0731 | vocms0738 | vocms0739)
-      sdproc "$ME loggers" "rotatelogs"
-      ;;
-    esac
     ;;
   esac
 }
@@ -831,7 +777,7 @@ indexbackup() {
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocms0736:offline | vocms0737:relval)
+    vocms0730:dev | vocms0736:offline | vocms0737:relval)
       CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/ixbackup/$D
       ;;
     *)
@@ -841,23 +787,7 @@ indexbackup() {
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-    vocms0731:offline | vocms0730:offline | vocms0731:relval | vocms0730:relval) ;;
-
-    # Keep "old" procedure in CC7 vocms machines (excl. vocms0730).
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    vocms0731:* | vocms0738:* | vocms0739:*)
-      DQM_DATA=$STATEDIR/$D
-      LOGSTEM=$D/agent-castorindexbackup
-      # Start the process not as an agent, but directly in the current thread.
-      # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
-      # The backup is incremental, but we do a full backup every 50 days.
-      visDQMIndexCastorStager \
-        $DQM_DATA/agents/ixstageout \
-        $DQM_DATA/ix128 \
-        $CASTORDIR \
-        cms-dqm-coreTeam@cern.ch \
-        </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1
-      ;;
+    vocms0730:offline | vocms0730:relval) ;;
     *)
       DQM_DATA=$STATEDIR/$D
       LOGSTEM=$D/agent-castorindexbackup
@@ -884,7 +814,7 @@ zipbackup() {
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocms0736:offline | vocms0737:relval)
+    vocms0730:dev | vocms0736:offline | vocms0737:relval)
       CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
       ;;
     *)
@@ -894,21 +824,7 @@ zipbackup() {
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-    vocms0731:offline | vocms0731:relval | vocms0730:offline | vocms0730:relval) ;;
-    # Keep "old" procedure in vocms machines.
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    vocms0731:* | vocms0738:* | vocms0739:*)
-      DQM_DATA=$STATEDIR/$D
-      LOGSTEM=$D/agent-castorzipbackup
-      # Start the process not as an agent, but directly in the current thread.
-      # It is supposed to be started from/by acrontab on regular intervals (like 15 mins).
-      visDQMZipCastorStager \
-        $DQM_DATA/agents/stageout \
-        $DQM_DATA/zipped \
-        $CASTORDIR \
-        $DQM_DATA/agents/verify \
-        </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1
-      ;;
+    vocms0730:offline | vocms0730:relval) ;;
     *)
       DQM_DATA=$STATEDIR/$D
       LOGSTEM=$D/agent-castorzipbackup
@@ -934,7 +850,7 @@ zipbackupcheck() {
     # Set default CASTOR directory to a testing area. Only the production
     # servers (Offline and Relval and Dev) get the real thing.
     case $HOST:$D in
-    vocms0731:dev | vocms0730:dev | vocms0738:offline | vocms0739:relval | vocms0736:offline | vocms0737:relval)
+    vocms0730:dev | vocms0736:offline | vocms0737:relval)
       CASTORDIR=/eos/cms/store/group/comm_dqm/DQMGUI_Backup/data/$D
       ;;
     *)
@@ -944,23 +860,7 @@ zipbackupcheck() {
     # We run the backup everywhere when the backup method is called,
     # except for the offline and relval flavor on the dev server.
     case $HOST:$D in
-    vocms0731:offline | vocms0731:relval | vocms0730:offline | vocms0730:relval) ;;
-    # TODO: Remove after migration of vocms machines to newer OS (>=RHEL8).
-    vocms0731:* | vocms0738:* | vocms0739:*)
-      DQM_DATA=$STATEDIR/$D
-      LOGSTEM=$D/agent-castorzipbackupcheck
-      # Start the original agent process, however, not as an agent, but directly in the current thread.
-      # The agent was modified in such a way that it exits after each cycle.
-      # It is supposed to be started from/by acrontab.
-      visDQMZipCastorVerifier \
-        $DQM_DATA/agents/verify \
-        cms-dqm-coreTeam@cern.ch \
-        $DQM_DATA/zipped \
-        $CASTORDIR \
-        24 \
-        $DQM_DATA/agents/clean \
-        </dev/null 2>&1 | rotatelogs $LOGDIR/$LOGSTEM-%Y%m%d-$(hostname -s).log 86400 >/dev/null 2>&1
-      ;;
+    vocms0730:offline | vocms0730:relval) ;;
     *)
       DQM_DATA=$STATEDIR/$D
       LOGSTEM=$D/agent-castorzipbackupcheck
