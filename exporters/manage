@@ -217,7 +217,7 @@ start()
             dbs_monitors
             ;;
 
-        vocms0740 | vocms0841 | vocms0846 )
+        vocms0846 )
             couchdb_monitors "workqueue,workqueue_inbox"
             ;;
 
@@ -227,17 +227,17 @@ start()
             wma_monitors
             ;;
 
-        vocms0742 | vocms0842 | vocms0847 )
+        vocms0847 )
             couchdb_monitors "reqmgr_workload_cache,reqmgr_config_cache,acdcserver,reqmgr_auxiliary"
             ;;
 
 
-        vocms0743 | vocms0843 | vocms0848 )
+        vocms0848 )
             couchdb_monitors "wmstats,workloadsummary,wmstats_logdb"
             ;;
 
 
-        vocms0744 | vocms0844 | vocms0849 )
+        vocms0849 )
             couchdb_monitors "tier0_wmstats,t0_workloadsummary,t0_request,t0_logdb"
             ;;
 
@@ -254,25 +254,10 @@ start()
             ;;
 
         vocms0132 )
-            dbs_monitors
-            das2go_monitors
-            mongodb_monitors
             couchdb_monitors "reqmgr_workload_cache,reqmgr_config_cache,acdcserver,tier0_wmstats,t0_workloadsummary,t0_request,t0_logdb,reqmgr_auxiliary"
-            crab_monitors
-            reqmgr2_monitors
             ;;
 
-        vocms0731 )
-            dbs_monitors
-            das2go_monitors
-            mongodb_monitors
-            crab_monitors
-            reqmgr2_monitors
-            reqmgr2ms_monitors
-            wma_monitors
-            ;;
-
-        vocms0745 | vocms0746 )
+        vocms0745 )
             couchdb_monitors "workqueue,workqueue_inbox,wmstats,workloadsummary,wmstats_logdb"
             ;;
 
@@ -339,10 +324,9 @@ status()
         process_status "ms_monitor"
         process_status "ms_output"
         process_status "ms_transferor"
-
         ;;
 
-    vocms0740 | vocms0743 | vocms0744 | vocms0745 | vocms0746 | vocms0841 | vocms0842 | vocms0843 | vocms0844 | vocms0846 | vocms0847 | vocms0848 | vocms0849)
+    vocms0132 | vocms0745 | vocms0846 | vocms0847 | vocms0848 | vocms0849 )
         # couchdb exporter
         process_status "couchdb_exporter"
         ;;
@@ -360,13 +344,10 @@ status()
         process_status "node_exporter"
         ;;
 
-    vocms0132 | vocms0731 )
+    vocms0132 | vocms0745 )
         # process exporter
         process_status "process_exporter"
-        process_status "das2go_exporter"
-        process_status "mongodb_exporter"
         process_status "couchdb_exporter"
-        process_status "cpy_exporter"
         ;;
 
     *)
