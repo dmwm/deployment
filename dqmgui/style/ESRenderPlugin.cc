@@ -81,6 +81,8 @@ bool ESRenderPlugin::applies( const VisDQMObject &o, const VisDQMImgInfo & ) {
       return true;
     if ( o.name.find( "EventInfo" ) != std::string::npos )
       return true;
+    if ( o.name.find( "ByLumiSection" ) != std::string::npos )
+      return true;
   }
 
   return false;
