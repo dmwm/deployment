@@ -222,7 +222,6 @@ server.workspace('DQMContent', 22, 'Tracker', 'SiPixelHeterogeneous', '^SiPixelH
                  'SiPixelHeterogeneous/Layouts/11 - Differences in track properties',
                  'SiPixelHeterogeneous/Layouts/12a - Compare vertices',
                  'SiPixelHeterogeneous/Layouts/12b - Compare vertices',
-                 'SiPixelHeterogeneous/Layouts/12c - Differences in vertex properties',
                 )
 
 # Calorimeter workspaces:
