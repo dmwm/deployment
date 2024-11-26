@@ -441,66 +441,85 @@ ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/04 Basic Cluster Energy EE +',
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC energy map EE +', 'description': '2D distribution of the mean energy of the basic clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC energy projection eta EE +', 'description': 'Projection of the mean energy of the basic clusters.'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC energy projection phi EE +', 'description': 'Projection of the mean energy of the basic clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/05 Basic Cluster Size EB',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/05 Basic Cluster Energy Transverse',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC transverse energy map', 'description': '2D distribution of the mean transverse energy of the basic clusters.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC transverse energy map EE +', 'description': '2D distribution of the mean transverse energy of the basic clusters.'},
+	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC transverse energy map EE -', 'description': '2D distribution of the mean transverse energy of the basic clusters.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/06 Basic Cluster Size EB',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size map', 'description': '2D distribution of the mean number of crystals in basic clusters.'}],
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size projection eta', 'description': 'Eta-projection of the number of crystals in basic clusters.'},
 	    {'path': 'EcalBarrel/EBClusterTask/EBCLT BC size projection phi', 'description': 'Phi-projection of the number of crystals in basic clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/06 Basic Cluster Size EE -',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/07 Basic Cluster Size EE -',
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size map EE -', 'description': '2D distribution of the mean number of crystals in basic clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection eta EE -', 'description': 'Eta-rojection of the number of crystals in basic clusters.'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection phi EE -', 'description': 'Phi-projection of the number of crystals in basic clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/07 Basic Cluster Size EE +',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/08 Basic Cluster Size EE +',
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size map EE +', 'description': '2D distribution of the mean number of crystals in basic clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection eta EE +', 'description': 'Eta-projection of the number of crystals in basic clusters.'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT BC size projection phi EE +', 'description': 'Phi-projection of the number of crystals in basic clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/08 Basic Cluster Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/09 Basic Cluster Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC energy', 'description': 'Basic cluster energy distribution.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC energy', 'description': 'Basic cluster energy distribution.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/09 Basic Cluster Size',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/10 Basic Cluster Transverse Energy',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC transverse energy', 'description': 'Basic cluster transverse energy distribution.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC transverse energy', 'description': 'Basic cluster transverse energy distribution.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/11 Basic Cluster Size',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC size', 'description': 'Distribution of the number of crystals in basic clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT BC size', 'description': 'Distribution of the number of crystals in basic clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/10 Basic Cluster Size Trend',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/12 Basic Cluster Size Trend',
 	   [{'path': 'Ecal/Trends/ClusterTask EB size of basic clusters', 'description': 'Trend of the mean size of the basic clusters.'}],
 	   [{'path': 'Ecal/Trends/ClusterTask EE size of basic clusters', 'description': 'Trend of the mean size of the basic clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/11 Super Cluster Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/13 Super Cluster Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy', 'description': 'Super cluster energy distribution.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy', 'description': 'Super cluster energy distribution.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/12 Super Cluster Raw Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14 Super Cluster Transverse Energy',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC transverse energy', 'description': 'Super cluster transverse energy distribution.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC transverse energy', 'description': 'Super cluster transverse energy distribution.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/15 Super Cluster Raw Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy', 'description': 'Super cluster raw energy distribution.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy', 'description': 'Super cluster raw energy distribution.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/13 Super Cluster Energy Low',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/16 Super Cluster Raw Transverse Energy',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw transverse energy', 'description': 'Super cluster raw transverse energy distribution.'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw transverse energy', 'description': 'Super cluster raw transverse energy distribution.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/17 Super Cluster Energy Low',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy (low scale)', 'description': 'Energy distribution of the super clusters (low scale).'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy (low scale)', 'description': 'Energy distribution of the super clusters (low scale).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/14 Super Cluster Raw Energy Low',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/18 Super Cluster Transverse Energy Low',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC transverse energy (low scale)', 'description': 'Transverse energy distribution of the super clusters (low scale).'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC transverse energy (low scale)', 'description': 'Transverse energy distribution of the super clusters (low scale).'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/19 Super Cluster Raw Energy Low',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy (low scale)', 'description': 'Energy distribution (raw) of the super clusters (low scale).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/15 Super Cluster Raw Energy High',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/20 Super Cluster Raw Transverse Energy Low',
+	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw transverse energy (low scale)', 'description': 'Transverse energy distribution (raw) of the super clusters (low scale).'}],
+	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw transverse energy (low scale)', 'description': 'Transverse energy distribution (raw) of the super clusters (low scale).'}])
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/21 Super Cluster Raw Energy High',
        [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC raw energy (high scale)', 'description': 'Energy distribution (raw) of the super clusters (high scale).'}],
        [{'path': 'EcalEndcap/EEClusterTask/EECLT SC raw energy (high scale)', 'description': 'Energy distribution (raw) of the super clusters (high scale).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/16 Super Cluster Seed Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/22 Super Cluster Seed Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC seed crystal energy', 'description': 'Energy distribution of the crystals that seeded super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/17 Super Cluster R9',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/23 Super Cluster R9',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/18 Super Cluster R9 Raw',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/24 Super Cluster R9 Raw',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/19 Super Cluster R9 Full',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/25 Super Cluster R9 Full',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/20 Super Cluster R9 Full Raw',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/26 Super Cluster R9 Full Raw',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC R9 Full Raw', 'description': 'Distribution of E_seed / E_3x3 of the super clusters.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/21 Super Cluster Size',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/27 Super Cluster Size',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'},
 	    {'path': 'EcalBarrel/EBClusterTask/EBCLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC size', 'description': 'Distribution of the super cluster size (number of basic clusters)'},
 	    {'path': 'EcalEndcap/EEClusterTask/EECLT SC size (crystal)', 'description': 'Distribution of the super cluster size (number of crystals).'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/22 Cluster Energy vs Seed Energy',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/28 Cluster Energy vs Seed Energy',
 	   [{'path': 'EcalBarrel/EBClusterTask/EBCLT SC energy vs seed crystal energy', 'description': 'Relation between super cluster energy and its seed crystal energy.'}],
 	   [{'path': 'EcalEndcap/EEClusterTask/EECLT SC energy vs seed crystal energy', 'description': 'Relation between super cluster energy and its seed crystal energy.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/23 di-Electron Mass',
+ecallayout(dqmitems, 'Ecal/Layouts/04 Energy/29 di-Electron Mass',
 	   [{'path': 'HLT/ObjectMonitor/MainShifter/di-Electron_Mass', 'description': 'HLT di-electron mass [from HLT DQM].'}])
 
 #____________________ Layouts / 04 Energy / PiZero ____________________
