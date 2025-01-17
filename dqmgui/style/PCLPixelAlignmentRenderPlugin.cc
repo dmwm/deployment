@@ -40,7 +40,7 @@ public:
     c->cd();
 
     // Check if HG alignment is used
-    bool isHG = (o.name.find( "SiPixelAliHG" ) != std::string::npos);
+    bool isHG = ((o.name.find( "SiPixelAliHG" ) != std::string::npos) || (o.name.find( "SiPixelAliHLTHG" ) != std::string::npos));
 
 
     if( dynamic_cast<TH1F*>( o.object ) )
@@ -115,7 +115,7 @@ public:
     }
 
     // Check if HG alignment is used
-    bool isHG = (o.name.find( "SiPixelAliHG" ) != std::string::npos);
+    bool isHG = ((o.name.find( "SiPixelAliHG" ) != std::string::npos) || (o.name.find( "SiPixelAliHLTHG" ) != std::string::npos));
 
     if( dynamic_cast<TH1F*>( o.object ) )
     {
