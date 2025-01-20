@@ -78,7 +78,7 @@ data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.limitRequestsPerCycle = 500
 # Allows or not some alert notifications to be sent to the production-admin egroup
 data.sendNotification = SEND_NOTIFICATION
-data.verbose = True
+data.verbose = False
 data.interval = 60 * 60 * 1  # run it every hour
 data.services = ['output']
 data.enableDataPlacement = ENABLE_DATA_PLACEMENT
