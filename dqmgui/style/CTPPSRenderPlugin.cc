@@ -27,6 +27,8 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 
 			if (dynamic_cast<TH1F*>(o.object))
 				preDrawTH1F(c, o);
+			if (dynamic_cast<TProfile*>(o.object))
+				preDrawTProfile(c, o);
 
 			if (dynamic_cast<TH2F*>(o.object))
 				preDrawTH2F(c, o);
@@ -40,6 +42,8 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 			
 			if (dynamic_cast<TH1F*>(o.object))
 				postDrawTH1F(c, o);
+			if (dynamic_cast<TProfile*>(o.object))
+				postDrawTProfile(c, o);
 
 			if (dynamic_cast<TH2F*>(o.object))
 				postDrawTH2F(c, o);
@@ -63,6 +67,16 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 				obj->SetLineColor(2);
 
 			obj->SetLineWidth(2);
+		}
+
+		void preDrawTProfile(TCanvas *, const VisDQMObject &o)
+		{
+			TH1F* obj = dynamic_cast<TProfile*>(o.object);
+			assert(obj);
+
+			obj->SetLineWidth(2);
+			gStyle->SetOptStat(0);
+			obj->SetStats(kFALSE);
 		}
 
 		void preDrawTH2F(TCanvas *, const VisDQMObject &o)
@@ -92,6 +106,11 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 		void postDrawTH1F(TCanvas *c, const VisDQMObject &)
 		{
 			c->SetGridx();
+			c->SetGridy();
+		}
+
+		void postDrawTProfile(TCanvas *c, const VisDQMObject &)
+		{
 			c->SetGridy();
 		}
 
