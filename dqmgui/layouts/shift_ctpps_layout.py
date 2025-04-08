@@ -56,6 +56,19 @@ for sector in sectors:
 
   CTPPSCommonLayout(dqmitems, "Pixel ROC hits vs LS "+sector, *rows)
 
+
+# RP state per LS plot
+rows = list()
+row = list()
+row.append("CTPPS/common/rpstate per LS")
+rows.append(row)
+CTPPSCommonLayout(dqmitems, "RP state per LS", *rows)
+
+
+###
+# 	CTPPS Strips
+###
+
 # layouts with no overlays
 for plot in [ "active planes", "vfats with any problem", "track XY profile" ]:
   rows = list()
@@ -96,7 +109,7 @@ for suffix in [ " (short)" ]:
 # 	CTPPS Pixel
 ###
 
-for plot in ["number of fired planes per event","ROCs hits multiplicity per event"]:
+for plot in ["number of fired planes per event"]:
   rows = list()
   row = list()
   for station in pixelstations:
@@ -137,10 +150,10 @@ diamond_stations = [ "sector 45/station 220cyl/cyl_hr", "sector 45/station 220/n
 def CTPPSTimingDiamondLayout(i, p, *rows): i["00 Shift/CTPPS/TimingDiamond/" + p] = DQMItem(layout=rows)
 
 # layouts with no overlays
-TimingPlots = [ "active planes", "event category", "leading edge (le and te)", "time over threshold", "hits in planes", "hits in planes lumisection", "HPTDC Errors" ]
-TimingDrawOpt = [ {'xmax':"10"}, {'drawopts':"colztext"}, {'xmax':"25"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'drawopts':"colztext"} ]
+TimingPlots = [ "active planes", "event category", "time over threshold", "hits in planes", "hits in planes lumisection", "HPTDC Errors" ]
+TimingDrawOpt = [ {'xmax':"10"}, {'drawopts':"colztext"}, {'xmin':"0", 'xmax':"25"}, {'withref':"no"}, {'withref':"no"}, {'drawopts':"colztext"} ]
 TimingDescription = [ "It should be with peaks at 0 and 4", 'Most of the event should be in "both"',
-    "It should be peaked around 5 ns", "It should be a broad distribution peaked around 12 ns",
+    "It should be a broad distribution peaked around 12 ns",
     "It should be full", 'It should be similar to "hits in planes"', "It should be empty" ]
 
 for i in range(len(TimingPlots)):
@@ -153,14 +166,3 @@ for i in range(len(TimingPlots)):
 
   CTPPSTimingDiamondLayout(dqmitems, TimingPlots[i], *rows)
 
-
-# Efficiency display for all planes
-rows = list()
-for station in diamond_stations:
-  row = list()
-  for plane in range(4):
-    hist_lead = "CTPPS/TimingDiamond/"+station+"/plane {plane_id}/Efficiency wrt pixels".format(plane_id=plane)
-    row.append( { "path": hist_lead, 'draw':{'drawopts':"colz"}, 'description':"It should have most of the bins to 1 or 0 outside the sensor" } )
-  rows.append(row)
-
-  CTPPSTimingDiamondLayout(dqmitems, "efficiency", *rows)
