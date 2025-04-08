@@ -95,21 +95,8 @@ for suffix in [ " (short)" ]:
 ###
 # 	CTPPS Pixel
 ###
-for plot in ["hit multiplicity in planes"]:
-  rows = list()
-  row = list()
-  for station in pixelstations:
-    row.append("CTPPS/TrackingPixel/sector 45/"+station+"/fr_hr/"+plot)
-  rows.append(row)
 
-  row = list()
-  for station in pixelstations:
-    row.append("CTPPS/TrackingPixel/sector 56/"+station+"/fr_hr/"+plot)
-  rows.append(row)
-
-  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
-
-for plot in ["number of fired planes per event","ROCs hits multiplicity per event","track intercept point","number of tracks per event","Error Code"]:
+for plot in ["number of fired planes per event","ROCs hits multiplicity per event"]:
   rows = list()
   row = list()
   for station in pixelstations:
@@ -119,24 +106,6 @@ for plot in ["number of fired planes per event","ROCs hits multiplicity per even
   row = list()
   for station in pixelstations:
     row.append("CTPPS/TrackingPixel/sector 56/"+station+"/fr_hr/"+plot)
-  rows.append(row)
-
-  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
-
-for sector in sectors:
-  rows = list()
-  for station in pixelstations:
-    row = list()
-    row.append("CTPPS/TrackingPixel/"+sector+"/"+station+"/fr_hr/"+
-        "ROCs hits multiplicity per event vs LS")
-    rows.append(row)
-
-  CTPPSTrackingPixelLayout(dqmitems, "ROC hits vs LS "+sector, *rows)
-
-for plot in ["Pixel planes activity"]:
-  rows = list()
-  row = list()
-  row.append("CTPPS/TrackingPixel/"+plot)
   rows.append(row)
 
   CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
@@ -158,16 +127,6 @@ for plot in ["hits position"]:
       rows.append(row)
 
       CTPPSTrackingPixelLayout(dqmitems, plot+":" +sector+" "+station+" fr_hr", *rows)
-
-for plot in ["Errors in FED"]:
-  rows = list()
-  for fed in pix_feds:
-    row = list()
-    row.append("CTPPS/TrackingPixel/Errors in FED"+fed)
-    rows.append(row)
-
-  CTPPSTrackingPixelLayout(dqmitems, plot, *rows)
-
 
 ####################################################################################################
 # Diamond layouts
