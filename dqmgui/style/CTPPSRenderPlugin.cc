@@ -1,6 +1,7 @@
 #include "DQM/DQMRenderPlugin.h"
 
 #include "TH1F.h"
+#include "TProfile.h"
 #include "TH2F.h"
 #include "TCanvas.h"
 #include "TStyle.h"
@@ -71,7 +72,7 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 
 		void preDrawTProfile(TCanvas *, const VisDQMObject &o)
 		{
-			TH1F* obj = dynamic_cast<TProfile*>(o.object);
+			TProfile* obj = dynamic_cast<TProfile*>(o.object);
 			assert(obj);
 
 			obj->SetLineWidth(2);
