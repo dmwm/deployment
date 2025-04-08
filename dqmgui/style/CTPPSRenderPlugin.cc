@@ -100,7 +100,10 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 			gStyle->SetOptStat(0);
 			obj->SetStats(kFALSE);
 			gStyle->SetPalette(1);
-			if(o.name.find("ROCs hits multiplicity per event vs LS") != std::string::npos)
+			if(
+				(o.name.find("ROCs hits multiplicity per event vs LS") != std::string::npos) ||
+				(o.name.find("track intercept point") != std::string::npos)
+		)
 			  gPad->SetLogz(1);
 		}
 
