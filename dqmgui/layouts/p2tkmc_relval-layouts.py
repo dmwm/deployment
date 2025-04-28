@@ -119,61 +119,61 @@ phase2tkmclayout(dqmitems, "09 - IT Cluster Endcap PLUS FPix Y",
                  )
 
 phase2tkmclayout(dqmitems, "10 - IT RecHit Barrel Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer1/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer1/Delta_Y_vs_Delta_X",
                    'description': "Layer 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer2/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer2/Delta_Y_vs_Delta_X",
                    'description': "Layer 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer3/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer3/Delta_Y_vs_Delta_X",
                    'description': "Layer 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer4/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer4/Delta_Y_vs_Delta_X",
                    'description': "Layer 4 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "11 - IT RecHit Endcap MINUS EPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring1/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring1/Delta_Y_vs_Delta_X",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring2/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring2/Delta_Y_vs_Delta_X",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring3/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring3/Delta_Y_vs_Delta_X",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring4/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring4/Delta_Y_vs_Delta_X",
                    'description': "Ring 4 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring5/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring5/Delta_Y_vs_Delta_X",
                    'description': "Ring 5 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "12 - IT RecHit Endcap MINUS FPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring1/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring1/Delta_Y_vs_Delta_X",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring2/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring2/Delta_Y_vs_Delta_X",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring3/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring3/Delta_Y_vs_Delta_X",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring4/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring4/Delta_Y_vs_Delta_X",
                    'description': "Ring 4 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "13 - IT RecHit Endcap PLUS EPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring1/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring1/Delta_Y_vs_Delta_X",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring2/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring2/Delta_Y_vs_Delta_X",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring3/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring3/Delta_Y_vs_Delta_X",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring4/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring4/Delta_Y_vs_Delta_X",
                    'description': "Ring 4 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring5/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring5/Delta_Y_vs_Delta_X",
                    'description': "Ring 5 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "14 - IT RecHit Endcap PLUS FPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring1/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring1/Delta_Y_vs_Delta_X",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring2/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring2/Delta_Y_vs_Delta_X",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring3/Delta_Y_V_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring3/Delta_Y_vs_Delta_X",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring4/Delta_Y_V_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring4/Delta_Y_vs_Delta_X",
                    'description': "Ring 4 Delta Y v Delta X"}]
                  )
 
@@ -301,9 +301,7 @@ phase2tkmclayout(dqmitems, "30 - OT Cluster Barrel Pixel X",
                   {'path':"TrackerPhase2OTClusterV/Barrel/Layer2/Delta_X_Pixel",
                    'description': "Layer 2 Delta X Pixel"}],
                  [{'path':"TrackerPhase2OTClusterV/Barrel/Layer3/Delta_X_Pixel",
-                   'description': "Layer 3 Delta X Pixel"},
-                  {'path':"TrackerPhase2OTClusterV/Barrel/Layer4/Delta_X_Pixel",
-                   'description': "Layer 4 Delta X Pixel"}]
+                   'description': "Layer 3 Delta X Pixel"}]
                  )
 
 phase2tkmclayout(dqmitems, "31 - OT Cluster Barrel Pixel Y",
@@ -312,9 +310,7 @@ phase2tkmclayout(dqmitems, "31 - OT Cluster Barrel Pixel Y",
                   {'path':"TrackerPhase2OTClusterV/Barrel/Layer2/Delta_Y_Pixel",
                    'description': "Layer 2 Delta Y Pixel"}],
                  [{'path':"TrackerPhase2OTClusterV/Barrel/Layer3/Delta_Y_Pixel",
-                   'description': "Layer 3 Delta Y Pixel"},
-                  {'path':"TrackerPhase2OTClusterV/Barrel/Layer4/Delta_Y_Pixel",
-                   'description': "Layer 4 Delta Y Pixel"}]
+                   'description': "Layer 3 Delta Y Pixel"}]
                  )
 
 phase2tkmclayout(dqmitems, "32 - OT Cluster Barrel Strip X",
@@ -481,9 +477,7 @@ phase2tkmclayout(dqmitems, "50 - OT RecHit Barrel Pixel X",
                   {'path':"TrackerPhase2OTRecHitV/Barrel/Layer2/Delta_X_Pixel",
                    'description': "Layer 2 Delta X Pixel"}],
                  [{'path':"TrackerPhase2OTRecHitV/Barrel/Layer3/Delta_X_Pixel",
-                   'description': "Layer 3 Delta X Pixel"},
-                  {'path':"TrackerPhase2OTRecHitV/Barrel/Layer4/Delta_X_Pixel",
-                   'description': "Layer 4 Delta X Pixel"}]
+                   'description': "Layer 3 Delta X Pixel"}]
                  )
 
 phase2tkmclayout(dqmitems, "51 - OT RecHit Barrel Pixel Y",
@@ -492,9 +486,7 @@ phase2tkmclayout(dqmitems, "51 - OT RecHit Barrel Pixel Y",
                   {'path':"TrackerPhase2OTRecHitV/Barrel/Layer2/Delta_Y_Pixel",
                    'description': "Layer 2 Delta Y Pixel"}],
                  [{'path':"TrackerPhase2OTRecHitV/Barrel/Layer3/Delta_Y_Pixel",
-                   'description': "Layer 3 Delta Y Pixel"},
-                  {'path':"TrackerPhase2OTRecHitV/Barrel/Layer4/Delta_Y_Pixel",
-                   'description': "Layer 4 Delta Y Pixel"}]
+                   'description': "Layer 3 Delta Y Pixel"}]
                  )
 
 phase2tkmclayout(dqmitems, "52 - OT RecHit Barrel Strip X",
