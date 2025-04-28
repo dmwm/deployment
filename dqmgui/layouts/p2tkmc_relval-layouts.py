@@ -119,61 +119,61 @@ phase2tkmclayout(dqmitems, "09 - IT Cluster Endcap PLUS FPix Y",
                  )
 
 phase2tkmclayout(dqmitems, "10 - IT RecHit Barrel Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer1/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer1/Delta_Y_vs_DeltaX",
                    'description': "Layer 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer2/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer2/Delta_Y_vs_DeltaX",
                    'description': "Layer 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer3/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/Barrel/Layer3/Delta_Y_vs_DeltaX",
                    'description': "Layer 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer4/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/Barrel/Layer4/Delta_Y_vs_DeltaX",
                    'description': "Layer 4 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "11 - IT RecHit Endcap MINUS EPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring1/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring1/Delta_Y_vs_DeltaX",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring2/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring2/Delta_Y_vs_DeltaX",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring3/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring3/Delta_Y_vs_DeltaX",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring4/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring4/Delta_Y_vs_DeltaX",
                    'description': "Ring 4 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring5/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/EPix/Ring5/Delta_Y_vs_DeltaX",
                    'description': "Ring 5 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "12 - IT RecHit Endcap MINUS FPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring1/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring1/Delta_Y_vs_DeltaX",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring2/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring2/Delta_Y_vs_DeltaX",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring3/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring3/Delta_Y_vs_DeltaX",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring4/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side1/FPix/Ring4/Delta_Y_vs_DeltaX",
                    'description': "Ring 4 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "13 - IT RecHit Endcap PLUS EPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring1/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring1/Delta_Y_vs_DeltaX",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring2/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring2/Delta_Y_vs_DeltaX",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring3/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring3/Delta_Y_vs_DeltaX",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring4/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring4/Delta_Y_vs_DeltaX",
                    'description': "Ring 4 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring5/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/EPix/Ring5/Delta_Y_vs_DeltaX",
                    'description': "Ring 5 Delta Y v Delta X"}]
                  )
 
 phase2tkmclayout(dqmitems, "14 - IT RecHit Endcap PLUS FPix Delta Y v Delta X",
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring1/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring1/Delta_Y_vs_DeltaX",
                    'description': "Ring 1 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring2/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring2/Delta_Y_vs_DeltaX",
                    'description': "Ring 2 Delta Y v Delta X"}],
-                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring3/Delta_Y_vs_Delta_X",
+                 [{'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring3/Delta_Y_vs_DeltaX",
                    'description': "Ring 3 Delta Y v Delta X"},
-                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring4/Delta_Y_vs_Delta_X",
+                  {'path':"TrackerPhase2ITRecHitV/EndCap_Side2/FPix/Ring4/Delta_Y_vs_DeltaX",
                    'description': "Ring 4 Delta Y v Delta X"}]
                  )
 
@@ -388,30 +388,30 @@ phase2tkmclayout(dqmitems, "37 - OT Cluster Endcap PLUS TEDD2 Pixel and Strip XY
                  )
 
 phase2tkmclayout(dqmitems, "40 - OT L1Track Eta Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/EtaEfficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/FinalResolution/EtaResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/EtaResolution",
                    'description': "Eta Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "41 - OT L1Track Phi Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/PhiEfficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/PhiEfficiency",
                    'description': "Phi Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/FinalResolution/PhiResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/PhiResolution",
                    'description': "Phi Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "42 - OT L1Track VtxZ Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/VtxZEfficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/VtxZEfficiency",
                    'description': "VtxZ Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/FinalResolution/VtxZResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/VtxZResolution",
                    'description': "VtxZ Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "43 - OT L1Track d0 Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/d0Efficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/d0Efficiency",
                    'description': "d0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/FinalResolution/d0Resolution",
+                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/d0Resolution",
                    'description': "d0 Resolution"}]
                  )
 
