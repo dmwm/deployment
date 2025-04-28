@@ -388,30 +388,30 @@ phase2tkmclayout(dqmitems, "37 - OT Cluster Endcap PLUS TEDD2 Pixel and Strip XY
                  )
 
 phase2tkmclayout(dqmitems, "40 - OT L1Track Eta Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/EtaEfficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/EtaResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/EtaResolution",
                    'description': "Eta Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "41 - OT L1Track Phi Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/PhiEfficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/PhiEfficiency",
                    'description': "Phi Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/PhiResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/PhiResolution",
                    'description': "Phi Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "42 - OT L1Track VtxZ Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/VtxZEfficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/VtxZEfficiency",
                    'description': "VtxZ Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/VtxZResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/VtxZResolution",
                    'description': "VtxZ Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "43 - OT L1Track d0 Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalEfficiency/d0Efficiency",
+                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/d0Efficiency",
                    'description': "d0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/NominalL1TF/FinalResolution/d0Resolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/d0Resolution",
                    'description': "d0 Resolution"}]
                  )
 
