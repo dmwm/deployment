@@ -401,11 +401,11 @@ phase2tkmclayout(dqmitems, "41 - OT L1Track Phi Efficiency and Resolution",
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "42 - OT L1Track VtxZ Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/VtxZEfficiency",
-                   'description': "VtxZ Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/VtxZResolution",
-                   'description': "VtxZ Resolution"}]
+phase2tkmclayout(dqmitems, "42 - OT L1Track Lxy Efficiency and Resolution",
+                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/LxyEfficiency",
+                   'description': "Lxy Efficiency"},
+                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/LxyResolution",
+                   'description': "Lxy Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "43 - OT L1Track d0 Efficiency and Resolution",
@@ -429,11 +429,11 @@ phase2tkmclayout(dqmitems, "45 - OT Extended L1Track Displaced Phi Efficiency an
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "46 - OT Extended L1Track Displaced VtxZ Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/VtxZEfficiency",
-                   'description': "VtxZ Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/VtxZResolution",
-                   'description': "VtxZ Resolution"}]
+phase2tkmclayout(dqmitems, "46 - OT Extended L1Track Displaced Lxy Efficiency and Resolution",
+                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/LxyEfficiency",
+                   'description': "Lxy Efficiency"},
+                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/LxyResolution",
+                   'description': "Lxy Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "47 - OT Extended L1Track Displaced d0 Efficiency and Resolution",
@@ -457,11 +457,11 @@ phase2tkmclayout(dqmitems, "49 - OT Extended L1Track Prompt Phi Efficiency and R
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "410 - OT Extended L1Track Prompt VtxZ Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/VtxZEfficiency",
-                   'description': "VtxZ Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/VtxZResolution",
-                   'description': "VtxZ Resolution"}]
+phase2tkmclayout(dqmitems, "410 - OT Extended L1Track Prompt Lxy Efficiency and Resolution",
+                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/LxyEfficiency",
+                   'description': "Lxy Efficiency"},
+                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/LxyResolution",
+                   'description': "Lxy Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "411 - OT Extended L1Track Prompt d0 Efficiency and Resolution",
