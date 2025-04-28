@@ -343,7 +343,7 @@ phase2tkmclayout(dqmitems, "33 - OT Cluster Barrel Strip Y",
                    'description': "Layer 6 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "34 - OT Cluster Endcap MINUS TEDD1 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "34 - OT Cluster Endcap MINUS TEDD1 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTClusterV/EndCap_Side1/TEDD_1/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTClusterV/EndCap_Side1/TEDD_1/Ring1/Delta_Y_Pixel",
@@ -354,7 +354,7 @@ phase2tkmclayout(dqmitems, "34 - OT Cluster Endcap MINUS TEDD1 Pixel/StripXY",
                    'description': "Ring 1 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "35 - OT Cluster Endcap MINUS TEDD2 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "35 - OT Cluster Endcap MINUS TEDD2 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTClusterV/EndCap_Side1/TEDD_2/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTClusterV/EndCap_Side1/TEDD_2/Ring1/Delta_Y_Pixel",
@@ -365,7 +365,7 @@ phase2tkmclayout(dqmitems, "35 - OT Cluster Endcap MINUS TEDD2 Pixel/StripXY",
                    'description': "Ring 1 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "36 - OT Cluster Endcap PLUS TEDD1 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "36 - OT Cluster Endcap PLUS TEDD1 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTClusterV/EndCap_Side2/TEDD_1/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTClusterV/EndCap_Side2/TEDD_1/Ring1/Delta_Y_Pixel",
@@ -376,7 +376,7 @@ phase2tkmclayout(dqmitems, "36 - OT Cluster Endcap PLUS TEDD1 Pixel/StripXY",
                    'description': "Ring 1 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "37 - OT Cluster Endcap PLUS TEDD2 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "37 - OT Cluster Endcap PLUS TEDD2 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTClusterV/EndCap_Side2/TEDD_2/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTClusterV/EndCap_Side2/TEDD_2/Ring1/Delta_Y_Pixel",
@@ -387,84 +387,84 @@ phase2tkmclayout(dqmitems, "37 - OT Cluster Endcap PLUS TEDD2 Pixel/StripXY",
                    'description': "Ring 1 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "40 - OT L1Track Eta Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "40 - OT L1Track Eta Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/FinalResolution/EtaResolution",
                    'description': "Eta Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "41 - OT L1Track Phi Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "41 - OT L1Track Phi Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/PhiEfficiency",
                    'description': "Phi Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/FinalResolution/PhiResolution",
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "42 - OT L1Track VtxZ Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "42 - OT L1Track VtxZ Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/VtxZEfficiency",
                    'description': "VtxZ Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/FinalResolution/VtxZResolution",
                    'description': "VtxZ Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "43 - OT L1Track d0 Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "43 - OT L1Track d0 Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/FinalEfficiency/d0Efficiency",
                    'description': "d0 Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/FinalResolution/d0Resolution",
                    'description': "d0 Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "44 - OT Extended L1Track Displaced Eta Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "44 - OT Extended L1Track Displaced Eta Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/EtaResolution",
                    'description': "Eta Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "45 - OT Extended L1Track Displaced Phi Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "45 - OT Extended L1Track Displaced Phi Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/PhiEfficiency",
                    'description': "Phi Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/PhiResolution",
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "46 - OT Extended L1Track Displaced VtxZ Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "46 - OT Extended L1Track Displaced VtxZ Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/VtxZEfficiency",
                    'description': "VtxZ Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/VtxZResolution",
                    'description': "VtxZ Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "47 - OT Extended L1Track Displaced d0 Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "47 - OT Extended L1Track Displaced d0 Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/d0Efficiency",
                    'description': "d0 Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/d0Resolution",
                    'description': "d0 Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "48 - OT Extended L1Track Prompt Eta Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "48 - OT Extended L1Track Prompt Eta Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/EtaResolution",
                    'description': "Eta Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "49 - OT Extended L1Track Prompt Phi Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "49 - OT Extended L1Track Prompt Phi Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/PhiEfficiency",
                    'description': "Phi Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/PhiResolution",
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "410 - OT Extended L1Track Prompt VtxZ Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "410 - OT Extended L1Track Prompt VtxZ Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/VtxZEfficiency",
                    'description': "VtxZ Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/VtxZResolution",
                    'description': "VtxZ Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "411 - OT Extended L1Track Prompt d0 Efficiency/Resolution",
+phase2tkmclayout(dqmitems, "411 - OT Extended L1Track Prompt d0 Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/d0Efficiency",
                    'description': "d0 Efficiency"},
                   {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/d0Resolution",
@@ -519,7 +519,7 @@ phase2tkmclayout(dqmitems, "53 - OT RecHit Barrel Strip Y",
                    'description': "Layer 6 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "54 - OT RecHit Endcap MINUS TEDD1 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "54 - OT RecHit Endcap MINUS TEDD1 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTRecHitV/EndCap_Side1/TEDD_1/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTRecHitV/EndCap_Side1/TEDD_1/Ring1/Delta_Y_Pixel",
@@ -530,7 +530,7 @@ phase2tkmclayout(dqmitems, "54 - OT RecHit Endcap MINUS TEDD1 Pixel/StripXY",
                    'description': "Ring 1 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "55 - OT RecHit Endcap MINUS TEDD2 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "55 - OT RecHit Endcap MINUS TEDD2 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTRecHitV/EndCap_Side1/TEDD_2/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTRecHitV/EndCap_Side1/TEDD_2/Ring1/Delta_Y_Pixel",
@@ -541,7 +541,7 @@ phase2tkmclayout(dqmitems, "55 - OT RecHit Endcap MINUS TEDD2 Pixel/StripXY",
                    'description': "Ring 1 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "56 - OT RecHit Endcap PLUS TEDD1 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "56 - OT RecHit Endcap PLUS TEDD1 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTRecHitV/EndCap_Side2/TEDD_1/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTRecHitV/EndCap_Side2/TEDD_1/Ring1/Delta_Y_Pixel",
@@ -552,7 +552,7 @@ phase2tkmclayout(dqmitems, "56 - OT RecHit Endcap PLUS TEDD1 Pixel/StripXY",
                    'description': "Ring 1 Delta Y Strip"}]
                  )
 
-phase2tkmclayout(dqmitems, "57 - OT RecHit Endcap PLUS TEDD2 Pixel/StripXY",
+phase2tkmclayout(dqmitems, "57 - OT RecHit Endcap PLUS TEDD2 Pixel and Strip XY",
                  [{'path':"TrackerPhase2OTRecHitV/EndCap_Side2/TEDD_2/Ring1/Delta_X_Pixel",
                    'description': "Ring 1 Delta X Pixel"},
                   {'path':"TrackerPhase2OTRecHitV/EndCap_Side2/TEDD_2/Ring1/Delta_Y_Pixel",
