@@ -125,48 +125,48 @@ server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Tk Phase-2' , '^TrackerPha
                  "MCLayouts/Phase2Tk/31 - OT Cluster Barrel Pixel Y",
                  "MCLayouts/Phase2Tk/32 - OT Cluster Barrel Strip X",
                  "MCLayouts/Phase2Tk/33 - OT Cluster Barrel Strip Y",
-                 "MCLayouts/Phase2Tk/34 - OT Cluster Endcap MINUS TEDD1 Pixel/StripXY",
-                 "MCLayouts/Phase2Tk/35 - OT Cluster Endcap MINUS TEDD2 Pixel/StripXY",
-                 "MCLayouts/Phase2Tk/36 - OT Cluster Endcap PLUS TEDD1 Pixel/StripXY",
-                 "MCLayouts/Phase2Tk/37 - OT Cluster Endcap PLUS TEDD2 Pixel/StripXY",
-                 "MCLayouts/Phase2Tk/40 - OT L1Track Eta Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/41 - OT L1Track Phi Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/42 - OT L1Track VtxZ Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/43 - OT L1Track d0 Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/44 - OT Extended L1Track Displaced Eta Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/45 - OT Extended L1Track Displaced Phi Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/46 - OT Extended L1Track Displaced VtxZ Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/47 - OT Extended L1Track Displaced d0 Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/48 - OT Extended L1Track Prompt Eta Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/49 - OT Extended L1Track Prompt Phi Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/410 - OT Extended L1Track Prompt VtxZ Efficiency/Resolution",
-                 "MCLayouts/Phase2Tk/411 - OT Extended L1Track Prompt d0 Efficiency/Resolution",
+                 "MCLayouts/Phase2Tk/34 - OT Cluster Endcap MINUS TEDD1 Pixel and Strip XY",
+                 "MCLayouts/Phase2Tk/35 - OT Cluster Endcap MINUS TEDD2 Pixel and Strip XY",
+                 "MCLayouts/Phase2Tk/36 - OT Cluster Endcap PLUS TEDD1 Pixel and Strip XY",
+                 "MCLayouts/Phase2Tk/37 - OT Cluster Endcap PLUS TEDD2 Pixel and Strip XY",
+                 "MCLayouts/Phase2Tk/40 - OT L1Track Eta Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/41 - OT L1Track Phi Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/42 - OT L1Track VtxZ Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/43 - OT L1Track d0 Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/44 - OT Extended L1Track Displaced Eta Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/45 - OT Extended L1Track Displaced Phi Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/46 - OT Extended L1Track Displaced VtxZ Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/47 - OT Extended L1Track Displaced d0 Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/48 - OT Extended L1Track Prompt Eta Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/49 - OT Extended L1Track Prompt Phi Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/410 - OT Extended L1Track Prompt VtxZ Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/411 - OT Extended L1Track Prompt d0 Efficiency and Resolution",
                  "MCLayouts/Phase2Tk/50 - OT RecHit Barrel Pixel X",
                  "MCLayouts/Phase2Tk/51 - OT RecHit Barrel Pixel Y",
                  "MCLayouts/Phase2Tk/52 - OT RecHit Barrel Strip X",
                  "MCLayouts/Phase2Tk/53 - OT RecHit Barrel Strip Y",
-                 "MCLayouts/Phase2Tk/54 - OT RecHit Endcap MINUS TEDD1 Pixel/StripXY",
-                 "MCLayouts/Phase2Tk/55 - OT RecHit Endcap MINUS TEDD2 Pixel/StripXY",
-                 "MCLayouts/Phase2Tk/56 - OT RecHit Endcap PLUS TEDD1 Pixel/StripXY",
-                 "MCLayouts/Phase2Tk/57 - OT RecHit Endcap PLUS TEDD2 Pixel/StripXY")
+                 "MCLayouts/Phase2Tk/54 - OT RecHit Endcap MINUS TEDD1 Pixel and Strip XY",
+                 "MCLayouts/Phase2Tk/55 - OT RecHit Endcap MINUS TEDD2 Pixel and Strip XY",
+                 "MCLayouts/Phase2Tk/56 - OT RecHit Endcap PLUS TEDD1 Pixel and Strip XY",
+                 "MCLayouts/Phase2Tk/57 - OT RecHit Endcap PLUS TEDD2 Pixel and Strip XY")
 
-server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Ecal' , '^Ecal.*/', 'MCLayouts/Ecal')
-server.workspace('DQMContent', 32, 'Monte Carlo', 'MC Hcal' , '(^Hcal(|NoiseRatesD|RecHitsD|DigisV|HitsV)|^CaloTowersD)/', 'MCLayouts/Hcal')
-server.workspace('DQMContent', 33, 'Monte Carlo', 'MC DT' , '^DT/', '')
-server.workspace('DQMContent', 34, 'Monte Carlo', 'MC CSC' , '^CSC/', '')
-server.workspace('DQMContent', 35, 'Monte Carlo', 'MC RPC' , '^RPC/', '')
-server.workspace('DQMContent', 36, 'Monte Carlo', 'MC Tracking' , '^Tracking/', '')
-server.workspace('DQMContent', 37, 'Monte Carlo', 'MC L1T', '^L1T/', '')
-server.workspace('DQMContent', 38, 'Monte Carlo', 'MC L1TEMU', '^L1TEMU/', '')
-server.workspace('DQMContent', 39, 'Monte Carlo', 'MC HLT', '^HLT/', '')
-server.workspace('DQMContent', 40, 'Monte Carlo', 'MC Electron' , '^Electron/', '')
-server.workspace('DQMContent', 41, 'Monte Carlo', 'MC Photon' , '^Photon/', '')
-server.workspace('DQMContent', 42, 'Monte Carlo', 'MC Muon' , '^Muon/', '')
-server.workspace('DQMContent', 43, 'Monte Carlo', 'MC Jet' , '^Jet/', '')
-server.workspace('DQMContent', 44, 'Monte Carlo', 'MC MET' , '^MET/', '')
-server.workspace('DQMContent', 45, 'Monte Carlo', 'MC BTag' , '^BTag/', '')
-server.workspace('DQMContent', 46, 'Monte Carlo', 'MC Tau' , '^.*Tau.*/', 'RecoTauV/Layouts')
-server.workspace('DQMContent', 47, 'Monte Carlo', 'MC PFlow' , '^ParticleFlow/', 'MCLayouts/PFlow',
+server.workspace('DQMContent', 32, 'Monte Carlo', 'MC Ecal' , '^Ecal.*/', 'MCLayouts/Ecal')
+server.workspace('DQMContent', 33, 'Monte Carlo', 'MC Hcal' , '(^Hcal(|NoiseRatesD|RecHitsD|DigisV|HitsV)|^CaloTowersD)/', 'MCLayouts/Hcal')
+server.workspace('DQMContent', 34, 'Monte Carlo', 'MC DT' , '^DT/', '')
+server.workspace('DQMContent', 35, 'Monte Carlo', 'MC CSC' , '^CSC/', '')
+server.workspace('DQMContent', 36, 'Monte Carlo', 'MC RPC' , '^RPC/', '')
+server.workspace('DQMContent', 37, 'Monte Carlo', 'MC Tracking' , '^Tracking/', '')
+server.workspace('DQMContent', 38, 'Monte Carlo', 'MC L1T', '^L1T/', '')
+server.workspace('DQMContent', 39, 'Monte Carlo', 'MC L1TEMU', '^L1TEMU/', '')
+server.workspace('DQMContent', 40, 'Monte Carlo', 'MC HLT', '^HLT/', '')
+server.workspace('DQMContent', 41, 'Monte Carlo', 'MC Electron' , '^Electron/', '')
+server.workspace('DQMContent', 42, 'Monte Carlo', 'MC Photon' , '^Photon/', '')
+server.workspace('DQMContent', 43, 'Monte Carlo', 'MC Muon' , '^Muon/', '')
+server.workspace('DQMContent', 44, 'Monte Carlo', 'MC Jet' , '^Jet/', '')
+server.workspace('DQMContent', 45, 'Monte Carlo', 'MC MET' , '^MET/', '')
+server.workspace('DQMContent', 46, 'Monte Carlo', 'MC BTag' , '^BTag/', '')
+server.workspace('DQMContent', 47, 'Monte Carlo', 'MC Tau' , '^.*Tau.*/', 'RecoTauV/Layouts')
+server.workspace('DQMContent', 48, 'Monte Carlo', 'MC PFlow' , '^ParticleFlow/', 'MCLayouts/PFlow',
                  'MCLayouts/PFlow/01 - Jet Pt Resolution - Barrel',
                  'MCLayouts/PFlow/02 - Jet Pt Resolution - Endcap',
                  'MCLayouts/PFlow/03 - Jet Pt Resolution distribution - Barrel',
