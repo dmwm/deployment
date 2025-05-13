@@ -136,7 +136,7 @@ server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Tk Phase-2' , '^TrackerPha
                  "MCLayouts/Phase2Tk/404 - OT RecHit Endcap MINUS TEDD1 Ring1 Pixel and Strip Delta X and Y",
                  "MCLayouts/Phase2Tk/405 - OT RecHit Endcap MINUS TEDD2 Ring1 Pixel and Strip Delta X and Y",
                  "MCLayouts/Phase2Tk/406 - OT RecHit Endcap PLUS TEDD1 Ring1 Pixel and Strip Delta X and Y",
-                 "MCLayouts/Phase2Tk/407 - OT RecHit Endcap PLUS TEDD2 Ring1 Pixel and Strip Delta X and Y"
+                 "MCLayouts/Phase2Tk/407 - OT RecHit Endcap PLUS TEDD2 Ring1 Pixel and Strip Delta X and Y",
                  "MCLayouts/Phase2Tk/500 - OT L1Track Eta Efficiency and Resolution",
                  "MCLayouts/Phase2Tk/501 - OT L1Track Phi Efficiency and Resolution",
                  "MCLayouts/Phase2Tk/502 - OT L1Track Lxy Efficiency and Resolution",
