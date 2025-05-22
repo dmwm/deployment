@@ -1420,6 +1420,570 @@ phase2tkmclayout(dqmitems, "457 - OT RecHit Endcap PLUS TEDD2 Ring12 Strip Delta
                    'description': "Ring 12 Delta Y Strip"}]
                  )
 
+#----------------------------------------------------------------------------------------------
+phase2tkmclayout(dqmitems, "500 - OT TrackingRecHit Barrel Pixel X",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer1/Delta_X_Pixel",
+                   'description': "Layer 1 Delta X"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer2/Delta_X_Pixel",
+                   'description': "Layer 2 Delta X"}],
+                 [{'path':"TrackerPhase2)TTrackingRecHitV/Barrel/Layer3/Delta_X_Pixel",
+                   'description': "Layer 3 Delta X"}]
+                 )
+
+phase2tkmclayout(dqmitems, "501 - OT TrackingRecHit Barrel Pixel Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer1/Delta_Y_Pixel",
+                   'description': "Layer 1 Delta Y"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer2/Delta_Y_Pixel",
+                   'description': "Layer 2 Delta Y"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer3/Delta_Y_Pixel",
+                   'description': "Layer 3 Delta Y"}]
+                 )
+
+phase2tkmclayout(dqmitems, "502 - OT TrackingRecHit Barrel Strip X",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer1/Delta_X_Strip",
+                   'description': "Layer 1 Delta X"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer2/Delta_X_Strip",
+                   'description': "Layer 2 Delta X"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer3/Delta_X_Strip",
+                   'description': "Layer 3 Delta X"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer4/Delta_X_Strip",
+                   'description': "Layer 4 Delta X"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer5/Delta_X_Strip",
+                   'description': "Layer 5 Delta X"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer6/Delta_X_Strip",
+                   'description': "Layer 6 Delta X"}]
+                 )
+
+phase2tkmclayout(dqmitems, "503 - OT TrackingRecHit Barrel Strip Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer1/Delta_Y_Strip",
+                   'description': "Layer 1 Delta Y"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer2/Delta_Y_Strip",
+                   'description': "Layer 2 Delta Y"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer3/Delta_Y_Strip",
+                   'description': "Layer 3 Delta Y"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer4/Delta_Y_Strip",
+                   'description': "Layer 4 Delta Y"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer5/Delta_Y_Strip",
+                   'description': "Layer 5 Delta Y"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer6/Delta_Y_Strip",
+                   'description': "Layer 6 Delta Y"}]
+                 )
+
+phase2tkmclayout(dqmitems, "504 - OT TrackingRecHit Endcap MINUS TEDD1 Ring1 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring1/Delta_X_Pixel",
+                   'description': "Ring 1 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring1/Delta_Y_Pixel",
+                   'description': "Ring 1 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring1/Delta_X_Strip",
+                   'description': "Ring 1 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring1/Delta_Y_Strip",
+                   'description': "Ring 1 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "505 - OT TrackingRecHit Endcap MINUS TEDD1 Ring2 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring2/Delta_X_Pixel",
+                   'description': "Ring 2 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring2/Delta_Y_Pixel",
+                   'description': "Ring 2 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring2/Delta_X_Strip",
+                   'description': "Ring 2 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring2/Delta_Y_Strip",
+                   'description': "Ring 2 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "506 - OT TrackingRecHit Endcap MINUS TEDD1 Ring3 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring3/Delta_X_Pixel",
+                   'description': "Ring 3 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTRecHitV/EndCap_Side1/TEDD_1/Ring3/Delta_Y_Pixel",
+                   'description': "Ring 3 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTRecHitV/EndCap_Side1/TEDD_1/Ring3/Delta_X_Strip",
+                   'description': "Ring 3 Delta X Strip"},
+                  {'path':"TrackerPhase2OTRecHitV/EndCap_Side1/TEDD_1/Ring3/Delta_Y_Strip",
+                   'description': "Ring 3 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "507 - OT TrackingRecHit Endcap MINUS TEDD1 Ring4 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring4/Delta_X_Pixel",
+                   'description': "Ring 4 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring4/Delta_Y_Pixel",
+                   'description': "Ring 4 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring4/Delta_X_Strip",
+                   'description': "Ring 4 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring4/Delta_Y_Strip",
+                   'description': "Ring 4 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "508 - OT TrackingRecHit Endcap MINUS TEDD1 Ring5 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring5/Delta_X_Pixel",
+                   'description': "Ring 5 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring5/Delta_Y_Pixel",
+                   'description': "Ring 5 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring5/Delta_X_Strip",
+                   'description': "Ring 5 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring5/Delta_Y_Strip",
+                   'description': "Ring 5 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "509 - OT TrackingRecHit Endcap MINUS TEDD1 Ring6 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring6/Delta_X_Pixel",
+                   'description': "Ring 6 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring6/Delta_Y_Pixel",
+                   'description': "Ring 6 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring6/Delta_X_Strip",
+                   'description': "Ring 6 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring6/Delta_Y_Strip",
+                   'description': "Ring 6 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "510 - OT TrackingRecHit Endcap MINUS TEDD1 Ring7 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring7/Delta_X_Pixel",
+                   'description': "Ring 7 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring7/Delta_Y_Pixel",
+                   'description': "Ring 7 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring7/Delta_X_Strip",
+                   'description': "Ring 7 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring7/Delta_Y_Strip",
+                   'description': "Ring 7 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "511 - OT TrackingRecHit Endcap MINUS TEDD1 Ring8 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring8/Delta_X_Pixel",
+                   'description': "Ring 8 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring8/Delta_Y_Pixel",
+                   'description': "Ring 8 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring8/Delta_X_Strip",
+                   'description': "Ring 8 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring8/Delta_Y_Strip",
+                   'description': "Ring 8 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "512 - OT TrackingRecHit Endcap MINUS TEDD1 Ring9 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring9/Delta_X_Pixel",
+                   'description': "Ring 9 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring9/Delta_Y_Pixel",
+                   'description': "Ring 9 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring9/Delta_X_Strip",
+                   'description': "Ring 9 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring9/Delta_Y_Strip",
+                   'description': "Ring 9 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "513 - OT TrackingRecHit Endcap MINUS TEDD1 Ring10 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring10/Delta_X_Pixel",
+                   'description': "Ring 10 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring10/Delta_Y_Pixel",
+                   'description': "Ring 10 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring10/Delta_X_Strip",
+                   'description': "Ring 10 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring10/Delta_Y_Strip",
+                   'description': "Ring 10 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "514 - OT TrackingRecHit Endcap MINUS TEDD1 Ring11 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring11/Delta_X_Strip",
+                   'description': "Ring 11 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring11/Delta_Y_Strip",
+                   'description': "Ring 11 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "515 - OT TrackingRecHit Endcap MINUS TEDD1 Ring12 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring12/Delta_X_Strip",
+                   'description': "Ring 12 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring12/Delta_Y_Strip",
+                   'description': "Ring 12 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "516 - OT TrackingRecHit Endcap MINUS TEDD1 Ring13 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring13/Delta_X_Strip",
+                   'description': "Ring 13 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring13/Delta_Y_Strip",
+                   'description': "Ring 13 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "517 - OT TrackingRecHit Endcap MINUS TEDD1 Ring14 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring14/Delta_X_Strip",
+                   'description': "Ring 14 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring14/Delta_Y_Strip",
+                   'description': "Ring 14 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "518 - OT TrackingRecHit Endcap MINUS TEDD1 Ring15 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring15/Delta_X_Strip",
+                   'description': "Ring 15 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_1/Ring15/Delta_Y_Strip",
+                   'description': "Ring 15 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "519 - OT TrackingRecHit Endcap MINUS TEDD2 Ring1 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring1/Delta_X_Pixel",
+                   'description': "Ring 1 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring1/Delta_Y_Pixel",
+                   'description': "Ring 1 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring1/Delta_X_Strip",
+                   'description': "Ring 1 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring1/Delta_Y_Strip",
+                   'description': "Ring 1 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "520 - OT TrackingRecHit Endcap MINUS TEDD2 Ring2 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring2/Delta_X_Pixel",
+                   'description': "Ring 2 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring2/Delta_Y_Pixel",
+                   'description': "Ring 2 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring2/Delta_X_Strip",
+                   'description': "Ring 2 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring2/Delta_Y_Strip",
+                   'description': "Ring 2 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "521 - OT TrackingRecHit Endcap MINUS TEDD2 Ring3 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring3/Delta_X_Pixel",
+                   'description': "Ring 3 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring3/Delta_Y_Pixel",
+                   'description': "Ring 3 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring3/Delta_X_Strip",
+                   'description': "Ring 3 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring3/Delta_Y_Strip",
+                   'description': "Ring 3 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "522 - OT TrackingRecHit Endcap MINUS TEDD2 Ring4 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring4/Delta_X_Pixel",
+                   'description': "Ring 4 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring4/Delta_Y_Pixel",
+                   'description': "Ring 4 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring4/Delta_X_Strip",
+                   'description': "Ring 4 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring4/Delta_Y_Strip",
+                   'description': "Ring 4 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "523 - OT TrackingRecHit Endcap MINUS TEDD2 Ring5 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring5/Delta_X_Pixel",
+                   'description': "Ring 5 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring5/Delta_Y_Pixel",
+                   'description': "Ring 5 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring5/Delta_X_Strip",
+                   'description': "Ring 5 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring5/Delta_Y_Strip",
+                   'description': "Ring 5 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "524 - OT TrackingRecHit Endcap MINUS TEDD2 Ring6 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring6/Delta_X_Pixel",
+                   'description': "Ring 6 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring6/Delta_Y_Pixel",
+                   'description': "Ring 6 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring6/Delta_X_Strip",
+                   'description': "Ring 6 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring6/Delta_Y_Strip",
+                   'description': "Ring 6 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "525 - OT TrackingRecHit Endcap MINUS TEDD2 Ring7 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring7/Delta_X_Pixel",
+                   'description': "Ring 7 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring7/Delta_Y_Pixel",
+                   'description': "Ring 7 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring7/Delta_X_Strip",
+                   'description': "Ring 7 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring7/Delta_Y_Strip",
+                   'description': "Ring 7 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "526 - OT TrackingRecHit Endcap MINUS TEDD2 Ring8 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring8/Delta_X_Strip",
+                   'description': "Ring 8 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring8/Delta_Y_Strip",
+                   'description': "Ring 8 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "527 - OT TrackingRecHit Endcap MINUS TEDD2 Ring9 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring9/Delta_X_Strip",
+                   'description': "Ring 9 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring9/Delta_Y_Strip",
+                   'description': "Ring 9 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "528 - OT TrackingRecHit Endcap MINUS TEDD2 Ring10 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring10/Delta_X_Strip",
+                   'description': "Ring 10 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring10/Delta_Y_Strip",
+                   'description': "Ring 10 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "529 - OT TrackingRecHit Endcap MINUS TEDD2 Ring11 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring11/Delta_X_Strip",
+                   'description': "Ring 11 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring11/Delta_Y_Strip",
+                   'description': "Ring 11 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "530 - OT TrackingRecHit Endcap MINUS TEDD2 Ring12 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring12/Delta_X_Strip",
+                   'description': "Ring 12 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side1/TEDD_2/Ring12/Delta_Y_Strip",
+                   'description': "Ring 12 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "531 - OT TrackingRecHit Endcap PLUS TEDD1 Ring1 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring1/Delta_X_Pixel",
+                   'description': "Ring 1 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring1/Delta_Y_Pixel",
+                   'description': "Ring 1 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring1/Delta_X_Strip",
+                   'description': "Ring 1 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring1/Delta_Y_Strip",
+                   'description': "Ring 1 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "532 - OT TrackingRecHit Endcap PLUS TEDD1 Ring2 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring2/Delta_X_Pixel",
+                   'description': "Ring 2 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring2/Delta_Y_Pixel",
+                   'description': "Ring 2 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring2/Delta_X_Strip",
+                   'description': "Ring 2 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring2/Delta_Y_Strip",
+                   'description': "Ring 2 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "533 - OT TrackingRecHit Endcap PLUS TEDD1 Ring3 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring3/Delta_X_Pixel",
+                   'description': "Ring 3 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring3/Delta_Y_Pixel",
+                   'description': "Ring 3 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring3/Delta_X_Strip",
+                   'description': "Ring 3 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring3/Delta_Y_Strip",
+                   'description': "Ring 3 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "534 - OT TrackingRecHit Endcap PLUS TEDD1 Ring4 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring4/Delta_X_Pixel",
+                   'description': "Ring 4 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring4/Delta_Y_Pixel",
+                   'description': "Ring 4 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring4/Delta_X_Strip",
+                   'description': "Ring 4 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring4/Delta_Y_Strip",
+                   'description': "Ring 4 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "535 - OT TrackingRecHit Endcap PLUS TEDD1 Ring5 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring5/Delta_X_Pixel",
+                   'description': "Ring 5 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring5/Delta_Y_Pixel",
+                   'description': "Ring 5 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTRecHitV/EndCap_Side2/TEDD_1/Ring5/Delta_X_Strip",
+                   'description': "Ring 5 Delta X Strip"},
+                  {'path':"TrackerPhase2OTRecHitV/EndCap_Side2/TEDD_1/Ring5/Delta_Y_Strip",
+                   'description': "Ring 5 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "536 - OT TrackingRecHit Endcap PLUS TEDD1 Ring6 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring6/Delta_X_Pixel",
+                   'description': "Ring 6 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring6/Delta_Y_Pixel",
+                   'description': "Ring 6 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring6/Delta_X_Strip",
+                   'description': "Ring 6 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring6/Delta_Y_Strip",
+                   'description': "Ring 6 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "537 - OT TrackingRecHit Endcap PLUS TEDD1 Ring7 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring7/Delta_X_Pixel",
+                   'description': "Ring 7 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring7/Delta_Y_Pixel",
+                   'description': "Ring 7 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring7/Delta_X_Strip",
+                   'description': "Ring 7 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring7/Delta_Y_Strip",
+                   'description': "Ring 7 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "538 - OT TrackingRecHit Endcap PLUS TEDD1 Ring8 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring8/Delta_X_Pixel",
+                   'description': "Ring 8 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring8/Delta_Y_Pixel",
+                   'description': "Ring 8 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring8/Delta_X_Strip",
+                   'description': "Ring 8 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring8/Delta_Y_Strip",
+                   'description': "Ring 8 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "539 - OT TrackingRecHit Endcap PLUS TEDD1 Ring9 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring9/Delta_X_Pixel",
+                   'description': "Ring 9 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring9/Delta_Y_Pixel",
+                   'description': "Ring 9 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring9/Delta_X_Strip",
+                   'description': "Ring 9 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring9/Delta_Y_Strip",
+                   'description': "Ring 9 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "540 - OT TrackingRecHit Endcap PLUS TEDD1 Ring10 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring10/Delta_X_Pixel",
+                   'description': "Ring 10 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring10/Delta_Y_Pixel",
+                   'description': "Ring 10 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring10/Delta_X_Strip",
+                   'description': "Ring 10 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring10/Delta_Y_Strip",
+                   'description': "Ring 10 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "541 - OT TrackingRecHit Endcap PLUS TEDD1 Ring11 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring11/Delta_X_Strip",
+                   'description': "Ring 11 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring11/Delta_Y_Strip",
+                   'description': "Ring 11 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "542 - OT TrackingRecHit Endcap PLUS TEDD1 Ring12 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring12/Delta_X_Strip",
+                   'description': "Ring 12 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring12/Delta_Y_Strip",
+                   'description': "Ring 12 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "543 - OT TrackingRecHit Endcap PLUS TEDD1 Ring13 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring13/Delta_X_Strip",
+                   'description': "Ring 13 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring13/Delta_Y_Strip",
+                   'description': "Ring 13 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "544 - OT TrackingRecHit Endcap PLUS TEDD1 Ring14 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring14/Delta_X_Strip",
+                   'description': "Ring 14 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring14/Delta_Y_Strip",
+                   'description': "Ring 14 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "545 - OT TrackingRecHit Endcap PLUS TEDD1 Ring15 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring15/Delta_X_Strip",
+                   'description': "Ring 15 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_1/Ring15/Delta_Y_Strip",
+                   'description': "Ring 15 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "546 - OT TrackingRecHit Endcap PLUS TEDD2 Ring1 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring1/Delta_X_Pixel",
+                   'description': "Ring 1 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring1/Delta_Y_Pixel",
+                   'description': "Ring 1 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring1/Delta_X_Strip",
+                   'description': "Ring 1 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring1/Delta_Y_Strip",
+                   'description': "Ring 1 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "547 - OT TrackingRecHit Endcap PLUS TEDD2 Ring2 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring2/Delta_X_Pixel",
+                   'description': "Ring 2 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring2/Delta_Y_Pixel",
+                   'description': "Ring 2 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring2/Delta_X_Strip",
+                   'description': "Ring 2 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring2/Delta_Y_Strip",
+                   'description': "Ring 2 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "548 - OT TrackingRecHit Endcap PLUS TEDD2 Ring3 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring3/Delta_X_Pixel",
+                   'description': "Ring 3 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring3/Delta_Y_Pixel",
+                   'description': "Ring 3 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring3/Delta_X_Strip",
+                   'description': "Ring 3 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring3/Delta_Y_Strip",
+                   'description': "Ring 3 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "549 - OT TrackingRecHit Endcap PLUS TEDD2 Ring4 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring4/Delta_X_Pixel",
+                   'description': "Ring 4 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring4/Delta_Y_Pixel",
+                   'description': "Ring 4 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring4/Delta_X_Strip",
+                   'description': "Ring 4 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring4/Delta_Y_Strip",
+                   'description': "Ring 4 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "550 - OT TrackingRecHit Endcap PLUS TEDD2 Ring5 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring5/Delta_X_Pixel",
+                   'description': "Ring 5 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring5/Delta_Y_Pixel",
+                   'description': "Ring 5 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring5/Delta_X_Strip",
+                   'description': "Ring 5 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring5/Delta_Y_Strip",
+                   'description': "Ring 5 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "551 - OT TrackingRecHit Endcap PLUS TEDD2 Ring6 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring6/Delta_X_Pixel",
+                   'description': "Ring 6 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring6/Delta_Y_Pixel",
+                   'description': "Ring 6 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring6/Delta_X_Strip",
+                   'description': "Ring 6 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring6/Delta_Y_Strip",
+                   'description': "Ring 6 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "552 - OT TrackingRecHit Endcap PLUS TEDD2 Ring7 Pixel and Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring7/Delta_X_Pixel",
+                   'description': "Ring 7 Delta X Pixel"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring7/Delta_Y_Pixel",
+                   'description': "Ring 7 Delta Y Pixel"}],
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring7/Delta_X_Strip",
+                   'description': "Ring 7 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring7/Delta_Y_Strip",
+                   'description': "Ring 7 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "553 - OT TrackingRecHit Endcap PLUS TEDD2 Ring8 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring8/Delta_X_Strip",
+                   'description': "Ring 8 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring8/Delta_Y_Strip",
+                   'description': "Ring 8 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "554 - OT TrackingRecHit Endcap PLUS TEDD2 Ring9 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring9/Delta_X_Strip",
+                   'description': "Ring 9 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring9/Delta_Y_Strip",
+                   'description': "Ring 9 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "555 - OT TrackingRecHit Endcap PLUS TEDD2 Ring10 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring10/Delta_X_Strip",
+                   'description': "Ring 10 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring10/Delta_Y_Strip",
+                   'description': "Ring 10 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "556 - OT TrackingRecHit Endcap PLUS TEDD2 Ring11 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring11/Delta_X_Strip",
+                   'description': "Ring 11 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring11/Delta_Y_Strip",
+                   'description': "Ring 11 Delta Y Strip"}]
+                 )
+
+phase2tkmclayout(dqmitems, "557 - OT TrackingRecHit Endcap PLUS TEDD2 Ring12 Strip Delta X and Y",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring12/Delta_X_Strip",
+                   'description': "Ring 12 Delta X Strip"},
+                  {'path':"TrackerPhase2OTTrackingRecHitV/EndCap_Side2/TEDD_2/Ring12/Delta_Y_Strip",
+                   'description': "Ring 12 Delta Y Strip"}]
+                 )
+#---------------------------------------------------------------------------------------------------------
+
 phase2tkmclayout(dqmitems, "500 - OT L1Track Eta Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
