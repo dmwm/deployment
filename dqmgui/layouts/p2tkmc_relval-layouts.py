@@ -1425,7 +1425,7 @@ phase2tkmclayout(dqmitems, "500 - OT TrackingRecHit Barrel Pixel X",
                    'description': "Layer 1 Delta X"},
                   {'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer2/Delta_X_Pixel",
                    'description': "Layer 2 Delta X"}],
-                 [{'path':"TrackerPhase2)TTrackingRecHitV/Barrel/Layer3/Delta_X_Pixel",
+                 [{'path':"TrackerPhase2OTTrackingRecHitV/Barrel/Layer3/Delta_X_Pixel",
                    'description': "Layer 3 Delta X"}]
                  )
 
@@ -1989,18 +1989,14 @@ phase2tkmclayout(dqmitems, "600 - OT L1Track Eta Efficiency and Resolution",
                    'description': "Eta Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "601 - OT L1Track Phi Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/PhiEfficiency",
-                   'description': "Phi Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/PhiResolution",
+phase2tkmclayout(dqmitems, "601 - OT L1Track Phi Resolution",
+                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/PhiResolution",
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "602 - OT L1Track Lxy Efficiency and Resolution",
+phase2tkmclayout(dqmitems, "602 - OT L1Track Lxy Efficiency",
                  [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/LxyEfficiency",
-                   'description': "Lxy Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/LxyResolution",
-                   'description': "Lxy Resolution"}]
+                   'description': "Lxy Efficiency"}]
                  )
 
 phase2tkmclayout(dqmitems, "603 - OT L1Track d0 Efficiency and Resolution",
@@ -2020,56 +2016,48 @@ phase2tkmclayout(dqmitems, "604 - OT L1Track z0 Efficiency and Resolution",
 phase2tkmclayout(dqmitems, "605 - OT Extended L1Track Displaced Eta Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/EtaResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/EtaResolution_displaced",
                    'description': "Eta Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "606 - OT Extended L1Track Displaced Phi Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/PhiEfficiency",
-                   'description': "Phi Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/PhiResolution",
+phase2tkmclayout(dqmitems, "606 - OT Extended L1Track Displaced Phi Resolution",
+                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/PhiResolution_displaced",
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "607 - OT Extended L1Track Displaced Lxy Efficiency and Resolution",
+phase2tkmclayout(dqmitems, "607 - OT Extended L1Track Displaced Lxy Efficiency",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/LxyEfficiency",
-                   'description': "Lxy Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/LxyResolution",
-                   'description': "Lxy Resolution"}]
+                   'description': "Lxy Efficiency"}]
                  )
 
 phase2tkmclayout(dqmitems, "608 - OT Extended L1Track Displaced d0 Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/d0Efficiency",
                    'description': "d0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/d0Resolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/d0Resolution_displaced",
                    'description': "d0 Resolution"}]
                  )
 
 phase2tkmclayout(dqmitems, "609 - OT Extended L1Track Prompt Eta Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/EtaEfficiency",
                    'description': "Eta Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/EtaResolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/EtaResolution_prompt",
                    'description': "Eta Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "610 - OT Extended L1Track Prompt Phi Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/PhiEfficiency",
-                   'description': "Phi Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/PhiResolution",
+phase2tkmclayout(dqmitems, "610 - OT Extended L1Track Prompt Phi Resolution",
+                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/PhiResolution_prompt",
                    'description': "Phi Resolution"}]
                  )
 
-phase2tkmclayout(dqmitems, "611 - OT Extended L1Track Prompt Lxy Efficiency and Resolution",
+phase2tkmclayout(dqmitems, "611 - OT Extended L1Track Prompt Lxy Efficiency",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/LxyEfficiency",
-                   'description': "Lxy Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/LxyResolution",
-                   'description': "Lxy Resolution"}]
+                   'description': "Lxy Efficiency"}]
                  )
 
 phase2tkmclayout(dqmitems, "612 - OT Extended L1Track Prompt d0 Efficiency and Resolution",
                  [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/d0Efficiency",
                    'description': "d0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/d0Resolution",
+                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/d0Resolution_prompt",
                    'description': "d0 Resolution"}]
                  )
 

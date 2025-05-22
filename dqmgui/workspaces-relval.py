@@ -134,17 +134,17 @@ server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Tk Phase-2' , '^TrackerPha
                  "MCLayouts/Phase2Tk/502 - OT TrackingRecHit Barrel Strip X",
                  "MCLayouts/Phase2Tk/503 - OT TrackingRecHit Barrel Strip Y",
                  "MCLayouts/Phase2Tk/600 - OT L1Track Eta Efficiency and Resolution",
-                 "MCLayouts/Phase2Tk/601 - OT L1Track Phi Efficiency and Resolution",
-                 "MCLayouts/Phase2Tk/602 - OT L1Track Lxy Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/601 - OT L1Track Phi Resolution",
+                 "MCLayouts/Phase2Tk/602 - OT L1Track Lxy Efficiency",
                  "MCLayouts/Phase2Tk/603 - OT L1Track d0 Efficiency and Resolution",
                  "MCLayouts/Phase2Tk/604 - OT L1Track z0 Efficiency and Resolution",
                  "MCLayouts/Phase2Tk/605 - OT Extended L1Track Displaced Eta Efficiency and Resolution",
-                 "MCLayouts/Phase2Tk/606 - OT Extended L1Track Displaced Phi Efficiency and Resolution",
-                 "MCLayouts/Phase2Tk/607 - OT Extended L1Track Displaced Lxy Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/606 - OT Extended L1Track Displaced Phi Resolution",
+                 "MCLayouts/Phase2Tk/607 - OT Extended L1Track Displaced Lxy Efficiency",
                  "MCLayouts/Phase2Tk/608 - OT Extended L1Track Displaced d0 Efficiency and Resolution",
                  "MCLayouts/Phase2Tk/609 - OT Extended L1Track Prompt Eta Efficiency and Resolution",
-                 "MCLayouts/Phase2Tk/610 - OT Extended L1Track Prompt Phi Efficiency and Resolution",
-                 "MCLayouts/Phase2Tk/611 - OT Extended L1Track Prompt Lxy Efficiency and Resolution",
+                 "MCLayouts/Phase2Tk/610 - OT Extended L1Track Prompt Phi Resolution",
+                 "MCLayouts/Phase2Tk/611 - OT Extended L1Track Prompt Lxy Efficiency",
                  "MCLayouts/Phase2Tk/612 - OT Extended L1Track Prompt d0 Efficiency and Resolution",)
 
 server.workspace('DQMContent', 32, 'Monte Carlo', 'MC Ecal' , '^Ecal.*/', 'MCLayouts/Ecal')
