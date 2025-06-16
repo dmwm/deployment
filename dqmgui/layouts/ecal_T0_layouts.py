@@ -675,7 +675,6 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/14 Rate of TP (Spike-ma
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/15 Efficiency of spike-matching',
            [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT Efficiency of spike killer matching', 'description': 'Efficiency of spike-matching'}])
 
-
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
   for sign in ['-', '+']: # Loop over z-side
@@ -1040,6 +1039,7 @@ ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/11 DCC-SRP Desync Trend',
 ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/12 Trend of Et sum of TPs with Et > 30 GeV',
         [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs above threshold', 'description': 'Trend of Et sum of TPs with Et > 30 GeV.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/13 Trend of Et sum of Spike-matched TPs with Et > 30 GeV',
+        [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs above threshold (Spike Matched)', 'description': 'Trend of Et sum of TPs (spike-matched) with Et > 30 GeV.'}])
 
 #____________________ Layouts / 12 By SuperModule ____________________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
