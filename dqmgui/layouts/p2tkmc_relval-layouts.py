@@ -1,8 +1,7 @@
 def phase2tkmclayout(i, p, *rows): i["MCLayouts/Phase2Tk/" + p] = DQMItem(layout=rows)
 
-# Loop to create layouts for all EXCEPT L1Track
-
-# These names shouldn't change
+# Loop for histograms in IT & OT barrels & endcaps
+# These file names shouldn't change
 top_files = ["TrackerPhase2ITClusterV/",
             "TrackerPhase2ITRecHitV/",
             "TrackerPhase2ITTrackingRecHitV/",
@@ -19,10 +18,10 @@ layout_name_parts = ["IT ", "OT ", "Clusters ", "RecHit ", "TrackingRecHit ", "L
 # If you want to book different values, you'll have to add them here, and then edit the "for histogram in histogram_names[a:b]:" lines
 histogram_names = ["Delta_X_Pixel", "Delta_Y_Pixel", "Delta_Y_vs_DeltaX", "Delta_X", "Delta_Y", "Delta_X_Strip", "Delta_Y_Strip"]
 
-for f_index, file in enumerate(top_files): # Loop thru our top folders
+for f_index, file in enumerate(top_files): # Loop through our top folders
     layout = []
-    layout_num = 00 # Two digit counter - layouts are numbered with three digits, with the first indicating the top folder
-    for s_index, structure in enumerate(common_structures): # Loop thru our "common" tracker structures
+    layout_num = 00 # Layouts are numbered with three digits, with the first indicating the top folder. Use f"{layout_num:02}" to force 2 digits
+    for s_index, structure in enumerate(common_structures): # Loop through our "common" tracker structures
 
         # ----- OUTER TRACKER ------
         if f_index > 2:
@@ -35,7 +34,7 @@ for f_index, file in enumerate(top_files): # Loop thru our top folders
                     for layer in range(6): # One layout = One histogram * 6 layers (for strips)
                         layout.append([{"path":(file + structure + "Layer" + str(layer+1) + "/" + histogram), "description":(layout_desc_template + layout_name_parts[7] + str(layer+1) + " " + histogram)}])
                     phase2tkmclayout(dqmitems, layout_name, (layout[0]+layout[1]), (layout[2]+layout[3]), (layout[4]+layout[5]))
-                    layout_num = layout_num + 1
+                    layout_num += 1
                     layout = []
                     
                 # ---- PIXELS ----
@@ -44,7 +43,7 @@ for f_index, file in enumerate(top_files): # Loop thru our top folders
                     for layer in range(3): # One layout = One histogram * 3 layers (for pixels)
                         layout.append([{"path":(file + structure + "Layer" + str(layer+1) + "/" + histogram), "description":(layout_desc_template + layout_name_parts[7] + str(layer+1) + " " + histogram)}])
                     phase2tkmclayout(dqmitems, layout_name, (layout[0]+layout[1]), layout[2])
-                    layout_num = layout_num + 1
+                    layout_num += 1
                     layout = []
 
             # ----- OUTER TRACKER ENDCAPS -----
@@ -63,7 +62,7 @@ for f_index, file in enumerate(top_files): # Loop thru our top folders
                             phase2tkmclayout(dqmitems, layout_name, (layout[0]+layout[1]), (layout[2]+layout[3]))
                         else:
                             phase2tkmclayout(dqmitems, layout_name, (layout[0]+layout[1]))
-                        layout_num = layout_num + 1
+                        layout_num += 1
                         layout = []
 
         # ----- INNER TRACKER -----
@@ -88,7 +87,7 @@ for f_index, file in enumerate(top_files): # Loop thru our top folders
                     for layer in range(4): # One layout = One histogram * 4 layers
                         layout.append([{"path":(file + structure + "Layer" + str(layer+1) + "/" + histogram), "description":(layout_desc_template + layout_name_parts[7] + str(layer+1) + " " + histogram)}])
                     phase2tkmclayout(dqmitems, layout_name, (layout[0]+layout[1]), (layout[2]+layout[3]))
-                    layout_num = layout_num + 1
+                    layout_num += 1
                     layout = []
 
             # ----- INNER TRACKER ENDCAPS -----  
@@ -103,88 +102,53 @@ for f_index, file in enumerate(top_files): # Loop thru our top folders
                             phase2tkmclayout(dqmitems, layout_name, (layout[0]+layout[1]), (layout[2]+layout[3]))
                         else:
                             phase2tkmclayout(dqmitems, layout_name, (layout[0]+layout[1]), (layout[2]+layout[3]), layout[4])
-                        layout_num = layout_num + 1
+                        layout_num += 1
                         layout = []
 
-# ----- END LOOP ------
+# ----- END BARREL/ENDCAP LOOP ------
+
 # L1 TRACK
-phase2tkmclayout(dqmitems, "600 - OT L1Track Eta Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/EtaEfficiency",
-                   'description': "Eta Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/EtaResolution",
-                   'description': "Eta Resolution"}]
-                 )
+top_folder_name = "TrackerPhase2OTL1TrackV/"
+layout_num = 00
+sub_folders = ["Extended_L1TF/Displaced", "Extended_L1TF/Prompt", "Nominal_L1TF"]
 
-phase2tkmclayout(dqmitems, "601 - OT L1Track Phi Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/PhiResolution",
-                   'description': "Phi Resolution"}]
-                 )
+l1t_histogram_names = ["FinalEfficiency/EtaEfficiency", "FinalResolution/EtaResolution",
+                       "FinalEfficiency/d0Efficiency", "FinalResolution/d0Resolution",
+                       "FinalEfficiency/z0Efficiency", "FinalResolution/z0Resolution",
+                       "FinalEfficiency/LxyEfficiency",
+                       "FinalResolution/PhiResolution"]
 
-phase2tkmclayout(dqmitems, "602 - OT L1Track Lxy Efficiency",
-                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/LxyEfficiency",
-                   'description': "Lxy Efficiency"}]
-                 )
+l1t_layout_names = ["Eta Efficiency & Resolution", "",
+                    "d0 Efficiency & Resolution", "",
+                    "z0 Efficiency & Resolution", "",
+                    "Lxy Efficiency",
+                    "Phi Resolution"]
 
-phase2tkmclayout(dqmitems, "603 - OT L1Track d0 Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/d0Efficiency",
-                   'description': "d0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/d0Resolution",
-                   'description': "d0 Resolution"}]
-                 )
+layout = []
+for folder in sub_folders:
+    for h_index, histogram in enumerate(l1t_histogram_names[0:6]):
+            path = top_folder_name + folder + "/" + histogram
+            layout_name =  "6" + f"{layout_num:02}" + " - OT " + folder.replace("/", " ") + " " + l1t_layout_names[h_index-1]
+            
+            if (h_index%2==1):
+                if folder != "Nominal_L1TF":
+                    path = path + "_" + folder.lower()[14:]
+                layout_num += 1
+                layout.append([{"path":(path), "description":(histogram)}])
+                phase2tkmclayout(dqmitems, layout_name, (layout[0] + layout[1]))
+                layout = []
 
-phase2tkmclayout(dqmitems, "604 - OT L1Track z0 Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalEfficiency/z0Efficiency",
-                   'description': "z0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Nominal_L1TF/FinalResolution/z0Resolution",
-                   'description': "z0 Resolution"}]
-                 )
+            else:
+                layout.append([{"path":(path), "description":(histogram)}])
 
-phase2tkmclayout(dqmitems, "605 - OT Extended L1Track Displaced Eta Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/EtaEfficiency",
-                   'description': "Eta Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/EtaResolution_displaced",
-                   'description': "Eta Resolution"}]
-                 )
-
-phase2tkmclayout(dqmitems, "606 - OT Extended L1Track Displaced Phi Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/PhiResolution_displaced",
-                   'description': "Phi Resolution"}]
-                 )
-
-phase2tkmclayout(dqmitems, "607 - OT Extended L1Track Displaced Lxy Efficiency",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/LxyEfficiency",
-                   'description': "Lxy Efficiency"}]
-                 )
-
-phase2tkmclayout(dqmitems, "608 - OT Extended L1Track Displaced d0 Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalEfficiency/d0Efficiency",
-                   'description': "d0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Displaced/FinalResolution/d0Resolution_displaced",
-                   'description': "d0 Resolution"}]
-                 )
-
-phase2tkmclayout(dqmitems, "609 - OT Extended L1Track Prompt Eta Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/EtaEfficiency",
-                   'description': "Eta Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/EtaResolution_prompt",
-                   'description': "Eta Resolution"}]
-                 )
-
-phase2tkmclayout(dqmitems, "610 - OT Extended L1Track Prompt Phi Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/PhiResolution_prompt",
-                   'description': "Phi Resolution"}]
-                 )
-
-phase2tkmclayout(dqmitems, "611 - OT Extended L1Track Prompt Lxy Efficiency",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/LxyEfficiency",
-                   'description': "Lxy Efficiency"}]
-                 )
-
-phase2tkmclayout(dqmitems, "612 - OT Extended L1Track Prompt d0 Efficiency and Resolution",
-                 [{'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalEfficiency/d0Efficiency",
-                   'description': "d0 Efficiency"},
-                  {'path':"TrackerPhase2OTL1TrackV/Extended_L1TF/Prompt/FinalResolution/d0Resolution_prompt",
-                   'description': "d0 Resolution"}]
-                 )
+    layout_name = "6" + f"{layout_num:02}" + " - OT " + folder.replace("/", " ") + " " + l1t_layout_names[6]
+    phase2tkmclayout(dqmitems, layout_name, [{"path":(top_folder_name + folder + "/" + l1t_histogram_names[6]), "description":(l1t_histogram_names[6])}])
+    layout_num += 1
+    layout_name = "6" + f"{layout_num:02}" + " - OT " + folder.replace("/", " ") + " " + l1t_layout_names[7]
+    path = top_folder_name + folder + "/" + l1t_histogram_names[7]
+    if folder != "Nominal_L1TF":
+        path = path + "_" + folder.lower()[14:]
+    phase2tkmclayout(dqmitems, layout_name, [{"path":(path), "description":(l1t_histogram_names[7])}])
+    layout_num += 1
 
 
