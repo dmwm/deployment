@@ -1230,26 +1230,26 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
     obj->SetMaximum(6.0);
     gStyle->SetPalette(tpTimingPalette.size(), &(tpTimingPalette[0]));
   }
-  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing (map(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath)){
+  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing (map(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) || TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT timing (map(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath)){
     if(isNewStyle)
       obj->GetZaxis()->SetRangeUser(-5., 5.);
     else
       obj->GetZaxis()->SetRangeUser(45., 55.);
     gStyle->SetPalette(timingPalette.size(), &(timingPalette[0]));
   }
-  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE]+ vs E[BE]-").MatchB(fullpath)){
+  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE]+ vs E[BE]-").MatchB(fullpath) || TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT timing E[BE]+ vs E[BE]-").MatchB(fullpath)){
     gPad->SetGrid(false, false);
 
     applyDefaults = false;
   }
-  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath)){
+  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) || TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath)){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetLogx(true);
     gPad->SetGrid(false, false);
 
     applyDefaults = false;
   }
-  else if( TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) ){
+  else if( TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) || TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath)){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     obj->GetXaxis()->SetNoExponent(kTRUE);
     gStyle->SetPalette(1);
@@ -1257,7 +1257,7 @@ EcalRenderPlugin::preDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject, 
 
     applyDefaults = false;
   }
-  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath)){
+  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath) || TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath)){
     if(obj->GetMaximum() > 0.) gPad->SetLogz(true);
     gPad->SetGrid(false, false);
 
@@ -1347,7 +1347,7 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
 
   bool isNewStyle = (obj->GetUniqueID() > 0);
 
-  if(!isNewStyle && TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+-][0-1][0-9]").MatchB(fullpath)){
+  if(!isNewStyle && (TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+-][0-1][0-9]").MatchB(fullpath) || TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT timing E[BE][+-][0-1][0-9]").MatchB(fullpath))){
     if(obj->GetZaxis()) obj->GetZaxis()->SetLabelSize(0.);
     canvas->Update();
     if(timingAxis){
@@ -1367,9 +1367,12 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
     if(timingAxis)
       timingAxis->Draw();
   }
-  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) ||
+  else if(TPRegexp("E[BE]TimingTask/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) || 
+	  TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT timing vs amplitude (summary(| EE [+-])|E[BE][+-][0-1][0-9])").MatchB(fullpath) ||
           TPRegexp("E[BE]TimingTask/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath) ||
+          TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT timing E[BE][+] vs E[BE][-]").MatchB(fullpath) ||
           TPRegexp("E[BE]TimingTask/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) ||
+          TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT in-time vs BX[+-]1 amplitude(| EE [+-])").MatchB(fullpath) ||
           TPRegexp("E[BE]TriggerTowerTask/E[BE]TTT Real vs Emulated TP Et(| EE [+-])").MatchB(fullpath))
     applyDefaults = false;
   else if(TPRegexp("E[BE]SelectiveReadoutTask/E[BE]SRT TT Flags vs Et(| EE [+-])").MatchB(fullpath)) {
@@ -1404,11 +1407,21 @@ EcalRenderPlugin::postDrawByName(TCanvas* canvas, VisDQMObject const& dqmObject,
     applyDefaults = false;
   }
   else if(TPRegexp("E[BE]TimingTask/E[BE]TMT Timing vs BX").MatchB(fullpath) ||
-          TPRegexp("E[BE]TimingTask/E[BE]TMT Timing vs Finely Binned BX").MatchB(fullpath) ) {
+          TPRegexp("E[BE]TimingTask/E[BE]TMT Timing vs Finely Binned BX").MatchB(fullpath)) {
     gStyle->SetOptStat(0);
     obj->SetMarkerStyle(kDot);
     obj->GetXaxis()->SetTitleOffset(3.);
     obj->GetYaxis()->SetRangeUser(-1.5, 0.);
+    obj->GetYaxis()->SetNdivisions(15);
+    gPad->SetGridy();
+    applyDefaults = false;
+  }
+  else if(TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT Timing vs BX").MatchB(fullpath) ||
+          TPRegexp("E[BE]TimingTask/nonCorrectedTime/E[BE]TMT Timing vs Finely Binned BX").MatchB(fullpath)) {
+    gStyle->SetOptStat(0);
+    obj->SetMarkerStyle(kDot);
+    obj->GetXaxis()->SetTitleOffset(3.);
+    obj->GetYaxis()->SetRangeUser(-10., 5.);
     obj->GetYaxis()->SetNdivisions(15);
     gPad->SetGridy();
     applyDefaults = false;
