@@ -1142,6 +1142,9 @@ csclayout(dqmitems,"00 Data Integrity/Physics Efficiency 12 - Timing",
   ]
   )
 
+csclayout(dqmitems,"00 Data Integrity/Physics Efficiency 13 - Tag-and-Probe Segments Efficiency",
+    [{'path': "CSC/Segment_TnP/Task/CSC_chamberEff_allCh", 'description': "CSC Tag-and-Probe Segments Efficiency."}])
+
 csclayout(dqmitems,"01 FED Data Integrity/00 FED Stats",
     [{'path':"CSC/Summary/FEDEntries", 'description': "Histogram shows the number of FED/DCC events."},
      {'path':"CSC/Summary/FEDBufferSize", 'description':"Histogram shows FED/DCCs buffer size (logarithmic scale)."}],
