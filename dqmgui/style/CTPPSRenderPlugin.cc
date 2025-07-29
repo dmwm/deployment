@@ -1,6 +1,7 @@
 #include "DQM/DQMRenderPlugin.h"
 
 #include "TH1F.h"
+#include "TProfile.h"
 #include "TH2F.h"
 #include "TCanvas.h"
 #include "TStyle.h"
@@ -27,6 +28,8 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 
 			if (dynamic_cast<TH1F*>(o.object))
 				preDrawTH1F(c, o);
+			if (dynamic_cast<TProfile*>(o.object))
+				preDrawTProfile(c, o);
 
 			if (dynamic_cast<TH2F*>(o.object))
 				preDrawTH2F(c, o);
@@ -40,6 +43,8 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 			
 			if (dynamic_cast<TH1F*>(o.object))
 				postDrawTH1F(c, o);
+			if (dynamic_cast<TProfile*>(o.object))
+				postDrawTProfile(c, o);
 
 			if (dynamic_cast<TH2F*>(o.object))
 				postDrawTH2F(c, o);
@@ -65,6 +70,16 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 			obj->SetLineWidth(2);
 		}
 
+		void preDrawTProfile(TCanvas *, const VisDQMObject &o)
+		{
+			TProfile* obj = dynamic_cast<TProfile*>(o.object);
+			assert(obj);
+
+			obj->SetLineWidth(2);
+			gStyle->SetOptStat(0);
+			obj->SetStats(kFALSE);
+		}
+
 		void preDrawTH2F(TCanvas *, const VisDQMObject &o)
 		{
 			TH2F* obj = dynamic_cast<TH2F*>(o.object);
@@ -85,13 +100,21 @@ class CTPPSRenderPlugin : public DQMRenderPlugin
 			gStyle->SetOptStat(0);
 			obj->SetStats(kFALSE);
 			gStyle->SetPalette(1);
-			if(o.name.find("ROCs hits multiplicity per event vs LS") != std::string::npos)
+			if(
+				(o.name.find("ROCs hits multiplicity per event vs LS") != std::string::npos) ||
+				(o.name.find("track intercept point") != std::string::npos)
+		)
 			  gPad->SetLogz(1);
 		}
 
 		void postDrawTH1F(TCanvas *c, const VisDQMObject &)
 		{
 			c->SetGridx();
+			c->SetGridy();
+		}
+
+		void postDrawTProfile(TCanvas *c, const VisDQMObject &)
+		{
 			c->SetGridy();
 		}
 
