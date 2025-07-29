@@ -707,6 +707,12 @@ ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/21 noniso_bx_ieta_first
            [{'path': 'L1T/L1TObjects/L1TEGamma/timing/First_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_firstbunch_ptmin20p0', 'description': 'L1T EGamma object BX relative to the BX of the L1_FirstCollisionInTrain algorithm vs. L1T EGamma object iEta, for events where the L1_FirstCollisionInTrain algorithm has fired within +/-2 BX around L1A BX 0. L1T EGamma objects must have pT >= 20 GeV. BX 0 in the histogram marks the first bunch in a bunch train.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/22 noniso_bx_ieta_lastbunch',
            [{'path': 'L1T/L1TObjects/L1TEGamma/timing/Last_bunch/ptmin_20p0_gev/egamma_noniso_bx_ieta_lastbunch_ptmin20p0', 'description': 'L1T EGamma object BX relative to the BX of the L1_LastCollisionInTrain algorithm vs. L1T EGamma object iEta, for events where the L1_LastCollisionInTrain algorithm has fired within +/-2 BX around L1A BX 0. L1T EGamma objects must have pT >= 20 GeV. BX 0 in the histogram marks the last bunch in a bunch train.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/23 Rate of TP vs Et Threshold',
+           [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT Rate of TP with Et above threshold vs Et threshold', 'description': 'Number of TPs above Et threshold in EB'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/24 Rate of TP (Spike-matched) vs Et Threshold',
+           [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT Rate of TP with Et above threshold (spike matched) vs Et threshold', 'description': 'Number of spike-matched TPs above Et threshold in EB'}])
+ecallayout(dqmitems, 'Ecal/Layouts/06 Trigger Primitives/25 Efficiency of spike-matching',
+           [{'path': 'EcalBarrel/EBTriggerTowerTask/EBTTT Efficiency of spike killer matching', 'description': 'Efficiency of spike-matching'}])
 
 # By SuperModule _______________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
@@ -1092,6 +1098,20 @@ ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/12 DCC-SRP Desync Trend',
          {'path': 'Ecal/Trends/RawDataTask number of EBRDT L1A SRP errors', 'description': 'Trend of the number of L1A value mismatches between DCC and SRP in EB'}],
         [{'path': 'Ecal/Trends/RawDataTask number of EERDT bunch crossing SRP errors', 'description': 'Trend of the number of bunch crossing value mismatches between DCC and SRP in EE.'},
          {'path': 'Ecal/Trends/RawDataTask number of EERDT L1A SRP errors', 'description': 'Trend of the number of L1A value mismatches between DCC and SRP in EE'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/13 Trend of Et sum of TPs (Et > 13 GeV in EB)',
+        [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 13 GeV', 'description': 'Trend of Et sum of TPs in EB with Et > 13 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/14 Trend of Et sum of TPs (Et > 20 GeV in EB)',
+        [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 20 GeV', 'description': 'Trend of Et sum of TPs in EB with Et > 20 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/15 Trend of Et sum of TPs (Et > 30 GeV in EB)',
+        [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 30 GeV', 'description': 'Trend of Et sum of TPs in EB with Et > 30 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/16 Trend of Et sum of Spike-matched TPs (Et > 13 GeV in EB)',
+        [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 13 GeV (Spike Matched)', 'description': 'Trend of Et sum of TPs in EB (spike-matched) with Et > 13 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/17 Trend of Et sum of Spike-matched TPs (Et > 20 GeV in EB)',
+        [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 20 GeV (Spike Matched)', 'description': 'Trend of Et sum of TPs in EB (spike-matched) with Et > 20 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/18 Trend of Et sum of Spike-matched TPs (Et > 30 GeV in EB)',
+        [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 30 GeV (Spike Matched)', 'description': 'Trend of Et sum of TPs in EB (spike-matched) with Et > 30 GeV.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/19 PU Trend',
+        [{'path': 'Ecal/Trends/PU per Lumisection', 'description': 'Trend of PU per LS.'}])
 
 #____________________ Layouts / 12 By SuperModule ____________________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
