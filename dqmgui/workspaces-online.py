@@ -293,6 +293,24 @@ server.workspace('DQMContent', 34, 'Calorimeters', 'Castor', '^Castor/', '',
                  'Castor/Layouts/Digi/05 - DigiSize',
                 )
 
+server.workspace('DQMContent', 35, 'Calorimeters', 'HGCAL', '^HGCAL/', '',
+                 "HGCAL/Digis/econdPayload",
+                 "HGCAL/Digis/econdQualityH",
+                 "HGCAL/Digis/cbQualityH",
+                 "HGCAL/Modules/hex_avgadc_module_0",
+                 "HGCAL/Modules/hex_avgadc_module_1",
+                 "HGCAL/Modules/hex_avgadc_module_2",
+                 "HGCAL/Modules/hex_avgadc_module_3",
+                 "HGCAL/Modules/hex_avgadc_module_4",
+                 "HGCAL/Modules/hex_avgadc_module_5",
+                 "HGCAL/Digis/adc_module_0",
+                 "HGCAL/Digis/adc_module_1",
+                 "HGCAL/Digis/adc_module_2",
+                 "HGCAL/Digis/adc_module_3",
+                 "HGCAL/Digis/adc_module_4",
+                 "HGCAL/Digis/adc_module_5",
+                )
+
 # Muons workspaces:
 server.workspace('DQMContent', 40, 'Muons', 'DT', '^DT/', '',
                  'DT/Layouts/00-Summary/00-DataIntegritySummary',
