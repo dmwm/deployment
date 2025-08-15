@@ -1048,8 +1048,6 @@ ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/16 Trend of Et sum of Spike-matched 
         [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 20 GeV (Spike Matched)', 'description': 'Trend of Et sum of TPs in EB (spike-matched) with Et > 20 GeV.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/17 Trend of Et sum of Spike-matched TPs (Et > 30 GeV in EB)',
         [{'path': 'Ecal/Trends/TriggerTowerTask Et sum of TPs in EB above 30 GeV (Spike Matched)', 'description': 'Trend of Et sum of TPs in EB (spike-matched) with Et > 30 GeV.'}])
-ecallayout(dqmitems, 'Ecal/Layouts/11 Trend/18 PU Trend',
-        [{'path': 'Ecal/Trends/PU per Lumisection', 'description': 'Trend of PU per LS.'}])
 
 #____________________ Layouts / 12 By SuperModule ____________________
 for (detector, label, maxchannel) in [('Endcap', 'EE', 9), ('Barrel', 'EB', 18)]: # Loop over EB,EE
