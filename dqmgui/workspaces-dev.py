@@ -34,7 +34,7 @@ server.workspace('DQMContent', 16, 'Tracker/Muons', 'GEM', '^GEM/', '')
 server.workspace('DQMContent', 21, 'Calorimeter', 'Ecal', '^Ecal(|Barrel|Endcap|Calibration)/', '')
 server.workspace('DQMContent', 22, 'Calorimeter', 'EcalPreshower', '^EcalPreshower', '')
 server.workspace('DQMContent', 23, 'Calorimeter', 'HCAL', '^Hcal/', '')
-server.workspace('DQMContent', 24, 'Calorimeter', 'CASTOR', '^Castor/', '')
+# server.workspace('DQMContent', 24, 'Calorimeter', 'CASTOR', '^Castor/', '')
 server.workspace('DQMContent', 25, 'Calorimeter', 'HCALcalib', '^HcalCalib/', '')
 
 # Trigger/Lumi workspaces:
