@@ -286,12 +286,12 @@ server.workspace('DQMContent',33,'Calorimeters','HCALcalib', '^HcalCalib/', '',
                  'HcalCalib/Layouts/15 LED TDCTime'
                 )
 
-server.workspace('DQMContent', 34, 'Calorimeters', 'Castor', '^Castor/', '',
-                 'Castor/Layouts/01 - Map of frontend and readout errors',
-                 'Castor/Layouts/02 - Channel-wise timing',
-                 'Castor/Layouts/02b - Channel-wise timing (rms)',
-                 'Castor/Layouts/Digi/05 - DigiSize',
-                )
+# server.workspace('DQMContent', 34, 'Calorimeters', 'Castor', '^Castor/', '',
+#                  'Castor/Layouts/01 - Map of frontend and readout errors',
+#                  'Castor/Layouts/02 - Channel-wise timing',
+#                  'Castor/Layouts/02b - Channel-wise timing (rms)',
+#                  'Castor/Layouts/Digi/05 - DigiSize',
+#                 )
 
 server.workspace('DQMContent', 35, 'Calorimeters', 'HGCAL', '^HGCAL/', '',
                  "HGCAL/Digis/econdPayload",

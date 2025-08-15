@@ -197,12 +197,12 @@ server.workspace('DQMContent',33,'Calorimeters','HCALcalib', '^HcalCalib/', '',
                 )
 
 
-server.workspace('DQMContent', 34, 'Calorimeters', 'Castor', '^Castor/', '',
-                 'Castor/Layouts/01 - Map of frontend and readout errors',
-                 'Castor/Layouts/02 - Channel-wise timing',
-                 'Castor/Layouts/02b - Channel-wise timing (rms)',
-                 'Castor/Layouts/Digi/05 - DigiSize',
-                )
+# server.workspace('DQMContent', 34, 'Calorimeters', 'Castor', '^Castor/', '',
+#                  'Castor/Layouts/01 - Map of frontend and readout errors',
+#                  'Castor/Layouts/02 - Channel-wise timing',
+#                  'Castor/Layouts/02b - Channel-wise timing (rms)',
+#                  'Castor/Layouts/Digi/05 - DigiSize',
+#                 )
 
 # Muons workspaces:
 server.workspace('DQMContent', 40, 'Muons', 'CSC', '^CSC/', '',
