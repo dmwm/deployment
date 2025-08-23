@@ -90,7 +90,7 @@ data.excludeDataTier = []
 data.relvalPolicy = [{"datatier": "GEN-SIM", "destinations": ["T2_CH_CERN"]},
                      {"datatier": "ALCARECO", "destinations": ["T2_CH_CERN"]},
                      {"datatier": "default", "destinations": ["T2_CH_CERN"]}]
-data.rucioRSEAttribute = "ddm_quota"
+data.rucioRSEAttribute = None  # "ddm_quota"
 data.rucioDiskRuleWeight = "ddm_quota"
 data.rucioTapeExpression = "rse_type=TAPE\cms_type=test"  # "rse_type=TAPE\cms_type=test\\rse=T0_CH_CERN_Tape"
 data.rulesLifetime = RULE_LIFETIME

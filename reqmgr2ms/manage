@@ -53,6 +53,8 @@ else
   CFGFILERCLEAN=$CFGDIR/config-ruleCleaner.py
   CFGFILEUNMERGED=$CFGDIR/config-unmerged.py
 fi
+CFGFILEOUT=$CFGDIR # force ms-output to be disabled
+CFGFILEUNMERGED=$CFGDIR # force ms-unmerged to be disabled
 
 LOG_TRANS=ms-transferor
 LOG_MON=ms-monitor
