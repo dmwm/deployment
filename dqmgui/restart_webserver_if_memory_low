@@ -1,0 +1,25 @@
+#!/bin/env bash
+
+# Workaround script for detecting if the current machine
+# has total free memory under a threshold, and if it does
+# restarts the DQMGUI's webserver.
+# Accepts an installation dir as the first arg (defaults to /data/srv),
+# and a free memory threshold as the second arg (defaults to 5).
+# Should be run periodically from a crontab.
+
+installation_dir=${1:-/data/srv}
+free_threshold=${2:-5}
+
+# Get total and available memory in kilobytes
+total_mem=$(grep 'MemTotal' /proc/meminfo | awk '{print $2}')
+available_mem=$(grep 'MemAvailable' /proc/meminfo | awk '{print $2}')
+
+# Calculate available memory percentage
+available_percent=$(echo "scale=2; $available_mem * 100 / $total_mem" | bc)
+
+# Compare with threshold
+if (($(echo "$available_percent < $free_threshold" | bc -l))); then
+    date
+    echo "Free memory (${available_percent}%) under threshold (${free_threshold}%)"
+    "$installation_dir/current/config/dqmgui/manage" xrestart webserver 'I did read documentation'
+fi
