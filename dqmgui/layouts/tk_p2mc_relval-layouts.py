@@ -123,5 +123,5 @@ p2trackervalidationlayout(dqmitems, "18 - OT extended L1Tracking prompt z0",
                           'description': "z0 resolution of extended L1Tracks (prompt)"}])
 
 p2trackervalidationlayout(dqmitems, "19 - OT number of L1Track Particles",
-                        [{ 'path':"TrackerPhase2OTL1TrackV/trackParticles/n_trackParts",
+                        [{ 'path':"TrackerPhase2OTL1TrackV/trackParticles/trackParts_Num",
                            'description': "Number of L1Track Particles"}])
