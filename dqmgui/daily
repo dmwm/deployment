@@ -59,4 +59,4 @@ done
 
 ######################################################################
 # Rotate logs
-/usr/sbin/logrotate "$TOP/current/apps/dqmgui/128/etc/logrotate.conf" --state "$TOP/state/dqmgui/logrotate.state" --verbose --log "$TOP/logs/dqmgui/logrotate.log"
+/usr/sbin/logrotate "$TOP/current/apps/dqmgui/128/etc/logrotate.conf" --state "$TOP/state/dqmgui/logrotate.state" --verbose --log "$TOP/logs/dqmgui/logrotate.log" &>/dev/null
