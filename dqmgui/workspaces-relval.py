@@ -95,7 +95,26 @@ server.workspace('DQMContent', 30, 'Monte Carlo', 'MC Tk' , '^(Tk/|TrackerDigisV
                  'MCLayouts/Tk/04 - TrackingMCTruth',
                  'MCLayouts/Tk/05 - TrackingRecHits',
                 )
-server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Tk Phase-2' , '^(TrackerPhase2.*/|SiOuter.*)', 'MCLayouts/PhaseTk')
+server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Tk Phase-2', '^TrackerPhase2(OT|IT)(Cluster|L1Track|RecHit|Stub|TrackingRecHit)V', 'MCLayouts/Tk_Phase2',
+                 'MCLayouts/Tk_Phase2/01 - IT Cluster Delta Phi',
+                 'MCLayouts/Tk_Phase2/02 - IT RecHit Delta Phi',
+                 'MCLayouts/Tk_Phase2/03 - IT TrackingRecHit Delta Phi',
+                 'MCLayouts/Tk_Phase2/04 - OT Cluster Delta Phi',
+                 'MCLayouts/Tk_Phase2/05 - OT RecHit Delta Phi',
+                 'MCLayouts/Tk_Phase2/06 - OT TrackingRecHit Delta Phi',
+                 'MCLayouts/Tk_Phase2/07 - OT Stub Delta Phi',
+                 'MCLayouts/Tk_Phase2/08 - OT Stub Delta R',
+                 'MCLayouts/Tk_Phase2/09 - OT Stub Rate',
+                 'MCLayouts/Tk_Phase2/10 - OT L1Tracking Nominal eta',
+                 'MCLayouts/Tk_Phase2/11 - OT L1Tracking Nominal d0',
+                 'MCLayouts/Tk_Phase2/12 - OT L1Tracking Nominal z0',
+                 'MCLayouts/Tk_Phase2/13 - OT extended L1Tracking displaced eta',
+                 'MCLayouts/Tk_Phase2/14 - OT extended L1Tracking displaced d0',
+                 'MCLayouts/Tk_Phase2/15 - OT extended L1Tracking displaced z0',
+                 'MCLayouts/Tk_Phase2/16 - OT extended L1Tracking prompt eta',
+                 'MCLayouts/Tk_Phase2/17 - OT extended L1Tracking prompt d0',
+                 'MCLayouts/Tk_Phase2/18 - OT extended L1Tracking prompt z0',
+                 'MCLayouts/Tk_Phase2/19 - OT number of L1Track Particles')
 server.workspace('DQMContent', 31, 'Monte Carlo', 'MC Ecal' , '^Ecal.*/', 'MCLayouts/Ecal')
 server.workspace('DQMContent', 32, 'Monte Carlo', 'MC Hcal' , '(^Hcal(|NoiseRatesD|RecHitsD|DigisV|HitsV)|^CaloTowersD)/', 'MCLayouts/Hcal')
 server.workspace('DQMContent', 33, 'Monte Carlo', 'MC DT' , '^DT/', '')
