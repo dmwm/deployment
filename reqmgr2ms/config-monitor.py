@@ -22,12 +22,8 @@ AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
 from ReqMgr2MSSecrets import USER_AMQ, PASS_AMQ, AMQ_TOPIC
 
-if BASE_URL == "https://cmsweb.cern.ch":
-    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
-    RUCIO_URL="http://cms-rucio.cern.ch"
-else:
-    RUCIO_AUTH_URL="https://cms-rucio-auth-int.cern.ch"
-    RUCIO_URL="http://cms-rucio-int.cern.ch"
+RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
+RUCIO_URL="http://cms-rucio.cern.ch"
 
 config = Configuration()
 
@@ -71,6 +67,8 @@ data.reqmgr2Url = "%s/reqmgr2" % BASE_URL
 data.enableStatusTransition = True
 data.verbose = True
 data.interval = 600
+# interval to evaluate data transfers, every hour
+data.updateInterval = 1 * 60 * 60
 data.services = ['monitor']
 data.rucioAccount = "wmcore_transferor"
 data.rucioAuthUrl = RUCIO_AUTH_URL

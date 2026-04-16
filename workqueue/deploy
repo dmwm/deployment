@@ -45,6 +45,8 @@ deploy_workqueue_sw()
         base_url="https://`hostname -f`"
         ;;
   esac
+  rucio_host_url=http://cms-rucio.cern.ch
+  rucio_auth_url=https://cms-rucio-auth.cern.ch
   perl -p -i -e "s{\"\@\@BASE_URL\@\@\"}{\"$base_url\"}g;" \
        $root/$cfgversion/config/$project/config.py
 
