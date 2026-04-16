@@ -42,3 +42,24 @@ pfClusterlayout(dqmitems, "006 - Compare PFCluster Rechit multiplicity",
       'description': "RecHit multiplicity in PFClusters GPU vs CPU",
       'draw': {'withref': "no", 'drawopts': "COLZ"}}]
    )
+
+pfClusterlayout(dqmitems, "008 - PFCluster Energy GPU-CPU difference",
+   [{'path':  "ParticleFlow/pfCaloGPUCompDir/MultiplicityDiff",
+      'description': "PFCluster Multiplicity GPU - CPU",
+      'draw': {'withref': "no"}}],
+   [{'path':  "ParticleFlow/pfCaloGPUCompDir/EnergyDiff",
+      'description': "PFCluster Energy GPU - CPU",
+      'draw': {'withref': "no"}}],
+   [{'path':  "ParticleFlow/pfCaloGPUCompDir/EtaDiff",
+      'description': "PFCluster Eta GPU - CPU",
+      'draw': {'withref': "no"}}],
+   [{'path':  "ParticleFlow/pfCaloGPUCompDir/PhiDiff",
+      'description': "PFCluster Phi GPU - CPU",
+      'draw': {'withref': "no"}}],
+   [{'path':  "ParticleFlow/pfCaloGPUCompDir/LayerDiff",
+      'description': "PFCluster Layer GPU - CPU",
+      'draw': {'withref': "no"}}],
+   [{'path':  "ParticleFlow/pfCaloGPUCompDir/DepthDiff",
+      'description': "PFCluster Depth GPU - CPU",
+      'draw': {'withref': "no"}}]
+   )
