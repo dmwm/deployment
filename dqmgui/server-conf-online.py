@@ -65,7 +65,10 @@ if HOSTALIAS == "dqm-prod-local" or HOSTALIAS == "dqmsrv-c2a06-07-01":  # Online
     SERVICENAME = "Online"
     BASEURL = "/dqm/online"
     UPLOADDIR = "/dqmdata/dqm/uploads"
-    FILEREPO = {"Original": "/dqmdata/dqm/repository/original/OnlineData"}
+    FILEREPO = {
+        "Original": "/dqmdata/dqm/repository/original/OnlineData",
+        "Offline": "/dqmdata/dqm/repository/original/OfflineData",
+    }
     COLLHOST = "dqm-prod-local.cms"
 
 elif HOSTALIAS == "dqm-prod-offsite":
@@ -110,7 +113,7 @@ elif HOSTALIAS == "dqmfu-c2b03-46-01":  # Muon DQMFU
         SERVERPORT = 9010
         SERVICENAME = "Online DT"
         BASEURL = "/dqm/dt-online"
-    
+
 # Server configuration.
 modules = ("Monitoring.DQM.GUI",)
 
