@@ -17,14 +17,9 @@ LOG_DB_URL = "%s/wmstats_logdb" % COUCH_URL
 LOG_REPORTER = "reqmgr2ms_transferor"
 ROOTDIR = __file__.rsplit('/', 3)[0]
 AMQ_HOST_PORT = [('cms-mb.cern.ch', 61313)]
-if BASE_URL == "https://cmsweb.cern.ch":
-    RULE_LIFETIME=None
-    RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
-    RUCIO_URL="http://cms-rucio.cern.ch"
-else:
-    RULE_LIFETIME=24 * 60 * 60  # 24h
-    RUCIO_AUTH_URL="https://cms-rucio-auth-int.cern.ch"
-    RUCIO_URL="http://cms-rucio-int.cern.ch"
+RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
+RUCIO_URL="http://cms-rucio.cern.ch"
+RULE_LIFETIME=3 * 24 * 60 * 60  # 3 days
 
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
