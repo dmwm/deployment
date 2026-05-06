@@ -363,23 +363,23 @@ update_couchapps()
   mkdir -p $tmp_dir/couchapps/WMStats/vendor/{jquery,datatables}/_attachments
 
   # jquery-ui.min.js
-  echo -e "\nDownloading jquery-ui.min.js..."
-  wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js ||
+  echo -e "\nDownloading jquery libraries"
+  wget -nv https://code.jquery.com/ui/1.12.1/jquery-ui.min.js ||
     { echo "Error downloading jquery-ui.min.js"; exit 3; }
   cp jquery-ui.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery-ui.min.js
 
   # jquery.min.js
   echo -e "\nDownloading jquery.min.js..."
-  wget -nv http://code.jquery.com/jquery-1.7.2.min.js ||
-    { echo "Error downloading jquery-1.7.2.min.js"; exit 3; }
-  cp jquery-1.7.2.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery.min.js
+  wget -nv http://code.jquery.com/jquery-1.12.1.min.js ||
+    { echo "Error downloading jquery-1.12.1.min.js"; exit 3; }
+  cp jquery-1.12.1.min.js $tmp_dir/couchapps/WMStats/vendor/jquery/_attachments/jquery.min.js
 
   # Datatables
   echo -e "\nDownloading Datatables..."
-  wget -nv http://datatables.net/releases/DataTables-1.9.1.zip ||
-    { echo "Error downloading Datatables-1.9.1.zip"; exit 3; }
-  unzip DataTables-1.9.1.zip &> /dev/null
-  cp DataTables*/{media/js/jquery.dataTables.min,extras/ColVis/media/js/ColVis.min}.js $tmp_dir/couchapps/WMStats/vendor/datatables/_attachments
+  wget -nv http://datatables.net/releases/DataTables-1.11.2.zip ||
+    { echo "Error downloading DataTables-1.11.2.zip"; exit 3; }
+  unzip DataTables-1.11.2.zip &> /dev/null
+  cp DataTables-*/media/js/jquery.dataTables.min.js $tmp_dir/couchapps/WMStats/vendor/datatables/_attachments
 
   # YUI library, required by WorkQueue
   # List of required files at: https://github.com/dmwm/WMCore/blob/master/bin/wmagent-couchapp-init#L135
