@@ -25,6 +25,9 @@ else:
     RULE_LIFETIME=24 * 60 * 60  # 24h
     RUCIO_AUTH_URL="https://cms-rucio-auth-int.cern.ch"
     RUCIO_URL="http://cms-rucio-int.cern.ch"
+RUCIO_PROD_ACCT = "wmcore_transferor"
+RUCIO_RELVAL_ACCT = "wmcore_transferor_relval"
+
 
 # load AMQ credentials
 sys.path.append(path.join(ROOTDIR, 'auth/reqmgr2ms'))
@@ -79,7 +82,8 @@ data.quotaUsage = 0.9
 data.minimumThreshold = 1 * (1000 ** 4)  # 1 TB (terabyte)
 data.rulesLifetime = RULE_LIFETIME
 data.rucioRuleWeight = "ddm_quota"
-data.rucioAccount = "wmcore_transferor"
+data.rucioAccount = RUCIO_PROD_ACCT
+data.rucioAccountRelVal = RUCIO_RELVAL_ACCT
 data.rucioAuthUrl = RUCIO_AUTH_URL
 data.rucioUrl = RUCIO_URL
 data.toAddr = ["alan.malta@cern.ch", "todor.trendafilov.ivanov@cern.ch", "kenyi.paolo.hurtado.anampa@cern.ch", "h.ozturk@cern.ch"]

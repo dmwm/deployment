@@ -42,7 +42,6 @@ except ImportError:
     PASS_AMQ=None
     AMQ_TOPIC=None
 
-RUCIO_ACCT = "wmcore_transferor"
 # Production service has to point to production Rucio, anything else will use pre-production
 if BASE_URL == "https://cmsweb.cern.ch":
     RUCIO_AUTH_URL="https://cms-rucio-auth.cern.ch"
@@ -50,6 +49,8 @@ if BASE_URL == "https://cmsweb.cern.ch":
 else:
     RUCIO_AUTH_URL="https://cms-rucio-auth-int.cern.ch"
     RUCIO_URL="http://cms-rucio-int.cern.ch"
+RUCIO_ACCT = "wmcore_transferor"
+RUCIO_RELVAL_ACCT = "wmcore_transferor_relval"
 
 config = Configuration()
 
@@ -97,6 +98,7 @@ def setWorkQueueCommonConfig(config):
     config.queueParams['central_logdb_url'] = LOG_DB_URL
     config.queueParams['log_reporter'] = LOG_REPORTER
     config.queueParams['rucioAccount'] = RUCIO_ACCT
+    config.queueParams['rucioAccountRelVal'] = RUCIO_RELVAL_ACCT
     config.queueParams['rucioAuthUrl'] = RUCIO_AUTH_URL
     config.queueParams['rucioUrl'] = RUCIO_URL
 
