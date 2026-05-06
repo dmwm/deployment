@@ -82,6 +82,14 @@ ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/13 Led 2 PN',
 	   [{'path': 'EcalEndcap/EESummaryClient/EELDT PN led quality summary L2', 'description': 'Summary of the led data quality in the PN diodes. A channel is red if mean / expected < 0.1 or RMS / expected > 1.0. Expected amplitudes are 800.0, 800.0 for led 1 and 2 respectively. Channels with less than 3 are not considered.'}])
 ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/14 Error Trends',
 	   [{'path': 'Ecal/Trends/RawDataTask accumulated number of sync errors', 'description': 'Accumulated trend of the number of synchronization errors (L1A & BX mismatches) between DCC and FE in this run.'}],[{'path': 'Ecal/Trends/IntegrityTask number of integrity errors', 'description': 'Trend of the number of integrity errors.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/15 RMS Map',
+       [{'path': 'EcalBarrel/EBSummaryClient/EBPOT pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'}],
+       [{'path': 'EcalEndcap/EESummaryClient/EEPOT EE - pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'},
+        {'path': 'EcalEndcap/EESummaryClient/EEPOT EE + pedestal G12 RMS map', 'description': '2D distribution of the presample RMS. Channels with entries less than 6 are not considered.'}])
+ecallayout(dqmitems, 'Ecal/Layouts/00 Overview/16 Basic Cluster Energy',
+       [{'path': 'EcalBarrel/EBClusterTask/EBCLT BC energy map', 'description': '2D distribution of the mean energy of the basic clusters.'}],
+       [{'path': 'EcalEndcap/EEClusterTask/EECLT BC energy map EE -', 'description': '2D distribution of the mean energy of the basic clusters.'},
+        {'path': 'EcalEndcap/EEClusterTask/EECLT BC energy map EE +', 'description': '2D distribution of the mean energy of the basic clusters.'}])
 
 #____________________ Layouts / 01 Raw Data ____________________
 ecallayout(dqmitems, 'Ecal/Layouts/01 Raw Data/00 FEStatus Summary',
