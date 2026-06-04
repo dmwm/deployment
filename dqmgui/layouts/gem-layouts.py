@@ -30,26 +30,26 @@ GEMLayout(dqmitems, 'Common/04 GE11-P-L2 Lumi-based chamber status',
     )
 
 
-GEMLayout(dqmitems, 'Common/05 GE21-M-L1-M1 Lumi-based chamber status', 
-    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M1', 'description': 'Lumi-based chamber status in GE21-M-L1-M1'}], 
+GEMLayout(dqmitems, 'Common/05 GE21-M-L1-M5 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M5', 'description': 'Lumi-based chamber status in GE21-M-L1-M5'}], 
     )
 
 
 
-GEMLayout(dqmitems, 'Common/06 GE21-M-L1-M2 Lumi-based chamber status', 
-    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M2', 'description': 'Lumi-based chamber status in GE21-M-L1-M2'}], 
+GEMLayout(dqmitems, 'Common/06 GE21-M-L1-M6 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M6', 'description': 'Lumi-based chamber status in GE21-M-L1-M6'}], 
     )
 
 
 
-GEMLayout(dqmitems, 'Common/07 GE21-M-L1-M3 Lumi-based chamber status', 
-    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M3', 'description': 'Lumi-based chamber status in GE21-M-L1-M3'}], 
+GEMLayout(dqmitems, 'Common/07 GE21-M-L1-M7 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M7', 'description': 'Lumi-based chamber status in GE21-M-L1-M7'}], 
     )
 
 
 
-GEMLayout(dqmitems, 'Common/08 GE21-M-L1-M4 Lumi-based chamber status', 
-    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M4', 'description': 'Lumi-based chamber status in GE21-M-L1-M4'}], 
+GEMLayout(dqmitems, 'Common/08 GE21-M-L1-M8 Lumi-based chamber status', 
+    [{'path': 'GEM/EventInfo/chamberStatus_inLumi_GE21-M-L1-M8', 'description': 'Lumi-based chamber status in GE21-M-L1-M8'}], 
     )
 
 
@@ -120,23 +120,23 @@ GEMLayout(dqmitems, 'Common/21 GE11-P-L2 OptoHybrid status',
     )
 
 
-GEMLayout(dqmitems, 'Common/22 GE21-M-L1-M1 OptoHybrid status', 
-    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M1', 'description': 'OptoHybrid status in GE21-M-L1-M1'}], 
+GEMLayout(dqmitems, 'Common/22 GE21-M-L1-M5 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M5', 'description': 'OptoHybrid status in GE21-M-L1-M5'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/23 GE21-M-L1-M2 OptoHybrid status', 
-    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M2', 'description': 'OptoHybrid status in GE21-M-L1-M2'}], 
+GEMLayout(dqmitems, 'Common/23 GE21-M-L1-M6 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M6', 'description': 'OptoHybrid status in GE21-M-L1-M6'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/24 GE21-M-L1-M3 OptoHybrid status', 
-    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M3', 'description': 'OptoHybrid status in GE21-M-L1-M3'}], 
+GEMLayout(dqmitems, 'Common/24 GE21-M-L1-M7 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M7', 'description': 'OptoHybrid status in GE21-M-L1-M7'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/25 GE21-M-L1-M4 OptoHybrid status', 
-    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M4', 'description': 'OptoHybrid status in GE21-M-L1-M4'}], 
+GEMLayout(dqmitems, 'Common/25 GE21-M-L1-M8 OptoHybrid status', 
+    [{'path': 'GEM/DAQStatus/oh_status_GE21-M-L1-M8', 'description': 'OptoHybrid status in GE21-M-L1-M8'}], 
     )
 
 
@@ -180,24 +180,24 @@ GEMLayout(dqmitems, 'Common/33 GE11-P-L2 VFAT status (chamber vs. VFAT)',
     )
 
 
-GEMLayout(dqmitems, 'Common/34 GE21-M-L1-M1 VFAT status (chamber vs. VFAT)', 
-    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M1', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M1'}], 
+GEMLayout(dqmitems, 'Common/34 GE21-M-L1-M5 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M5', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M5'}], 
     )
 
 
 
-GEMLayout(dqmitems, 'Common/35 GE21-M-L1-M2 VFAT status (chamber vs. VFAT)', 
-    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M2', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M2'}], 
+GEMLayout(dqmitems, 'Common/35 GE21-M-L1-M6 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M6', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M6'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/36 GE21-M-L1-M3 VFAT status (chamber vs. VFAT)', 
-    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M3', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M3'}], 
+GEMLayout(dqmitems, 'Common/36 GE21-M-L1-M7 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M7', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M7'}], 
     )
 
 
-GEMLayout(dqmitems, 'Common/37 GE21-M-L1-M4 VFAT status (chamber vs. VFAT)', 
-    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M4', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M4'}], 
+GEMLayout(dqmitems, 'Common/37 GE21-M-L1-M8 VFAT status (chamber vs. VFAT)', 
+    [{'path': 'GEM/EventInfo/vfat_statusSummary_GE21-M-L1-M8', 'description': 'VFAT status (chamber vs. VFAT) in GE21-M-L1-M8'}], 
     )
 
 
