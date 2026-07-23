@@ -96,6 +96,10 @@ vocms0737:*)
   FLAVOR=relval
   _kerberos_init
   ;;
+vocms0732:*)
+  FLAVOR=online
+  _kerberos_init
+  ;;
 # Private instances get the dev flavor, unless specified differently
 *:cern.ch) FLAVOR=dev ;;
 esac
@@ -295,6 +299,14 @@ start_agents() {
   dqmsrv-c2a06-08-01:*agents*)
     start_agents_dqm_integration
     ;;
+  ##### OFFLINE: offsite prod online server
+  # alias: "historical online dqm"
+  # the server runs
+  # - the import daemon
+  # nothing gets backed up
+  vocms0732:*agents*)
+    start_agents_dqm_prod_offsite
+    ;;
   ##### OFFLINE: offline server
   # The offline server runs
   # - the standard receive and import daemons
@@ -374,15 +386,23 @@ start_agents_dqm_prod_local() {
     8031
 }
 
-# Used to be srv...02
+# vocms0732
 start_agents_dqm_prod_offsite() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
-  DQM_DATA=/dqmdata/dqm
+  DQM_DATA=$STATEDIR/online
+
+  # both agents are enabled to allow re-uploads, will most likely be disabled after NGTDemonstrator cleanup
+  # then we have a frozen database with the entire Run1, Run2 and Run3 data.
+  startagent $D/agent-receive \
+    visDQMReceiveDaemon \
+    $DQM_DATA/uploads \
+    $DQM_DATA/repository/original \
+    $DQM_DATA/agents/register
 
   startagent $D/agent-import-128 \
     visDQMImportDaemon \
-    $DQM_DATA/agents/import-srv-c2f11-29-02 \
+    $DQM_DATA/agents/register \
     $DQM_DATA/repository/original \
     $STATEDIR/online/ix128
 }
@@ -657,6 +677,9 @@ start_collector() {
       elif echo "$USER" | grep -qi "ecal"; then
         DQMCollector --listen 9090 </dev/null >>$LOGDIR/$CONFIG/collector-$(hostname -s).log 2>&1 &
       fi
+      ;;
+    # Offsite historical copy: no live data is ever received, so no collector is needed:
+    online:vocms0732:*collector*)
       ;;
     # Rest/default: Standard collector:
     online:*:*collector*)
