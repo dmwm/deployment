@@ -24,6 +24,7 @@ pfClusterlayout(dqmitems, "003 - Compare PFCluster eta",
    [{'path':  "ParticleFlow/pfCaloGPUCompDir/pfCluster_Eta_HostvsDevice",
       'description': "PFCluster eta GPU vs CPU",
       'draw': {'withref': "no", 'drawopts': "COLZ"}}]
+   )
 
 pfClusterlayout(dqmitems, "004 - Compare PFCluster phi",
    [{'path':  "ParticleFlow/pfCaloGPUCompDir/pfCluster_Phi_HostvsDevice",
