@@ -71,14 +71,16 @@ if HOSTALIAS == "dqm-prod-local" or HOSTALIAS == "dqmsrv-c2a06-07-01":  # Online
     }
     COLLHOST = "dqm-prod-local.cms"
 
-elif HOSTALIAS == "dqm-prod-offsite":
-    COLLPORT = 9090
+elif HOSTALIAS == "vocms0732.cern.ch":  # Offsite historical copy of the online GUI
     SERVERPORT = 8030
     SERVICENAME = "Online"
     BASEURL = "/dqm/online"
-    UPLOADDIR = "/dqmdata/dqm/uploads"
-    FILEREPO = {"Original": "/dqmdata/dqm/repository/original/OnlineData"}
-    COLLHOST = "dqm-prod-local.cms"
+    UPLOADDIR = "%s/uploads" % STATEDIR
+    # STATEDIR/repository/original is a symlink to the EOS data dump
+    FILEREPO = {
+        "Original": "%s/repository/original/OnlineData" % STATEDIR,
+        "Offline": "%s/repository/original/OfflineData" % STATEDIR,
+    }
 
 elif HOSTALIAS == "dqm-integration" or HOSTALIAS == "dqmsrv-c2a06-08-01":
     COLLPORT = 9090
