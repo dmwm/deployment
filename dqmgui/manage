@@ -387,24 +387,13 @@ start_agents_dqm_prod_local() {
 }
 
 # vocms0732
+# do not run agent-receive and agent-import agents
+# uploading new data through `$DQM_DATA/uploads` or `visDQMUpload` is not accept anymore
+# the database is frozen
 start_agents_dqm_prod_offsite() {
   refuseproc "file agents" "visDQMIndex" "refusing to restart"
   D=online
   DQM_DATA=$STATEDIR/online
-
-  # both agents are enabled to allow re-uploads, will most likely be disabled after NGTDemonstrator cleanup
-  # then we have a frozen database with the entire Run1, Run2 and Run3 data.
-  startagent $D/agent-receive \
-    visDQMReceiveDaemon \
-    $DQM_DATA/uploads \
-    $DQM_DATA/repository/original \
-    $DQM_DATA/agents/register
-
-  startagent $D/agent-import-128 \
-    visDQMImportDaemon \
-    $DQM_DATA/agents/register \
-    $DQM_DATA/repository/original \
-    $STATEDIR/online/ix128
 }
 
 # dqmsrv-c2a06-08-01
